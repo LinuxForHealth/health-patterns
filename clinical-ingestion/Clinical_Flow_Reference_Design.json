@@ -19104,37 +19104,13 @@
 					"value": ""
 				},
 				{
-					"name": "hri.api.endpoint",
-					"description": "The URL of Health Records Ingestion API. This can be found.......(tbd)",
-					"sensitive": false,
-					"value": ""
-				},
-				{
 					"name": "Password",
 					"description": "",
 					"sensitive": true
 				},
 				{
-					"name": "hri.ibm.client.key",
-					"description": "The apikey to be used to access Health Records Ingestion. This can be found....??? (tbd)",
-					"sensitive": false,
-					"value": ""
-				},
-				{
-					"name": "tenant.id",
-					"description": "The id of the tenant used for this flow (DEPRECATED?)",
-					"sensitive": false,
-					"value": ""
-				},
-				{
 					"name": "SASL Mechanism",
 					"description": "",
-					"sensitive": false,
-					"value": ""
-				},
-				{
-					"name": "kafka.topic.failure",
-					"description": "A kafka topic used to store failures from this flow.",
 					"sensitive": false,
 					"value": ""
 				}
