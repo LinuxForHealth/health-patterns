@@ -2,16 +2,13 @@
 health-patterns is a collection of documentation and reference implementations that highlight how to combine various technologies into meaningful patterns for healthcare.
 
 
-The initial focus will be a clinical data ingestion reference implementation that will accept clinical healthcare data, perform some translation and normalization and then store it into an industry standard FHIR Server.
+The initial focus will be on 2 patterns for clinical data:
+1) **Clinical Data _Ingestion_**
+2) **Clinical Data _Enrichment_**
 
+with subsequent focus on Clinical Data Access and Data analytics.  
 
-Subsequent patterns will focus on 
--  Analytics against the patient data
--  Extraction of concepts / named entities using NLP and storing that information back into the FHIR Server
--  De-identification of patient data to be stored into a secondary FHIR Server
-
-
-
+### Learn more about these patterns and our [roadmap here](docs/roadmap.md)
 
 
 
