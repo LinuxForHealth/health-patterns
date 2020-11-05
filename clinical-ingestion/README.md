@@ -29,14 +29,16 @@ These dependencies can be enabled by clicking on "Configure" for the parent proc
 There are two ways to easily run a FHIR bundle through Clinical Ingestion Flow once it is deployed to NiFi.
 
 1. Post the FHIR bundle json to the defined port (FHIR_LISTEN_PORT in "Clinical Ingestion Flow FHIR Parameter Context")
-	* curl -X POST --header "ResolveTerminology: true" --header "Content-Type: application/json" -d @<<path/to/json>> "<<NIFI_SERVER>>:<<FHIR_LISTEN_PORT>>/fhirResource" --verbose
+
+	`curl -X POST --header "ResolveTerminology: true" --header "Content-Type: application/json" -d @<<path/to/json>> "<<NIFI_SERVER>>:<<FHIR_LISTEN_PORT>>/fhirResource" --verbose`
+	
 	* "ResolveTerminology: true" tells the pipeline to run the bundle through the terminology normalization process. If you do not wish to run this step, you can omit this header.
 	* "path/to/json" can refer to any FHIR bundle you wish to process. For example, "patientData/fhir_bundle_birthsex.json"
 	* NIFI_SERVER and FHIR_LISTEN_PORT should be known values from the setup above.
 	* The result of this command should be an HTTP 200 response indicating that it was successfully submitted.
 
-2. Submit the FHIR bundle to the kafka topic configured above (kafka.topic.in in "Clinical Ingestion Flow Kafka Parameter Context")
-	* Using the configured kafka broker (), post the FHIR bundle of your choice and the Clinical Ingestion Flow will automatically react and begin processing.
+2. Submit the FHIR bundle to the kafka topic configured above ("kafka.topic.in" parameter in "Clinical Ingestion Flow Kafka Parameter Context")
+	* Using the configured kafka broker ("kafka.brokers" parameter in "Clinical Ingestion Flow Kafka Parameter Context"), post the FHIR bundle of your choice and the Clinical Ingestion Flow will automatically react and begin processing.
 	* Posting data to kafka is a well-documented process, but there are no single line examples on how to post an entire file.  If you need help posting to a kafka topic, please start here: https://kafka.apache.org/quickstart#quickstart_send
 
 Once submitted, you will see the bundle traverse the NiFi flow, resulting in many successful flowfiles accumulating at the end of the flow.
