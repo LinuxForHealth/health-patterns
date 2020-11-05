@@ -33,7 +33,7 @@ There are two ways to easily run a FHIR bundle through Clinical Ingestion Flow o
 	`curl -X POST --header "ResolveTerminology: true" --header "Content-Type: application/json" -d @<<path/to/json>> "<<NIFI_SERVER>>:<<FHIR_LISTEN_PORT>>/fhirResource" --verbose`
 	
 	* "ResolveTerminology: true" tells the pipeline to run the bundle through the terminology normalization process. If you do not wish to run this step, you can omit this header.
-	* "path/to/json" can refer to any FHIR bundle you wish to process. For example, "patientData/fhir_bundle_birthsex.json"
+	* "path/to/json" can refer to any FHIR bundle you wish to process. For example, "patientData/patient-with-us-core-birthsex.json"
 	* NIFI_SERVER and FHIR_LISTEN_PORT should be known values from the setup above.
 	* The result of this command should be an HTTP 200 response indicating that it was successfully submitted.
 
