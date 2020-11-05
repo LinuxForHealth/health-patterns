@@ -69,15 +69,15 @@ git commit -s
 ```
 
 ## Communication
-Connect with us through https://chat.fhir.org/ or open an [issue](https://github.com/Alvearie/health-patterns/issues). Avlearie health-patterns has a dedicated "stream" at https://chat.fhir.org/#narrow/stream/212434-ibm (`#ibm`).
+Connect with us by opening an [issue](https://github.com/Alvearie/health-patterns/issues).
 
 ## Setup
-Avlearie health-patterns is built with Maven and requires Java 8 or higher.  To build the project from the root directory, please execute:
+Avlearie health-patterns is built with Maven and requires Java 8 or higher.  Since it is composed of several patterns, each pattern will be stored in a separate sub-folder of the health-patterns repository.  To build any pattern, navigate to the folder containing the pattern and execute:
 
-> mvn clean install -f fhir-parent/pom.xml
+> mvn clean install
 
 ## Testing
-To ensure a working build, please run the full build from the root of the project before submitting your pull request.
+To ensure a working build, please run the full build from the root of each pattern affected by your pull request before submitting.
 
 ## Coding style guidelines
 Avlearie health-patterns is new. Formatting is not strictly enforced, but please consider the following points as you change the code:
@@ -103,4 +103,3 @@ issue-#<number>
 issue #<number> - short description
 
 long description
-
