@@ -11,8 +11,7 @@ Subsequent patterns will focus on 
 -  De-identification of patient data to be stored into a secondary FHIR Server
 
 
-![Example Roadmap Image](/images/IngestionRoadmap2020.png)
-Format: ![Alt Text](url)
+
 
 
 
