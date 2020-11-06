@@ -1,7 +1,7 @@
 # Basic ACD Custom Processor
 
-This custom nifi processor is a simple ACD handler that will take a string of text and
-via a call to acd, create flowfiles corresponding to any resources (medications or procedures)
+This custom nifi processor is a simple ACD (Annotator for Clinical Data) handler that will take a string of text and
+via a call to ACD, create flowfiles corresponding to any resources (medications or procedures)
 that are found in the response.
 
 ## To build this artifact
