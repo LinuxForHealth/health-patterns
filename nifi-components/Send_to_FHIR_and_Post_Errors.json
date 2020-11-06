@@ -2,7 +2,7 @@
 	"flowContents": {
 		"identifier": "c5cf306c-4d44-37f1-9283-7ae25994fb05",
 		"name": "Send to FHIR and Post Errors V9",
-		"comments": "",
+		"comments": "(C) Copyright IBM Corp. 2020, 2020\nSPDX-License-Identifier: Apache-2.0",
 		"position": {
 			"x": 832.0,
 			"y": 1736.0
@@ -10353,24 +10353,6 @@
 					"value": ""
 				},
 				{
-					"name": "hri.api.endpoint",
-					"description": "The URL of Health Records Ingestion API. This can be found.......(tbd)",
-					"sensitive": false,
-					"value": ""
-				},
-				{
-					"name": "tenant.id",
-					"description": "The id of the tenant used for this flow (DEPRECATED?)",
-					"sensitive": false,
-					"value": ""
-				},
-				{
-					"name": "hri.ibm.client.key",
-					"description": "The apikey to be used to access Health Records Ingestion. This can be found....??? (tbd)",
-					"sensitive": false,
-					"value": ""
-				},
-				{
 					"name": "Password",
 					"description": "",
 					"sensitive": true
@@ -10380,12 +10362,6 @@
 					"description": "",
 					"sensitive": false,
 					"value": ""
-				},
-				{
-					"name": "kafka.topic.failure",
-					"description": "A kafka topic used to store failures from this flow.",
-					"sensitive": false,
-					"value": ""
 				}
 			]
 		},
@@ -10393,15 +10369,15 @@
 			"name": "Clinical Ingestion Flow FHIR Parameter Context",
 			"parameters": [
 				{
-					"name": "FHIR_UserPwd",
-					"description": "The password for the username specified by FHIR_User. This will be used to access the specified FHIR server.",
-					"sensitive": true
-				},
-				{
 					"name": "FHIR_LISTEN_PORT",
 					"description": "The port to listen for FHIR Resources posted to this nifi instance to consume by this pipeline",
 					"sensitive": false,
 					"value": ""
+				},
+				{
+					"name": "FHIR_UserPwd",
+					"description": "The password for the username specified by FHIR_User. This will be used to access the specified FHIR server.",
+					"sensitive": true
 				},
 				{
 					"name": "FHIR_User",
