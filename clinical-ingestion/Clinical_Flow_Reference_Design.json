@@ -2,7 +2,7 @@
 	"flowContents": {
 		"identifier": "104b61da-95be-3a34-811a-966f5944f27d",
 		"name": "Clinical Ingestion Flow - Reference Design",
-		"comments": "",
+		"comments": "(C) Copyright IBM Corp. 2020, 2020\nSPDX-License-Identifier: Apache-2.0",
 		"position": {
 			"x": 1680.0,
 			"y": 432.0

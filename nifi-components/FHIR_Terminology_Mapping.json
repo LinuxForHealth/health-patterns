@@ -2,7 +2,7 @@
 	"flowContents": {
 		"identifier": "e40fc71d-ebe5-3eda-9b25-9020d6ac01b1",
 		"name": "FHIR Terminology Mapping",
-		"comments": "",
+		"comments": "(C) Copyright IBM Corp. 2020, 2020\nSPDX-License-Identifier: Apache-2.0",
 		"position": {
 			"x": 824.0,
 			"y": 472.0

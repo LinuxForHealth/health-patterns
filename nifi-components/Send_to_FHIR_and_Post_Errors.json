@@ -2,7 +2,7 @@
 	"flowContents": {
 		"identifier": "c5cf306c-4d44-37f1-9283-7ae25994fb05",
 		"name": "Send to FHIR and Post Errors V9",
-		"comments": "",
+		"comments": "(C) Copyright IBM Corp. 2020, 2020\nSPDX-License-Identifier: Apache-2.0",
 		"position": {
 			"x": 832.0,
 			"y": 1736.0
