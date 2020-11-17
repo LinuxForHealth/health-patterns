@@ -22,7 +22,7 @@
         <version>0.1</version>
     </parent>
 	<properties>
-    	<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 	</properties>
 	
@@ -43,7 +43,6 @@
 		<dependency>
     		<groupId>io.github.linuxforhealth</groupId>
 		    <artifactId>hl7v2-fhir-converter</artifactId>
-<!--     		<version>1.0.0</version> -->
 			<version>1.0.3-alpha</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/ca.uhn.hapi/hapi-base -->
