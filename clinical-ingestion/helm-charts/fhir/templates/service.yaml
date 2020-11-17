@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fhir.fullname" . }}
+  labels:
+    {{- include "fhir.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: fhir-server
+      protocol: TCP
+      name: fhir-server
+    - port: {{ .Values.proxy.service.port }}
+      targetPort: fhir-proxy
+      protocol: TCP
+      name: fhir-proxy
+  selector:
+    {{- include "fhir.selectorLabels" . | nindent 4 }}
