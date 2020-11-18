@@ -47,7 +47,7 @@ import io.github.linuxforhealth.hl7.parsing.HL7HapiParser;
  * should contain HL7 data. The response will be: 
  * 
  * "success" - If the flowfile is successfully converted to FHIR, the flowfile will contain the FHIR version of the input data. 
- * "invalid format" - If the flowfile cannot be parsed as HL7 data, the input flowfile will be returned with this response. 
+ * "HL7 data not detected" - If the flowfile cannot be parsed as HL7 data, the input flowfile will be returned with this response.
  * "failure" - If the conversion fails for any reason, the input flowfile will be returned with this response. Errors will be written to the log.
  */
 
@@ -59,7 +59,7 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
 
     public static final Relationship FAIL_RELATIONSHIP = new Relationship.Builder().name("failure").description("HL7 data conversion failed").build();
 
-    public static final Relationship INVALID_FORMAT_RELATIONSHIP = new Relationship.Builder().name("invalid format").description("Non-HL7 data detected").build();
+    public static final Relationship HL7_NOT_DETECTED_RELATIONSHIP = new Relationship.Builder().name("HL7 data not detected").description("HL7 data not detected").build();
 
     private List<PropertyDescriptor> descriptors;
 
@@ -78,7 +78,7 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
 
         final Set<Relationship> relationships = new HashSet<Relationship>();
         relationships.add(SUCCESS_RELATIONSHIP);
-        relationships.add(INVALID_FORMAT_RELATIONSHIP);
+        relationships.add(HL7_NOT_DETECTED_RELATIONSHIP);
         relationships.add(FAIL_RELATIONSHIP);
         this.relationships = Collections.unmodifiableSet(relationships);
     }
@@ -119,7 +119,6 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
 
     @Override
     public void onTrigger(final ProcessContext context, final ProcessSession session) throws ProcessException {
-        getLogger().info(VERSION);
         FlowFile inputFlowFile = session.get();
         if (inputFlowFile == null) {
             return; // if there is no flowfile present then stop
@@ -133,10 +132,10 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
             while ((line = reader.readLine()) != null) {
                 inputMessage.append(line + "\n");
             }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException e) {
+            getLogger().error("Error reading flowfile", e);
             session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
-            return; // if the incoming data is empty then stop
+            return; // if an error occurred reading the input flowfile then stop
         }
 
         if (inputMessage == null || inputMessage.length() == 0) {
@@ -147,24 +146,31 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
         try {
             new HL7HapiParser().getParser().parse(inputMessage.toString());
         } catch (HL7Exception e) {
-            session.transfer(inputFlowFile, INVALID_FORMAT_RELATIONSHIP);
-            return; // if the incoming data is empty then stop
+            session.transfer(inputFlowFile, HL7_NOT_DETECTED_RELATIONSHIP);
+            return; // if the input data can't be parsed as HL7 then stop
         }
 
-        String hl7Message = inputMessage.toString();
-        HL7ToFHIRConverter ftv = new HL7ToFHIRConverter();
-        String fhirMessage = ftv.convert(hl7Message); // generated a FHIR output
 
-        getLogger().info("Writing data to new flowfile");
-        FlowFile outputFlowFile = session.clone(inputFlowFile);
-        try (OutputStream newFlowOutput = session.write(outputFlowFile)) {
-            newFlowOutput.write(fhirMessage.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+        try {
+            String hl7Message = inputMessage.toString();
+            HL7ToFHIRConverter ftv = new HL7ToFHIRConverter();
+            String fhirMessage = ftv.convert(hl7Message); // generated a FHIR output
+
+            FlowFile outputFlowFile = session.clone(inputFlowFile);
+            try (OutputStream newFlowOutput = session.write(outputFlowFile)) {
+                newFlowOutput.write(fhirMessage.getBytes());
+            } catch (IOException e) {
+                getLogger().error("Error writing FHIR message to output flow", e);
+                session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
+                return; // if the input data can't be parsed as HL7 then stop
+            }
+            session.transfer(outputFlowFile, SUCCESS_RELATIONSHIP);
+            session.remove(inputFlowFile); // remove the original flow file and stop
+            getLogger().info("Pass FHIR flowfile to success queue");
+        } catch (UnsupportedOperationException | IllegalArgumentException e) {
+            getLogger().error("Error converting HL7 data to FHIR", e);
             session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
+            return; // if the input data can't be converted to FHIR then stop
         }
-        session.transfer(outputFlowFile, SUCCESS_RELATIONSHIP);
-        session.remove(inputFlowFile); // remove the original flow file and stop
-        getLogger().info("Pass FHIR flowfile to success queue");
     }
 }

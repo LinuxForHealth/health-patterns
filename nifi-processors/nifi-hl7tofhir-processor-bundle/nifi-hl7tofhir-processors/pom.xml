@@ -33,10 +33,6 @@
         	<id>ibm-fhir</id>
 	        <url>https://dl.bintray.com/ibm-watson-health/ibm-fhir-server-releases</url>
     	</repository>
-    	<repository>
-    	<id>l4h</id>
-    	<url>https://oss.sonatype.org/content/groups/staging</url>
-    	</repository>
   	</repositories>
     <dependencies>
     	<!-- https://mvnrepository.com/artifact/io.github.linuxforhealth/hl7v2-fhir-converter -->
