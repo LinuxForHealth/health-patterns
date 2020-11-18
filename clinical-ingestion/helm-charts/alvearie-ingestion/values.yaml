@@ -77,7 +77,17 @@ nifi:
 # Values: https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
 # ------------------------------------------------------------------------------
 kafka:
-  enabled: true
+  externalAccess:
+    enabled: true
+    service:
+      type: LoadBalancer
+      port: 9094
+    autoDiscovery:
+      enabled: true
+  serviceAccount:
+    create: true
+  rbac:
+    create: true    
   persistence:
     # Persistence disabled in order to avoid having to delete the kafka PersistenceVolume created by the StatefulSet when re-deploying the chart to facilitate rapid deployment
     enabled: false

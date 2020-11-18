@@ -54,7 +54,7 @@ dependencies:
     repository: https://cetic.github.io/helm-charts
     condition: nifi.enabled
   - name: kafka
-    version: 11.8.9
+    version: 12.1.0
     repository: https://charts.bitnami.com/bitnami
     condition: kafka.enabled
     
