@@ -12,7 +12,11 @@ In order for this flow to operate correctly, it is assumed that the following de
 - FHIR server
 - Kafka - This is optional, but is necessary for the preferred entry point and proper logging of errors
 
-To deploy the Clinical Ingestion Flow, follow the instructions found on the [NiFi Components](../nifi-components/README.md) readme.
+If you already have the services mentioned above, to deploy the Clinical Ingestion Flow, follow the instructions found on the [NiFi Components](../nifi-components/README.md) readme.
+
+You may also use the provided [Alvearie Clinical Ingestion pattern Helm Chart](helm-charts) to install the necessary dependencies, and then run the ingestion use case in the next section.
+
+## Configuring NiFi for the Clinical Ingestion Flow
 
 The Clinical Ingestion Flow consists of multiple [Parameter Contexts](https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#parameter-contexts), used to advise the various processor groups on where target environments can be accessed.  These parameters are important in order for the flow to operate correctly.  All parameters should be filled out, according to the help text provided for each.
 
@@ -24,7 +28,7 @@ In addition, certain components in the Clinical Ingestion Flow require specific 
 These dependencies can be enabled by clicking on "Configure" for the parent processor group, selecting "Controller Services" and then enabling each necessary service.  Continue to follow this process for any other processors that have warnings listing disabled services.
 
 
-# Running a FHIR bundle through the Clinical Ingestion Flow
+## Running a FHIR bundle through the Clinical Ingestion Flow
 
 There are two ways to easily run a FHIR bundle through Clinical Ingestion Flow once it is deployed to NiFi.
 
