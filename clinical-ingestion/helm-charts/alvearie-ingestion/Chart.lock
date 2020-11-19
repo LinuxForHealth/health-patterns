@@ -8,5 +8,8 @@ dependencies:
 - name: kafka
   repository: https://charts.bitnami.com/bitnami
   version: 12.1.0
-digest: sha256:cf2518487c009ce27973042ba1359f2dce36096854d10d8d827b484eb5c83297
-generated: "2020-11-18T11:51:58.6136901-07:00"
+- name: kube-prometheus-stack
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 12.0.4
+digest: sha256:c87d60e9b79b32d355bff95737d2fb79e73b88c0e0f1f1e2917c5ccdf25f0946
+generated: "2020-11-23T12:13:24.644438-06:00"

@@ -24,19 +24,21 @@ appVersion: s6
 
 icon: https://avatars3.githubusercontent.com/u/72946463?s=200&v=4
 keywords:
-  - ibm  
-  - fhir  
+  - ibm
+  - fhir
   - nifi
   - ingestion
   - health records
   - clinical data
   - alvearie
-  
+
 home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/alvearie-ingestion
 
-maintainers:  
-  - name: Luis A. Garcia    
+maintainers:
+  - name: Luis A. Garcia
     email: luisg@us.ibm.com
+  - name: David L. Ranum
+    email: dlranum@us.ibm.com
 
 dependencies:
   - name: fhir
@@ -55,7 +57,7 @@ dependencies:
   - name: zookeeper
     version: 6.0.0
     repository: https://charts.bitnami.com/bitnami
-    condition: zookeeper.enabled    
+    condition: zookeeper.enabled
   - name: nifi
     version: 0.6.0
     repository: https://cetic.github.io/helm-charts
@@ -64,4 +66,7 @@ dependencies:
     version: 12.1.0
     repository: https://charts.bitnami.com/bitnami
     condition: kafka.enabled
-    
+  - name: kube-prometheus-stack
+    version: 12.0.4
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: kube-prometheus-stack.enabled
