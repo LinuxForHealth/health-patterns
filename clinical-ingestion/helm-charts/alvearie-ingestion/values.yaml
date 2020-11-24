@@ -61,6 +61,13 @@ nifi:
   enabled: true
   service: 
     type: LoadBalancer
+    processors:
+      enabled: true
+      ports:
+        # Expose the HTTP server for the processor that accepts FHIR bundles
+        - name: fhir-over-http
+          port: 7001
+          targetPort: 7001    
   url: ""
   port: 80
   zookeeper:
