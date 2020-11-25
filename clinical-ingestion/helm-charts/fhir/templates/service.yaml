@@ -7,13 +7,19 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: fhir-server
+    - port: {{ .Values.service.httpPort }}
+      targetPort: http
       protocol: TCP
-      name: fhir-server
+      name: fhir-server-http
+    - port: {{ .Values.service.httpsPort }}
+      targetPort: https
+      protocol: TCP
+      name: fhir-server-https
+{{- if .Values.proxy.enabled }}      
     - port: {{ .Values.proxy.service.port }}
-      targetPort: fhir-proxy
+      targetPort: proxy
       protocol: TCP
       name: fhir-proxy
+{{ end }}
   selector:
     {{- include "fhir.selectorLabels" . | nindent 4 }}

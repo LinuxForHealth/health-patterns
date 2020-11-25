@@ -24,32 +24,69 @@ spec:
       {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+{{- range $key, $value := .Values.initContainers }}
+        - name: {{ $key }}
+{{ toYaml $value | indent 10 }}
+{{- end }}        
       containers:
-        - name: {{ .Chart.Name }}-server
+        - name: server
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: fhir-server
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: https
               containerPort: 9443
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-        - name: {{ .Chart.Name }}-proxy
+          volumeMounts:
+          - name: server-xml
+            mountPath: /opt/ol/wlp/usr/servers/fhir-server/server.xml
+            subPath: server.xml
+          - name: fhir-server-config-json
+            mountPath: /opt/ol/wlp/usr/servers/fhir-server/config/default/fhir-server-config.json
+            subPath: fhir-server-config.json
+          {{- if .Values.extraVolumeMounts }}
+{{ toYaml .Values.extraVolumeMounts | indent 10 }}
+          {{- end }}
+{{- if .Values.proxy.enabled }}
+        - name: proxy
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
           imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
           ports:
-            - name: fhir-proxy
+            - name: proxy
               containerPort: 80
               protocol: TCP
           env:
             - name: FHIR_API
-              value: 'http://localhost:9443/fhir-server/api/v4'
+              value: 'http://localhost:8080/fhir-server/api/v4'
           resources:
             {{- toYaml .Values.proxy.resources | nindent 12 }}
+{{ end }}
+      volumes:
+        - name: server-xml
+          configMap:
+            name: {{ template "fhir.fullname" . }}-config
+            items:
+              - key: "server.xml"
+                path: "server.xml"
+        - name: fhir-server-config-json
+          configMap:
+            name: {{ template "fhir.fullname" . }}-config
+            items:
+              - key: "fhir-server-config.json"
+                path: "fhir-server-config.json"
+{{- if .Values.extraVolumes }}
+{{ toYaml .Values.extraVolumes | indent 8 }}
+{{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
