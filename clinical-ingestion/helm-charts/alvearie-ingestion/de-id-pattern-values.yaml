@@ -35,7 +35,7 @@ fhir:
   enabled: true 
 
 fhir-deid:
-  enabled: false 
+  enabled: true 
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
@@ -64,13 +64,6 @@ nifi:
   enabled: true
   service: 
     type: LoadBalancer
-    processors:
-      enabled: true
-      ports:
-        # Expose the HTTP server for the processor that accepts FHIR bundles
-        - name: fhir-over-http
-          port: 7001
-          targetPort: 7001    
   url: ""
   port: 80
   zookeeper:
@@ -81,25 +74,6 @@ nifi:
     ## We use a different NiFi Registry than the default one, that loads the flow from the Alvearie Github NiFi flow repository  
     enabled: false
     url: ingestion-nifi-registry
-  initContainers:
-		    # This init container will install the custom NiFi Processors (packed in the proper NAR format).
-    # The NARs will be copied to a shared volume, and the customLibPath will be set to the location
-    # of that shared volume in the main NiFi server container and set in nifi.properties
-    alvearie-nars-init:
-      image: luisgarc/alvearie-nars
-      imagePullPolicy: Always
-      command: ["sh", "-c", "cp *.nar /nars"]
-      volumeMounts:
-      - name: alvearie-nars
-        mountPath: /nars
-  extraVolumeMounts:
-    - name: alvearie-nars
-      mountPath: /opt/nifi/nifi-current/custom-nars
-  extraVolumes:
-    - name: alvearie-nars
-      emptyDir: {}
-  properties:
-    customLibPath: ./custom-nars
 
 # ------------------------------------------------------------------------------
 # Kafka Configuration
@@ -133,4 +107,4 @@ kafka:
 # Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
-  enabled: false
+  enabled: true

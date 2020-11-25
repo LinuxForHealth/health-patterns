@@ -42,6 +42,13 @@ dependencies:
   - name: fhir
     version: 0.2.0
     condition: fhir.enabled
+  - name: fhir
+    version: 0.1.0
+    condition: fhir-deid.enabled
+    alias: fhir-deid
+  - name: deid
+    version: 0.1.0
+    condition: deid.enabled    
   - name: nifi-registry
     version: 0.1.0
     condition: nifi-registry.enabled
