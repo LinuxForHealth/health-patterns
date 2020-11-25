@@ -35,7 +35,7 @@ fhir:
   enabled: true 
 
 fhir-deid:
-  enabled: false 
+  enabled: true 
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
@@ -107,4 +107,4 @@ kafka:
 # Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
-  enabled: false
+  enabled: true

@@ -40,6 +40,15 @@ Install the helm chart with a release name `ingestion`:
 helm install ingestion .
 ```
 
+### Install the Chart with De-Identification Enabled
+
+This same chart can be used to install the patient de-identification pattern, which adds a de-identification service and a secondary FHIR server for de-identified clinical data.
+In order to install that pattern run the command below:
+
+```bash
+helm install ingestion . -f de-id-pattern-values.yaml
+```
+
 ### Using the Chart
 
 After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](clinical-ingestion).
