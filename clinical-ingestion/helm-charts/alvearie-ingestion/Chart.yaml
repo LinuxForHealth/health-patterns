@@ -40,7 +40,7 @@ maintainers:
 
 dependencies:
   - name: fhir
-    version: 0.1.0
+    version: 0.2.0
     condition: fhir.enabled
   - name: nifi-registry
     version: 0.1.0
