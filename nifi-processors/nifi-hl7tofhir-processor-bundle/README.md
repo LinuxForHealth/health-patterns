@@ -8,7 +8,7 @@ This custom nifi processor can be used to convert an incoming HL7 message to a F
 
 The following must be installed on your system:
 
-- maven
+- maven >= 3.6.3 
 - java >= 8
 
 ### Steps
