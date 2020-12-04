@@ -42,6 +42,8 @@ spec:
             - name: https
               containerPort: 9443
               protocol: TCP
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

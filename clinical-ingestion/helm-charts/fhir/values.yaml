@@ -7,11 +7,13 @@ replicaCount: 1
 image:
   repository: ibmcom/ibm-fhir-server
   pullPolicy: IfNotPresent
-  tag: 4.5.0
+  tag: 4.5.2
+
 service:
   type: LoadBalancer
   httpPort: 80
   httpsPort: 443
+  
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -86,3 +88,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+env: {}
+# Example:
+# - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
+#   value: '300s'
