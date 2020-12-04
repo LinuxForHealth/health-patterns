@@ -2,9 +2,9 @@
 
 ## Introduction
 
-This [Helm](https://github.com/kubernetes/helm) chart installs the [Alvearie Clinical Ingestion pattern](https://github.com/Alvearie/health-patterns/tree/initial-charts/clinical-ingestion) in a Kubernetes cluster.
+This [Helm](https://github.com/kubernetes/helm) chart installs the [Alvearie Clinical Ingestion pattern](/clinical-ingestion) in a Kubernetes cluster.
 
-The [Alvearie Clinical Ingestion pattern](https://github.com/Alvearie/health-patterns/tree/initial-charts/clinical-ingestion) is comprised of multiple components described in more detail in the pattern's main page, and using this Helm chart you can optionally enable/disable components of that pattern.
+The [Alvearie Clinical Ingestion pattern](/clinical-ingestion) is comprised of multiple components described in more detail in the pattern's main page, and using this Helm chart you can optionally enable/disable components of that pattern.
 
 ## Pre-Requisites
 
