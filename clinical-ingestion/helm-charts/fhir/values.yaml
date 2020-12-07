@@ -10,7 +10,7 @@ image:
   tag: 4.5.2
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   httpPort: 80
   httpsPort: 443
   
@@ -89,7 +89,7 @@ tolerations: []
 
 affinity: {}
 
-env: {}
+env: []
 # Example:
 # - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
 #   value: '300s'

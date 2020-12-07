@@ -1,3 +1,6 @@
+# A simple name describing the Alvearie pattern implemented by this Helm values file 
+pattern: "De-Identification"
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
