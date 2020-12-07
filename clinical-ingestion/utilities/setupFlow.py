@@ -6,11 +6,22 @@
 import requests
 import sys
 
+debug = False  # turn off debug by default
+
 def main():
-    baseURL = "http://localhost:8080/"
-    if len(sys.argv) > 1:
-        #use argument for url, otherwise keep as localhost
-        baseURL = sys.argv[1]
+    if len(sys.argv) != 3:
+        print("Must include base url and default password as arguments")
+        print("USAGE: setupFlow.py URL defaultpassword")
+        exit()  #need to retry
+
+    baseURL = sys.argv[1]
+    defaultPWD = sys.argv[2]
+
+    if baseURL[-1] != "/":
+        print("BaseURL requires trailing /, fixing...")
+        baseURL = baseURL + "/"  #add the trailing / if needed
+
+    print("Configuring with Nifi at BaseURL: ", baseURL)
 
     flowName = "Clinical Ingestion"  #assume that we want clinical ingestion flow for now
 
@@ -20,6 +31,8 @@ def main():
     # version is placed on the canvas.  Need to know the registry, bucket, and flow for the
     # desired flow name
 
+    print("Step 1: Creating process group...")
+
     found = False
     flowURL = None
     theRegistry = None
@@ -28,27 +41,35 @@ def main():
 
     regURL = baseURL + "nifi-api/flow/registries"
     resp = requests.get(url=regURL)
-    print(dict(resp.json()))
+    if debug:
+        print(dict(resp.json()))
     respDict = dict(resp.json())
     for regs in respDict["registries"]:
-        print(regs)
+        if debug:
+            print(regs)
         regId = regs["registry"]["id"]
-        print(regId)
+        if debug:
+            print(regId)
 
         buckURL = regURL + "/" + regId + "/buckets"
         resp = requests.get(url=buckURL)
-        print(dict(resp.json()))
+        if debug:
+            print(dict(resp.json()))
         bucketDict = dict(resp.json())
         for bucket in bucketDict["buckets"]:
-            print(bucket)
+            if debug:
+                print(bucket)
             bucketId = bucket['id']
-            print(bucketId)
+            if debug:
+                print(bucketId)
             flowURL = buckURL + "/" + bucketId + "/" + "flows"
             resp = requests.get(url=flowURL)
-            print(dict(resp.json()))
+            if debug:
+                print(dict(resp.json()))
             flowDict = dict(resp.json())
             for flow in flowDict["versionedFlows"]:
-                print(flow)
+                if debug:
+                    print(flow)
                 if flow["versionedFlow"]["flowName"] == flowName:
                     found = True
                     theRegistry = regId
@@ -61,14 +82,15 @@ def main():
             break
 
     if not found:
-        print("script failed-no flow found:", flowName)
+        print("script failed-no matching flow found:", flowName)
         exit()  #if we don't find the specific flow then we are done
 
     #found the flow so now go ahead and find the latest version
 
     versionURL = flowURL + "/" + theFlow + "/" + "versions"
     resp = requests.get(url=versionURL)
-    print(dict(resp.json()))
+    if debug:
+        print(dict(resp.json()))
     versionDict = dict(resp.json())
 
     latest = 0
@@ -81,60 +103,80 @@ def main():
 
     URL = baseURL + "nifi-api/flow/process-groups/root"
     resp = requests.get(url=URL)
-    print(resp)
-    print(resp.content)
+    if debug:
+        print(resp)
+        print(resp.content)
     rootId = (dict(resp.json()))["processGroupFlow"]["id"]
-    print(rootId)
+    if debug:
+        print(rootId)
 
     #Create new process group from repo
 
     createJson = {"revision":{"version":0},"component":{"versionControlInformation":{"registryId":theRegistry,"bucketId":theBucket,"flowId":theFlow,"version":latest}}}
     createPostEndpoint = "nifi-api/process-groups/" + rootId + "/process-groups"
     resp = requests.post(url=baseURL + createPostEndpoint, json=createJson)
-    print(resp.content)
+    if debug:
+        print(resp.content)
+
+    print("Step 1 complete: Process group created...")
 
     #STEP 2: Set specific passwords in the parameter contexts for fhir, kafka, and deid
 
+    print("Step 2: Setting default password in all parameter contexts...")
+
     #Get parameter contexts
     resp = requests.get(url=baseURL + "nifi-api/flow/parameter-contexts")
-    print(resp.content)
+    if debug:
+        print(resp.content)
 
     contexts = dict(resp.json())["parameterContexts"]
-    print(contexts)
+    if debug:
+        print(contexts)
 
     for context in contexts:
         if "FHIR" in context["component"]["name"]:
-            print("processing fhir")
+            if debug:
+                print("processing fhir")
             #setting the fhir password
             contextId = context["id"]
-            print("FHIR context:", contextId)
+            if debug:
+                print("FHIR context:", contextId)
 
-            updatePwd(baseURL, contextId, 0, "FHIR_UserPwd", "integrati0n")
+            updatePwd(baseURL, contextId, 0, "FHIR_UserPwd", defaultPWD)
 
         if "Kafka" in context["component"]["name"]:
-            print("processing kafka-two pwds")
+            if debug:
+                print("processing kafka-two pwds")
 
             #set kafka passwords
             contextId = context["id"]
-            print("Kafka context: ", contextId)
+            if debug:
+                print("Kafka context: ", contextId)
 
-            updatePwd(baseURL, contextId, 0, "Password", "integrati0n")
-            updatePwd(baseURL, contextId, 1, "kafka.auth.password", "integrati0n")
+            updatePwd(baseURL, contextId, 0, "Password", defaultPWD)
+            updatePwd(baseURL, contextId, 1, "kafka.auth.password", defaultPWD)
 
         if "De-Identification" in context["component"]["name"]:
-            print("processing deid-two pwds")
+            if debug:
+                print("processing deid-two pwds")
             #set deid passwords
             contextId = context["id"]
-            print("DeId context: ", contextId)
+            if debug:
+                print("DeId context: ", contextId)
 
-            updatePwd(baseURL, contextId, 0, "DEID_FHIR_PASSWORD", "integrati0n")
-            updatePwd(baseURL, contextId, 1, "Basic Authentication Password", "integrati0n")
+            updatePwd(baseURL, contextId, 0, "DEID_FHIR_PASSWORD", defaultPWD)
+            updatePwd(baseURL, contextId, 1, "Basic Authentication Password", defaultPWD)
+
+    print("Step 2 complete: Password set complete...")
 
     #STEP 3: Enable all controller services that are currently disabled-starting from root
 
+    print("Step 3: Enabling all controller services...")
+
     rootProcessGroupsURL = baseURL + "nifi-api/flow/process-groups/root"
     resp = requests.get(url=rootProcessGroupsURL)
-    print(resp, resp.content)
+    if debug:
+        print(resp, resp.content)
 
     groupDict = dict(resp.json())
 
@@ -143,10 +185,12 @@ def main():
 
     # start with the root groups
     for group in groupDict["processGroupFlow"]["flow"]["processGroups"]:
-        print(group["id"])
+        if debug:
+            print(group["id"])
         groupList.append(group["id"])
 
-    print("GROUPLIST=", groupList)
+    if debug:
+        print("GROUPLIST=", groupList)
     while len(groupList) > 0:
         #more groups to try
         nextGroup = groupList.pop(0)
@@ -158,14 +202,16 @@ def main():
         for group in groupDict["processGroupFlow"]["flow"]["processGroups"]:
             groupList.append(group["id"])
 
-    print(finalGroupList)
+    if debug:
+        print(finalGroupList)
 
     controllerServices = [] #hold the list of all controller services found in all process groups
 
     for agroup in finalGroupList:
         csURL = baseURL + "nifi-api/flow/process-groups/" + agroup + "/controller-services"
         resp = requests.get(url=csURL)
-        print(resp, resp.content)
+        if debug:
+            print(resp, resp.content)
         csDict = dict(resp.json())
 
         for service in csDict["controllerServices"]:
@@ -173,16 +219,19 @@ def main():
             if serviceId not in controllerServices:
                 controllerServices.append(serviceId)
 
-    print(controllerServices)
+    if debug:
+        print(controllerServices)
 
     for cs in controllerServices:
         csURL = baseURL + "nifi-api/controller-services/" + cs
         resp = requests.get(url=csURL)
-        print("CS=", cs)
-        print(resp, resp.content)
+        if debug:
+            print("CS=", cs)
+            print(resp, resp.content)
         csDict = dict(resp.json())
         currentState = csDict["component"]["state"]
-        print(cs, currentState)
+        if debug:
+            print(cs, currentState)
 
         if currentState == "DISABLED": #enable all services that are currently disabled
             enableJson = {"revision": {"version": 0}, "state": "ENABLED"}
@@ -190,8 +239,11 @@ def main():
 
             resp = requests.put(url=enableURL, json=enableJson)
 
-            print(resp, resp.content)
+            if debug:
+                print(resp, resp.content)
 
+    print("Step 3 complete: Controllers enabled...")
+    print("Setup task complete")
 
 def updatePwd(baseURL, contextId, versionNum, pwdName, pwdValue):
     # Updates the password and polls the request for completion
@@ -202,25 +254,33 @@ def updatePwd(baseURL, contextId, versionNum, pwdName, pwdValue):
         "id": contextId}}
     createPostEndpoint = "nifi-api/parameter-contexts/" + contextId + "/update-requests"
     resp = requests.post(url=baseURL + createPostEndpoint, json=passwordJson)
-    print(resp, resp.content)
-
-    requestId = dict(resp.json())["request"]["requestId"]
-    print(requestId)
-    resp = requests.get(url=baseURL + createPostEndpoint + "/" + requestId)
-    print(resp, resp.content)
-
-    complete = dict(resp.json())["request"]["complete"]
-    print("update request status", pwdName, complete)
-    while str(complete) != "True":
-        print("task not complete", pwdName)
-
-        resp = requests.get(url=baseURL + createPostEndpoint + "/" + requestId)
+    if debug:
         print(resp, resp.content)
 
-        complete = dict(resp.json())["request"]["complete"]
-        print("update request status", pwdName, complete)
+    requestId = dict(resp.json())["request"]["requestId"]
+    if debug:
+        print(requestId)
+    resp = requests.get(url=baseURL + createPostEndpoint + "/" + requestId)
+    if debug:
+        print(resp, resp.content)
 
-    print("Deleting the update task", pwdName)
+    complete = dict(resp.json())["request"]["complete"]
+    if debug:
+        print("update request status", pwdName, complete)
+    while str(complete) != "True":
+        if debug:
+            print("task not complete", pwdName)
+
+        resp = requests.get(url=baseURL + createPostEndpoint + "/" + requestId)
+        if debug:
+            print(resp, resp.content)
+
+        complete = dict(resp.json())["request"]["complete"]
+        if debug:
+            print("update request status", pwdName, complete)
+
+    if debug:
+        print("Deleting the update task", pwdName)
     resp = requests.delete(url=baseURL + createPostEndpoint + "/" + requestId)
 
 if __name__ == '__main__':
