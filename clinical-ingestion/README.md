@@ -27,6 +27,32 @@ In addition, certain components in the Clinical Ingestion Flow require specific 
 
 These dependencies can be enabled by clicking on "Configure" for the parent processor group, selecting "Controller Services" and then enabling each necessary service.  Continue to follow this process for any other processors that have warnings listing disabled services.
 
+## Configuring the Clinical Ingestion Flow using a helper script [OPTIONAL]
+
+To assist with the configuration, a Python script (utilities/setupClinicalIngestionFlow.py) has been provided that will automate the steps necessary to use the Clinical Ingestion Flow.  The script will
+
+1. Load the Clinical Ingestion Flow processor group onto the Nifi canvas
+1. Set the missing passwords in the parameter contexts described above
+1. Enable the controller services described above
+
+Prerequisites
+  - Python 3 installed
+  - The `requests` module must be installed (`pip install requests`)
+  - Change the permissions on the script to add executable (`chmod +x setupClinicalIngestionFlow.py`)
+  
+In order to execute the script, two arguments must be provided.  
+  1. The base URL for the Nifi instance including the port.
+  1. The default password to be used.  The script assumes that all passwords will be set to the same default.
+  
+For example, from the `utilities` directory, run
+
+`./setupClinicalIngestionFlow <<Nifi Server:Nifi Port>> <<default password>>`
+
+If your Nifi server was running on `http://nifi.xyz.org:8080` and you want the default password to be `twinkle`, then it would be
+
+`./setupClinicalIngestionFlow http://nifi.xyz.org:8080  twinkle`
+
+Status messages will log the activity of the script and you will see a completion message at the end.  At that point, you may need to refresh your Nifi canvas to see the new process group.
 
 ## Running a FHIR bundle through the Clinical Ingestion Flow
 
