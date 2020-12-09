@@ -23,14 +23,14 @@ version: 0.1.0
 appVersion: 0.8.0
 
 keywords:
-  - ibm  
-  - nifi-registry 
+  - ibm
+  - nifi-registry
   - health records
   - clinical data
   - alvearie
 
 home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/nifi-registry
 
-maintainers:  
-  - name: Luis A. Garcia    
-    email: luisg@us.ibm.com    
+maintainers:
+  - name: Luis A. Garcia
+    email: luisg@us.ibm.com

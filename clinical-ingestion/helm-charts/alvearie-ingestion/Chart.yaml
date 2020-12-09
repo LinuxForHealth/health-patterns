@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.0
+version: 0.2.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -37,23 +37,27 @@ home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts
 maintainers:
   - name: Luis A. Garcia
     email: luisg@us.ibm.com
-  - name: David L. Ranum
+  - name: ranum
     email: dlranum@us.ibm.com
 
 dependencies:
   - name: fhir
     version: 0.2.0
     condition: fhir.enabled
+    repository: ""
   - name: fhir
     version: 0.2.0
     condition: fhir-deid.enabled
     alias: fhir-deid
+    repository: ""
   - name: deid
     version: 0.1.0
-    condition: deid.enabled    
+    condition: deid.enabled
+    repository: ""
   - name: nifi-registry
     version: 0.1.0
     condition: nifi-registry.enabled
+    repository: ""
   - name: zookeeper
     version: 6.0.0
     repository: https://charts.bitnami.com/bitnami
