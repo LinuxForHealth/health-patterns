@@ -41,16 +41,16 @@ Prerequisites
   - Change the permissions on the script to add executable (`chmod +x setupClinicalIngestionFlow.py`)
   
 In order to execute the script, two arguments must be provided.  
-  1. The base URL for the Nifi instance including the port and trailing /.
+  1. The base URL for the Nifi instance including the port.
   1. The default password to be used.  The script assumes that all passwords will be set to the same default.
   
 For example, from the `utilities` directory, run
 
-`./setupClinicalIngestionFlow <<Nifi Server:Nifi Port/>> <<default password>>`
+`./setupClinicalIngestionFlow <<Nifi Server:Nifi Port>> <<default password>>`
 
 If your Nifi server was running on `http://nifi.xyz.org:8080` and you want the default password to be `twinkle`, then it would be
 
-`./setupClinicalIngestionFlow http://nifi.xyz.org:8080/  twinkle`
+`./setupClinicalIngestionFlow http://nifi.xyz.org:8080  twinkle`
 
 Status messages will log the activity of the script and you will see a completion message at the end.  At that point, you may need to refresh your Nifi canvas to see the new process group.
 
