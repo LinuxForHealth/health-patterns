@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "nifi-registry.fullname" . }}-test-connection"
+  name: "{{ include "nifi-registry.fullname" . }}-test"
   labels:
     {{- include "nifi-registry.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": test-success
+    "helm.sh/hook": test
 spec:
   containers:
-    - name: wget
+    - name: test
       image: busybox
       command: ['wget']
-      args: ['{{ include "nifi-registry.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "nifi-registry.fullname" . }}:{{ .Values.service.port }}/nifi-registry']
   restartPolicy: Never
