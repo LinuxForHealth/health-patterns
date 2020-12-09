@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: atclark/deid
+  repository: alvearie/deid
   pullPolicy: IfNotPresent
   tag: latest
 service:
