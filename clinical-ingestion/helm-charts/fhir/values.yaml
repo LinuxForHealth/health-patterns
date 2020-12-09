@@ -29,7 +29,7 @@ resources: {}
 proxy:
   enabled: false
   image:
-    repository: luisgarc/fhir-proxy
+    repository: alvearie/fhir-proxy
     pullPolicy: IfNotPresent
     tag: latest
   service:
