@@ -1,6 +1,6 @@
 apiVersion: v2
-name: deid
-description: A Helm Chart to deploy the Alvearie De-Identification service.
+name: fhir
+description: A Helm Chart to deploy the IBM FHIR Server.
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -15,24 +15,22 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.0
+version: 0.2.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: 0.0.1
-
-icon: 
+appVersion: 4.5.0
 
 keywords:
-  - ibm  
+  - ibm
+  - fhir
   - health records
   - clinical data
   - alvearie
-  - deid
 
-home: https://github.com/Alvearie/de-identification
+home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir
 
-maintainers:  
-  - name: Luis A. Garcia    
-    email: luisg@us.ibm.com    
+maintainers:
+  - name: Luis A. Garcia
+    email: luisg@us.ibm.com
