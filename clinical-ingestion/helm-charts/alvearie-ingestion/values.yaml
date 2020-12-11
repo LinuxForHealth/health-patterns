@@ -39,14 +39,14 @@ fhir:
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
-      value: '300s' 
+      value: '300s'
 
 fhir-deid:
   enabled: false
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
-      value: '300s' 
+      value: '300s'
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
@@ -97,7 +97,7 @@ nifi:
         - -c
         - |
           echo "downloading nifi init script..."
-          curl -k --url https://raw.github.ibm.com/integrationsquad/integration-tools/master/scriptex.sh?token=AABLLYCPUJ5BLBIVHRPICI27Z7WVO -o /scripts/initialize-reporting-task.sh
+          curl -k --url https://raw.githubusercontent.com/Alvearie/health-patterns/main/clinical-ingestion/utilities/scriptex.sh -o /scripts/initialize-reporting-task.sh
           echo "done downloading nifi init script"
 
           echo "waiting for NiFi API to start nifi 8080"
