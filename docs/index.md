@@ -9,4 +9,3 @@ Below are the initial patterns that incorporate parts of Alvearie (https://alvea
 
 Learn more about the reference implementations and our roadmap [here](roadmap.md)
 
-GitHub: https://github.com/Alvearie/health-patterns
