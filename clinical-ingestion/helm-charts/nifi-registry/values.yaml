@@ -14,6 +14,9 @@ service:
   port: 80
 
 git:
+  branch: origin
+  username: read-only-not-needed
+  password: read-only-not-needed
   # By default this registry loads the health-patterns NiFi flows
   repository: https://github.com/Alvearie/health-patterns-nifi-flows.git
   
