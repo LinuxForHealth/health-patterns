@@ -24,9 +24,9 @@
     <flowPersistenceProvider>
         <class>org.apache.nifi.registry.provider.flow.git.GitFlowPersistenceProvider</class>
         <property name="Flow Storage Directory">./flow_storage</property>
-        <property name="Remote To Push">origin</property>
-        <property name="Remote Access User">read-only-not-needed</property>
-        <property name="Remote Access Password">read-only-not-needed</property>
+        <property name="Remote To Push">{{ .Values.git.branch }}</property>
+        <property name="Remote Access User">{{ .Values.git.username }}</property>
+        <property name="Remote Access Password">{{ .Values.git.password }}</property>
         <property name="Remote Clone Repository">{{ .Values.git.repository }}</property>
     </flowPersistenceProvider>    
 
