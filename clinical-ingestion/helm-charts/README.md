@@ -4,11 +4,15 @@
 
 This directory contains the [Helm](https://github.com/kubernetes/helm) charts used to install the Alvearie Clinical Ingestion pattern in a Kubernetes cluster.
 
-There are three main charts contained in this directory:
+The main chart in this directory is:
 
-- [FHIR Chart](./fhir): Chart used to install a FHIR server
-- [NiFi Registry](./nifi-registry): Chart used to install a [NiFi Registry](https://nifi.apache.org/registry.html)
 - [Clinical Ingestion Pattern](./alvearie-ingestion): Chart used to install the Alvearie Clinical Ingestion pattern
+
+That main chart has three dependent subcharts, which can also be used as standalone charts:
+
+- [FHIR Chart](./alvearie-ingestion/charts/fhir): Chart used to install a FHIR server
+- [NiFi Registry Chart](./alvearie-ingestion/charts/nifi-registry): Chart used to install a [NiFi Registry](https://nifi.apache.org/registry.html)
+- [DeID Service Chart](./alvearie-ingestion/charts/deid): Chart used to install a [De-Identification Service](https://github.com/Alvearie/de-identification)
 
 
 ## Installation
