@@ -16,14 +16,15 @@ jobs:
         with:
           version: v3.4.1
 
-      - uses: actions/setup-python@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
           python-version: 3.7
 
-      - name: Set up chart-testing
+      - name: Set up chart-testing (ct)
         uses: helm/chart-testing-action@v2.0.1
 
-      - name: Run chart-testing (list-changed)
+      - name: Get changed charts (ct list-changed)
         id: list-changed
         run: |
           changed=$(ct list-changed --chart-dirs clinical-ingestion/helm-charts --target-branch main)
@@ -31,12 +32,20 @@ jobs:
             echo "::set-output name=changed::true"
           fi
 
-      - name: Run chart-testing (lint)
+      - name: Lint charts (ct lint)
         run: ct lint --chart-dirs clinical-ingestion/helm-charts --target-branch main --validate-maintainers=false --debug
 
-#      - name: Create kind cluster
-#        uses: helm/kind-action@v1.0.0
-#        if: steps.list-changed.outputs.changed == 'true'
+      - name: Create 'kind' cluster
+        uses: helm/kind-action@v1.0.0
+        if: steps.list-changed.outputs.changed == 'true'
 
-#      - name: Run chart-testing (install)
-#        run: ct install
+      # We need to know the name of the release or be able to set it (the expected release name is 'ingestion' by default)
+      # ct does not allow the option to do that, so we explocitly run the commands that `ct install` would have run
+      - name: Install charts (helm install)
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add cetic https://cetic.github.io/helm-charts
+          helm repo add prometheus https://prometheus-community.github.io/helm-charts
+          helm dependency build clinical-ingestion/helm-charts/alvearie-ingestion
+          helm install ingestion clinical-ingestion/helm-charts/alvearie-ingestion --values clinical-ingestion/helm-charts/alvearie-ingestion/ci/chart-testing-values.yaml --wait --timeout 6m0s
+          kubectl get all

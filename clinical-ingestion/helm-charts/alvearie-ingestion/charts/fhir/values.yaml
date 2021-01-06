@@ -31,7 +31,7 @@ proxy:
   image:
     repository: alvearie/fhir-proxy
     pullPolicy: IfNotPresent
-    tag: latest
+    tag: 0.0.1
   service:
     port: 81
   resources: {}
