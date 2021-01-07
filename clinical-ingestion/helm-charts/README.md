@@ -45,7 +45,7 @@ Feel free to contribute by making a [pull request](https://github.com/Alvearie/h
 
 Please review the [Contributing Guide](CONTRIBUTING.md) for information on how to get started contributing to the project.
 
-### Github Chart Linting Locally
+### Running Github Chart Linting Locally
 
 This notes describe the necessary steps to lint a chart in a local dev env.
 
