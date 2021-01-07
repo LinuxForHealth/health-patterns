@@ -51,7 +51,7 @@ helm install ingestion . -f de-id-pattern-values.yaml
 
 ### Using the Chart
 
-After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](clinical-ingestion).
+After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](../../).
 
 ## Uninstallation
 
