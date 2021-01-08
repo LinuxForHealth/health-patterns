@@ -142,7 +142,7 @@ def main():
             if debug:
                 print("FHIR context:", contextId)
 
-            updatePwd(baseURL, contextId, 0, "FHIR_UserPwd", defaultPWD)
+            updatePwd(baseURL, contextId, 0, "FHIR_PASSWORD", defaultPWD)
 
         if "Kafka" in context["component"]["name"]:
             if debug:
@@ -153,8 +153,7 @@ def main():
             if debug:
                 print("Kafka context: ", contextId)
 
-            updatePwd(baseURL, contextId, 0, "Password", defaultPWD)
-            updatePwd(baseURL, contextId, 1, "kafka.auth.password", defaultPWD)
+            updatePwd(baseURL, contextId, 0, "kafka.auth.password", defaultPWD)
 
         if "De-Identification" in context["component"]["name"]:
             if debug:
@@ -165,7 +164,6 @@ def main():
                 print("DeId context: ", contextId)
 
             updatePwd(baseURL, contextId, 0, "DEID_FHIR_PASSWORD", defaultPWD)
-            updatePwd(baseURL, contextId, 1, "Basic Authentication Password", defaultPWD)
 
     print("Step 2 complete: Password set complete...")
 
