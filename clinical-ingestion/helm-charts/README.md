@@ -49,7 +49,7 @@ Please review the [Contributing Guide](CONTRIBUTING.md) for information on how t
 
 This notes describe the necessary steps to lint a chart in a local dev env.
 
-There is a Github Action that will automatically lint the Alvearie Integration charts when a corresponding PR is created, however it is convenient to have a way to reproduce that process locally to avoid having to push a PR just to be able to run the official linting process.
+There is a Github Action that will automatically lint the Alvearie Ingestion charts when a corresponding PR is created, however it is convenient to have a way to reproduce that process locally to avoid having to push a PR just to be able to run the official linting process.
 
 The chart linting process is done using a Github Action called *helm/chart-testing-action@v2.0.1*. That action runs a docker image that contains the chart-testing tool and runs the chart through the tool. 
 
