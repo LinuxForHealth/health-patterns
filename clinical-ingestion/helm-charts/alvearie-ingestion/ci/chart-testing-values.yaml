@@ -49,3 +49,7 @@ kafka:
 # ------------------------------------------------------------------------------
 kube-prometheus-stack:
   enabled: false
+
+metrics:
+  kafka:
+    enabled: false
