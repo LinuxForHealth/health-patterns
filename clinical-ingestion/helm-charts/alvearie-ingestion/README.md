@@ -61,7 +61,7 @@ To uninstall/delete the `ingestion` deployment:
 helm delete ingestion
 ```
 
-Deletion of charts doesn't cascade to deleting associated `PersistedVolume`s and `PersistedVolumeClains`s. 
+Deletion of charts doesn't cascade to deleting associated `PersistedVolume`s and `PersistedVolumeClaims`s.
 To delete them:
 
 ```bash
@@ -82,6 +82,19 @@ Please consult the relevant charts for their configuration options.
 | `fhir.enabled`           | Enable [Spark](../fhir)                                                                                            | `true`    |
 | `zookeeper.enabled`      | Enable [Zookeeper](https://github.com/bitnami/charts/tree/master/bitnami/zookeeper)                                | `true`    |
 
+## Monitoring
+
+There is a grafana-based monitoring solution that has been included as part of this chart.  It is disabled by default in the chart, however, it can be enabled by setting the following options to `true` (note that they are currently all set to `false`).
+
+```bash
+kafka.metrics.kafka.enabled
+kafka.metrics.jmx.enabled
+kafka.metrics.serviceMonitor.enabled
+kube-prometheus-stack.enabled
+```
+
+It is important to note that due to a limitation in grafana that causes multi-install collisions, only one instance of the chart should be installed when the monitoring solution is turned on.
+
 ## Contributing
 
 Feel free to contribute by making a [pull request](https://github.com/Alvearie/health-patterns/pull/new/master).
@@ -89,4 +102,4 @@ Feel free to contribute by making a [pull request](https://github.com/Alvearie/h
 Please review the [Contributing Guide](https://github.com/Alvearie/health-patterns/blob/main/CONTRIBUTING.md) for information on how to get started contributing to the project.
 
 ## License
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
