@@ -49,3 +49,4 @@ jobs:
           helm dependency build clinical-ingestion/helm-charts/alvearie-ingestion
           helm install ingestion clinical-ingestion/helm-charts/alvearie-ingestion --values clinical-ingestion/helm-charts/alvearie-ingestion/ci/chart-testing-values.yaml --wait --timeout 6m0s
           kubectl get all
+        if: steps.list-changed.outputs.changed == 'true'

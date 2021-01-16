@@ -19,7 +19,7 @@ That main chart has three dependent subcharts, which can also be used as standal
 
 The charts here can be installed individually, however in order to deploy the full [Alvearie Clinical Ingestion pattern](./alvearie-ingestion) (with its dependencies) install the corresponding chart following the instructions listed in the corresponding link *(3 minutes)*.
 
-After installing that chart your Kubernetes cluster will have a NiFi server pointing to a NiFi Registry with pre-loaded [Clinical Ingestion Nifi Components](https://github.com/Alvearie/health-patterns/tree/initial-charts/nifi-components), so you may skip the instructions listed there and follow the instructions below *(2 minutes)*.
+After installing that chart your Kubernetes cluster will have a NiFi server pointing to a NiFi Registry with pre-loaded [Clinical Ingestion Nifi Components](/nifi-components), so you may skip the instructions listed there and follow the instructions below *(2 minutes)*.
 
 ### Import the NiFi Ingestion Components
 
@@ -37,13 +37,13 @@ _Note: We have occasionally seen a lag in NiFi where it may take a bit for it to
 
 That's it! 
 
-You should be ready to exercise the operations described in the [Configuring NiFi for the Clinical Ingestion Flow](https://github.com/Alvearie/health-patterns/tree/initial-charts/clinical-ingestion#configuring-nifi-for-the-clinical-ingestion-flow) and running a FHIR bundle through it.
+You should be ready to exercise the operations described in the [Configuring NiFi for the Clinical Ingestion Flow](/clinical-ingestion#configuring-nifi-for-the-clinical-ingestion-flow) and running a FHIR bundle through it.
 
 ## Contributing
 
 Feel free to contribute by making a [pull request](https://github.com/Alvearie/health-patterns/pull/new/master).
 
-Please review the [Contributing Guide](CONTRIBUTING.md) for information on how to get started contributing to the project.
+Please review the [Contributing Guide](/CONTRIBUTING.md) for information on how to get started contributing to the project.
 
 ### Running Github Chart Linting Locally
 
