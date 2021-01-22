@@ -2,9 +2,9 @@
 
 This bundle contains all custom processors created by/for the health-patterns project.  Currently, this includes:
 
-ACDProcessor - This processor feeds the current flow file to the Annotator for Clinical Data (ACD) to add NLP annotations to the current FHIR resource.
-HL7ToFhirProcessor - This processor converts an HL7-formatted flow file to FHIR
-GenerateFHIRFromMimic - This processor reads all patients from a source Mimic database and produce one FHIR bundle per patient representing all known data for that patient.
+- **ACDProcessor** - This processor feeds the current flow file to the Annotator for Clinical Data (ACD) to add NLP annotations to the current FHIR resource.
+- **HL7ToFhirProcessor** - This processor converts an HL7-formatted flow file to FHIR
+- **GenerateFHIRFromMimic** - This processor reads all patients from a source Mimic database and produces one FHIR bundle per patient representing all known data for that patient.
 
 ## To build this artifact
 
@@ -14,6 +14,7 @@ The following must be installed on your system:
 
 - maven >= 3.6.3 
 - java >= 8
+- previously built maven artifact for [mimic2fhir](https://github.com/Alvearie/mimic2fhir).  See [here](MIMIC2FHIR_README.md) for instructions.
 
 ### Steps
 
