@@ -1,0 +1,8 @@
+{
+    "@class": "com.ibm.cohort.engine.IBMFhirServerConfig",
+    "endpoint": "http://ingestion-fhir/fhir-server/api/v4",
+    "user": "fhiruser",
+    "password": "integrati0n",
+    "tenantId": "default",
+    "tenantIdHeader": "X-FHIR-TENANT-ID"
+}
