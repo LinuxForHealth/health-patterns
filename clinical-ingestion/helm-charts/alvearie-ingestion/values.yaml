@@ -39,14 +39,14 @@ fhir:
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
-      value: '300s'
+      value: '600s'
 
 fhir-deid:
   enabled: false
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
-      value: '300s'
+      value: '600s'
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
