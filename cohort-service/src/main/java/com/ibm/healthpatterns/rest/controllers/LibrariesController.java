@@ -22,6 +22,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.healthpatterns.app.CQLFile;
 import com.ibm.healthpatterns.app.CohortService;
 
+/**
+ * The controller that handles the library services (CRUD operations for libraries).
+ *  
+ * @author Luis A. Garía
+ *
+ */
 @RestController
 @RequestMapping("/cohort-service/libraries")
 public class LibrariesController {
@@ -35,6 +41,10 @@ public class LibrariesController {
 		cohortService = CohortService.getInstance();
 	}
 
+	/**
+	 * 
+	 * @return all available libraries
+	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<String> getLibraries() {
 		ObjectMapper mapper = new ObjectMapper();
@@ -47,6 +57,12 @@ public class LibrariesController {
 		return new ResponseEntity<String>(json, HttpStatus.OK);
 	}
 
+	/**
+	 * 
+	 * @param cql
+	 * @return the response of adding a new library
+	 * @throws IOException
+	 */
 	@PostMapping
 	public ResponseEntity<String> addLibrary(@RequestBody String cql) throws IOException {
 		CQLFile cqlFile;
@@ -63,6 +79,11 @@ public class LibrariesController {
 		return ResponseEntity.created(location).build();
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return the library by the given ID
+	 */
 	@GetMapping("/{id}")
 	public @ResponseBody ResponseEntity<String> getLibrary(@PathVariable String id) {
 		CQLFile cql = cohortService.getLibrary(id);
@@ -72,6 +93,13 @@ public class LibrariesController {
 		return new ResponseEntity<String>(cql.getContent(), HttpStatus.OK);
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param cql
+	 * @return the response of updating the given library
+	 * @throws IOException
+	 */
 	@PutMapping("/{id}")
 	public @ResponseBody ResponseEntity<String> updateLibrary(@PathVariable String id, @RequestBody String cql) throws IOException {
 		CQLFile updatedCQL = cohortService.updateLibrary(id, cql);
@@ -81,6 +109,12 @@ public class LibrariesController {
 		return new ResponseEntity<String>("CQL Updated!", HttpStatus.OK);
 	}	
 	
+	/**
+	 * 
+	 * @param id
+	 * @return the response of updating the given library
+	 * @throws IOException
+	 */
 	@DeleteMapping("/{id}")
 	public @ResponseBody ResponseEntity<String> deleteLibrary(@PathVariable String id) throws IOException {
 		CQLFile cql = cohortService.deleteLibrary(id);

@@ -16,6 +16,10 @@ import org.junit.Test;
  */
 public class CQLFileTest {
 
+	/**
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testLoadCQLFile() throws IOException {
 		CQLFile file = new CQLFile(Paths.get("src/test/resources/test.cql"));

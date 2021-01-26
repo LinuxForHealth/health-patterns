@@ -14,6 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+/**
+ * 
+ * @author Luis A. Garía
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class EndpointTest {
@@ -24,6 +29,10 @@ public class EndpointTest {
     @LocalServerPort
     private int port;
 
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     public void testEndpoint() throws Exception {
         String endpoint = "http://localhost:" + port;

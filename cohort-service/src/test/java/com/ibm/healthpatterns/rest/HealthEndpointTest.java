@@ -12,6 +12,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
+/**
+ * 
+ * @author Luis A. Garía
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class HealthEndpointTest {
@@ -22,6 +27,10 @@ public class HealthEndpointTest {
     @LocalServerPort
     private int port;
 
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     public void testEndpoint() throws Exception {
         String endpoint = "http://localhost:" + port + "/health";
