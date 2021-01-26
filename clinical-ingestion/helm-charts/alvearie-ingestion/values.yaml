@@ -213,14 +213,14 @@ kafka:
     ## Prometheus Kafka Exporter: exposes complimentary metrics to JMX Exporter
     ##
     kafka:
-      enabled: true
+      enabled: false
     ## Prometheus JMX Exporter: exposes the majority of Kafkas metrics
     ## https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
     jmx:
-      enabled: true
+      enabled: false
 
     serviceMonitor:
-      enabled: true
+      enabled: false
 
 # ------------------------------------------------------------------------------
 # De-Identification Service
@@ -245,7 +245,7 @@ deid:
 # on the port defined.  Note there are two kafka type metrics
 # ------------------------------------------------------------------------------
 kube-prometheus-stack:
-  enabled: true
+  enabled: false
   grafana:
     adminPassword: admin
     service:
