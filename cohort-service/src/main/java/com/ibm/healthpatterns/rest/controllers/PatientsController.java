@@ -43,14 +43,18 @@ public class PatientsController {
 	 * 
 	 * @param libraryID the library id
 	 * @param ids the optional list of patient IDs to run the cohort, instead of using all patients in the FHIR server
+	 * @param reverse run the CQL engine with a reversed where only the patients that don't match the cohort are returned
 	 * @return the list of patients
 	 */
 	@GetMapping("/patientIDs")
-	public @ResponseBody ResponseEntity<String> getPatientIds(@PathVariable String libraryID, @RequestParam(required = false) String ids) {
+	public @ResponseBody ResponseEntity<String> getPatientIds(@PathVariable String libraryID, 
+															  @RequestParam(required = false) String ids,
+															  @RequestParam(required = false) String reverse) {
 		List<String> patientIds = parsePatientIDs(ids);
+		boolean reverseMatch = parseReverse(reverse);
 		List<String> cohort;
 		try {
-			cohort = cohortService.getPatientIdsForCohort(libraryID, patientIds);
+			cohort = cohortService.getPatientIdsForCohort(libraryID, patientIds, reverseMatch);
 		} catch (CQLExecutionException e) {
 			return cqlExecutionExceptionResponse(e);
 		}
@@ -71,14 +75,18 @@ public class PatientsController {
 	 * 
 	 * @param libraryID the library id
 	 * @param ids the optional list of patient IDs to run the cohort, instead of using all patients in the FHIR server
+	 * @param reverse run the CQL engine with a reversed where only the patients that don't match the cohort are returned
 	 * @return the list of patients
 	 */
 	@GetMapping("/patients")
-	public @ResponseBody ResponseEntity<String> getPatients(@PathVariable String libraryID, @RequestParam(required = false) String ids) {
+	public @ResponseBody ResponseEntity<String> getPatients(@PathVariable String libraryID, 
+															@RequestParam(required = false) String ids,
+															@RequestParam(required = false) String reverse) {
 		List<String> patientIds = parsePatientIDs(ids);
+		boolean reverseMatch = parseReverse(reverse);
 		String fhirResponse;
 		try {
-			fhirResponse = cohortService.getPatientsForCohort(libraryID, patientIds);
+			fhirResponse = cohortService.getPatientsForCohort(libraryID, patientIds, reverseMatch);
 		} catch (CQLExecutionException e) {
 			return cqlExecutionExceptionResponse(e);
 		}
@@ -99,7 +107,14 @@ public class PatientsController {
 		}
 		return patientIDs;
 	}
-	
+
+	private boolean parseReverse(String reverse) {
+		if (reverse == null || reverse.trim().isEmpty()) {
+			return false;
+		}
+		return Boolean.valueOf(reverse);
+	}
+
 	private ResponseEntity<String> cqlExecutionExceptionResponse(CQLExecutionException e) {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);

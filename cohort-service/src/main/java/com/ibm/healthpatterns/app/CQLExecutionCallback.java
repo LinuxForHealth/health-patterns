@@ -16,12 +16,15 @@ class CQLExecutionCallback implements EvaluationResultCallback {
 	 * 
 	 */
 	private final List<String> cohort;
+	private boolean reverseMatch;
 
 	/**
-	 * @param cohort
+	 * @param cohort a list where the matching patients will be saved in place 
+	 * @param reverseMatch save the patients who don't match the cohort
 	 */
-	CQLExecutionCallback(List<String> cohort) {
+	CQLExecutionCallback(List<String> cohort, boolean reverseMatch) {
 		this.cohort = cohort;
+		this.reverseMatch = reverseMatch;
 	}
 
 	@Override
@@ -30,8 +33,11 @@ class CQLExecutionCallback implements EvaluationResultCallback {
 
 	@Override
 	public void onEvaluationComplete(String contextId, String expression, Object result) {
-		if (expression.equalsIgnoreCase("Numerator") && Boolean.parseBoolean(result.toString())) {
-			cohort.add(contextId);
+		if (expression.equalsIgnoreCase("Numerator")) {
+			boolean patientMatched = Boolean.parseBoolean(result.toString());
+			if ((patientMatched && !reverseMatch) || (!patientMatched && reverseMatch)) {
+				cohort.add(contextId);
+			}
 		}
 	}
 

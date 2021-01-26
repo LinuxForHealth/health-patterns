@@ -256,10 +256,11 @@ public class CohortService {
 	 * 
 	 * @param libraryID the library ID
 	 * @param patientsSubset the subset of patients over which to execute the cohort
+	 * @param reverseMatch run the CQL such that only the patients that don't match it are returned 
 	 * @return the list of patients that matched, an empty list if none matched, or null if the library ID does not exist
 	 * @throws CQLExecutionException if there is a problem executing the library 
 	 */
-	public List<String> getPatientIdsForCohort(String libraryID, List<String> patientsSubset) throws CQLExecutionException {
+	public List<String> getPatientIdsForCohort(String libraryID, List<String> patientsSubset, boolean reverseMatch) throws CQLExecutionException {
 		CQLFile cql = cqls.get(libraryID);
 		if (cql == null) {
 			return null;
@@ -283,7 +284,7 @@ public class CohortService {
 		// TODO: Add support for parameters
 		// parameters = parseParameterArguments(arguments.parameters);
 		try {
-			cqlEngine.evaluate(cql.getName(), cql.getVersion(), null, null, patientIds, new CQLExecutionCallback(cohort));
+			cqlEngine.evaluate(cql.getName(), cql.getVersion(), null, null, patientIds, new CQLExecutionCallback(cohort, reverseMatch));
 		} catch (Exception e) {
 			throw new CQLExecutionException(e);
 		}
@@ -295,11 +296,12 @@ public class CohortService {
 	 * 
 	 * @param libraryID the library ID
 	 * @param patientsSubset the subset of patients over which to execute the cohort
+	 * @param reverseMatch run the CQL such that only the patients that don't match it are returned
 	 * @return the FHIR JSON response (a Bundle) with all the patients that matched
 	 * @throws CQLExecutionException if there is a problem executing the library 
 	 */
-	public String getPatientsForCohort(String libraryID, List<String> patientsSubset) throws CQLExecutionException {
-		List<String> cohortPatients = getPatientIdsForCohort(libraryID, patientsSubset);
+	public String getPatientsForCohort(String libraryID, List<String> patientsSubset, boolean reverseMatch) throws CQLExecutionException {
+		List<String> cohortPatients = getPatientIdsForCohort(libraryID, patientsSubset, reverseMatch);
 		if (cohortPatients == null) {
 			return null;
 		}
