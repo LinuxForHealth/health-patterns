@@ -12,6 +12,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.healthpatterns.app.CohortService;
 
+/**
+ * The controller that handles the configuration service, currently the only configuration is the FHIR config.
+ * 
+ * @author Luis A. Garía
+ *
+ */
 @RestController
 @RequestMapping("/cohort-service/config")
 public class ConfigController {
@@ -25,6 +31,10 @@ public class ConfigController {
 		cohortService = CohortService.getInstance();
 	}
 	
+	/**
+	 * 
+	 * @return the response
+	 */
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<String> getFHIRConfig() {
 		ObjectMapper mapper = new ObjectMapper();

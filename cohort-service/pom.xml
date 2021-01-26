@@ -15,6 +15,7 @@
         <java.version>1.8</java.version>
         <opentracing-spring-jaeger-web-starter.version>3.1.1</opentracing-spring-jaeger-web-starter.version>
         <app.name>cohort-service</app.name>
+        <hapi.fhir.version>5.2.0</hapi.fhir.version>
     </properties>
 
     <parent>
@@ -38,7 +39,6 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.26</version>
         </dependency>
 
         <!--Monitoring -->
@@ -72,19 +72,33 @@
         	<groupId>com.ibm.cohort</groupId>
         	<artifactId>cohort-engine</artifactId>
         	<version>0.0.1-SNAPSHOT</version>
-        	<exclusions>
-        		<exclusion>
-        			<groupId>ca.uhn.hapi.fhir</groupId>
-        			<artifactId>hapi-fhir-base</artifactId>
-        		</exclusion>
-        	</exclusions>
         </dependency>
-        <dependency>
-        	<groupId>ca.uhn.hapi.fhir</groupId>
-        	<artifactId>hapi-fhir-base</artifactId>
-        	<version>5.2.0</version>
-        	<type>bundle</type>
-        </dependency>
+
+	    <dependency>
+	      <groupId>ca.uhn.hapi.fhir</groupId>
+	      <artifactId>hapi-fhir-client</artifactId>
+	      <version>${hapi.fhir.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>ca.uhn.hapi.fhir</groupId>
+	      <artifactId>hapi-fhir-base</artifactId>
+	      <version>${hapi.fhir.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>ca.uhn.hapi.fhir</groupId>
+	      <artifactId>hapi-fhir-converter</artifactId>
+	      <version>${hapi.fhir.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>ca.uhn.hapi.fhir</groupId>
+	      <artifactId>org.hl7.fhir.convertors</artifactId>
+	      <version>${hapi.fhir.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>ca.uhn.hapi.fhir</groupId>
+	      <artifactId>org.hl7.fhir.validation</artifactId>
+	      <version>${hapi.fhir.version}</version>
+	    </dependency>
     </dependencies>
 
     <build>
