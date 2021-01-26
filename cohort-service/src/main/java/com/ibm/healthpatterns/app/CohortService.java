@@ -33,6 +33,7 @@ import com.ibm.cohort.engine.TranslatingLibraryLoader;
 import com.ibm.cohort.engine.translation.CqlTranslationProvider;
 import com.ibm.cohort.engine.translation.InJVMCqlTranslationProvider;
 
+import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.util.BundleUtil;
 
@@ -51,6 +52,10 @@ public class CohortService {
 	
 	private FhirServerConfig fhirConnectionInfo;
 	private Map<String, CQLFile> cqls;
+
+	private IGenericClient fhir;
+
+	private CqlEngineWrapper cqlEngine;
 	
 	/**
 	 * @return the singleton instance of the {@link CohortService}
@@ -65,6 +70,25 @@ public class CohortService {
 		initializeCQLDirectory();
 		loadDefaultCQLLibraries();
 		loadCQLLibraries();
+		FhirClientBuilderFactory factory = FhirClientBuilderFactory.newInstance();
+		FhirClientBuilder fhirBuilder = factory.newFhirClientBuilder();
+		fhir = fhirBuilder.createFhirClient(fhirConnectionInfo);
+		cqlEngine = new CqlEngineWrapper(fhirBuilder);
+		cqlEngine.setDataServerClient(fhir);
+		cqlEngine.setMeasureServerClient(fhir);
+		cqlEngine.setTerminologyServerClient(fhir);
+		
+		MultiFormatLibrarySourceProvider sourceProvider;
+		try {
+			sourceProvider = new DirectoryLibrarySourceProvider(CQL_DIRECTORY);
+		} catch (Exception e) {
+			System.err.println("Problem creating the directory library source provider on the CQL repository: " + e.getMessage());
+			e.printStackTrace();
+			return;
+		}		
+		CqlTranslationProvider translationProvider = new InJVMCqlTranslationProvider(sourceProvider);
+		cqlEngine.setLibraryLoader(new TranslatingLibraryLoader(sourceProvider, translationProvider, true));
+		
 	}
 
 	/**
@@ -232,17 +256,15 @@ public class CohortService {
 	 * 
 	 * @param libraryID the library ID
 	 * @return the list of patients that matched, an empty list if none matched, or null if the library ID does not exist
+	 * @throws CQLExecutionException if there is a problem executing the library 
 	 */
-	public List<String> getPatients(String libraryID) {
+	public List<String> getPatientIdsForCohort(String libraryID) throws CQLExecutionException {
 		CQLFile cql = cqls.get(libraryID);
 		if (cql == null) {
 			return null;
 		}
-		FhirClientBuilderFactory factory = FhirClientBuilderFactory.newInstance();
-		FhirClientBuilder builder = factory.newFhirClientBuilder();
-		IGenericClient fhir = builder.createFhirClient(fhirConnectionInfo);
 		List<Patient> patients = new ArrayList<>();
-
+		List<String> cohort = new ArrayList<>();
 		// We'll do a search for all Patients and extract the first page
 		Bundle bundle = fhir
 		   .search()
@@ -253,38 +275,37 @@ public class CohortService {
 		patients.addAll(BundleUtil.toListOfResourcesOfType(fhir.getFhirContext(), bundle, Patient.class));
 		List<String> patientIds = getPatientIds(patients);
 		
-		CqlEngineWrapper wrapper = new CqlEngineWrapper(builder);
-		wrapper.setDataServerConnectionProperties(fhirConnectionInfo);
-		wrapper.setMeasureServerConnectionProperties(fhirConnectionInfo);
-		wrapper.setTerminologyServerConnectionProperties(fhirConnectionInfo);
-		
-		MultiFormatLibrarySourceProvider sourceProvider;
-		try {
-			sourceProvider = new DirectoryLibrarySourceProvider(CQL_DIRECTORY);
-		} catch (Exception e) {
-			System.err.println("Problem creating the directoryu library source provider on the CQL repository: " + e.getMessage());
-			e.printStackTrace();
-			return null;
-		}		
-		List<String> cohort = new ArrayList<>();
-		CqlTranslationProvider translationProvider = new InJVMCqlTranslationProvider(sourceProvider);
-		wrapper.setLibraryLoader(new TranslatingLibraryLoader(sourceProvider, translationProvider, true));
 		// TODO: Add support for parameters
 		// parameters = parseParameterArguments(arguments.parameters);
 		try {
-			wrapper.evaluate(cql.getName(), cql.getVersion(), null, null, patientIds, new CQLExecutionCallback(cohort));
+			cqlEngine.evaluate(cql.getName(), cql.getVersion(), null, null, patientIds, new CQLExecutionCallback(cohort));
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new CQLExecutionException(e);
 		}
-//		String theSearchUrl = fhir.getServerBase() + "/Patient?_id=" + String.join(",", cohort);
-//		System.out.println(theSearchUrl);
-//		Bundle cohortBundle = fhir.search()
-//				   .byUrl(theSearchUrl)
-//				   .returnBundle(Bundle.class)
-//				   .execute();
-//				   
-//		System.out.println("cohort" + cohortBundle.getTotal());
 		return cohort;
+	}
+
+	/**
+	 * Gets the FHIR response with the patients that matched the cohort defined by the given library ID.
+	 * 
+	 * @param libraryID the library ID
+	 * @return the FHIR JSON response (a Bundle) with all the patients that matched
+	 * @throws CQLExecutionException if there is a problem executing the library 
+	 */
+	public String getPatientsForCohort(String libraryID) throws CQLExecutionException {
+		List<String> cohortPatients = getPatientIdsForCohort(libraryID);
+		if (cohortPatients == null) {
+			return null;
+		}
+		String theSearchUrl = fhir.getServerBase() + "/Patient?_id=" + String.join(",", cohortPatients);
+		Bundle cohortBundle = fhir.search()
+				   .byUrl(theSearchUrl)
+				   .returnBundle(Bundle.class)
+				   .execute();
+				   
+		IParser parser = fhir.getFhirContext().newJsonParser();
+		String serialized = parser.encodeResourceToString(cohortBundle);
+		return serialized;
 	}
 
 	/**
