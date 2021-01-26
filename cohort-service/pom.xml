@@ -72,6 +72,18 @@
         	<groupId>com.ibm.cohort</groupId>
         	<artifactId>cohort-engine</artifactId>
         	<version>0.0.1-SNAPSHOT</version>
+        	<exclusions>
+        		<exclusion>
+        			<groupId>ca.uhn.hapi.fhir</groupId>
+        			<artifactId>hapi-fhir-base</artifactId>
+        		</exclusion>
+        	</exclusions>
+        </dependency>
+        <dependency>
+        	<groupId>ca.uhn.hapi.fhir</groupId>
+        	<artifactId>hapi-fhir-base</artifactId>
+        	<version>5.2.0</version>
+        	<type>bundle</type>
         </dependency>
     </dependencies>
 
