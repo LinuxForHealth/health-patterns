@@ -255,24 +255,29 @@ public class CohortService {
 	 * Gets a list of patient IDs that matched the cohort defined by the given library ID.
 	 * 
 	 * @param libraryID the library ID
+	 * @param patientsSubset the subset of patients over which to execute the cohort
 	 * @return the list of patients that matched, an empty list if none matched, or null if the library ID does not exist
 	 * @throws CQLExecutionException if there is a problem executing the library 
 	 */
-	public List<String> getPatientIdsForCohort(String libraryID) throws CQLExecutionException {
+	public List<String> getPatientIdsForCohort(String libraryID, List<String> patientsSubset) throws CQLExecutionException {
 		CQLFile cql = cqls.get(libraryID);
 		if (cql == null) {
 			return null;
 		}
 		List<Patient> patients = new ArrayList<>();
 		List<String> cohort = new ArrayList<>();
-		// We'll do a search for all Patients and extract the first page
-		Bundle bundle = fhir
-		   .search()
-		   .forResource(Patient.class)
-		   .returnBundle(Bundle.class)
-		   .count(1000)
-		   .execute();
+
+		String theSearchUrl = fhir.getServerBase() + "/Patient?_count=1000";
+		if (!patientsSubset.isEmpty()) {
+			theSearchUrl += "&_id=" + String.join(",", patientsSubset);
+		}
+		Bundle bundle = fhir.search()
+				   .byUrl(theSearchUrl)
+				   .returnBundle(Bundle.class)
+				   .execute();
+
 		patients.addAll(BundleUtil.toListOfResourcesOfType(fhir.getFhirContext(), bundle, Patient.class));
+		
 		List<String> patientIds = getPatientIds(patients);
 		
 		// TODO: Add support for parameters
@@ -289,11 +294,12 @@ public class CohortService {
 	 * Gets the FHIR response with the patients that matched the cohort defined by the given library ID.
 	 * 
 	 * @param libraryID the library ID
+	 * @param patientsSubset the subset of patients over which to execute the cohort
 	 * @return the FHIR JSON response (a Bundle) with all the patients that matched
 	 * @throws CQLExecutionException if there is a problem executing the library 
 	 */
-	public String getPatientsForCohort(String libraryID) throws CQLExecutionException {
-		List<String> cohortPatients = getPatientIdsForCohort(libraryID);
+	public String getPatientsForCohort(String libraryID, List<String> patientsSubset) throws CQLExecutionException {
+		List<String> cohortPatients = getPatientIdsForCohort(libraryID, patientsSubset);
 		if (cohortPatients == null) {
 			return null;
 		}
