@@ -2,6 +2,7 @@ package com.ibm.healthpatterns.rest.controllers;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +27,7 @@ import com.ibm.healthpatterns.app.CohortService;
  *
  */
 @RestController
-@RequestMapping("/cohort-service/libraries/{id}")
+@RequestMapping("/cohort-service/libraries/{libraryID}")
 public class PatientsController {
 
 	private CohortService cohortService;
@@ -39,19 +41,21 @@ public class PatientsController {
 
 	/**
 	 * 
-	 * @param id the library id
+	 * @param libraryID the library id
+	 * @param ids the optional list of patient IDs to run the cohort, instead of using all patients in the FHIR server
 	 * @return the list of patients
 	 */
 	@GetMapping("/patientIDs")
-	public @ResponseBody ResponseEntity<String> getPatientIds(@PathVariable String id) {
+	public @ResponseBody ResponseEntity<String> getPatientIds(@PathVariable String libraryID, @RequestParam(required = false) String ids) {
+		List<String> patientIds = parsePatientIDs(ids);
 		List<String> cohort;
 		try {
-			cohort = cohortService.getPatientIdsForCohort(id);
+			cohort = cohortService.getPatientIdsForCohort(libraryID, patientIds);
 		} catch (CQLExecutionException e) {
 			return cqlExecutionExceptionResponse(e);
 		}
 		if (cohort == null) {
-			return new ResponseEntity<String>("Library with ID '" + id + "' was not found.", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Library with ID '" + libraryID + "' was not found.", HttpStatus.NOT_FOUND);
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		String json;
@@ -65,23 +69,37 @@ public class PatientsController {
 
 	/**
 	 * 
-	 * @param id the library id
+	 * @param libraryID the library id
+	 * @param ids the optional list of patient IDs to run the cohort, instead of using all patients in the FHIR server
 	 * @return the list of patients
 	 */
 	@GetMapping("/patients")
-	public @ResponseBody ResponseEntity<String> getPatients(@PathVariable String id) {
+	public @ResponseBody ResponseEntity<String> getPatients(@PathVariable String libraryID, @RequestParam(required = false) String ids) {
+		List<String> patientIds = parsePatientIDs(ids);
 		String fhirResponse;
 		try {
-			fhirResponse = cohortService.getPatientsForCohort(id);
+			fhirResponse = cohortService.getPatientsForCohort(libraryID, patientIds);
 		} catch (CQLExecutionException e) {
 			return cqlExecutionExceptionResponse(e);
 		}
 		if (fhirResponse == null) {
-			return new ResponseEntity<String>("Library with ID '" + id + "' was not found.", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Library with ID '" + libraryID + "' was not found.", HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(fhirResponse);
 	}
 
+	private List<String> parsePatientIDs(String ids) {
+		List<String> patientIDs = new ArrayList<>();
+		if (ids == null || ids.trim().isEmpty()) {
+			return patientIDs;
+		}
+		String[] idsArray = ids.split(",");
+		for (String id : idsArray) {
+			patientIDs.add(id.trim());
+		}
+		return patientIDs;
+	}
+	
 	private ResponseEntity<String> cqlExecutionExceptionResponse(CQLExecutionException e) {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
