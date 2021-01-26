@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ibm.icu.impl.IllegalIcuArgumentException;
 
 /**
+ * A {@link CQLFile}is a reference to a CQL file that is managed by the cohort service.
+ * 
  * @author Luis A. Garía
  *
  */
@@ -107,6 +109,9 @@ public class CQLFile {
 		this.content = content;
 	}
 	
+	/**
+	 * @return the file name for this CQL file 
+	 */
 	@JsonIgnore
 	public String getFileName() {
 		return toString() + ".cql";
