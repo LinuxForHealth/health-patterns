@@ -9,18 +9,32 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Patient;
 import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibm.cohort.engine.CqlEngineWrapper;
+import com.ibm.cohort.engine.DirectoryLibrarySourceProvider;
+import com.ibm.cohort.engine.FhirClientBuilder;
+import com.ibm.cohort.engine.FhirClientBuilderFactory;
 import com.ibm.cohort.engine.FhirServerConfig;
+import com.ibm.cohort.engine.MultiFormatLibrarySourceProvider;
+import com.ibm.cohort.engine.TranslatingLibraryLoader;
+import com.ibm.cohort.engine.translation.CqlTranslationProvider;
+import com.ibm.cohort.engine.translation.InJVMCqlTranslationProvider;
+
+import ca.uhn.fhir.rest.client.api.IGenericClient;
+import ca.uhn.fhir.util.BundleUtil;
 
 /**
  * The {@link CohortService} allows consumers to save CQL library files and execute them against
@@ -202,7 +216,7 @@ public class CohortService {
 	/**
 	 * @param library the library to delete
 	 * @return the deleted {@link CQLFile} or null if it did not exist
-	 * @@throws IOException if there is a problem deleting the library to this cohort service 
+	 * @throws IOException if there is a problem deleting the library to this cohort service 
 	 */
 	public CQLFile deleteLibrary(String library) throws IOException {
 		CQLFile cqlFile = cqls.remove(library);
@@ -211,5 +225,83 @@ public class CohortService {
 			Files.delete(path);
 		}
 		return cqlFile;
+	}
+
+	/**
+	 * Gets a list of patient IDs that matched the cohort defined by the given library ID.
+	 * 
+	 * @param libraryID the library ID
+	 * @return the list of patients that matched, an empty list if none matched, or null if the library ID does not exist
+	 */
+	public List<String> getPatients(String libraryID) {
+		CQLFile cql = cqls.get(libraryID);
+		if (cql == null) {
+			return null;
+		}
+		FhirClientBuilderFactory factory = FhirClientBuilderFactory.newInstance();
+		FhirClientBuilder builder = factory.newFhirClientBuilder();
+		IGenericClient fhir = builder.createFhirClient(fhirConnectionInfo);
+		List<Patient> patients = new ArrayList<>();
+
+		// We'll do a search for all Patients and extract the first page
+		Bundle bundle = fhir
+		   .search()
+		   .forResource(Patient.class)
+		   .returnBundle(Bundle.class)
+		   .count(1000)
+		   .execute();
+		patients.addAll(BundleUtil.toListOfResourcesOfType(fhir.getFhirContext(), bundle, Patient.class));
+		List<String> patientIds = getPatientIds(patients);
+		
+		CqlEngineWrapper wrapper = new CqlEngineWrapper(builder);
+		wrapper.setDataServerConnectionProperties(fhirConnectionInfo);
+		wrapper.setMeasureServerConnectionProperties(fhirConnectionInfo);
+		wrapper.setTerminologyServerConnectionProperties(fhirConnectionInfo);
+		
+		MultiFormatLibrarySourceProvider sourceProvider;
+		try {
+			sourceProvider = new DirectoryLibrarySourceProvider(CQL_DIRECTORY);
+		} catch (Exception e) {
+			System.err.println("Problem creating the directoryu library source provider on the CQL repository: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}		
+		List<String> cohort = new ArrayList<>();
+		CqlTranslationProvider translationProvider = new InJVMCqlTranslationProvider(sourceProvider);
+		wrapper.setLibraryLoader(new TranslatingLibraryLoader(sourceProvider, translationProvider, true));
+		// TODO: Add support for parameters
+		// parameters = parseParameterArguments(arguments.parameters);
+		try {
+			wrapper.evaluate(cql.getName(), cql.getVersion(), null, null, patientIds, new CQLExecutionCallback(cohort));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		String theSearchUrl = fhir.getServerBase() + "/Patient?_id=" + String.join(",", cohort);
+//		System.out.println(theSearchUrl);
+//		Bundle cohortBundle = fhir.search()
+//				   .byUrl(theSearchUrl)
+//				   .returnBundle(Bundle.class)
+//				   .execute();
+//				   
+//		System.out.println("cohort" + cohortBundle.getTotal());
+		return cohort;
+	}
+
+	/**
+	 * Gets a list of patient IDs from the given list of patients
+	 * 
+	 * @param patients the patients
+	 * @return the list of patient ids
+	 */
+	private List<String> getPatientIds(List<Patient> patients) {
+		List<String> ids = new ArrayList<>();
+		for (Patient patient : patients) {
+			// For some reason the ID is the full URL of the history resource
+			// e.g. http://e8a618a7-us-south.lb.appdomain.cloud/fhir-server/api/v4/Patient/1772aebdfd1-6301ff57-eda3-46ba-8944-f6ab0a1223b1/_history/1
+			// Hence we do the following to get just the UUID
+			String[] idElements = patient.getId().split("/");
+			ids.add(idElements[idElements.length - 3]);
+		}
+		return ids;
 	}
 }
