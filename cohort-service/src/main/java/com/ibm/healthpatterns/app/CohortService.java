@@ -33,6 +33,7 @@ import com.ibm.cohort.engine.TranslatingLibraryLoader;
 import com.ibm.cohort.engine.translation.CqlTranslationProvider;
 import com.ibm.cohort.engine.translation.InJVMCqlTranslationProvider;
 
+import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.util.BundleUtil;
@@ -70,24 +71,7 @@ public class CohortService {
 		initializeCQLDirectory();
 		loadDefaultCQLLibraries();
 		loadCQLLibraries();
-		FhirClientBuilderFactory factory = FhirClientBuilderFactory.newInstance();
-		FhirClientBuilder fhirBuilder = factory.newFhirClientBuilder();
-		fhir = fhirBuilder.createFhirClient(fhirConnectionInfo);
-		cqlEngine = new CqlEngineWrapper(fhirBuilder);
-		cqlEngine.setDataServerClient(fhir);
-		cqlEngine.setMeasureServerClient(fhir);
-		cqlEngine.setTerminologyServerClient(fhir);
-		
-		MultiFormatLibrarySourceProvider sourceProvider;
-		try {
-			sourceProvider = new DirectoryLibrarySourceProvider(CQL_DIRECTORY);
-		} catch (Exception e) {
-			System.err.println("Problem creating the directory library source provider on the CQL repository: " + e.getMessage());
-			e.printStackTrace();
-			return;
-		}		
-		CqlTranslationProvider translationProvider = new InJVMCqlTranslationProvider(sourceProvider);
-		cqlEngine.setLibraryLoader(new TranslatingLibraryLoader(sourceProvider, translationProvider, true));
+		initializeCQLEngine();
 		
 	}
 
@@ -172,6 +156,37 @@ public class CohortService {
 		} catch (IOException e) {
 			System.out.println("Could not create CQLs directory " + CQL_DIRECTORY + ": " + e.getMessage());
 		}
+	}
+
+	/**
+	 * Initialized the CQL engine (using the instance's FHIR connection info) runnig over the {@value #CQL_DIRECTORY}.
+	 */
+	private void initializeCQLEngine() {
+		FhirClientBuilderFactory factory = FhirClientBuilderFactory.newInstance();
+		FhirContext fhirContext = FhirContext.forR4();
+		// Currently the socket connection  may time out on a FHIR server 
+		// with several dozen patients so increasing the timeout to avoid that
+		fhirContext.getRestfulClientFactory().setSocketTimeout(60 * 1000);
+		FhirClientBuilder fhirBuilder = factory.newFhirClientBuilder(fhirContext);
+		fhir = fhirBuilder.createFhirClient(fhirConnectionInfo);
+		
+		System.out.println("Created FHIR connection to " + fhirConnectionInfo.getEndpoint());
+		cqlEngine = new CqlEngineWrapper(fhirBuilder);
+		cqlEngine.setDataServerClient(fhir);
+		cqlEngine.setMeasureServerClient(fhir);
+		cqlEngine.setTerminologyServerClient(fhir);
+		
+		MultiFormatLibrarySourceProvider sourceProvider;
+		try {
+			sourceProvider = new DirectoryLibrarySourceProvider(CQL_DIRECTORY);
+		} catch (Exception e) {
+			System.err.println("Problem creating the directory library source provider on the CQL repository: " + e.getMessage());
+			e.printStackTrace();
+			return;
+		}		
+		CqlTranslationProvider translationProvider = new InJVMCqlTranslationProvider(sourceProvider);
+		cqlEngine.setLibraryLoader(new TranslatingLibraryLoader(sourceProvider, translationProvider, true));
+		System.out.println("Initialized CQL Engine over directory " + CQL_DIRECTORY);
 	}
 
 	/**
@@ -277,6 +292,9 @@ public class CohortService {
 				   .returnBundle(Bundle.class)
 				   .execute();
 
+		if (bundle.getTotal() == 0) {
+			return cohort;
+		}
 		patients.addAll(BundleUtil.toListOfResourcesOfType(fhir.getFhirContext(), bundle, Patient.class));
 		
 		List<String> patientIds = getPatientIds(patients);
