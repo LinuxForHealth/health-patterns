@@ -18,28 +18,22 @@
  */
 package com.ibm.healthpatterns.rest;
 
-import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
+ * The SpringBoot Application that will serve the cohort-service endpoints.
  * 
  * @author Luis A. García
  */
-@Component
-public class Info {
+@SpringBootApplication
+public class Application {
 
 	/**
 	 * 
+	 * @param args
 	 */
-	@EventListener(ApplicationReadyEvent.class)
-	public void contextRefreshedEvent() {
-		System.out.println("The following endpoints are available by default :-");
-		System.out.println("  Health        : http://localhost:8080/health");
-		System.out.println("  Application   : http://localhost:8080/cohort-service/config");
-		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries");
-		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries/{id}/patients");
-		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries/{id}/patientIDs");
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
 	}
-
 }
