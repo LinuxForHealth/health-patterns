@@ -69,8 +69,8 @@ public class CohortService {
 		cqls = new TreeMap<>();
 		loadDefaultFHIRConfig();
 		initializeCQLDirectory();
-		loadDefaultCQLLibraries();
 		loadCQLLibraries();
+		installDefaultCQLLibraries();
 		initializeCQLEngine();
 		
 	}
@@ -95,7 +95,7 @@ public class CohortService {
 	/**
 	 * Loads the default CQL libraries that are commonly used, such as the FHIRHelpers.cql, and register them with this service. 
 	 */
-	private void loadDefaultCQLLibraries() {
+	private void installDefaultCQLLibraries() {
 		ClassPathResource cqlDirectoryResource = new ClassPathResource("cql");
 		Path cqlDirectory;
 		try {
@@ -112,11 +112,22 @@ public class CohortService {
 			return;
 		}
 		for (Path cql : defaultCQLs) {
+			CQLFile cqlFile;
 			try {
-				CQLFile cqlFile = new CQLFile(cql);
-				cqls.put(cqlFile.toString(), cqlFile);
+				cqlFile = new CQLFile(cql);
 			} catch (IOException e) {
 				System.err.println("The default CQL file " + cql + " could not be read: " + e.getMessage());
+				continue;
+			}
+			if (getLibrary(cqlFile.getId()) == null) {
+				try {
+					addLibrary(cqlFile.getContent());
+					System.out.println("Installed default CQL file: " + cqlFile.getFileName());
+				} catch (IllegalArgumentException e) {
+					System.err.println("The default CQL file " + cql + " is not valid CQL: " + e.getMessage());
+				} catch (IOException e) {
+					System.err.println("The default CQL file " + cql + " could not be added to the library: " + e.getMessage());
+				}
 			}
 		}
 	}

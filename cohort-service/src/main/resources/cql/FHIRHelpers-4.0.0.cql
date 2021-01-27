@@ -1,5 +1,7 @@
 library FHIRHelpers version '4.0.0'
 
+// Source: From https://github.com/Alvearie/quality-measure-and-cohort-service/blob/main/cohort-engine/src/test/resources/cql/includes/FHIRHelpers.cql
+
 using FHIR version '4.0.0'
 
 define function ToInterval(period FHIR.Period):
