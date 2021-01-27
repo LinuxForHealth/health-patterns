@@ -90,7 +90,7 @@ public class LibrariesController {
 		if (cql == null) {
 			return new ResponseEntity<String>("Library with ID '" + id + "' was not found.", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<String>(cql.getContent(), HttpStatus.OK);
+		return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body(cql.getContent());
 	}
 
 	/**
