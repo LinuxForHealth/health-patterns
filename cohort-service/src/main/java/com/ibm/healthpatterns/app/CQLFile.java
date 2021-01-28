@@ -18,14 +18,18 @@
  */
 package com.ibm.healthpatterns.app;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ibm.icu.impl.IllegalIcuArgumentException;
 
 /**
  * A {@link CQLFile}is a reference to a CQL file that is managed by the cohort service.
@@ -42,6 +46,15 @@ public class CQLFile {
 	private String content;
 
 	/**
+	 * Create a {@link CQLFile} from the given {@link InputStream}
+	 * 
+	 * @param file the input with the CQL
+	 */
+	public CQLFile(InputStream file) {
+		this(new BufferedReader(new InputStreamReader(file, StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n")));
+	}
+
+	/**
 	 * Create a {@link CQLFile} from the given Path
 	 * 
 	 * @param file the path
@@ -55,9 +68,9 @@ public class CQLFile {
 	 * Create a {@link CQLFile} from the given text
 	 * 
 	 * @param cql the CQL content
-	 * @throws IllegalIcuArgumentException if the CQL content is invalid
+	 * @throws IllegalArgumentException if the CQL content is invalid
 	 */
-	public CQLFile(String cql) throws IllegalIcuArgumentException {
+	public CQLFile(String cql) throws IllegalArgumentException {
 		this.content = cql;
 		String lines[] = cql.split("\\r?\\n");
 		if (lines.length == 0) {
