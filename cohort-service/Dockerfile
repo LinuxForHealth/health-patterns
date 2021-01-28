@@ -7,6 +7,6 @@ FROM adoptopenjdk/openjdk8
 LABEL maintainer="Luis A. Garcia at Alvearie"
 
 RUN mkdir /opt/app
-COPY target/cohort-service-1.0-SNAPSHOT.jar /opt/app/app.jar
+COPY target/cohort-service-1.0.0-SNAPSHOT.jar /opt/app/app.jar
 
 ENTRYPOINT [ "sh", "-c", "java -jar /opt/app/app.jar" ]

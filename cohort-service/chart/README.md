@@ -1,14 +1,13 @@
-# FHIR Helm Chart
+# Cohort Service Helm Chart
 
 ## Introduction
 
-This [Helm](https://github.com/kubernetes/helm) chart installs an [IBM FHIR Server](https://github.com/IBM/FHIR) in a Kubernetes cluster.
+This [Helm](https://github.com/kubernetes/helm) chart installs a [Cohort Service App](../README.md) in a Kubernetes cluster.
 
 ## Pre-Requisites
 
 - Kubernetes cluster 1.10+
 - Helm 3.0.0+
-- PV provisioner support in the underlying infrastructure.
 
 ## Installation
 
@@ -18,45 +17,27 @@ Git clone this repository and `cd` into this directory.
 
 ```bash
 git clone https://github.com/Alvearie/health-patterns.git
-cd clinical-ingestion/helm-charts/fhir
+cd cohort-service/chart
 ```
 
 ### Install the Chart
 
-Install the helm chart with a release name `fhir`:
+Install the helm chart with a release name:
 
 ```bash
-helm install fhir .
+helm install cohort-service .
 ```
 
 ### Using the Chart
 
-Access your FHIR server at: `http://<external-ip>/fhir-server/api/v4`
-
-Credentials:
-
-```bash
-# Get the ID of the fhir pod and replace it in <pod-id> in the next command
-kubectl get pods
-kubectl exec <pod-id> -c fhir-server -- cat server.xml | grep -A2 BasicRealm
-```
-
-The chart also installs an unauthenticated FHIR Server proxy on port 81: `http://<external-ip>:81/fhir-server/api/v4`
+Access your FHIR server at: `http://<external-ip>/cohort-service/health`
 
 ## Uninstallation
 
 To uninstall/delete the `fhir` deployment:
 
 ```bash
-helm delete fhir
-```
-
-Deleting the charts doesn't cascade to deleting associated `PersistedVolume`s and `PersistedVolumeClains`s. 
-If FHIR persistence was used, to delete them:
-
-```bash
-kubectl delete pvc -l release=fhir
-kubectl delete pv -l release=fhir
+helm delete cohort-service
 ```
 
 ## Configuration
