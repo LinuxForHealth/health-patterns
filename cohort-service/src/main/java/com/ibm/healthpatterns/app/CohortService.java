@@ -216,7 +216,17 @@ public class CohortService {
 	public FhirServerConfig getFHIRConnectionInfo() {
 		return fhirConnectionInfo;
 	}
-	
+
+	/**
+	 * Updates the FHIR connection info
+	 * 
+	 * @param fhirConnectionInfo 
+	 */
+	public void updateFHIRConecetionInfo(FhirServerConfig fhirConnectionInfo) {
+		this.fhirConnectionInfo = fhirConnectionInfo;
+		initializeCQLEngine();
+	}
+
 	/**
 	 * Adds the given library to the {@link CohortService}. 
 	 * 
