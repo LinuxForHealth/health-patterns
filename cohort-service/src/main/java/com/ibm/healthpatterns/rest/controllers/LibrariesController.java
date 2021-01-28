@@ -20,6 +20,7 @@ package com.ibm.healthpatterns.rest.controllers;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Collection;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -66,8 +67,17 @@ public class LibrariesController {
 	public @ResponseBody ResponseEntity<String> getLibraries() {
 		ObjectMapper mapper = new ObjectMapper();
 		String json;
+		Collection<CQLFile> libraries = cohortService.getLibraries();
+		for (CQLFile cqlFile : libraries) {
+			URI uri = ServletUriComponentsBuilder
+	                .fromCurrentRequest()
+	                .path("/{id}")
+	                .buildAndExpand(cqlFile.getId())
+	                .toUri();		
+			cqlFile.setUri(uri.toString());
+		}
 		try {
-			json = mapper.writeValueAsString(cohortService.getLibraries());
+			json = mapper.writeValueAsString(libraries);
 		} catch (JsonProcessingException e) {
 			return new ResponseEntity<String>("Could not map connection info: " + e, HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
@@ -93,7 +103,7 @@ public class LibrariesController {
                 .path("/{id}")
                 .buildAndExpand(cqlFile.getId())
                 .toUri();		
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body("CQL created: " + location + "!");
 	}
 
 	/**
