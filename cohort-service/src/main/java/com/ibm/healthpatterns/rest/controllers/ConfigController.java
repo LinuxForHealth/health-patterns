@@ -18,16 +18,22 @@
  */
 package com.ibm.healthpatterns.rest.controllers;
 
+import java.io.IOException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibm.cohort.engine.FhirServerConfig;
 import com.ibm.healthpatterns.app.CohortService;
 
 /**
@@ -52,7 +58,7 @@ public class ConfigController {
 	 * 
 	 * @return the response
 	 */
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<String> getFHIRConfig() {
 		ObjectMapper mapper = new ObjectMapper();
 		String json;
@@ -63,4 +69,26 @@ public class ConfigController {
 		}
 		return new ResponseEntity<String>(json, HttpStatus.OK);
 	}
+
+	/**
+	 * 
+	 * @param fhirConnection
+	 * @return the response of updating the given library
+	 * @throws IOException
+	 */
+	@PutMapping
+	public @ResponseBody ResponseEntity<String> updateLibrary(@RequestBody String fhirConnection) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		FhirServerConfig fhirConnectionInfo;
+		try {
+			fhirConnectionInfo = mapper.readValue(fhirConnection, FhirServerConfig.class);
+		} catch (JsonMappingException e) {
+			return new ResponseEntity<String>("The FHIR connection JSON does not match the corresponding connection class: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (JsonProcessingException e) {
+			return new ResponseEntity<String>("The FHIR connection JSON is not valid JSON: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+		} 
+		cohortService.updateFHIRConecetionInfo(fhirConnectionInfo);
+		return new ResponseEntity<String>("FHIR Connection Updated!", HttpStatus.OK);
+	}	
+
 }
