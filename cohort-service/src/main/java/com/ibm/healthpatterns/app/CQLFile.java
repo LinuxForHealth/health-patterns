@@ -44,6 +44,7 @@ public class CQLFile {
 	private String version;
 	
 	private String content;
+	private String uri;
 
 	/**
 	 * Create a {@link CQLFile} from the given {@link InputStream}
@@ -142,6 +143,20 @@ public class CQLFile {
 	@JsonIgnore
 	public String getFileName() {
 		return toString() + ".cql";
+	}
+
+	/**
+	 * @return the uri
+	 */
+	public String getUri() {
+		return uri;
+	}
+
+	/**
+	 * @param uri the uri to set
+	 */
+	public void setUri(String uri) {
+		this.uri = uri;
 	}
 
 	/* (non-Javadoc)
