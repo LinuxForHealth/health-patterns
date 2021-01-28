@@ -34,6 +34,8 @@ import java.util.stream.Collectors;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -71,7 +73,7 @@ public class CohortService {
 	private IGenericClient fhir;
 
 	private CqlEngineWrapper cqlEngine;
-	
+
 	/**
 	 * @return the singleton instance of the {@link CohortService}
 	 */
@@ -86,7 +88,6 @@ public class CohortService {
 		loadCQLLibraries();
 		installDefaultCQLLibraries();
 		initializeCQLEngine();
-		
 	}
 
 	/**
@@ -96,7 +97,7 @@ public class CohortService {
 		ObjectMapper mapper = new ObjectMapper();
 		ClassPathResource fhirFile = new ClassPathResource("config/default-ibm-fhir.json");
 		try {
-			fhirConnectionInfo = mapper.readValue(fhirFile.getFile(), FhirServerConfig.class);
+			fhirConnectionInfo = mapper.readValue(fhirFile.getInputStream(), FhirServerConfig.class);
 		} catch (JsonMappingException e) {
 			System.err.println("The default IBM FHIR connection JSON file does not match the corresponding connection class: " + e.getMessage());
 		} catch (JsonProcessingException e) {
@@ -107,30 +108,25 @@ public class CohortService {
 	}
 
 	/**
-	 * Loads the default CQL libraries that are commonly used, such as the FHIRHelpers.cql, and register them with this service. 
+	 * Loads the default CQL libraries that are commonly used, such as the FHIRHelpers.cql, and register them with this service.
 	 */
 	private void installDefaultCQLLibraries() {
-		ClassPathResource cqlDirectoryResource = new ClassPathResource("cql");
-		Path cqlDirectory;
+		// We use this Spring Framework utility class because when packaged the /cql is inside a JAR and this
+		// class helps resolve the /cql classpath entry as a directory and iterate over its files
+		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+		Resource[] resources;
 		try {
-			cqlDirectory = cqlDirectoryResource.getFile().toPath();
+			resources = resolver.getResources("classpath:cql/*.*");
 		} catch (IOException e) {
 			System.err.println("The default CQL directory could not be loaded, default CQLs won't be available: " + e.getMessage());
-			return;
+			return;		
 		}
-		List<Path> defaultCQLs;
-		try {
-			defaultCQLs = Files.list(cqlDirectory).collect(Collectors.toList());
-		} catch (IOException e) {
-			System.err.println("The default CQL directory " + cqlDirectory + " could not be traversed, default CQLs won't be available: " + e.getMessage());
-			return;
-		}
-		for (Path cql : defaultCQLs) {
+		for (Resource cql : resources) {
 			CQLFile cqlFile;
 			try {
-				cqlFile = new CQLFile(cql);
+				cqlFile = new CQLFile(cql.getInputStream());
 			} catch (IOException e) {
-				System.err.println("The default CQL file " + cql + " could not be read: " + e.getMessage());
+				System.err.println("The default CQL file " + cql.getFilename() + " could not be read: " + e.getMessage());
 				continue;
 			}
 			if (getLibrary(cqlFile.getId()) == null) {
