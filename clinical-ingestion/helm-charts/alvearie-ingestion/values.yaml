@@ -36,6 +36,8 @@ affinity: {}
 # ------------------------------------------------------------------------------
 fhir:
   enabled: true
+  service:
+    type: LoadBalancer
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
@@ -227,6 +229,13 @@ kafka:
 # Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
+  enabled: false
+
+# ------------------------------------------------------------------------------
+# Cohort Service
+# Values: https://github.com/Alvearie/health-patterns/cohort-service/chart/values.yaml
+# ------------------------------------------------------------------------------
+cohort-service:
   enabled: false
 
 # ------------------------------------------------------------------------------
