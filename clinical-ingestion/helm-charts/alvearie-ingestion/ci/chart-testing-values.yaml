@@ -6,6 +6,8 @@ pattern: "Chart Test"
 # Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
 # ------------------------------------------------------------------------------
 fhir:
+  service:
+    type: NodePort
   proxy:
     enabled: true
 
@@ -53,3 +55,12 @@ kube-prometheus-stack:
 metrics:
   kafka:
     enabled: false
+
+# ------------------------------------------------------------------------------
+# Cohort Service
+# Values: https://github.com/Alvearie/health-patterns/cohort-service/chart/values.yaml
+# ------------------------------------------------------------------------------
+cohort-service:
+  enabled: true
+  service:
+    type: NodePort

@@ -39,6 +39,9 @@ The following services have been deployed:
 - Prometheus
 - Grafana
 {{- end }}
+{{- if index .Values "cohort-service" "enabled" }}
+- Cohort Service
+{{- end }}
 
 It may take a few minutes for the LoadBalancer IPs to be available.
 
@@ -93,6 +96,16 @@ Grafana Server:
   echo Grafana Server: http://$GRAFANA_IP:$GRAFANA_PORT
 
 {{- end }}
+{{- if index .Values "cohort-service" "enabled" }}
+
+Cohort Service:
+ 
+  export COHORT_SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-cohort-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export COHORT_SERVICE_PORT=$(kubectl get svc {{ .Release.Name }}-cohort-service -o jsonpath='{.spec.ports[0].port}') 
+  echo Grafana Server: http://$COHORT_SERVICE_IP:$COHORT_SERVICE_PORT
+
+{{- end }}
+
 
 Inside the cluster you can access the services at the following locations:
 
@@ -119,5 +132,8 @@ Inside the cluster you can access the services at the following locations:
 {{- end }}
 {{- if index .Values "kube-prometheus-stack" "enabled" }}
 - Grafana: {{ .Release.Name }}-grafana.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
+{{- end }}
+{{- if index .Values "cohort-service" "enabled" }}
+- Cohort Service: {{ .Release.Name }}-cohort-service.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
 {{- end }}
 
