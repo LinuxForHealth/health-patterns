@@ -9,7 +9,10 @@ import sys
 debug = False  # turn off debug by default
 
 def main():
-    if len(sys.argv) != 3:
+    regName = "default"  #default registry to use
+    bucketName = "Health_Patterns"  #default bucket to use
+
+    if len(sys.argv) < 3:
         print("Must include base url and default password as arguments")
         print("USAGE: setupFlow.py URL defaultpassword")
         exit()  #need to retry
@@ -17,6 +20,14 @@ def main():
     baseURL = sys.argv[1]
     defaultPWD = sys.argv[2]
 
+    #now handle optional registry and bucket
+    if len(sys.argv) == 4: #included registry name
+        regName = sys.argv[3]
+    if len(sys.argv) == 5: #included registry name and bucket name
+        regName = sys.argv[3]
+        bucketName = sys.argv[4]
+
+    #now fix trailing / problem if needed
     if baseURL[-1] != "/":
         print("BaseURL requires trailing /, fixing...")
         baseURL = baseURL + "/"  #add the trailing / if needed
@@ -44,46 +55,66 @@ def main():
     if debug:
         print(dict(resp.json()))
     respDict = dict(resp.json())
+
+    #search for registry
+    regFound = False
     for regs in respDict["registries"]:
         if debug:
             print(regs)
-        regId = regs["registry"]["id"]
-        if debug:
-            print(regId)
+        if regs["registry"]["name"] == regName:
+           regId = regs["registry"]["id"]
+           regFound = True
+           if debug:
+              print("FOUND Registry", regName, "-->",regId)
+           break
 
-        buckURL = regURL + "/" + regId + "/buckets"
-        resp = requests.get(url=buckURL)
+    if not regFound:
+        print("script failed-no matching registry found:", regName)
+        exit()  #if we don't find the specific registry then we are done
+
+    #search for bucket
+    bucketFound = False
+    buckURL = regURL + "/" + regId + "/buckets"
+    resp = requests.get(url=buckURL)
+    if debug:
+        print(dict(resp.json()))
+    bucketDict = dict(resp.json())
+    for bucket in bucketDict["buckets"]:
         if debug:
-            print(dict(resp.json()))
-        bucketDict = dict(resp.json())
-        for bucket in bucketDict["buckets"]:
-            if debug:
-                print(bucket)
+            print(bucket)
+        if bucket["bucket"]["name"] == bucketName:
             bucketId = bucket['id']
+            bucketFound = True
             if debug:
-                print(bucketId)
-            flowURL = buckURL + "/" + bucketId + "/" + "flows"
-            resp = requests.get(url=flowURL)
-            if debug:
-                print(dict(resp.json()))
-            flowDict = dict(resp.json())
-            for flow in flowDict["versionedFlows"]:
-                if debug:
-                    print(flow)
-                if flow["versionedFlow"]["flowName"] == flowName:
-                    found = True
-                    theRegistry = regId
-                    theBucket = bucketId
-                    theFlow = flow["versionedFlow"]["flowId"]
-                    break
-            if found:
-                break
-        if found:
+                print("FOUND Bucket ", bucketName, "-->", bucketId)
             break
 
-    if not found:
+    if not bucketFound:
+        print("script failed-no matching bucket found:", bucketName)
+        exit()  #if we don't find the specific bucket then we are done
+
+    #search for flow
+    flowFound = False
+    flowURL = buckURL + "/" + bucketId + "/" + "flows"
+    resp = requests.get(url=flowURL)
+    if debug:
+        print(dict(resp.json()))
+    flowDict = dict(resp.json())
+    for flow in flowDict["versionedFlows"]:
+        if debug:
+            print(flow)
+        if flow["versionedFlow"]["flowName"] == flowName:
+            flowFound = True
+            theRegistry = regId
+            theBucket = bucketId
+            theFlow = flow["versionedFlow"]["flowId"]
+            if debug:
+                print("FOUND Flow: ", flowName, "-->", theFlow)
+            break
+
+    if not flowFound:
         print("script failed-no matching flow found:", flowName)
-        exit()  #if we don't find the specific flow then we are done
+        exit()  #if we don't find the specific bucket then we are done
 
     #found the flow so now go ahead and find the latest version
 
