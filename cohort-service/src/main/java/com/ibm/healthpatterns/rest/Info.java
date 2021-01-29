@@ -39,7 +39,7 @@ public class Info {
 		System.out.println("  Application   : http://localhost:8080/cohort-service/config");
 		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries");
 		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries/{id}/patients");
-		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries/{id}/patientIDs");
+		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries/{id}/patientIds");
 	}
 
 }
