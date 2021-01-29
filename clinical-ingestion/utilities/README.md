@@ -27,4 +27,8 @@ The script currently assumes the flow will come from the `default` registry.  An
 
 `./setupClinicalIngestionFlow http://nifi.xyz.org:8080  twinkle someotherregistry`
 
+In addition, you can also provide a registry and a bucket.  Note: if you want to provide a bucket name, you are **required** to also specify a registry name that contains that bucket.  For example
+
+`./setupClinicalIngestionFlow http://nifi.xyz.org:8080  twinkle registryname bucketname`
+
 Status messages will log the activity of the script and you will see a completion message at the end.  At that point, you may need to refresh your Nifi canvas to see the new process group.
