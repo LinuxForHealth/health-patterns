@@ -103,7 +103,7 @@ public class LibrariesController {
                 .path("/{id}")
                 .buildAndExpand(cqlFile.getId())
                 .toUri();		
-		return ResponseEntity.created(location).body("CQL created: " + location + "!");
+		return ResponseEntity.created(location).body("CQL created! - URI: " + location);
 	}
 
 	/**

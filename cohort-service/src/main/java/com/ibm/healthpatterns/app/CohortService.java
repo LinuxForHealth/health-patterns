@@ -64,7 +64,7 @@ import ca.uhn.fhir.util.BundleUtil;
 public class CohortService {
 
 	private static final Path CQL_DIRECTORY = Paths.get(System.getProperty("java.io.tmpdir"), "cqls");
-
+	
 	private static final CohortService INSTANCE = new CohortService();
 	
 	private FhirServerConfig fhirConnectionInfo;
@@ -85,9 +85,9 @@ public class CohortService {
 		cqls = new TreeMap<>();
 		loadDefaultFHIRConfig();
 		initializeCQLDirectory();
+		initializeCQLEngine();
 		loadCQLLibraries();
 		installDefaultCQLLibraries();
-		initializeCQLEngine();
 	}
 
 	/**
@@ -131,8 +131,8 @@ public class CohortService {
 			}
 			if (getLibrary(cqlFile.getId()) == null) {
 				try {
+					System.out.println("Installing default CQL file: " + cqlFile.getFileName() + "...");
 					addLibrary(cqlFile.getContent());
-					System.out.println("Installed default CQL file: " + cqlFile.getFileName());
 				} catch (IllegalArgumentException e) {
 					System.err.println("The default CQL file " + cql + " is not valid CQL: " + e.getMessage());
 				} catch (IOException e) {
@@ -190,26 +190,31 @@ public class CohortService {
 		fhirContext.getRestfulClientFactory().setSocketTimeout(60 * 1000);
 		FhirClientBuilder fhirBuilder = factory.newFhirClientBuilder(fhirContext);
 		fhir = fhirBuilder.createFhirClient(fhirConnectionInfo);
-		
 		System.out.println("Created FHIR connection to " + fhirConnectionInfo.getEndpoint());
 		cqlEngine = new CqlEngineWrapper(fhirBuilder);
 		cqlEngine.setDataServerClient(fhir);
 		cqlEngine.setMeasureServerClient(fhir);
 		cqlEngine.setTerminologyServerClient(fhir);
-		
+		resetCQLDirectory();
+	}
+
+	/**
+	 * Reload the CQL directory into the CQL Engine.
+	 */
+	private void resetCQLDirectory() {
 		MultiFormatLibrarySourceProvider sourceProvider;
 		try {
 			sourceProvider = new DirectoryLibrarySourceProvider(CQL_DIRECTORY);
 		} catch (Exception e) {
-			System.err.println("Problem creating the directory library source provider on the CQL repository: " + e.getMessage());
+			System.err.println("Problem accessing the directory library source provider on the CQL repository: " + e.getMessage());
 			e.printStackTrace();
 			return;
-		}		
+		}
 		CqlTranslationProvider translationProvider = new InJVMCqlTranslationProvider(sourceProvider);
 		cqlEngine.setLibraryLoader(new TranslatingLibraryLoader(sourceProvider, translationProvider, true));
-		System.out.println("Initialized CQL Engine over directory " + CQL_DIRECTORY);
+		System.out.println("Re-initialized CQL Engine over directory " + CQL_DIRECTORY);
 	}
-
+	
 	/**
 	 * @return the FHIR connection info object
 	 */
@@ -244,6 +249,8 @@ public class CohortService {
 		// We persist the library for the next time the service starts
 		Files.copy(new ByteArrayInputStream(cql.getBytes()), path, StandardCopyOption.REPLACE_EXISTING);
 		cqls.put(cqlFile.toString(), cqlFile);
+		resetCQLDirectory();
+		System.out.println("Added new CQL file: " + cqlFile.getFileName());
 		return cqlFile;
 	}
 
@@ -272,7 +279,7 @@ public class CohortService {
 	 * @throws IOException if there is a problem adding the library to this cohort service
 	 */
 	public CQLFile updateLibrary(String id, String cql) throws IllegalArgumentException, IOException {
-		if (cqls.containsKey(id)) {
+		if (!cqls.containsKey(id)) {
 			return null;
 		}
 		CQLFile cqlFile = new CQLFile(cql);

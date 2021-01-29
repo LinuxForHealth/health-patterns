@@ -41,4 +41,15 @@ public class CQLFileTest {
 		assertEquals("1.0.0", file.getVersion());
 	}
 
+	/**
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testLoadCQLFile2() throws IOException {
+		CQLFile file = new CQLFile(Paths.get("src/test/resources/CMS645_FHIR-2.0.0.cql"));
+		assertEquals("CMS645_FHIR", file.getName());
+		assertEquals("2.0.0", file.getVersion());
+	}
+
 }

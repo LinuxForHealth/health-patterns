@@ -63,7 +63,7 @@ public class PatientsController {
 	 * @param reverse run the CQL engine with a reversed where only the patients that don't match the cohort are returned
 	 * @return the list of patients
 	 */
-	@GetMapping("/patientIDs")
+	@GetMapping("/patientIds")
 	public @ResponseBody ResponseEntity<String> getPatientIds(@PathVariable String libraryID, 
 															  @RequestParam(required = false) String ids,
 															  @RequestParam(required = false) String reverse) {

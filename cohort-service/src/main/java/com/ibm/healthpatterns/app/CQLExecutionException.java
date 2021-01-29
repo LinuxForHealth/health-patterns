@@ -36,6 +36,6 @@ public class CQLExecutionException extends Exception {
 	 * @param e the underlying exception
 	 */
 	public CQLExecutionException(Exception e) {
-		super(e.getMessage(), e.getCause());
+		super(e.getMessage(), e);
 	}
 }

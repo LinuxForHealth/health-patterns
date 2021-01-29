@@ -34,6 +34,9 @@ class CQLExecutionCallback implements EvaluationResultCallback {
 	 */
 	private final List<String> cohort;
 	private boolean reverseMatch;
+	
+	private Boolean numerator;
+	private Boolean denominator;
 
 	/**
 	 * @param cohort a list where the matching patients will be saved in place 
@@ -46,14 +49,26 @@ class CQLExecutionCallback implements EvaluationResultCallback {
 
 	@Override
 	public void onContextBegin(String contextId) {
+		numerator = null;
+		denominator = null;
 	}
 
 	@Override
 	public void onEvaluationComplete(String contextId, String expression, Object result) {
+		
 		if (expression.equalsIgnoreCase("Numerator")) {
-			boolean patientMatched = Boolean.parseBoolean(result.toString());
-			if ((patientMatched && !reverseMatch) || (!patientMatched && reverseMatch)) {
+			numerator = Boolean.parseBoolean(result.toString());
+		} else if (expression.equalsIgnoreCase("Denominator")) {
+			denominator = Boolean.parseBoolean(result.toString());
+		}
+		
+		if (numerator != null && denominator != null) {
+			if (!denominator) {
+				return;
+			}
+			if ((numerator && !reverseMatch) || (!numerator && reverseMatch)) {
 				cohort.add(contextId);
+				return;
 			}
 		}
 	}

@@ -1,17 +1,15 @@
-The IBM FHIR server can be accessed from within your cluster at the following location:
+The Alvearie Cohort Service can be accessed from within your cluster at the following location:
 
-  {{ include "fhir.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
+  {{ include "cohort-service.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
  
-To connect to your IBM FHIR server from outside the cluster, follow the instructions below:
+To connect to your Alvearie cohort-service server from outside the cluster, follow the instructions below:
  
 Get the application URL by running these commands:
 {{- if contains "NodePort" .Values.service.type }}
 
-  export NODE_PORT_HTTP=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "fhir.fullname" . }})
-  export NODE_PORT_HTTPS=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[1].nodePort}" services {{ include "fhir.fullname" . }})
+  export NODE_PORT_HTTP=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "cohort-service.fullname" . }})
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo FHIR Server over HTTP: http://$NODE_IP:$NODE_PORT_HTTP/fhir-server/api/v4
-  echo FHIR Server over HTTPs: https://$NODE_IP:$NODE_PORT_HTTPS/fhir-server/api/v4
+  echo cohort-service Server over HTTP: http://$NODE_IP:$NODE_PORT_HTTP/cohort-service/health
   
 {{- else if contains "LoadBalancer" .Values.service.type }}
 
@@ -19,38 +17,17 @@ It may take a few minutes for the LoadBalancer IP to be available.
 
 You can watch the status by running the following command and wait unti the external IP address appears: 
 
-  kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "fhir.fullname" . }}
+  kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "cohort-service.fullname" . }}
 
 Once the external IP has been assigned run the following:
 
-  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "fhir.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}') 
-  echo FHIR Server over HTTP: http://$SERVICE_IP:{{ .Values.service.httpPort }}/fhir-server/api/v4
-  echo FHIR Server over HTTPs: http://$SERVICE_IP:{{ .Values.service.httpsPort }}/fhir-server/api/v4
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "cohort-service.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}') 
+  echo cohort-service Server over HTTP: http://$SERVICE_IP:{{ .Values.service.httpPort }}/cohort-service/health
 
-{{- if .Values.proxy.enabled }}
-
-This chart deployment included creating an unauthenticated FHIR proxy, you can access it at the following location:
-
-  echo FHIR Server Proxy: http://$SERVICE_IP:{{ .Values.proxy.service.port }}/fhir-server/api/v4
-{{- end }}
-	
 {{- else if contains "ClusterIP" .Values.service.type }}
 
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "fhir.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "cohort-service.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME {{ .Values.service.httpPort }}:{{ .Values.service.httpPort }}
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME {{ .Values.service.httpsPort }}:{{ .Values.service.httpsPort }}  
-  echo FHIR Server over HTTP: http://127.0.0.1:{{ .Values.service.httpPort }}/fhir-server/api/v4
-  echo FHIR Server over HTTPs: http://127.0.0.1:{{ .Values.service.httpsPort }}/fhir-server/api/v4
-
-  {{- if .Values.proxy.enabled }}
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME {{ .Values.proxy.service.httpPort }}:{{ .Values.proxy.service.httpPort }}
-  echo FHIR Server proxy: http://127.0.0.1:{{ .Values.proxy.service.httpPort }}/fhir-server/api/v4
-  {{- end }}
-  
+  echo cohort-service Server over HTTP: http://127.0.0.1:{{ .Values.service.httpPort }}/cohort-service/health
 
 {{- end }}
-
-To get the credentials to access this FHIR server run the following command:
-
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "fhir.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-  kubectl exec $POD_NAME -c server -- cat server.xml | grep -A2 BasicRealm
