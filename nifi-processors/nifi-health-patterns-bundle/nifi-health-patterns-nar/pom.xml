@@ -17,11 +17,10 @@
 	<parent>
 		<groupId>com.ibm.healthpatterns</groupId>
 		<artifactId>nifi-health-patterns-bundle</artifactId>
-		<version>0.1</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>nifi-health-patterns-nar</artifactId>
-	<version>0.1</version>
 	<packaging>nar</packaging>
 	
 	<properties>

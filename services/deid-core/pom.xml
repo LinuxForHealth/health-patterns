@@ -24,6 +24,7 @@
     </parent>
 
     <artifactId>deid-core</artifactId>
+    <name>De-Identification Core</name>
 
 	<dependencies>
 	   <dependency>

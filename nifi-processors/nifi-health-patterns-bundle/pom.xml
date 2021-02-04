@@ -24,11 +24,40 @@
 
     <groupId>com.ibm.healthpatterns</groupId>
     <artifactId>nifi-health-patterns-bundle</artifactId>
-    <version>0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>nifi-health-patterns-processors</module>
         <module>nifi-health-patterns-nar</module>
     </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-no-snapshots</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireReleaseDeps>
+                                    <message>Other than org apache nifi and Alvearie components no snapshot dependencies are allowed</message>
+                                    <excludes>
+                                        <exclude>org.apache.nifi:*</exclude>
+                                        <exclude>com.ibm.healthpatterns:*</exclude>
+                                    </excludes>
+                                </requireReleaseDeps>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+              </executions>
+            </plugin>
+        </plugins>
+    </build>    
 </project>
