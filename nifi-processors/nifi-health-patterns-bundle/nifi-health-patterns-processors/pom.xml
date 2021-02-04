@@ -17,7 +17,7 @@
 	<parent>
 		<groupId>com.ibm.healthpatterns</groupId>
 		<artifactId>nifi-health-patterns-bundle</artifactId>
-		<version>0.1</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -48,7 +48,6 @@
 		<dependency>
 			<groupId>org.apache.nifi</groupId>
 			<artifactId>nifi-mock</artifactId>
-			<version>1.12.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -94,5 +93,13 @@
 			<artifactId>hapi-fhir-base</artifactId>
 			<version>5.1.0</version>
 		</dependency>		
+		
+		
+		<!-- DeIdentification Dependencies -->
+		<dependency>
+		    <groupId>com.ibm.healthpatterns</groupId>
+            <artifactId>deid-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
