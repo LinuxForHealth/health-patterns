@@ -64,6 +64,7 @@ public class DeIdentifierTest {
 	 * 
 	 */
 	public DeIdentifierTest() {
+		// These URLs are for two IBM Cloud services that we setup specifically to run these tests
 		deidURL = "http://3a5d0fa4-us-south.lb.appdomain.cloud:8080/api/v1";
 		fhirURL = "http://4603f72b-us-south.lb.appdomain.cloud/fhir-server/api/v4";
 		fhirUsername = "fhiruser";

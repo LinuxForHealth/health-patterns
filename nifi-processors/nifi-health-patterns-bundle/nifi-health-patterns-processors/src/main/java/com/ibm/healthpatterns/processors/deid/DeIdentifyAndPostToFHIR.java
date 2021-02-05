@@ -74,8 +74,8 @@ import com.ibm.healthpatterns.deid.DeIdentifierException;
 @CapabilityDescription("De-identifies the given FHIR resources and adds them to a designated FHIR server.")
 @InputRequirement(Requirement.INPUT_REQUIRED)
 @WritesAttributes({
-    @WritesAttribute(attribute = "Location", description = "The HTTP Location header returned by the FHIR server when a resource is created"),
-    @WritesAttribute(attribute = "deidTransactionID" , description = "All FlowFiles produced from the deidentifying and persisting the same parent FlowFile will have the same randomly generated UUID added for this attribute")})
+	@WritesAttribute(attribute = "Location", description = "The HTTP Location header returned by the FHIR server when a resource is created"),
+	@WritesAttribute(attribute = "deidTransactionID" , description = "All FlowFiles produced from the deidentifying and persisting the same parent FlowFile will have the same randomly generated UUID added for this attribute")})
 public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
 
 	/**
@@ -95,7 +95,7 @@ public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
 
 	static final PropertyDescriptor DEID_URL = new PropertyDescriptor.Builder()
 			.name("De-identification Service URL")
-			.description("The full base URL of the de-identeification service API, e.g.: http://ingestion-deid/api/v1")
+			.description("The full base URL of the de-identification service API.")
 			.required(true)
 			.defaultValue("http://ingestion-deid:8080/api/v1")
 			.addValidator(StandardValidators.URI_VALIDATOR)
@@ -103,7 +103,7 @@ public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
 
 	static final PropertyDescriptor FHIR_URL = new PropertyDescriptor.Builder()
 			.name("De-identified FHIR Server URL")
-			.description("The full base URL of the FHIR server that will be used to persist the deidentified FHIR resources, e.g.: http://ingestion-fhir-deid/fhir-server/api/v4")
+			.description("The full base URL of the FHIR server that will be used to persist the deidentified FHIR resources.")
 			.required(true)
 			.defaultValue("http://ingestion-fhir-deid/fhir-server/api/v4")
 			.addValidator(StandardValidators.URI_VALIDATOR)
@@ -194,9 +194,9 @@ public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
 		return descriptors;
 	}
 
-    @Override
-    protected Collection<ValidationResult> customValidate(final ValidationContext context) {
-        final List<ValidationResult> results = new ArrayList<>(super.customValidate(context));
+	@Override
+	protected Collection<ValidationResult> customValidate(final ValidationContext context) {
+		final List<ValidationResult> results = new ArrayList<>(super.customValidate(context));
 
 		String fhirURL = context.getProperty(FHIR_URL).getValue();
 		String fhirUsername = context.getProperty(FHIR_USERNAME).getValue();
@@ -206,18 +206,18 @@ public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
 
 		StringWriter status = new StringWriter();
 		boolean healthOK = deid.healthCheck(status);
-		
+
 		if (!healthOK) {
-	        ValidationResult validation = new ValidationResult.Builder()
-	        		.subject("The connection information")
-	        		.valid(false)
-	        		.explanation("the health checks did not pass:\n" + status)
-	        		.build();
-	        results.add(validation);			
+			ValidationResult validation = new ValidationResult.Builder()
+					.subject("The connection information")
+					.valid(false)
+					.explanation("the health checks did not pass:\n" + status)
+					.build();
+			results.add(validation);			
 		}
 
-        return results;
-    }
+		return results;
+	}
 
 	/*
 	 * (non-Javadoc)

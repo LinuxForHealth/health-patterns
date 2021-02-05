@@ -76,7 +76,7 @@ public class DeIdentifierServiceClient {
 	private CloseableHttpClient httpclient;
 	private String requestTemplate;
 	private String url;
-	
+
 	/**
 	 * Create a new {@link DeIdentifierServiceClient} talking to the de-id service on the given URL.
 	 * 
@@ -91,7 +91,7 @@ public class DeIdentifierServiceClient {
 		}
 		this.url = url;
 	}
-	
+
 	/**
 	 * Checks the health of the deid service using the corresponding health check API.
 	 * If the services are healthy the service returns true, otherwise the services return false.
@@ -103,29 +103,29 @@ public class DeIdentifierServiceClient {
 	 */
 	public boolean healthCheck(StringWriter status) {
 		HttpGet getRequest = new HttpGet(url + HEALTH_PATH);
-        try (CloseableHttpResponse response = httpclient.execute(getRequest)) {
-        	EntityUtils.consume(response.getEntity());
-            if (response.getStatusLine().getStatusCode() == 200) {
-            	status.write("De-id service OK!\n");
-            	return true;
-            } else {
-            	status.write("There is an unknown problem in the de-id service.\n");
-            	status.write("> " + getRequest.getRequestLine() + "\n");
-            	HttpEntity entity = response.getEntity();
-            	String responseString = EntityUtils.toString(entity, "UTF-8");
-            	status.write("< " + response.getStatusLine().toString() + "\n");
-            	status.write(responseString + "\n");
-            }
-        } catch (ClientProtocolException e) {
-        	status.write("There is a problem in the de-id service.\n");
-        	status.write("HTTP protocol error executing request: " + getRequest.getRequestLine() + " - " + e.getMessage() + "\n");
+		try (CloseableHttpResponse response = httpclient.execute(getRequest)) {
+			EntityUtils.consume(response.getEntity());
+			if (response.getStatusLine().getStatusCode() == 200) {
+				status.write("De-id service OK!\n");
+				return true;
+			} else {
+				status.write("There is an unknown problem in the de-id service.\n");
+				status.write("> " + getRequest.getRequestLine() + "\n");
+				HttpEntity entity = response.getEntity();
+				String responseString = EntityUtils.toString(entity, "UTF-8");
+				status.write("< " + response.getStatusLine().toString() + "\n");
+				status.write(responseString + "\n");
+			}
+		} catch (ClientProtocolException e) {
+			status.write("There is a problem in the de-id service.\n");
+			status.write("HTTP protocol error executing request: " + getRequest.getRequestLine() + " - " + e.getMessage() + "\n");
 		} catch (IOException e) {
 			status.write("There is a problem in the de-id service.\n");
 			status.write("HTTP I/O connection error executing request: " + getRequest.getRequestLine() + " - " + e.getMessage() + "\n");
 		}		
-        return false;
+		return false;
 	}
-	
+
 	/**
 	 * De-identifies the given data with the given de-identification configuration.
 	 * 
@@ -136,20 +136,20 @@ public class DeIdentifierServiceClient {
 	 */
 	public String deIdentify(String data, String config) throws DeIdentifierClientException {
 		HttpPost postRequest = new HttpPost(url + DEIDENTIFICATION_PATH);
-        config = prepareRequestBodyElements(config);
-        data = prepareRequestBodyElements(data);
-        String requestBody = requestTemplate.replace(CONFIG_MARKER, config).replace(DATA_MARKER, data);
-        StringEntity entity = new StringEntity(requestBody, StandardCharsets.UTF_8.name());
-        entity.setContentType(ContentType.APPLICATION_JSON.getMimeType());
-        postRequest.setEntity(entity);
-//        System.out.println("> " + postRequest.getRequestLine());
-        try (CloseableHttpResponse response = httpclient.execute(postRequest)) {
-            String responseBody = IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
-//            System.out.println("< " + response.getStatusLine() + ": " + responseBody);
-            EntityUtils.consume(response.getEntity());
-            return responseBody;
-        } catch (ClientProtocolException e) {
-        	throw new DeIdentifierClientException("HTTP protocol error executing request " + postRequest.getRequestLine(), e);
+		config = prepareRequestBodyElements(config);
+		data = prepareRequestBodyElements(data);
+		String requestBody = requestTemplate.replace(CONFIG_MARKER, config).replace(DATA_MARKER, data);
+		StringEntity entity = new StringEntity(requestBody, StandardCharsets.UTF_8.name());
+		entity.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+		postRequest.setEntity(entity);
+		//        System.out.println("> " + postRequest.getRequestLine());
+		try (CloseableHttpResponse response = httpclient.execute(postRequest)) {
+			String responseBody = IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
+			//            System.out.println("< " + response.getStatusLine() + ": " + responseBody);
+			EntityUtils.consume(response.getEntity());
+			return responseBody;
+		} catch (ClientProtocolException e) {
+			throw new DeIdentifierClientException("HTTP protocol error executing request " + postRequest.getRequestLine(), e);
 		} catch (IOException e) {
 			throw new DeIdentifierClientException("HTTP I/O connection error executing request " + postRequest.getRequestLine(), e);
 		}
