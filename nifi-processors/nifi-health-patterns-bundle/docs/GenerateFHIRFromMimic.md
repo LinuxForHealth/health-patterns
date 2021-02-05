@@ -18,7 +18,7 @@ The following must be available on your system:
 
 #### Deploy new PostgreSQL db on kubernetes
 1. Connect to your kubernetes cluster and target namespace.
-1. Run: `kubectl apply -f "postgres.yaml"`
+1. Run: `kubectl apply -f "mimic_postgres.yaml"`
 
 1. Switch directories to the Mimic Code Repository listed in the pre-req section.
 1. From a command line, connect to your deployed PostgreSQL db using: `psql -h <<POSTGRESQL_SERVICE_SERVER_NAME>> -p 5432 -U mimic_user -d mimic`
