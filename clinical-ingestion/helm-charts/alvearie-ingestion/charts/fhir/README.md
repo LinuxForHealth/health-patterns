@@ -38,7 +38,7 @@ Credentials:
 ```bash
 # Get the ID of the fhir pod and replace it in <pod-id> in the next command
 kubectl get pods
-kubectl exec <pod-id> -c fhir-server -- cat server.xml | grep -A2 BasicRealm
+kubectl exec <pod-id> -c server -- cat server.xml | grep -A2 BasicRealm
 ```
 
 The chart also installs an unauthenticated FHIR Server proxy on port 81: `http://<external-ip>:81/fhir-server/api/v4`
