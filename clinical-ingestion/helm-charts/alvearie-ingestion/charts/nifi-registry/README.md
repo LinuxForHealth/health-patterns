@@ -19,7 +19,7 @@ Git clone this repository and `cd` into this directory.
 
 ```bash
 git clone https://github.com/Alvearie/health-patterns.git
-cd clinical-ingestion/helm-charts/nifi-registry
+cd health-patterns/clinical-ingestion/helm-charts/alvearie-ingestion/charts/nifi-registry
 ```
 
 ### Install the Chart
