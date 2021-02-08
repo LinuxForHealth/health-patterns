@@ -20,7 +20,7 @@ Git clone this repository and `cd` into this directory.
 
 ```bash
 git clone https://github.com/Alvearie/health-patterns.git
-cd clinical-ingestion/helm-charts/alvearie-ingestion
+cd health-patterns/clinical-ingestion/helm-charts/alvearie-ingestion
 ```
 
 ### Create a new namespace (Optional)
