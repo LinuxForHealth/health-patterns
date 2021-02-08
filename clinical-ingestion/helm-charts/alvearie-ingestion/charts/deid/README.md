@@ -17,7 +17,7 @@ Git clone this repository and `cd` into this directory.
 
 ```bash
 git clone https://github.com/Alvearie/health-patterns.git
-cd health-patterns/clinical-ingestion/helm-charts/deid
+cd health-patterns/clinical-ingestion/helm-charts/alvearie-ingestion/charts/deid
 ```
 
 ### Install the Chart
