@@ -3,7 +3,7 @@ Clinical Ingestion Flow is a reference implementation of a clinical data ingesti
 
 The Clinical Ingestion Flow is designed to read medical data from a configured [kafka](https://kafka.apache.org/) topic  or directly via REST API.  As the data is processed, any errors that are detected are logged and posted to target kafka topics (if configured).
 
-Currently, the only supported medical data format is FHIR bundles. Other formats are on our backlog and will be coming soon, including [HL7](https://www.hl7.org/implement/standards/product_section.cfm?section=13) and [DICOM](https://www.dicomstandard.org/) image data.
+The current flow is designed to operate on FHIR resources. If [HL7](https://www.hl7.org/implement/standards/product_section.cfm?section=13) data is passed in, the pipeline is capable of converting it to FHIR and allowing it run through the pipeline.  Other data types (such as [DICOM](https://www.dicomstandard.org/) image data) are being considered but are currently supported.
 
 In order for this flow to operate correctly, it is assumed that the following dependencies are already deployed and available, with required URL, port, authentication, etc:
 
