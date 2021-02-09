@@ -10,3 +10,8 @@ metadata:
     heritage: {{ .Release.Service | quote }}
 data:
 {{ (tpl (.Files.Glob "config/*").AsConfig . ) | indent 2 }}
+binaryData:
+{{ range $path, $bytes := .Files.Glob (printf "binaryconfig/**")}}
+{{ $name := base $path }}
+{{- sha256sum (printf "%s/%s" (index (regexSplit "binaryconfig" (dir $path) -1) 1 ) $name ) | indent 2 }}{{ print ": "}}{{ $.Files.Get $path | b64enc }}
+{{ end }}
