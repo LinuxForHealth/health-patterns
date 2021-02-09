@@ -1,0 +1,42 @@
+{
+  "resourceType": "ValueSet",
+  "id": "sex-assigned-at-birth",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><ul><li>Include all codes defined in <a href=\"CodeSystem-sex-assigned-at-birth.html\"><code>http://ibm.com/fhir/cdm/CodeSystem/sex-assigned-at-birth</code></a></li></ul></div>"
+  },
+  "url": "http://ibm.com/fhir/cdm/ValueSet/sex-assigned-at-birth",
+  "version": "0.1.0",
+  "name": "SexAssignedAtBirthValueSet",
+  "title": "Sex Assigned At Birth Value Set",
+  "status": "active",
+  "date": "2021-02-09T14:12:03+00:00",
+  "contact": [
+    {
+      "name": "Kim Kenna",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "sloand@us.ibm.com"
+        }
+      ]
+    },
+    {
+      "name": "Jill Doty",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "jdoty@us.ibm.com"
+        }
+      ]
+    }
+  ],
+  "description": "Sex assigned at birth based on observation by a physician.  Also called phenotype, or how the genes were expressed, based on the observation of the doctor. This assignment may not match the gender Identity of the person, which will not be known until the newborn is older.",
+  "compose": {
+    "include": [
+      {
+        "system": "http://ibm.com/fhir/cdm/CodeSystem/sex-assigned-at-birth"
+      }
+    ]
+  }
+}
