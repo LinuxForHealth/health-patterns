@@ -25,10 +25,6 @@
         {
             "url": "http://synthetichealth.github.io/synthea/quality-adjusted-life-years",
             "valueDecimal": 47.383406506168288
-        },
-        {
-            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex",
-            "valueCode": "F"
         }
     ],
     "identifier": [
@@ -98,7 +94,7 @@
             "use": "official",
             "family": "Acosta403",
             "given": [
-                "Antonia30"
+                "Antonio30"
             ],
             "prefix": [
                 "Mrs."
@@ -108,7 +104,7 @@
             "use": "maiden",
             "family": "Armenta418",
             "given": [
-                "Antonia30"
+                "Antonio30"
             ],
             "prefix": [
                 "Mrs."

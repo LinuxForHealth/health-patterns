@@ -95,11 +95,17 @@
 		</dependency>		
 		
 		
-		<!-- DeIdentification Dependencies -->
+		<!-- Alvearie Dependencies -->
 		<dependency>
 		    <groupId>com.ibm.healthpatterns</groupId>
             <artifactId>deid-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
 		</dependency>
+        <dependency>
+            <groupId>com.ibm.healthpatterns</groupId>
+            <artifactId>terminology-service-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
 	</dependencies>
 </project>
