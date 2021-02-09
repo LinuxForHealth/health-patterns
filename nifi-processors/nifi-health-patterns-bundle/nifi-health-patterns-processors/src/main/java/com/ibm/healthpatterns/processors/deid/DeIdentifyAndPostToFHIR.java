@@ -74,8 +74,8 @@ import com.ibm.healthpatterns.deid.DeIdentifierException;
 @CapabilityDescription("De-identifies the given FHIR resources and adds them to a designated FHIR server.")
 @InputRequirement(Requirement.INPUT_REQUIRED)
 @WritesAttributes({
-	@WritesAttribute(attribute = "Location", description = "The HTTP Location header returned by the FHIR server when a resource is created"),
-	@WritesAttribute(attribute = "deidTransactionID" , description = "All FlowFiles produced from the deidentifying and persisting the same parent FlowFile will have the same randomly generated UUID added for this attribute")})
+	@WritesAttribute(attribute = DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE, description = "The HTTP Location header returned by the FHIR server when a resource is created"),
+	@WritesAttribute(attribute = DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE , description = "All FlowFiles produced from the deidentifying and persisting the same parent FlowFile will have the same randomly generated UUID added for this attribute")})
 public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
 
 	/**
@@ -91,7 +91,7 @@ public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
 	/**
 	 * The location header attribute
 	 */
-	static final String LOCATION = HttpHeaders.LOCATION;
+	static final String LOCATION_ATTRIBUTE = HttpHeaders.LOCATION;
 
 	static final PropertyDescriptor DEID_URL = new PropertyDescriptor.Builder()
 			.name("De-identification Service URL")
@@ -316,7 +316,7 @@ public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
 		session.putAttribute(fhirResponseFlowFile, DEID_TRANSACTION_ID_ATTRIBUTE, transactionId);
 		// The FHIR location header will be null if the resource posted was a Bundle
 		if (fhirLLocationHeader != null) {
-			session.putAttribute(fhirResponseFlowFile, LOCATION, fhirLLocationHeader);
+			session.putAttribute(fhirResponseFlowFile, LOCATION_ATTRIBUTE, fhirLLocationHeader);
 		}
 		session.transfer(fhirResponseFlowFile, SUCCESS);
 	}

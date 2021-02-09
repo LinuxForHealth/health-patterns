@@ -120,7 +120,7 @@ public class DeIdentifyAndPostToFHIRTest {
 
 		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(DeIdentifyAndPostToFHIR.SUCCESS).get(0);
 		successFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE);
-		successFlowFile.assertAttributeNotExists(DeIdentifyAndPostToFHIR.LOCATION);
+		successFlowFile.assertAttributeNotExists(DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE);
 		String fhirResponse = successFlowFile.getContent();
 		assertFalse(fhirResponse.isEmpty());
 
@@ -135,7 +135,7 @@ public class DeIdentifyAndPostToFHIRTest {
 		// Save the resource locations so we can clean up the FHIR server
 		ObjectMapper jsonDeserializer = new ObjectMapper();
 		JsonNode fhirResponseJson = jsonDeserializer.readTree(fhirResponse);
-		List<JsonNode> locations = fhirResponseJson.findValues(DeIdentifyAndPostToFHIR.LOCATION.toLowerCase());
+		List<JsonNode> locations = fhirResponseJson.findValues(DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE.toLowerCase());
 		for (JsonNode jsonNode : locations) {
 			createdResources.add(jsonNode.asText());
 		}
@@ -161,7 +161,7 @@ public class DeIdentifyAndPostToFHIRTest {
 
 		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(DeIdentifyAndPostToFHIR.SUCCESS).get(0);
 		successFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE);
-		successFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.LOCATION);
+		successFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE);
 		assertTrue(successFlowFile.getContent().isEmpty());
 
 		MockFlowFile deidFlowFile = testRunner.getFlowFilesForRelationship(DeIdentifyAndPostToFHIR.DEIDENTIFIED).get(0);
@@ -173,7 +173,7 @@ public class DeIdentifyAndPostToFHIRTest {
 		originalFlowFile.assertContentEquals(input);
 
 		// Save the resource locations so we can clean up the FHIR server
-		createdResources.add(successFlowFile.getAttribute(DeIdentifyAndPostToFHIR.LOCATION));
+		createdResources.add(successFlowFile.getAttribute(DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE));
 	}
 
 	/**
