@@ -1,0 +1,94 @@
+{
+    "resourceType": "ConceptMap",
+    "id": "FHIR-v4-To-IBM-CDM-Birth-Sex",
+    "url": "http://ibm.com/fhir/integration-squad/ConceptMap/100",
+    "identifier": {
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b"
+    },
+    "version": "4.0.1",
+    "name": "FHIR-v4-To-IBM-CDM-Birth-Sex",
+    "title": "FHIR/v4 to IBM CDM Birth Sex Mapping",
+    "status": "draft",
+    "experimental": true,
+    "date": "2020-10-29",
+    "publisher": "IBM Watson Health",
+    "contact": [
+        {
+            "name": "Integration Squad",
+            "telecom": [
+                {
+                    "system": "url",
+                    "value": "http://ibm.com"
+                }
+            ]
+        }
+    ],
+    "description": "A mapping between the FHIR v4 birhtsex and IBM CDM's sex-assigned-at-birth",
+    "useContext": [
+        {
+            "code": {
+                "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                "code": "venue"
+            },
+            "valueCodeableConcept": {
+                "text": "for CCDA Usage"
+            }
+        }
+    ],
+    "jurisdiction": [
+        {
+            "coding": [
+                {
+                    "system": "urn:iso:std:iso:3166",
+                    "code": "US"
+                }
+            ]
+        }
+    ],
+    "purpose": "To automatically map incoming generic FHIR resources to CDM",
+    "copyright": "Creative Commons 0",
+    "sourceUri": "http://hl7.org/fhir/us/core/ValueSet/birthsex",
+    "targetUri": "http://ibm.com/fhir/cdm/ValueSet/sex-assigned-at-birth",
+    "group": [
+        {
+            "source": "http://hl7.org/fhir/us/core/ValueSet/birthsex",
+            "target": "http://ibm.com/fhir/cdm/ValueSet/sex-assigned-at-birth",
+            "element": [
+                {
+                    "code": "F",
+                    "display": "Female",
+                    "target": [
+                        {
+                            "code": "female",
+                            "display": "Female",
+                            "equivalence": "equivalent"
+                        }
+                    ]
+                },
+                {
+                    "code": "M",
+                    "display": "Male",
+                    "target": [
+                        {
+                            "code": "male",
+                            "display": "Male",
+                            "equivalence": "equivalent"
+                        }
+                    ]
+                },
+                {
+                    "code": "UNK",
+                    "display": "Unknown",
+                    "target": [
+                        {
+                            "code": "unknown",
+                            "display": "Unknown",
+                            "equivalence": "equivalent"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
