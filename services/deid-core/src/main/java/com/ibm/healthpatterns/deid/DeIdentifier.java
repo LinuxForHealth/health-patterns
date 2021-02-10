@@ -21,44 +21,25 @@ package com.ibm.healthpatterns.deid;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.io.Writer;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpStatus;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Resource;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.ibm.healthpatterns.core.FHIRService;
 import com.ibm.healthpatterns.deid.client.DeIdentifierClientException;
 import com.ibm.healthpatterns.deid.client.DeIdentifierServiceClient;
 
-import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.rest.api.MethodOutcome;
-import ca.uhn.fhir.rest.client.api.IClientInterceptor;
-import ca.uhn.fhir.rest.client.api.IGenericClient;
-import ca.uhn.fhir.rest.client.interceptor.BasicAuthInterceptor;
 import ca.uhn.fhir.rest.server.exceptions.BaseServerResponseException;
 
 /**
@@ -73,12 +54,7 @@ import ca.uhn.fhir.rest.server.exceptions.BaseServerResponseException;
  * 
  * @author Luis A. García
  */
-public class DeIdentifier {
-
-	/**
-	 * The path to check the FHIR server health.
-	 */
-	private static final String FHIR_HEALTHCHECK_PATH = "/$healthcheck";
+public class DeIdentifier extends FHIRService {
 
 	/**
 	 * The file that contains the masking config that will be used to configure the de-id service.
@@ -91,11 +67,6 @@ public class DeIdentifier {
 	private static final String[] DEIDENTIFIABLE_FHIR_TYPES = new String[] {"Patient", "Procedure", "Condition", "Observation", "MedicationRequest", "Encounter"};
 	
 	/**
-	 * A FHIR resource's Bundle resource type
-	 */
-	private static final String BUNDLE_RESOURCE_TYPE = "Bundle";
-
-	/**
 	 * The de-id service response data field.
 	 */
 	private static final String DATA_OBJECT = "data";
@@ -105,23 +76,8 @@ public class DeIdentifier {
 	 */
 	private static final String TEXT_OBJECT = "text";
 
-	/**
-	 * A FHIR resource's 'resource' field 
-	 */
-	private static final String RESOURCE_OBJECT = "resource";
-
-	/**
-	 * A FHIR resource's 'entry' field
-	 */
-	private static final String ENTRY_OBJECT = "entry";
-
-	private ObjectMapper jsonDeserializer;
-	
-	private DeIdentifierServiceClient deidClient;
-	private String configJson;
-	
-	private IGenericClient fhirClient;
-	private CloseableHttpClient rawFhirClient;
+	DeIdentifierServiceClient deidClient;
+	String configJson;
 	
 	/**
 	 * Create a {@link DeIdentifier} that uses the given de-id and FHIR connection information.
@@ -132,7 +88,7 @@ public class DeIdentifier {
 	 * @param fhirServerPassword the FHIR server password
 	 */
 	public DeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword) {
-		jsonDeserializer = new ObjectMapper();
+		super(fhirServerURL, fhirServerUsername, fhirServerPassword);
 		deidClient = new DeIdentifierServiceClient(deidServiceURL);
 		InputStream configInputStream = this.getClass().getResourceAsStream(DEID_CONFIG_JSON);
 		try {
@@ -140,97 +96,19 @@ public class DeIdentifier {
 		} catch (IOException e) {
 			System.err.println("Could not read de-identifier service configuration, the DeIdentifier won't be functional");
 		}
-		initializeFhirClients(fhirServerURL, fhirServerUsername, fhirServerPassword);
-	
 	}
 
-	private void initializeFhirClients(String fhirServerURL, String fhirServerUsername, String fhirServerPassword) {
-		// Initialize the Hapi FHIR client to perform all general FHIR operations
-		FhirContext context = FhirContext.forR4();
-		// Large synthea Bundles need a longer timeout than the default
-		context.getRestfulClientFactory().setSocketTimeout(200 * 1000);
-		fhirClient = context.newRestfulGenericClient(fhirServerURL);
-		// https://hapifhir.io/hapi-fhir/docs/interceptors/built_in_client_interceptors.html#section2
-		IClientInterceptor authInterceptor = new BasicAuthInterceptor(fhirServerUsername, fhirServerPassword);
-		fhirClient.registerInterceptor(authInterceptor);
-		
-		// Initialize the raw FHIR client to perform IBM specific FHIR operations, e.g. $healthcheck
-		if (fhirServerUsername == null) {
-			rawFhirClient = HttpClients.createDefault();
-		} else {
-			CredentialsProvider credentialsPovider = new BasicCredentialsProvider();
-			URL url;
-			try {
-				url = new URL(fhirClient.getServerBase());
-			} catch (MalformedURLException e) {
-				System.err.println("Incorrect FHIR server URL provided: " + e.getMessage());
-				return;
-			}
-			credentialsPovider.setCredentials(new AuthScope(url.getHost(), url.getPort()), new UsernamePasswordCredentials(fhirServerUsername, fhirServerPassword));
-			rawFhirClient = HttpClients.custom()
-					.setDefaultCredentialsProvider(credentialsPovider)
-					.build();
-		}
-	}
-
-	/**
-	 * Checks the health of the underlying services using the services' corresponding health check APIs.
-	 * If the services are healthy the service returns true, otherwise the services return false.
-	 * In either case the given {@link Writer} will be used by the method to populate more information about
-	 * what exactly is went wrong.
-	 *  
-	 * @param status an optional {@link StringWriter} where status will be logged 
-	 * @return true if the service is healthy, false otherwise
+	/* (non-Javadoc)
+	 * @see com.ibm.healthpatterns.core.FHIRService#healthCheck(java.io.StringWriter)
 	 */
+	@Override
 	public boolean healthCheck(StringWriter status) {
-		boolean errors = false;
-		if (status == null) {
-			status = new StringWriter();
-		}
+		boolean errors = !super.healthCheck(status);
 		if (configJson == null) {
 			status.write("It wasn't possible to load the default de-id configuraiton. Likely this is a problem with the de-id JAR.\n");
 			errors = true;
 		}
 		if (!deidClient.healthCheck(status)) {
-			errors = true;
-		}
-		if (!checkFHIRHealth(status)) {
-			errors = true;
-		}
-		return !errors;
-	}
-
-	private boolean checkFHIRHealth(StringWriter status) {
-		boolean errors = false;
-		HttpGet getRequest = new HttpGet(fhirClient.getServerBase() + FHIR_HEALTHCHECK_PATH);
-		try (CloseableHttpResponse response = rawFhirClient.execute(getRequest)) {
-        	EntityUtils.consume(response.getEntity());
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-            	status.write("FHIR Server OK!\n");
-            } else if (response.getStatusLine().getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
-            	status.write("The FHIR Server credentials are incorrect, please verify:\n");
-            	status.write("> " + getRequest.getRequestLine() + "\n");
-            	HttpEntity entity = response.getEntity();
-            	String responseString = EntityUtils.toString(entity, "UTF-8");
-            	status.write("< " + response.getStatusLine().toString() + "\n");
-            	status.write(responseString + "\n");
-            	errors = true;
-            } else {
-            	status.write("There is an unknown problem in the FHIR Server:\n");
-            	status.write("> " + getRequest.getRequestLine() + "\n");
-            	HttpEntity entity = response.getEntity();
-            	String responseString = EntityUtils.toString(entity, "UTF-8");
-            	status.write("< " + response.getStatusLine().toString() + "\n");
-            	status.write(responseString + "\n");
-            	errors = true;
-            }
-        } catch (ClientProtocolException e) {
-        	status.write("There is a problem in the FHIR Server.\n");
-        	status.write("HTTP protocol error executing request: " + getRequest.getRequestLine() + " - " + e.getMessage() + "\n");
-        	errors = true;
-		} catch (IOException e) {
-			status.write("There is a problem in the FHIR Server.\n");
-			status.write("HTTP I/O connection error executing request: " + getRequest.getRequestLine() + " - " + e.getMessage() + "\n");
 			errors = true;
 		}
 		return !errors;
@@ -320,6 +198,9 @@ public class DeIdentifier {
 	 */
 	private JsonNode deIdentifyResource(JsonNode resource) throws DeIdentifierException {
 		String resourceType = getResourceType(resource);
+		if (resourceType == null) {
+			throw new DeIdentifierException("The FHIR resource did not contain a 'resourceType' field. Currently only proper FHIR resources are supported");
+		}
 		boolean isDeidentifiable = StringUtils.equalsAny(resourceType, DEIDENTIFIABLE_FHIR_TYPES);
 		if (!isDeidentifiable) {
 			return null;
@@ -341,32 +222,6 @@ public class DeIdentifier {
 		// The de-id service returns the given resource in a JSON array called "data", we obtain it from there and return it
 		ArrayNode arrayNode = (ArrayNode) deidentifiedResourceResponse.get(DATA_OBJECT);
 		return arrayNode.get(0);
-	}
-
-	/**
-	 * Determines whether the given {@link JsonNode} represents a FHIR Bundle
-	 *  
-	 * @param jsonNode the json to check
-	 * @return true if the 'resourceType' of the given FHIR resource is Bundle, false otherwise
-	 * @throws DeIdentifierException if the given JSON is not a valid FHIR resource 
-	 */
-	private boolean isBundle(JsonNode jsonNode) throws DeIdentifierException {
-		return getResourceType(jsonNode).equals(BUNDLE_RESOURCE_TYPE);
-	}
-
-	/**
-	 * Extract the resource type from the given JSON object.
-	 * 
-	 * @param json the json resource
-	 * @return the resource type
-	 * @throws DeIdentifierException if the resource type field is not present, which would indicate the FHIR resource is invalid
-	 */
-	private String getResourceType(JsonNode json) throws DeIdentifierException {
-		JsonNode resourceType = json.findValue("resourceType");
-		if (resourceType == null) {
-			throw new DeIdentifierException("The FHIR resource did not contain a 'resourceType' field. Currently only proper FHIR resources are supported");
-		}
-		return resourceType.asText();
 	}
 
 	/**
@@ -457,13 +312,6 @@ public class DeIdentifier {
 		}
 		System.out.println("FHIR create resource done!");
 		return outcome.getId().toString();
-	}
-
-	/**
-	 * @return the fhirClient used by this {@link DeIdentifier}
-	 */
-	public IGenericClient getFhirClient() {
-		return fhirClient;
 	}
 	
 }

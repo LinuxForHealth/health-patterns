@@ -22,10 +22,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -36,18 +32,6 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpStatus;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.instance.model.api.IIdType;
 import org.hl7.fhir.r4.model.Bundle;
@@ -61,16 +45,12 @@ import org.hl7.fhir.r4.model.ValueSet;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.ibm.healthpatterns.core.FHIRService;
 
-import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
-import ca.uhn.fhir.rest.client.api.IClientInterceptor;
-import ca.uhn.fhir.rest.client.api.IGenericClient;
-import ca.uhn.fhir.rest.client.interceptor.BasicAuthInterceptor;
 
 /**
  * A {@link TerminologyService} translates FHIR resource extension codes using the IBM FHIR Terminology Service.
@@ -90,7 +70,7 @@ import ca.uhn.fhir.rest.client.interceptor.BasicAuthInterceptor;
  * 
  * @author Luis A. García
  */
-public class TerminologyService {
+public class TerminologyService extends FHIRService {
 
 	/**
 	 * Directory in the classpath that has the default mappings FHIR resources
@@ -108,39 +88,14 @@ public class TerminologyService {
 	private static final String[] SAMPLE_MAPPING_RESOURCES = new String[] {"cdm-sex-assigned-at-birth-vs.json", "uscore-birthsex-vs.json", "uscore-to-cdm-cm.json"};
 	
 	/**
-	 * The path to check the FHIR server health.
-	 */
-	private static final String FHIR_HEALTHCHECK_PATH = "/$healthcheck";
-
-	/**
-	 * A FHIR resource's Bundle resource type
-	 */
-	private static final String BUNDLE_TYPE = "Bundle";
-
-	/**
-	 * 
+	 * The ConceptMap FHIR resource type
 	 */
 	private static final String CONCEPT_MAP_TYPE = "ConceptMap";
 
 	/**
-	 * 
+	 * The ValueSet FHIR resource type
 	 */
 	private static final String VALUE_SET_TYPE = "ValueSet";
-
-	/**
-	 * A FHIR resource's 'resource' field 
-	 */
-	private static final String RESOURCE_OBJECT = "resource";
-
-	/**
-	 * A FHIR resource's 'entry' field
-	 */
-	private static final String ENTRY_OBJECT = "entry";
-
-	/**
-	 * A FHIR resource's 'resourceType' field
-	 */
-	private static final String RESOURCE_TYPE_OBJECT = "resourceType";
 
 	/**
 	 * A FHIR resource's 'valueCode' field
@@ -177,11 +132,6 @@ public class TerminologyService {
 	 */
 	private static final String[] TRANSLATABLE_FHIR_TYPES = new String[] {"Patient"};
 
-	private ObjectMapper jsonDeserializer;
-
-	private IGenericClient fhirClient;
-	private CloseableHttpClient rawFhirClient;
-
 	private Map<String, String> valueSetForStructureDefinition;
 
 	private boolean fhirResourcesInstalled;
@@ -195,9 +145,8 @@ public class TerminologyService {
 	 * @param fhirServerPassword the FHIR server password
 	 */
 	public TerminologyService(String fhirServerURL, String fhirServerUsername, String fhirServerPassword) {
-		jsonDeserializer = new ObjectMapper();
+		super(fhirServerURL, fhirServerUsername, fhirServerPassword);
 		installedResources = new ArrayList<>();
-		initializeFhirClients(fhirServerURL, fhirServerUsername, fhirServerPassword);
 		loadValueSetsForStructureDefinitions();
 	}
 
@@ -241,6 +190,11 @@ public class TerminologyService {
 		valueSetForStructureDefinition.put(vsUri, sdUri);
 	}
 
+	/**
+	 * Install the default translation FHIR resources on the FHIR server.
+	 * 
+	 * @param fileNames the resources to install
+	 */
 	private void installTranslationResources(String... fileNames) {
 		boolean errors = false;
 		for (String fileName : fileNames) {
@@ -295,93 +249,6 @@ public class TerminologyService {
 			}
 		}
 		fhirResourcesInstalled = !errors;
-	}
-
-	private void initializeFhirClients(String fhirServerURL, String fhirServerUsername, String fhirServerPassword) {
-		// Initialize the Hapi FHIR client to perform all general FHIR operations
-		FhirContext context = FhirContext.forR4();
-		
-		// Large synthea Bundles need a longer timeout than the default
-		context.getRestfulClientFactory().setSocketTimeout(200 * 1000);
-		fhirClient = context.newRestfulGenericClient(fhirServerURL);
-		
-		// https://hapifhir.io/hapi-fhir/docs/interceptors/built_in_client_interceptors.html#section2
-		IClientInterceptor authInterceptor = new BasicAuthInterceptor(fhirServerUsername, fhirServerPassword);
-		fhirClient.registerInterceptor(authInterceptor);
-
-		// Initialize the raw FHIR client to perform IBM specific FHIR operations, e.g. $healthcheck
-		if (fhirServerUsername == null) {
-			rawFhirClient = HttpClients.createDefault();
-		} else {
-			CredentialsProvider credentialsPovider = new BasicCredentialsProvider();
-			URL url;
-			try {
-				url = new URL(fhirClient.getServerBase());
-			} catch (MalformedURLException e) {
-				System.err.println("Incorrect FHIR server URL provided: " + e.getMessage());
-				return;
-			}
-			credentialsPovider.setCredentials(new AuthScope(url.getHost(), url.getPort()), new UsernamePasswordCredentials(fhirServerUsername, fhirServerPassword));
-			rawFhirClient = HttpClients.custom()
-					.setDefaultCredentialsProvider(credentialsPovider)
-					.build();
-		}
-	}
-
-	/**
-	 * Checks the health of the underlying services using the services' corresponding health check APIs.
-	 * If the services are healthy the service returns true, otherwise the services return false.
-	 * In either case the given {@link Writer} will be used by the method to populate more information about
-	 * what exactly is went wrong.
-	 *  
-	 * @param status an optional {@link StringWriter} where status will be logged 
-	 * @return true if the service is healthy, false otherwise
-	 */
-	public boolean healthCheck(StringWriter status) {
-		boolean errors = false;
-		if (status == null) {
-			status = new StringWriter();
-		}
-		if (!checkFHIRHealth(status)) {
-			errors = true;
-		}
-		return !errors;
-	}
-
-	private boolean checkFHIRHealth(StringWriter status) {
-		boolean errors = false;
-		HttpGet getRequest = new HttpGet(fhirClient.getServerBase() + FHIR_HEALTHCHECK_PATH);
-		try (CloseableHttpResponse response = rawFhirClient.execute(getRequest)) {
-			EntityUtils.consume(response.getEntity());
-			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				status.write("FHIR Server OK!\n");
-			} else if (response.getStatusLine().getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
-				status.write("The FHIR Server credentials are incorrect, please verify:\n");
-				status.write("> " + getRequest.getRequestLine() + "\n");
-				HttpEntity entity = response.getEntity();
-				String responseString = EntityUtils.toString(entity, StandardCharsets.UTF_8);
-				status.write("< " + response.getStatusLine().toString() + "\n");
-				status.write(responseString + "\n");
-				errors = true;
-			} else {
-				status.write("There is an unknown problem in the FHIR Server:\n");
-				status.write("> " + getRequest.getRequestLine() + "\n");
-				HttpEntity entity = response.getEntity();
-				String responseString = EntityUtils.toString(entity, StandardCharsets.UTF_8);
-				status.write("< " + response.getStatusLine().toString() + "\n");
-				status.write(responseString + "\n");
-				errors = true;
-			}
-		} catch (ClientProtocolException e) {
-			status.write("There is a problem in the FHIR Server.\n");
-			status.write("HTTP protocol error executing request: " + getRequest.getRequestLine() + " - " + e.getMessage() + "\n");
-			errors = true;
-		} catch (IOException e) {
-			status.write("There is a problem in the FHIR Server.\n");
-			status.write("HTTP I/O connection error executing request: " + getRequest.getRequestLine() + " - " + e.getMessage() + "\n");
-			errors = true;
-		}
-		return !errors;
 	}
 
 	/**
@@ -559,38 +426,6 @@ public class TerminologyService {
 			translatedSomething = true;
 		}
 		return translatedSomething;
-	}
-
-	/**
-	 * Extract the resource type from the given JSON object.
-	 * 
-	 * @param json the json resource
-	 * @return the resource type or null if not found
-	 */
-	private String getResourceType(JsonNode json) {
-		JsonNode resourceType = json.findValue(RESOURCE_TYPE_OBJECT);
-		if (resourceType == null) {
-			return null;
-		}
-		return resourceType.asText();
-	}
-
-	/**
-	 * Determines whether the given {@link JsonNode} represents a FHIR Bundle
-	 *  
-	 * @param jsonNode the json to check
-	 * @return true if the 'resourceType' of the given FHIR resource is Bundle, false otherwise
-	 * @throws DeIdentifierException if the given JSON is not a valid FHIR resource 
-	 */
-	private boolean isBundle(JsonNode jsonNode) throws TerminologyServiceException {
-		return getResourceType(jsonNode).equals(BUNDLE_TYPE);
-	}
-	
-	/**
-	 * @return the fhirClient used by this {@link TerminologyService}
-	 */
-	public IGenericClient getFhirClient() {
-		return fhirClient;
 	}
 
 	/**

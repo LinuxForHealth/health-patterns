@@ -31,14 +31,13 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.After;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.ibm.healthpatterns.core.FHIRService;
+import com.ibm.healthpatterns.core.FHIRServiceTest;
 
 /**
  * This test runs the {@link TerminologyService} against a real FHIR server dedicated 
@@ -49,46 +48,17 @@ import com.fasterxml.jackson.databind.JsonNode;
  *  
  * @author Luis A. García
  */
-public class TerminologyServiceTest {
+public class TerminologyServiceTest extends FHIRServiceTest {
 
 	private TerminologyService terminology;
-	private List<String> createdResources;
 	
-	private String fhirURL;
-	private String fhirUsername;
-	private String fhirPassword;
-
 	/**
 	 * 
 	 */
 	public TerminologyServiceTest() {
-		// This URL is for two IBM Cloud services that we setup specifically to run these tests
-		fhirURL = "http://4603f72b-us-south.lb.appdomain.cloud/fhir-server/api/v4";
-		fhirUsername = "fhiruser";
-		fhirPassword = "integrati0n";
 		terminology = new TerminologyService(fhirURL, fhirUsername, fhirPassword);
-		createdResources = new ArrayList<String>();
 	}
 
-	/**
-	 * Clean up the FHIR resources created by this test 
-	 */
-	@After
-	public void cleanUpFHIR() {
-		for (String uri : createdResources) {
-			String[] uriElements = uri.split("/");
-			String id = uriElements[uriElements.length - 1];
-			String type = uriElements[uriElements.length - 2];
-			System.out.println("Deleting " + type + " resource " + id);
-			terminology.getFhirClient()
-					.delete()
-					.resourceById(type, id)
-					.execute();
-		}
-		System.out.println("------------------");
-		System.out.println();
-	}
-	
 	/**
 	 * Test method for {@link com.ibm.healthpatterns.terminology.TerminologyService#healthCheck(java.io.StringWriter)}.
 	 */
@@ -131,7 +101,7 @@ public class TerminologyServiceTest {
 	 * @throws TerminologyServiceException 
 	 */
 	@Test
-	public void testTranslateResource() throws IOException, TerminologyServiceException{
+	public void testTranslateResource() throws IOException, TerminologyServiceException {
 		// This first pass tests (in addition to the actual translation) 
 		// the path were the FHIR Terminology Service resources are installed from scratch on the FHIR server
 		Path jsonFile = Paths.get("src/test/resources/Antonia30_Acosta403_Patient.json");
@@ -241,6 +211,14 @@ public class TerminologyServiceTest {
 	public void testTranslateBadJSON() throws IOException, TerminologyServiceException {
 		InputStream inputStream = IOUtils.toInputStream("some bad JSON", Charset.forName("UTF-8"));
 		terminology.translate(inputStream);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ibm.healthpatterns.core.FHIRServiceTest#getFHIRService()
+	 */
+	@Override
+	protected FHIRService getFHIRService() {
+		return terminology;
 	}
 	
 }
