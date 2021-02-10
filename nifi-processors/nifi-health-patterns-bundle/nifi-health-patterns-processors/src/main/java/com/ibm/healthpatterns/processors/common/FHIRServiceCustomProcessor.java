@@ -16,32 +16,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ibm.healthpatterns.deid;
+package com.ibm.healthpatterns.processors.common;
 
-import com.ibm.healthpatterns.core.FHIRServiceException;
+import com.ibm.healthpatterns.core.FHIRService;
 
 /**
+ * An custom processor that will use a {@link FHIRService}.
+ * 
  * @author Luis A. García
  */
-public class DeIdentifierException extends FHIRServiceException {
+public interface FHIRServiceCustomProcessor {
 
 	/**
-	 * 
+	 * @return the {@link FHIRService} used by this {@link FHIRService}
 	 */
-	private static final long serialVersionUID = -2447683821098809222L;
-
-	/**
-	 * @param msg
-	 */
-	public DeIdentifierException(String msg) {
-		super(msg);
-	}
-
-	/**
-	 * @param msg 
-	 * @param cause 
-	 */
-	public DeIdentifierException(String msg, Exception cause) {
-		super(msg, cause);
-	}
+	public FHIRService getFHIRService();
 }
