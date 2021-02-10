@@ -57,6 +57,8 @@ import org.apache.nifi.processor.util.StandardValidators;
 import org.apache.nifi.util.FormatUtils;
 import org.apache.nifi.util.StopWatch;
 
+import com.ibm.healthpatterns.core.FHIRService;
+import com.ibm.healthpatterns.processors.common.FHIRServiceCustomProcessor;
 import com.ibm.healthpatterns.terminology.TerminologyService;
 import com.ibm.healthpatterns.terminology.TerminologyServiceException;
 import com.ibm.healthpatterns.terminology.Translation;
@@ -71,7 +73,7 @@ import com.ibm.healthpatterns.terminology.Translation;
 @InputRequirement(Requirement.INPUT_REQUIRED)
 @WritesAttributes({
 	@WritesAttribute(attribute = FHIRConceptMapTranslate.TRANSLATED_ATTRIBUTE, description = "A boolean property that will get set to true when a translation occurred.")})
-public class FHIRConceptMapTranslate extends AbstractProcessor {
+public class FHIRConceptMapTranslate extends AbstractProcessor implements FHIRServiceCustomProcessor {
 
 	/**
 	 * A boolean attribute that gets set with translation status.
@@ -247,5 +249,13 @@ public class FHIRConceptMapTranslate extends AbstractProcessor {
 	 */
 	TerminologyService getTerminologyService() {
 		return terminologyService;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ibm.healthpatterns.processors.common.FHIRServiceCustomProcessor#getFHIRService()
+	 */
+	@Override
+	public FHIRService getFHIRService() {
+		return getTerminologyService();
 	}
 }

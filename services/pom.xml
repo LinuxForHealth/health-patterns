@@ -35,8 +35,9 @@
     </properties>
 
     <modules>
+        <module>common</module>        
         <module>deid-core</module>
-        <module>terminology-service-core</module>        
+        <module>terminology-service-core</module>
     </modules>
     
     <dependencies>
@@ -72,6 +73,14 @@
 			<artifactId>hapi-fhir-structures-r4</artifactId>
 			<version>${hapi.fhir.version}</version>
 		</dependency>
+
+        <!-- JSON Parsing -->
+       <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+          <version>2.11.2</version>
+       </dependency>
+
 
         <!-- Logging dependencies -->
 		<dependency>

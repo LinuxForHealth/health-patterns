@@ -61,9 +61,11 @@ import org.apache.nifi.util.FormatUtils;
 import org.apache.nifi.util.StopWatch;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.ibm.healthpatterns.core.FHIRService;
 import com.ibm.healthpatterns.deid.DeIdentification;
 import com.ibm.healthpatterns.deid.DeIdentifier;
 import com.ibm.healthpatterns.deid.DeIdentifierException;
+import com.ibm.healthpatterns.processors.common.FHIRServiceCustomProcessor;
 
 /**
  * Custom processor to deidentify a FHIR resource and save it to a FHIR server.
@@ -76,7 +78,7 @@ import com.ibm.healthpatterns.deid.DeIdentifierException;
 @WritesAttributes({
 	@WritesAttribute(attribute = DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE, description = "The HTTP Location header returned by the FHIR server when a resource is created"),
 	@WritesAttribute(attribute = DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE , description = "All FlowFiles produced from the deidentifying and persisting the same parent FlowFile will have the same randomly generated UUID added for this attribute")})
-public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
+public class DeIdentifyAndPostToFHIR extends AbstractProcessor implements FHIRServiceCustomProcessor {
 
 	/**
 	 * The MIME Type attribute
@@ -324,7 +326,15 @@ public class DeIdentifyAndPostToFHIR extends AbstractProcessor {
 	/**
 	 * @return the deidentifiers used by this custom processor
 	 */
-	DeIdentifier getDeidentifier() {
+	public DeIdentifier getDeidentifier() {
 		return deid;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ibm.healthpatterns.processors.common.FHIRServiceCustomProcessor#getFHIRService()
+	 */
+	@Override
+	public FHIRService getFHIRService() {
+		return getDeidentifier();
 	}
 }

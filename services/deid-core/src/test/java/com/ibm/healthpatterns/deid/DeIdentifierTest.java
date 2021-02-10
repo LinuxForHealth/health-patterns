@@ -32,14 +32,14 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.After;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.ibm.healthpatterns.core.FHIRService;
+import com.ibm.healthpatterns.core.FHIRServiceTest;
 
 /**
  * This test runs the {@link DeIdentifier} against a real de-id service and FHIR server dedicated 
@@ -50,48 +50,19 @@ import com.fasterxml.jackson.databind.JsonNode;
  *  
  * @author Luis A. García
  */
-public class DeIdentifierTest {
+public class DeIdentifierTest extends FHIRServiceTest {
 
 	private DeIdentifier deid;
-	private List<String> createdResources;
-	
 	private String deidURL;
-	private String fhirURL;
-	private String fhirUsername;
-	private String fhirPassword;
-
+	
 	/**
 	 * 
 	 */
 	public DeIdentifierTest() {
-		// These URLs are for two IBM Cloud services that we setup specifically to run these tests
 		deidURL = "http://3a5d0fa4-us-south.lb.appdomain.cloud:8080/api/v1";
-		fhirURL = "http://4603f72b-us-south.lb.appdomain.cloud/fhir-server/api/v4";
-		fhirUsername = "fhiruser";
-		fhirPassword = "integrati0n";
 		deid = new DeIdentifier(deidURL, fhirURL, fhirUsername, fhirPassword);
-		createdResources = new ArrayList<String>();
 	}
 
-	/**
-	 * Clean up the FHIR resources created by this test 
-	 */
-	@After
-	public void cleanUpFHIR() {
-		for (String uri : createdResources) {
-			String[] uriElements = uri.split("/");
-			String id = uriElements[uriElements.length - 3];
-			String type = uriElements[uriElements.length - 4];
-			System.out.println("Deleting " + type + " resource " + id);
-			deid.getFhirClient()
-					.delete()
-					.resourceById(type, id)
-					.execute();
-		}
-		System.out.println("------------------");
-		System.out.println();
-	}
-	
 	/**
 	 * Test method for {@link com.ibm.healthpatterns.deid.DeIdentifier#healthCheck(java.io.StringWriter)}.
 	 */
@@ -220,5 +191,12 @@ public class DeIdentifierTest {
 		InputStream inputStream = IOUtils.toInputStream("some bad JSON", Charset.forName("UTF-8"));
 		deid.deIdentify(inputStream);
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see com.ibm.healthpatterns.core.FHIRServiceTest#getFHIRService()
+	 */
+	@Override
+	protected FHIRService getFHIRService() {
+		return deid;
+	}
 }

@@ -23,18 +23,17 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibm.healthpatterns.processors.common.FHIRCustomProcessorTest;
+import com.ibm.healthpatterns.processors.common.FHIRServiceCustomProcessor;
 
 /**
  * This test runs the custom process against a real FHIR server dedicated to ensure the functionality here works.
@@ -44,28 +43,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 
  * @author Luis A. García
  */
-public class FHIRConceptMapTranslateTest {
+public class FHIRConceptMapTranslateTest extends FHIRCustomProcessorTest {
 
 	private TestRunner testRunner;
 
-	private String fhirURL;
-	private String fhirUsername;
-	private String fhirPassword;
-
-	private List<String> createdResources;
-
 	private FHIRConceptMapTranslate customProcessor;
-
-	/**
-	 * 
-	 */
-	public FHIRConceptMapTranslateTest() {
-		// These URLs are for two IBM Cloud services that we setup specifically to run these tests 
-		fhirURL = "http://4603f72b-us-south.lb.appdomain.cloud/fhir-server/api/v4";
-		fhirUsername = "fhiruser";
-		fhirPassword = "integrati0n";
-		createdResources = new ArrayList<String>();
-	}
 
 	/**
 	 * @throws IOException 
@@ -75,27 +57,6 @@ public class FHIRConceptMapTranslateTest {
 	public void init() throws IOException {
 		customProcessor = new FHIRConceptMapTranslate();
 		testRunner = TestRunners.newTestRunner(customProcessor);
-	}
-
-	/**
-	 * @throws IOException 
-	 * 
-	 */
-	@After
-	public void cleanUpFHIR() throws IOException {
-		for (String uri : createdResources) {
-			String[] uriElements = uri.split("/");
-			String id = uriElements[uriElements.length - 1];
-			String type = uriElements[uriElements.length - 2];
-			System.out.println("Deleting " + type + " resource " + id);
-			customProcessor.getTerminologyService()
-				.getFhirClient()
-				.delete()
-				.resourceById(type, id)
-				.execute();
-		}
-		System.out.println("------------------");
-		System.out.println();    	
 	}
 
 	/**
@@ -217,6 +178,14 @@ public class FHIRConceptMapTranslateTest {
 		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_USERNAME, fhirUsername);
 		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertValid();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ibm.healthpatterns.processors.common.FHIRCustomProcessorTest#getCustomProcessor()
+	 */
+	@Override
+	public FHIRServiceCustomProcessor getCustomProcessor() {
+		return customProcessor;
 	}
 
 }
