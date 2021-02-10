@@ -123,17 +123,17 @@
             "applicationName": "fhir-bulkimportexport-webapp",
             "moduleName": "fhir-bulkimportexport.war",
             "jobParameters": {
-                "cos.bucket.name": "healthpatternsfhir",
-                "cos.location": "us-east",
-                "cos.endpoint.internal": "s3.us-east.cloud-object-storage.appdomain.cloud",
+                "cos.bucket.name": "{{.Values.bulkexportconfig.cosbucketname}}",
+                "cos.location": "{{.Values.bulkexportconfig.coslocation}}",
+                "cos.endpoint.internal": "{{.Values.bulkexportconfig.cosendpointinternal}}",
                 "cos.credential.ibm": "Y",
-                "cos.api.key": "ubrZ_dvjkT9lz0b4skztzvYr2TOBPSZuUNb5nt7p2Xos",
-                "cos.srvinst.id": "crn:v1:bluemix:public:iam-identity::a/6694a1bda7d84197b130c3ea87ef3e77::serviceid:ServiceId-6df6ddec-246e-4d83-afc0-0336f4d3d2c8"
+                "cos.api.key": "{{.Values.bulkexportconfig.cosapikey}}",
+                "cos.srvinst.id": "{{.Values.bulkexportconfig.cossrvinstid}}"
             },
             "implementation_type": "cos",
             "batch-uri": "https://localhost:9443/ibm/api/batch/jobinstances",
             "batch-user": "fhiradmin",
-            "batch-user-password": "integrati0n",
+            "batch-user-password": "{{.Values.bulkexportconfig.batchuserpw}}",
             "batch-truststore": "resources/security/fhirTrustStore.p12",
             "batch-truststore-password": "change-password",
             "isExportPublic": true,

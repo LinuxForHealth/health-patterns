@@ -95,6 +95,40 @@ kube-prometheus-stack.enabled
 
 It is important to note that due to a limitation in grafana that causes multi-install collisions, only one instance of the chart should be installed when the monitoring solution is turned on.
 
+## Bulk Export configuration
+
+It is possible to configure the Fhir server to allow bulk export.  For this to happen, there are a number of prerequisites that must be completed.  Bulk export assumes that the export artifact will be placed in a Cloud Object Store bucket.  You will need to create a bucket and set up service credentials for access.  In addition, you will need to configure a fhirTrustStore file to include new information for your particular cos endpoint.
+
+### Bucket and Credentials
+
+1. Create a cloud object store resource
+1. Create a new bucket for export artifacts within that resource (make a note of the bucket name for later)
+1. Click on configuration to find the public endpoint and the location (make a note of the endpoint and the location for later)
+1. Click on Service Credentials and choose New Credential. Pick a name and choose writer. Open the new credential (make a note of the apikey and the iam_serviceid_crn for later)
+
+### fhirTrustStore
+
+In the helm chart, navigate to `clinical-ingestion/helm-charts/alvearie-ingestion/charts/fhir/binaryconfig/` where you will find a file called `fhirTrustStore.p12`.  In order for fhir to communicate with cos you need to update this file with certificate information from your cos endpoint.  Execute the bash command below to get and store the cos certificate relative to your endpoint:
+
+`echo "" | openssl s_client -showcerts -prexit -connect <YOUR ENDPOINT>:443 2> /dev/null | sed -n -e '/BEGIN CERTIFICATE/,/END CERTIFICATE/ p' > out.pem`
+
+where <YOUR ENDPOINT> is the endpoint noted above.  The result is stored in a file called `out.pen`.  Now, we will update the p12 file with this new information.  The following command will take the contents of the `out.pem` file and add them to the `fhirTrustStore.p12` file.
+
+`keytool -importcert -noprompt  -keystore fhirTrustStore.p12  -storepass change-password -alias my-host -file out.pem`
+
+### Update the values.yaml file to configure bulk Export
+
+In the `values.yaml` file for the helm chart, locate the `bulkexportconfig` section under the FHIR Configuration.  Fill in the values using the the information you noted above
+
+  `cosbucketname` The bucket name you chose
+  `coslocation` The region (for example, us-east)
+  `cosendpointinternal` The cos endpoint from the bucket config
+  `cosapikey` The api key from your service credentials
+  `cossrvinstid` The srv instance id from your service credentials
+  `batchuserpw` The fhirAdmin user password
+
+Save the file and you are ready to install the chart using the instructions above.
+
 ## Contributing
 
 Feel free to contribute by making a [pull request](https://github.com/Alvearie/health-patterns/pull/new/master).
