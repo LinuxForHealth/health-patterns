@@ -123,17 +123,17 @@
             "applicationName": "fhir-bulkimportexport-webapp",
             "moduleName": "fhir-bulkimportexport.war",
             "jobParameters": {
-                "cos.bucket.name": "{{.Values.bulkexportconfig.cosbucketname}}",
-                "cos.location": "{{.Values.bulkexportconfig.coslocation}}",
-                "cos.endpoint.internal": "{{.Values.bulkexportconfig.cosendpointinternal}}",
+                "cos.bucket.name": "{{.Values.bulkExportConfig.cosBucketName}}",
+                "cos.location": "{{.Values.bulkExportConfig.cosLocation}}",
+                "cos.endpoint.internal": "{{.Values.bulkExportConfig.cosEndpointInternal}}",
                 "cos.credential.ibm": "Y",
-                "cos.api.key": "{{.Values.bulkexportconfig.cosapikey}}",
-                "cos.srvinst.id": "{{.Values.bulkexportconfig.cossrvinstid}}"
+                "cos.api.key": "{{.Values.bulkExportConfig.cosApikey}}",
+                "cos.srvinst.id": "{{.Values.bulkExportConfig.cosSrvinstid}}"
             },
             "implementation_type": "cos",
             "batch-uri": "https://localhost:9443/ibm/api/batch/jobinstances",
             "batch-user": "fhiradmin",
-            "batch-user-password": "{{.Values.bulkexportconfig.batchuserpw}}",
+            "batch-user-password": "{{.Values.bulkExportConfig.batchUserPw}}",
             "batch-truststore": "resources/security/fhirTrustStore.p12",
             "batch-truststore-password": "change-password",
             "isExportPublic": true,

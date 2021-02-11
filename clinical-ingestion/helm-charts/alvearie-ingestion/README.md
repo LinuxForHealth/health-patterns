@@ -97,16 +97,17 @@ It is important to note that due to a limitation in grafana that causes multi-in
 
 ## Bulk Export configuration
 
-It is possible to configure the Fhir server to allow bulk export.  For this to happen, there are a number of prerequisites that must be completed.  Bulk export assumes that the export artifact will be placed in a Cloud Object Store bucket.  You will need to create a bucket and set up service credentials for access.  In addition, you will need to configure a fhirTrustStore file to include new information for your particular cos endpoint.
+It is possible to configure the Fhir server to allow bulk export.  For this to happen, there are a number of prerequisites that must be completed.  Bulk export assumes that the export artifact will be placed in a Cloud Object Store bucket.  You will need to create a bucket and set up service credentials for access.  In addition, you will need to configure a PKCS Trust Store file to include new information for your particular cos endpoint.
 
 ### Bucket and Credentials
+#### Note that these instructions target IBM Cloud Object Store but other cloud storage will work as well (details will vary)
 
 1. Create a cloud object store resource
-1. Create a new bucket for export artifacts within that resource (make a note of the bucket name for later)
-1. Click on configuration to find the public endpoint and the location (make a note of the endpoint and the location for later)
-1. Click on Service Credentials and choose New Credential. Pick a name and choose writer. Open the new credential (make a note of the apikey and the iam_serviceid_crn for later)
+1. Create a new bucket for export artifacts within that resource (make a note of the `bucket name` for later)
+1. Click on configuration to find the public endpoint and the location (make a note of the `endpoint` and the `location` for later)
+1. Click on Service Credentials and choose New Credential. Pick a name and choose writer. Open the new credential (make a note of the `apikey` and the `iam_serviceid_crn` for later)
 
-### fhirTrustStore
+### Setting up the PKCS Trust Store
 
 In the helm chart, navigate to `clinical-ingestion/helm-charts/alvearie-ingestion/charts/fhir/binaryconfig/` where you will find a file called `fhirTrustStore.p12`.  In order for fhir to communicate with cos you need to update this file with certificate information from your cos endpoint.  Execute the bash command below to get and store the cos certificate relative to your endpoint:
 
@@ -114,20 +115,24 @@ In the helm chart, navigate to `clinical-ingestion/helm-charts/alvearie-ingestio
 
 where `YOUR ENDPOINT` is the endpoint noted above.  The result is stored in a file called `out.pem`.  Now, we will update the p12 file with this new information.  The following command will take the contents of the `out.pem` file and add them to the `fhirTrustStore.p12` file.
 
-`keytool -importcert -noprompt  -keystore fhirTrustStore.p12  -storepass change-password -alias my-host -file out.pem`
+```bash
+keytool -importcert -noprompt \
+           -keystore fhirTrustStore.p12  -storepass change-password \
+           -alias my-host -file out.pem
+```
 
 After the update, delete the `out.pem` file from the `binaryconfig` directory.
 
-### Update the values.yaml file to configure bulk Export
+### Update Chart Configuration to Setup Bulk Export
 
-In the `values.yaml` file for the helm chart, locate the `bulkexportconfig` section under the FHIR Configuration.  Fill in the values using the the information you noted above.
+In the `values.yaml` file for the helm chart, locate the `bulkExportConfig` section under the FHIR Configuration.  Fill in the values using the the information you noted above.
 
-  - `cosbucketname` The bucket name you chose
-  - `coslocation` The region (for example, us-east)
-  - `cosendpointinternal` The cos endpoint from the bucket config
-  - `cosapikey` The api key from your service credentials
-  - `cossrvinstid` The srv instance id from your service credentials
-  - `batchuserpw` The fhirAdmin user password
+  - `cosBucketName` The bucket name you chose
+  - `cosLocation` The region (for example, us-east)
+  - `cosEndpointInternal` The cos endpoint from the bucket config
+  - `cosApikey` The api key from your service credentials
+  - `cosSrvinstid` The srv instance id from your service credentials
+  - `batchUserPw` The fhirAdmin user password
 
 Save the file and you are ready to install the chart using the instructions above.
 

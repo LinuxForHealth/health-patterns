@@ -53,13 +53,13 @@ notifications:
     bootstrapServers: ""
     password: ""
 
-bulkexportconfig:
-    cosbucketname: fhir-r4-connectathon
-    coslocation: us
-    cosendpointinternal: fake
-    cosapikey: fake
-    cossrvinstid: fake
-    batchuserpw: change-password
+bulkExportConfig:
+    cosBucketName: fhir-r4-connectathon
+    cosLocation: us
+    cosEndpointInternal: fake
+    cosApikey: fake
+    cosSrvinstid: fake
+    batchUserPw: change-password
 
 initContainers:
   # fhir-init:  # <- will be used as container name

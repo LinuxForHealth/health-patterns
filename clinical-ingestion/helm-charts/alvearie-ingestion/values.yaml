@@ -44,13 +44,13 @@ fhir:
       value: '600s'
 
 ## Configure these to allow bulk access from fhir server
-#  bulkexportconfig:
-#    cosbucketname: yourbucketnamehere
-#    coslocation: yourcosregion
-#    cosendpointinternal: yourbucketendpointhere
-#    cosapikey: yourcosapikey
-#    cossrvinstid: yourcossrvinstid
-#    batchuserpw: youradminpw
+#  bulkExportConfig:
+#    cosBucketName: yourbucketnamehere
+#    cosLocation: yourcosregion
+#    cosEndpointInternal: yourbucketendpointhere
+#    cosApikey: yourcosapikey
+#    cosSrvinstid: yourcossrvinstid
+#    batchUserPw: youradminpw
 
 fhir-deid:
   enabled: false
@@ -60,13 +60,13 @@ fhir-deid:
       value: '600s'
 
 ## Configure these to allow bulk access from fhir-deid server
-#  bulkexportconfig:
-#    cosbucketname: yourbucketnamehere
-#    coslocation: yourcosregion
-#    cosendpointinternal: yourbucketendpointhere
-#    cosapikey: yourcosapikey
-#    cossrvinstid: yourcossrvinstid
-#    batchuserpw: youradminpw
+#  bulkExportConfig:
+#    cosBucketName: yourbucketnamehere
+#    cosLocation: yourcosregion
+#    cosEndpointInternal: yourbucketendpointhere
+#    cosApikey: yourcosapikey
+#    cosSrvinstid: yourcossrvinstid
+#    batchUserPw: youradminpw
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
