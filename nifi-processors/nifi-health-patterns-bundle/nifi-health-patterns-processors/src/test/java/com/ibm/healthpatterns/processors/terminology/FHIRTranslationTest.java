@@ -43,11 +43,11 @@ import com.ibm.healthpatterns.processors.common.FHIRServiceCustomProcessor;
  * 
  * @author Luis A. García
  */
-public class FHIRConceptMapTranslateTest extends FHIRCustomProcessorTest {
+public class FHIRTranslationTest extends FHIRCustomProcessorTest {
 
 	private TestRunner testRunner;
 
-	private FHIRConceptMapTranslate customProcessor;
+	private FHIRTranslation customProcessor;
 
 	/**
 	 * @throws IOException 
@@ -55,7 +55,7 @@ public class FHIRConceptMapTranslateTest extends FHIRCustomProcessorTest {
 	 */
 	@Before
 	public void init() throws IOException {
-		customProcessor = new FHIRConceptMapTranslate();
+		customProcessor = new FHIRTranslation();
 		testRunner = TestRunners.newTestRunner(customProcessor);
 	}
 
@@ -64,21 +64,21 @@ public class FHIRConceptMapTranslateTest extends FHIRCustomProcessorTest {
 	 */
 	@Test
 	public void testRunBundle() throws IOException {
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_URL, fhirURL);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_USERNAME, fhirUsername);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_PASSWORD, fhirPassword);
+		testRunner.setProperty(FHIRTranslation.FHIR_URL, fhirURL);
+		testRunner.setProperty(FHIRTranslation.FHIR_USERNAME, fhirUsername);
+		testRunner.setProperty(FHIRTranslation.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertValid();
 
 		Path input = Paths.get("src/test/resources/Antonia30_Acosta403_Bundle.json");
 		testRunner.enqueue(input);
 		testRunner.run();
-		testRunner.assertAllFlowFilesTransferred(FHIRConceptMapTranslate.SUCCESS);
+		testRunner.assertAllFlowFilesTransferred(FHIRTranslation.SUCCESS);
 
 		// We check that the contents of the flow file are not empty 
-		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(FHIRConceptMapTranslate.SUCCESS).get(0);
+		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(FHIRTranslation.SUCCESS).get(0);
 		String flowFileContent = successFlowFile.getContent();
 		assertFalse(flowFileContent.isEmpty());
-		successFlowFile.assertAttributeEquals(FHIRConceptMapTranslate.TRANSLATED_ATTRIBUTE, "true");
+		successFlowFile.assertAttributeEquals(FHIRTranslation.TRANSLATED_ATTRIBUTE, "true");
 		
 		// We check that there are some provenance events because the contents of the flow file were modified
 		assertFalse(testRunner.getProvenanceEvents().isEmpty());
@@ -99,21 +99,21 @@ public class FHIRConceptMapTranslateTest extends FHIRCustomProcessorTest {
 	 */
 	@Test
 	public void testRunResource() throws IOException {
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_URL, fhirURL);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_USERNAME, fhirUsername);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_PASSWORD, fhirPassword);
+		testRunner.setProperty(FHIRTranslation.FHIR_URL, fhirURL);
+		testRunner.setProperty(FHIRTranslation.FHIR_USERNAME, fhirUsername);
+		testRunner.setProperty(FHIRTranslation.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertValid();
 
 		Path input = Paths.get("src/test/resources/Antonia30_Acosta403_Patient.json");
 		testRunner.enqueue(input);
 		testRunner.run();
-		testRunner.assertAllFlowFilesTransferred(FHIRConceptMapTranslate.SUCCESS);
+		testRunner.assertAllFlowFilesTransferred(FHIRTranslation.SUCCESS);
 
 		// We check that the contents of the flow file are not empty 
-		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(FHIRConceptMapTranslate.SUCCESS).get(0);
+		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(FHIRTranslation.SUCCESS).get(0);
 		String flowFileContent = successFlowFile.getContent();
 		assertFalse(flowFileContent.isEmpty());
-		successFlowFile.assertAttributeEquals(FHIRConceptMapTranslate.TRANSLATED_ATTRIBUTE, "true");
+		successFlowFile.assertAttributeEquals(FHIRTranslation.TRANSLATED_ATTRIBUTE, "true");
 
 		// We check that there are some provenance events because the contents of the flow file were modified
 		assertFalse(testRunner.getProvenanceEvents().isEmpty());
@@ -134,21 +134,21 @@ public class FHIRConceptMapTranslateTest extends FHIRCustomProcessorTest {
 	 */
 	@Test
 	public void testRunNothingToTranslate() throws IOException {
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_URL, fhirURL);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_USERNAME, fhirUsername);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_PASSWORD, fhirPassword);
+		testRunner.setProperty(FHIRTranslation.FHIR_URL, fhirURL);
+		testRunner.setProperty(FHIRTranslation.FHIR_USERNAME, fhirUsername);
+		testRunner.setProperty(FHIRTranslation.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertValid();
 
 		Path input = Paths.get("src/test/resources/Nothing_To_Translate_Patient.json");
 		testRunner.enqueue(input);
 		testRunner.run();
-		testRunner.assertAllFlowFilesTransferred(FHIRConceptMapTranslate.SUCCESS);
+		testRunner.assertAllFlowFilesTransferred(FHIRTranslation.SUCCESS);
 
 		// The flow file must be identical to the input flow file and there should be no provenance events
 		assertTrue(testRunner.getProvenanceEvents().isEmpty());
-		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(FHIRConceptMapTranslate.SUCCESS).get(0);
+		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(FHIRTranslation.SUCCESS).get(0);
 		successFlowFile.assertContentEquals(input);
-		successFlowFile.assertAttributeEquals(FHIRConceptMapTranslate.TRANSLATED_ATTRIBUTE, "false");
+		successFlowFile.assertAttributeEquals(FHIRTranslation.TRANSLATED_ATTRIBUTE, "false");
 
 		// Save the resource locations so we can clean up the FHIR server
 		createdResources.addAll(customProcessor.getTerminologyService().getInstalledResources());
@@ -159,14 +159,14 @@ public class FHIRConceptMapTranslateTest extends FHIRCustomProcessorTest {
 	 */
 	@Test
 	public void testRunBadInput() throws IOException {
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_URL, fhirURL);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_USERNAME, fhirUsername);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_PASSWORD, fhirPassword);
+		testRunner.setProperty(FHIRTranslation.FHIR_URL, fhirURL);
+		testRunner.setProperty(FHIRTranslation.FHIR_USERNAME, fhirUsername);
+		testRunner.setProperty(FHIRTranslation.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertValid();
 
 		testRunner.enqueue("a bad file that isn't JSON");
 		testRunner.run();
-		testRunner.assertAllFlowFilesTransferred(FHIRConceptMapTranslate.FAILURE);
+		testRunner.assertAllFlowFilesTransferred(FHIRTranslation.FAILURE);
 	}
 
 	/**
@@ -174,9 +174,9 @@ public class FHIRConceptMapTranslateTest extends FHIRCustomProcessorTest {
 	 */
 	@Test
 	public void testValidate() throws IOException {
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_URL, fhirURL);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_USERNAME, fhirUsername);
-		testRunner.setProperty(FHIRConceptMapTranslate.FHIR_PASSWORD, fhirPassword);
+		testRunner.setProperty(FHIRTranslation.FHIR_URL, fhirURL);
+		testRunner.setProperty(FHIRTranslation.FHIR_USERNAME, fhirUsername);
+		testRunner.setProperty(FHIRTranslation.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertValid();
 	}
 

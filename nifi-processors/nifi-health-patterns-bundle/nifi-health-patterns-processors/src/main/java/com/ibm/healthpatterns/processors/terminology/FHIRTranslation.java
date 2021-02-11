@@ -72,8 +72,8 @@ import com.ibm.healthpatterns.terminology.Translation;
 @CapabilityDescription("Runs a FHIR ConceptMap $translate operation on the given FHIR resources.")
 @InputRequirement(Requirement.INPUT_REQUIRED)
 @WritesAttributes({
-	@WritesAttribute(attribute = FHIRConceptMapTranslate.TRANSLATED_ATTRIBUTE, description = "A boolean property that will get set to true when a translation occurred.")})
-public class FHIRConceptMapTranslate extends AbstractProcessor implements FHIRServiceCustomProcessor {
+	@WritesAttribute(attribute = FHIRTranslation.TRANSLATED_ATTRIBUTE, description = "A boolean property that will get set to true when a translation occurred.")})
+public class FHIRTranslation extends AbstractProcessor implements FHIRServiceCustomProcessor {
 
 	/**
 	 * A boolean attribute that gets set with translation status.

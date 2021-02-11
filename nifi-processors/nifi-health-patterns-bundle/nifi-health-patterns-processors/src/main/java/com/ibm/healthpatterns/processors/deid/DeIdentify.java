@@ -76,9 +76,9 @@ import com.ibm.healthpatterns.processors.common.FHIRServiceCustomProcessor;
 @CapabilityDescription("De-identifies the given FHIR resources and adds them to a designated FHIR server.")
 @InputRequirement(Requirement.INPUT_REQUIRED)
 @WritesAttributes({
-	@WritesAttribute(attribute = DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE, description = "The HTTP Location header returned by the FHIR server when a resource is created"),
-	@WritesAttribute(attribute = DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE , description = "All FlowFiles produced from the deidentifying and persisting the same parent FlowFile will have the same randomly generated UUID added for this attribute")})
-public class DeIdentifyAndPostToFHIR extends AbstractProcessor implements FHIRServiceCustomProcessor {
+	@WritesAttribute(attribute = DeIdentify.LOCATION_ATTRIBUTE, description = "The HTTP Location header returned by the FHIR server when a resource is created"),
+	@WritesAttribute(attribute = DeIdentify.DEID_TRANSACTION_ID_ATTRIBUTE , description = "All FlowFiles produced from the deidentifying and persisting the same parent FlowFile will have the same randomly generated UUID added for this attribute")})
+public class DeIdentify extends AbstractProcessor implements FHIRServiceCustomProcessor {
 
 	/**
 	 * The MIME Type attribute
