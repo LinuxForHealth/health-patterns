@@ -57,7 +57,7 @@ import javax.net.ssl.HttpsURLConnection;
  * The outgoing flowfiles contain the extracted JSON data for each resource
  *
  */
-@Tags({"ACDprocessor"})
+@Tags({"acd", "nlp", "ibm", "alvearie"})
 public class ACDProcessor extends AbstractProcessor {
 
     // constants for resource property

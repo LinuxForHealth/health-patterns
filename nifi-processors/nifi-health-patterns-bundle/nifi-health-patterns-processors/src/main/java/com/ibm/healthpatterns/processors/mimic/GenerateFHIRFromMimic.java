@@ -42,7 +42,7 @@ import de.uzl.itcr.mimic2fhir.work.Config;
  * @author AdamClark
  */
 @SupportsBatching
-@Tags({ "GenerateFHIRFromMimic" })
+@Tags({"fhir", "mimic", "ibm", "alvearie"})
 @InputRequirement(Requirement.INPUT_FORBIDDEN)
 @CapabilityDescription("This processor creates FlowFiles with FHIR resources, based on the current data stored in the target Mimic database")
 public class GenerateFHIRFromMimic extends AbstractProcessor {
