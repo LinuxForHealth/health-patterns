@@ -112,9 +112,11 @@ In the helm chart, navigate to `clinical-ingestion/helm-charts/alvearie-ingestio
 
 `echo "" | openssl s_client -showcerts -prexit -connect <YOUR ENDPOINT>:443 2> /dev/null | sed -n -e '/BEGIN CERTIFICATE/,/END CERTIFICATE/ p' > out.pem`
 
-where `YOUR ENDPOINT` is the endpoint noted above.  The result is stored in a file called `out.pen`.  Now, we will update the p12 file with this new information.  The following command will take the contents of the `out.pem` file and add them to the `fhirTrustStore.p12` file.
+where `YOUR ENDPOINT` is the endpoint noted above.  The result is stored in a file called `out.pem`.  Now, we will update the p12 file with this new information.  The following command will take the contents of the `out.pem` file and add them to the `fhirTrustStore.p12` file.
 
 `keytool -importcert -noprompt  -keystore fhirTrustStore.p12  -storepass change-password -alias my-host -file out.pem`
+
+After the update, delete the `out.pem` file from the `binaryconfig` directory.
 
 ### Update the values.yaml file to configure bulk Export
 
