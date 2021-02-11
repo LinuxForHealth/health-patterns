@@ -1,7 +1,6 @@
 # health-patterns
 health-patterns is a collection of documentation and reference implementations that highlight how to combine various technologies into meaningful patterns for healthcare.
 
-
 The initial focus will be on 2 patterns for clinical data:
 1) **Clinical Data _Ingestion_**
 2) **Clinical Data _Enrichment_**
@@ -9,8 +8,6 @@ The initial focus will be on 2 patterns for clinical data:
 with subsequent focus on Clinical Data Access and Data analytics.  
 
 ### Learn more about these patterns and our [roadmap here](docs/roadmap.md)
-
-
 
 Components currently used by health-patterns clinical data ingestion reference implementation
 
@@ -42,4 +39,8 @@ Components currently used by health-patterns clinical data ingestion reference i
 - [Jupyter](https://jupyter.org/) The Jupyter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Uses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more.
 
 
+#### Current Build Status
 
+![Lint and Test Charts](https://github.com/Alvearie/health-patterns/workflows/Lint%20and%20Test%20Charts/badge.svg)
+
+![Java CI with Maven](https://github.com/Alvearie/health-patterns/workflows/Java%20CI%20with%20Maven/badge.svg)

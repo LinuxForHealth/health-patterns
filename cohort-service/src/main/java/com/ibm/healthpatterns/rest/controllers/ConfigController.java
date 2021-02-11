@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibm.cohort.engine.FhirServerConfig;
+import com.ibm.cohort.fhir.client.config.FhirServerConfig;
 import com.ibm.healthpatterns.app.CohortService;
 
 /**
