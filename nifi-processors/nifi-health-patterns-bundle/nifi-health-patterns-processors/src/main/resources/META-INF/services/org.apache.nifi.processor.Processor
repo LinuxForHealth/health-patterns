@@ -15,5 +15,5 @@
 com.ibm.healthpatterns.processors.acdprocessors.ACDProcessor
 com.ibm.healthpatterns.processors.hl7tofhir.HL7ToFhirProcessor
 com.ibm.healthpatterns.processors.mimic.GenerateFHIRFromMimic
-com.ibm.healthpatterns.processors.deid.DeIdentifyAndPostToFHIR
-com.ibm.healthpatterns.processors.terminology.FHIRConceptMapTranslate
+com.ibm.healthpatterns.processors.deid.DeIdentify
+com.ibm.healthpatterns.processors.terminology.FHIRTranslation

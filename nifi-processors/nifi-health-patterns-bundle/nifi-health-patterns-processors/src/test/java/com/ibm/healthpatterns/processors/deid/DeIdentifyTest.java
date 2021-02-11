@@ -43,15 +43,15 @@ import com.ibm.healthpatterns.processors.common.FHIRServiceCustomProcessor;
  * 
  * @author Luis A. García
  */
-public class DeIdentifyAndPostToFHIRTest extends FHIRCustomProcessorTest {
+public class DeIdentifyTest extends FHIRCustomProcessorTest {
 
 	private String deidURL;
-	private DeIdentifyAndPostToFHIR customProcessor;
+	private DeIdentify customProcessor;
 	
 	/**
 	 * 
 	 */
-	public DeIdentifyAndPostToFHIRTest() {
+	public DeIdentifyTest() {
 		// This URL is for IBM Cloud services that we setup specifically to run these tests 
 		deidURL = "http://3a5d0fa4-us-south.lb.appdomain.cloud:8080/api/v1";
 	}
@@ -62,7 +62,7 @@ public class DeIdentifyAndPostToFHIRTest extends FHIRCustomProcessorTest {
 	 */
 	@Before
 	public void init() throws IOException {
-		customProcessor = new DeIdentifyAndPostToFHIR();
+		customProcessor = new DeIdentify();
 		testRunner = TestRunners.newTestRunner(customProcessor);
 	}
 
@@ -71,37 +71,37 @@ public class DeIdentifyAndPostToFHIRTest extends FHIRCustomProcessorTest {
 	 */
 	@Test
 	public void testRunBundle() throws IOException {
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.DEID_URL, deidURL);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_URL, fhirURL);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_USERNAME, fhirUsername);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_PASSWORD, fhirPassword);
+		testRunner.setProperty(DeIdentify.DEID_URL, deidURL);
+		testRunner.setProperty(DeIdentify.FHIR_URL, fhirURL);
+		testRunner.setProperty(DeIdentify.FHIR_USERNAME, fhirUsername);
+		testRunner.setProperty(DeIdentify.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertValid();
 
 		Path input = Paths.get("src/test/resources/Antonia30_Acosta403_Bundle.json");
 		testRunner.enqueue(input);
 		testRunner.run();
-		testRunner.assertTransferCount(DeIdentifyAndPostToFHIR.SUCCESS, 1);
-		testRunner.assertTransferCount(DeIdentifyAndPostToFHIR.DEIDENTIFIED, 1);
-		testRunner.assertTransferCount(DeIdentifyAndPostToFHIR.ORIGINAL, 1);
+		testRunner.assertTransferCount(DeIdentify.SUCCESS, 1);
+		testRunner.assertTransferCount(DeIdentify.DEIDENTIFIED, 1);
+		testRunner.assertTransferCount(DeIdentify.ORIGINAL, 1);
 
-		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(DeIdentifyAndPostToFHIR.SUCCESS).get(0);
-		successFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE);
-		successFlowFile.assertAttributeNotExists(DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE);
+		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(DeIdentify.SUCCESS).get(0);
+		successFlowFile.assertAttributeExists(DeIdentify.DEID_TRANSACTION_ID_ATTRIBUTE);
+		successFlowFile.assertAttributeNotExists(DeIdentify.LOCATION_ATTRIBUTE);
 		String fhirResponse = successFlowFile.getContent();
 		assertFalse(fhirResponse.isEmpty());
 
-		MockFlowFile deidFlowFile = testRunner.getFlowFilesForRelationship(DeIdentifyAndPostToFHIR.DEIDENTIFIED).get(0);
-		deidFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE);
+		MockFlowFile deidFlowFile = testRunner.getFlowFilesForRelationship(DeIdentify.DEIDENTIFIED).get(0);
+		deidFlowFile.assertAttributeExists(DeIdentify.DEID_TRANSACTION_ID_ATTRIBUTE);
 		assertFalse(deidFlowFile.getContent().isEmpty());
 
-		MockFlowFile originalFlowFile = testRunner.getFlowFilesForRelationship(DeIdentifyAndPostToFHIR.ORIGINAL).get(0);
-		originalFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE);
+		MockFlowFile originalFlowFile = testRunner.getFlowFilesForRelationship(DeIdentify.ORIGINAL).get(0);
+		originalFlowFile.assertAttributeExists(DeIdentify.DEID_TRANSACTION_ID_ATTRIBUTE);
 		originalFlowFile.assertContentEquals(input);
 
 		// Save the resource locations so we can clean up the FHIR server
 		ObjectMapper jsonDeserializer = new ObjectMapper();
 		JsonNode fhirResponseJson = jsonDeserializer.readTree(fhirResponse);
-		List<JsonNode> locations = fhirResponseJson.findValues(DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE.toLowerCase());
+		List<JsonNode> locations = fhirResponseJson.findValues(DeIdentify.LOCATION_ATTRIBUTE.toLowerCase());
 		for (JsonNode jsonNode : locations) {
 			createdResources.add(jsonNode.asText());
 		}
@@ -112,34 +112,34 @@ public class DeIdentifyAndPostToFHIRTest extends FHIRCustomProcessorTest {
 	 */
 	@Test
 	public void testRunResource() throws IOException {
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.DEID_URL, deidURL);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_URL, fhirURL);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_USERNAME, fhirUsername);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_PASSWORD, fhirPassword);
+		testRunner.setProperty(DeIdentify.DEID_URL, deidURL);
+		testRunner.setProperty(DeIdentify.FHIR_URL, fhirURL);
+		testRunner.setProperty(DeIdentify.FHIR_USERNAME, fhirUsername);
+		testRunner.setProperty(DeIdentify.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertValid();
 
 		Path input = Paths.get("src/test/resources/Antonia30_Acosta403_Patient.json");
 		testRunner.enqueue(input);
 		testRunner.run();
-		testRunner.assertTransferCount(DeIdentifyAndPostToFHIR.SUCCESS, 1);
-		testRunner.assertTransferCount(DeIdentifyAndPostToFHIR.DEIDENTIFIED, 1);
-		testRunner.assertTransferCount(DeIdentifyAndPostToFHIR.ORIGINAL, 1);
+		testRunner.assertTransferCount(DeIdentify.SUCCESS, 1);
+		testRunner.assertTransferCount(DeIdentify.DEIDENTIFIED, 1);
+		testRunner.assertTransferCount(DeIdentify.ORIGINAL, 1);
 
-		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(DeIdentifyAndPostToFHIR.SUCCESS).get(0);
-		successFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE);
-		successFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE);
+		MockFlowFile successFlowFile = testRunner.getFlowFilesForRelationship(DeIdentify.SUCCESS).get(0);
+		successFlowFile.assertAttributeExists(DeIdentify.DEID_TRANSACTION_ID_ATTRIBUTE);
+		successFlowFile.assertAttributeExists(DeIdentify.LOCATION_ATTRIBUTE);
 		assertTrue(successFlowFile.getContent().isEmpty());
 
-		MockFlowFile deidFlowFile = testRunner.getFlowFilesForRelationship(DeIdentifyAndPostToFHIR.DEIDENTIFIED).get(0);
-		deidFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE);
+		MockFlowFile deidFlowFile = testRunner.getFlowFilesForRelationship(DeIdentify.DEIDENTIFIED).get(0);
+		deidFlowFile.assertAttributeExists(DeIdentify.DEID_TRANSACTION_ID_ATTRIBUTE);
 		assertFalse(deidFlowFile.getContent().isEmpty());
 
-		MockFlowFile originalFlowFile = testRunner.getFlowFilesForRelationship(DeIdentifyAndPostToFHIR.ORIGINAL).get(0);
-		originalFlowFile.assertAttributeExists(DeIdentifyAndPostToFHIR.DEID_TRANSACTION_ID_ATTRIBUTE);
+		MockFlowFile originalFlowFile = testRunner.getFlowFilesForRelationship(DeIdentify.ORIGINAL).get(0);
+		originalFlowFile.assertAttributeExists(DeIdentify.DEID_TRANSACTION_ID_ATTRIBUTE);
 		originalFlowFile.assertContentEquals(input);
 
 		// Save the resource locations so we can clean up the FHIR server
-		createdResources.add(successFlowFile.getAttribute(DeIdentifyAndPostToFHIR.LOCATION_ATTRIBUTE));
+		createdResources.add(successFlowFile.getAttribute(DeIdentify.LOCATION_ATTRIBUTE));
 	}
 
 	/**
@@ -147,15 +147,15 @@ public class DeIdentifyAndPostToFHIRTest extends FHIRCustomProcessorTest {
 	 */
 	@Test
 	public void testRunBadInput() throws IOException {
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.DEID_URL, deidURL);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_URL, fhirURL);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_USERNAME, fhirUsername);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_PASSWORD, fhirPassword);
+		testRunner.setProperty(DeIdentify.DEID_URL, deidURL);
+		testRunner.setProperty(DeIdentify.FHIR_URL, fhirURL);
+		testRunner.setProperty(DeIdentify.FHIR_USERNAME, fhirUsername);
+		testRunner.setProperty(DeIdentify.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertValid();
 
 		testRunner.enqueue("a bad file that isn't JSON");
 		testRunner.run();
-		testRunner.assertAllFlowFilesTransferred(DeIdentifyAndPostToFHIR.FAILURE);
+		testRunner.assertAllFlowFilesTransferred(DeIdentify.FAILURE);
 	}
 
 	/**
@@ -163,10 +163,10 @@ public class DeIdentifyAndPostToFHIRTest extends FHIRCustomProcessorTest {
 	 */
 	@Test
 	public void testValidate() throws IOException {
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.DEID_URL, "http://badurl");
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_URL, fhirURL);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_USERNAME, fhirUsername);
-		testRunner.setProperty(DeIdentifyAndPostToFHIR.FHIR_PASSWORD, fhirPassword);
+		testRunner.setProperty(DeIdentify.DEID_URL, "http://badurl");
+		testRunner.setProperty(DeIdentify.FHIR_URL, fhirURL);
+		testRunner.setProperty(DeIdentify.FHIR_USERNAME, fhirUsername);
+		testRunner.setProperty(DeIdentify.FHIR_PASSWORD, fhirPassword);
 		testRunner.assertNotValid();
 	}
 
