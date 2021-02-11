@@ -87,7 +87,10 @@
 			<groupId>de.uzl.itcr</groupId>
 			<artifactId>mimic2fhir</artifactId>
 			<version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/mimic2fhir-1.0.0.jar</systemPath>
 		</dependency>
+		
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-base</artifactId>
