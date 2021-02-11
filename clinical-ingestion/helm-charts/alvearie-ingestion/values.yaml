@@ -42,13 +42,15 @@ fhir:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
       value: '600s'
-  bulkexportconfig:
-    cosbucketname: yourbucketnamehere
-    coslocation: yourcosregion
-    cosendpointinternal: yourbucketendpointhere
-    cosapikey: yourcosapikey
-    cossrvinstid: yourcossrvinstid
-    batchuserpw: youradminpw
+
+## Configure these to allow bulk access from fhir server
+#  bulkexportconfig:
+#    cosbucketname: yourbucketnamehere
+#    coslocation: yourcosregion
+#    cosendpointinternal: yourbucketendpointhere
+#    cosapikey: yourcosapikey
+#    cossrvinstid: yourcossrvinstid
+#    batchuserpw: youradminpw
 
 fhir-deid:
   enabled: false
@@ -56,6 +58,15 @@ fhir-deid:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
       value: '600s'
+
+## Configure these to allow bulk access from fhir-deid server
+#  bulkexportconfig:
+#    cosbucketname: yourbucketnamehere
+#    coslocation: yourcosregion
+#    cosendpointinternal: yourbucketendpointhere
+#    cosapikey: yourcosapikey
+#    cossrvinstid: yourcossrvinstid
+#    batchuserpw: youradminpw
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
