@@ -42,11 +42,11 @@ maintainers:
 
 dependencies:
   - name: fhir
-    version: 0.2.0
+    version: 0.2.1
     condition: fhir.enabled
     repository: ""
   - name: fhir
-    version: 0.2.0
+    version: 0.2.1
     condition: fhir-deid.enabled
     alias: fhir-deid
     repository: ""
