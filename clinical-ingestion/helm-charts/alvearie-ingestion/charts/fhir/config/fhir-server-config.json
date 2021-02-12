@@ -26,9 +26,9 @@
                     "scopes": ["openid", "profile", "fhirUser", "launch/patient", "patient/*.*", "offline_access"],
                     "capabilities": [
                         "sso-openid-connect",
-                        "launch-standalone", 
-                        "client-public", 
-                        "client-confidential-symmetric", 
+                        "launch-standalone",
+                        "client-public",
+                        "client-confidential-symmetric",
                         "permission-offline",
                         "context-standalone-patient",
                         "permission-patient"
@@ -123,17 +123,17 @@
             "applicationName": "fhir-bulkimportexport-webapp",
             "moduleName": "fhir-bulkimportexport.war",
             "jobParameters": {
-                "cos.bucket.name": "fhir-r4-connectathon",
-                "cos.location": "us",
-                "cos.endpointurl": "fake",
-                "cos.credential.ibm": "N",
-                "cos.access.key": "fake",
-                "cos.secret.key": "fake"
+                "cos.bucket.name": "{{.Values.bulkExportConfig.cosBucketName}}",
+                "cos.location": "{{.Values.bulkExportConfig.cosLocation}}",
+                "cos.endpoint.internal": "{{.Values.bulkExportConfig.cosEndpointInternal}}",
+                "cos.credential.ibm": "Y",
+                "cos.api.key": "{{.Values.bulkExportConfig.cosApikey}}",
+                "cos.srvinst.id": "{{.Values.bulkExportConfig.cosSrvinstid}}"
             },
             "implementation_type": "cos",
             "batch-uri": "https://localhost:9443/ibm/api/batch/jobinstances",
             "batch-user": "fhiradmin",
-            "batch-user-password": "change-password",
+            "batch-user-password": "{{.Values.bulkExportConfig.batchUserPw}}",
             "batch-truststore": "resources/security/fhirTrustStore.p12",
             "batch-truststore-password": "change-password",
             "isExportPublic": true,
