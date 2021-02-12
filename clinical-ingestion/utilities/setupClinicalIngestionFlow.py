@@ -122,7 +122,7 @@ def main():
         exit()  #if we don't find the specific bucket then we are done
 
     #found the flow so now go ahead and find the latest version
-    #unless None then version already provided explicitly
+    #unless latest is not None because then version already provided explicitly
     if latest == None:
         versionURL = flowURL + "/" + theFlow + "/" + "versions"
         resp = requests.get(url=versionURL)
