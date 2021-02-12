@@ -53,11 +53,11 @@ spec:
           - name: fhir-server-config-json
             mountPath: /opt/ol/wlp/usr/servers/fhir-server/config/default/fhir-server-config.json
             subPath: fhir-server-config.json
-           {{ range $path, $bytes := .Files.Glob ( printf "binaryconfig/**") }}
+           {{ range $path, $bytes := .Files.Glob ( printf "binary-config/**") }}
            {{ $name := base $path }}
           - name: binary-file-volume
             mountPath: {{ printf "/opt/ol/wlp/usr/servers/fhir-server/resources/security/%s"  $name | indent 2 }}
-            subPath: {{- sha256sum (printf "%s/%s" (index (regexSplit "binaryconfig" (dir $path) -1) 1 ) $name ) | indent 2 }}
+            subPath: {{- sha256sum (printf "%s/%s" (index (regexSplit "binary\\-config" (dir $path) -1) 1 ) $name ) | indent 2 }}
            {{ end }}
           {{- if .Values.extraVolumeMounts }}
 {{ toYaml .Values.extraVolumeMounts | indent 10 }}
