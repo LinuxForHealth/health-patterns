@@ -11,6 +11,7 @@ debug = False  # turn off debug by default
 def main():
     regName = "default"  #default registry to use
     bucketName = "Health_Patterns"  #default bucket to use
+    latest = None #will search for latest version unless explicity set
 
     if len(sys.argv) < 3:
         print("Must include base url and default password as arguments")
@@ -26,6 +27,10 @@ def main():
     if len(sys.argv) == 5: #included registry name and bucket name
         regName = sys.argv[3]
         bucketName = sys.argv[4]
+    if len(sys.argv) == 6: #included registry name and bucket name and version
+        regName = sys.argv[3]
+        bucketName = sys.argv[4]
+        latest = int(sys.argv[5])
 
     #now fix trailing / problem if needed
     if baseURL[-1] != "/":
@@ -117,18 +122,21 @@ def main():
         exit()  #if we don't find the specific bucket then we are done
 
     #found the flow so now go ahead and find the latest version
+    #unless None then version already provided explicitly
+    if latest == None:
+        versionURL = flowURL + "/" + theFlow + "/" + "versions"
+        resp = requests.get(url=versionURL)
+        if debug:
+            print(dict(resp.json()))
+        versionDict = dict(resp.json())
 
-    versionURL = flowURL + "/" + theFlow + "/" + "versions"
-    resp = requests.get(url=versionURL)
-    if debug:
-        print(dict(resp.json()))
-    versionDict = dict(resp.json())
-
-    latest = 0
-    for v in versionDict["versionedFlowSnapshotMetadataSet"]:
-        version = int(v["versionedFlowSnapshotMetadata"]["version"])
-        if version > latest:
-            latest = version
+        latest = 0
+        for v in versionDict["versionedFlowSnapshotMetadataSet"]:
+            version = int(v["versionedFlowSnapshotMetadata"]["version"])
+            if version > latest:
+                latest = version
+        if debug:
+            print("FOUND Version: ", latest)
 
     #Get root id for canvas process group
 
