@@ -1,0 +1,50 @@
+name: Deploy to IBM Cloud
+
+on:
+#  release:
+#    types: [created]
+  pull_request:
+    branches: [ main ]
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  GITHUB_SHA: ${{ github.sha }}
+  IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
+  IBM_CLOUD_REGION: us-south
+  CLUSTER_NAMESPACE: github
+  PORT: 5001
+
+jobs:
+  deploy:
+    name: Deploy Health Patterns Chart to the IBM Cloud
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Download and Install IBM Cloud CLI
+    - name: Install IBM Cloud CLI
+      run: |
+        curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+        ibmcloud --version
+        ibmcloud config --check-version=false
+        ibmcloud plugin install -f kubernetes-service
+
+    # Authenticate with IBM Cloud CLI
+    - name: Authenticate into IBM Cloud Integration Squad Kubernetes Cluster
+      run: |
+        ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g Default
+        ibmcloud ks cluster config --cluster bvr4cmtd0ju1e4kt9b40
+
+    # Setup and Install Chart
+    - name: Install Chart
+      run: |
+        kubectl config current-context
+        kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
+        helm install ingestion clinical-ingestion/helm-charts/alvearie-ingestion --values clinical-ingestion/helm-charts/alvearie-ingestion/ci/chart-testing-values.yaml --wait --timeout 3m0s
+        kubectl get all
+
+    # Uninstall Chart
+    - name: Uninstall Chart
+      run: helm uninstall ingestion
