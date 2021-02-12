@@ -41,8 +41,7 @@ Components currently used by health-patterns clinical data ingestion reference i
 
 #### Current Build Status
 
-![Java CI with Maven](https://github.com/Alvearie/health-patterns/workflows/Java%20CI%20with%20Maven/badge.svg)
-
-![Lint and Test Charts](https://github.com/Alvearie/health-patterns/workflows/Lint%20and%20Test%20Charts/badge.svg)
-
-![Lint Docker Images](https://github.com/Alvearie/health-patterns/workflows/Lint%20Docker/badge.svg)
+- ![IBM Cloud](https://github.com/Alvearie/health-patterns/workflows/Deploy%20to%20IBM%20Cloud/badge.svg)
+- ![Java CI with Maven](https://github.com/Alvearie/health-patterns/workflows/Java%20CI%20with%20Maven/badge.svg) 
+- ![Lint and Test Charts](https://github.com/Alvearie/health-patterns/workflows/Lint%20and%20Test%20Charts/badge.svg) 
+- ![Lint Docker Images](https://github.com/Alvearie/health-patterns/workflows/Lint%20Docker/badge.svg) 
