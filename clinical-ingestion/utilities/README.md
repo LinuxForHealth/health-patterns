@@ -1,4 +1,26 @@
-## setupClinicalIngestionFlow.py
+# Utilities
+
+This directory contains various utilities that are used to automate the installation of the Alvearie Health Patterns Clinical Ingestion chart.
+The utilities included here are built into a container and loaded as a sidecar container next to some of the containers in the Alvearie Ingestion chart.
+
+The container image used to load these utilities is built on top of an image that includes various networking utilities, and python.
+To build and push it simply:
+
+```
+cd health-patterns/clinical-ingestion/utilities
+docker build -t alvearie/nifi-setup:{tag} .
+docker push alvearie/nifi-setup:{tag}
+```
+
+### wait-for-nifi.sh
+
+This script waits for a NiFi server running on this host to fully initialize.
+
+### initialize-reporting-task.sh
+
+This script creates, configures, and starts a prometheus reporting task for generating metrics to be used in grafana dashboards.
+
+### setupClinicalIngestionFlow.py
 
 To assist with the Clinical Ingestion Flow configuration, a Python script (utilities/setupClinicalIngestionFlow.py) will automate the steps necessary to use the Clinical Ingestion Flow.  The script will
 

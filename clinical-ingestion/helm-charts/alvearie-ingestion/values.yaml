@@ -110,63 +110,24 @@ nifi:
           targetPort: 12667
   extraContainers:
     - name: post-start-setup
-      image: praqma/network-multitool
+      image: alvearie/nifi-setup:0.0.1
       imagePullPolicy: IfNotPresent
       command:
         - bash
         - -c
         - |
-          echo "downloading nifi init script..."
-          curl -k --url https://raw.githubusercontent.com/Alvearie/health-patterns/main/clinical-ingestion/utilities/scriptex.sh -o /scripts/initialize-reporting-task.sh
-          echo "done downloading nifi init script"
-
-          echo "waiting for NiFi API to start nifi 8080"
-          until nc -vzw 1 ingestion-nifi-0 8080; do
-            echo "waiting for nifi api..."
-            sleep 2
-          done
-
-          echo "wait for flow controller initialization..."
-          initializing='initializing'
-          response=$(curl -k -X GET --url http://ingestion-nifi-0:8080/nifi-api/flow/status)
-          echo $response
-
-          while [[ "$response" == *"$initializing"* ]];
-          do
-             response=$(curl -k -X GET --url http://ingestion-nifi-0:8080/nifi-api/flow/status)
-             echo $response
-          done
-
-          echo "wait for cluster connection..."
-          cluster='connectedToCluster":true'
-          while [[ "$response" != *"$cluster"* ]];
-          do
-              response=$(curl -k -X GET --url http://ingestion-nifi-0:8080/nifi-api/flow/cluster/summary)
-              echo $response
-          done
-
-          echo "wait for node to show connected..."
-          connected='connectedNodeCount":1'
-          while [[ "$response" != *"$connected"* ]];
-          do
-              response=$(curl -k -X GET --url http://ingestion-nifi-0:8080/nifi-api/flow/cluster/summary)
-              echo $response
-          done
-
-          echo "cluster is connected and ready to respond to api..."
-
-          echo "running nifi init script..."
-          chmod +x /scripts/initialize-reporting-task.sh
-          echo "permission changed"
-
-          bash -c /scripts/initialize-reporting-task.sh
-
-          echo "done running nifi init script"
-          echo "starting wait loop so container does not exit"
-          while true; do sleep 10; done
-      volumeMounts:
-        - name: alvearie-scripts
-          mountPath: /scripts
+          /scripts/wait-for-nifi.sh $HOSTNAME 8080
+          /scripts/initialize-reporting-task.sh $HOSTNAME 8080
+          python /scripts/setupClinicalIngestionFlow.py http://$HOSTNAME:8080/ integrati0n
+          if [ $? -eq 0 ]
+          then
+            echo "NiFi canvas setup was successful!"
+            echo "starting wait loop so container does not exit"
+            while true; do sleep 1000; done
+          else
+            echo "NiFi canvas setup failed"
+            exit 1
+          fi
   url: ""
   port: 80
   zookeeper:
@@ -191,12 +152,8 @@ nifi:
   extraVolumeMounts:
     - name: alvearie-nars
       mountPath: /opt/nifi/nifi-current/custom-nars
-    - name: alvearie-scripts
-      mountPath: /opt/nifi/nifi-current/custom-scripts
   extraVolumes:
     - name: alvearie-nars
-      emptyDir: {}
-    - name: alvearie-scripts
       emptyDir: {}
   properties:
     customLibPath: ./custom-nars
