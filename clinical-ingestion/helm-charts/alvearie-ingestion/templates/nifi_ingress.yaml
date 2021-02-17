@@ -1,0 +1,26 @@
+{{- if .Values.global.ingress.enabled -}}
+{{- if .Values.nifi.enabled -}}
+{{- $ingressPort := 8080 -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-nifi-ingress
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.nifi.labels }}
+  labels:
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+    ingress.kubernetes.io/proxy-read-timeout: '90'
+    kubernetes.io/ingress.class: public-iks-k8s-nginx
+spec:
+  rules:
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.global.ingress.subdomain}}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ .Release.Name }}-nifi
+              servicePort: {{ $ingressPort }}
+{{- end }}
+{{- end }}

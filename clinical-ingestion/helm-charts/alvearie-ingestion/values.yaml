@@ -30,6 +30,11 @@ tolerations: []
 
 affinity: {}
 
+global:
+  ingress:
+    enabled: true
+    subdomain: integration-k8s-cluster-dcc48c44d831198cb8496b1ec68d7d12-0000.us-south.containers.appdomain.cloud
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
@@ -37,7 +42,8 @@ affinity: {}
 fhir:
   enabled: true
   service:
-    type: LoadBalancer
+    type: ClusterIP
+    port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
@@ -54,6 +60,9 @@ fhir:
 
 fhir-deid:
   enabled: false
+  service:
+    type: ClusterIP
+    port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
@@ -76,6 +85,7 @@ nifi-registry:
   enabled: true
   # The fullname is overridden to some static name in order to automatically register the NiFi Registry with the NiFi deployment
   fullnameOverride: ingestion-nifi-registry
+  
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
@@ -96,7 +106,7 @@ nifi:
   fullnameOverride: ingestion-nifi
   enabled: true
   service:
-    type: LoadBalancer
+    type: ClusterIP
     processors:
       enabled: true
       ports:
@@ -211,7 +221,7 @@ kafka:
   externalAccess:
     enabled: true
     service:
-      type: LoadBalancer
+      type: NodePort
       port: 9094
     autoDiscovery:
       enabled: true
@@ -277,7 +287,7 @@ kube-prometheus-stack:
   grafana:
     adminPassword: admin
     service:
-      type: LoadBalancer
+      type: ClusterIP
 
     defaultDashboardsEnabled: false
 
