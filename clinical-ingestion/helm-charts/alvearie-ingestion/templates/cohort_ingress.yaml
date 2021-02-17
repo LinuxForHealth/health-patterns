@@ -1,6 +1,6 @@
 {{- if .Values.global.ingress.enabled -}}
 {{- if index .Values "cohort-service" "enabled" -}}
-{{- $ingressPort := index .Values "cohort-service" "service" "port" -}}
+{{- $ingressPort := index .Values "cohort-service" "service" "httpPort" -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
