@@ -32,13 +32,25 @@ kubectl create namespace alvearie
 kubectl config set-context --current --namespace=alvearie
 ```
 
+### Identify ingress subdomain
+In order to expose the services deployed in this chart, the ingress sub-domain is required.  It can be found on IBM Cloud using this command:
+
+```
+ibmcloud ks cluster get --cluster <<CLUSTER_NAME_OR_ID>>
+```
+
+
+
 ### Install the Chart
 
 Install the helm chart with a release name `ingestion`:
 
 ```bash
-helm install ingestion .
+helm install ingestion . --set global.ingress.enabled=true,global.ingress.subdomain=<<INGRESS_SUBDOMAIN>>
 ```
+
+The parameters passed in here enable the ingress for the specified sub-domain.  If they are not specified the services will not be exposed outside of the cluster.  Alternatively, this can be updated directly in the values.yaml file or in a custom yaml file used to override the values.yaml properties.
+
 
 ### Install the Chart with De-Identification Enabled
 

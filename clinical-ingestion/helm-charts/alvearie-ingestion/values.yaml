@@ -32,8 +32,8 @@ affinity: {}
 
 global:
   ingress:
-    enabled: true
-    subdomain: integration-k8s-cluster-dcc48c44d831198cb8496b1ec68d7d12-0000.us-south.containers.appdomain.cloud
+    enabled: false
+    subdomain: <<INSERT_INGRESS_SUBDOMAIN_HERE>>
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration

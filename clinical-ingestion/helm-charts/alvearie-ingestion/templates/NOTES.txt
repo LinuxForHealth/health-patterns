@@ -15,33 +15,33 @@ Pattern: {{ .Values.pattern }}
 
 The following services have been deployed:
 {{- if .Values.fhir.enabled }}
-- Primary FHIR Server -------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir.{{ .Values.global.ingress.subdomain}}/fhir-server/api/v4
+- Primary FHIR Server{{- if .Values.global.ingress.enabled }} -------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir.{{ .Values.global.ingress.subdomain}}/fhir-server/api/v4{{- end }}
 {{- end }}
 {{- if index .Values "fhir-deid" "enabled" }}
-- Secondary FHIR Server ------ http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid.{{ .Values.global.ingress.subdomain}}/fhir-server/api/v4
+- Secondary FHIR Server{{- if .Values.global.ingress.enabled }} ------ http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid.{{ .Values.global.ingress.subdomain}}/fhir-server/api/v4{{- end }}
 {{- end }}
 {{- if .Values.deid.enabled }}
-- De-Identification Service -- http://{{ .Release.Namespace }}.{{ .Release.Name }}-deid.{{ .Values.global.ingress.subdomain}}/api/v1/
+- De-Identification Service{{- if .Values.global.ingress.enabled }} -- http://{{ .Release.Namespace }}.{{ .Release.Name }}-deid.{{ .Values.global.ingress.subdomain}}/api/v1/{{- end }}
 {{- end }}
 {{- if .Values.nifi.enabled }}
-- NiFi Server ---------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.global.ingress.subdomain}}/nifi
-- NiFi REST API -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-rest.{{ .Values.global.ingress.subdomain}} 
+- NiFi Server{{- if .Values.global.ingress.enabled }} ---------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.global.ingress.subdomain}}/nifi{{- end }}
+- NiFi REST API{{- if .Values.global.ingress.enabled }} -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-rest.{{ .Values.global.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if index .Values "nifi-registry" "enabled" }}
-- NiFi Registry -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-registry.{{ .Values.global.ingress.subdomain}}/nifi-registry
+- NiFi Registry{{- if .Values.global.ingress.enabled }} -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-registry.{{ .Values.global.ingress.subdomain}}/nifi-registry{{- end }}
 {{- end }}
 {{- if .Values.kafka.enabled }}
-- Kafka ---------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-kafka.{{ .Values.global.ingress.subdomain}}
+- Kafka{{- if .Values.global.ingress.enabled }} ---------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-kafka.{{ .Values.global.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if .Values.zookeeper.enabled }}
 - Zookeeper
 {{- end }}
 {{- if index .Values "kube-prometheus-stack" "enabled" }}
 - Prometheus
-- Grafana -------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-grafana.{{ .Values.global.ingress.subdomain}}
+- Grafana{{- if .Values.global.ingress.enabled }} -------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-grafana.{{ .Values.global.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if index .Values "cohort-service" "enabled" }}
-- Cohort Service ------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-cohort-service.{{ .Values.global.ingress.subdomain}}
+- Cohort Service{{- if .Values.global.ingress.enabled }} ------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-cohort-service.{{ .Values.global.ingress.subdomain}}{{- end }}
 {{- end }}
 
 Inside the cluster you can access the services at the following locations:
