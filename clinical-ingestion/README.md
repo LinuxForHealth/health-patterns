@@ -66,6 +66,8 @@ There are two ways to easily run a FHIR bundle through Clinical Ingestion Flow o
 	* "path/to/json" can refer to any FHIR bundle you wish to process. For example, "patientData/patient-with-us-core-birthsex.json"
 	* NIFI_SERVER and FHIR_LISTEN_PORT should be known values from the setup above.
 	* The result of this command should be an HTTP 200 response indicating that it was successfully submitted.
+	* It is also possible to use a special HTTP header *filename* with a user generated ID. When providing this, that header will be persisted throughout the Ingestion pipeline as a flow file attribute, in order to match any user request to its corresponding flow file. Sample usage:
+	    * `curl -X POST --header "filename: request-0001" -d @<<path/to/json>> "<<NIFI_SERVER>>:<<FHIR_LISTEN_PORT>>/fhirResource" --verbose`
 
 2. Submit the FHIR bundle to the kafka topic configured above ("kafka.topic.in" parameter in "Clinical Ingestion Kafka Parameter Context")
 	* Using the configured kafka broker ("kafka.brokers" parameter in "Clinical Ingestion Kafka Parameter Context"), post the FHIR bundle of your choice and the Clinical Ingestion Flow will automatically react and begin processing.
