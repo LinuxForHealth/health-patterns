@@ -8,11 +8,11 @@ The conceptual architecture below is brought into reality with a combination of 
 Below are the initial patterns that incorporate parts of [Alvearie](https://alvearie.github.io/) along with other open technologies that can be used to start building your own healthcare solutions using a common base of proven technology.
 
 ### Clinical Data Ingestion & Enrichment
-This pattern provides a reference implementation that can take clinical data in a variety of formats, convert and normalize the data as necessary, optionally enrich it (eg using NLP or de-identification) and store it in a FHIR Server (https://github.com/ibm/fhir)
+This pattern provides a reference implementation that can take clinical data in a variety of formats, convert and normalize the data as necessary, optionally enrich it (eg using NLP or de-identification) and store it in a [FHIR Server](https://github.com/ibm/fhir)
 
 The Enrichment process can either be run as part of the ingestion or it can run on its own (after the data has been stored in the FHIR Server).
 
-Get started using the clinical data ingestion & enrichment pattern now: https://github.com/Alvearie/health-patterns/tree/main/clinical-ingestion
+Get started using the [clinical data ingestion & enrichment pattern today](https://github.com/Alvearie/health-patterns/tree/main/clinical-ingestion)
 
 Learn more about the current state and future enhancements in the [roadmap](roadmap.md)
 
