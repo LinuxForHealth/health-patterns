@@ -85,7 +85,7 @@ nifi-registry:
   enabled: true
   # The fullname is overridden to some static name in order to automatically register the NiFi Registry with the NiFi deployment
   fullnameOverride: ingestion-nifi-registry
-  
+
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
