@@ -10,11 +10,11 @@ At the end of 2020, the _Clinical Ingestion & Enrichment_ health pattern has mad
     - Convert [HL7 to FHIR using technology from LinuxForHealth](https://github.com/LinuxForHealth/hl7v2-fhir-converter)
     - Validate the FHIR data without storing it in the FHIR Server
     - Convert terminology using the FHIR Terminology Services
+    - Optionally [De-identify](https://github.com/Alvearie/de-identification) the FHIR data
     - Store the FHIR bundle into the [FHIR Server](https://github.com/ibm/fhir)
+    - If de-identification happened, store the de-identified data into a second FHIR Server
     - In case of errors within the bundle, individual resources are retried
     - Errors are reported back to the data integrator via the kafka topic
-    - [De-identify](https://github.com/Alvearie/de-identification) the FHIR data
-    - Return the de-identified data and/or store the de-identified data into a second FHIR Server (with the same error handling as before)
 -  [Prometheus](https://github.com/prometheus) & [Grafana](https://github.com/grafana/grafana) configured to monitor the environment
 - Single helm chart to deploy & configure the above, with the flexibility to bring your own (BYO) services if you already have an instance that you want to use (Kafka or FHIR server or NiFi, etc)
 
