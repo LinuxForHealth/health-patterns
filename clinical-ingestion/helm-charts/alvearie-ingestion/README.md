@@ -48,15 +48,11 @@ The hostname for each service will be auto-generated based on the ingress subdom
 ibmcloud ks cluster get --cluster <<CLUSTER_NAME_OR_ID>>
 ```
 
-Once you have the ingress subdomain, you can run the helm chart and enable the ingress using:
+Once you have the ingress subdomain, you need to update the `ingress-enabled-values.yaml` file and replace `<<INGRESS_SUBDOMAIN>>` with your subdomain.  Then deploy the chart using:
 
 ```bash
-helm install ingestion . --set global.ingress.enabled=true,global.ingress.subdomain=<<INGRESS_SUBDOMAIN>>
+helm install ingestion . -f ingress-enabled-values.yaml
 ```
-
-The parameters passed in here enable the ingresses for the specified sub-domain.  If these parameters are not specified the services will revert to load balancers for the services.
-
-Alternatively, this can be updated directly in the values.yaml file or in a custom yaml file used to override the values.yaml properties.
 
 ### Install the Chart with De-Identification Enabled
 
@@ -66,6 +62,9 @@ In order to install that pattern run the command below:
 ```bash
 helm install ingestion . -f de-id-pattern-values.yaml
 ```
+
+Note: In order to install De-Identification in an ingress-enabled environment, you need to manually merge the values from the two previous yaml files into one joint configuration.
+
 
 ### Using the Chart
 
