@@ -111,7 +111,7 @@ nifi:
   extraContainers:
     - name: post-start-setup
       image: alvearie/nifi-setup:0.0.1
-      imagePullPolicy: IfNotPresent
+      imagePullPolicy: Always
       command:
         - bash
         - -c

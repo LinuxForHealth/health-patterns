@@ -37,11 +37,3 @@ Components currently used by health-patterns clinical data ingestion reference i
 
 
 - [Jupyter](https://jupyter.org/) The Jupyter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Uses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more.
-
-
-#### Current Build Status
-
-- ![IBM Cloud](https://github.com/Alvearie/health-patterns/workflows/Deploy%20to%20IBM%20Cloud/badge.svg)
-- ![Java CI with Maven](https://github.com/Alvearie/health-patterns/workflows/Java%20CI%20with%20Maven/badge.svg) 
-- ![Lint and Test Charts](https://github.com/Alvearie/health-patterns/workflows/Lint%20and%20Test%20Charts/badge.svg) 
-- ![Lint Docker Images](https://github.com/Alvearie/health-patterns/workflows/Lint%20Docker/badge.svg) 
