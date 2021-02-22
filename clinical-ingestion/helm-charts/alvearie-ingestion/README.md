@@ -32,25 +32,31 @@ kubectl create namespace alvearie
 kubectl config set-context --current --namespace=alvearie
 ```
 
-### Identify ingress subdomain
-In order to expose the services deployed in this chart, the ingress sub-domain is required.  It can be found on IBM Cloud using this command:
-
-```
-ibmcloud ks cluster get --cluster <<CLUSTER_NAME_OR_ID>>
-```
-
-
-
 ### Install the Chart
 
 Install the helm chart with a release name `ingestion`:
 
 ```bash
+helm install ingestion .
+```
+
+### Optional: Expose via Ingress
+By default, this chart will expose services using individual load balancers.  This consistently works across all Cloud environments (IBM, Azure, AWS, GCP), but is not preferred.  Instead, if you have an ingress controller setup for your cluster, you can deploy the chart using ingresses for each service instead.
+The hostname for each service will be auto-generated based on the ingress subdomain provided.  In IBM Cloud, the ingress subdomain for your cluster can be retrieved using:
+
+```
+ibmcloud ks cluster get --cluster <<CLUSTER_NAME_OR_ID>>
+```
+
+Once you have the ingress subdomain, you can run the helm chart and enable the ingress using:
+
+```bash
 helm install ingestion . --set global.ingress.enabled=true,global.ingress.subdomain=<<INGRESS_SUBDOMAIN>>
 ```
 
-The parameters passed in here enable the ingress for the specified sub-domain.  If they are not specified the services will not be exposed outside of the cluster.  Alternatively, this can be updated directly in the values.yaml file or in a custom yaml file used to override the values.yaml properties.
+The parameters passed in here enable the ingresses for the specified sub-domain.  If these parameters are not specified the services will revert to load balancers for the services.
 
+Alternatively, this can be updated directly in the values.yaml file or in a custom yaml file used to override the values.yaml properties.
 
 ### Install the Chart with De-Identification Enabled
 

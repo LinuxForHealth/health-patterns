@@ -44,6 +44,73 @@ The following services have been deployed:
 - Cohort Service{{- if .Values.global.ingress.enabled }} ------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-cohort-service.{{ .Values.global.ingress.subdomain}}{{- end }}
 {{- end }}
 
+{{- if not .Values.global.ingress.enabled }}
+
+
+It may take a few minutes for the LoadBalancer IPs to be available.
+
+Watch the status of the public services by running the following command and wait until the external IP addresses appear: 
+
+  kubectl get --namespace {{ .Release.Namespace }} svc -w | grep LoadBalancer
+
+Once the external IPs have been assigned run the following commands to access the corresponding public services.
+
+{{- if .Values.fhir.enabled }}
+
+Primary FHIR Server:
+
+  export FHIR_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-fhir -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export FHIR_PORT=$(kubectl get svc {{ .Release.Name }}-fhir -o jsonpath='{.spec.ports[0].port}') 
+  echo Primary FHIR Server: http://$FHIR_IP:$FHIR_PORTfhir-server/api/v4
+
+{{- end }}
+{{- if index .Values "fhir-deid" "enabled" }}
+
+Secondary FHIR Server:
+
+  export FHIR_DEID_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-fhir-deid -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export FHIR_DEID_PORT=$(kubectl get svc {{ .Release.Name }}-fhir-deid -o jsonpath='{.spec.ports[0].port}') 
+  echo Secondary FHIR Server: http://$FHIR_DEID_IP:$FHIR_DEID_PORTfhir-server/api/v4
+
+{{- end }}
+{{- if .Values.nifi.enabled }}
+
+NiFi Server:
+
+  export NIFI_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-nifi -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export NIFI_PORT=$(kubectl get svc {{ .Release.Name }}-nifi -o jsonpath='{.spec.ports[0].port}') 
+  echo Nifi Server: http://$NIFI_IP:$NIFI_PORT/nifi
+
+{{- end }}
+{{- if .Values.kafka.enabled }}
+
+Kafka Broker:
+
+  export KAFKA_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-kafka-0-external -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-nifi -o jsonpath='{.spec.ports[0].port}') 
+  echo Kafka Broker: $KAFKA_IP:$KAFKA_PORT
+
+{{- end }}
+{{- if index .Values "kube-prometheus-stack" "enabled" }}
+
+Grafana Server:
+ 
+  export GRAFANA_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-grafana -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export GRAFANA_PORT=$(kubectl get svc {{ .Release.Name }}-grafana -o jsonpath='{.spec.ports[0].port}') 
+  echo Grafana Server: http://$GRAFANA_IP:$GRAFANA_PORT
+
+{{- end }}
+{{- if index .Values "cohort-service" "enabled" }}
+
+Cohort Service:
+ 
+  export COHORT_SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-cohort-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export COHORT_SERVICE_PORT=$(kubectl get svc {{ .Release.Name }}-cohort-service -o jsonpath='{.spec.ports[0].port}') 
+  echo Grafana Server: http://$COHORT_SERVICE_IP:$COHORT_SERVICE_PORT
+
+{{- end }}
+{{- end }}
+
 Inside the cluster you can access the services at the following locations:
 
 {{- if .Values.fhir.enabled }}

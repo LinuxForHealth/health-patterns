@@ -1,6 +1,6 @@
 {{- if .Values.global.ingress.enabled -}}
 {{- if .Values.nifi.enabled -}}
-{{- $ingressPort := .Values.nifi.service.rest.port -}}
+{{- $ingressPort := .Values.nifi.service.restPort -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:

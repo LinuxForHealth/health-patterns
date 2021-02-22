@@ -33,7 +33,6 @@ affinity: {}
 global:
   ingress:
     enabled: false
-    subdomain: <<INSERT_INGRESS_SUBDOMAIN_HERE>>
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
@@ -42,7 +41,7 @@ global:
 fhir:
   enabled: true
   service:
-    type: ClusterIP
+    type: LoadBalancer
     port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
@@ -61,7 +60,6 @@ fhir:
 fhir-deid:
   enabled: false
   service:
-    type: ClusterIP
     port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
@@ -86,7 +84,6 @@ nifi-registry:
   # The fullname is overridden to some static name in order to automatically register the NiFi Registry with the NiFi deployment
   fullnameOverride: ingestion-nifi-registry
 
-
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
 # Values: https://github.com/bitnami/charts/blob/master/bitnami/zookeeper/values.yaml
@@ -106,7 +103,7 @@ nifi:
   fullnameOverride: ingestion-nifi
   enabled: true
   service:
-    type: ClusterIP
+    type: LoadBalancer
     port: 8080
     restPort: 7001
     processors:
@@ -223,7 +220,7 @@ kafka:
   externalAccess:
     enabled: true
     service:
-      type: NodePort
+      type: LoadBalancer
       port: 9094
     autoDiscovery:
       enabled: true
@@ -268,8 +265,6 @@ deid:
 # ------------------------------------------------------------------------------
 cohort-service:
   enabled: false
-  service:
-    type: ClusterIP
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
@@ -291,7 +286,7 @@ kube-prometheus-stack:
   grafana:
     adminPassword: admin
     service:
-      type: ClusterIP
+      type: LoadBalancer
 
     defaultDashboardsEnabled: false
 
