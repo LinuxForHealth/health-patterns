@@ -1,34 +1,52 @@
 # health-patterns roadmap
-health-patterns is a collection of documentation and reference implementations that highlight how to combine various technologies into meaningful patterns for healthcare.
-
-By the end of the first quarter of 2021, we intend to have two reference implementations ready for use, with another one under construction.
 
 
-## 1) Clinical Data Ingestion
-This reference implementation will focus on the process of accepting data from a source system (EMR, Data Warehouse, etc), performing the necessary transformation & normalization and storing it in a persistence layer.  Initial data formats supported will include HL7, FHIR and DICOM and this version will persist the data in an industry standard FHIR Server as well as the dcm4che image store.
-
-The end result architecture will look something like the following
-![Ingestion2021](images/IngestionRoadmap1Q2021.png)
-
-While the goal for the end of 2020 will be this subset
+## Clinical Data Ingestion & Enrichment
 
 
-![Ingestion2020](images/IngestionRoadmap2020.png)
+At the end of 2020, the _Clinical Ingestion & Enrichment_ health pattern has made great progress as shown below.  This pattern is cloud agnostic (has been run on IBM Cloud, AWS, Azure, Google) and allows the following 
+- Take in HL7 or FHIR data from a source system (EMR, Data Warehouse, etc) via Kafka (preferred) or a simple API (mostly for testing)
+- Within a [NiFi](https://github.com/apache/nifi) canvas
+    - Convert [HL7 to FHIR using technology from LinuxForHealth](https://github.com/LinuxForHealth/hl7v2-fhir-converter)
+    - Validate the FHIR data without storing it in the FHIR Server
+    - Convert terminology using the FHIR Terminology Services
+    - Optionally [De-identify](https://github.com/Alvearie/de-identification) the FHIR data
+    - Store the FHIR bundle into the [FHIR Server](https://github.com/ibm/fhir)
+    - If de-identification happened, store the de-identified data into a second FHIR Server
+    - In case of errors within the bundle, individual resources are retried
+    - Errors are reported back to the data integrator via the kafka topic
+-  [Prometheus](https://github.com/prometheus) & [Grafana](https://github.com/grafana/grafana) configured to monitor the environment
+- Single helm chart to deploy & configure the above, with the flexibility to bring your own (BYO) services if you already have an instance that you want to use (Kafka or FHIR server or NiFi, etc)
+
+
+Here is what the implemented architecture looks like currently 
+![IngestionEnrichment2020](images/IngestionEnrichment2020.png)
+
+
+Here is the longer term [Alvearie architecture](https://alvearie.github.io/architecture) that includes additional Ingestion & Enrichment capabilities
+
+**Next up** for the _Clinical Data Ingestion & Enrichment_ pattern:
+- Add support for DICOM image ingestion & storage (expected early 2Q 2021)
+- Additional enrichment capabilities (NLP, additional normalization, patient matching)
+- Documentation & best practices around security, HIPAA compliance & multi-tenancy
+- Incorporate any new Alvearie assets as appropriate
 
 
 
+## Clinical Data Access & Analytics
+The Clinical Data Analytics pattern will provide a reference implementation that gives examples of the use of the [quality measure & cohort service](https://github.com/Alvearie/quality-measure-and-cohort-service) to find patients within the FHIR server that match a given cohort as defined using [CQL](https://cql.hl7.org).
 
-## 2) Clinical Data Enrichment
-Enrichment can happen as part of Ingestion or separately (after the data has been persisted).  
-The 2 focus areas will be
-1. the use of NLP to extract information from the unstructured patient notes.  Our implementation will show the use of IBM's Annotator for Clinical Data (ACD)
-2. the ability to de-identify the patient information and persist the de-identified data in a second FHIR server
+In addition, the Clinical Data Analytics reference implementation will incorporate ML models using Kubeflow.  We will have examples of 
+- using single patient data from the FHIR server to score against a model
+- bulk export data from the FHIR Server to run the model against multiple patients (or to use that data to train a new model)
+- how to easily serve existing trained models
+- build, train, tune new models
+- incorporate the models into the Ingest & Enrich pattern or as something that runs after the data has landed in the FHIR server
 
-Enrichment by the end of March 2021
-![Enrichment2021](images/EnrichmentRoadmap1Q2021.png)
+Clinical Data Access pattern will show how to configure access to the FHIR server for traditional access methods
+- [SMART on FHIR](https://smarthealthit.org/)
+- Using an API Management solution like [3scale](https://github.com/3scale) 
 
-Enrichment by the end of 2020
-![Enrichment2020](images/EnrichmentRoadmap2020.png)
+It will also show how to access the associated DICOM images for a patient.
 
-
-The third reference implementation will focus on Clinical Data Access and Analytics.  More details to come on that pattern...
+Again, the main Alvearie page shows the longer term [Alvearie architecture](https://alvearie.github.io/architecture) including Access & Analytics

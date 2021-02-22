@@ -1,9 +1,9 @@
-name: Lint and Test Charts
+name: Lint Charts
 
 on: pull_request
 
 jobs:
-  lint-test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,19 +34,3 @@ jobs:
 
       - name: Lint charts (ct lint)
         run: ct lint --chart-dirs clinical-ingestion/helm-charts --target-branch main --validate-maintainers=false --debug
-
-      - name: Create 'kind' cluster
-        uses: helm/kind-action@v1.0.0
-        if: steps.list-changed.outputs.changed == 'true'
-
-      # We need to know the name of the release or be able to set it (the expected release name is 'ingestion' by default)
-      # ct does not allow the option to do that, so we explocitly run the commands that `ct install` would have run
-      - name: Install charts (helm install)
-        run: |
-          helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo add cetic https://cetic.github.io/helm-charts
-          helm repo add prometheus https://prometheus-community.github.io/helm-charts
-          helm dependency build clinical-ingestion/helm-charts/alvearie-ingestion
-          helm install ingestion clinical-ingestion/helm-charts/alvearie-ingestion --values clinical-ingestion/helm-charts/alvearie-ingestion/ci/chart-testing-values.yaml --wait --timeout 6m0s
-          kubectl get all
-        if: steps.list-changed.outputs.changed == 'true'
