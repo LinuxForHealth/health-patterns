@@ -42,7 +42,7 @@ jobs:
       run: |
         kubectl config current-context
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
-        helm install ingestion clinical-ingestion/helm-charts/alvearie-ingestion --values clinical-ingestion/helm-charts/alvearie-ingestion/ci/chart-testing-values.yaml --wait --timeout 3m0s
+        helm install ingestion clinical-ingestion/helm-charts/alvearie-ingestion --values clinical-ingestion/helm-charts/alvearie-ingestion/ci/chart-testing-values.yaml --wait --timeout 6m0s
         kubectl get all
 
     # Uninstall Chart
