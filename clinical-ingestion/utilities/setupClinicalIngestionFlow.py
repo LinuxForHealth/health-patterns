@@ -16,7 +16,7 @@ def main():
     if len(sys.argv) < 3:
         print("Must include base url and default password as arguments")
         print("USAGE: setupFlow.py URL defaultpassword")
-        exit()  #need to retry
+        exit(1)  #need to retry
 
     baseURL = sys.argv[1]
     defaultPWD = sys.argv[2]
@@ -75,7 +75,7 @@ def main():
 
     if not regFound:
         print("script failed-no matching registry found:", regName)
-        exit()  #if we don't find the specific registry then we are done
+        exit(1)  #if we don't find the specific registry then we are done
 
     #search for bucket
     bucketFound = False
@@ -96,7 +96,7 @@ def main():
 
     if not bucketFound:
         print("script failed-no matching bucket found:", bucketName)
-        exit()  #if we don't find the specific bucket then we are done
+        exit(1)  #if we don't find the specific bucket then we are done
 
     #search for flow
     flowFound = False
@@ -119,7 +119,7 @@ def main():
 
     if not flowFound:
         print("script failed-no matching flow found:", flowName)
-        exit()  #if we don't find the specific bucket then we are done
+        exit(1)  #if we don't find the specific bucket then we are done
 
     #found the flow so now go ahead and find the latest version
     #unless latest is not None because then version already provided explicitly
