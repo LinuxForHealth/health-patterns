@@ -164,6 +164,7 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
                 session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
                 return; // if the input data can't be parsed as HL7 then stop
             }
+            session.putAttribute(outputFlowFile, "mime.type", "application/json");
             session.transfer(outputFlowFile, SUCCESS_RELATIONSHIP);
             session.remove(inputFlowFile); // remove the original flow file and stop
             getLogger().info("Pass FHIR flowfile to success queue");
