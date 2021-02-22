@@ -1,10 +1,11 @@
 {{- if .Values.global.ingress.enabled -}}
 {{- if .Values.nifi.enabled -}}
-{{- $ingressPort := 7001 -}}
+{{- $ingressPort := 8080 -}}
+{{- $ingressPort := .Values.nifi.service.port -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-nifi-rest-ingress
+  name: {{ .Release.Name }}-nifi-ingress
   namespace: {{ .Release.Namespace }}
   {{- with .Values.nifi.labels }}
   labels:
@@ -15,7 +16,7 @@ metadata:
     kubernetes.io/ingress.class: public-iks-k8s-nginx
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-nifi-rest.{{ .Values.global.ingress.subdomain}}
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.global.ingress.subdomain}}
       http:
         paths:
           - path: /
