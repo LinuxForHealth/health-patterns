@@ -26,18 +26,17 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.flowfile.FlowFile;
+import org.apache.nifi.flowfile.attributes.CoreAttributes;
 import org.apache.nifi.processor.AbstractProcessor;
 import org.apache.nifi.processor.ProcessContext;
 import org.apache.nifi.processor.ProcessSession;
 import org.apache.nifi.processor.ProcessorInitializationContext;
 import org.apache.nifi.processor.Relationship;
 import org.apache.nifi.processor.exception.ProcessException;
-
 import ca.uhn.hl7v2.HL7Exception;
 import io.github.linuxforhealth.hl7.HL7ToFHIRConverter;
 import io.github.linuxforhealth.hl7.parsing.HL7HapiParser;
@@ -60,6 +59,8 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
     public static final Relationship FAIL_RELATIONSHIP = new Relationship.Builder().name("failure").description("HL7 data conversion failed").build();
 
     public static final Relationship HL7_NOT_DETECTED_RELATIONSHIP = new Relationship.Builder().name("HL7 data not detected").description("HL7 data not detected").build();
+
+    public static final String APPLICATION_JSON = "application/json";
 
     private List<PropertyDescriptor> descriptors;
 
@@ -164,7 +165,7 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
                 session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
                 return; // if the input data can't be parsed as HL7 then stop
             }
-            session.putAttribute(outputFlowFile, "mime.type", "application/json");
+            session.putAttribute(outputFlowFile, CoreAttributes.MIME_TYPE.key(), APPLICATION_JSON);
             session.transfer(outputFlowFile, SUCCESS_RELATIONSHIP);
             session.remove(inputFlowFile); // remove the original flow file and stop
             getLogger().info("Pass FHIR flowfile to success queue");
