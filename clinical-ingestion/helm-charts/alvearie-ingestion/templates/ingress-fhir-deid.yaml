@@ -1,4 +1,4 @@
-{{- if .Values.global.ingress.enabled -}}
+{{- if .Values.ingress.enabled -}}
 {{- if index .Values "fhir-deid" "enabled" -}}
 {{- $ingressPort := index .Values "fhir-deid" "service" "httpPort" -}}
 apiVersion: extensions/v1beta1
@@ -11,11 +11,10 @@ metadata:
     {{ toYaml . | nindent 4 }}
   {{- end }}
   annotations:
-    ingress.kubernetes.io/proxy-read-timeout: '90'
-    kubernetes.io/ingress.class: public-iks-k8s-nginx
+    kubernetes.io/ingress.class: public-iks-k8s-nginx # Required for IBM Cloud Ingresses
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid.{{ .Values.global.ingress.subdomain}}
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}
       http:
         paths:
           - path: /

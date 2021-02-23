@@ -63,8 +63,11 @@ In order to install that pattern run the command below:
 helm install ingestion . -f de-id-pattern-values.yaml
 ```
 
-Note: In order to install De-Identification in an ingress-enabled environment, you need to manually merge the values from the two previous yaml files into one joint configuration.
+Note: In order to install De-Identification in an ingress-enabled environment, you need to include both values files:
 
+```bash
+helm install ingestion . -f ingress-enabled-values.yaml -f de-id-pattern-values.yaml
+```
 
 ### Using the Chart
 

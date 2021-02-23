@@ -1,4 +1,4 @@
-{{- if .Values.global.ingress.enabled -}}
+{{- if .Values.ingress.enabled -}}
 {{- if .Values.nifi.enabled -}}
 {{- $ingressPort := 8080 -}}
 {{- $ingressPort := .Values.nifi.service.port -}}
@@ -12,11 +12,10 @@ metadata:
     {{ toYaml . | nindent 4 }}
   {{- end }}
   annotations:
-    ingress.kubernetes.io/proxy-read-timeout: '90'
-    kubernetes.io/ingress.class: public-iks-k8s-nginx
+    kubernetes.io/ingress.class: public-iks-k8s-nginx # Required for IBM Cloud Ingresses
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.global.ingress.subdomain}}
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.ingress.subdomain}}
       http:
         paths:
           - path: /

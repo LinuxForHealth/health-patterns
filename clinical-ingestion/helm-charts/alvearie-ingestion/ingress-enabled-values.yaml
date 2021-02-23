@@ -1,10 +1,9 @@
 # A simple name describing the Alvearie pattern implemented by this Helm values file 
 pattern: "Ingress-Enabled-Clinical-Ingestion"
 
-global:
-  ingress:
-    enabled: true
-    subdomain: <<INSERT_INGRESS_SUBDOMAIN_HERE>>
+ingress:
+  enabled: true
+  subdomain: <<INSERT_INGRESS_SUBDOMAIN_HERE>>
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration

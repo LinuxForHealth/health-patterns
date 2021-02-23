@@ -30,9 +30,8 @@ tolerations: []
 
 affinity: {}
 
-global:
-  ingress:
-    enabled: false
+ingress:
+  enabled: false
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
@@ -105,7 +104,7 @@ nifi:
   service:
     type: LoadBalancer
     port: 8080
-    restPort: 7001
+    httpInputPort: 7001
     processors:
       enabled: true
       ports:

@@ -1,4 +1,4 @@
-{{- if .Values.global.ingress.enabled -}}
+{{- if .Values.ingress.enabled -}}
 {{- if index .Values "kube-prometheus-stack" "enabled" -}}
 {{- $ingressPort := index .Values "kube-prometheus-stack" "grafana" "service" "portName" -}}
 apiVersion: extensions/v1beta1
@@ -7,11 +7,10 @@ metadata:
   name: {{ .Release.Name }}-grafana-ingress
   namespace: {{ .Release.Namespace }}
   annotations:
-    ingress.kubernetes.io/proxy-read-timeout: '90'
-    kubernetes.io/ingress.class: public-iks-k8s-nginx
+    kubernetes.io/ingress.class: public-iks-k8s-nginx # Required for IBM Cloud Ingresses
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-grafana.{{ .Values.global.ingress.subdomain}}
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-grafana.{{ .Values.ingress.subdomain}}
       http:
         paths:
           - path: /
