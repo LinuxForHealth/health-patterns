@@ -9,7 +9,7 @@ package com.ibm.healthpatterns.processors.hl7tofhir;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-
+import org.apache.nifi.flowfile.attributes.CoreAttributes;
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
@@ -48,7 +48,10 @@ public class Hl7ToFhirProcessorTest {
         List<MockFlowFile> flowFiles = testRunner.getFlowFilesForRelationship("success");
         assertTrue("No Flow Files returned on success relationship", flowFiles != null && flowFiles.size() == 1);
 
-        String data = new String(flowFiles.get(0).getData());
+        MockFlowFile flowFile = flowFiles.get(0);
+        String data = new String(flowFile.getData());
         assertTrue("HL7 data not converted correctly", data != null && data.startsWith("{"));
+        
+        flowFile.assertAttributeEquals(CoreAttributes.MIME_TYPE.key(), HL7ToFhirProcessor.APPLICATION_JSON);
     }
 }

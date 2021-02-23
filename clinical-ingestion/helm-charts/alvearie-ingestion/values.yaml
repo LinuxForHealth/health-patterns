@@ -143,7 +143,7 @@ nifi:
     # The NARs will be copied to a shared volume, and the customLibPath will be set to the location
     # of that shared volume in the main NiFi server container and set in nifi.properties
     alvearie-nars-init:
-      image: alvearie/nars:0.0.3
+      image: alvearie/nars:0.0.4
       imagePullPolicy: Always
       command: ["sh", "-c", "cp *.nar /nars"]
       volumeMounts:
