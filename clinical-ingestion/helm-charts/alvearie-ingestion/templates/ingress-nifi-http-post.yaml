@@ -4,7 +4,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-nifi-rest-ingress
+  name: {{ .Release.Name }}-nifi-http-post-ingress
   namespace: {{ .Release.Namespace }}
   {{- with .Values.nifi.labels }}
   labels:
