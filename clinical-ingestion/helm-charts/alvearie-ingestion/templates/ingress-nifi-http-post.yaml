@@ -14,7 +14,7 @@ metadata:
     kubernetes.io/ingress.class: public-iks-k8s-nginx # Required for IBM Cloud Ingresses
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-nifi-rest.{{ .Values.ingress.subdomain}}
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-nifi-http-post.{{ .Values.ingress.subdomain}}
       http:
         paths:
           - path: /
