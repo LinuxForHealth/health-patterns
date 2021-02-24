@@ -1,0 +1,25 @@
+{{- if .Values.ingress.enabled -}}
+{{- if index .Values "fhir-deid" "enabled" -}}
+{{- $ingressPort := index .Values "fhir-deid" "service" "httpPort" -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-fhir-deid-ingress
+  namespace: {{ .Release.Namespace }}
+  {{- with index .Values "fhir-deid" "labels" }}
+  labels:
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+    kubernetes.io/ingress.class: public-iks-k8s-nginx # Required for IBM Cloud Ingresses
+spec:
+  rules:
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ .Release.Name }}-fhir-deid
+              servicePort: {{ $ingressPort }}
+{{- end }}
+{{- end }}

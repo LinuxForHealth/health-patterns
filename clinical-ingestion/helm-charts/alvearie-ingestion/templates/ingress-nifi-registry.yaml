@@ -1,0 +1,25 @@
+{{- if .Values.ingress.enabled -}}
+{{- if index .Values "nifi-registry" "enabled" -}}
+{{- $ingressPort := index .Values "nifi-registry" "service" "port" -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-nifi-registry-ingress
+  namespace: {{ .Release.Namespace }}
+  {{- with index .Values "nifi-registry" "labels" }}
+  labels:
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+    kubernetes.io/ingress.class: public-iks-k8s-nginx # Required for IBM Cloud Ingresses
+spec:
+  rules:
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-nifi-registry.{{ .Values.ingress.subdomain}}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ .Release.Name }}-nifi-registry
+              servicePort: {{ $ingressPort }}
+{{- end }}
+{{- end }}              

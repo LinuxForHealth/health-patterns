@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled -}}
+{{- if .Values.nifi.enabled -}}
+{{- $ingressPort := 8080 -}}
+{{- $ingressPort := .Values.nifi.service.port -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-nifi-ingress
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.nifi.labels }}
+  labels:
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+    kubernetes.io/ingress.class: public-iks-k8s-nginx # Required for IBM Cloud Ingresses
+spec:
+  rules:
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.ingress.subdomain}}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ .Release.Name }}-nifi
+              servicePort: {{ $ingressPort }}
+{{- end }}
+{{- end }}

@@ -15,34 +15,36 @@ Pattern: {{ .Values.pattern }}
 
 The following services have been deployed:
 {{- if .Values.fhir.enabled }}
-- Primary FHIR Server
+- Primary FHIR Server{{- if .Values.ingress.enabled }} -------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
 {{- end }}
 {{- if index .Values "fhir-deid" "enabled" }}
-- Secondary FHIR Server
+- Secondary FHIR Server{{- if .Values.ingress.enabled }} ------ http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
 {{- end }}
 {{- if .Values.deid.enabled }}
-- De-Identification Service
+- De-Identification Service{{- if .Values.ingress.enabled }} -- http://{{ .Release.Namespace }}.{{ .Release.Name }}-deid.{{ .Values.ingress.subdomain}}/api/v1/{{- end }}
 {{- end }}
 {{- if .Values.nifi.enabled }}
-- NiFi Server
+- NiFi Server{{- if .Values.ingress.enabled }} ---------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.ingress.subdomain}}/nifi{{- end }}
+- NiFi REST API{{- if .Values.ingress.enabled }} -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-rest.{{ .Values.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if index .Values "nifi-registry" "enabled" }}
-- NiFi Registry
+- NiFi Registry{{- if .Values.ingress.enabled }} -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-registry.{{ .Values.ingress.subdomain}}/nifi-registry{{- end }}
 {{- end }}
 {{- if .Values.kafka.enabled }}
-- Kafka
+- Kafka{{- if .Values.ingress.enabled }} ---------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-kafka.{{ .Values.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if .Values.zookeeper.enabled }}
 - Zookeeper
 {{- end }}
 {{- if index .Values "kube-prometheus-stack" "enabled" }}
 - Prometheus
-- Grafana
+- Grafana{{- if .Values.ingress.enabled }} -------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-grafana.{{ .Values.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if index .Values "cohort-service" "enabled" }}
-- Cohort Service
+- Cohort Service{{- if .Values.ingress.enabled }} ------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-cohort-service.{{ .Values.ingress.subdomain}}{{- end }}
 {{- end }}
 
+{{- if not .Values.ingress.enabled }}
 It may take a few minutes for the LoadBalancer IPs to be available.
 
 Watch the status of the public services by running the following command and wait until the external IP addresses appear: 
@@ -104,6 +106,7 @@ Cohort Service:
   export COHORT_SERVICE_PORT=$(kubectl get svc {{ .Release.Name }}-cohort-service -o jsonpath='{.spec.ports[0].port}') 
   echo Grafana Server: http://$COHORT_SERVICE_IP:$COHORT_SERVICE_PORT
 
+{{- end }}
 {{- end }}
 
 

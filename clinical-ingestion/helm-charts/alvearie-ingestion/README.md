@@ -40,6 +40,20 @@ Install the helm chart with a release name `ingestion`:
 helm install ingestion .
 ```
 
+### Optional: Expose via Ingress
+By default, this chart will expose services using individual load balancers.  This consistently works across all Cloud environments (IBM, Azure, AWS, GCP), but is not preferred.  Instead, if you have an ingress controller setup for your cluster, you can deploy the chart using ingresses for each service instead.
+The hostname for each service will be auto-generated based on the ingress subdomain provided.  In IBM Cloud, the ingress subdomain for your cluster can be retrieved using:
+
+```
+ibmcloud ks cluster get --cluster <<CLUSTER_NAME_OR_ID>>
+```
+
+Once you have the ingress subdomain, you need to update the `ingress-enabled-values.yaml` file and replace `<<INGRESS_SUBDOMAIN>>` with your subdomain.  Then deploy the chart using:
+
+```bash
+helm install ingestion . -f ingress-enabled-values.yaml
+```
+
 ### Install the Chart with De-Identification Enabled
 
 This same chart can be used to install the patient de-identification pattern, which adds a de-identification service and a secondary FHIR server for de-identified clinical data.
@@ -47,6 +61,12 @@ In order to install that pattern run the command below:
 
 ```bash
 helm install ingestion . -f de-id-pattern-values.yaml
+```
+
+Note: In order to install De-Identification in an ingress-enabled environment, you need to include both values files:
+
+```bash
+helm install ingestion . -f ingress-enabled-values.yaml -f de-id-pattern-values.yaml
 ```
 
 ### Using the Chart

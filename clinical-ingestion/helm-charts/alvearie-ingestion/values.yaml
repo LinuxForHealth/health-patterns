@@ -30,6 +30,9 @@ tolerations: []
 
 affinity: {}
 
+ingress:
+  enabled: false
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
@@ -38,6 +41,7 @@ fhir:
   enabled: true
   service:
     type: LoadBalancer
+    port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
@@ -54,6 +58,8 @@ fhir:
 
 fhir-deid:
   enabled: false
+  service:
+    port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
@@ -97,6 +103,8 @@ nifi:
   enabled: true
   service:
     type: LoadBalancer
+    port: 8080
+    httpInputPort: 7001
     processors:
       enabled: true
       ports:
