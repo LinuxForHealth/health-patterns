@@ -7,7 +7,7 @@ metadata:
   name: {{ .Release.Name }}-grafana-ingress
   namespace: {{ .Release.Namespace }}
   annotations:
-    kubernetes.io/ingress.class: public-iks-k8s-nginx # Required for IBM Cloud Ingresses
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
 spec:
   rules:
     - host: {{ .Release.Namespace }}.{{ .Release.Name }}-grafana.{{ .Values.ingress.subdomain}}
