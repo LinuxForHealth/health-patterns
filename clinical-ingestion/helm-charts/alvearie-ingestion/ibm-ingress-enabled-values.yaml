@@ -4,7 +4,7 @@ pattern: "Ingress-Enabled-Clinical-Ingestion"
 ingress:
   enabled: true
   class: public-iks-k8s-nginx
-  subdomain: c45d7d587bfa40c09a7f.centralus.aksapp.io
+  subdomain: <<INSERT_INGRESS_SUBDOMAIN_HERE>>
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
