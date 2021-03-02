@@ -155,8 +155,11 @@ def main():
     createPostEndpoint = "nifi-api/process-groups/" + rootId + "/process-groups"
     resp = requests.post(url=baseURL + createPostEndpoint, json=createJson)
     if debug:
+        print("Response from new group...")
         print(resp.content)
-
+    newgroupid = (dict(resp.json()))["id"]
+    if debug:
+        print("New process group id...",newgroupid)
     print("Step 1 complete: Process group created...")
 
     #STEP 2: Set specific passwords in the parameter contexts for fhir, kafka, and deid
@@ -280,6 +283,21 @@ def main():
                 print(resp, resp.content)
 
     print("Step 3 complete: Controllers enabled...")
+
+    # STEP 4: start all of the processors in the process group that was added in step 1
+    
+    print("Step 4: Start all processors in the new process group")
+
+    startupJson = {"id":newgroupid,"state":"RUNNING"}
+    startupPutEndpoint = "nifi-api/flow/process-groups/" + newgroupid
+    resp = requests.put(url=baseURL + startupPutEndpoint, json=startupJson)
+    if debug:
+        print(resp)
+        print("Response from startup...")
+        print(resp.content)
+
+    print("Step 4 complete: New processor group started...")
+
     print("Setup task complete")
 
 def updatePwd(baseURL, contextId, versionNum, pwdName, pwdValue):
