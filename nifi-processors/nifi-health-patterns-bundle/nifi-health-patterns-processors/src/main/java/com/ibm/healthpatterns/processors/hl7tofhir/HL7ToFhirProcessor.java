@@ -16,16 +16,21 @@
  */
 package com.ibm.healthpatterns.processors.hl7tofhir;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
 import org.apache.nifi.components.PropertyDescriptor;
@@ -37,6 +42,10 @@ import org.apache.nifi.processor.ProcessSession;
 import org.apache.nifi.processor.ProcessorInitializationContext;
 import org.apache.nifi.processor.Relationship;
 import org.apache.nifi.processor.exception.ProcessException;
+import org.apache.nifi.processor.io.InputStreamCallback;
+import org.apache.nifi.processor.io.OutputStreamCallback;
+import org.apache.nifi.util.FormatUtils;
+import org.apache.nifi.util.StopWatch;
 import ca.uhn.hl7v2.HL7Exception;
 import io.github.linuxforhealth.hl7.HL7ToFHIRConverter;
 import io.github.linuxforhealth.hl7.parsing.HL7HapiParser;
@@ -126,19 +135,44 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
         }
 
         getLogger().info("Reading text data from FlowFile");
-        InputStream is = session.read(inputFlowFile);
-        StringBuilder inputMessage = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                inputMessage.append(line + "\n");
-            }
-        } catch (IOException e) {
-            getLogger().error("Error reading flowfile", e);
-            session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
-            return; // if an error occurred reading the input flowfile then stop
-        }
+        
+        AtomicReference<String> uploadDataRate = new AtomicReference<String>();
+        AtomicLong uploadMillis = new AtomicLong();        
+        final StopWatch stopWatch = new StopWatch(true);
+        AtomicReference<String> callBackMessage = new AtomicReference<String>();
+        
+        session.read(inputFlowFile, new InputStreamCallback() {
+          /*
+           * (non-Javadoc)
+           * 
+           * @see org.apache.nifi.processor.io.InputStreamCallback#process(java.io.InputStream)
+           */
+          @Override
+          public void process(InputStream in) throws IOException {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+              StringBuilder sb = new StringBuilder();
+              String line = null;
+              while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+              }
+              callBackMessage.set(sb.toString());
+              stopWatch.stop();
+              uploadMillis.set(stopWatch.getDuration(TimeUnit.MILLISECONDS));
+              uploadDataRate.set(stopWatch.calculateDataRate(inputFlowFile.getSize()));
+            } catch (IOException e) {
+              getLogger().error("Error reading flowfile", e);
+              session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
+              return;
+           }
+          }
+        });
 
+        getLogger().info("Successfully read input data in {} at a rate of {}",
+            new Object[] {
+                FormatUtils.formatMinutesSeconds(uploadMillis.get(), TimeUnit.MILLISECONDS),
+                uploadDataRate.get()});
+
+        String inputMessage = callBackMessage.get();
         if (inputMessage == null || inputMessage.length() == 0) {
             session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
             return; // if the incoming data is empty then stop
@@ -151,28 +185,39 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
             return; // if the input data can't be parsed as HL7 then stop
         }
 
-
         try {
-            String hl7Message = inputMessage.toString();
-            HL7ToFHIRConverter ftv = new HL7ToFHIRConverter();
-            String fhirMessage = ftv.convert(hl7Message); // generated a FHIR output
+          String hl7Message = inputMessage.toString();
+          HL7ToFHIRConverter ftv = new HL7ToFHIRConverter();
+          String fhirMessage = ftv.convert(hl7Message); // generated a FHIR output
 
-            FlowFile outputFlowFile = session.clone(inputFlowFile);
-            try (OutputStream newFlowOutput = session.write(outputFlowFile)) {
-                newFlowOutput.write(fhirMessage.getBytes());
-            } catch (IOException e) {
+          FlowFile outputFlowFile = session.clone(inputFlowFile);
+
+          outputFlowFile = session.write(outputFlowFile, new OutputStreamCallback() {
+            /*
+             * (non-Javadoc)
+             * 
+             * @see org.apache.nifi.processor.io.OutputStreamCallback#process(java.io.OutputStream)
+             */
+            @Override
+            public void process(OutputStream out) throws IOException {
+              try (OutputStream outputStream = new BufferedOutputStream(out)) {
+                outputStream.write(fhirMessage.getBytes(StandardCharsets.UTF_8));
+              } catch (IOException e) {
                 getLogger().error("Error writing FHIR message to output flow", e);
                 session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
                 return; // if the input data can't be parsed as HL7 then stop
+              }
             }
-            session.putAttribute(outputFlowFile, CoreAttributes.MIME_TYPE.key(), APPLICATION_JSON);
-            session.transfer(outputFlowFile, SUCCESS_RELATIONSHIP);
-            session.remove(inputFlowFile); // remove the original flow file and stop
-            getLogger().info("Pass FHIR flowfile to success queue");
+          });
+
+          session.putAttribute(outputFlowFile, CoreAttributes.MIME_TYPE.key(), APPLICATION_JSON);
+          session.transfer(outputFlowFile, SUCCESS_RELATIONSHIP);
+          session.remove(inputFlowFile); // remove the original flow file and stop
+          getLogger().info("Pass FHIR flowfile to success queue");
         } catch (UnsupportedOperationException | IllegalArgumentException e) {
-            getLogger().error("Error converting HL7 data to FHIR", e);
-            session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
-            return; // if the input data can't be converted to FHIR then stop
+          getLogger().error("Error converting HL7 data to FHIR", e);
+          session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
+          return; // if the input data can't be converted to FHIR then stop
         }
-    }
+      }
 }
