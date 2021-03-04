@@ -40,6 +40,10 @@ Install the helm chart with a release name `ingestion`:
 helm install ingestion .
 ```
 
+### Optional: Deploy a FHIR UI
+
+Follow the instructions for deploying the [Alvearie Patient Browser App](https://github.com/Alvearie/patient-browser/tree/master/chart#installation) if you need a FHIR UI.
+
 ### Optional: Expose via Ingress
 By default, this chart will expose services using individual load balancers.  This consistently works across all Cloud environments (IBM, Azure, AWS, GCP), but is not preferred.  Instead, if you have an ingress controller setup for your cluster, you can deploy the chart using ingresses for each service instead.
 The hostname for each service will be auto-generated based on the ingress subdomain provided.  In IBM Cloud, the ingress subdomain for your cluster can be retrieved using:
