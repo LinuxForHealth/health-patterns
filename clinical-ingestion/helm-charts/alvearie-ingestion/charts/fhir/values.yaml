@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: ibmcom/ibm-fhir-server
+  repository: alvearie/fhir-server-demo
   pullPolicy: IfNotPresent
-  tag: 4.5.2
+  tag: everything-preview
 
 service:
   type: ClusterIP
