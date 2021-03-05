@@ -37,7 +37,7 @@ nifi:
 kafka:
   externalAccess:
     service:
-      type: NodePort
+      type: LoadBalancer # Required for liveness probe test for now
 
 # ------------------------------------------------------------------------------
 # Cohort Service
