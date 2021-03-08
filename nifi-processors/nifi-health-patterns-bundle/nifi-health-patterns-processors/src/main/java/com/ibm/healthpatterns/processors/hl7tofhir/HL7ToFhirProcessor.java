@@ -219,5 +219,5 @@ public class HL7ToFhirProcessor extends AbstractProcessor {
           session.transfer(inputFlowFile, FAIL_RELATIONSHIP);
           return; // if the input data can't be converted to FHIR then stop
         }
-      }
+    }
 }
