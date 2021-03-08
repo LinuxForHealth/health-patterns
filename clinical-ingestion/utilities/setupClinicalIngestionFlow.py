@@ -5,6 +5,7 @@
 
 import requests
 import sys
+import time
 
 debug = False  # turn off debug by default
 
@@ -285,18 +286,55 @@ def main():
     print("Step 3 complete: Controllers enabled...")
 
     # STEP 4: start all of the processors in the process group that was added in step 1
-    
+
     print("Step 4: Start all processors in the new process group")
 
-    startupJson = {"id":newgroupid,"state":"RUNNING"}
-    startupPutEndpoint = "nifi-api/flow/process-groups/" + newgroupid
-    resp = requests.put(url=baseURL + startupPutEndpoint, json=startupJson)
     if debug:
-        print(resp)
-        print("Response from startup...")
-        print(resp.content)
+        print("Original ordering....")
+        print(finalGroupList)
 
-    print("Step 4 complete: New processor group started...")
+    finalGroupList.reverse()
+
+    if debug:
+        print("Reording, starting from bottom up....")
+        print(finalGroupList)
+
+    for thegroup in finalGroupList:
+        status2GetEndpoint = "nifi-api/process-groups/" + thegroup
+        resp = requests.get(url=baseURL + status2GetEndpoint)
+        statusdict = dict(resp.json())
+        stoppedcount = statusdict["stoppedCount"]
+        if debug:
+            print("Stopped Count: ", thegroup, "is ", int(stoppedcount))
+        while stoppedcount > 0:  #there are still some processors that are not running so start again
+            startupJson = {"id":thegroup,"state":"RUNNING"} #reschedule to running state
+            startupPutEndpoint = "nifi-api/flow/process-groups/" + thegroup
+            resp = requests.put(url=baseURL + startupPutEndpoint, json=startupJson)
+            if debug:
+                print(resp.content)
+            if debug:
+                print("Response from startup...", thegroup)
+                print(resp)
+                print(resp.content)
+
+            time.sleep(1) #wait a bit for the process group to reset itself before getting next status
+
+            status2GetEndpoint = "nifi-api/process-groups/" + thegroup
+            resp = requests.get(url=baseURL + status2GetEndpoint)
+            statusdict = dict(resp.json())
+            stoppedcount = statusdict["stoppedCount"]
+            if debug:
+                print("Stopped Count: ", thegroup, "is ", int(stoppedcount))
+
+    if debug:
+        for agroup in finalGroupList:
+            status2GetEndpoint = "nifi-api/process-groups/" + agroup
+            resp = requests.get(url=baseURL + status2GetEndpoint)
+            statusdict = dict(resp.json())
+            stoppedcount = statusdict["stoppedCount"]
+            print("Stopped Count: ", agroup, "is ", int(stoppedcount))
+
+    print("Step 4 complete: All processors in new processor group started....")
 
     print("Setup task complete")
 
