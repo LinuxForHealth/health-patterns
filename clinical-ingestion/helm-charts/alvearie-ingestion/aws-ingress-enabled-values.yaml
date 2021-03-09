@@ -1,0 +1,68 @@
+# A simple name describing the Alvearie pattern implemented by this Helm values file 
+pattern: "Ingress-Enabled-Clinical-Ingestion"
+
+ingress:
+  enabled: true
+  class: nginx
+  subdomain: <<INSERT_INGRESS_SUBDOMAIN_HERE>>
+
+# ------------------------------------------------------------------------------
+# FHIR Configuration
+# Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
+# ------------------------------------------------------------------------------
+fhir:
+  service:
+    type: ClusterIP
+
+# ------------------------------------------------------------------------------
+# FHIR Configuration
+# Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
+# ------------------------------------------------------------------------------
+fhir-deid:
+  service:
+    type: ClusterIP
+
+# ------------------------------------------------------------------------------
+# Nifi Configuration
+# Values: https://github.com/cetic/helm-nifi/blob/master/values.yaml
+# ------------------------------------------------------------------------------
+nifi:
+  service:
+    type: ClusterIP
+    
+# ------------------------------------------------------------------------------
+# Kafka Configuration
+# Values: https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
+# ------------------------------------------------------------------------------
+kafka:
+  externalAccess:
+    service:
+      type: LoadBalancer # Required for liveness probe test for now
+
+# ------------------------------------------------------------------------------
+# Cohort Service
+# Values: https://github.com/Alvearie/health-patterns/cohort-service/chart/values.yaml
+# ------------------------------------------------------------------------------
+cohort-service:
+  service:
+    type: ClusterIP
+
+# ------------------------------------------------------------------------------
+# Prometheus-Grafana stack Configuration
+# This will add specific configuration for the new grafana-prometheusSpec
+# monitoring stack so that nifi and kafka will both generate metrics to a
+# externally available grafana
+# ------------------------------------------------------------------------------
+# Nifi Metrics Configuration
+# This adds an additional scrape configuration that will expose Nifi /metrics
+# on the port defined
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Kafka Metrics Configuration
+# This adds an additional scrape configuration that will expose Kafka /metrics
+# on the port defined.  Note there are two kafka type metrics
+# ------------------------------------------------------------------------------
+kube-prometheus-stack:
+  grafana:
+    service:
+      type: ClusterIP
