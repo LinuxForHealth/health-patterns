@@ -37,10 +37,13 @@ kubectl config set-context --current --namespace=alvearie
 Install the helm chart with a release name `ingestion`:
 
 NOTE: By default, this will install all services as individual Load Balancers.  The preferred approach is to use ClusterIP services and expose via Ingress.  At this time, ingress support requires individual cloud-specific setup, but instructions can be found [here](README_INGRESS.md).
-
 ```bash
 helm install ingestion .
 ```
+
+### Optional: Deploy a FHIR UI
+
+Follow the instructions for deploying the [Alvearie Patient Browser App](https://github.com/Alvearie/patient-browser/tree/master/chart#installation) if you need a FHIR UI.
 
 ### Install the Chart with De-Identification Enabled
 
