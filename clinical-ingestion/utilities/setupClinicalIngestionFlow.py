@@ -296,9 +296,10 @@ def main():
     finalGroupList.reverse()
 
     if debug:
-        print("Reording, starting from bottom up....")
+        print("Reordering, starting from bottom up....")
         print(finalGroupList)
 
+    MAXRETRIES = 5
     for thegroup in finalGroupList:
         status2GetEndpoint = "nifi-api/process-groups/" + thegroup
         resp = requests.get(url=baseURL + status2GetEndpoint)
@@ -306,10 +307,12 @@ def main():
         stoppedcount = statusdict["stoppedCount"]
         if debug:
             print("Stopped Count: ", thegroup, "is ", int(stoppedcount))
-        while stoppedcount > 0:  #there are still some processors that are not running so start again
+        tries = 0
+        while stoppedcount > 0 and tries < MAXRETRIES:  #there are still some processors that are not running so start again
             startupJson = {"id":thegroup,"state":"RUNNING"} #reschedule to running state
             startupPutEndpoint = "nifi-api/flow/process-groups/" + thegroup
             resp = requests.put(url=baseURL + startupPutEndpoint, json=startupJson)
+            tries = tries + 1  #we will only do this MAXTRIES times
             if debug:
                 print(resp.content)
             if debug:
