@@ -12,7 +12,6 @@ env:
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
   IBM_CLOUD_REGION: us-south
   CLUSTER_NAMESPACE: github
-  PORT: 5001
 
 jobs:
   deploy:
@@ -48,3 +47,4 @@ jobs:
     # Uninstall Chart
     - name: Uninstall Chart
       run: helm uninstall ingestion
+      if: ${{ always() }}
