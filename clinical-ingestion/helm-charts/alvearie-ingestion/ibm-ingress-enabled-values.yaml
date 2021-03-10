@@ -3,6 +3,7 @@ pattern: "Ingress-Enabled-Clinical-Ingestion"
 
 ingress:
   enabled: true
+  class: public-iks-k8s-nginx
   subdomain: <<INSERT_INGRESS_SUBDOMAIN_HERE>>
 
 # ------------------------------------------------------------------------------
@@ -36,7 +37,7 @@ nifi:
 kafka:
   externalAccess:
     service:
-      type: NodePort
+      type: LoadBalancer # Required for liveness probe test for now
 
 # ------------------------------------------------------------------------------
 # Cohort Service
