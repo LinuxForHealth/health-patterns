@@ -53,6 +53,9 @@ spec:
           - name: fhir-server-config-json
             mountPath: /opt/ol/wlp/usr/servers/fhir-server/config/default/fhir-server-config.json
             subPath: fhir-server-config.json
+          - name: jvm-options
+            mountPath: /opt/ol/wlp/usr/servers/fhir-server/jvm.options
+            subPath: jvm.options
            {{ range $path, $bytes := .Files.Glob ( printf "binary-config/**") }}
            {{ $name := base $path }}
           - name: binary-file-volume
@@ -91,6 +94,12 @@ spec:
             items:
               - key: "fhir-server-config.json"
                 path: "fhir-server-config.json"
+        - name: jvm-options
+          configMap:
+            name: {{ template "fhir.fullname" . }}-config
+            items:
+              - key: "jvm.options"
+                path: "jvm.options"
         - name: binary-file-volume
           configMap:
             name: {{ template "fhir.fullname" . }}-config

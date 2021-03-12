@@ -40,6 +40,9 @@ spec:
           - name: providers
             mountPath: /opt/nifi-registry/nifi-registry-current/conf/providers.xml
             subPath: providers.xml
+          - name: bootstrap-conf
+            mountPath: /opt/nifi-registry/nifi-registry-current/conf/bootstrap.conf
+            subPath: bootstrap.conf
       volumes:
         - name: providers
           configMap:
@@ -47,7 +50,12 @@ spec:
             items:
               - key: "providers.xml"
                 path: "providers.xml"
-
+        - name: bootstrap-conf
+          configMap:
+            name: {{ template "nifi-registry.fullname" . }}-config
+            items:
+              - key: "bootstrap.conf"
+                path: "bootstrap.conf"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

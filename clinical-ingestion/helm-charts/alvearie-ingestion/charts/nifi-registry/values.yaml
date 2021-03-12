@@ -20,6 +20,9 @@ git:
   # By default this registry loads the health-patterns NiFi flows
   repository: https://github.com/Alvearie/health-patterns-nifi-flows.git
 
+# Amount of memory to give the NiFi Registry java heap
+jvmMemory: 1G
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
