@@ -85,7 +85,7 @@ NiFi Server:
 Kafka Broker:
 
   export KAFKA_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-kafka-0-external -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-  export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-nifi -o jsonpath='{.spec.ports[0].port}') 
+  export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-kafka-0-external -o jsonpath='{.spec.ports[0].port}') 
   echo Kafka Broker: $KAFKA_IP:$KAFKA_PORT
 
 {{- end }}
