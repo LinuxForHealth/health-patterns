@@ -5,23 +5,18 @@ In order to deploy via ingress, the target cloud will need an ingress controller
 
 ### Deploy via Ingress on IBM Cloud
 
-On IBM Cloud, an ingress controller is automatically installed in the kubernetes cluster and a load balancer is attached to it.  You will need to identify the ingress subdomain.
+On IBM Cloud, an ingress controller is automatically installed in the kubernetes cluster and a load balancer is attached to it.  In order to identify the ingress subdomain simply run:
 
-1. Run `ibmcloud ks cluster get --cluster <<CLUSTER_NAME_OR_ID>>`.
-1. Update `ibm-ingress-enabled-values.yaml` and replace `<<INGRESS_SUBDOMAIN>>` with the `Ingress Subdomain` value from the prior step.
-1. Deploy the helm chart using the updated yaml: `helm install ingestion . -f ibm-ingress-enabled-values.yaml`.
+1. `ibmcloud ks cluster get --cluster <<CLUSTER_NAME_OR_ID>>`.
 
-Once the chart deploys, you will see a list of valid URL's to access the various ingresses available.
+This will return to you a list of information including the ingress subdomain for your cluster.
 
 ### Deploy via Ingress on Azure
 
 On Azure, an ingress controller is automatically installed in the kubernetes cluster without any extra steps. You will need to add a DNS Zone to expose the ingress controller via a domain name.
 
 1. In the Azure portal, create a [DNS Zone](http://portal.azure.com/#create/Microsoft.DnsZone).
-1. Once created, the generated name of the DNS Zone (i.e. "1234567890.centralus.aksapp.io") will be used to replace `<<INGRESS_SUBDOMAIN>>` in `azure-ingress-enabled-values.yaml`.
-1. Deploy the helm chart using the updated yaml: `helm install ingestion . -f azure-ingress-enabled-values.yaml`
-
-Once the chart deploys, you will see a list of valid URL's to access the various ingresses available.
+1. Once created, the generated name of the DNS Zone (i.e. "1234567890.centralus.aksapp.io") will be used as your ingress subdomain in the Clinical Ingestion helm chart.
 
 ### Deploy via Ingress on AWS
 
@@ -29,10 +24,9 @@ On AWS, an ingress controller is not available by default. You will need to depl
 
 1. Setup an ingress controller on your kubernetes cluster using [these instructions](https://aws.amazon.com/blogs/opensource/network-load-balancer-nginx-ingress-controller-eks).
 1. There should now be an NLB deployed to your cluster. You need to identify the DNS name associated with it using: `aws elbv2 describe-load-balancers`.
-1. Copy the `DNSName` and update `<<INGRESS_SUBDOMAIN>>` in `aws-ingress-enabled-values.yaml` with it.
-1. Deploy the helm chart using the updated yaml: `helm install ingestion . -f aws-ingress-enabled-values.yaml`.
+1. The generated `DNSName` will be used as your ingress subdomain in the Clinical Ingestion Helm chart.
 
-At this point you have an ingress exposed for each endpoint service.  This can be exposed in AWS using [Route 53](https://console.aws.amazon.com/route53).  
+After you have completed deployment of the Clinical Ingestion Helm chart you will have an ingress exposed for each endpoint service.  However, this is not reachable yet in AWS.  It can be exposed externally using [Route 53](https://console.aws.amazon.com/route53).  
 
 1. Create a new [hosted zone](https://console.aws.amazon.com/route53/v2/hostedzones) for your target DNS Name
 1. Select your hosted zone.
@@ -47,10 +41,11 @@ At this point you have an ingress exposed for each endpoint service.  This can b
 
 Route 53 may take some time to propagate and did not consistently work for us in testing, so you may want a tactical work-around while you wait.
 
-Using [Nip.io](https://nip.io/), you can target your load balancer using it's IP address, but provide the necessary service-routing by prefixing the URI appropriately.
+##Quick deploy for AWS:##
+
+If configuring Route 53 is too daunting in AWS, another option that can get you up and running quickly is to use [Nip.io](https://nip.io/).  This service will automatically route traffic to the corresponding IP address, using a formatted prefix on the hostname:
 
 1. Find your Load Balancer IP using your favorite name resolution tool (i.e. NSLookup or Dig)
-2. Update `aws-ingress-enabled-values.yaml` with "<<IP>.nip.io" (i.e. "1.2.3.4.nip.io")
-3. Deploy/redeploy the helm chart: `helm upgrade ingestion . -f aws-ingress-enabled-values.yaml --install`
+2. For the ingress subdomain, use this format: "<<IP>.nip.io" (i.e. "1.2.3.4.nip.io")
 
-Once the chart deploys, you will see a list of valid URL's to access the various ingresses available.
+This will result in automatically routing traffic to the back-end ingress controller, which will, in turn, pass the data onto individual services.

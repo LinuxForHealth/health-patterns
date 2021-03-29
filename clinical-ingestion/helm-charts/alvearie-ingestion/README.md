@@ -36,10 +36,31 @@ kubectl config set-context --current --namespace=alvearie
 
 Install the helm chart with a release name `ingestion`:
 
-NOTE: By default, this will install all services as individual Load Balancers.  The preferred approach is to use ClusterIP services and expose via Ingress.  At this time, ingress support requires individual cloud-specific setup, but instructions can be found [here](README_INGRESS.md).
+We recommend deploying this chart via ingress.  However, each cloud environment has different requirements for configuring ingress resources and exposing them properly, so we provide the alternate approach of deploying via load balancers. This is more simple and universal, but requires more rigor in exposing/securing services in order to prevent exposures.
+
+In order to deploy via ingress, you will need to identify your ingress subdomain as defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.  Instructions can be found [here](README_INGRESS_SUBDOMAIN.md) on how to identify your ingress subdomain.
+
+Once you have your ingress subdomain, you can install the chart using: 
+
 ```bash
-helm install ingestion .
+helm install ingestion . -set ingress.class=INGRESS_CLASS -set ingress.subdomain=INGRESS_SUBDOMAIN
 ```
+
+INGRESS_CLASS refers to the ingress class used by your cloud provider.  Currently, these are the preferred values: 
+  - IBM: public-iks-k8s-nginx
+  - Azure: addon-http-application-routing
+  - AWS: nginx
+ 
+INGRESS_SUBDOMAIN is the value identified above for the ingress subdomain 
+
+
+If you cannot deploy via ingress in your environment, we also provide the ability to deploy using load balancers.  This is not recommended, but will allow quick deployment of this pattern.  To deploy via load balancers, run:
+
+```bash
+helm install ingestion . -f loadbalancer-values.yaml
+```
+
+NOTE: You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
 
 ### Optional: Deploy a FHIR UI
 
@@ -52,12 +73,6 @@ In order to install that pattern run the command below:
 
 ```bash
 helm install ingestion . -f de-id-pattern-values.yaml
-```
-
-Note: In order to install De-Identification in an ingress-enabled environment, you need to include both values files:
-
-```bash
-helm install ingestion . -f ingress-enabled-values.yaml -f de-id-pattern-values.yaml
 ```
 
 ### Using the Chart

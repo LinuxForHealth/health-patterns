@@ -31,7 +31,13 @@ tolerations: []
 affinity: {}
 
 ingress:
-  enabled: false
+  enabled: true
+  class: public-iks-k8s-nginx
+         # IBM: public-iks-k8s-nginx
+         # Azure: addon-http-application-routing
+         # AWS: nginx
+  subdomain: integration-k8s-cluster-dcc48c44d831198cb8496b1ec68d7d12-0000.us-south.containers.appdomain.cloud
+
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
@@ -40,7 +46,7 @@ ingress:
 fhir:
   enabled: true
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
@@ -59,6 +65,7 @@ fhir:
 fhir-deid:
   enabled: false
   service:
+    type: ClusterIP
     port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
@@ -102,7 +109,7 @@ nifi:
   fullnameOverride: ingestion-nifi
   enabled: true
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 8080
     httpInputPort: 7001
     processors:
@@ -221,6 +228,10 @@ deid:
 # ------------------------------------------------------------------------------
 cohort-service:
   enabled: false
+  service:
+    type: ClusterIP
+
+
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
@@ -237,12 +248,13 @@ cohort-service:
 # This adds an additional scrape configuration that will expose Kafka /metrics
 # on the port defined.  Note there are two kafka type metrics
 # ------------------------------------------------------------------------------
+
 kube-prometheus-stack:
   enabled: false
   grafana:
     adminPassword: admin
     service:
-      type: LoadBalancer
+      type: ClusterIP
 
     defaultDashboardsEnabled: false
 
