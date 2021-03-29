@@ -30,9 +30,6 @@ The following services have been deployed:
 {{- if index .Values "nifi-registry" "enabled" }}
 - NiFi Registry{{- if .Values.ingress.enabled }} -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-registry.{{ .Values.ingress.subdomain}}/nifi-registry{{- end }}
 {{- end }}
-{{- if .Values.kafka.enabled }}
-- Kafka{{- if .Values.ingress.enabled }} ---------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-kafka.{{ .Values.ingress.subdomain}}{{- end }}
-{{- end }}
 {{- if .Values.zookeeper.enabled }}
 - Zookeeper
 {{- end }}
@@ -42,6 +39,27 @@ The following services have been deployed:
 {{- end }}
 {{- if index .Values "cohort-service" "enabled" }}
 - Cohort Service{{- if .Values.ingress.enabled }} ------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-cohort-service.{{ .Values.ingress.subdomain}}{{- end }}
+{{- end }}
+{{- if .Values.kafka.enabled }}
+- Kafka
+{{- end }}
+
+{{- if .Values.ingress.enabled }}
+{{- if .Values.kafka.enabled }}
+
+Access to the Kafka server is handled via load balancer. It may take a few minutes for the LoadBalancer IP to be available.
+
+Watch the status of the public services by running the following command and wait until the external IP addresses appear: 
+
+  kubectl get --namespace {{ .Release.Namespace }} svc -w | grep kafka-0-external
+  
+Once the external IP has been assigned run the following command to access the kafka server.
+
+  export KAFKA_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-kafka-0-external -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-kafka-0-external -o jsonpath='{.spec.ports[0].port}') 
+  echo Kafka Broker: $KAFKA_IP:$KAFKA_PORT
+
+{{- end }}
 {{- end }}
 
 {{- if not .Values.ingress.enabled }}
