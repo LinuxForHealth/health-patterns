@@ -9,7 +9,7 @@ The current flow is designed to operate on FHIR resources. If [HL7](https://www.
 
 The Clinical Ingestion flow requires a number of underlying service to operate.  These can all be deployed and configured automatically using instructions provided [here](helm-charts/alvearie-ingestion/README.md).  However, if you wish to deploy and configure your own, follow the instructions [here](README_MANUAL_DEPLOY.md).
 
-## Running a FHIR bundle through the Clinical Ingestion Flow
+## Running clinical data through the Clinical Ingestion Flow
 
 There are two ways to easily send clinical data through the Clinical Ingestion Flow once it is deployed to NiFi.
 
@@ -29,8 +29,8 @@ The result of this command should be an HTTP 200 response indicating that it was
 
 
 
-2. Submit the FHIR bundle to the kafka topic configured above ("kafka.topic.in" parameter in "Clinical Ingestion Kafka Parameter Context")
-	* Using the configured kafka broker ("kafka.brokers" parameter in "Clinical Ingestion Kafka Parameter Context"), post the FHIR bundle of your choice and the Clinical Ingestion Flow will automatically react and begin processing.
+2. Submit the clinical data to the kafka topic configured above ("kafka.topic.in" parameter in "Clinical Ingestion Kafka Parameter Context")
+	* Using the configured kafka broker ("kafka.brokers" parameter in "Clinical Ingestion Kafka Parameter Context"), post the clinical data of your choice and the Clinical Ingestion Flow will automatically react and begin processing.
 	* Posting data to kafka is a well-documented process, but there are no single line examples on how to post an entire file.  If you need help posting to a kafka topic, please start here: https://kafka.apache.org/quickstart#quickstart_send
 
 Once submitted, you will see the bundle traverse the NiFi flow, resulting in many successful flowfiles accumulating at the end of the flow.
