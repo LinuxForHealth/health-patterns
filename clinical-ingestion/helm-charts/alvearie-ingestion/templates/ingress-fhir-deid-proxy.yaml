@@ -2,7 +2,7 @@
 {{- if index .Values "fhir-deid" "enabled" -}}
 {{- if index .Values "fhir-deid" "proxy" "enabled" -}}
 {{- $ingressPort := index .Values "fhir-deid" "proxy" "service" "port" -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-fhir-deid-proxy-ingress
