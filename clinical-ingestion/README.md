@@ -5,6 +5,14 @@ The Clinical Ingestion Flow is designed to read medical data from a configured [
 
 The current flow is designed to operate on FHIR resources. If [HL7](https://www.hl7.org/implement/standards/product_section.cfm?section=13) data is passed in, the pipeline is capable of converting it to FHIR and allowing it run through the pipeline.  Other data types (such as [DICOM](https://www.dicomstandard.org/) image data) are being considered but are currently supported.
 
+The Clinical Ingestion Flow can also enrich the data as it flows through. Currently we support the following enrichment steps:
+
+1. FHIR Terminology Service - This step will update the clinical data by adding/updating values to adhere to the terminology service configuration. The configuration mapping rules are currently static and can be found:
+
+>health-patterns/services/terminology-service-core/src/main/resources/mappings
+
+1. De-Identification Service - This step will de-identify the clinical data flowing through the pipeline and store the de-identified version in a separate FHIR server.  The de-identification rules are currently static and can be found [here](../services/deid-core/src/main/resources/de-id-config.json).
+
 ## Deploying the Clinical Ingestion Flow
 
 The Clinical Ingestion flow requires a number of underlying service to operate.  These can all be deployed and configured automatically using instructions provided [here](helm-charts/alvearie-ingestion/README.md).  However, if you wish to deploy and configure your own, follow the instructions [here](README_MANUAL_DEPLOY.md).

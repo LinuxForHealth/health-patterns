@@ -1,9 +1,9 @@
-# Deploy Helm chart via Ingress
+# Ingress Subdomain Setup
 
 In order to deploy via ingress, the target cloud will need an ingress controller available in kubernetes, and traffic will need to be routed to that controller properly.  This is currently supported somewhat differently across different clouds, but details can be found below for IBM, Azure, and AWS.
 
 
-### Deploy via Ingress on IBM Cloud
+### Ingress on IBM Cloud
 
 On IBM Cloud, an ingress controller is automatically installed in the kubernetes cluster and a load balancer is attached to it.  In order to identify the ingress subdomain simply run:
 
@@ -11,14 +11,14 @@ On IBM Cloud, an ingress controller is automatically installed in the kubernetes
 
 This will return to you a list of information including the ingress subdomain for your cluster.
 
-### Deploy via Ingress on Azure
+### Ingress on Azure
 
 On Azure, an ingress controller is automatically installed in the kubernetes cluster without any extra steps. You will need to add a DNS Zone to expose the ingress controller via a domain name.
 
 1. In the Azure portal, create a [DNS Zone](http://portal.azure.com/#create/Microsoft.DnsZone).
 1. Once created, the generated name of the DNS Zone (i.e. "1234567890.centralus.aksapp.io") will be used as your ingress subdomain in the Clinical Ingestion helm chart.
 
-### Deploy via Ingress on AWS
+### Ingress on AWS
 
 On AWS, an ingress controller is not available by default. You will need to deploy one in order to deploy this chart.
 
