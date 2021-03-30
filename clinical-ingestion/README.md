@@ -5,54 +5,9 @@ The Clinical Ingestion Flow is designed to read medical data from a configured [
 
 The current flow is designed to operate on FHIR resources. If [HL7](https://www.hl7.org/implement/standards/product_section.cfm?section=13) data is passed in, the pipeline is capable of converting it to FHIR and allowing it run through the pipeline.  Other data types (such as [DICOM](https://www.dicomstandard.org/) image data) are being considered but are currently supported.
 
-In order for this flow to operate correctly, it is assumed that the following dependencies are already deployed and available, with required URL, port, authentication, etc:
+## Deploying the Clinical Ingestion Flow
 
-- NiFi Registry 
-- NiFi - Configured to access the NiFi Registry
-- FHIR server
-- Kafka - This is optional, but is necessary for the preferred entry point and proper logging of errors
-
-If you already have the services mentioned above, to deploy the Clinical Ingestion Flow, follow the instructions found on the [NiFi Components](../nifi-components/README.md) readme.
-
-You may also use the provided [Alvearie Clinical Ingestion pattern Helm Chart](helm-charts) to install the necessary dependencies, and then run the ingestion use case in the next section.
-
-## Configuring NiFi for the Clinical Ingestion Flow
-
-The Clinical Ingestion Flow consists of multiple [Parameter Contexts](https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#parameter-contexts), used to advise the various processor groups on where target environments can be accessed.  These parameters are important in order for the flow to operate correctly.  All parameters should be filled out, according to the help text provided for each.
-
-In addition, certain components in the Clinical Ingestion Flow require specific controller services to be enabled in order for the flow to operate successfully.  Specifically:
-
-- Clinical Ingestion Flow -> Enrich Patient -> Resolve Terminology -> FHIR Terminology Mapping -> Translate Codes -> Get Matching ConceptMap --> This relies on a SimpleKeyValueLookupService
-- Clinical Ingestion Flow -> Enrich Patient -> Resolve Terminology -> FHIR Terminology Mapping -> Translate Codes -> Wait For All Extension Processing --> This relies on a DistributedMapCacheClientService and a DistributedMapCacheServer.
-
-These dependencies can be enabled by clicking on "Configure" for the parent processor group, selecting "Controller Services" and then enabling each necessary service.  Continue to follow this process for any other processors that have warnings listing disabled services.
-
-## Configuring the Clinical Ingestion Flow using a helper script [OPTIONAL]
-
-To assist with the configuration, a Python script (utilities/setupClinicalIngestionFlow.py) has been provided that will automate the steps necessary to use the Clinical Ingestion Flow.  The script will
-
-1. Load the Clinical Ingestion Flow processor group onto the Nifi canvas
-1. Set the missing passwords in the parameter contexts described above
-1. Enable the controller services described above
-
-Prerequisites
-  - Python 3 installed
-  - The `requests` module must be installed (`pip install requests`)
-  - Change the permissions on the script to add executable (`chmod +x setupClinicalIngestionFlow.py`)
-  
-In order to execute the script, two arguments must be provided.  
-  1. The base URL for the Nifi instance including the port.
-  1. The default password to be used.  The script assumes that all passwords will be set to the same default.
-  
-For example, from the `utilities` directory, run
-
-`./setupClinicalIngestionFlow <<Nifi Server URL>> <<default password>>`
-
-If your Nifi server was running on `http://nifi.xyz.org:8080` and you want the default password to be `twinkle`, then it would be
-
-`./setupClinicalIngestionFlow http://nifi.xyz.org:8080  twinkle`
-
-Status messages will log the activity of the script and you will see a completion message at the end.  At that point, you may need to refresh your Nifi canvas to see the new process group.
+The Clinical Ingestion flow requires a number of underlying service to operate.  These can all be deployed and configured automatically using instructions provided [here](helm-charts/alvearie-ingestion/README.md).  However, if you wish to deploy and configure your own, follow the instructions [here](README_MANUAL_DEPLOY.md).
 
 ## Running a FHIR bundle through the Clinical Ingestion Flow
 
