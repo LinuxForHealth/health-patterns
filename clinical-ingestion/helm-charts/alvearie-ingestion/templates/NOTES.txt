@@ -47,13 +47,13 @@ The following services have been deployed:
 {{- if .Values.ingress.enabled }}
 {{- if .Values.kafka.enabled }}
 
-Access to the Kafka server is handled via load balancer. It may take a few minutes for the LoadBalancer IP to be available.
+Access to the Kafka server is handled via load balancer. It may take a few minutes for the load balancer IP to be available.
 
-Watch the status of the public services by running the following command and wait until the external IP addresses appear: 
+Watch the status of the kafka service by running the following command and wait until the external IP address appears: 
 
   kubectl get --namespace {{ .Release.Namespace }} svc -w | grep kafka-0-external
   
-Once the external IP has been assigned run the following command to access the kafka server.
+Once the external IP has been assigned run the following command to identify the kafka server broker:
 
   export KAFKA_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-kafka-0-external -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
   export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-kafka-0-external -o jsonpath='{.spec.ports[0].port}') 

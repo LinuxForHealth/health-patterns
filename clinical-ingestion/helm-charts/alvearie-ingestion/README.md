@@ -43,7 +43,7 @@ In order to deploy via ingress, you will need to identify your ingress subdomain
 Once you have your ingress subdomain, you can install the chart using: 
 
 ```bash
-helm install ingestion . -set ingress.class=INGRESS_CLASS -set ingress.subdomain=INGRESS_SUBDOMAIN
+helm install ingestion . --set ingress.class=INGRESS_CLASS --set ingress.subdomain=INGRESS_SUBDOMAIN
 ```
 
 INGRESS_CLASS refers to the ingress class used by your cloud provider.  Currently, these are the preferred values: 
