@@ -28,7 +28,7 @@ To deploy a NiFi flow into a running [NiFi Registry](https://nifi.apache.org/reg
 	`registry create-flow --baseUrl=<<BASE_URL>> --bucketIdentifier <<BUCKET_IDENTIFIER>> --flowName <<FLOW_NAME>>`
 	
 1. Download the latest version of the Clinical Ingestion flow:
-	curl https://raw.githubusercontent.com/Alvearie/health-patterns-nifi-flows/main/Health_Patterns/Clinical_Ingestion.snapshot --output clinicalIngestion.json
+	`curl https://raw.githubusercontent.com/Alvearie/health-patterns-nifi-flows/main/Health_Patterns/Clinical_Ingestion.snapshot --output clinicalIngestion.json`
 	
 1. Import current version of flow using flow json:
 
