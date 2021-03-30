@@ -230,8 +230,6 @@ cohort-service:
   service:
     type: ClusterIP
 
-
-
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
 # This will add specific configuration for the new grafana-prometheusSpec
