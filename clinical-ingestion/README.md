@@ -46,7 +46,7 @@ In order to execute the script, two arguments must be provided.
   
 For example, from the `utilities` directory, run
 
-`./setupClinicalIngestionFlow <<Nifi Server:Nifi Port>> <<default password>>`
+`./setupClinicalIngestionFlow <<Nifi Server URL>> <<default password>>`
 
 If your Nifi server was running on `http://nifi.xyz.org:8080` and you want the default password to be `twinkle`, then it would be
 
@@ -56,18 +56,23 @@ Status messages will log the activity of the script and you will see a completio
 
 ## Running a FHIR bundle through the Clinical Ingestion Flow
 
-There are two ways to easily run a FHIR bundle through Clinical Ingestion Flow once it is deployed to NiFi.
+There are two ways to easily send clinical data through the Clinical Ingestion Flow once it is deployed to NiFi.
 
-1. Post the FHIR bundle json to the defined port.  By default, it is set to 7001, but can be updated in the Nifi Parameter Context named "Clinical Ingestion FHIR Parameter Context" by changing the parameter FHIR_LISTEN_PORT.
+1. Post the data (FHIR or HL7) to the Nifi HTTP Post URL:
 
-	`curl -X POST --header "ResolveTerminology: true" --header "Content-Type: application/json" -d @<<path/to/json>> "<<NIFI_SERVER>>:<<FHIR_LISTEN_PORT>>/fhirResource" --verbose`
-	
-	* "ResolveTerminology: true" tells the pipeline to run the bundle through the terminology normalization process. If you do not wish to run this step, you can omit this header.
-	* "path/to/json" can refer to any FHIR bundle you wish to process. For example, "patientData/patient-with-us-core-birthsex.json"
-	* NIFI_SERVER and FHIR_LISTEN_PORT should be known values from the setup above.
-	* The result of this command should be an HTTP 200 response indicating that it was successfully submitted.
-	* It is also possible to use a special HTTP header *RequestId* with a user generated ID. When providing this, that header will be persisted throughout the Ingestion pipeline as a flow file attribute, in order to match any user request to its corresponding flow file. Sample usage:
-	    * `curl -X POST --header "RequestId: request-0001" -d @<<path/to/json>> "<<NIFI_SERVER>>:<<FHIR_LISTEN_PORT>>/fhirResource" --verbose`
+	`curl -X POST --header "RequestId: request-0001" --header "ResolveTerminology: true" --header "DeidentifyData: true" --header "Content-Type: application/json" -d @<<path/to/json>> "<<Nifi Server URL>>/fhirResource" --verbose`
+
+An explanation of the parameters:
+
+* "RequestId: request-0001" - This is an *optional* parameter that can be used to specify a user-generated ID. When used, the provided value will be persisted throughout the ingestion pipeline as a flowfile attribute for better tracking of the request.
+* "ResolveTerminology: true" - This is an *optional* parameter that tells the pipeline to run the bundle through the terminology normalization process.
+* "DeidentifyData: true" - This is an *optional* parameter that tells the pipeline to run the de-identify logic. This will store the de-identified data to a separate FHIR server and allow the original data to continue through the flow.
+* "path/to/json" - This is a *required* parameter that refers to any clinical data you wish to process (for example, "patientData/patient-with-us-core-birthsex.json"). Currently only FHIR and HL7 data are supported by this flow. 
+* "Nifi Server URL" - This is a *required* parameter that represents the Nifi HTTP Post entry point.  By default, this is an ingress URL that you can find listed in your kubernetes ingresses under "ingestion-nifi-http-post-ingress".  It is also listed in the notes shown at the end of the helm install process. If you choose to deploy via load balancer, this address needs to include the URL and port (usually 7001) for the ingestion-nifi service.
+
+The result of this command should be an HTTP 200 response indicating that it was successfully submitted.
+
+
 
 2. Submit the FHIR bundle to the kafka topic configured above ("kafka.topic.in" parameter in "Clinical Ingestion Kafka Parameter Context")
 	* Using the configured kafka broker ("kafka.brokers" parameter in "Clinical Ingestion Kafka Parameter Context"), post the FHIR bundle of your choice and the Clinical Ingestion Flow will automatically react and begin processing.
