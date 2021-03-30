@@ -1,0 +1,27 @@
+{{- if .Values.ingress.enabled -}}
+{{- if .Values.fhir.enabled -}}
+{{- if .Values.fhir.proxy.enabled -}}
+{{- $ingressPort := .Values.fhir.proxy.service.port -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-fhir-proxy-ingress
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.fhir.proxy.labels }}
+  labels:
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+spec:
+  rules:
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-fhir-proxy.{{ .Values.ingress.subdomain}}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ .Release.Name }}-fhir
+              servicePort: {{ $ingressPort }}
+{{- end }}
+{{- end }}
+{{- end }}

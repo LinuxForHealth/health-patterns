@@ -1,0 +1,27 @@
+{{- if .Values.ingress.enabled -}}
+{{- if index .Values "fhir-deid" "enabled" -}}
+{{- if index .Values "fhir-deid" "proxy" "enabled" -}}
+{{- $ingressPort := index .Values "fhir-deid" "proxy" "service" "port" -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-fhir-deid-proxy-ingress
+  namespace: {{ .Release.Namespace }}
+  {{- with index .Values "fhir-deid" "proxy" "labels" }}
+  labels:
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+spec:
+  rules:
+    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid-proxy.{{ .Values.ingress.subdomain}}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ .Release.Name }}-fhir-deid
+              servicePort: {{ $ingressPort }}
+{{- end }}
+{{- end }}
+{{- end }}
