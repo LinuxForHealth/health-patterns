@@ -1,4 +1,4 @@
-*NOTE: This is not the recommended approach for deploying the Clinical Ingestion flow. Use the [Helm chart](helm-charts) unless you are sure you need manual control over the deployment process.*
+*NOTE: This is not the recommended approach for deploying the Clinical Ingestion flow. Use the [Helm chart](helm-charts/alvearie-ingestion/README.md) unless you are sure you need manual control over the deployment process.*
 
 # Manual Deploy and Configuration of the Clinical Ingestion Flow
 
