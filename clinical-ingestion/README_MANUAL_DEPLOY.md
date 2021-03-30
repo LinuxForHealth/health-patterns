@@ -19,17 +19,20 @@ To deploy a NiFi flow into a running [NiFi Registry](https://nifi.apache.org/reg
 1. Download and install the [NiFi CLI Toolkit](https://nifi.apache.org/download.html)
 1. Execute "cli" from the bin folder in the Toolkit
 1. Identify the base URL for your NiFi registry (i.e. http://localhost:8080/nifi-registry)
-1. Create a bucket for your target NiFi Registry to store the component (This will return the bucket identifier used in the next step):
+1. Create a bucket for your target NiFi Registry to store the flow (This will return the bucket identifier used in the next step):
 
 	`registry create-bucket --baseUrl=<<BASE_URL>> --bucketName="Health Patterns"`
 	
-1. Create a bucket entry for component flow (This will return the flow identifier used in the next step):
+1. Create a bucket entry for the flow (This will return the flow identifier used in the next step):
 	
 	`registry create-flow --baseUrl=<<BASE_URL>> --bucketIdentifier <<BUCKET_IDENTIFIER>> --flowName <<FLOW_NAME>>`
 	
-1. Import current version of component using flow json:
+1. Download the latest version of the Clinical Ingestion flow:
+	curl https://raw.githubusercontent.com/Alvearie/health-patterns-nifi-flows/main/Health_Patterns/Clinical_Ingestion.snapshot --output clinicalIngestion.json
+	
+1. Import current version of flow using flow json:
 
-	`registry import-flow-version --baseUrl=<<BASE_URL>> --flowIdentifier=<<FLOW_ID>> -i <<PATH_TO_FLOW_JSON>>`
+	`registry import-flow-version --baseUrl=<<BASE_URL>> --flowIdentifier=<<FLOW_ID>> -i clinicalIngestion.json`
 	
 1. Once the flow file is imported into the NiFi Registry, it can be added to a NiFi canvas and initialized according to normal NiFi instructions.
 
