@@ -124,7 +124,7 @@ nifi:
           targetPort: 12667
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.0.2
+      image: alvearie/nifi-setup:0.0.3
       imagePullPolicy: Always
       command:
         - bash
