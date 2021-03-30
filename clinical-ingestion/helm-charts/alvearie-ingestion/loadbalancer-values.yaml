@@ -1,18 +1,16 @@
 # A simple name describing the Alvearie pattern implemented by this Helm values file 
-pattern: "Ingress-Enabled-Clinical-Ingestion"
+pattern: "LoadBalancer Clinical Ingestion"
 
 ingress:
-  enabled: true
-  class: public-iks-k8s-nginx
-  subdomain: <<INSERT_INGRESS_SUBDOMAIN_HERE>>
-
+  enabled: false
+  
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
 # ------------------------------------------------------------------------------
 fhir:
   service:
-    type: ClusterIP
+    type: LoadBalancer
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
@@ -20,7 +18,7 @@ fhir:
 # ------------------------------------------------------------------------------
 fhir-deid:
   service:
-    type: ClusterIP
+    type: LoadBalancer
 
 # ------------------------------------------------------------------------------
 # Nifi Configuration
@@ -28,24 +26,15 @@ fhir-deid:
 # ------------------------------------------------------------------------------
 nifi:
   service:
-    type: ClusterIP
+    type: LoadBalancer
     
-# ------------------------------------------------------------------------------
-# Kafka Configuration
-# Values: https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
-# ------------------------------------------------------------------------------
-kafka:
-  externalAccess:
-    service:
-      type: LoadBalancer # Required for liveness probe test for now
-
 # ------------------------------------------------------------------------------
 # Cohort Service
 # Values: https://github.com/Alvearie/health-patterns/cohort-service/chart/values.yaml
 # ------------------------------------------------------------------------------
 cohort-service:
   service:
-    type: ClusterIP
+    type: LoadBalancer
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
@@ -65,4 +54,4 @@ cohort-service:
 kube-prometheus-stack:
   grafana:
     service:
-      type: ClusterIP
+      type: LoadBalancer

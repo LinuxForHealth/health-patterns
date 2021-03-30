@@ -1,7 +1,7 @@
 {{- if .Values.ingress.enabled -}}
 {{- if index .Values "nifi-registry" "enabled" -}}
 {{- $ingressPort := index .Values "nifi-registry" "service" "port" -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-nifi-registry-ingress

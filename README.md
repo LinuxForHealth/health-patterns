@@ -2,7 +2,7 @@
 health-patterns is a collection of documentation and reference implementations that highlight how to combine various technologies into meaningful patterns for healthcare.
 
 The initial focus will be on 2 patterns for clinical data:
-1) **Clinical Data _Ingestion_**
+1) [**Clinical Data _Ingestion_**](clinical-ingestion)
 2) **Clinical Data _Enrichment_**
 
 with subsequent focus on Clinical Data Access and Data analytics.  

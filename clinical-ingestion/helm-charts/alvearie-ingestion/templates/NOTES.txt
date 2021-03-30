@@ -15,33 +15,57 @@ Pattern: {{ .Values.pattern }}
 
 The following services have been deployed:
 {{- if .Values.fhir.enabled }}
-- Primary FHIR Server{{- if .Values.ingress.enabled }} -------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Primary FHIR Server{{- if .Values.ingress.enabled }} --------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+{{- if .Values.fhir.proxy.enabled }}
+- Primary FHIR Server Proxy {{- if .Values.ingress.enabled }} --- http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir-proxy.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+{{- end }}
 {{- end }}
 {{- if index .Values "fhir-deid" "enabled" }}
-- Secondary FHIR Server{{- if .Values.ingress.enabled }} ------ http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Secondary FHIR Server{{- if .Values.ingress.enabled }} ------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+{{- if index .Values "fhir-deid" "proxy" "enabled" }}
+- Secondary FHIR Server Proxy {{- if .Values.ingress.enabled }} - http://{{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid-proxy.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+{{- end }}
 {{- end }}
 {{- if .Values.deid.enabled }}
-- De-Identification Service{{- if .Values.ingress.enabled }} -- http://{{ .Release.Namespace }}.{{ .Release.Name }}-deid.{{ .Values.ingress.subdomain}}/api/v1/{{- end }}
+- De-Identification Service{{- if .Values.ingress.enabled }} --- http://{{ .Release.Namespace }}.{{ .Release.Name }}-deid.{{ .Values.ingress.subdomain}}/api/v1/{{- end }}
 {{- end }}
 {{- if .Values.nifi.enabled }}
-- NiFi Server{{- if .Values.ingress.enabled }} ---------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.ingress.subdomain}}/nifi{{- end }}
-- NiFi HTTP Post API{{- if .Values.ingress.enabled }} -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-http-post.{{ .Values.ingress.subdomain}}{{- end }}
+- NiFi Server{{- if .Values.ingress.enabled }} ----------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi.{{ .Values.ingress.subdomain}}/nifi{{- end }}
+- NiFi HTTP Post API{{- if .Values.ingress.enabled }} ---------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-http-post.{{ .Values.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if index .Values "nifi-registry" "enabled" }}
-- NiFi Registry{{- if .Values.ingress.enabled }} -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-registry.{{ .Values.ingress.subdomain}}/nifi-registry{{- end }}
-{{- end }}
-{{- if .Values.kafka.enabled }}
-- Kafka{{- if .Values.ingress.enabled }} ---------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-kafka.{{ .Values.ingress.subdomain}}{{- end }}
+- NiFi Registry{{- if .Values.ingress.enabled }} --------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-nifi-registry.{{ .Values.ingress.subdomain}}/nifi-registry{{- end }}
 {{- end }}
 {{- if .Values.zookeeper.enabled }}
 - Zookeeper
 {{- end }}
 {{- if index .Values "kube-prometheus-stack" "enabled" }}
 - Prometheus
-- Grafana{{- if .Values.ingress.enabled }} -------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-grafana.{{ .Values.ingress.subdomain}}{{- end }}
+- Grafana{{- if .Values.ingress.enabled }} --------------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-grafana.{{ .Values.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if index .Values "cohort-service" "enabled" }}
-- Cohort Service{{- if .Values.ingress.enabled }} ------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-cohort-service.{{ .Values.ingress.subdomain}}{{- end }}
+- Cohort Service{{- if .Values.ingress.enabled }} -------------- http://{{ .Release.Namespace }}.{{ .Release.Name }}-cohort-service.{{ .Values.ingress.subdomain}}{{- end }}
+{{- end }}
+{{- if .Values.kafka.enabled }}
+- Kafka
+{{- end }}
+
+{{- if .Values.ingress.enabled }}
+{{- if .Values.kafka.enabled }}
+
+Access to the Kafka server is handled via load balancer. It may take a few minutes for the load balancer IP to be available.
+
+Watch the status of the kafka service by running the following command and wait until the external IP address appears: 
+
+  kubectl get --namespace {{ .Release.Namespace }} svc -w | grep kafka-0-external
+  
+Once the external IP has been assigned run the following command to identify the kafka server broker:
+
+  export KAFKA_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-kafka-0-external -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+  export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-kafka-0-external -o jsonpath='{.spec.ports[0].port}') 
+  echo Kafka Broker: $KAFKA_IP:$KAFKA_PORT
+
+{{- end }}
 {{- end }}
 
 {{- if not .Values.ingress.enabled }}

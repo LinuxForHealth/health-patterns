@@ -31,7 +31,12 @@ tolerations: []
 affinity: {}
 
 ingress:
-  enabled: false
+  enabled: true
+  class:
+         # IBM: public-iks-k8s-nginx
+         # Azure: addon-http-application-routing
+         # AWS: nginx
+  subdomain:
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
@@ -40,12 +45,14 @@ ingress:
 fhir:
   enabled: true
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
       value: '600s'
+  proxy:
+    enabled: false
 
 ## Configure these to allow bulk access from fhir server
 #  bulkExportConfig:
@@ -59,11 +66,14 @@ fhir:
 fhir-deid:
   enabled: false
   service:
+    type: ClusterIP
     port: 80
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
       value: '600s'
+  proxy:
+    enabled: false
 
 ## Configure these to allow bulk access from fhir-deid server
 #  bulkExportConfig:
@@ -102,7 +112,7 @@ nifi:
   fullnameOverride: ingestion-nifi
   enabled: true
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 8080
     httpInputPort: 7001
     processors:
@@ -118,7 +128,7 @@ nifi:
           targetPort: 12667
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.0.2
+      image: alvearie/nifi-setup:0.0.3
       imagePullPolicy: Always
       command:
         - bash
@@ -221,6 +231,8 @@ deid:
 # ------------------------------------------------------------------------------
 cohort-service:
   enabled: false
+  service:
+    type: ClusterIP
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
@@ -237,12 +249,13 @@ cohort-service:
 # This adds an additional scrape configuration that will expose Kafka /metrics
 # on the port defined.  Note there are two kafka type metrics
 # ------------------------------------------------------------------------------
+
 kube-prometheus-stack:
   enabled: false
   grafana:
     adminPassword: admin
     service:
-      type: LoadBalancer
+      type: ClusterIP
 
     defaultDashboardsEnabled: false
 
