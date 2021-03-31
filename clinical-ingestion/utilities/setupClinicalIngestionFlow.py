@@ -177,30 +177,21 @@ def main():
         print(contexts)
 
     for context in contexts:
-        if "FHIR" in context["component"]["name"]:
+        if "cms_adapter_parameters" in context["component"]["name"]:
             if debug:
-                print("processing fhir")
-            #setting the fhir password
+                print("processing new cms_adapter_parameters")
+            #setting the fhir and kafka passwords
             contextId = context["id"]
             if debug:
                 print("FHIR context:", contextId)
 
-            updatePwd(baseURL, contextId, 0, "FHIR_PASSWORD", defaultPWD)
-
-        if "Kafka" in context["component"]["name"]:
-            if debug:
-                print("processing kafka-two pwds")
-
-            #set kafka passwords
-            contextId = context["id"]
-            if debug:
-                print("Kafka context: ", contextId)
-
-            updatePwd(baseURL, contextId, 0, "kafka.auth.password", defaultPWD)
+            updatePwd(baseURL, contextId, 0, "FHIR_UserPwd_PatientAccess", defaultPWD)
+            updatePwd(baseURL, contextId, 1, "FHIR_UserPwd_ProviderDirectory", defaultPWD)
+            updatePwd(baseURL, contextId, 2, "kafka.auth.password", defaultPWD)
 
         if "De-Identification" in context["component"]["name"]:
             if debug:
-                print("processing deid-two pwds")
+                print("processing deid")
             #set deid passwords
             contextId = context["id"]
             if debug:
