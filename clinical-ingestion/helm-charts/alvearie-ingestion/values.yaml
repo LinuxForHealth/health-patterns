@@ -233,6 +233,13 @@ cohort-service:
   enabled: false
   service:
     type: ClusterIP
+  ingress:
+    enabled: true
+    class: 
+           # IBM: public-iks-k8s-nginx
+           # Azure: addon-http-application-routing
+           # AWS: nginx
+    subdomain: 
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration

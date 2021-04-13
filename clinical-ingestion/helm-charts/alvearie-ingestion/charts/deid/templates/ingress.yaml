@@ -1,0 +1,21 @@
+{{- if .Values.ingress.enabled -}}
+{{- $ingressPort := .Values.service.port -}}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-deid-ingress
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "deid.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+spec:
+  rules:
+    - host: {{ .Release.Namespace }}.deid.{{ .Values.ingress.subdomain }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ .Release.Name }}-deid
+              servicePort: {{ $ingressPort }}
+{{- end }}
