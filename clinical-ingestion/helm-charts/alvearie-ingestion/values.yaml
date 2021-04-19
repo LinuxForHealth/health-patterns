@@ -32,11 +32,11 @@ affinity: {}
 
 ingress:
   enabled: true
-  class: public-iks-k8s-nginx
+  class:
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-  subdomain: <<YOUR_DOMAIN>>
+  subdomain:
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
@@ -225,7 +225,8 @@ kafka:
 deid:
   enabled: false
   ingress:
-    enabled: false # disable ingress in the base chart, allowing re-use of the Clinical Ingestion-wide ingress definitions
+    enabled: false
+    # disable ingress in the base chart, allowing re-use of the Clinical Ingestion-wide ingress definitions
 
 # ------------------------------------------------------------------------------
 # Cohort Service
@@ -236,7 +237,8 @@ cohort-service:
   service:
     type: ClusterIP
   ingress:
-    enabled: false # disable ingress in the base chart, allowing re-use of the Clinical Ingestion-wide ingress definitions
+    enabled: false
+    # disable ingress in the base chart, allowing re-use of the Clinical Ingestion-wide ingress definitions
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
