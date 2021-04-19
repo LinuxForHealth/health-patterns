@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $ingressPort := .Values.service.port -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-deid-ingress
@@ -9,13 +9,17 @@ metadata:
     {{- include "deid.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
   rules:
     - host: {{ .Release.Namespace }}.deid.{{ .Values.ingress.subdomain }}
       http:
         paths:
           - path: /
+            pathType: ImplementationSpecific
             backend:
-              serviceName: {{ .Release.Name }}-deid
-              servicePort: {{ $ingressPort }}
+              service:
+                name: {{ .Release.Name }}-deid
+                port: 
+                  number: {{ $ingressPort }}
 {{- end }}

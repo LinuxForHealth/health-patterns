@@ -1,7 +1,7 @@
 {{- if .Values.enabled -}}
 {{- if .Values.ingress.enabled -}}
 {{- $ingressPort := .Values.service.httpPort -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-cohort-service-ingress
@@ -10,14 +10,18 @@ metadata:
     {{- include "cohort-service.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+	    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
   rules:
     - host: {{ .Release.Namespace }}.cohort-service.{{ .Values.ingress.subdomain }}
       http:
         paths:
           - path: /
+            pathType: ImplementationSpecific
             backend:
-              serviceName: {{ .Release.Name }}-cohort-service
-              servicePort: {{ $ingressPort }}
+              service:
+                name: {{ .Release.Name }}-cohort-service
+              	  port: 
+	                number: {{ $ingressPort }}
 {{- end }}
 {{- end }}

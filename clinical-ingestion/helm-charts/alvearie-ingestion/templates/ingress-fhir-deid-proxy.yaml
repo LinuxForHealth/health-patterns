@@ -2,7 +2,7 @@
 {{- if index .Values "fhir-deid" "enabled" -}}
 {{- if index .Values "fhir-deid" "proxy" "enabled" -}}
 {{- $ingressPort := index .Values "fhir-deid" "proxy" "service" "port" -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-fhir-deid-proxy-ingress
@@ -13,15 +13,19 @@ metadata:
   {{- end }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+	    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
   rules:
     - host: {{ .Release.Namespace }}.{{ .Release.Name }}-fhir-deid-proxy.{{ .Values.ingress.subdomain}}
       http:
         paths:
           - path: /
+            pathType: ImplementationSpecific
             backend:
-              serviceName: {{ .Release.Name }}-fhir-deid
-              servicePort: {{ $ingressPort }}
+              service:
+                name: {{ .Release.Name }}-fhir-deid
+                	port: 
+                  number: {{ $ingressPort }}
 {{- end }}
 {{- end }}
 {{- end }}
