@@ -37,6 +37,8 @@ An explanation of the parameters:
 * "path/to/json" - This is a *required* parameter that refers to any clinical data you wish to process (for example, "patientData/patient-with-us-core-birthsex.json"). Currently only FHIR and HL7 data are supported by this flow. 
 * "Nifi Server URL" - This is a *required* parameter that represents the Nifi HTTP Post entry point.  By default, this is an ingress URL that you can find listed in your kubernetes ingresses under "ingestion-nifi-http-post-ingress".  It is also listed in the notes shown at the end of the helm install process. If you choose to deploy via load balancer, this address needs to include the URL and port (usually 7001) for the ingestion-nifi service.
 
+NOTE: The enrichment parameters (ResolveTerminology, DeidentifyData, and RunASCVD) can also be provided default values in the pipeline by setting values in the Enrichment Parameter Context.  Any values provided in the request header will always be respected first, but when no header value is provided, the defaults will be used.  
+
 The result of this command should be an HTTP 200 response indicating that it was successfully submitted.
 
 
