@@ -11,7 +11,7 @@ metadata:
 	    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-grafana.{{ .Values.ingress.subdomain}}
+    - host: {{ .Release.Namespace }}-{{ .Release.Name }}-grafana.{{ .Values.ingress.subdomain}}
       http:
         paths:
           - path: /

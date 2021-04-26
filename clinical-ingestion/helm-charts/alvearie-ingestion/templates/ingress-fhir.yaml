@@ -12,10 +12,9 @@ metadata:
   {{- end }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
-    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-fhir.{{ .Values.ingress.subdomain}}
+    - host: {{ .Release.Namespace }}-{{ .Release.Name }}-fhir.{{ .Values.ingress.subdomain}}
       http:
         paths:
           - path: /
