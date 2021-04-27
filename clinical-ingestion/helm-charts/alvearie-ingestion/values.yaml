@@ -186,7 +186,7 @@ kafka:
   externalAccess:
     enabled: true
     service:
-      type: NodePort
+      type: LoadBalancer
       port: 9094
     autoDiscovery:
       enabled: true
