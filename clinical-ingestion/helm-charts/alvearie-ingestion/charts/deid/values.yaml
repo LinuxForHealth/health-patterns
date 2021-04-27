@@ -13,11 +13,11 @@ service:
   port: 8080
 ingress:
   enabled: true
-  class: 
+  class: public-iks-k8s-nginx
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-  subdomain: 
+  subdomain: <<YOUR_DOMAIN>>
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
