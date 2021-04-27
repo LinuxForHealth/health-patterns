@@ -13,7 +13,6 @@ metadata:
   {{- end }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
-    	nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
   rules:
     - host: {{ .Release.Namespace }}.{{ .Release.Name }}-fhir-proxy.{{ .Values.ingress.subdomain}}
@@ -23,9 +22,9 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-				                name: {{ .Release.Name }}-fhir
-              	  port: 
-					                  number: {{ $ingressPort }}
+                name: {{ .Release.Name }}-fhir
+                port: 
+                  number: {{ $ingressPort }}
 {{- end }}
 {{- end }}
 {{- end }}

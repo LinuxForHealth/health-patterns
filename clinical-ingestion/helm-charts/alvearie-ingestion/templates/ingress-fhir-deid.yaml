@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- if index .Values "fhir-deid" "enabled" -}}
-{{- $ingressPort := index .Values "fhir-deid" "service" "httpsPort" -}}
+{{- $ingressPort := index .Values "fhir-deid" "service" "httpPort" -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -12,12 +12,7 @@ metadata:
   {{- end }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
-    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
-  tls:
-    - hosts:
-        - {{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}
-      secretName: {{ .Values.secretName}}
   rules:
     - host: {{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}
       http:
