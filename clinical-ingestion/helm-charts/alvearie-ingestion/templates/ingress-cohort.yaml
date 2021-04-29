@@ -1,7 +1,7 @@
 {{- if .Values.ingress.enabled -}}
 {{- if index .Values "cohort-service" "enabled" -}}
 {{- $ingressPort := index .Values "cohort-service" "service" "httpPort" -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-cohort-service-ingress
@@ -14,12 +14,15 @@ metadata:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.{{ .Release.Name }}-cohort-service.{{ .Values.ingress.subdomain}}
+    - host: {{ .Release.Namespace }}-{{ .Release.Name }}-cohort-service.{{ .Values.ingress.subdomain}}
       http:
         paths:
           - path: /
+            pathType: ImplementationSpecific
             backend:
-              serviceName: {{ .Release.Name }}-cohort-service
-              servicePort: {{ $ingressPort }}
+              service:
+                name: {{ .Release.Name }}-cohort-service
+                port: 
+                  number: {{ $ingressPort }}
 {{- end }}
 {{- end }}
