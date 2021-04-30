@@ -51,6 +51,8 @@ fhir:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
       value: '600s'
+    - name: BOOTSTRAP_DB
+      value: 'true'
   proxy:
     enabled: false
 
@@ -72,6 +74,8 @@ fhir-deid:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
       value: '600s'
+    - name: BOOTSTRAP_DB
+      value: 'true'
   proxy:
     enabled: false
 
