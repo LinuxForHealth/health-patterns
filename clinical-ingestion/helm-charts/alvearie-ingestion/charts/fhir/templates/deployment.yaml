@@ -48,15 +48,15 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           - name: server-xml
-            mountPath: /opt/ol/wlp/usr/servers/fhir-server/server.xml
+            mountPath: /opt/ol/wlp/usr/servers/defaultServer/server.xml
             subPath: server.xml
           - name: fhir-server-config-json
-            mountPath: /opt/ol/wlp/usr/servers/fhir-server/config/default/fhir-server-config.json
+            mountPath: /opt/ol/wlp/usr/servers/defaultServer/config/default/fhir-server-config.json
             subPath: fhir-server-config.json
            {{ range $path, $bytes := .Files.Glob ( printf "binary-config/**") }}
            {{ $name := base $path }}
           - name: binary-file-volume
-            mountPath: {{ printf "/opt/ol/wlp/usr/servers/fhir-server/resources/security/%s"  $name | indent 2 }}
+            mountPath: {{ printf "/opt/ol/wlp/usr/servers/defaultServer/resources/security/%s"  $name | indent 2 }}
             subPath: {{- sha256sum (printf "%s/%s" (index (regexSplit "binary\\-config" (dir $path) -1) 1 ) $name ) | indent 2 }}
            {{ end }}
           {{- if .Values.extraVolumeMounts }}
