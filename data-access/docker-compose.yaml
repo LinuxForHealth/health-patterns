@@ -1,0 +1,55 @@
+version: '3.7'
+services:
+  fhir-server:
+    image: ibmcom/ibm-fhir-server:latest
+    hostname: fhir
+    volumes:
+      - type: bind
+        source: ./fhir/config
+        target: /opt/ol/wlp/usr/servers/defaultServer/config
+        read_only: true
+      - type: bind
+        source: ./fhir/configDropins/overrides
+        target: /opt/ol/wlp/usr/servers/defaultServer/configDropins/overrides
+        read_only: true
+      - type: bind
+        source: ./fhir/userlib
+        target: /opt/ol/wlp/usr/servers/defaultServer/userlib
+        read_only: true
+      - type: bind
+        source: ./fhir/derby
+        target: /output/derby
+    environment:
+      - BOOTSTRAP_DB=true
+    ports:
+      - 9080:9080
+      - 9443:9443
+    healthcheck:
+      start_period: 62s
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      test: curl -k -u 'fhiruser:change-password' 'https://localhost:9443/fhir-server/api/v4/metadata'
+    networks:
+      - fhir
+  keycloak:
+    image: alvearie/smart-keycloak:latest
+    hostname: keycloak
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    ports:
+      - 8080:8080
+      - 8443:8443
+    healthcheck:
+      start_period: 32s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      # https://docs.docker.com/compose/compose-file/#variable-substitution
+      test: curl -k 'https://localhost:8443/auth'
+    networks:
+      - fhir
+networks:
+  fhir:
+    driver: bridge
