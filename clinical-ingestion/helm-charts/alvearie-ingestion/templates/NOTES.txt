@@ -83,7 +83,7 @@ Primary FHIR Server:
 
   export FHIR_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-fhir -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
   export FHIR_PORT=$(kubectl get svc {{ .Release.Name }}-fhir -o jsonpath='{.spec.ports[0].port}') 
-  echo Primary FHIR Server: http://$FHIR_IP:$FHIR_PORTfhir-server/api/v4
+  echo Primary FHIR Server: http://$FHIR_IP:$FHIR_PORT/fhir-server/api/v4
 
 {{- end }}
 {{- if index .Values "fhir-deid" "enabled" }}
@@ -92,7 +92,7 @@ Secondary FHIR Server:
 
   export FHIR_DEID_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-fhir-deid -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
   export FHIR_DEID_PORT=$(kubectl get svc {{ .Release.Name }}-fhir-deid -o jsonpath='{.spec.ports[0].port}') 
-  echo Secondary FHIR Server: http://$FHIR_DEID_IP:$FHIR_DEID_PORTfhir-server/api/v4
+  echo Secondary FHIR Server: http://$FHIR_DEID_IP:$FHIR_DEID_PORT/fhir-server/api/v4
 
 {{- end }}
 {{- if .Values.nifi.enabled }}
