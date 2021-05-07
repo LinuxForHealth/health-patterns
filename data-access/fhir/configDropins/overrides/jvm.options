@@ -1,0 +1,5 @@
+# Initial heap size (same as max so no reallocations will occur)
+-Xms2048M
+
+# Maximum heap size
+-Xmx2048M
