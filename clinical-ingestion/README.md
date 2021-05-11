@@ -14,7 +14,7 @@ The Clinical Ingestion Flow can also enrich the data as it flows through. Curren
 * De-Identification Service - This step will de-identify the clinical data flowing through the pipeline and store the de-identified version in a separate FHIR server.  The de-identification rules are currently static and can be found [here](../services/deid-core/src/main/resources/de-id-config.json).
 
 
-* Million Hearts ASCVD Model: This step will calculate a ten-year risk of cardiovascular disease using the Million Hearts ASCVD Model.  This step requires manual deployment of the [ASCVD](https://github.com/Alvearie/health-analytics/tree/main/ascvd) service and the [ASCVD FHIR Data Extraction service](https://github.com/Alvearie/health-analytics/tree/main/ascvd-fhir-data-extraction), as well as manual updates of the ASCVD Parameter Context within the Clinical Ingestion Nifi flow to point to your ASCVD services.
+* Million Hearts ASCVD Model: This step will calculate a ten-year risk of cardiovascular disease using the Million Hearts ASCVD Model.  This step requires manual deployment of the [ASCVD](https://github.com/Alvearie/health-analytics/tree/main/ascvd) service and the [ASCVD FHIR Data Extraction service](https://github.com/Alvearie/health-analytics/tree/main/ascvd-from-fhir), as well as manual updates of the ASCVD Parameter Context within the Clinical Ingestion Nifi flow to point to your ASCVD services.
 
 ## Deploying the Clinical Ingestion Flow
 
