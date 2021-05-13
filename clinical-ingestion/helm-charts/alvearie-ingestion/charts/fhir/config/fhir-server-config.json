@@ -5,7 +5,7 @@
             "tenantIdHeaderName": "X-FHIR-TENANT-ID",
             "datastoreIdHeaderName": "X-FHIR-DSID",
             "originalRequestUriHeaderName": "X-FHIR-FORWARDED-URL",
-            "checkReferenceTypes": true,
+            "checkReferenceTypes": false,
             "conditionalDeleteMaxNumber": 10,
             "serverRegistryResourceProviderEnabled": true,
             "disabledOperations": ""
