@@ -8,40 +8,18 @@ See https://alvearie.io/blog/smart-keycloak for an overview.
 Currently, this pattern is packaged via docker-compose.
 It relies on:
 1. the publicly available ibmcom/ibm-fhir-server image
-2. locally-built images from https://github.com/Alvearie/keycloak-extensions-for-fhir
+2. publicly available images from https://github.com/Alvearie/keycloak-extensions-for-fhir
     * alvearie/smart-keycloak
     * alvearie/keycloak-config
 
 ### Prerequisites
-Assuming you have maven and docker installed and configured, perform the following steps to build the keycloak-related images:
-1. clone the https://github.com/Alvearie/keycloak-extensions-for-fhir project
-2. build it
-
-    ```
-    cd keycloak-extensions-for-fhir
-    mvn clean install -DskipTests
-    ```
-
-3. build the smart-keycloak image
-
-    ```
-    docker build . -t alvearie/smart-keycloak
-    ```
-
-4. build the keycloak-config image
-
-    ```
-    cd keycloak-config
-    docker build . -t alvearie/keycloak-config
-    ```
-
-Because this pattern is configured for data-access (and not data ingestion), the FHIR server is configured to be read-only.
+Because this pattern is configured for data access (and not data ingestion), the FHIR server is configured to be read-only.
 To make it easier to execute the pattern, we include a sample database under data-access/fhir/derby/sampleDB.zip.
-To use this sample database, unzip it to `data-access/fhir/derby` before launching the docker-compose environment the first time.
-The result should be directory at `data-access/fhir/derby/fhirDB` that has the contents of the sample database.
+To use this sample database, unzip it to `data-access/fhir/derby` before launching the docker-compose environment for the first time.
+The result should be a directory at `data-access/fhir/derby/fhirDB` that has the contents of the sample database.
 
 ### Docker compose
-After building the images, execute the following commands from *this repo's* data-access directory (the one that has this README) to package the `fhir-smart` authorization addon with the IBM FHIR Server and spin up the fhir-server and keycloak services:
+Execute the following commands from *this repo's* data-access directory (the one that has this README) to package the `fhir-smart` authorization addon with the IBM FHIR Server and spin up the fhir-server and keycloak services:
 
 ```
 mvn clean package
