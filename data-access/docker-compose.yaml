@@ -25,7 +25,7 @@ services:
       - 9080:9080
       - 9443:9443
     healthcheck:
-      start_period: 62s
+      start_period: 32s
       interval: 30s
       timeout: 5s
       retries: 3
