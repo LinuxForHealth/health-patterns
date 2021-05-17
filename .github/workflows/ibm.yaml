@@ -33,8 +33,8 @@ jobs:
     # Authenticate with IBM Cloud CLI
     - name: Authenticate into IBM Cloud Integration Squad Kubernetes Cluster
       run: |
-        ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g Default
-        ibmcloud ks cluster config --cluster c0lsdn8d01pulliemgc0
+        ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g dev-env-wdc-kube
+        ibmcloud ks cluster config --cluster health-patterns-1
 
     # Setup and Install Chart
     - name: Install Chart
