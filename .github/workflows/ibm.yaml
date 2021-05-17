@@ -10,7 +10,7 @@ on:
 env:
   GITHUB_SHA: ${{ github.sha }}
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
-  IBM_CLOUD_REGION: us-south
+  IBM_CLOUD_REGION: us-east
   CLUSTER_NAMESPACE: github
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
     - name: Authenticate into IBM Cloud Integration Squad Kubernetes Cluster
       run: |
         ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g Default
-        ibmcloud ks cluster config --cluster bvr4cmtd0ju1e4kt9b40
+        ibmcloud ks cluster config --cluster c0lsdn8d01pulliemgc0
 
     # Setup and Install Chart
     - name: Install Chart
