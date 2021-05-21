@@ -1,50 +1,50 @@
 Welcome to the
 
-       d8888 888                                    d8b          
-      d88888 888                                    Y8P          
-     d88P888 888                                                 
-    d88P 888 888 888  888  .d88b.   8888b.  888d888 888  .d88b.  
-   d88P  888 888 888  888 d8P  Y8b     "88b 888P"   888 d8P  Y8b 
-  d88P   888 888 Y88  88P 88888888 .d888888 888     888 88888888 
- d8888888888 888  Y8bd8P  Y8b.     888  888 888     888 Y8b.     
-d88P     888 888   Y88P    "Y8888  "Y888888 888     888  "Y8888  
-                                                                 
-                               Clinical Data Ingestion Framework 
+       d8888 888                                    d8b
+      d88888 888                                    Y8P
+     d88P888 888
+    d88P 888 888 888  888  .d88b.   8888b.  888d888 888  .d88b.
+   d88P  888 888 888  888 d8P  Y8b     "88b 888P"   888 d8P  Y8b
+  d88P   888 888 Y88  88P 88888888 .d888888 888     888 88888888
+ d8888888888 888  Y8bd8P  Y8b.     888  888 888     888 Y8b.
+d88P     888 888   Y88P    "Y8888  "Y888888 888     888  "Y8888
+
+                               Clinical Data Ingestion Framework
 
 Pattern: {{ .Values.pattern }}
 
 The following services have been deployed:
 {{- if .Values.fhir.enabled }}
-- Primary FHIR Server{{- if .Values.ingress.enabled }} --------- http://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Primary FHIR Server{{- if .Values.ingress.enabled }} --------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
 {{- if .Values.fhir.proxy.enabled }}
-- Primary FHIR Server Proxy {{- if .Values.ingress.enabled }} --- http://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-proxy.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Primary FHIR Server Proxy {{- if .Values.ingress.enabled }} --- https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-proxy.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
 {{- end }}
 {{- end }}
 {{- if index .Values "fhir-deid" "enabled" }}
-- Secondary FHIR Server{{- if .Values.ingress.enabled }} ------- http://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Secondary FHIR Server{{- if .Values.ingress.enabled }} ------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
 {{- if index .Values "fhir-deid" "proxy" "enabled" }}
-- Secondary FHIR Server Proxy {{- if .Values.ingress.enabled }} - http://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid-proxy.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Secondary FHIR Server Proxy {{- if .Values.ingress.enabled }} - https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid-proxy.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
 {{- end }}
 {{- end }}
 {{- if .Values.deid.enabled }}
-- De-Identification Service{{- if .Values.ingress.enabled }} --- http://{{ .Release.Namespace }}-{{ .Release.Name }}-deid.{{ .Values.ingress.subdomain}}/api/v1/{{- end }}
+- De-Identification Service{{- if .Values.ingress.enabled }} --- https://{{ .Release.Namespace }}-{{ .Release.Name }}-deid.{{ .Values.ingress.subdomain}}/api/v1/{{- end }}
 {{- end }}
 {{- if .Values.nifi.enabled }}
-- NiFi Server{{- if .Values.ingress.enabled }} ----------------- http://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi.{{ .Values.ingress.subdomain}}/nifi{{- end }}
-- NiFi HTTP Post API{{- if .Values.ingress.enabled }} ---------- http://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-http-post.{{ .Values.ingress.subdomain}}{{- end }}
+- NiFi Server{{- if .Values.ingress.enabled }} ----------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi.{{ .Values.ingress.subdomain}}/nifi{{- end }}
+- NiFi HTTP Post API{{- if .Values.ingress.enabled }} ---------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-http-post.{{ .Values.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if index .Values "nifi-registry" "enabled" }}
-- NiFi Registry{{- if .Values.ingress.enabled }} --------------- http://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-registry.{{ .Values.ingress.subdomain}}/nifi-registry{{- end }}
+- NiFi Registry{{- if .Values.ingress.enabled }} --------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-registry.{{ .Values.ingress.subdomain}}/nifi-registry{{- end }}
 {{- end }}
 {{- if .Values.zookeeper.enabled }}
 - Zookeeper
 {{- end }}
 {{- if index .Values "kube-prometheus-stack" "enabled" }}
 - Prometheus
-- Grafana{{- if .Values.ingress.enabled }} --------------------- http://{{ .Release.Namespace }}-{{ .Release.Name }}-grafana.{{ .Values.ingress.subdomain}}{{- end }}
+- Grafana{{- if .Values.ingress.enabled }} --------------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-grafana.{{ .Values.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if index .Values "cohort-service" "enabled" }}
-- Cohort Service{{- if .Values.ingress.enabled }} -------------- http://{{ .Release.Namespace }}-{{ .Release.Name }}-cohort-service.{{ .Values.ingress.subdomain}}{{- end }}
+- Cohort Service{{- if .Values.ingress.enabled }} -------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-cohort-service.{{ .Values.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if .Values.kafka.enabled }}
 - Kafka
@@ -55,14 +55,14 @@ The following services have been deployed:
 
 Access to the Kafka server is handled via load balancer. It may take a few minutes for the load balancer IP to be available.
 
-Watch the status of the kafka service by running the following command and wait until the external IP address appears: 
+Watch the status of the kafka service by running the following command and wait until the external IP address appears:
 
   kubectl get --namespace {{ .Release.Namespace }} svc -w | grep kafka-0-external
-  
+
 Once the external IP has been assigned run the following command to identify the kafka server broker:
 
   export KAFKA_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-kafka-0-external -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-  export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-kafka-0-external -o jsonpath='{.spec.ports[0].port}') 
+  export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-kafka-0-external -o jsonpath='{.spec.ports[0].port}')
   echo Kafka Broker: $KAFKA_IP:$KAFKA_PORT
 
 {{- end }}
@@ -71,7 +71,7 @@ Once the external IP has been assigned run the following command to identify the
 {{- if not .Values.ingress.enabled }}
 It may take a few minutes for the LoadBalancer IPs to be available.
 
-Watch the status of the public services by running the following command and wait until the external IP addresses appear: 
+Watch the status of the public services by running the following command and wait until the external IP addresses appear:
 
   kubectl get --namespace {{ .Release.Namespace }} svc -w | grep LoadBalancer
 
@@ -82,7 +82,7 @@ Once the external IPs have been assigned run the following commands to access th
 Primary FHIR Server:
 
   export FHIR_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-fhir -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-  export FHIR_PORT=$(kubectl get svc {{ .Release.Name }}-fhir -o jsonpath='{.spec.ports[0].port}') 
+  export FHIR_PORT=$(kubectl get svc {{ .Release.Name }}-fhir -o jsonpath='{.spec.ports[0].port}')
   echo Primary FHIR Server: http://$FHIR_IP:$FHIR_PORT/fhir-server/api/v4
 
 {{- end }}
@@ -91,7 +91,7 @@ Primary FHIR Server:
 Secondary FHIR Server:
 
   export FHIR_DEID_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-fhir-deid -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-  export FHIR_DEID_PORT=$(kubectl get svc {{ .Release.Name }}-fhir-deid -o jsonpath='{.spec.ports[0].port}') 
+  export FHIR_DEID_PORT=$(kubectl get svc {{ .Release.Name }}-fhir-deid -o jsonpath='{.spec.ports[0].port}')
   echo Secondary FHIR Server: http://$FHIR_DEID_IP:$FHIR_DEID_PORT/fhir-server/api/v4
 
 {{- end }}
@@ -100,7 +100,7 @@ Secondary FHIR Server:
 NiFi Server:
 
   export NIFI_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-nifi -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-  export NIFI_PORT=$(kubectl get svc {{ .Release.Name }}-nifi -o jsonpath='{.spec.ports[0].port}') 
+  export NIFI_PORT=$(kubectl get svc {{ .Release.Name }}-nifi -o jsonpath='{.spec.ports[0].port}')
   echo Nifi Server: http://$NIFI_IP:$NIFI_PORT/nifi
 
 {{- end }}
@@ -109,25 +109,25 @@ NiFi Server:
 Kafka Broker:
 
   export KAFKA_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-kafka-0-external -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-  export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-kafka-0-external -o jsonpath='{.spec.ports[0].port}') 
+  export KAFKA_PORT=$(kubectl get svc {{ .Release.Name }}-kafka-0-external -o jsonpath='{.spec.ports[0].port}')
   echo Kafka Broker: $KAFKA_IP:$KAFKA_PORT
 
 {{- end }}
 {{- if index .Values "kube-prometheus-stack" "enabled" }}
 
 Grafana Server:
- 
+
   export GRAFANA_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-grafana -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-  export GRAFANA_PORT=$(kubectl get svc {{ .Release.Name }}-grafana -o jsonpath='{.spec.ports[0].port}') 
+  export GRAFANA_PORT=$(kubectl get svc {{ .Release.Name }}-grafana -o jsonpath='{.spec.ports[0].port}')
   echo Grafana Server: http://$GRAFANA_IP:$GRAFANA_PORT
 
 {{- end }}
 {{- if index .Values "cohort-service" "enabled" }}
 
 Cohort Service:
- 
+
   export COHORT_SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-cohort-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-  export COHORT_SERVICE_PORT=$(kubectl get svc {{ .Release.Name }}-cohort-service -o jsonpath='{.spec.ports[0].port}') 
+  export COHORT_SERVICE_PORT=$(kubectl get svc {{ .Release.Name }}-cohort-service -o jsonpath='{.spec.ports[0].port}')
   echo Grafana Server: http://$COHORT_SERVICE_IP:$COHORT_SERVICE_PORT
 
 {{- end }}
@@ -137,10 +137,10 @@ Cohort Service:
 Inside the cluster you can access the services at the following locations:
 
 {{- if .Values.fhir.enabled }}
-- Primary FHIR Server: {{ .Release.Name }}-fhir.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}} 
+- Primary FHIR Server: {{ .Release.Name }}-fhir.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
 {{- end }}
 {{- if index .Values "fhir-deid" "enabled" }}
-- Secondary FHIR Server: {{ .Release.Name }}-fhir-deid.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}} 
+- Secondary FHIR Server: {{ .Release.Name }}-fhir-deid.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
 {{- end }}
 {{- if .Values.deid.enabled }}
 - De-Identification Service: {{ .Release.Name }}-deid.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
@@ -163,4 +163,3 @@ Inside the cluster you can access the services at the following locations:
 {{- if index .Values "cohort-service" "enabled" }}
 - Cohort Service: {{ .Release.Name }}-cohort-service.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
 {{- end }}
-
