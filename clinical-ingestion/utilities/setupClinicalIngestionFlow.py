@@ -91,22 +91,24 @@ def main():
         respDict = dict(resp.json())
 
         #search for registry
+        registryname = flowConfig[aflow][0]
         regFound = False
         for regs in respDict["registries"]:
             if debug:
                 print(regs)
-            if regs["registry"]["name"] == flowConfig[aflow][0]:
+            if regs["registry"]["name"] == registryname:
                regId = regs["registry"]["id"]
                regFound = True
                if debug:
-                  print("FOUND Registry", flowConfig[aflow][0], "-->",regId)
+                  print("FOUND Registry", registryname, "-->",regId)
                break
 
         if not regFound:
-            print("script failed-no matching registry found:", flowConfig[aflow][0])
+            print("script failed-no matching registry found:", registryname)
             exit(1)  #if we don't find the specific registry then we are done
 
         #search for bucket
+        registrybucketname = flowConfig[aflow][1]
         bucketFound = False
         buckURL = regURL + "/" + regId + "/buckets"
         resp = requests.get(url=buckURL)
@@ -116,15 +118,15 @@ def main():
         for bucket in bucketDict["buckets"]:
             if debug:
                 print(bucket)
-            if bucket["bucket"]["name"] == flowConfig[aflow][1]:
+            if bucket["bucket"]["name"] == registrybucketname:
                 bucketId = bucket['id']
                 bucketFound = True
                 if debug:
-                    print("FOUND Bucket ", flowConfig[aflow][1], "-->", bucketId)
+                    print("FOUND Bucket ", registrybucketname, "-->", bucketId)
                 break
 
         if not bucketFound:
-            print("script failed-no matching bucket found:", flowConfig[aflow][1])
+            print("script failed-no matching bucket found:", registrybucketname)
             exit(1)  #if we don't find the specific bucket then we are done
 
         #search for flow
