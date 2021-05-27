@@ -54,7 +54,7 @@ fhir:
     - name: BOOTSTRAP_DB
       value: 'true'
   proxy:
-    enabled: false
+    enabled: true
 
 ## Configure these to allow bulk access from fhir server
 #  bulkExportConfig:
@@ -77,7 +77,7 @@ fhir-deid:
     - name: BOOTSTRAP_DB
       value: 'true'
   proxy:
-    enabled: false
+    enabled: true
 
 ## Configure these to allow bulk access from fhir-deid server
 #  bulkExportConfig:
