@@ -53,13 +53,6 @@ INGRESS_CLASS refers to the ingress class used by your cloud provider.  Currentl
  
 INGRESS_SUBDOMAIN is the value identified above for the ingress subdomain 
 
-
-If you cannot deploy via ingress in your environment, we also provide the ability to deploy using load balancers.  This is not recommended, but will allow quick deployment of this pattern.  To deploy via load balancers, run:
-
-```bash
-helm install ingestion . -f loadbalancer-values.yaml
-```
-
 NOTE: You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
 
 ### Optional: Deploy a FHIR UI
