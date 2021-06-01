@@ -31,11 +31,11 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
-    <dependency>
+    <!-- <dependency>
       <groupId>com.ibm.fhir</groupId>
       <artifactId>fhir-model</artifactId>
       <version>${fhir.version}</version>
-    </dependency>
+    </dependency> -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy</artifactId>

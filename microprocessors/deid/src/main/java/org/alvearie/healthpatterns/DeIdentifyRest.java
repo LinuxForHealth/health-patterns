@@ -11,11 +11,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.ibm.fhir.model.*;
-import com.ibm.fhir.model.resource.Bundle;
-import com.ibm.fhir.model.resource.Resource;
-
-import org.jboss.logging.annotations.Param;
 
 
 @Path("/")
