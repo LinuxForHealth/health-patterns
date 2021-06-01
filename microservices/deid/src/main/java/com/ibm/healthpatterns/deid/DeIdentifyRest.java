@@ -1,4 +1,4 @@
-package org.alvearie.healthpatterns;
+package com.ibm.healthpatterns.deid;
 
 import java.io.InputStream;
 
