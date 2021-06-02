@@ -69,9 +69,13 @@ public class DeIdentifyRest {
             @HeaderParam("deid_server") @DefaultValue(DEID_FHIR_SERVER_URL) String deid_server,
             @HeaderParam("username") @DefaultValue(DEID_FHIR_SERVER_USEERNAME) String username,
             @HeaderParam("password") @DefaultValue(DEID_FHIR_SERVER_PASSWORD) String password,
+            @QueryParam("configName") @DefaultValue("default") String configName,
             InputStream resourceInputStream
     ) {
-        /*DeIdentifier deid = new DeIdentifier(deid_service, deid_server, username, password);
+        /*
+        DeIdentifier deid = new DeIdentifier(deid_service, deid_server, username, password);
+        deid.setConfigJson(configString);
+
         try {
             DeIdentification result = deid.deIdentify(resourceInputStream);
             return result.getDeIdentifiedResource().toPrettyString();
@@ -83,30 +87,6 @@ public class DeIdentifyRest {
         } catch (IOException e) {
             return e.toString();
         }
-    public String deidentifyFHIR(InputStream resourceInputStream,
-                                 @DefaultValue("default")
-                                 @QueryParam("configName")
-                                         String configName) throws Exception {
-        JsonNode jsonNode;
-        String configString = configs.get(configName);
-		try {
-			jsonNode = jsonDeserializer.readTree(resourceInputStream);
-		} catch (JsonParseException e) {
-			throw new Exception("The given input stream did not contain valid JSON.", e);
-		}
-		if (!(jsonNode instanceof ObjectNode)) {
-			throw new Exception("The FHIR resource did not contain a valid JSON object, likely it was a JSON array. Currently only proper FHIR resources are supported");
-		}
-        return jsonNode.toPrettyString();
-
-
-		//DeIdentifier deid = new DeIdentifier(null, null, null, null);
-
-		//deid.setConfigJson(configString);
-		/*
-		deidentified = deid.deIdentify(InputStream)
-		return deidentified.getDeIdentifiedResource()
-		 */
     }
 
     @POST
