@@ -101,6 +101,12 @@
 	      <groupId>ca.uhn.hapi.fhir</groupId>
 	      <artifactId>org.hl7.fhir.validation</artifactId>
 	      <version>${hapi.fhir.version}</version>
+	      <exclusions>
+	      	<exclusion>
+	      		<groupId>info.cqframework</groupId>
+	      		<artifactId>cql</artifactId>
+	      	</exclusion>
+	      </exclusions>
 	    </dependency>
     </dependencies>
 
