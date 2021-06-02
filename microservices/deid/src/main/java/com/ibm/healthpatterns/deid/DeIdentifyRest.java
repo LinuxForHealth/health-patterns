@@ -36,6 +36,12 @@ public class DeIdentifyRest {
 			throw new Exception("The FHIR resource did not contain a valid JSON object, likely it was a JSON array. Currently only proper FHIR resources are supported");
 		}
         return jsonNode.toPrettyString();
+
+		/*
+		DeIdentifier deid = new DeIdentifier(default values)
+		deidentified = deid.deIdentify(InputStream)
+		return deidentified.getDeIdentifiedResource()
+		 */
     }
 
     @POST
