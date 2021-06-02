@@ -98,6 +98,16 @@ public class DeIdentifier extends FHIRService {
 		}
 	}
 
+	public DeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword, InputStream configInputStream) {
+		super(fhirServerURL, fhirServerUsername, fhirServerPassword);
+		deidClient = new DeIdentifierServiceClient(deidServiceURL);
+		try {
+			configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
+		} catch (IOException e) {
+			System.err.println("Could not read de-identifier service configuration, the DeIdentifier won't be functional");
+		}
+	}
+
 	/* (non-Javadoc)
 	 * @see com.ibm.healthpatterns.core.FHIRService#healthCheck(java.io.StringWriter)
 	 */

@@ -1,5 +1,6 @@
 package com.ibm.healthpatterns.deid;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -74,7 +75,11 @@ public class DeIdentifyRest {
         } catch (Exception e) {
             return e.toString();
         }*/
-        return deid_service + '\n' + deid_server + '\n' + username + '\n' + password;
+        try {
+            return jsonDeserializer.readTree(this.getClass().getResourceAsStream(DEID_CONFIG_JSON)).toPrettyString();
+        } catch (IOException e) {
+            return e.toString();
+        }
     }
 
     @POST
