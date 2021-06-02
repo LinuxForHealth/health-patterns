@@ -37,7 +37,7 @@ public class CohortServiceAppTest {
 	 * 
 	 * @throws IOException
 	 */
-	@Test
+	//@Test
 	public void testAllPatientsForFemaleCohort() throws IOException {
 		CQLFile file = new CQLFile(Paths.get("src/test/resources/FemalePatients-1.0.0.cql"));
 		assertEquals("FemalePatients", file.getName());
