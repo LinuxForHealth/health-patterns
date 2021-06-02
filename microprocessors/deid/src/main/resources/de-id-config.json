@@ -1,0 +1,202 @@
+{
+        "rules": [
+            {
+                "name": "hash",
+                "maskingProviders": [
+                    {
+                        "type": "HASH"
+                    }
+                ]
+            },
+            {
+                "name": "date",
+                "maskingProviders": [
+                    {
+                        "type": "DATETIME",
+                        "maskShiftDate": true,
+                        "maskShiftSeconds": 987678654
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "maskingProviders": [
+                    {
+                        "type": "RANDOM"
+                    }
+                ]
+            },
+            {
+                "name": "delete",
+                "maskingProviders": [
+                    {
+                        "type": "NULL"
+                    }
+                ]
+            }
+        ],
+        "json": {
+            "schemaType": "FHIR",
+            "messageTypeKey": "resourceType",
+            "messageTypes": [
+                "Patient",
+                "Observation",
+                "Condition",
+                "Procedure"
+            ],
+            "maskingRules": [
+                {
+                    "jsonPath": "/fhir/Patient",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/UUID",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/address/city",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/address/district",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/address/line",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/address/postalCode",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/address/text",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/birthDate",
+                    "rule": "date"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/contact/address/city",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/contact/address/district",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/contact/address/line",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/contact/address/postalCode",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/contact/address/text",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/contact/name/family",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/contact/name/given",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/contact/name/text",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/contact/telecom/value",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/deceasedDateTime",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/deviceInfo",
+                    "rule": "delete"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/name/family",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/name/given",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/federationNumber",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/given",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/identifier/assigner/display",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/identifier/assigner/reference",
+                    "rule": "hash"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/identifier/type/coding/code",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/identifier/type/coding/display",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/identifier/type/text",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/identifier/value",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/maritalStatus/coding/code",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/maritalStatus/coding/display",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/maritalStatus/text",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/messageID",
+                    "rule": "delete"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/ptpsIdentifier",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/ptpsVersion",
+                    "rule": "delete"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/requestID",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/telecom/value",
+                    "rule": "random"
+                },
+                {
+                    "jsonPath": "/fhir/Patient/text",
+                    "rule": "delete"
+                }
+            ]
+        }
+    }

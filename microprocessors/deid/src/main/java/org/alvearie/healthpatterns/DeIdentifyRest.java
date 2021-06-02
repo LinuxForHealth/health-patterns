@@ -1,6 +1,12 @@
 package org.alvearie.healthpatterns;
 
 import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
+import org.apache.commons.io.IOUtils;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -12,11 +18,36 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
+
 
 @Path("/")
 public class DeIdentifyRest {
 
-    private ObjectMapper jsonDeserializer = new ObjectMapper();
+
+	/**
+	 * The file that contains the masking config that will be used to configure the de-id service.
+	 */
+	private static final String DEID_CONFIG_JSON = "/de-id-config.json";
+
+    private ObjectMapper jsonDeserializer;
+    
+    private HashMap<String, JsonNode> configs;
+
+    public DeIdentifyRest() {
+        jsonDeserializer = new ObjectMapper();
+        configs = new HashMap<String, JsonNode>();
+
+        /*
+		InputStream configInputStream = this.getClass().getResourceAsStream(DEID_CONFIG_JSON);
+		try {
+			configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
+		} catch (IOException e) {
+			System.err.println("Could not read de-identifier service configuration, the DeIdentifier won't be functional");
+		}
+        
+        configs.put("default", ) */
+    }
 
     // config params as optional url parameters?
 
@@ -48,8 +79,10 @@ public class DeIdentifyRest {
     @POST
     @Path("postdeidconfig")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void setConfig() {
-
+    public String setConfig(InputStream resourceInputStream, @PathParam("name") String name) throws Exception {
+        JsonNode jsonNode;
+        jsonNode = jsonDeserializer.readTree(resourceInputStream);
+        return jsonNode.toPrettyString();
     }
 
 }
