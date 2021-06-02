@@ -1,5 +1,6 @@
 package com.ibm.healthpatterns.deid;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import org.apache.commons.io.IOUtils;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
+import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 
 
 @Path("/")
@@ -32,21 +35,23 @@ public class DeIdentifyRest {
 
     private ObjectMapper jsonDeserializer;
     
-    private HashMap<String, JsonNode> configs;
+    private HashMap<String, String> configs;
+
+    private String configJson;
 
     public DeIdentifyRest() {
         jsonDeserializer = new ObjectMapper();
-        configs = new HashMap<String, JsonNode>();
+        configs = new HashMap<String, String>();
 
-        /*
 		InputStream configInputStream = this.getClass().getResourceAsStream(DEID_CONFIG_JSON);
 		try {
 			configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
 		} catch (IOException e) {
-			System.err.println("Could not read de-identifier service configuration, the DeIdentifier won't be functional");
+			System.err.println("Could not read default de-identifier service configuration, the DeIdentifier won't be" +
+                    "functional if a different configuration is not set.");
 		}
         
-        configs.put("default", ) */
+        configs.put("default", configJson);
     }
 
     // config params as optional url parameters?
@@ -56,8 +61,12 @@ public class DeIdentifyRest {
     @POST
     @Path("deidentifyFHIR")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String deidentifyFHIR(InputStream resourceInputStream) throws Exception {
+    public String deidentifyFHIR(InputStream resourceInputStream,
+                                 @DefaultValue("default")
+                                 @QueryParam("configName")
+                                         String configName) throws Exception {
         JsonNode jsonNode;
+        String configString = configs.get(configName);
 		try {
 			jsonNode = jsonDeserializer.readTree(resourceInputStream);
 		} catch (JsonParseException e) {
@@ -68,8 +77,11 @@ public class DeIdentifyRest {
 		}
         return jsonNode.toPrettyString();
 
+
+		//DeIdentifier deid = new DeIdentifier(null, null, null, null);
+
+		//deid.setConfigJson(configString);
 		/*
-		DeIdentifier deid = new DeIdentifier(default values)
 		deidentified = deid.deIdentify(InputStream)
 		return deidentified.getDeIdentifiedResource()
 		 */
@@ -85,10 +97,18 @@ public class DeIdentifyRest {
     @POST
     @Path("postdeidconfig")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String setConfig(InputStream resourceInputStream, @PathParam("name") String name) throws Exception {
+    public String setConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
+        if (name == null || name.isEmpty()) throw new Exception("Config not given an identifier." +
+                "Specify an identifier for the config using the \"identifier\" query parameter");
         JsonNode jsonNode;
-        jsonNode = jsonDeserializer.readTree(resourceInputStream);
-        return jsonNode.toPrettyString();
+        try {
+            jsonNode = jsonDeserializer.readTree(resourceInputStream);
+        } catch (IOException e) {
+            throw new Exception("The given input stream did not contain valid JSON.", e);
+        }
+        configs.put(name, jsonNode.toString());
+        return "New configuration stored with the identifier \"" + name +
+                "\".  Apply the config by setting the query parameter \"configName\" equal to the config's identifier.";
     }
 
 }

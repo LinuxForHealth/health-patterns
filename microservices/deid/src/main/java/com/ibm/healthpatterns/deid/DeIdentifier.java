@@ -168,7 +168,7 @@ public class DeIdentifier extends FHIRService {
 	/**
 	 * This method de-identifies the resources in the given Bundle, and pushes them to a FHIR server.
 	 * 
-	 * @param json with the FHIR Bundle to de-identify
+	 * @param jsonNode with the FHIR Bundle to de-identify
 	 * @throws DeIdentifierException if the given bundle does not contain proper FHIR resources
 	 */
 	private void deIdentifyBundle(JsonNode jsonNode) throws DeIdentifierException {
@@ -191,7 +191,7 @@ public class DeIdentifier extends FHIRService {
 	/**
 	 * De-identifies the given single FHIR resource represented as a {@link JsonNode}.
 	 *  
-	 * @param patient the FHIR resource to de-identify
+	 * @param resource the FHIR resource to de-identify
 	 * @return the de-identified resource, or null if this resource is not of a type that can be de-identified
 	 * @throws DeIdentifierException if there is an error in the de-identification REST API or parsing the JSON
 	 * @throws IllegalArgumentException if the given JSON does not have a 'resource' object
@@ -312,6 +312,10 @@ public class DeIdentifier extends FHIRService {
 		}
 		System.out.println("FHIR create resource done!");
 		return outcome.getId().toString();
+	}
+
+	public void setConfigJson(String string) {
+		configJson = string;
 	}
 	
 }
