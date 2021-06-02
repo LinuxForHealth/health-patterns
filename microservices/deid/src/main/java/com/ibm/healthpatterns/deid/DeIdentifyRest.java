@@ -8,9 +8,7 @@ import java.util.HashMap;
 
 import org.apache.commons.io.IOUtils;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -20,6 +18,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
+import com.ibm.healthpatterns.deid.*;
 
 @Path("/")
 public class DeIdentifyRest {
@@ -29,6 +28,11 @@ public class DeIdentifyRest {
 	 * The file that contains the masking config that will be used to configure the de-id service.
 	 */
 	private static final String DEID_CONFIG_JSON = "/de-id-config.json";
+
+	private static final String DEID_SERVICE_URL = "http://ingestion-deid:8080/api/v1";
+	private static final String DEID_FHIR_SERVER_URL = "http://ingestion-fhir-deid/fhir-server/api/v4";
+	private static final String DEID_FHIR_SERVER_USEERNAME = "fhiruser";
+	private static final String DEID_FHIR_SERVER_PASSWORD = "integrati0n";
 
     private ObjectMapper jsonDeserializer;
     
@@ -56,23 +60,21 @@ public class DeIdentifyRest {
     @POST
     @Path("deidentifyFHIR")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String deidentifyFHIR(InputStream resourceInputStream) throws Exception {
-        JsonNode jsonNode;
-		try {
-			jsonNode = jsonDeserializer.readTree(resourceInputStream);
-		} catch (JsonParseException e) {
-			throw new Exception("The given input stream did not contain valid JSON.", e);
-		}
-		if (!(jsonNode instanceof ObjectNode)) {
-			throw new Exception("The FHIR resource did not contain a valid JSON object, likely it was a JSON array. Currently only proper FHIR resources are supported");
-		}
-        return jsonNode.toPrettyString();
-
-		/*
-		DeIdentifier deid = new DeIdentifier(default values)
-		deidentified = deid.deIdentify(InputStream)
-		return deidentified.getDeIdentifiedResource()
-		 */
+    public String deidentifyFHIR(
+            @HeaderParam("deid_service") @DefaultValue(DEID_SERVICE_URL) String deid_service,
+            @HeaderParam("deid_server") @DefaultValue(DEID_FHIR_SERVER_URL) String deid_server,
+            @HeaderParam("username") @DefaultValue(DEID_FHIR_SERVER_USEERNAME) String username,
+            @HeaderParam("password") @DefaultValue(DEID_FHIR_SERVER_PASSWORD) String password,
+            InputStream resourceInputStream
+    ) {
+        /*DeIdentifier deid = new DeIdentifier(deid_service, deid_server, username, password);
+        try {
+            DeIdentification result = deid.deIdentify(resourceInputStream);
+            return result.getDeIdentifiedResource().toPrettyString();
+        } catch (Exception e) {
+            return e.toString();
+        }*/
+        return deid_service + '\n' + deid_server + '\n' + username + '\n' + password;
     }
 
     @POST
