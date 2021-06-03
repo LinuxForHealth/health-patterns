@@ -16,24 +16,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ibm.healthpatterns.deid.client;
+package com.ibm.healthpatterns.microservices.deid;
+
+import com.ibm.healthpatterns.microservices.common.FHIRServiceException;
 
 /**
- * Indicates that an error occurred in the {@link DeIdentifierServiceClient}.
- * 
  * @author Luis A. García
  */
-public class DeIdentifierClientException extends Exception {
+public class DeIdentifierException extends FHIRServiceException {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3904998271976616044L;
+	private static final long serialVersionUID = -2447683821098809222L;
 
 	/**
 	 * @param msg
 	 */
-	public DeIdentifierClientException(String msg) {
+	public DeIdentifierException(String msg) {
 		super(msg);
 	}
 
@@ -41,7 +41,7 @@ public class DeIdentifierClientException extends Exception {
 	 * @param msg 
 	 * @param cause 
 	 */
-	public DeIdentifierClientException(String msg, Exception cause) {
+	public DeIdentifierException(String msg, Exception cause) {
 		super(msg, cause);
 	}
 }

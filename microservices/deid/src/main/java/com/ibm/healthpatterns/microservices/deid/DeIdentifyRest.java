@@ -1,4 +1,4 @@
-package com.ibm.healthpatterns.deid;
+package com.ibm.healthpatterns.microservices.deid;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ibm.healthpatterns.deid;
+package com.ibm.healthpatterns.microservices.deid;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,9 +34,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.ibm.healthpatterns.core.FHIRService;
-import com.ibm.healthpatterns.deid.client.DeIdentifierClientException;
-import com.ibm.healthpatterns.deid.client.DeIdentifierServiceClient;
+import com.ibm.healthpatterns.microservices.common.FHIRService;
+import com.ibm.healthpatterns.microservices.deid.client.DeIdentifierClientException;
+import com.ibm.healthpatterns.microservices.deid.client.DeIdentifierServiceClient;
 
 import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.rest.api.MethodOutcome;
