@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ibm.healthpatterns.core;
+package com.ibm.healthpatterns.microservices.common;
 
 import java.io.IOException;
 

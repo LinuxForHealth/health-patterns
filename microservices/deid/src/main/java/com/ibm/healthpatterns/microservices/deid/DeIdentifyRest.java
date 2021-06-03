@@ -1,9 +1,8 @@
-package com.ibm.healthpatterns.deid;
+package com.ibm.healthpatterns.microservices.deid;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -19,8 +18,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
-
-import com.ibm.healthpatterns.deid.*;
 
 @Path("/")
 public class DeIdentifyRest {

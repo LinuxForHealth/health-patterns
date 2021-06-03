@@ -16,24 +16,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ibm.healthpatterns.core;
+package com.ibm.healthpatterns.microservices.terminology;
 
 /**
- * A problem occurred with this service.
- * 
  * @author Luis A. García
  */
-public class FHIRServiceException extends Exception {
+public class TerminologyServiceException extends Exception {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6306314160788650883L;
+	private static final long serialVersionUID = 45931463646535012L;
 
 	/**
 	 * @param msg
 	 */
-	public FHIRServiceException(String msg) {
+	public TerminologyServiceException(String msg) {
 		super(msg);
 	}
 
@@ -41,7 +39,7 @@ public class FHIRServiceException extends Exception {
 	 * @param msg 
 	 * @param cause 
 	 */
-	public FHIRServiceException(String msg, Exception cause) {
+	public TerminologyServiceException(String msg, Exception cause) {
 		super(msg, cause);
 	}
 }
