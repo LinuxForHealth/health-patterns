@@ -3,7 +3,6 @@ package com.ibm.healthpatterns.deid;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -12,15 +11,11 @@ import org.apache.commons.io.IOUtils;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import org.jboss.resteasy.annotations.jaxrs.PathParam;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
-
-import com.ibm.healthpatterns.deid.*;
 
 @Path("/")
 public class DeIdentifyRest {
@@ -29,12 +24,22 @@ public class DeIdentifyRest {
 	/**
 	 * The file that contains the masking config that will be used to configure the de-id service.
 	 */
-	private static final String DEID_CONFIG_JSON = "/de-id-config.json";
+	private static final String DEID_DEFAULT_CONFIG_JSON = "/de-id-config.json";
+	private static final String DEID_DEFAULT_CONFIG_NAME = "default";
 
-	private static final String DEID_SERVICE_URL = "http://ingestion-deid:8080/api/v1";
-	private static final String DEID_FHIR_SERVER_URL = "http://ingestion-fhir-deid/fhir-server/api/v4";
-	private static final String DEID_FHIR_SERVER_USEERNAME = "fhiruser";
-	private static final String DEID_FHIR_SERVER_PASSWORD = "integrati0n";
+	@ConfigProperty(name = "DEID_SERVICE_URL")
+	String DEID_SERVICE_URL;
+
+    @ConfigProperty(name = "DEID_FHIR_SERVER_URL")
+	String DEID_FHIR_SERVER_URL;
+
+    @ConfigProperty(name = "DEID_FHIR_SERVER_USERNAME")
+	String DEID_FHIR_SERVER_USERNAME;
+
+    @ConfigProperty(name = "DEID_FHIR_SERVER_PASSWORD")
+	String DEID_FHIR_SERVER_PASSWORD;
+
+	//private final DeIdentifier DEID = new DeIdentifier(DEID_SERVICE_URL, DEID_FHIR_SERVER_URL, DEID_FHIR_SERVER_USERNAME, DEID_FHIR_SERVER_PASSWORD);
 
     private ObjectMapper jsonDeserializer;
     
@@ -46,7 +51,7 @@ public class DeIdentifyRest {
         jsonDeserializer = new ObjectMapper();
         configs = new HashMap<String, String>();
 
-		InputStream configInputStream = this.getClass().getResourceAsStream(DEID_CONFIG_JSON);
+		InputStream configInputStream = this.getClass().getResourceAsStream(DEID_DEFAULT_CONFIG_JSON);
 		try {
 			configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
 		} catch (IOException e) {
@@ -65,11 +70,7 @@ public class DeIdentifyRest {
     @Path("deidentifyFHIR")
     @Consumes(MediaType.APPLICATION_JSON)
     public String deidentifyFHIR(
-            @HeaderParam("deid_service") @DefaultValue(DEID_SERVICE_URL) String deid_service,
-            @HeaderParam("deid_server") @DefaultValue(DEID_FHIR_SERVER_URL) String deid_server,
-            @HeaderParam("username") @DefaultValue(DEID_FHIR_SERVER_USEERNAME) String username,
-            @HeaderParam("password") @DefaultValue(DEID_FHIR_SERVER_PASSWORD) String password,
-            @QueryParam("configName") @DefaultValue("default") String configName,
+            @QueryParam("configName") @DefaultValue(DEID_DEFAULT_CONFIG_NAME) String configName,
             InputStream resourceInputStream
     ) {
         /*
@@ -82,11 +83,7 @@ public class DeIdentifyRest {
         } catch (Exception e) {
             return e.toString();
         }*/
-        try {
-            return jsonDeserializer.readTree(this.getClass().getResourceAsStream(DEID_CONFIG_JSON)).toPrettyString();
-        } catch (IOException e) {
-            return e.toString();
-        }
+        return DEID_SERVICE_URL + '\n' + DEID_FHIR_SERVER_URL + '\n' + DEID_FHIR_SERVER_USERNAME + '\n' + DEID_FHIR_SERVER_PASSWORD;
     }
 
     @POST
