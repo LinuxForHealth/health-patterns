@@ -39,8 +39,7 @@ public class DeIdentifyRest {
     @ConfigProperty(name = "DEID_FHIR_SERVER_PASSWORD")
 	String DEID_FHIR_SERVER_PASSWORD;
 
-	//private final DeIdentifier DEID = new DeIdentifier(DEID_SERVICE_URL, DEID_FHIR_SERVER_URL, DEID_FHIR_SERVER_USERNAME, DEID_FHIR_SERVER_PASSWORD);
-
+	private DeIdentifier DEID = null;
     private ObjectMapper jsonDeserializer;
     
     private HashMap<String, String> configs;
@@ -48,6 +47,7 @@ public class DeIdentifyRest {
     private String configJson;
 
     public DeIdentifyRest() {
+
         jsonDeserializer = new ObjectMapper();
         configs = new HashMap<String, String>();
 
@@ -73,17 +73,21 @@ public class DeIdentifyRest {
             @QueryParam("configName") @DefaultValue(DEID_DEFAULT_CONFIG_NAME) String configName,
             InputStream resourceInputStream
     ) {
-        /*
-        DeIdentifier deid = new DeIdentifier(deid_service, deid_server, username, password);
-        deid.setConfigJson(configString);
+        if (DEID == null){
+            DEID = new DeIdentifier(DEID_SERVICE_URL, DEID_FHIR_SERVER_URL, DEID_FHIR_SERVER_USERNAME, DEID_FHIR_SERVER_PASSWORD);
+        }
+
+
+        String configString = configs.get(configName);
+        DEID.setConfigJson(configString);
 
         try {
-            DeIdentification result = deid.deIdentify(resourceInputStream);
+            DeIdentification result = DEID.deIdentify(resourceInputStream);
             return result.getDeIdentifiedResource().toPrettyString();
         } catch (Exception e) {
             return e.toString();
-        }*/
-        return DEID_SERVICE_URL + '\n' + DEID_FHIR_SERVER_URL + '\n' + DEID_FHIR_SERVER_USERNAME + '\n' + DEID_FHIR_SERVER_PASSWORD;
+        }
+        //return DEID_SERVICE_URL + '\n' + DEID_FHIR_SERVER_URL + '\n' + DEID_FHIR_SERVER_USERNAME + '\n' + DEID_FHIR_SERVER_PASSWORD;
     }
 
     @POST
