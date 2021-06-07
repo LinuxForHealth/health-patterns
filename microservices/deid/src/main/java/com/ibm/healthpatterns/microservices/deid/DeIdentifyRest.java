@@ -2,6 +2,7 @@ package com.ibm.healthpatterns.microservices.deid;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 
@@ -10,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,12 +41,12 @@ public class DeIdentifyRest {
     @ConfigProperty(name = "DEID_FHIR_SERVER_PASSWORD")
 	String DEID_FHIR_SERVER_PASSWORD;
 
-	private DeIdentifier DEID = null;
+	private DeIdentifier deid = null;
     private ObjectMapper jsonDeserializer;
     
     private HashMap<String, String> configs;
 
-    private String configJson;
+    private String defaultConfigJson;
 
     public DeIdentifyRest() {
 
@@ -53,52 +55,59 @@ public class DeIdentifyRest {
 
 		InputStream configInputStream = this.getClass().getResourceAsStream(DEID_DEFAULT_CONFIG_JSON);
 		try {
-			configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
+			defaultConfigJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
 		} catch (IOException e) {
 			System.err.println("Could not read default de-identifier service configuration, the DeIdentifier won't be" +
                     "functional if a different configuration is not set.");
 		}
         
-        configs.put("default", configJson);
+        configs.put("default", defaultConfigJson);
     }
 
-    // config params as optional url parameters?
-
-    // "database" of deid configs, select config via url param, if not use default.
+    private void initializeDeid() throws Exception {
+        if (deid == null) {
+            if (DEID_SERVICE_URL == null) {
+                throw new Exception("DEID service URL not set");
+            }
+            if (DEID_FHIR_SERVER_URL == null ||
+                DEID_FHIR_SERVER_USERNAME == null ||
+                DEID_FHIR_SERVER_PASSWORD == null
+            ) {
+                throw new Exception("FHIR server URL/credentials not set");
+            }
+            deid = new DeIdentifier(DEID_SERVICE_URL, DEID_FHIR_SERVER_URL, DEID_FHIR_SERVER_USERNAME, DEID_FHIR_SERVER_PASSWORD, defaultConfigJson);
+        }
+    }
 
     @POST
-    @Path("deidentifyFHIR")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String deidentifyFHIR(
+    public Response deidentify(
             @QueryParam("configName") @DefaultValue(DEID_DEFAULT_CONFIG_NAME) String configName,
+            @QueryParam("pushToFHIR") @DefaultValue("true") String pushToFHIR,
             InputStream resourceInputStream
     ) {
-        if (DEID == null){
-            DEID = new DeIdentifier(DEID_SERVICE_URL, DEID_FHIR_SERVER_URL, DEID_FHIR_SERVER_USERNAME, DEID_FHIR_SERVER_PASSWORD);
+        boolean boolPush = pushToFHIR.equals("true");
+        try {
+            initializeDeid();
+        } catch (Exception e) {
+            return Response.status(500, e.toString()).build(); // Internal server error
         }
-
-
-        String configString = configs.get(configName);
-        DEID.setConfigJson(configString);
 
         try {
-            DeIdentification result = DEID.deIdentify(resourceInputStream);
-            return result.getDeIdentifiedResource().toPrettyString();
+            if (!configs.containsKey(configName)) {
+                throw new Exception();
+            }
+            String configString = configs.get(configName);
+            deid.setConfigJson(configString);
+            DeIdentification result = deid.deIdentify(resourceInputStream, boolPush);
+            return Response.status(200, result.getDeIdentifiedResource().toPrettyString()).build(); // OK
         } catch (Exception e) {
-            return e.toString();
+            return Response.status(400).build(); // Bad request error
         }
-        //return DEID_SERVICE_URL + '\n' + DEID_FHIR_SERVER_URL + '\n' + DEID_FHIR_SERVER_USERNAME + '\n' + DEID_FHIR_SERVER_PASSWORD;
     }
 
     @POST
-    @Path("deidentify")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String deidentify() {
-        return null;
-    }
-
-    @POST
-    @Path("postdeidconfig")
+    @Path("config")
     @Consumes(MediaType.APPLICATION_JSON)
     public String setConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
         if (name == null || name.isEmpty()) throw new Exception("Config not given an identifier." +
@@ -112,6 +121,23 @@ public class DeIdentifyRest {
         configs.put(name, jsonNode.toString());
         return "New configuration stored with the identifier \"" + name +
                 "\".  Apply the config by setting the query parameter \"configName\" equal to the config's identifier.";
+    }
+
+    @GET
+    @Path("healthCheck")
+    public Response getHealthCheck() {
+        try {
+            initializeDeid();
+        } catch (Exception e) {
+            return Response.status(500, e.toString()).build(); // Internal server error
+        }
+
+        StringWriter status = new StringWriter();
+        if (deid.healthCheck(status)) {
+            return Response.status(200).build(); // OK
+        } else {
+            return Response.status(500, status.toString()).build(); // Internal server error
+        }
     }
 
 }

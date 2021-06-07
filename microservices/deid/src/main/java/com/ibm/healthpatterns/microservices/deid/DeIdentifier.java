@@ -87,25 +87,10 @@ public class DeIdentifier extends FHIRService {
 	 * @param fhirServerUsername the FHIR server username
 	 * @param fhirServerPassword the FHIR server password
 	 */
-	public DeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword) {
+	public DeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword, String configJson) {
 		super(fhirServerURL, fhirServerUsername, fhirServerPassword);
 		deidClient = new DeIdentifierServiceClient(deidServiceURL);
-		InputStream configInputStream = this.getClass().getResourceAsStream(DEID_CONFIG_JSON);
-		try {
-			configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
-		} catch (IOException e) {
-			System.err.println("Could not read de-identifier service configuration, the DeIdentifier won't be functional");
-		}
-	}
-
-	public DeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword, InputStream configInputStream) {
-		super(fhirServerURL, fhirServerUsername, fhirServerPassword);
-		deidClient = new DeIdentifierServiceClient(deidServiceURL);
-		try {
-			configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
-		} catch (IOException e) {
-			System.err.println("Could not read de-identifier service configuration, the DeIdentifier won't be functional");
-		}
+		this.configJson = configJson;
 	}
 
 	/* (non-Javadoc)
@@ -135,7 +120,7 @@ public class DeIdentifier extends FHIRService {
 	 *                               de-identification operation or saving the resulting resource to FHIR
 	 * @throws IOException if there is an IO problem reading the input stream 
 	 */
-	public DeIdentification deIdentify(InputStream resourceInputStream) throws DeIdentifierException, IOException {
+	public DeIdentification deIdentify(InputStream resourceInputStream, boolean pushToFHIR) throws DeIdentifierException, IOException {
 		JsonNode jsonNode;
 		try {
 			jsonNode = jsonDeserializer.readTree(resourceInputStream);
@@ -149,9 +134,11 @@ public class DeIdentifier extends FHIRService {
 		deidentification.setOriginalResource(jsonNode);
 		JsonNode deIdentifiedJson = deIdentify(jsonNode);
 		deidentification.setDeIdentifiedResource(deIdentifiedJson);
-		pushToFHIR(deIdentifiedJson, deidentification);
+		if (pushToFHIR) {
+			pushToFHIR(deIdentifiedJson, deidentification);
+		}
 		return deidentification;
-	}	
+	}
 	
 	/**
 	 * De-identifies the FHIR resource represented in the given JSON object.

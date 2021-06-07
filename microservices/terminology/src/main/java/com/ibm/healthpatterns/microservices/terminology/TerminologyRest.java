@@ -1,21 +1,13 @@
 package com.ibm.healthpatterns.microservices.terminology;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.HashMap;
-
-
-import org.apache.commons.io.IOUtils;
+import java.io.StringWriter;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 
 @Path("/")
 public class TerminologyRest {
@@ -31,21 +23,49 @@ public class TerminologyRest {
 
     private TerminologyService terminologyService = null;
 
-    public TerminologyRest() {
-
+    private void initializeService() throws Exception {
+        if (terminologyService == null) {
+            if (FHIR_SERVER_URL == null ||
+                FHIR_SERVER_USERNAME == null ||
+                FHIR_SERVER_PASSWORD == null
+            ) {
+                throw new Exception("FHIR server URL/credentials not set");
+            }
+            terminologyService = new TerminologyService(FHIR_SERVER_URL, FHIR_SERVER_USERNAME, FHIR_SERVER_PASSWORD);
+        }
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public String translate(InputStream resourceInputStream) {
+    public Response translate(InputStream resourceInputStream) {
         try {
-            if (terminologyService == null) {
-                terminologyService = new TerminologyService(FHIR_SERVER_URL, FHIR_SERVER_USERNAME, FHIR_SERVER_PASSWORD);
-            }
-            Translation result = terminologyService.translate(resourceInputStream);
-            return result.getTranslatedResource().toPrettyString();
+            initializeService();
         } catch (Exception e) {
-            return e.toString();
+            return Response.status(500, e.toString()).build(); // Internal server error
+        }
+
+        try {
+            Translation result = terminologyService.translate(resourceInputStream);
+            return Response.status(200, result.getTranslatedResource().toPrettyString()).build(); // OK
+        } catch (Exception e) {
+            return Response.status(400).build(); // Bad request error
+        }
+    }
+
+    @GET
+    @Path("healthCheck")
+    public Response getHealthCheck() {
+        try {
+            initializeService();
+        } catch (Exception e) {
+            return Response.status(500, e.toString()).build(); // Internal server error
+        }
+
+        StringWriter status = new StringWriter();
+        if (terminologyService.healthCheck(status)) {
+            return Response.status(200).build(); // OK
+        } else {
+            return Response.status(500, status.toString()).build(); // Internal server error
         }
     }
 
