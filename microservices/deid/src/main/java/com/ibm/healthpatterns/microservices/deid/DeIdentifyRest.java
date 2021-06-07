@@ -81,6 +81,7 @@ public class DeIdentifyRest {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response deidentify(
             @QueryParam("configName") @DefaultValue(DEID_DEFAULT_CONFIG_NAME) String configName,
             @QueryParam("pushToFHIR") @DefaultValue("true") String pushToFHIR,
@@ -109,6 +110,7 @@ public class DeIdentifyRest {
     @POST
     @Path("config")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public String setConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
         if (name == null || name.isEmpty()) throw new Exception("Config not given an identifier." +
                 "Specify an identifier for the config using the \"identifier\" query parameter");
@@ -125,6 +127,7 @@ public class DeIdentifyRest {
 
     @GET
     @Path("healthCheck")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getHealthCheck() {
         try {
             initializeDeid();
