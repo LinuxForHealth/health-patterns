@@ -1,0 +1,36 @@
+# A simple name describing the Alvearie pattern implemented by this Helm values file 
+pattern: "All"
+
+ingress:
+  enabled: true
+
+fhir:
+  enabled: true
+  proxy:
+    enabled: true
+
+cohort-service:
+  enabled: true
+
+fhir-deid:
+  enabled: true
+  proxy:
+    enabled: true
+
+nifi-registry:
+  enabled: true
+
+zookeeper:
+  enabled: true
+
+nifi:
+  enabled: true
+
+kafka:
+  enabled: true
+
+deid:
+  enabled: true
+
+kube-prometheus-stack:
+  enabled: false

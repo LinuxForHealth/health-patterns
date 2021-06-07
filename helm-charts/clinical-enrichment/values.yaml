@@ -1,12 +1,12 @@
 # ------------------------------------------------------------------------------
 # General Configuration
 # ------------------------------------------------------------------------------
-# Default values for alvearie-ingestion.
+# Default values.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 # A simple name describing the Alvearie pattern implemented by this Helm values file
-pattern: "Ingestion"
+pattern: "Enrichment"
 
 nameOverride: ""
 fullnameOverride: ""
@@ -40,7 +40,7 @@ ingress:
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
-# Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
+# Values: https://github.com/Alvearie/health-patterns/clinical-enrichment/helm-charts/fhir/values.yaml
 # ------------------------------------------------------------------------------
 fhir:
   enabled: true
@@ -54,16 +54,16 @@ fhir:
     - name: BOOTSTRAP_DB
       value: 'true'
   proxy:
-    enabled: false
+    enabled: true
 
 ## Configure these to allow bulk access from fhir server
-#  bulkExportConfig:
-#    cosBucketName: yourbucketnamehere
-#    cosLocation: yourcosregion
-#    cosEndpointInternal: yourbucketendpointhere
-#    cosApikey: yourcosapikey
-#    cosSrvinstid: yourcossrvinstid
-#    batchUserPw: youradminpw
+  bulkExportConfig:
+    cosBucketName: fhir-data-access
+    cosLocation: us-east
+    cosEndpointInternal: https://s3.us-east.cloud-object-storage.appdomain.cloud:443
+    cosApikey: qCcVgZZdjTsFwmFT0XgpF8rPzlKXajhe-_Cfn7JASf8F
+    cosSrvinstid: crn:v1:bluemix:public:iam-identity::a/6694a1bda7d84197b130c3ea87ef3e77::serviceid:ServiceId-0d979bad-9a82-4cd0-b0ff-601ed80a10fe
+    batchUserPw: integrati0n
 
 fhir-deid:
   enabled: false
@@ -77,7 +77,7 @@ fhir-deid:
     - name: BOOTSTRAP_DB
       value: 'true'
   proxy:
-    enabled: false
+    enabled: true
 
 ## Configure these to allow bulk access from fhir-deid server
 #  bulkExportConfig:
@@ -95,7 +95,7 @@ fhir-deid:
 nifi-registry:
   enabled: true
   # The fullname is overridden to some static name in order to automatically register the NiFi Registry with the NiFi deployment
-  fullnameOverride: ingestion-nifi-registry
+  fullnameOverride: enrich-nifi-registry
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
@@ -104,16 +104,16 @@ nifi-registry:
 zookeeper:
   enabled: true
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
-  fullnameOverride: ingestion-zookeeper
+  fullnameOverride: enrich-zookeeper
   persistence:
-    enabled: false
+    enabled: false 
 
 # ------------------------------------------------------------------------------
 # Nifi Configuration
 # Values: https://github.com/cetic/helm-nifi/blob/master/values.yaml
 # ------------------------------------------------------------------------------
 nifi:
-  fullnameOverride: ingestion-nifi
+  fullnameOverride: enrich-nifi
   enabled: true
   service:
     type: ClusterIP
@@ -132,7 +132,7 @@ nifi:
           targetPort: 12667
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.0.4
+      image: atclark/nifi-setup:0.0.1
       imagePullPolicy: Always
       command:
         - bash
@@ -140,7 +140,7 @@ nifi:
         - |
           /scripts/wait-for-nifi.sh $HOSTNAME 8080
           /scripts/initialize-reporting-task.sh $HOSTNAME 8080
-          python /scripts/setupClinicalIngestionFlow.py http://$HOSTNAME:8080/ integrati0n
+          python /scripts/setupClinicalEnrichmentFlow.py http://$HOSTNAME:8080/ integrati0n
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"
@@ -155,11 +155,11 @@ nifi:
   zookeeper:
     ## Values: https://github.com/bitnami/charts/blob/master/bitnami/zookeeper/values.yaml
     enabled: false
-    url: ingestion-zookeeper
+    url: enrich-zookeeper
   registry:
     ## We use a different NiFi Registry than the default one, that loads the flow from the Alvearie Github NiFi flow repository
     enabled: false
-    url: ingestion-nifi-registry
+    url: enrich-nifi-registry
   initContainers:
     # This init container will install the custom NiFi Processors (packed in the proper NAR format).
     # The NARs will be copied to a shared volume, and the customLibPath will be set to the location
@@ -187,7 +187,6 @@ nifi:
 # ------------------------------------------------------------------------------
 kafka:
   enabled: true
-  maxMessageBytes: _10000000
   externalAccess:
     enabled: true
     service:
@@ -208,7 +207,7 @@ kafka:
   externalZookeeper:
     # The zookeeper server is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
     servers:
-      - ingestion-zookeeper
+      - enrich-zookeeper
 
   metrics:
     ## Prometheus Kafka Exporter: exposes complimentary metrics to JMX Exporter
@@ -225,13 +224,13 @@ kafka:
 
 # ------------------------------------------------------------------------------
 # De-Identification Service
-# Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/deid/values.yaml
+# Values: https://github.com/Alvearie/health-patterns/clinical-enrich/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
   enabled: false
   ingress:
     enabled: false
-    # disable ingress in the base chart, allowing re-use of the Clinical Ingestion-wide ingress definitions
+    # disable ingress in the base chart, allowing re-use of the Clinical Enrichment-wide ingress definitions
 
 # ------------------------------------------------------------------------------
 # Cohort Service
@@ -243,7 +242,7 @@ cohort-service:
     type: ClusterIP
   ingress:
     enabled: false
-    # disable ingress in the base chart, allowing re-use of the Clinical Ingestion-wide ingress definitions
+    # disable ingress in the base chart, allowing re-use of the Clinical Enrichment-wide ingress definitions
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
@@ -7511,7 +7510,7 @@ kube-prometheus-stack:
       additionalScrapeConfigs:
         - job_name: 'nifi'
           static_configs:
-            - targets: ['ingestion-nifi:12667']
+            - targets: ['enrich-nifi:12667']
 
         - job_name: 'kafka-metrics'
           static_configs:

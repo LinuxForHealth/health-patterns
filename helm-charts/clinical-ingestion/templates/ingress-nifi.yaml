@@ -1,0 +1,28 @@
+{{- if .Values.ingress.enabled -}}
+{{- if .Values.nifi.enabled -}}
+{{- $ingressPort := .Values.nifi.service.port -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-nifi-ingress
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.nifi.labels }}
+  labels:
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+spec:
+  rules:
+    - host: {{ .Release.Namespace }}-{{ .Release.Name }}-nifi.{{ .Values.ingress.subdomain}}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Release.Name }}-nifi
+                port: 
+                  number: {{ $ingressPort }}
+{{- end }}
+{{- end }}

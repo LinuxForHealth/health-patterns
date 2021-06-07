@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "alvearie-enrichment.fullname" . }}-test"
+  labels:
+    {{- include "alvearie-enrichment.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+{{- if .Values.nifi.enabled }}
+    - name: test-nifi
+      image: busybox
+      command: ['wget']
+      args: ['{{ .Release.Name }}-nifi:8080/nifi']
+{{- end }}
+  restartPolicy: Never
+  
