@@ -118,7 +118,7 @@ entries:
     name: alvearie-ingestion
     type: application
     urls:
-    - clinical-ingestion.tgz
+    - https://ibmatc.github.io/health-patterns/helm-charts/clinical-ingestion.tgz
     version: 0.6.9
   cohort-service:
   - apiVersion: v2
