@@ -40,12 +40,10 @@ public class TerminologyRest {
     public String translate(InputStream resourceInputStream) {
         try {
             if (terminologyService == null) {
-                // this causes a null pointer exception
                 terminologyService = new TerminologyService(FHIR_SERVER_URL, FHIR_SERVER_USERNAME, FHIR_SERVER_PASSWORD);
             }
-            return null;
-            //Translation result = terminologyService.translate(resourceInputStream);
-            //return result.getTranslatedResource().toPrettyString();
+            Translation result = terminologyService.translate(resourceInputStream);
+            return result.getTranslatedResource().toPrettyString();
         } catch (Exception e) {
             return e.toString();
         }
