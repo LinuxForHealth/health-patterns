@@ -18,7 +18,7 @@ entries:
     name: cohort-service
     type: application
     urls:
-    - cohort-service.tgz
+    - https://ibmatc.github.io/health-patterns/cohort-service.tgz
     version: 0.0.1
   deid:
   - apiVersion: v2
@@ -39,7 +39,7 @@ entries:
     name: deid
     type: application
     urls:
-    - deid.tgz
+    - https://ibmatc.github.io/health-patterns/deid.tgz
     version: 0.1.0
   fhir:
   - apiVersion: v2
@@ -60,7 +60,7 @@ entries:
     name: fhir
     type: application
     urls:
-    - fhir.tgz
+    - https://ibmatc.github.io/health-patterns/fhir.tgz
     version: 0.4.0
   nifi-registry:
   - apiVersion: v2
@@ -81,6 +81,6 @@ entries:
     name: nifi-registry
     type: application
     urls:
-    - nifi-registry.tgz
+    - https://ibmatc.github.io/health-patterns/nifi-registry.tgz
     version: 0.1.0
 generated: "2021-06-07T10:50:46.695049-05:00"
