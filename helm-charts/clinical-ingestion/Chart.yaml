@@ -44,24 +44,24 @@ dependencies:
   - name: fhir
     version: 0.4.0
     condition: fhir.enabled
-    repository: ""
+    repository: "https://ibmatc.github.io/health-patterns"
   - name: fhir
     version: 0.4.0
     condition: fhir-deid.enabled
     alias: fhir-deid
-    repository: ""
+    repository: "https://ibmatc.github.io/health-patterns"
   - name: deid
     version: 0.1.0
     condition: deid.enabled
-    repository: ""
+    repository: "https://ibmatc.github.io/health-patterns"
   - name: cohort-service
     version: 0.0.1
-    repository: ""
+    repository: "https://ibmatc.github.io/health-patterns"
     condition: cohort-service.enabled
   - name: nifi-registry
     version: 0.1.0
     condition: nifi-registry.enabled
-    repository: ""
+    repository: "https://ibmatc.github.io/health-patterns"
   - name: zookeeper
     version: 6.0.0
     repository: https://charts.bitnami.com/bitnami
