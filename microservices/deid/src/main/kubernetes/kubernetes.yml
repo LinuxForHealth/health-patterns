@@ -1,0 +1,34 @@
+apiVersion: v1
+data:
+  service.url: "http://ingestion-deid:8080/api/v1"
+  fhirserver.url: "http://ingestion-fhir-deid/fhir-server/api/v4"
+  fhirserver.username: "fhiruser"
+  fhirserver.password: "integrati0n"
+kind: ConfigMap
+metadata:
+  name: deid-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: deid-config-pv-claim
+spec:
+  storageClassName: ibmc-s3fs-standard-cross-region
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: deid-config-pv
+spec:
+  storageClassName: ibmc-s3fs-standard-cross-region
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"

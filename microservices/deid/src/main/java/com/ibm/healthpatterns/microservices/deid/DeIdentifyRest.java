@@ -1,10 +1,8 @@
 package com.ibm.healthpatterns.microservices.deid;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.charset.Charset;
-import java.util.HashMap;
+import java.nio.file.Files;
 
 
 import org.apache.commons.io.IOUtils;
@@ -28,6 +26,7 @@ public class DeIdentifyRest {
 	 */
 	private static final String DEID_DEFAULT_CONFIG_JSON = "/de-id-config.json";
 	private static final String DEID_DEFAULT_CONFIG_NAME = "default";
+	private static final String DEID_CONFIG_PATH = "/mnt/data/";
 
 	private static final String TRUE_STRING = "true";
 	private static final String FALSE_STRING = "false";
@@ -45,26 +44,29 @@ public class DeIdentifyRest {
 	String DEID_FHIR_SERVER_PASSWORD;
 
 	private DeIdentifier deid = null;
-    private ObjectMapper jsonDeserializer;
-    
-    private HashMap<String, String> configs;
+    private final ObjectMapper jsonDeserializer;
 
+
+    private String configJson;
     private String defaultConfigJson;
 
     public DeIdentifyRest() {
 
         jsonDeserializer = new ObjectMapper();
-        configs = new HashMap<String, String>();
+        File defaultConfig = new File(DEID_CONFIG_PATH + DEID_DEFAULT_CONFIG_NAME);
 
-		InputStream configInputStream = this.getClass().getResourceAsStream(DEID_DEFAULT_CONFIG_JSON);
-		try {
-			defaultConfigJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
-		} catch (IOException e) {
-			System.err.println("Could not read default de-identifier service configuration, the DeIdentifier won't be" +
+        try {
+            if (defaultConfig.createNewFile()) {
+                BufferedWriter out = new BufferedWriter(new FileWriter(defaultConfig));
+                out.write(configJson);
+                out.close();
+            }
+
+            defaultConfigJson = getDefaultConfig();
+        } catch (IOException e) {
+            System.err.println("Could not read default de-identifier service configuration, the DeIdentifier won't be" +
                     "functional if a different configuration is not set.");
-		}
-        
-        configs.put("default", defaultConfigJson);
+        }
     }
 
     private void initializeDeid() throws Exception {
@@ -78,14 +80,14 @@ public class DeIdentifyRest {
             ) {
                 throw new Exception("FHIR server URL/credentials not set");
             }
-            deid = new DeIdentifier(DEID_SERVICE_URL, DEID_FHIR_SERVER_URL, DEID_FHIR_SERVER_USERNAME, DEID_FHIR_SERVER_PASSWORD, defaultConfigJson);
+            deid = new DeIdentifier(DEID_SERVICE_URL, DEID_FHIR_SERVER_URL, DEID_FHIR_SERVER_USERNAME, DEID_FHIR_SERVER_PASSWORD, getDefaultConfig());
         }
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Object deidentify(
+    public Response deidentify(
             @QueryParam("configName") @DefaultValue(DEID_DEFAULT_CONFIG_NAME) String configName,
             @QueryParam("pushToFHIR") @DefaultValue(TRUE_STRING) String pushToFHIR,
             InputStream resourceInputStream
@@ -98,23 +100,35 @@ public class DeIdentifyRest {
         } else {
             return Response.status(400, "Bad value for parameter \"pushToFHIR\"").build();
         }
+        File configFile = new File(DEID_CONFIG_PATH + configName);
 
         try {
             initializeDeid();
         } catch (Exception e) {
             return Response.status(500, e.toString()).build(); // Internal server error
         }
+        if (!configFile.exists() && !configName.equals(DEID_DEFAULT_CONFIG_NAME)) {
+            return Response.status(400, "No config with the identifier \"" + configName + "\" exists.").build();
+        } else {
+            String configString;
+            if (configName.equals(DEID_DEFAULT_CONFIG_NAME)) {
+                configString = defaultConfigJson;
+            } else {
+                try {
+                    configString = Files.readString(java.nio.file.Path.of(DEID_CONFIG_PATH + configName));
+                } catch (IOException e) {
+                    return Response.status(500, e.toString()).build();
+                }
+            }
+
+            deid.setConfigJson(configString);
+        }
 
         try {
-            if (!configs.containsKey(configName)) {
-                throw new Exception();
-            }
-            String configString = configs.get(configName);
-            deid.setConfigJson(configString);
             DeIdentification result = deid.deIdentify(resourceInputStream, boolPush);
-            return result.getDeIdentifiedResource().toPrettyString();
+            return Response.ok(result.getDeIdentifiedResource().toPrettyString()).build();
         } catch (Exception e) {
-            return Response.status(400).build(); // Bad request error
+            return Response.status(400, e.getMessage()).build(); // Bad request error
         }
     }
 
@@ -122,18 +136,88 @@ public class DeIdentifyRest {
     @Path("config")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String setConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
-        if (name == null || name.isEmpty()) throw new Exception("Config not given an identifier." +
-                "Specify an identifier for the config using the \"identifier\" query parameter");
+    public Response setConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
+        if (name == null || name.isEmpty()) {
+            return Response.status(400,  "Config not given an identifier." +
+                    "Specify an identifier for the config using the \"identifier\" query parameter").build();
+        }
         JsonNode jsonNode;
         try {
             jsonNode = jsonDeserializer.readTree(resourceInputStream);
         } catch (IOException e) {
-            throw new Exception("The given input stream did not contain valid JSON.", e);
+            return Response.status(400,  "The given input stream did not contain valid JSON: "+ e).build();
         }
-        configs.put(name, jsonNode.toString());
-        return "New configuration stored with the identifier \"" + name +
-                "\".  Apply the config by setting the query parameter \"configName\" equal to the config's identifier.";
+        File configFile = new File(DEID_CONFIG_PATH + name);
+        if (!configFile.exists()) {
+            BufferedWriter out = new BufferedWriter(new FileWriter(configFile));
+            out.write(jsonNode.toPrettyString());
+            out.close();
+        } else {
+            return Response.status(400, "Config with the identifier \"" + name + "\" already exists.").build();
+        }
+
+        return Response.ok().build();
+    }
+
+    @PUT
+    @Path("config")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response putConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
+        if (name == null || name.isEmpty()) {
+            return Response.status(400,  "Config not given an identifier." +
+                    "Specify an identifier for the config using the \"identifier\" query parameter").build();
+        }
+        JsonNode jsonNode;
+        try {
+            jsonNode = jsonDeserializer.readTree(resourceInputStream);
+        } catch (IOException e) {
+            return Response.status(400,  "The given input stream did not contain valid JSON: "+ e).build();
+        }
+        File configFile = new File(DEID_CONFIG_PATH + name);
+        BufferedWriter out = new BufferedWriter(new FileWriter(configFile, false));
+        out.write(jsonNode.toPrettyString());
+        out.close();
+
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("config")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllConfigs() {
+        File configPath = new File(DEID_CONFIG_PATH);
+        File[] files = configPath.listFiles();
+        StringBuilder out = new StringBuilder();
+        assert files != null;
+        for (File file : files) {
+            out.append(file.getName()).append("\n");
+        }
+        return Response.ok(out.toString()).build();
+    }
+
+    @GET
+    @Path("config/{configName}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getConfig(@PathParam("configName") String configName) throws Exception {
+        String configPath = DEID_CONFIG_PATH + configName;
+
+        File configFile = new File(configPath);
+        if (configFile.exists()) {
+            return Response.ok(Files.readString(java.nio.file.Path.of(configPath))).build();
+        } else {
+            return Response.status(400, "No config with the identifier \"" + configName + "\" exists.").build();
+        }
+    }
+
+    private String getDefaultConfig() throws IOException {
+        InputStream configInputStream = this.getClass().getResourceAsStream(DEID_DEFAULT_CONFIG_JSON);
+
+        assert configInputStream != null;
+        configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
+        return configJson;
     }
 
     @GET
