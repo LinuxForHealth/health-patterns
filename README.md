@@ -1,13 +1,15 @@
 # health-patterns
-health-patterns is a collection of documentation and reference implementations that highlight how to combine various technologies into meaningful patterns for healthcare.
+health-patterns is a collection of documentation and cloud agnostic reference implementations of the overall [Alvearie architecture](https://alvearie.io/architecture). They highlight how to combine various technologies into meaningful patterns for healthcare.
 
-The initial focus will be on 2 patterns for clinical data:
+To this point, there has been focus on 5 patterns for healthcare data:
 1) [**Clinical Data _Ingestion_**](clinical-ingestion)
-2) **Clinical Data _Enrichment_**
+2) [**Clinical Data _Enrichment_**](clinical-ingestion)  is currently combined with clinical data ingestion but will be separately availalbe in the near future
+3) [**Quality Measure & _Cohorting_**](cohort-service)
+4) [**Clinical Data _Access_**](data-access)
+5) **Clinical Data _Analytics_**  Coming soon
 
-with subsequent focus on Clinical Data Access and Data analytics.  
 
-### Learn more about these patterns and our [roadmap here](docs/roadmap.md)
+### See a summary of all of the [patterns here](https://alvearie.io/health-patterns/)
 
 Components currently used by health-patterns clinical data ingestion reference implementation
 
@@ -17,18 +19,24 @@ Components currently used by health-patterns clinical data ingestion reference i
 
 - [NiFi](https://nifi.apache.org/) Apache NiFi is a platform for automating and managing the flow of data between disparate systems. 
 
-
-- [Flink](https://flink.apache.org/) Apache Flink is a framework and distributed processing engine for stateful computations over unbounded and bounded data streams. Flink has been designed to run in all common cluster environments, perform computations at in-memory speed and at any scale.
-
+- [FHIR Server](https://github.com/IBM/FHIR)  The IBM® FHIR® Server is a modular Java implementation of version 4 of the HL7 FHIR specification with a focus on performance and configurability.
 
 - [HL7-ingestion](https://github.com/Alvearie/HL7-ingestion)
 
-
 - [Health record ingestion (HRI)](https://github.com/Alvearie/HRI)
 
+- [Quality measure and cohort service](https://github.com/Alvearie/quality-measure-and-cohort-service)
 
-- [FHIR Server](https://github.com/IBM/FHIR)  The IBM® FHIR® Server is a modular Java implementation of version 4 of the HL7 FHIR specification with a focus on performance and configurability.
+- [De-identification](https://github.com/Alvearie/de-identification)
 
+- [Keycloak](https://www.keycloak.org/)
+
+- [Keycloak extensions for FHIR](https://github.com/Alvearie/keycloak-extensions-for-fhir)
+
+- [FHIR UI / Patient Browser](https://github.com/Alvearie/patient-browser)
+
+
+- [Flink](https://flink.apache.org/) Apache Flink is a framework and distributed processing engine for stateful computations over unbounded and bounded data streams. Flink has been designed to run in all common cluster environments, perform computations at in-memory speed and at any scale.
 
 - [Prometheus](https://prometheus.io/) is an open source monitoring and alerting tool that is widely adopted across many enterprises. Prometheus can be configured to monitor targets by scraping or pulling metrics from the target’s HTTP endpoint and storing the metric name and a set of key-value pairs in a time series database.
 

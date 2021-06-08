@@ -53,18 +53,23 @@ INGRESS_CLASS refers to the ingress class used by your cloud provider.  Currentl
  
 INGRESS_SUBDOMAIN is the value identified above for the ingress subdomain 
 
-
-If you cannot deploy via ingress in your environment, we also provide the ability to deploy using load balancers.  This is not recommended, but will allow quick deployment of this pattern.  To deploy via load balancers, run:
-
-```bash
-helm install ingestion . -f loadbalancer-values.yaml
-```
-
 NOTE: You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
 
 ### Optional: Deploy a FHIR UI
 
 Follow the instructions for deploying the [Alvearie Patient Browser App](https://github.com/Alvearie/patient-browser/tree/master/chart#installation) if you need a FHIR UI.
+
+When specifying the FHIR URL (fhirServer parameter) you must use an open server (not requiring authorization).  If you enable the FHIR Proxy Ingress, you can use the corresponding host name.  The proxy allows unauthenticated access to the FHIR server, so will not be enabled by default. To enable it, when deploying the Clinical Ingestion helm chart, include:
+
+```
+--set fhir.proxy.enabled=true
+```
+
+and
+
+```
+--set fhir.deid.proxy.enabled=true
+```
 
 ### Install the Chart with De-Identification Enabled
 
