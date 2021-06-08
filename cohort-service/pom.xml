@@ -74,7 +74,7 @@
         	<groupId>com.ibm.cohort</groupId>
         	<artifactId>cohort-engine</artifactId>
         	<!-- This is a fixed version from the Cohort Team's SNAPSHOTs that we are currently using that we got from Corey Snders. -->
-        	<version>0.0.1-20210210.195359-31</version>
+        	<version>0.0.1-SNAPSHOT</version>
         </dependency>
 
 	    <dependency>
@@ -101,6 +101,12 @@
 	      <groupId>ca.uhn.hapi.fhir</groupId>
 	      <artifactId>org.hl7.fhir.validation</artifactId>
 	      <version>${hapi.fhir.version}</version>
+	      <exclusions>
+	      	<exclusion>
+	      		<groupId>info.cqframework</groupId>
+	      		<artifactId>cql</artifactId>
+	      	</exclusion>
+	      </exclusions>
 	    </dependency>
     </dependencies>
 

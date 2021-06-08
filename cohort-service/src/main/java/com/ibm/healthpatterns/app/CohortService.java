@@ -19,7 +19,6 @@
 package com.ibm.healthpatterns.app;
 
 import java.io.ByteArrayInputStream;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,7 +40,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibm.cohort.engine.CqlEngineWrapper;
+import com.ibm.cohort.engine.CqlEvaluator;
 import com.ibm.cohort.engine.DirectoryLibrarySourceProvider;
 import com.ibm.cohort.engine.MultiFormatLibrarySourceProvider;
 import com.ibm.cohort.engine.TranslatingLibraryLoader;
@@ -73,7 +72,7 @@ public class CohortService {
 
 	private IGenericClient fhir;
 
-	private CqlEngineWrapper cqlEngine;
+	private CqlEvaluator cqlEngine;
 
 	/**
 	 * @return the singleton instance of the {@link CohortService}
@@ -192,7 +191,7 @@ public class CohortService {
 		FhirClientBuilder fhirBuilder = factory.newFhirClientBuilder(fhirContext);
 		fhir = fhirBuilder.createFhirClient(fhirConnectionInfo);
 		System.out.println("Created FHIR connection to " + fhirConnectionInfo.getEndpoint());
-		cqlEngine = new CqlEngineWrapper(fhirBuilder);
+		cqlEngine = new CqlEvaluator();
 		cqlEngine.setDataServerClient(fhir);
 		cqlEngine.setMeasureServerClient(fhir);
 		cqlEngine.setTerminologyServerClient(fhir);
