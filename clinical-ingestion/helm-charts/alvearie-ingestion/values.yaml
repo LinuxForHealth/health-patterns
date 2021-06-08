@@ -187,6 +187,7 @@ nifi:
 # ------------------------------------------------------------------------------
 kafka:
   enabled: true
+  maxMessageBytes: _10000000
   externalAccess:
     enabled: true
     service:
