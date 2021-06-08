@@ -38,7 +38,7 @@ public class TerminologyRest {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response translate(InputStream resourceInputStream) {
+    public Object translate(InputStream resourceInputStream) {
         try {
             initializeService();
         } catch (Exception e) {
@@ -47,8 +47,9 @@ public class TerminologyRest {
 
         try {
             Translation result = terminologyService.translate(resourceInputStream);
-            return Response.status(200).entity(result.getTranslatedResource().toPrettyString()).build();
+            return result.getTranslatedResource().toPrettyString();
         } catch (Exception e) {
+            System.err.println(e);
             return Response.status(400, e.toString()).build(); // Bad request error
         }
     }

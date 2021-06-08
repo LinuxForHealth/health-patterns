@@ -29,6 +29,9 @@ public class DeIdentifyRest {
 	private static final String DEID_DEFAULT_CONFIG_JSON = "/de-id-config.json";
 	private static final String DEID_DEFAULT_CONFIG_NAME = "default";
 
+	private static final String TRUE_STRING = "true";
+	private static final String FALSE_STRING = "false";
+
 	@ConfigProperty(name = "DEID_SERVICE_URL")
 	String DEID_SERVICE_URL;
 
@@ -82,12 +85,20 @@ public class DeIdentifyRest {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deidentify(
+    public Object deidentify(
             @QueryParam("configName") @DefaultValue(DEID_DEFAULT_CONFIG_NAME) String configName,
-            @QueryParam("pushToFHIR") @DefaultValue("true") String pushToFHIR,
+            @QueryParam("pushToFHIR") @DefaultValue(TRUE_STRING) String pushToFHIR,
             InputStream resourceInputStream
     ) {
-        boolean boolPush = pushToFHIR.equals("true");
+        boolean boolPush;
+        if (pushToFHIR.equalsIgnoreCase(TRUE_STRING)) {
+            boolPush = true;
+        } else if (pushToFHIR.equalsIgnoreCase(FALSE_STRING)) {
+            boolPush = false;
+        } else {
+            return Response.status(400, "Bad value for parameter \"pushToFHIR\"").build();
+        }
+
         try {
             initializeDeid();
         } catch (Exception e) {
@@ -101,7 +112,7 @@ public class DeIdentifyRest {
             String configString = configs.get(configName);
             deid.setConfigJson(configString);
             DeIdentification result = deid.deIdentify(resourceInputStream, boolPush);
-            return Response.status(200, result.getDeIdentifiedResource().toPrettyString()).build(); // OK
+            return result.getDeIdentifiedResource().toPrettyString();
         } catch (Exception e) {
             return Response.status(400).build(); // Bad request error
         }
