@@ -16,9 +16,15 @@ Pattern: {{ .Values.pattern }}
 The following services have been deployed:
 {{- if .Values.fhir.enabled }}
 - Primary FHIR Server{{- if .Values.ingress.enabled }} --------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+{{- if .Values.fhir.proxy.enabled }}
+- Primary FHIR Server Proxy {{- if .Values.ingress.enabled }} --- https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-proxy.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+{{- end }}
 {{- end }}
 {{- if index .Values "fhir-deid" "enabled" }}
 - Secondary FHIR Server{{- if .Values.ingress.enabled }} ------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+{{- if index .Values "fhir-deid" "proxy" "enabled" }}
+- Secondary FHIR Server Proxy {{- if .Values.ingress.enabled }} - https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid-proxy.{{ .Values.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+{{- end }}
 {{- end }}
 {{- if .Values.deid.enabled }}
 - De-Identification Service{{- if .Values.ingress.enabled }} --- https://{{ .Release.Namespace }}-{{ .Release.Name }}-deid.{{ .Values.ingress.subdomain}}/api/v1/{{- end }}

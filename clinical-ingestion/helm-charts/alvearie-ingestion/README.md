@@ -59,20 +59,16 @@ NOTE: You can chain multiple override file parameters in yaml, so if you want to
 
 Follow the instructions for deploying the [Alvearie Patient Browser App](https://github.com/Alvearie/patient-browser/tree/master/chart#installation) if you need a FHIR UI.
 
-When specifying the FHIR URL (fhirServer parameter) you can rely on the FHIR proxy pre-deployed with the Clinical Ingestion helm chart.  The proxy allows unauthenticated access to the FHIR server, and so will not be exposed outside of the cluster. However, it can be referenced using the internal service name and port 81 (by default). 
+When specifying the FHIR URL (fhirServer parameter) you must use an open server (not requiring authorization).  If you enable the FHIR Proxy Ingress, you can use the corresponding host name.  The proxy allows unauthenticated access to the FHIR server, so will not be enabled by default. To enable it, when deploying the Clinical Ingestion helm chart, include:
 
-For example, the default release name of "ingestion" would result in fhirServer URL parameter values of: 
-
-Primary FHIR Server:
-
-```bash
-https://ingestion-fhir:81/fhir-server/api/v4
+```
+--set fhir.proxy.enabled=true
 ```
 
-Secondary FHIR Server (used by De-id):
+and
 
-```bash
-https://ingestion-fhir-deid:81/fhir-server/api/v4
+```
+--set fhir.deid.proxy.enabled=true
 ```
 
 ### Install the Chart with De-Identification Enabled
