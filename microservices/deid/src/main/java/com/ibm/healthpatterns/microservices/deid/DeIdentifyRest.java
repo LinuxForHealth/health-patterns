@@ -26,9 +26,6 @@ public class DeIdentifyRest {
 	private static final String DEID_DEFAULT_CONFIG_JSON = "/de-id-config.json";
 	private static final String DEID_DEFAULT_CONFIG_NAME = "default";
 
-	private static final String TRUE_STRING = "true";
-	private static final String FALSE_STRING = "false";
-
 	@ConfigProperty(name = "DEID_SERVICE_URL")
 	String DEID_SERVICE_URL;
 
@@ -75,27 +72,26 @@ public class DeIdentifyRest {
      * Initializes the DeIdentifier, which connects to the FHIR server
      * @throws Exception If FHIR credentials are improperly initialized.
      */
-    private void initializeDeid() throws Exception {
-        if (deid == null) {
-            if (DEID_SERVICE_URL == null) {
-                throw new Exception("DEID service URL not set");
-            }
-            if (DEID_FHIR_SERVER_URL == null ||
-                DEID_FHIR_SERVER_USERNAME == null ||
-                DEID_FHIR_SERVER_PASSWORD == null
-            ) {
-                throw new Exception("FHIR server URL/credentials not set");
-            }
-            deid = new DeIdentifier(DEID_SERVICE_URL, DEID_FHIR_SERVER_URL, DEID_FHIR_SERVER_USERNAME, DEID_FHIR_SERVER_PASSWORD, getDefaultConfig());
+    private void initializeDeid(String configString) throws Exception {
+        if (DEID_SERVICE_URL == null) {
+            throw new Exception("DEID service URL not set");
         }
+        if (DEID_FHIR_SERVER_URL == null ||
+            DEID_FHIR_SERVER_USERNAME == null ||
+            DEID_FHIR_SERVER_PASSWORD == null
+        ) {
+            throw new Exception("FHIR server URL/credentials not set");
+        }
+        deid = DeIdentifier.getDeIdentifier(DEID_SERVICE_URL, DEID_FHIR_SERVER_URL, DEID_FHIR_SERVER_USERNAME,
+                DEID_FHIR_SERVER_PASSWORD, configString);
     }
 
     /**
      * Passes the given FHIR Resource through the deidentification service, pushing to the FHIR server if the pushToFHIR
      * parameter is set to true.
-     * @param configName Path parameter that tells which specific configuration file to use, if unspecified uses the
+     * @param configName Query parameter that tells which specific configuration file to use, if unspecified uses the
      *                   "default" configuration.
-     * @param pushToFHIR Path parameter that tells whether or not to push the resulting deidentified resource to the
+     * @param pushToFHIR Query parameter that tells whether or not to push the resulting deidentified resource to the
      *                   FHIR server, defaults to True
      * @param resourceInputStream Request body, the FHIR resource to be deidentified as a JSON object
      * @return Http response containing the deidentified resource if successful
@@ -105,46 +101,35 @@ public class DeIdentifyRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deidentify(
             @QueryParam("configName") @DefaultValue(DEID_DEFAULT_CONFIG_NAME) String configName,
-            @QueryParam("pushToFHIR") @DefaultValue(TRUE_STRING) String pushToFHIR,
+            @QueryParam("pushToFHIR") @DefaultValue("true") Boolean pushToFHIR,
             InputStream resourceInputStream
     ) {
-        boolean boolPush;
-        if (pushToFHIR.equalsIgnoreCase(TRUE_STRING)) {
-            boolPush = true;
-        } else if (pushToFHIR.equalsIgnoreCase(FALSE_STRING)) {
-            boolPush = false;
-        } else {
-            return Response.status(400, "Bad value for parameter \"pushToFHIR\"").build();
-        }
         File configFile = new File(PV_PATH + configName);
 
-        try {
-            initializeDeid();
-        } catch (Exception e) {
-            return Response.status(500, e.toString()).build(); // Internal server error
-        }
         if (!configFile.exists() && !configName.equals(DEID_DEFAULT_CONFIG_NAME)) {
-            return Response.status(400, "No config with the identifier \"" + configName + "\" exists.").build();
+            return Response.status(400).entity("No config with the identifier \"" + configName + "\" exists.").build();
+        }
+        String configString;
+        if (configName.equals(DEID_DEFAULT_CONFIG_NAME)) {
+            configString = defaultConfigJson;
         } else {
-            String configString;
-            if (configName.equals(DEID_DEFAULT_CONFIG_NAME)) {
-                configString = defaultConfigJson;
-            } else {
-                try {
-                    configString = Files.readString(java.nio.file.Path.of(PV_PATH + configName));
-                } catch (IOException e) {
-                    return Response.status(500, e.toString()).build();
-                }
+            try {
+                configString = Files.readString(java.nio.file.Path.of(PV_PATH + configName));
+            } catch (IOException e) {
+                return Response.status(500).entity(e.toString()).build();
             }
-
-            deid.setConfigJson(configString);
+        }
+        try {
+            initializeDeid(configString);
+        } catch (Exception e) {
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
 
         try {
-            DeIdentification result = deid.deIdentify(resourceInputStream, boolPush);
+            DeIdentification result = deid.deIdentify(resourceInputStream, pushToFHIR);
             return Response.ok(result.getDeIdentifiedResource().toPrettyString()).build();
         } catch (Exception e) {
-            return Response.status(400, e.getMessage()).build(); // Bad request error
+            return Response.status(400).entity(e.getMessage()).build(); // Bad request error
         }
     }
 
@@ -157,19 +142,19 @@ public class DeIdentifyRest {
      * @throws IOException if there is an error writing to the persistent volume
      */
     @POST
-    @Path("config")
+    @Path("config/{configName}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws IOException {
+    public Response postConfig(InputStream resourceInputStream, @PathParam("configName") String name) throws IOException {
         if (name == null || name.isEmpty()) {
-            return Response.status(400,  "Config not given an identifier." +
+            return Response.status(400).entity("Config not given an identifier." +
                     "Specify an identifier for the config using the \"identifier\" query parameter").build();
         }
         JsonNode jsonNode;
         try {
             jsonNode = jsonDeserializer.readTree(resourceInputStream);
         } catch (IOException e) {
-            return Response.status(400,  "The given input stream did not contain valid JSON: "+ e).build();
+            return Response.status(400).entity("The given input stream did not contain valid JSON: "+ e).build();
         }
         File configFile = new File(PV_PATH + name);
         if (!configFile.exists()) {
@@ -177,10 +162,10 @@ public class DeIdentifyRest {
             out.write(jsonNode.toPrettyString());
             out.close();
         } else {
-            return Response.status(400, "Config with the identifier \"" + name + "\" already exists.").build();
+            return Response.status(400).entity("Config with the identifier \"" + name + "\" already exists.").build();
         }
 
-        return Response.ok().build();
+        return Response.ok("Config " + name + " added:\n" + jsonNode.toPrettyString()).build();
     }
 
     /**
@@ -193,26 +178,29 @@ public class DeIdentifyRest {
      * @throws IOException if there is an error writing to the persistent volume
      */
     @PUT
-    @Path("config")
+    @Path("config/{configName}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response putConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
+    public Response putConfig(InputStream resourceInputStream, @PathParam("configName") String name) throws Exception {
         if (name == null || name.isEmpty()) {
-            return Response.status(400,  "Config not given an identifier." +
+            return Response.status(400).entity("Config not given an identifier." +
                     "Specify an identifier for the config using the \"identifier\" query parameter").build();
         }
         JsonNode jsonNode;
         try {
             jsonNode = jsonDeserializer.readTree(resourceInputStream);
         } catch (IOException e) {
-            return Response.status(400,  "The given input stream did not contain valid JSON: "+ e).build();
+            return Response.status(400).entity("The given input stream did not contain valid JSON: "+ e).build();
         }
         File configFile = new File(PV_PATH + name);
+        boolean update = configFile.exists();
         BufferedWriter out = new BufferedWriter(new FileWriter(configFile, false));
         out.write(jsonNode.toPrettyString());
         out.close();
-
-        return Response.ok().build();
+        if (update) {
+            return Response.ok("Config " + name + " updated to:\n" + jsonNode.toPrettyString()).build();
+        }
+        return Response.ok("Config " + name + " added:\n" + jsonNode.toPrettyString()).build();
     }
 
     /**
@@ -253,7 +241,32 @@ public class DeIdentifyRest {
         if (configFile.exists()) {
             return Response.ok(Files.readString(java.nio.file.Path.of(configPath))).build();
         } else {
-            return Response.status(400, "No config with the identifier \"" + configName + "\" exists.").build();
+            return Response.status(400).entity("No config with the identifier \"" + configName + "\" exists.").build();
+        }
+    }
+
+    /**
+     * Deletes the content of the specified config file.
+     *
+     * @param configName Path parameter, specifies which configuration file to return
+     * @return HTTP Response with success or failure.
+     */
+    @DELETE
+    @Path("config/{configName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteConfig(@PathParam("configName") String configName) {
+        String configPath = PV_PATH + configName;
+
+        File configFile = new File(configPath);
+        if (configFile.exists()) {
+            boolean deleted = configFile.delete();
+            if (deleted) {
+                return Response.ok().entity("Config file " + configName + " deleted").build();
+            } else {
+                return Response.status(500).entity("Error deleting config " + configName + ".").build();
+            }
+        } else {
+            return Response.status(400).entity("No config with the identifier \"" + configName + "\" exists.").build();
         }
     }
 
@@ -272,16 +285,16 @@ public class DeIdentifyRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHealthCheck() {
         try {
-            initializeDeid();
+            initializeDeid(defaultConfigJson);
         } catch (Exception e) {
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
 
         StringWriter status = new StringWriter();
         if (deid.healthCheck(status)) {
             return Response.status(200).build(); // OK
         } else {
-            return Response.status(500, status.toString()).build(); // Internal server error
+            return Response.status(500).entity(status.toString()).build(); // Internal server error
         }
     }
 
