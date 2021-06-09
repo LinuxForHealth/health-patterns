@@ -11,11 +11,11 @@ metadata:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: deid-config-pv-claim
+  name: deid-config-pv-kathrynelrod-claim
 spec:
   storageClassName: ibmc-s3fs-standard-cross-region
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 10Gi
@@ -23,12 +23,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: deid-config-pv
+  name: deid-config-pv-kathrynelrod
 spec:
   storageClassName: ibmc-s3fs-standard-cross-region
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
     path: "/mnt/data"

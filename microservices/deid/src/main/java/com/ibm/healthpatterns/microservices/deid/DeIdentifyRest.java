@@ -56,13 +56,13 @@ public class DeIdentifyRest {
         File defaultConfig = new File(DEID_CONFIG_PATH + DEID_DEFAULT_CONFIG_NAME);
 
         try {
+            defaultConfigJson = getDefaultConfig();
+
             if (defaultConfig.createNewFile()) {
                 BufferedWriter out = new BufferedWriter(new FileWriter(defaultConfig));
-                out.write(configJson);
+                out.write(defaultConfigJson);
                 out.close();
             }
-
-            defaultConfigJson = getDefaultConfig();
         } catch (IOException e) {
             System.err.println("Could not read default de-identifier service configuration, the DeIdentifier won't be" +
                     "functional if a different configuration is not set.");
