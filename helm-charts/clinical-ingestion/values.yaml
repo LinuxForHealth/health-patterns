@@ -245,6 +245,9 @@ cohort-service:
     enabled: false
     # disable ingress in the base chart, allowing re-use of the Clinical Ingestion-wide ingress definitions
 
+ascvd:
+  enabled: true
+
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
 # This will add specific configuration for the new grafana-prometheusSpec

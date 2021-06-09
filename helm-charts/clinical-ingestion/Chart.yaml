@@ -62,6 +62,14 @@ dependencies:
     version: 0.1.0
     condition: nifi-registry.enabled
     repository: "https://ibmatc.github.io/health-patterns"
+  - name: ascvd
+    version: 0.1.0
+    condition: ascvd.enabled
+    repository: "https://alvearie.github.io/health-analytics"
+  - name: ascvd-from-fhir
+    version: 0.1.0
+    condition: ascvd.enabled
+    repository: "https://alvearie.github.io/health-analytics"
   - name: zookeeper
     version: 6.0.0
     repository: https://charts.bitnami.com/bitnami
