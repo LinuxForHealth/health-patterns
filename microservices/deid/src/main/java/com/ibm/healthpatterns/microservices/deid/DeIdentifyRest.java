@@ -20,13 +20,11 @@ import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 @Path("/")
 public class DeIdentifyRest {
 
-
 	/**
 	 * The file that contains the masking config that will be used to configure the de-id service.
 	 */
 	private static final String DEID_DEFAULT_CONFIG_JSON = "/de-id-config.json";
 	private static final String DEID_DEFAULT_CONFIG_NAME = "default";
-	private static final String DEID_CONFIG_PATH = "/mnt/data/";
 
 	private static final String TRUE_STRING = "true";
 	private static final String FALSE_STRING = "false";
@@ -43,17 +41,21 @@ public class DeIdentifyRest {
     @ConfigProperty(name = "DEID_FHIR_SERVER_PASSWORD")
 	String DEID_FHIR_SERVER_PASSWORD;
 
-	private DeIdentifier deid = null;
+    @ConfigProperty(name = "PV_PATH")
+    String PV_PATH = "/mnt/data/";
+
+
+    private DeIdentifier deid = null;
     private final ObjectMapper jsonDeserializer;
 
-
-    private String configJson;
+    /*
+    / Used if the persistent volume is not available
+     */
     private String defaultConfigJson;
 
     public DeIdentifyRest() {
-
         jsonDeserializer = new ObjectMapper();
-        File defaultConfig = new File(DEID_CONFIG_PATH + DEID_DEFAULT_CONFIG_NAME);
+        File defaultConfig = new File(PV_PATH + DEID_DEFAULT_CONFIG_NAME);
 
         try {
             defaultConfigJson = getDefaultConfig();
@@ -69,6 +71,10 @@ public class DeIdentifyRest {
         }
     }
 
+    /**
+     * Initializes the DeIdentifier, which connects to the FHIR server
+     * @throws Exception If FHIR credentials are improperly initialized.
+     */
     private void initializeDeid() throws Exception {
         if (deid == null) {
             if (DEID_SERVICE_URL == null) {
@@ -84,6 +90,16 @@ public class DeIdentifyRest {
         }
     }
 
+    /**
+     * Passes the given FHIR Resource through the deidentification service, pushing to the FHIR server if the pushToFHIR
+     * parameter is set to true.
+     * @param configName Path parameter that tells which specific configuration file to use, if unspecified uses the
+     *                   "default" configuration.
+     * @param pushToFHIR Path parameter that tells whether or not to push the resulting deidentified resource to the
+     *                   FHIR server, defaults to True
+     * @param resourceInputStream Request body, the FHIR resource to be deidentified as a JSON object
+     * @return Http response containing the deidentified resource if successful
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -100,7 +116,7 @@ public class DeIdentifyRest {
         } else {
             return Response.status(400, "Bad value for parameter \"pushToFHIR\"").build();
         }
-        File configFile = new File(DEID_CONFIG_PATH + configName);
+        File configFile = new File(PV_PATH + configName);
 
         try {
             initializeDeid();
@@ -115,7 +131,7 @@ public class DeIdentifyRest {
                 configString = defaultConfigJson;
             } else {
                 try {
-                    configString = Files.readString(java.nio.file.Path.of(DEID_CONFIG_PATH + configName));
+                    configString = Files.readString(java.nio.file.Path.of(PV_PATH + configName));
                 } catch (IOException e) {
                     return Response.status(500, e.toString()).build();
                 }
@@ -132,11 +148,19 @@ public class DeIdentifyRest {
         }
     }
 
+    /**
+     * Method for posting configuration json files to the connected persistent volume, if there is one.
+     * @param resourceInputStream Request body, the deidentification configuration as a JSON string.
+     * @param name Query parameter specifying the identifier to save the file under.  If file already exists, returns
+     *             a 400 error.
+     * @return Http Response
+     * @throws IOException if there is an error writing to the persistent volume
+     */
     @POST
     @Path("config")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response setConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
+    public Response postConfig(InputStream resourceInputStream, @QueryParam("identifier") String name) throws IOException {
         if (name == null || name.isEmpty()) {
             return Response.status(400,  "Config not given an identifier." +
                     "Specify an identifier for the config using the \"identifier\" query parameter").build();
@@ -147,7 +171,7 @@ public class DeIdentifyRest {
         } catch (IOException e) {
             return Response.status(400,  "The given input stream did not contain valid JSON: "+ e).build();
         }
-        File configFile = new File(DEID_CONFIG_PATH + name);
+        File configFile = new File(PV_PATH + name);
         if (!configFile.exists()) {
             BufferedWriter out = new BufferedWriter(new FileWriter(configFile));
             out.write(jsonNode.toPrettyString());
@@ -159,6 +183,15 @@ public class DeIdentifyRest {
         return Response.ok().build();
     }
 
+    /**
+     * Method for putting configuration json files to the connected persistent volume, if there is one.
+     *
+     * @param resourceInputStream Request body, the deidentification configuration as a JSON string.
+     * @param name Query parameter specifying the identifier to save the file under.  If file already exists, overwrites
+     *             it with new JSON
+     * @return Http Response
+     * @throws IOException if there is an error writing to the persistent volume
+     */
     @PUT
     @Path("config")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -174,7 +207,7 @@ public class DeIdentifyRest {
         } catch (IOException e) {
             return Response.status(400,  "The given input stream did not contain valid JSON: "+ e).build();
         }
-        File configFile = new File(DEID_CONFIG_PATH + name);
+        File configFile = new File(PV_PATH + name);
         BufferedWriter out = new BufferedWriter(new FileWriter(configFile, false));
         out.write(jsonNode.toPrettyString());
         out.close();
@@ -182,12 +215,16 @@ public class DeIdentifyRest {
         return Response.ok().build();
     }
 
+    /**
+     * Gets a list of all config files stored on the persistent volume
+     * @return A string containing the filenames of the JSON configs.
+     */
     @GET
     @Path("config")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllConfigs() {
-        File configPath = new File(DEID_CONFIG_PATH);
+        File configPath = new File(PV_PATH);
         File[] files = configPath.listFiles();
         StringBuilder out = new StringBuilder();
         assert files != null;
@@ -197,12 +234,20 @@ public class DeIdentifyRest {
         return Response.ok(out.toString()).build();
     }
 
+    /**
+     * Gets the content of the specified config file.
+     *
+     * @param configName Path parameter, specifies which configuration file to return
+     * @return HTTP Response with a body containing JSON string contents of the config file specified, or a 400 if the
+     *         file doesn't exist.
+     * @throws IOException if there is an error reading the file
+     */
     @GET
     @Path("config/{configName}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getConfig(@PathParam("configName") String configName) throws Exception {
-        String configPath = DEID_CONFIG_PATH + configName;
+    public Response getConfig(@PathParam("configName") String configName) throws IOException {
+        String configPath = PV_PATH + configName;
 
         File configFile = new File(configPath);
         if (configFile.exists()) {
@@ -214,12 +259,14 @@ public class DeIdentifyRest {
 
     private String getDefaultConfig() throws IOException {
         InputStream configInputStream = this.getClass().getResourceAsStream(DEID_DEFAULT_CONFIG_JSON);
-
         assert configInputStream != null;
-        configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
-        return configJson;
+        return IOUtils.toString(configInputStream, Charset.defaultCharset());
     }
 
+    /**
+     * Health check for the REST api
+     * @return HTTP response OK if the deidentification service is healthy, HTTP response 500 otherwise.
+     */
     @GET
     @Path("healthCheck")
     @Produces(MediaType.APPLICATION_JSON)

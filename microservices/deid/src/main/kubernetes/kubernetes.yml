@@ -4,6 +4,7 @@ data:
   fhirserver.url: "http://ingestion-fhir-deid/fhir-server/api/v4"
   fhirserver.username: "fhiruser"
   fhirserver.password: "integrati0n"
+  pv.path: "/mnt/data"
 kind: ConfigMap
 metadata:
   name: deid-config
