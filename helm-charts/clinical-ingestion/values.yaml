@@ -57,13 +57,13 @@ fhir:
     enabled: false
 
 ## Configure these to allow bulk access from fhir server
-  bulkExportConfig:
-    cosBucketName: fhir-data-access
-    cosLocation: us-east
-    cosEndpointInternal: https://s3.us-east.cloud-object-storage.appdomain.cloud:443
-    cosApikey: qCcVgZZdjTsFwmFT0XgpF8rPzlKXajhe-_Cfn7JASf8F
-    cosSrvinstid: crn:v1:bluemix:public:iam-identity::a/6694a1bda7d84197b130c3ea87ef3e77::serviceid:ServiceId-0d979bad-9a82-4cd0-b0ff-601ed80a10fe
-    batchUserPw: integrati0n
+#  bulkExportConfig:
+#    cosBucketName: yourbucketnamehere
+#    cosLocation: yourcosregion
+#    cosEndpointInternal: yourbucketendpointhere
+#    cosApikey: yourcosapikey
+#    cosSrvinstid: yourcossrvinstid
+#    batchUserPw: youradminpw
 
 fhir-deid:
   enabled: false
