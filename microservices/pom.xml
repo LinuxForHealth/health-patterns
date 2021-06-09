@@ -63,6 +63,11 @@
 			<artifactId>hapi-fhir-structures-r4</artifactId>
 			<version>${hapi.fhir.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>org.hl7.fhir.r4</artifactId>
+            <version>${hapi.fhir.version}</version>
+        </dependency>
 
         <!-- JSON Parsing -->
        <dependency>
