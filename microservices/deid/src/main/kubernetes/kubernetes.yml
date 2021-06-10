@@ -14,7 +14,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: deid-config-pv-claim
 spec:
-  storageClassName: ibmc-s3fs-standard-cross-region
+  storageClassName: ibmc-vpc-block-10iops-tier
   accessModes:
     - ReadWriteMany
   resources:
@@ -26,7 +26,7 @@ kind: PersistentVolume
 metadata:
   name: deid-config-pv
 spec:
-  storageClassName: ibmc-s3fs-standard-cross-region
+  storageClassName: ibmc-vpc-block-10iops-tier
   capacity:
     storage: 10Gi
   accessModes:

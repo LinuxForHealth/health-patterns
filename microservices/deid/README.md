@@ -4,7 +4,13 @@ REST API for communicating with a deidentification service and FHIR server
 
 ## Configuration
 
-TODO
+| Key | Description | Default Value |
+|-----|-------------|---------------|
+| `service.url` | URL of the deidentification service | `http://ingestion-deid:8080/api/v1` |
+| `fhirserver.url` | URL of the deid FHIR server | `http://ingestion-fhir-deid/fhir-server/api/v4` |
+| `fhirserver.username` | Username for the deid FHIR server | `fhiruser` |
+| `fhirserver.password` | Password for the deid FHIR server | `integrati0n` |
+| `pv.path` | Mount path for the persistent volume | `/mnt/data/` |
 
 ## Usage
 | Action | Method | Endpoint | Body | Parameters | Returns |
