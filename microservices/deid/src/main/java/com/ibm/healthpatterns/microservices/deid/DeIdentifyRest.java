@@ -4,7 +4,6 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
-
 import org.apache.commons.io.IOUtils;
 
 import javax.ws.rs.*;
@@ -16,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
+
+import org.jboss.logging.Logger;
 
 @Path("/")
 public class DeIdentifyRest {
@@ -45,12 +46,15 @@ public class DeIdentifyRest {
     private DeIdentifier deid = null;
     private final ObjectMapper jsonDeserializer;
 
+    private static final Logger logger = Logger.getLogger(DeIdentifyRest.class);
+
     /*
     / Used if the persistent volume is not available
      */
     private String defaultConfigJson;
 
     public DeIdentifyRest() {
+
         jsonDeserializer = new ObjectMapper();
         File defaultConfig = new File(PV_PATH + DEID_DEFAULT_CONFIG_NAME);
 
@@ -63,7 +67,7 @@ public class DeIdentifyRest {
                 out.close();
             }
         } catch (IOException e) {
-            System.err.println("Could not read default de-identifier service configuration, the DeIdentifier won't be" +
+            logger.warn("Could not read default de-identifier service configuration, the DeIdentifier won't be" +
                     "functional if a different configuration is not set.");
         }
     }
@@ -107,6 +111,7 @@ public class DeIdentifyRest {
         File configFile = new File(PV_PATH + configName);
 
         if (!configFile.exists() && !configName.equals(DEID_DEFAULT_CONFIG_NAME)) {
+            logger.warn("No config with the identifier \"" + configName + "\" exists.");
             return Response.status(400).entity("No config with the identifier \"" + configName + "\" exists.").build();
         }
         String configString;
@@ -116,19 +121,23 @@ public class DeIdentifyRest {
             try {
                 configString = Files.readString(java.nio.file.Path.of(PV_PATH + configName));
             } catch (IOException e) {
+                logger.warn(e.toString());
                 return Response.status(500).entity(e.toString()).build();
             }
         }
         try {
             initializeDeid(configString);
         } catch (Exception e) {
+            logger.warn(e.toString());
             return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
 
         try {
             DeIdentification result = deid.deIdentify(resourceInputStream, pushToFHIR);
+            logger.info("Resource successfully deidentified");
             return Response.ok(result.getDeIdentifiedResource().toPrettyString()).build();
         } catch (Exception e) {
+            logger.warn(e.toString());
             return Response.status(400).entity(e.getMessage()).build(); // Bad request error
         }
     }
@@ -147,6 +156,8 @@ public class DeIdentifyRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response postConfig(InputStream resourceInputStream, @PathParam("configName") String name) throws IOException {
         if (name == null || name.isEmpty()) {
+            logger.warn("Config not given an identifier." +
+                    "Specify an identifier for the config using the \"identifier\" query parameter");
             return Response.status(400).entity("Config not given an identifier." +
                     "Specify an identifier for the config using the \"identifier\" query parameter").build();
         }
@@ -154,6 +165,7 @@ public class DeIdentifyRest {
         try {
             jsonNode = jsonDeserializer.readTree(resourceInputStream);
         } catch (IOException e) {
+            logger.warn("The given input stream did not contain valid JSON: "+ e);
             return Response.status(400).entity("The given input stream did not contain valid JSON: "+ e).build();
         }
         File configFile = new File(PV_PATH + name);
@@ -162,9 +174,10 @@ public class DeIdentifyRest {
             out.write(jsonNode.toPrettyString());
             out.close();
         } else {
+            logger.warn("Config with the identifier \"" + name + "\" already exists.");
             return Response.status(400).entity("Config with the identifier \"" + name + "\" already exists.").build();
         }
-
+        logger.info("Config " + name + " added:\n");
         return Response.ok("Config " + name + " added:\n" + jsonNode.toPrettyString()).build();
     }
 
@@ -183,6 +196,8 @@ public class DeIdentifyRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response putConfig(InputStream resourceInputStream, @PathParam("configName") String name) throws Exception {
         if (name == null || name.isEmpty()) {
+            logger.warn("Config not given an identifier." +
+                    "Specify an identifier for the config using the \"identifier\" query parameter");
             return Response.status(400).entity("Config not given an identifier." +
                     "Specify an identifier for the config using the \"identifier\" query parameter").build();
         }
@@ -190,6 +205,7 @@ public class DeIdentifyRest {
         try {
             jsonNode = jsonDeserializer.readTree(resourceInputStream);
         } catch (IOException e) {
+            logger.warn("The given input stream did not contain valid JSON: "+ e);
             return Response.status(400).entity("The given input stream did not contain valid JSON: "+ e).build();
         }
         File configFile = new File(PV_PATH + name);
@@ -198,8 +214,10 @@ public class DeIdentifyRest {
         out.write(jsonNode.toPrettyString());
         out.close();
         if (update) {
+            logger.info("Config " + name + " updated.");
             return Response.ok("Config " + name + " updated to:\n" + jsonNode.toPrettyString()).build();
         }
+        logger.info("Config " + name + " added.");
         return Response.ok("Config " + name + " added:\n" + jsonNode.toPrettyString()).build();
     }
 
@@ -219,6 +237,7 @@ public class DeIdentifyRest {
         for (File file : files) {
             out.append(file.getName()).append("\n");
         }
+        logger.info("Config list displayed.");
         return Response.ok(out.toString()).build();
     }
 
@@ -239,8 +258,10 @@ public class DeIdentifyRest {
 
         File configFile = new File(configPath);
         if (configFile.exists()) {
+            logger.info("Config found.");
             return Response.ok(Files.readString(java.nio.file.Path.of(configPath))).build();
         } else {
+            logger.warn("No config with the identifier \"" + configName + "\" exists.");
             return Response.status(400).entity("No config with the identifier \"" + configName + "\" exists.").build();
         }
     }
@@ -261,11 +282,14 @@ public class DeIdentifyRest {
         if (configFile.exists()) {
             boolean deleted = configFile.delete();
             if (deleted) {
+                logger.info("Config file " + configName + " deleted");
                 return Response.ok().entity("Config file " + configName + " deleted").build();
             } else {
+                logger.warn("Error deleting config " + configName + ".");
                 return Response.status(500).entity("Error deleting config " + configName + ".").build();
             }
         } else {
+            logger.warn("No config with the identifier \"" + configName + "\" exists.");
             return Response.status(400).entity("No config with the identifier \"" + configName + "\" exists.").build();
         }
     }
@@ -287,13 +311,16 @@ public class DeIdentifyRest {
         try {
             initializeDeid(defaultConfigJson);
         } catch (Exception e) {
+            logger.warn(e.toString());
             return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
 
         StringWriter status = new StringWriter();
         if (deid.healthCheck(status)) {
+            logger.info("Deidentification microservice is functional");
             return Response.status(200).build(); // OK
         } else {
+            logger.warn(status.toString());
             return Response.status(500).entity(status.toString()).build(); // Internal server error
         }
     }

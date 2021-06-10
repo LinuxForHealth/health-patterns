@@ -9,6 +9,8 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import org.jboss.logging.Logger;
+
 @Path("/")
 public class TerminologyRest {
 
@@ -22,6 +24,8 @@ public class TerminologyRest {
     String FHIR_SERVER_PASSWORD;
 
     private TerminologyService terminologyService = null;
+
+    private static final Logger logger = Logger.getLogger(TerminologyRest.class);
 
     private void initializeService() throws Exception {
         if (terminologyService == null) {
@@ -42,14 +46,16 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
+            logger.warn(e.toString());
             return Response.status(500, e.toString()).build(); // Internal server error
         }
 
         try {
             Translation result = terminologyService.translate(resourceInputStream);
+            logger.info("Resource translation successful");
             return result.getTranslatedResource().toPrettyString();
         } catch (Exception e) {
-            System.err.println(e);
+            logger.warn(e.toString());
             return Response.status(400, e.toString()).build(); // Bad request error
         }
     }
@@ -61,13 +67,16 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
+            logger.warn(e.toString());
             return Response.status(500, e.toString()).build(); // Internal server error
         }
 
         StringWriter status = new StringWriter();
         if (terminologyService.healthCheck(status)) {
+            logger.info("Terminology microservice is functional");
             return Response.status(200).build(); // OK
         } else {
+            logger.warn(status.toString());
             return Response.status(500, status.toString()).build(); // Internal server error
         }
     }
