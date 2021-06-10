@@ -18,9 +18,9 @@ These values are stored in ConfigMap `terminology-config`.
 kubectl apply -f kubernetes.yml
 ```
 > **_NOTE:_**  If multiple instances will be deployed on a single cluster, each instance's
-> persistent volume must have a unique name. The helm chart in ~/.../alvearie-ingestion/
+> persistent volume must have a unique name. The helm chart in `~/.../alvearie-ingestion/`
 > does this automatically, but for a manual install you must change "`deid-config-pv`" in
-> `kubernetes.yml` to some unique name for each instance.
+> the `PersistentVolume` definition in `kubernetes.yml` to some unique name for each instance.
 
 ## Usage
 | Action | Method | Endpoint | Body | Parameters | Returns on Success |
