@@ -27,7 +27,7 @@ kubectl apply -f kubernetes.yml
 ## Usage
 | Action | Method | Endpoint | Body | Parameters | Returns on Success |
 |:------:|:------:|:---------|:----:|:-----------|:-------:|
-| Deidentify | `POST` | `/` | FHIR bundle or resource | `configName`: Name of config to use *(optional)* </br> `pushToFHIR`: (true/false) Whether to push the deidentified object to the FHIR server *(optional)* | Deidentified object |
+| Deidentify | `POST` | `/` | FHIR bundle or resource | `configName`: Name of config to use *(optional, default: "default")* </br> `pushToFHIR`: (true/false) Whether to push the deidentified object to the FHIR server *(optional, default: true)* | Deidentified object |
 | Add Config (will overwrite) | `PUT` | `/config/{configName}` | Config (json) | | Status `200` |
 | Add Config (will not overwrite) | `POST` | `/config/{configName}` | Config (json) | | Status `200` |
 | Get Configs | `GET` | `/config` | | | Newline-delimited list of config names |
