@@ -9,6 +9,8 @@ image:
   pullPolicy: IfNotPresent
   tag: 1.0.0
 
+enabled: true
+
 service:
   type: ClusterIP
   httpPort: 80
@@ -19,7 +21,7 @@ ingress:
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-  subdomain: 
+  subdomain:
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

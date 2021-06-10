@@ -6,7 +6,7 @@
 # Declare variables to be passed into your templates.
 
 # A simple name describing the Alvearie pattern implemented by this Helm values file
-pattern: "Enrichment"
+pattern: "Clinical Ingestion"
 
 nameOverride: ""
 fullnameOverride: ""
@@ -38,9 +38,17 @@ ingress:
          # AWS: nginx
   subdomain:
 
+ascvd:
+  enabled: true
+
+ascvd-from-fhir:
+  enabled: true
+  ingress:
+    enabled: false
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
-# Values: https://github.com/Alvearie/health-patterns/clinical-enrichment/helm-charts/fhir/values.yaml
+# Values: https://github.com/Alvearie/health-patterns/helm-charts/fhir/values.yaml
 # ------------------------------------------------------------------------------
 fhir:
   enabled: true
@@ -95,7 +103,7 @@ fhir-deid:
 nifi-registry:
   enabled: true
   # The fullname is overridden to some static name in order to automatically register the NiFi Registry with the NiFi deployment
-  fullnameOverride: enrich-nifi-registry
+  fullnameOverride: alvearie-nifi-registry
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
@@ -104,7 +112,7 @@ nifi-registry:
 zookeeper:
   enabled: true
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
-  fullnameOverride: enrich-zookeeper
+  fullnameOverride: alvearie-zookeeper
   persistence:
     enabled: false 
 
@@ -113,7 +121,7 @@ zookeeper:
 # Values: https://github.com/cetic/helm-nifi/blob/master/values.yaml
 # ------------------------------------------------------------------------------
 nifi:
-  fullnameOverride: enrich-nifi
+  fullnameOverride: alvearie-nifi
   enabled: true
   service:
     type: ClusterIP
@@ -140,7 +148,21 @@ nifi:
         - |
           /scripts/wait-for-nifi.sh $HOSTNAME 8080
           /scripts/initialize-reporting-task.sh $HOSTNAME 8080
-          python /scripts/setupClinicalEnrichmentFlow.py http://$HOSTNAME:8080/ integrati0n
+          python /scripts/loadHealthPatternsFlows.py \
+                   --reg=default \
+                   --bucket=Health_Patterns \
+                   --flowName="Clinical Ingestion" \
+                   --baseUrl=http://$HOSTNAME:8080/ \
+                   --pw=integrati0n
+          python /scripts/loadHealthPatternsFlows.py \
+                   --reg=default \
+                   --bucket=Health_Patterns \
+                   --flowName="FHIR Bundle Enrichment" \
+                   --baseUrl=http://$HOSTNAME:8080/ \
+                   --pw=integrati0n
+          python /scripts/startHealthPatternsFlow.py \ 
+                   --baseUrl=http://$HOSTNAME:8080/ \
+                   --pw=integrati0n
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"
@@ -155,11 +177,11 @@ nifi:
   zookeeper:
     ## Values: https://github.com/bitnami/charts/blob/master/bitnami/zookeeper/values.yaml
     enabled: false
-    url: enrich-zookeeper
+    url: alvearie-zookeeper
   registry:
     ## We use a different NiFi Registry than the default one, that loads the flow from the Alvearie Github NiFi flow repository
     enabled: false
-    url: enrich-nifi-registry
+    url: alvearie-nifi-registry
   initContainers:
     # This init container will install the custom NiFi Processors (packed in the proper NAR format).
     # The NARs will be copied to a shared volume, and the customLibPath will be set to the location
@@ -207,7 +229,7 @@ kafka:
   externalZookeeper:
     # The zookeeper server is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
     servers:
-      - enrich-zookeeper
+      - alvearie-zookeeper
 
   metrics:
     ## Prometheus Kafka Exporter: exposes complimentary metrics to JMX Exporter
@@ -224,17 +246,17 @@ kafka:
 
 # ------------------------------------------------------------------------------
 # De-Identification Service
-# Values: https://github.com/Alvearie/health-patterns/clinical-enrich/helm-charts/deid/values.yaml
+# Values: https://github.com/Alvearie/health-patterns/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
   enabled: false
   ingress:
     enabled: false
-    # disable ingress in the base chart, allowing re-use of the Clinical Enrichment-wide ingress definitions
+    # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
 
 # ------------------------------------------------------------------------------
 # Cohort Service
-# Values: https://github.com/Alvearie/health-patterns/cohort-service/chart/values.yaml
+# Values: https://github.com/Alvearie/health-patterns/helm-charts/cohort-service/chart/values.yaml
 # ------------------------------------------------------------------------------
 cohort-service:
   enabled: false
@@ -242,7 +264,7 @@ cohort-service:
     type: ClusterIP
   ingress:
     enabled: false
-    # disable ingress in the base chart, allowing re-use of the Clinical Enrichment-wide ingress definitions
+    # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
@@ -7510,7 +7532,7 @@ kube-prometheus-stack:
       additionalScrapeConfigs:
         - job_name: 'nifi'
           static_configs:
-            - targets: ['enrich-nifi:12667']
+            - targets: ['alvearie-nifi:12667']
 
         - job_name: 'kafka-metrics'
           static_configs:

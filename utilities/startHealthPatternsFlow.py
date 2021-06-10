@@ -12,36 +12,15 @@ import argparse
 debug = False  # turn off debug by default
 
 def main():
-    regName = "default" #default registry to use for enrichment
-    bucketName = "Health_Patterns" #default bucket to use for enrichment
-    latest = None #will search for latest version unless explicity set
-
     parser = argparse.ArgumentParser()
-    parser.add_argument("baseurl", help="Base url for nifi instance")
-    parser.add_argument("pw", help="Clinical Ingestion default password")
-
-    parser.add_argument("--reg", help="Enrichment registry")
-    parser.add_argument("--bucket", help="Enrichment bucket")
-    parser.add_argument("--version", help="Enrichment version")
+    parser.add_argument("--baseUrl", help="Base url for nifi instance")
+    parser.add_argument("--pw", help="default password")
 
     args = parser.parse_args()
-    if args.reg:
-        regName = args.reg
-    if args.bucket:
-        bucketName = args.bucket
-    if args.version:
-        latest = int(args.version)
 
-    baseURL = args.baseurl
+    baseURL = args.baseUrl
     defaultPWD = args.pw
 
-    # set up configuration for each flow
-    flowNames = ["FHIR Bundle Enrichment"]
-    flowConfig = {}
-    flowConfig[flowNames[0]] = [regName, bucketName, latest]
-
-    if debug:
-        print(flowConfig)
     if debug:
         print(defaultPWD)
 
@@ -51,137 +30,6 @@ def main():
         baseURL = baseURL + "/"  #add the trailing / if needed
 
     print("Configuring with Nifi at BaseURL: ", baseURL)
-
-    # STEP 1: find the desired flow and place it on the root canvas
-
-    # If found, the flowURL will be used to get the versions so that the latest
-    # version is placed on the canvas.  Need to know the registry, bucket, and flow for the
-    # desired flow name
-
-    # This will be done for all configured flows
-
-    for aflow in flowNames:
-
-        print("Step 1: Creating process group...", aflow)
-
-        found = False
-        flowURL = None
-        theRegistry = None
-        theBucket = None
-        theFlow = None
-
-        regURL = baseURL + "nifi-api/flow/registries"
-        resp = requests.get(url=regURL)
-        if debug:
-            print(dict(resp.json()))
-        respDict = dict(resp.json())
-
-        #search for registry
-        registryname = flowConfig[aflow][0]
-        regFound = False
-        for regs in respDict["registries"]:
-            if debug:
-                print(regs)
-            if regs["registry"]["name"] == registryname:
-               regId = regs["registry"]["id"]
-               regFound = True
-               if debug:
-                  print("FOUND Registry", registryname, "-->",regId)
-               break
-
-        if not regFound:
-            print("script failed-no matching registry found:", registryname)
-            exit(1)  #if we don't find the specific registry then we are done
-
-        #search for bucket
-        registrybucketname = flowConfig[aflow][1]
-        bucketFound = False
-        buckURL = regURL + "/" + regId + "/buckets"
-        resp = requests.get(url=buckURL)
-        if debug:
-            print(dict(resp.json()))
-        bucketDict = dict(resp.json())
-        for bucket in bucketDict["buckets"]:
-            if debug:
-                print(bucket)
-            if bucket["bucket"]["name"] == registrybucketname:
-                bucketId = bucket['id']
-                bucketFound = True
-                if debug:
-                    print("FOUND Bucket ", registrybucketname, "-->", bucketId)
-                break
-
-        if not bucketFound:
-            print("script failed-no matching bucket found:", registrybucketname)
-            exit(1)  #if we don't find the specific bucket then we are done
-
-        #search for flow
-        flowFound = False
-        flowURL = buckURL + "/" + bucketId + "/" + "flows"
-        resp = requests.get(url=flowURL)
-        if debug:
-            print(dict(resp.json()))
-        flowDict = dict(resp.json())
-        for flow in flowDict["versionedFlows"]:
-            if debug:
-                print(flow)
-            if flow["versionedFlow"]["flowName"] == aflow:
-                flowFound = True
-                theRegistry = regId
-                theBucket = bucketId
-                theFlow = flow["versionedFlow"]["flowId"]
-                if debug:
-                    print("FOUND Flow: ", aflow, "-->", theFlow)
-                break
-
-        if not flowFound:
-            print("script failed-no matching flow found:", aflow)
-            exit(1)  #if we don't find the specific bucket then we are done
-
-        #found the flow so now go ahead and find the latest version
-        #unless latest is not None because then version already provided explicitly
-        latest = None
-        if flowConfig[aflow][2] == None:
-            versionURL = flowURL + "/" + theFlow + "/" + "versions"
-            resp = requests.get(url=versionURL)
-            if debug:
-                print(dict(resp.json()))
-            versionDict = dict(resp.json())
-
-            latest = 0
-            for v in versionDict["versionedFlowSnapshotMetadataSet"]:
-                version = int(v["versionedFlowSnapshotMetadata"]["version"])
-                if version > latest:
-                    latest = version
-            if debug:
-                print("FOUND Version: ", latest)
-        else:
-            latest = flowConfig[aflow][2]
-
-        #Get root id for canvas process group
-
-        URL = baseURL + "nifi-api/flow/process-groups/root"
-        resp = requests.get(url=URL)
-        if debug:
-            print(resp)
-            print(resp.content)
-        rootId = (dict(resp.json()))["processGroupFlow"]["id"]
-        if debug:
-            print(rootId)
-
-        #Create new process group from repo
-
-        createJson = {"revision":{"version":0},"component":{"versionControlInformation":{"registryId":theRegistry,"bucketId":theBucket,"flowId":theFlow,"version":latest}}}
-        createPostEndpoint = "nifi-api/process-groups/" + rootId + "/process-groups"
-        resp = requests.post(url=baseURL + createPostEndpoint, json=createJson)
-        if debug:
-            print("Response from new group...")
-            print(resp.content)
-        newgroupid = (dict(resp.json()))["id"]
-        if debug:
-            print("New process group id...",newgroupid)
-        print("Step 1 complete: Process group created...", aflow)
-
 
     #STEP 2: Set specific passwords in the parameter contexts for fhir, kafka, and deid
 
