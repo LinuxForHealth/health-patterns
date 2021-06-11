@@ -9,80 +9,65 @@ import time
 
 import argparse
 
-debug = False  # turn off debug by default
+debug = False # turn off debug by default
 
 def main():
+    fhir_password = "integrati0n"
+    kafka_password = "integrati0n"
+    runASCVD = False
+    deidentifyData = False
+    resolveTerminology = False
+    
     parser = argparse.ArgumentParser()
     parser.add_argument("--baseUrl", help="Base url for nifi instance")
-    parser.add_argument("--pw", help="default password")
+    parser.add_argument("--fhir_pw", help="FHIR password")
+    parser.add_argument("--kafka_pw", help="Kafka password")
+    parser.add_argument("--runASCVD", help="Enable ASCVD by default")
+    parser.add_argument("--deidentifyData", help="Enable Deidentify Data by default")
+    parser.add_argument("--resolveTerminology", help="Enable Terminology Services by default")
 
     args = parser.parse_args()
 
     baseURL = args.baseUrl
-    defaultPWD = args.pw
-
-    if debug:
-        print(defaultPWD)
+    if args.fhir_pw:
+        fhir_password = args.fhir_pw
+    if args.kafka_pw:
+        kafka_password = args.kafka_pw
+    if args.runASCVD:
+        runASCVD = args.runASCVD
+    if args.deidentifyData:
+        deidentifyData = args.deidentifyData
+    if args.resolveTerminology:
+        resolveTerminology = args.resolveTerminology
 
     #now fix trailing / problem if needed
     if baseURL[-1] != "/":
         print("BaseURL requires trailing /, fixing...")
         baseURL = baseURL + "/"  #add the trailing / if needed
 
-    print("Configuring with Nifi at BaseURL: ", baseURL)
+    #Set specific passwords in the parameter contexts for fhir, kafka, and deid
 
-    #STEP 2: Set specific passwords in the parameter contexts for fhir, kafka, and deid
+    print("Updating parameter context parameters based on config...")
+    updateParameters(baseURL, fhir_password, kafka_password, runASCVD, deidentifyData, resolveTerminology)
+    print("Parameter update complete...\n")
 
-    print("Step 2: Setting default password in all parameter contexts...")
+    print("Finding all processor groups to update")
+    finalGroupList = findProcessorGroups(baseURL)
+    print("Done finding all processor groups...\n")
 
-    #Get parameter contexts
-    resp = requests.get(url=baseURL + "nifi-api/flow/parameter-contexts")
-    if debug:
-        print(resp.content)
+    #Enable all controller services that are currently disabled-starting from root
+    print("Enabling all controller services...")
+    enableControllerServices(baseURL, finalGroupList)
+    print("Controller Services enabled...\n")
 
-    contexts = dict(resp.json())["parameterContexts"]
-    if debug:
-        print("CONTEXTS:", contexts)
+    #Start all of the processors in the process group that was added in step 1
+    print("Starting all processors in the configured process group(s)")
+    startAllProcessors(baseURL, finalGroupList)
+    print("All processors in the configured processor group(s) started...\n")
 
-    for context in contexts:
-        if "cms_adapter_parameters" in context["component"]["name"]:
-            if debug:
-                print("processing new cms_adapter_parameters")
-            #setting the fhir and kafka passwords
-            contextId = context["id"]
-            if debug:
-                print("FHIR context:", contextId)
+    print("Start Health Patterns Flow complete")
 
-            updatePwd(baseURL, contextId, 0, "FHIR_UserPwd_PatientAccess", defaultPWD)
-            updatePwd(baseURL, contextId, 1, "FHIR_UserPwd_ProviderDirectory", defaultPWD)
-            updatePwd(baseURL, contextId, 2, "kafka.auth.password", defaultPWD)
-
-        if "De-Identification" in context["component"]["name"]:
-            if debug:
-                print("processing deid")
-            #set deid passwords
-            contextId = context["id"]
-            if debug:
-                print("DeId context: ", contextId)
-
-            updatePwd(baseURL, contextId, 0, "DEID_FHIR_PASSWORD", defaultPWD)
-
-        if "Enrichment" in context["component"]["name"]:
-            if debug:
-                print("processing enrichment")
-            #set deid passwords
-            contextId = context["id"]
-            if debug:
-                print("Enrichment context: ", contextId)
-
-            updatePwd(baseURL, contextId, 0, "kafka.auth.password", defaultPWD)
-
-    print("Step 2 complete: Password set complete...")
-
-    #STEP 3: Enable all controller services that are currently disabled-starting from root
-
-    print("Step 3: Enabling all controller services...")
-
+def findProcessorGroups(baseURL):
     rootProcessGroupsURL = baseURL + "nifi-api/flow/process-groups/root"
     resp = requests.get(url=rootProcessGroupsURL)
     if debug:
@@ -115,6 +100,9 @@ def main():
     if debug:
         print(finalGroupList)
 
+    return finalGroupList
+
+def enableControllerServices(baseURL, finalGroupList):
     controllerServices = [] #hold the list of all controller services found in all process groups
 
     for agroup in finalGroupList:
@@ -152,12 +140,7 @@ def main():
             if debug:
                 print(resp, resp.content)
 
-    print("Step 3 complete: Controllers enabled...")
-
-    # STEP 4: start all of the processors in the process group that was added in step 1
-
-    print("Step 4: Start all processors in the new process group")
-
+def startAllProcessors(baseURL, finalGroupList):
     if debug:
         print("Original ordering....")
         print(finalGroupList)
@@ -206,22 +189,71 @@ def main():
             stoppedcount = statusdict["stoppedCount"]
             print("Stopped Count: ", agroup, "is ", int(stoppedcount))
 
-    print("Step 4 complete: All processors in new processor group started....")
+def updateParameters(baseURL, fhir_password, kafka_password, runASCVD, deidentifyData, resolveTerminology):
+    #Get parameter contexts
+    resp = requests.get(url=baseURL + "nifi-api/flow/parameter-contexts")
+    if debug:
+        print(resp.content)
 
-    print("Setup task complete")
+    contexts = dict(resp.json())["parameterContexts"]
+    if debug:
+        print("CONTEXTS:", contexts)
 
-def updatePwd(baseURL, contextId, versionNum, pwdName, pwdValue):
-    # Updates the password and polls the request for completion
+    for context in contexts:
+        if "cms_adapter_parameters" in context["component"]["name"]:
+            if debug:
+                print("Processing new cms_adapter_parameters")
+            #setting the fhir and kafka passwords
+            contextId = context["id"]
+            if debug:
+                print("FHIR context:", contextId)
+
+            update_parameter(baseURL, contextId, "FHIR_UserPwd_PatientAccess", fhir_password, True)
+            update_parameter(baseURL, contextId, "FHIR_UserPwd_ProviderDirectory", fhir_password, True)
+            update_parameter(baseURL, contextId, "kafka.auth.password", kafka_password, True)
+
+        if "De-Identification" in context["component"]["name"]:
+            if debug:
+                print("Processing De-Identification")
+            #set deid passwords
+            contextId = context["id"]
+            if debug:
+                print("DeId context: ", contextId)
+
+            update_parameter(baseURL, contextId, "DEID_FHIR_PASSWORD", fhir_password, True)
+
+        if "Enrichment" in context["component"]["name"]:
+            if debug:
+                print("Processing enrichment")
+            #set deid passwords
+            contextId = context["id"]
+            if debug:
+                print("Enrichment context: ", contextId)
+
+            update_parameter(baseURL, contextId, "kafka.auth.password", kafka_password, True)
+            update_parameter(baseURL, contextId, "RunASCVD", runASCVD)
+            update_parameter(baseURL, contextId, "DeidentifyData", deidentifyData)
+            update_parameter(baseURL, contextId, "ResolveTerminology", resolveTerminology)
+
+def update_parameter(baseURL, contextId, name, value, sensitive=False):
+    # Updates a parameter in the given context and polls the request for completion
     # Finally, the request is deleted
 
-    passwordJson = {"revision": {"version": versionNum}, "id": contextId, "component": {
-        "parameters": [{"parameter": {"name": pwdName, "sensitive": "true", "value": pwdValue}}],
-        "id": contextId}}
+    versionNum = 0
     createPostEndpoint = "nifi-api/parameter-contexts/" + contextId + "/update-requests"
-    resp = requests.post(url=baseURL + createPostEndpoint, json=passwordJson)
+    # Don't know what the current version is, so loop through until you find the "latest" version and update it
+    while(True):
+        parameterJson = {"revision": {"version": versionNum}, "id": contextId, "component": {
+            "parameters": [{"parameter": {"name": name, "sensitive": sensitive, "value": value}}],
+            "id": contextId}}
+        resp = requests.post(url=baseURL + createPostEndpoint, json=parameterJson)
+        if (resp.status_code==200):
+            break
+        versionNum += 1
+
     if debug:
         print(resp, resp.content)
-
+    
     requestId = dict(resp.json())["request"]["requestId"]
     if debug:
         print(requestId)
@@ -231,10 +263,10 @@ def updatePwd(baseURL, contextId, versionNum, pwdName, pwdValue):
 
     complete = dict(resp.json())["request"]["complete"]
     if debug:
-        print("update request status", pwdName, complete)
+        print("update request status", name, complete)
     while str(complete) != "True":
         if debug:
-            print("task not complete", pwdName)
+            print("task not complete", name)
 
         resp = requests.get(url=baseURL + createPostEndpoint + "/" + requestId)
         if debug:
@@ -242,10 +274,10 @@ def updatePwd(baseURL, contextId, versionNum, pwdName, pwdValue):
 
         complete = dict(resp.json())["request"]["complete"]
         if debug:
-            print("update request status", pwdName, complete)
+            print("update request status", name, complete)
 
     if debug:
-        print("Deleting the update task", pwdName)
+        print("Deleting the update task", name)
     resp = requests.delete(url=baseURL + createPostEndpoint + "/" + requestId)
 
 if __name__ == '__main__':
