@@ -19,8 +19,6 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--baseUrl", help="Base url for nifi instance")
-    parser.add_argument("--pw", help="default password")
-
     parser.add_argument("--reg", help="Registry")
     parser.add_argument("--bucket", help="Bucket")
     parser.add_argument("--flowName", help="Flow Name")
@@ -37,12 +35,9 @@ def main():
         flowName = args.flowName
 
     baseURL = args.baseUrl
-    defaultPWD = args.pw
 
     if debug:
         print([regName, bucketName, version])
-    if debug:
-        print(defaultPWD)
 
     #now fix trailing / problem if needed
     if baseURL[-1] != "/":

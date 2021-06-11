@@ -32,29 +32,31 @@ maintainers:
     email: atclark@us.ibm.com
   - name: David Ranum
     email: dlranum@us.ibm.com
+  - name: Luis A. Garcia
+    email: luisg@us.ibm.com
 
 dependencies:
   - name: fhir
     version: 0.4.0
     condition: fhir.enabled
-    repository: "https://ibmatc.github.io/health-patterns"
+    repository: "https://alvearie.github.io/health-patterns/charts"
   - name: fhir
     version: 0.4.0
     condition: fhir-deid.enabled
     alias: fhir-deid
-    repository: "https://ibmatc.github.io/health-patterns"
+    repository: "https://alvearie.github.io/health-patterns/charts"
   - name: deid
     version: 0.1.0
     condition: deid.enabled
-    repository: "https://ibmatc.github.io/health-patterns"
+    repository: "https://alvearie.github.io/health-patterns/charts"
   - name: cohort-service
     version: 0.0.1
-    repository: "https://ibmatc.github.io/health-patterns"
+    repository: "https://alvearie.github.io/health-patterns/charts"
     condition: cohort-service.enabled
   - name: nifi-registry
     version: 0.1.0
     condition: nifi-registry.enabled
-    repository: "https://ibmatc.github.io/health-patterns"
+    repository: "https://alvearie.github.io/health-patterns/charts"
   - name: ascvd
     version: 0.1.0
     condition: ascvd.enabled

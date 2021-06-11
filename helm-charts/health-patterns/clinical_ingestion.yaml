@@ -21,14 +21,18 @@ nifi:
                    --bucket=Health_Patterns \
                    --flowName="Clinical Ingestion" \
                    --baseUrl=http://$HOSTNAME:8080/ \
-                   --pw=integrati0n
           python /scripts/loadHealthPatternsFlows.py \
                    --reg=default \
                    --bucket=Health_Patterns \
                    --flowName="FHIR Bundle Enrichment" \
                    --baseUrl=http://$HOSTNAME:8080/ \
-                   --pw=integrati0n
-          python /scripts/startHealthPatternsFlow.py --baseUrl=http://$HOSTNAME:8080/ --pw=integrati0n
+          python /scripts/startHealthPatternsFlow.py \
+                   --baseUrl=http://$HOSTNAME:8080/ \
+                   --fhir_pw=integrati0n \
+                   --kafka_pw=integrati0n \
+                   --runASCVD=True \
+                   --deidentifyData=True \
+                   --resolveTerminology=True
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"

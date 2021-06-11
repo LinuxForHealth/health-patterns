@@ -140,7 +140,7 @@ nifi:
           targetPort: 12667
   extraContainers:
     - name: post-start-setup
-      image: atclark/nifi-setup:0.0.1
+      image: alvearie/nifi-setup:0.1.0
       imagePullPolicy: Always
       command:
         - bash
