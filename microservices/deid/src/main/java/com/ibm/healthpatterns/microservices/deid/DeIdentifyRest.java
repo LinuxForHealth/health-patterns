@@ -121,8 +121,8 @@ public class DeIdentifyRest {
             try {
                 configString = Files.readString(java.nio.file.Path.of(PV_PATH + configName));
             } catch (IOException e) {
-                logger.warn("The config should exist, but the file could not be found.");
-                return Response.status(500).entity("The config should exist, but the file could not be found.").build();
+                logger.warn("The config \"" + configName + "\" should exist, but the file could not be found.");
+                return Response.status(500).entity("The config \"" + configName + "\" should exist, but the file could not be found.").build();
             }
         }
         try {
