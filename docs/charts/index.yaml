@@ -1,131 +1,11 @@
 apiVersion: v1
 entries:
-  alvearie-enrichment:
-  - apiVersion: v2
-    appVersion: s1
-    created: "2021-06-07T13:07:41.021057-05:00"
-    dependencies:
-    - condition: fhir.enabled
-      name: fhir
-      repository: https://ibmatc.github.io/health-patterns
-      version: 0.4.0
-    - alias: fhir-deid
-      condition: fhir-deid.enabled
-      name: fhir
-      repository: https://ibmatc.github.io/health-patterns
-      version: 0.4.0
-    - condition: deid.enabled
-      name: deid
-      repository: https://ibmatc.github.io/health-patterns
-      version: 0.1.0
-    - condition: nifi-registry.enabled
-      name: nifi-registry
-      repository: https://ibmatc.github.io/health-patterns
-      version: 0.1.0
-    - condition: zookeeper.enabled
-      name: zookeeper
-      repository: https://charts.bitnami.com/bitnami
-      version: 6.0.0
-    - condition: nifi.enabled
-      name: nifi
-      repository: https://cetic.github.io/helm-charts
-      version: 0.6.0
-    - condition: kafka.enabled
-      name: kafka
-      repository: https://charts.bitnami.com/bitnami
-      version: 12.1.0
-    description: A Helm Chart to deploy the Alvearie Clinical Enrichment Flow reference implementation for clinical data enrichment.
-    digest: bcf0eec96e59d1591800d314997ba4c1aa87cba87903141c25ccb1d416b83744
-    home: https://github.com/Alvearie/health-patterns/clinical-enrichment/helm-charts
-    icon: https://avatars3.githubusercontent.com/u/72946463?s=200&v=4
-    keywords:
-    - ibm
-    - fhir
-    - nifi
-    - enrichment
-    - health records
-    - clinical data
-    - alvearie
-    maintainers:
-    - email: atclark@us.ibm.com
-      name: Adam T. Clark
-    - email: dlranum@us.ibm.com
-      name: ranum
-    name: alvearie-enrichment
-    type: application
-    urls:
-    - https://ibmatc.github.io/health-patterns/helm-charts/clinical-enrichment.tgz
-    version: 0.0.1
-  alvearie-ingestion:
-  - apiVersion: v2
-    appVersion: s6
-    created: "2021-06-07T13:07:41.080944-05:00"
-    dependencies:
-    - condition: fhir.enabled
-      name: fhir
-      repository: https://ibmatc.github.io/health-patterns
-      version: 0.4.0
-    - alias: fhir-deid
-      condition: fhir-deid.enabled
-      name: fhir
-      repository: https://ibmatc.github.io/health-patterns
-      version: 0.4.0
-    - condition: deid.enabled
-      name: deid
-      repository: https://ibmatc.github.io/health-patterns
-      version: 0.1.0
-    - condition: cohort-service.enabled
-      name: cohort-service
-      repository: https://ibmatc.github.io/health-patterns
-      version: 0.0.1
-    - condition: nifi-registry.enabled
-      name: nifi-registry
-      repository: https://ibmatc.github.io/health-patterns
-      version: 0.1.0
-    - condition: zookeeper.enabled
-      name: zookeeper
-      repository: https://charts.bitnami.com/bitnami
-      version: 6.0.0
-    - condition: nifi.enabled
-      name: nifi
-      repository: https://cetic.github.io/helm-charts
-      version: 0.6.0
-    - condition: kafka.enabled
-      name: kafka
-      repository: https://charts.bitnami.com/bitnami
-      version: 12.1.0
-    - condition: kube-prometheus-stack.enabled
-      name: kube-prometheus-stack
-      repository: https://prometheus-community.github.io/helm-charts
-      version: 12.0.4
-    description: A Helm Chart to deploy the Alvearie Clinical Ingestion Flow reference implementation for clinical data ingestion.
-    digest: 757918d289a4c280e273b0f4720bb9829c6d73c7841cc9be7b8644a3b5b51696
-    home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/alvearie-ingestion
-    icon: https://avatars3.githubusercontent.com/u/72946463?s=200&v=4
-    keywords:
-    - ibm
-    - fhir
-    - nifi
-    - ingestion
-    - health records
-    - clinical data
-    - alvearie
-    maintainers:
-    - email: luisg@us.ibm.com
-      name: Luis A. Garcia
-    - email: dlranum@us.ibm.com
-      name: ranum
-    name: alvearie-ingestion
-    type: application
-    urls:
-    - https://ibmatc.github.io/health-patterns/helm-charts/clinical-ingestion.tgz
-    version: 0.6.9
   cohort-service:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2021-06-07T13:07:41.081547-05:00"
+    created: "2021-06-11T11:28:45.096578-05:00"
     description: A Helm Chart to deploy the Alvearie Health Patterns Cohort Service App.
-    digest: 22be39b0850d8434b5ee816a48bb7ed11d7abf2144c0ca756890ce5b6b37fdb2
+    digest: 279981c041a0780a629fed06e4548401421cc6978fe0f0c22ae1922594ddfc8a
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/cohort-service
     keywords:
     - ibm
@@ -138,14 +18,14 @@ entries:
     name: cohort-service
     type: application
     urls:
-    - https://ibmatc.github.io/health-patterns/helm-charts/cohort-service.tgz
+    - cohort-service-0.0.1.tgz
     version: 0.0.1
   deid:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-06-07T13:07:41.082082-05:00"
+    created: "2021-06-11T11:28:45.097062-05:00"
     description: A Helm Chart to deploy the Alvearie De-Identification service.
-    digest: 89a99f05340848424b656515be0a3dc4c4d700ade7d77403d4f9523f4bbec03a
+    digest: cd0f2784e47ab256d55b20df8827f908ac2ddc1eeda551d702f5f125bfde0ae8
     home: https://github.com/Alvearie/de-identification
     keywords:
     - ibm
@@ -159,14 +39,14 @@ entries:
     name: deid
     type: application
     urls:
-    - https://ibmatc.github.io/health-patterns/helm-charts/deid.tgz
+    - deid-0.1.0.tgz
     version: 0.1.0
   fhir:
   - apiVersion: v2
     appVersion: 4.7.1
-    created: "2021-06-07T13:07:41.083006-05:00"
+    created: "2021-06-11T11:28:45.097834-05:00"
     description: A Helm Chart to deploy the IBM FHIR Server.
-    digest: 84f6c08987a129ca503fb83961e46e402b72b0d98393719198ef7b8c4925ddb2
+    digest: 881252fd533425fb75b800cc8760c2d682115a43c663a44884ab24d6fb7b5177
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir
     keywords:
     - ibm
@@ -180,14 +60,14 @@ entries:
     name: fhir
     type: application
     urls:
-    - https://ibmatc.github.io/health-patterns/helm-charts/fhir.tgz
+    - fhir-0.4.0.tgz
     version: 0.4.0
   nifi-registry:
   - apiVersion: v2
     appVersion: 0.8.0
-    created: "2021-06-07T13:07:41.083703-05:00"
+    created: "2021-06-11T11:28:45.098384-05:00"
     description: A Helm Chart to deploy a NiFi Registry.
-    digest: 5d09b3d9d21f40d8d7ba58865f4307a96bbf3d6d5061338b8b41b1f854e5424b
+    digest: 1a7cffc09c376cb6bd2d7225242915cb5a260b960232d5abfefa9335625db9fc
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/nifi-registry
     keywords:
     - ibm
@@ -201,6 +81,6 @@ entries:
     name: nifi-registry
     type: application
     urls:
-    - https://ibmatc.github.io/health-patterns/helm-charts/nifi-registry.tgz
+    - nifi-registry-0.1.0.tgz
     version: 0.1.0
-generated: "2021-06-07T13:07:40.996324-05:00"
+generated: "2021-06-11T11:28:45.095452-05:00"
