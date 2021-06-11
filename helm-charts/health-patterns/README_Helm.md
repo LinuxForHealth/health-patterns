@@ -2,9 +2,9 @@
 
 ## Introduction
 
-This [Helm](https://github.com/kubernetes/helm) chart deploys [Alvearie Health Patterns](/clinical-ingestion) in a Kubernetes cluster.
+This [Helm](https://github.com/kubernetes/helm) chart deploys Alvearie Health Patterns in a Kubernetes cluster.
 
-[Alvearie Health Patterns](/clinical-ingestion) is comprised of multiple components described in more detail [here](README.md), and using this Helm chart you can optionally enable/disable components of that pattern.
+Alvearie Health Patterns is comprised of multiple components described in more detail [here](README.md), and using this Helm chart you can optionally enable/disable components of that pattern.
 
 ## Pre-Requisites
 
@@ -108,7 +108,7 @@ NOTE: You can chain multiple override file parameters in yaml, so if you want to
 
 ### Using the Chart
 
-After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](../../).
+After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](../../README.md).
 
 ## Uninstallation
 

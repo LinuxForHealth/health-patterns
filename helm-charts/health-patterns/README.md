@@ -24,12 +24,9 @@ Currently we support the following enrichment steps:
 
 >health-patterns/services/terminology-service-core/src/main/resources/mappings
 
-* De-Identification Service - This step will de-identify the clinical data flowing through the pipeline and store the de-identified version in a separate FHIR server.  The de-identification rules are currently static and can be found [here](../services/deid-core/src/main/resources/de-id-config.json).
-
+* De-Identification Service - This step will de-identify the clinical data flowing through the pipeline and store the de-identified version in a separate FHIR server.  The de-identification rules are currently static and can be found [here](../../services/deid-core/src/main/resources/de-id-config.json).
 
 * Million Hearts ASCVD Model: This step will calculate a ten-year risk of cardiovascular disease using the Million Hearts ASCVD Model.  
-
-FIXME: as well as manual updates of the ASCVD Parameter Context within the Clinical Ingestion Nifi flow to point to your ASCVD services.
 
 ## Deploying the Health Patterns Helm chart
 
