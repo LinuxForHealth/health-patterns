@@ -38,6 +38,14 @@ ingress:
          # AWS: nginx
   subdomain:
 
+ascvd:
+  enabled: true
+
+ascvd-from-fhir:
+  enabled: true
+  ingress:
+    enabled: false
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # Values: https://github.com/Alvearie/health-patterns/helm-charts/fhir/values.yaml
@@ -54,16 +62,16 @@ fhir:
     - name: BOOTSTRAP_DB
       value: 'true'
   proxy:
-    enabled: true
+    enabled: false
 
 ## Configure these to allow bulk access from fhir server
-  bulkExportConfig:
-    cosBucketName: fhir-data-access
-    cosLocation: us-east
-    cosEndpointInternal: https://s3.us-east.cloud-object-storage.appdomain.cloud:443
-    cosApikey: qCcVgZZdjTsFwmFT0XgpF8rPzlKXajhe-_Cfn7JASf8F
-    cosSrvinstid: crn:v1:bluemix:public:iam-identity::a/6694a1bda7d84197b130c3ea87ef3e77::serviceid:ServiceId-0d979bad-9a82-4cd0-b0ff-601ed80a10fe
-    batchUserPw: integrati0n
+#  bulkExportConfig:
+#    cosBucketName: yourbucketnamehere
+#    cosLocation: yourcosregion
+#    cosEndpointInternal: yourbucketendpointhere
+#    cosApikey: yourcosapikey
+#    cosSrvinstid: yourcossrvinstid
+#    batchUserPw: youradminpw
 
 fhir-deid:
   enabled: false
@@ -77,7 +85,7 @@ fhir-deid:
     - name: BOOTSTRAP_DB
       value: 'true'
   proxy:
-    enabled: true
+    enabled: false
 
 ## Configure these to allow bulk access from fhir-deid server
 #  bulkExportConfig:
@@ -140,7 +148,19 @@ nifi:
         - |
           /scripts/wait-for-nifi.sh $HOSTNAME 8080
           /scripts/initialize-reporting-task.sh $HOSTNAME 8080
-          python /scripts/setupHealthPatternsFlow.py http://$HOSTNAME:8080/ integrati0n
+          python /scripts/loadHealthPatternsFlows.py \
+                   --reg=default \
+                   --bucket=Health_Patterns \
+                   --flowName="Clinical Ingestion" \
+                   --baseUrl=http://$HOSTNAME:8080/ \
+                   --pw=integrati0n
+          python /scripts/loadHealthPatternsFlows.py \
+                   --reg=default \
+                   --bucket=Health_Patterns \
+                   --flowName="FHIR Bundle Enrichment" \
+                   --baseUrl=http://$HOSTNAME:8080/ \
+                   --pw=integrati0n
+          python /scripts/startHealthPatternsFlow.py --baseUrl=http://$HOSTNAME:8080/ --pw=integrati0n
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"
@@ -187,6 +207,7 @@ nifi:
 # ------------------------------------------------------------------------------
 kafka:
   enabled: true
+  maxMessageBytes: _10000000
   externalAccess:
     enabled: true
     service:
