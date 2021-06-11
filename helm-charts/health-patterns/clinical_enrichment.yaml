@@ -23,7 +23,7 @@ nifi:
                    --baseUrl=http://$HOSTNAME:8080/ \
           python /scripts/startHealthPatternsFlow.py \
                    --baseUrl=http://$HOSTNAME:8080/ \
-				   --fhir_pw=integrati0n \
+                   --fhir_pw=integrati0n \
                    --kafka_pw=integrati0n \
                    --runASCVD=True \
                    --deidentifyData=True \
