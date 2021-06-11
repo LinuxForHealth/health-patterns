@@ -121,15 +121,15 @@ public class DeIdentifyRest {
             try {
                 configString = Files.readString(java.nio.file.Path.of(PV_PATH + configName));
             } catch (IOException e) {
-                logger.warn(e.toString());
-                return Response.status(500).entity(e.toString()).build();
+                logger.warn("The config should exist, but the file could not be found.");
+                return Response.status(500).entity("The config should exist, but the file could not be found.").build();
             }
         }
         try {
             initializeDeid(configString);
         } catch (Exception e) {
-            logger.warn(e.toString());
-            return Response.status(500).entity(e.toString()).build(); // Internal server error
+            logger.warn("The Deidentifier could not be initialized");
+            return Response.status(500).entity("The Deidentifier could not be initialized").build(); // Internal server error
         }
 
         try {
@@ -137,8 +137,10 @@ public class DeIdentifyRest {
             logger.info("Resource successfully deidentified");
             return Response.ok(result.getDeIdentifiedResource().toPrettyString()).build();
         } catch (Exception e) {
-            logger.warn(e.toString());
-            return Response.status(400).entity(e.getMessage()).build(); // Bad request error
+            logger.warn("Request could not be processed."+
+                    "Either you posted invalid data, or we could not communicate with the deid service.");
+            return Response.status(400).entity("Request could not be processed."+
+                    "Either you posted invalid data, or we could not communicate with the deid service.").build(); // Bad request error
         }
     }
 
@@ -311,13 +313,13 @@ public class DeIdentifyRest {
         try {
             initializeDeid(defaultConfigJson);
         } catch (Exception e) {
-            logger.warn(e.toString());
-            return Response.status(500).entity(e.toString()).build(); // Internal server error
+            logger.warn("The Deidentifier could not be initialized.");
+            return Response.status(500).entity("The Deidentifier could not be initialized.").build(); // Internal server error
         }
 
         StringWriter status = new StringWriter();
         if (deid.healthCheck(status)) {
-            logger.info("Deidentification microservice is functional");
+            logger.info("Deidentification FHIR server had no errors");
             return Response.status(200).build(); // OK
         } else {
             logger.warn(status.toString());
