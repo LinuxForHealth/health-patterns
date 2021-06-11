@@ -8,11 +8,20 @@ The main chart in this directory is:
 
 - [Health Patterns](./health-patterns): Chart used to install the entire Alvearie Health Patterns flow
 
-That main chart has many dependent subcharts.  These are referenced via their Helm repository locations, but a few do not currently have supported Helm charts so we have created them in this folder for our use. They can also be used as standalone charts.
+That main chart has many dependent sub-charts.  These are referenced via their Helm repository locations, but a few do not currently have supported Helm charts so we have created them in this folder for our use. They can also be used as standalone charts.
 
 - [FHIR Chart](./fhir): Chart used to install a FHIR server
 - [NiFi Registry Chart](./nifi-registry): Chart used to install a [NiFi Registry](https://nifi.apache.org/registry.html)
 - [DeID Service Chart](./deid): Chart used to install a [De-Identification Service](https://github.com/Alvearie/de-identification)
+
+## Updating
+
+The sub-charts maintained here are source-only.  The main chart references the packaged version of these, hosted in the helm repo located [here](../../docs/charts).  Whenever any of these sub-charts are updated, the following steps are required:
+
+1. Navigate to the Helm repo folder: `cd health-patterns/docs/charts`
+2. Run: `helm package ../../helm-charts/<chart_folder>`
+3. Update the index: `helm repo index .`
+4. Deliver any updated artifacts back to Git. This is where the Helm repo serves the charts to requests.
 
 ## Contributing
 
