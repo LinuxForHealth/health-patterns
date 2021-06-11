@@ -160,9 +160,7 @@ nifi:
                    --flowName="FHIR Bundle Enrichment" \
                    --baseUrl=http://$HOSTNAME:8080/ \
                    --pw=integrati0n
-          python /scripts/startHealthPatternsFlow.py \ 
-                   --baseUrl=http://$HOSTNAME:8080/ \
-                   --pw=integrati0n
+          python /scripts/startHealthPatternsFlow.py --baseUrl=http://$HOSTNAME:8080/ --pw=integrati0n
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"
