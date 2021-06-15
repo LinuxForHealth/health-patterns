@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafkahelper
+  labels:
+    app: kafkahelper
+spec:
+  ports:
+    - port: 5000
+      name: kafkahelper
+      protocol: TCP
+  selector:
+    app: kafkahelper
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: kafkahelper-ingress
+  annotations:
+    kubernetes.io/ingress.class: public-iks-k8s-nginx
+         # IBM: public-iks-k8s-nginx
+         # Azure: addon-http-application-routing
+         # AWS: nginx
+spec:
+  rules:
+    - host: kafkahelper.wh-health-patterns.dev.watson-health.ibm.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kafkahelper
+              servicePort: 5000
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kafkahelper
+spec:
+  selector:
+    matchLabels:
+      app: kafkahelper
+  template:
+    metadata:
+      labels:
+        app: kafkahelper
+    spec:
+      containers:
+        - name: kafkahelper
+          image: docker.io/dlranum/kafkahelper:0.1.0
+          imagePullPolicy: Always
+          env:
+            - name: KAFKAUSER
+              value: "token"
+            - name: KAFKAPW
+              value: "integrati0n"
+            - name: KAFKABOOTSTRAP
+              value: "ingestion-kafka:9092"

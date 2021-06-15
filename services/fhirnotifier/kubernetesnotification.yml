@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notify-enrich
+  labels:
+    app: notify-enrich
+spec:
+  ports:
+    - port: 5000
+      name: notify-enrich
+      protocol: TCP
+  selector:
+    app: notify-enrich
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: notify-enrich-ingress
+  annotations:
+    kubernetes.io/ingress.class: public-iks-k8s-nginx
+         # IBM: public-iks-k8s-nginx
+         # Azure: addon-http-application-routing
+         # AWS: nginx
+spec:
+  rules:
+    - host: dlr-notify-enrich.integration-k8s-cluster-dcc48c44d831198cb8496b1ec68d7d12-0000.us-south.containers.appdomain.cloud
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: notify-enrich
+              servicePort: 5000
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: notify-enrich
+spec:
+  selector:
+    matchLabels:
+      app: notify-enrich
+  template:
+    metadata:
+      labels:
+        app: notify-enrich
+    spec:
+      containers:
+        - name: notify-enrich
+          image: dlranum/notifyenrich:0.1.0
+          env:
+            - name: RESOURCESLIST
+              value: "Patient Observation Condition"
+            - name: MAXITERATIONS
+              value: "15"
+            - name: ALARMMINUTES
+              value: "10"
+            - name: CONSUMERTOPIC
+              value: "fhir.notification"
+            - name: KAFKAUSER
+              value: "token"
+            - name: KAFKAPW
+              value: "integrati0n"
+            - name: KAFKABOOTSTRAP
+              value: "ingestion-kafka:9092"
+            - name: PRODUCERTOPIC
+              value: "patients.updated.out"
+            - name: FHIRENDPOINT
+              value: "http://dlr-enrich-ingestion-fhir.integration-k8s-cluster-dcc48c44d831198cb8496b1ec68d7d12-0000.us-south.containers.appdomain.cloud/fhir-server/api/v4"
+            - name: FHIRUSERNAME
+              value: "fhiruser"
+            - name: FHIRPW
+              value: "integrati0n"
