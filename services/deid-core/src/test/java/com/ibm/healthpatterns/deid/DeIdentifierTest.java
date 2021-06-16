@@ -59,7 +59,7 @@ public class DeIdentifierTest extends FHIRServiceTest {
 	 * 
 	 */
 	public DeIdentifierTest() {
-		deidURL = "http://git-test.deid.integration-k8s-cluster-dcc48c44d831198cb8496b1ec68d7d12-0000.us-south.containers.appdomain.cloud/api/v1";
+		deidURL = "https://git-test-deid.wh-health-patterns.dev.watson-health.ibm.com/api/v1";
 		deid = new DeIdentifier(deidURL, fhirURL, fhirUsername, fhirPassword);
 	}
 

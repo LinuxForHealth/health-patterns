@@ -11,7 +11,7 @@ metadata:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.deid.{{ .Values.ingress.subdomain }}
+    - host: {{ .Release.Namespace }}-deid.{{ .Values.ingress.subdomain }}
       http:
         paths:
           - path: /
