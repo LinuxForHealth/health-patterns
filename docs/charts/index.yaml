@@ -1,0 +1,86 @@
+apiVersion: v1
+entries:
+  cohort-service:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-06-16T12:55:50.829739-05:00"
+    description: A Helm Chart to deploy the Alvearie Health Patterns Cohort Service App.
+    digest: 279981c041a0780a629fed06e4548401421cc6978fe0f0c22ae1922594ddfc8a
+    home: https://github.com/Alvearie/health-patterns/clinical-ingestion/cohort-service
+    keywords:
+    - ibm
+    - health records
+    - clinical data
+    - alvearie
+    maintainers:
+    - email: luisg@us.ibm.com
+      name: Luis A. Garcia
+    name: cohort-service
+    type: application
+    urls:
+    - cohort-service-0.0.1.tgz
+    version: 0.0.1
+  deid:
+  - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2021-06-16T12:55:50.830278-05:00"
+    description: A Helm Chart to deploy the Alvearie De-Identification service.
+    digest: 6b37a20c44af8225ae05455c32d2328e40c3fdff61fc67e2a878b01a0d9c8714
+    home: https://github.com/Alvearie/de-identification
+    keywords:
+    - ibm
+    - health records
+    - clinical data
+    - alvearie
+    - deid
+    maintainers:
+    - email: sfc@us.ibm.com
+      name: Susan Crowell
+    name: deid
+    type: application
+    urls:
+    - deid-1.0.1.tgz
+    version: 1.0.1
+  fhir:
+  - apiVersion: v2
+    appVersion: 4.7.1
+    created: "2021-06-16T12:55:50.831766-05:00"
+    description: A Helm Chart to deploy the IBM FHIR Server.
+    digest: 881252fd533425fb75b800cc8760c2d682115a43c663a44884ab24d6fb7b5177
+    home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir
+    keywords:
+    - ibm
+    - fhir
+    - health records
+    - clinical data
+    - alvearie
+    maintainers:
+    - email: luisg@us.ibm.com
+      name: Luis A. Garcia
+    name: fhir
+    type: application
+    urls:
+    - fhir-0.4.0.tgz
+    version: 0.4.0
+  nifi-registry:
+  - apiVersion: v2
+    appVersion: 0.8.0
+    created: "2021-06-16T12:55:50.833113-05:00"
+    description: A Helm Chart to deploy a NiFi Registry.
+    digest: 1a7cffc09c376cb6bd2d7225242915cb5a260b960232d5abfefa9335625db9fc
+    home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/nifi-registry
+    keywords:
+    - ibm
+    - nifi-registry
+    - health records
+    - clinical data
+    - alvearie
+    maintainers:
+    - email: luisg@us.ibm.com
+      name: Luis A. Garcia
+    name: nifi-registry
+    type: application
+    urls:
+    - nifi-registry-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-06-16T12:55:50.828257-05:00"

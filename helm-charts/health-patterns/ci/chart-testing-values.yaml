@@ -1,0 +1,74 @@
+# A simple name describing the Alvearie pattern implemented by this Helm values file
+pattern: "Chart Test"
+
+ingress:
+  enabled: true
+  class: public-iks-k8s-nginx
+         # IBM: public-iks-k8s-nginx
+         # Azure: addon-http-application-routing
+         # AWS: nginx
+  subdomain: wh-health-patterns.dev.watson-health.ibm.com
+
+# ------------------------------------------------------------------------------
+# FHIR Configuration
+# Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
+# ------------------------------------------------------------------------------
+fhir:
+  service:
+    type: NodePort
+  proxy:
+    enabled: true
+
+# ------------------------------------------------------------------------------
+# FHIR Configuration
+# Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir/values.yaml
+# ------------------------------------------------------------------------------
+fhir-deid:
+  enabled: true
+
+# ------------------------------------------------------------------------------
+# De-Identification Service
+# Values: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/deid/values.yaml
+# ------------------------------------------------------------------------------
+deid:
+  enabled: true
+
+# ------------------------------------------------------------------------------
+# Nifi Configuration
+# Values: https://github.com/cetic/helm-nifi/blob/master/values.yaml
+# ------------------------------------------------------------------------------
+nifi:
+  service:
+    type: NodePort
+
+# ------------------------------------------------------------------------------
+# Kafka Configuration
+# Values: https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
+# ------------------------------------------------------------------------------
+kafka:
+  externalAccess:
+    service:
+      type: NodePort
+  metrics:
+    kafka:
+      enabled: false
+
+# ------------------------------------------------------------------------------
+# Kube-Prometheus Stack Configuration
+# Values: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+# ------------------------------------------------------------------------------
+kube-prometheus-stack:
+  enabled: false
+
+metrics:
+  kafka:
+    enabled: false
+
+# ------------------------------------------------------------------------------
+# Cohort Service
+# Values: https://github.com/Alvearie/health-patterns/cohort-service/chart/values.yaml
+# ------------------------------------------------------------------------------
+cohort-service:
+  enabled: true
+  service:
+    type: NodePort

@@ -1,0 +1,83 @@
+apiVersion: v2
+name: health-patterns
+description: A Helm Chart to deploy the Alvearie Health Patterns reference implementations for clinical data ingestion and enrichment.
+
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.6.12
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+appVersion: s7
+
+icon: https://avatars3.githubusercontent.com/u/72946463?s=200&v=4
+keywords:
+  - ibm
+  - fhir
+  - nifi
+  - ingestion
+  - enrichment
+  - health records
+  - clinical data
+  - alvearie
+
+home: https://github.com/Alvearie/health-patterns/helm-charts/health-patterns
+
+maintainers:
+  - name: Adam T. Clark
+    email: atclark@us.ibm.com
+  - name: David Ranum
+    email: dlranum@us.ibm.com
+  - name: Luis A. Garcia
+    email: luisg@us.ibm.com
+
+dependencies:
+  - name: fhir
+    version: 0.4.0
+    condition: fhir.enabled
+    repository: "https://alvearie.github.io/health-patterns/charts"
+  - name: fhir
+    version: 0.4.0
+    condition: fhir-deid.enabled
+    alias: fhir-deid
+    repository: "https://alvearie.github.io/health-patterns/charts"
+  - name: deid
+    version: 1.0.1
+    condition: deid.enabled
+    repository: "https://alvearie.github.io/health-patterns/charts"
+  - name: cohort-service
+    version: 0.0.1
+    repository: "https://alvearie.github.io/health-patterns/charts"
+    condition: cohort-service.enabled
+  - name: nifi-registry
+    version: 0.1.0
+    condition: nifi-registry.enabled
+    repository: "https://alvearie.github.io/health-patterns/charts"
+  - name: ascvd
+    version: 0.1.0
+    condition: ascvd.enabled
+    repository: "https://alvearie.github.io/health-analytics/charts"
+  - name: ascvd-from-fhir
+    version: 0.1.0
+    condition: ascvd.enabled
+    repository: "https://alvearie.github.io/health-analytics/charts"
+  - name: zookeeper
+    version: 6.0.0
+    repository: https://charts.bitnami.com/bitnami
+    condition: zookeeper.enabled
+  - name: nifi
+    version: 0.6.0
+    repository: https://cetic.github.io/helm-charts
+    condition: nifi.enabled
+  - name: kafka
+    version: 12.1.0
+    repository: https://charts.bitnami.com/bitnami
+    condition: kafka.enabled
+  - name: kube-prometheus-stack
+    version: 12.0.4
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: kube-prometheus-stack.enabled
