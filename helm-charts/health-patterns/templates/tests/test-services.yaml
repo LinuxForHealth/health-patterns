@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "alvearie-ingestion.fullname" . }}-test"
+  name: "{{ include "health-patterns.fullname" . }}-test"
   labels:
-    {{- include "alvearie-ingestion.labels" . | nindent 4 }}
+    {{- include "health-patterns.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:

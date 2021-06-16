@@ -1,10 +1,10 @@
-# Alvearie Clinical Ingestion Helm Chart
+# Alvearie Health Patterns Helm Chart
 
 ## Introduction
 
-This [Helm](https://github.com/kubernetes/helm) chart installs the [Alvearie Clinical Ingestion pattern](/clinical-ingestion) in a Kubernetes cluster.
+This [Helm](https://github.com/kubernetes/helm) chart deploys Alvearie Health Patterns in a Kubernetes cluster.
 
-The [Alvearie Clinical Ingestion pattern](/clinical-ingestion) is comprised of multiple components described in more detail in the pattern's main page, and using this Helm chart you can optionally enable/disable components of that pattern.
+Alvearie Health Patterns is comprised of multiple components described in more detail [here](README.md), and using this Helm chart you can optionally enable/disable components of that pattern.
 
 ## Pre-Requisites
 
@@ -13,15 +13,6 @@ The [Alvearie Clinical Ingestion pattern](/clinical-ingestion) is comprised of m
 - PV provisioner support in the underlying infrastructure.
 
 ## Installation
-
-### Checkout the Code
-
-Git clone this repository and `cd` into this directory.
-
-```bash
-git clone https://github.com/Alvearie/health-patterns.git
-cd health-patterns/clinical-ingestion/helm-charts/alvearie-ingestion
-```
 
 ### Create a new namespace (Optional)
 
@@ -32,28 +23,27 @@ kubectl create namespace alvearie
 kubectl config set-context --current --namespace=alvearie
 ```
 
-### Install the Chart
+## Required parameters
 
-Install the helm chart with a release name `ingestion`:
+### Ingress parameters
 
-We recommend deploying this chart via ingress.  However, each cloud environment has different requirements for configuring ingress resources and exposing them properly, so we provide the alternate approach of deploying via load balancers. This is more simple and universal, but requires more rigor in exposing/securing services in order to prevent exposures.
+We recommend exposing the services in this chart via ingress.  This provides the most robust and secure approach.  If you choose to expose services via port-forwarding, load-balancer, or other optinos, please be careful to ensure proper security.
 
 In order to deploy via ingress, you will need to identify your ingress subdomain as defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.  Instructions can be found [here](README_INGRESS_SUBDOMAIN.md) on how to identify your ingress subdomain.
 
-Once you have your ingress subdomain, you can install the chart using: 
+Once you have your ingress subdomain, you can add it to your helm install command shown later.
 
-```bash
-helm install ingestion . --set ingress.class=INGRESS_CLASS --set ingress.subdomain=INGRESS_SUBDOMAIN
-```
+`--set ingress.subdomain=INGRESS_SUBDOMAIN`
 
-INGRESS_CLASS refers to the ingress class used by your cloud provider.  Currently, these are the preferred values: 
+Ingress also requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider:
   - IBM: public-iks-k8s-nginx
   - Azure: addon-http-application-routing
   - AWS: nginx
  
-INGRESS_SUBDOMAIN is the value identified above for the ingress subdomain 
+You can add your ingress class to the helm install using: 
 
-NOTE: You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
+`--set ingress.class=INGRESS_CLASS`
+
 
 ### Optional: Deploy a FHIR UI
 
@@ -71,18 +61,54 @@ and
 --set fhir.deid.proxy.enabled=true
 ```
 
-### Install the Chart with De-Identification Enabled
+### Checkout the Code
 
-This same chart can be used to install the patient de-identification pattern, which adds a de-identification service and a secondary FHIR server for de-identified clinical data.
-In order to install that pattern run the command below:
+Alternatively, you can clone this Git repository deploy the chart from the source:
 
 ```bash
-helm install ingestion . -f de-id-pattern-values.yaml
+git clone https://github.com/Alvearie/health-patterns.git
+cd health-patterns/helm-charts/health-patterns
+helm dependency update
 ```
+
+
+### Deploy
+
+There are two variations of the health-patterns Helm chart currently supported:
+- Clinical Ingestion (clinical_ingestion.yaml) - This variation will deploy an entire pipeline ready to normalize, validate, enrich, and persist FHIR data to a FHIR server
+- Clinical Enrichment (clinical_enrichment.yaml) - This variation will deploy a data enrichment pipeline aimed at consuming FHIR data and returning an updated FHIR response with the requested modifications. 
+
+By specifying your preferred variation in the Helm command below, you can customize this deployment to your needs.
+
+```
+helm install ingestion . \
+    --set ingress.class=INGRESS_CLASS \
+    --set ingress.subdomain=INGRESS_SUBDOMAIN \
+    --set fhir.proxy.enabled=true \
+    --set fhir.deid.proxy.enabled=true \
+    -f <<VARIATION_YAML>>
+```
+
+### Alternate configuration for Helm Chart
+
+When deploying this chart, there are many configuration parameters specified in the values.yaml file.  These can all be overridden based on individual preferences.  To do so, you can create a secondary YAML file containing your changes and specify it to the `helm install` command to override default configuration.
+
+```
+helm install ingestion alvearie/health-patterns \
+    --set ingress.class=INGRESS_CLASS \
+    --set ingress.subdomain=INGRESS_SUBDOMAIN \
+    --set fhir.proxy.enabled=true \
+    --set fhir.deid.proxy.enabled=true \
+    -f value_overrides.yaml \
+    -f <<VARIATION_YAML>>
+```
+
+NOTE: You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
+
 
 ### Using the Chart
 
-After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](../../).
+After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](../../README.md).
 
 ## Uninstallation
 
@@ -110,8 +136,10 @@ Please consult the relevant charts for their configuration options.
 | `kafka.enabled`          | Enable [Kafka](https://github.com/helm/charts/tree/master/incubator/kafka)                                         | `true`    |
 | `nifi.enabled`           | Enable [Nifi](https://github.com/cetic/helm-nifi)                                                                  | `true`    |
 | `nifi-registry.enabled`  | Enable [Nifi Registry](../nifi-registry)                                                                           | `true`    |
-| `fhir.enabled`           | Enable [Spark](../fhir)                                                                                            | `true`    |
+| `fhir.enabled`           | Enable [FHIR](../fhir)                                                                                            | `true`    |
 | `zookeeper.enabled`      | Enable [Zookeeper](https://github.com/bitnami/charts/tree/master/bitnami/zookeeper)                                | `true`    |
+| `deid.enabled`      | Enable [De-Identification](https://github.com/Alvearie/de-identification)                                | `true`    |
+| `ascvd.enabled`      | Enable [ASCVD](https://github.com/Alvearie/health-analytics/tree/main/ascvd)                                | `true`    |
 
 ## Monitoring
 
