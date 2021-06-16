@@ -100,10 +100,10 @@ public class TerminologyRest {
     }
 
     @POST
-    @Path("mapping")
+    @Path("mapping/{mappingName}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postMapping(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
+    public Response postMapping(InputStream resourceInputStream, @PathParam("mappingName") String name) throws Exception {
         try {
             initializeService();
         } catch (Exception e) {
@@ -129,10 +129,10 @@ public class TerminologyRest {
     }
 
     @PUT
-    @Path("mapping")
+    @Path("mapping/{mappingName}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response putMapping(InputStream resourceInputStream, @QueryParam("identifier") String name) throws Exception {
+    public Response putMapping(InputStream resourceInputStream, @PathParam("mappingName") String name) throws Exception {
         try {
             initializeService();
         } catch (Exception e) {
@@ -218,7 +218,7 @@ public class TerminologyRest {
     }
 
     @POST
-    @Path("structureDefinitions/")
+    @Path("structureDefinitions")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postStructureDefinition(InputStream sdInputStream) {
@@ -234,12 +234,12 @@ public class TerminologyRest {
         String vsUri;
         try {
             jsonNode = jsonDeserializer.readTree(sdInputStream);
-            sdUri = jsonNode.get("sdUri").asText();
-            vsUri = jsonNode.get("vsUri").asText();
-            if (sdUri.isEmpty() || vsUri.isEmpty()) {
+            if (jsonNode.get("sdUri") == null || jsonNode.get("vsUri") == null ) {
                 logger.warn("Improperly formatted json request:  should contain the fields \"sdUri\" and \"vsUri\"");
                 return Response.status(400).entity("Improperly formatted json request:  should contain the fields \"sdUri\" and \"vsUri\"").build();
             }
+            sdUri = jsonNode.get("sdUri").asText();
+            vsUri = jsonNode.get("vsUri").asText();
         } catch (IOException e) {
             logger.warn("Bad JSON: " + e);
             return Response.status(400).entity("Bad JSON: " + e).build();
