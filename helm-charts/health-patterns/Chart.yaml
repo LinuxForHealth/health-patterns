@@ -46,7 +46,7 @@ dependencies:
     alias: fhir-deid
     repository: "https://alvearie.github.io/health-patterns/charts"
   - name: deid
-    version: 0.1.0
+    version: 1.0.1
     condition: deid.enabled
     repository: "https://alvearie.github.io/health-patterns/charts"
   - name: cohort-service
