@@ -21,6 +21,6 @@ spec:
               service:
                 name: {{ .Release.Name }}-cohort-service
               	  port: 
-	                number: {{ $ingressPort }}
+                    number: {{ $ingressPort }}
 {{- end }}
 {{- end }}
