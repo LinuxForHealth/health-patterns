@@ -181,6 +181,9 @@ public class MappingStore {
      * @param vsUri the URI for the ValueSet
      */
     public void addSDMapping(String sdUri, String vsUri) {
+
+        valueSetMappings.put(sdUri, vsUri);
+        valueSetMappings.put(vsUri, sdUri);
         boolean duplicate = containsSDMapping(sdUri, vsUri);
         if (canReadWriteToDisk) {
             if (!duplicate) {
@@ -191,8 +194,6 @@ public class MappingStore {
                 }
             }
         }
-        valueSetMappings.put(sdUri, vsUri);
-        valueSetMappings.put(vsUri, sdUri);
     }
 
     public boolean containsSDMapping(String sdUri, String vsUri) {
@@ -208,16 +209,18 @@ public class MappingStore {
                     if (structureDefinitionToValueSet.length != 2) {
                         System.err.println("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
                     }
-                    if (structureDefinitionToValueSet[0].equals(sdUri) && structureDefinitionToValueSet[1].equals(vsUri) ||
-                            structureDefinitionToValueSet[1].equals(sdUri) && structureDefinitionToValueSet[0].equals(vsUri)) {
+                    if (structureDefinitionToValueSet[0].trim().equals(sdUri) && structureDefinitionToValueSet[1].trim().equals(vsUri) ||
+                            structureDefinitionToValueSet[1].trim().equals(sdUri) && structureDefinitionToValueSet[0].trim().equals(vsUri)) {
                         duplicate = true;
+                        break;
                     }
                 }
+
             } catch (IOException e) {
                 System.err.println("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional: " + e.getMessage());
             }
         }
-        return valueSetMappings.containsKey(sdUri) && valueSetMappings.get(sdUri).equals(vsUri) && !duplicate;
+        return valueSetMappings.containsKey(sdUri) && valueSetMappings.get(sdUri).equals(vsUri) && duplicate;
     }
 
     public void deleteSDMapping(String sdUri, String vsUri) {
@@ -240,8 +243,8 @@ public class MappingStore {
                     String[] structureDefinitionToValueSet = lineCopy.split("<=>");
                     if (structureDefinitionToValueSet.length != 2) {
                         System.err.println("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
-                    } else if(structureDefinitionToValueSet[0].equals(sdUri) && structureDefinitionToValueSet[1].equals(vsUri) ||
-                            structureDefinitionToValueSet[1].equals(sdUri) && structureDefinitionToValueSet[0].equals(vsUri)) {
+                    } else if(structureDefinitionToValueSet[0].trim().equals(sdUri) && structureDefinitionToValueSet[1].trim().equals(vsUri) ||
+                            structureDefinitionToValueSet[1].trim().equals(sdUri) && structureDefinitionToValueSet[0].trim().equals(vsUri)) {
                         lineToDelete = line;
                     }
                 }
@@ -250,6 +253,7 @@ public class MappingStore {
                     try (BufferedWriter out = new BufferedWriter(new FileWriter(structureDefinitionFile, false))) {
                         for (String line: lines) {
                             out.write(line);
+                            out.write("\n");
                         }
                     } catch (IOException e) {
                         //error?
