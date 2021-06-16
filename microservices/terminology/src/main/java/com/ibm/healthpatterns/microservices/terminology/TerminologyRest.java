@@ -13,7 +13,6 @@ import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import org.jboss.logging.Logger;
-import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 
 @Path("/")
 public class TerminologyRest {
@@ -30,9 +29,6 @@ public class TerminologyRest {
     @ConfigProperty(name = "PV_PATH")
     String PV_PATH;
 
-    private final String mappingsDirPath = PV_PATH + "mappings/";
-    private final String structureDefinitionPath = PV_PATH + "structureDefinition.mappings";
-
     private TerminologyService terminologyService = null;
 
     private static final Logger logger = Logger.getLogger(TerminologyRest.class);
@@ -41,8 +37,8 @@ public class TerminologyRest {
 
     private void initializeService() throws Exception {
         if (mappingStore == null) {
-            File mappingsDirFile = new File(mappingsDirPath);
-            File structureDefinitionFile = new File(structureDefinitionPath);
+            File mappingsDirFile = new File(PV_PATH + "mappings/");
+            File structureDefinitionFile = new File(PV_PATH + "structureDefinition.mappings");
             mappingStore = new MappingStore(structureDefinitionFile, mappingsDirFile);
         }
         if (terminologyService == null) {
