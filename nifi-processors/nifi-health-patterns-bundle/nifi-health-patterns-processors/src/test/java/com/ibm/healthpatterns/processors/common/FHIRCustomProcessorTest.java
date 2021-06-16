@@ -42,7 +42,7 @@ public abstract class FHIRCustomProcessorTest {
 	 */
 	public FHIRCustomProcessorTest() {
 		// This URL is for IBM Cloud services that we setup specifically to run these tests
-		fhirURL = "http://git-test.chart-1618346374-fhir.integration-k8s-cluster-dcc48c44d831198cb8496b1ec68d7d12-0000.us-south.containers.appdomain.cloud/fhir-server/api/v4";
+		fhirURL = "http://git-test.chart-1618346374-fhir.wh-health-patterns.dev.watson-health.ibm.com/fhir-server/api/v4";
 		fhirUsername = "fhiruser";
 		fhirPassword = "integrati0n";
 		createdResources = new ArrayList<>();

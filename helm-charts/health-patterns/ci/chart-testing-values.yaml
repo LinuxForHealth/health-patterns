@@ -7,7 +7,7 @@ ingress:
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-  subdomain: integration-k8s-cluster-dcc48c44d831198cb8496b1ec68d7d12-0000.us-south.containers.appdomain.cloud
+  subdomain: wh-health-patterns.dev.watson-health.ibm.com
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
