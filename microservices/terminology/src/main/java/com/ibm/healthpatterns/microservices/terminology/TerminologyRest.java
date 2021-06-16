@@ -65,7 +65,7 @@ public class TerminologyRest {
             initializeService();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
 
         try {
@@ -74,7 +74,7 @@ public class TerminologyRest {
             return result.getTranslatedResource().toPrettyString();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(400, e.toString()).build(); // Bad request error
+            return Response.status(400).entity(e.toString()).build(); // Bad request error
         }
     }
 
@@ -86,7 +86,7 @@ public class TerminologyRest {
             initializeService();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
 
         StringWriter status = new StringWriter();
@@ -95,7 +95,7 @@ public class TerminologyRest {
             return Response.status(200).build(); // OK
         } else {
             logger.warn(status.toString());
-            return Response.status(500, status.toString()).build(); // Internal server error
+            return Response.status(500).entity(status.toString()).build(); // Internal server error
         }
     }
 
@@ -111,7 +111,7 @@ public class TerminologyRest {
             return Response.status(500, e.toString()).build(); // Internal server error
         }
         if (name == null || name.isEmpty()) {
-            return Response.status(400,  "Mapping not given an identifier." +
+            return Response.status(400).entity("Mapping not given an identifier." +
                     "Specify an identifier for the mapping using the \"identifier\" query parameter").build();
         }
         String resourceString;
@@ -120,10 +120,10 @@ public class TerminologyRest {
             mappingStore.saveMapping(name, resourceString);
             boolean installed = terminologyService.installTranslationResource(name, resourceString);
             if (!installed) {
-                return Response.status(500, "Error installing FHIR Resource \"" + name + "\".  Translation might not work.").build();
+                return Response.status(500).entity("Error installing FHIR Resource \"" + name + "\".  Translation might not work.").build();
             }
         } else {
-            return Response.status(400, "Mapping with the identifier \"" + name + "\" already exists.").build();
+            return Response.status(400).entity("Mapping with the identifier \"" + name + "\" already exists.").build();
         }
         return Response.ok("Mapping Resource \"" + name + "\" created:\n" + resourceString).build();
     }
@@ -137,18 +137,18 @@ public class TerminologyRest {
             initializeService();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
         if (name == null || name.isEmpty()) {
-            return Response.status(400,  "Mapping not given an identifier." +
-                    "Specify an identifier for the mapping using the \"identifier\" query parameter").build();
+            return Response.status(400).entity("Mapping not given an identifier." +
+                    "Specify an identifier for the mapping using the \"mappingName\" path parameter").build();
         }
         boolean exists = mappingStore.mappingExists(name);
         String resourceString = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8);
         mappingStore.saveMapping(name, resourceString);
         boolean installed = terminologyService.installTranslationResource(name, resourceString);
         if (!installed) {
-            return Response.status(500, "Error installing FHIR Resource \"" + name + "\".  Translation might not work.").build();
+            return Response.status(500).entity("Error installing FHIR Resource \"" + name + "\".  Translation might not work.").build();
         }
         if (exists)
             return Response.ok("Mapping Resource \"" + name + "\" updated:\n" + resourceString).build();
@@ -164,7 +164,7 @@ public class TerminologyRest {
             initializeService();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
         StringBuilder out = new StringBuilder();
         for (String mappingName : mappingStore.getSavedResourcesMapping().keySet()) {
@@ -182,12 +182,12 @@ public class TerminologyRest {
             initializeService();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
         if (mappingStore.mappingExists(mappingName)) {
             return Response.ok(mappingStore.getMapping(mappingName)).build();
         } else {
-            return Response.status(400, "No mapping with the identifier \"" + mappingName + "\" exists.").build();
+            return Response.status(400).entity("No mapping with the identifier \"" + mappingName + "\" exists.").build();
         }
     }
 
@@ -205,7 +205,7 @@ public class TerminologyRest {
             initializeService();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
         if (mappingStore.mappingExists(mappingName)) {
             mappingStore.deleteMapping(mappingName);
@@ -226,7 +226,7 @@ public class TerminologyRest {
             initializeService();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
         ObjectMapper jsonDeserializer = new ObjectMapper();
         JsonNode jsonNode;
@@ -257,7 +257,7 @@ public class TerminologyRest {
             initializeService();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
         String[] definitions = mappingStore.getAllStructureDefinitions().toArray(new String[0]);
         StringBuilder out = new StringBuilder();
@@ -281,7 +281,7 @@ public class TerminologyRest {
             initializeService();
         } catch (Exception e) {
             logger.warn(e.toString());
-            return Response.status(500, e.toString()).build(); // Internal server error
+            return Response.status(500).entity(e.toString()).build(); // Internal server error
         }
         ObjectMapper jsonDeserializer = new ObjectMapper();
         JsonNode jsonNode;
