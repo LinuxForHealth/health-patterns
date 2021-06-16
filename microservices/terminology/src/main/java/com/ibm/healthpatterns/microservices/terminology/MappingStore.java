@@ -60,6 +60,11 @@ public class MappingStore {
                 this.canReadWriteToDisk = structureDefinitionFile.isFile() && structureDefinitionFile.canRead() &&
                         structureDefinitionFile.canWrite() && mappingsDir.isDirectory() &&
                         mappingsDir.canWrite() && mappingsDir.canRead();
+                if (canReadWriteToDisk) {
+                    logger.info("Terminology service accessing disk.");
+                } else {
+                    logger.info("Terminology service cannot access disk, changes will be transient.");
+                }
             } else {
                 this.canReadWriteToDisk = false;
             }
