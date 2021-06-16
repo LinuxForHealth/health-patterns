@@ -31,9 +31,8 @@ kubectl apply -f kubernetes.yml
 
 ## Usage
 
-The service listens on port 8080.
-
-> TODO: Add explanation of configs, where to find examples, how to use
+The service listens on port 8080. Configs tell the deid service which fields to deidentify;
+the default config can be found at `/src/main/resources/de-id-config.json`.
 
 | Action | Method | Endpoint | Body | Parameters | Returns on Success |
 |:------:|:------:|:---------|:----:|:-----------|:-------:|
