@@ -1,8 +1,0 @@
-apiVersion: v1
-data:
-  fhirserver.url: "http://ingestion-fhir/fhir-server/api/v4"
-  fhirserver.username: "fhiruser"
-  fhirserver.password: "integrati0n"
-kind: ConfigMap
-metadata:
-  name: terminology-config

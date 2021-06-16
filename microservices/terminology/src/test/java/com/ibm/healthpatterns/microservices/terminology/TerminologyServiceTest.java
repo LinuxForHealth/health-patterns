@@ -52,7 +52,7 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	 * 
 	 */
 	public TerminologyServiceTest() {
-		terminology = new TerminologyService(fhirURL, fhirUsername, fhirPassword);
+		terminology = new TerminologyService(fhirURL, fhirUsername, fhirPassword, new MappingStore(null, null));
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	 */
 	@Test
 	public void testHealthCheckBadFHIR() {
-		terminology = new TerminologyService("http://wrong-us-south.lb.appdomain.cloud:8080/api/v1", fhirUsername, fhirPassword);
+		terminology = new TerminologyService("http://wrong-us-south.lb.appdomain.cloud:8080/api/v1", fhirUsername, fhirPassword, new MappingStore(null, null));
 		StringWriter status = new StringWriter();
 		boolean healthCheck = terminology.healthCheck(status);
 		System.out.println(status);
@@ -83,7 +83,7 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	 */
 	@Test
 	public void testHealthCheckBadFHIRCredentials() {
-		terminology = new TerminologyService(fhirURL, "wronguser", fhirPassword);
+		terminology = new TerminologyService(fhirURL, "wronguser", fhirPassword, new MappingStore(null, null));
 		StringWriter status = new StringWriter();
 		boolean healthCheck = terminology.healthCheck(status);
 		System.out.println(status);
