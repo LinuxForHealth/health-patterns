@@ -29,86 +29,28 @@ def healthcheck():
 
     return resp
 
-@app.route("/topics", methods=['GET'])
-def gettopics():
-    consumer = KafkaConsumer(bootstrap_servers=kafkabootstrap,
-                             sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
-
-    existingtopics = consumer.topics()
-
-    message = {
-        "status": "200",
-        "topics": str(existingtopics)
-    }
-    resp = jsonify(message)
-    resp.status_code = 200
-
-    return resp
-
-@app.route("/produce", methods=['POST'])
-def produce():
-    resolveterminology = request.headers.get("ResolveTerminology", "false")
-    deidentifydata = request.headers.get("DeidentifyData", "false")
-    runascvd = request.headers.get("RunASCVD", "false")
-    resourceid = request.headers.get("ResourceId", "")
-
-    headers = [("ResolveTerminology",bytes(resolveterminology, 'utf-8')),
-               ("DeidentifyData",bytes(deidentifydata, 'utf-8')),
-               ("RunASCVD",bytes(runascvd, 'utf-8'))]
-
-    if len(resourceid) > 0:
-        headers.append(("ResourceId", bytes(resourceid, 'utf-8')))
-
+@app.route("/", methods=['GET'])
+def listorconsumetopics():
     topic = ""
     if 'topic' in request.args:
         topic = request.args.get("topic")
 
-    if len(topic) == 0:
-        #no topic 400 error
+    if len(topic) == 0: #topic arg not present so do topiclist
+        consumer = KafkaConsumer(bootstrap_servers=kafkabootstrap,
+                                 sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
+
+        existingtopics = consumer.topics()
+
         message = {
-            "status": "400",
-            "message": "Topic not found: must include a topic for produce"
+            "status": "200",
+            "topics": str(existingtopics)
         }
         resp = jsonify(message)
-        resp.status_code = 400
+        resp.status_code = 200
 
         return resp
 
-
-    post_data = request.data.decode("utf-8")
-
-    producer = KafkaProducer(bootstrap_servers=kafkabootstrap)
-
-    producer.send(topic, value=bytes(post_data, 'utf-8'), headers=headers)
-    producer.flush()
-    message = {
-        "status": "200",
-        "topic": topic,
-        "headers": str(headers),
-        "data": post_data[0:25] + "... " + str(len(post_data)) + " chars"
-    }
-    resp = jsonify(message)
-    resp.status_code = 200
-
-    return resp
-
-@app.route("/consume", methods=['GET'])
-def consume():
-    topic = ""
-    if 'topic' in request.args:
-        topic = request.args.get("topic")
-
-    if len(topic) == 0:
-        #no topic 400 error
-        message = {
-            "status": "400",
-            "message": "Topic not found: must include a topic for consume"
-        }
-        resp = jsonify(message)
-        resp.status_code = 400
-
-        return resp
-
+    #consume the given topic
     consumer = KafkaConsumer(topic, bootstrap_servers=kafkabootstrap,
                              sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw,
                              consumer_timeout_ms=2000)
@@ -134,9 +76,6 @@ def consume():
 
     nummessages = len(msglist)
     messages = "\n".join(msglist)
-
-    #datastring = "Messages on queue: " + str(nummessages) + "\n\n" + messages
-
     message = {
         "status": "200",
         "topic": topic,
@@ -148,7 +87,54 @@ def consume():
 
     return resp
 
-@app.route("/createtopic", methods=['POST'])
+@app.route("/", methods=['POST'])
+def produce():
+    resolveterminology = request.headers.get("ResolveTerminology", "false")
+    deidentifydata = request.headers.get("DeidentifyData", "false")
+    runascvd = request.headers.get("RunASCVD", "false")
+    resourceid = request.headers.get("ResourceId", "")
+
+    headers = [("ResolveTerminology",bytes(resolveterminology, 'utf-8')),
+               ("DeidentifyData",bytes(deidentifydata, 'utf-8')),
+               ("RunASCVD",bytes(runascvd, 'utf-8'))]
+
+    if len(resourceid) > 0:
+        headers.append(("ResourceId", bytes(resourceid, 'utf-8')))
+
+    topic = ""
+    if 'topic' in request.args:
+        topic = request.args.get("topic")
+
+    if len(topic) == 0:
+        #no topic 400 error
+        message = {
+            "status": "400",
+            "message": "Topic not found: must include a topic for produce (POST)"
+        }
+        resp = jsonify(message)
+        resp.status_code = 400
+
+        return resp
+
+
+    post_data = request.data.decode("utf-8")
+
+    producer = KafkaProducer(bootstrap_servers=kafkabootstrap)
+
+    producer.send(topic, value=bytes(post_data, 'utf-8'), headers=headers)
+    producer.flush()
+    message = {
+        "status": "200",
+        "topic": topic,
+        "headers": str(headers),
+        "data": post_data[0:25] + "... " + str(len(post_data)) + " chars"
+    }
+    resp = jsonify(message)
+    resp.status_code = 200
+
+    return resp
+
+@app.route("/", methods=['PUT'])
 def create():
     topic = ""
     if 'topic' in request.args:
@@ -158,7 +144,7 @@ def create():
         # no topic 400 error
         message = {
             "status": "400",
-            "message": "Topic not found: must include a topic"
+            "message": "Topic not found: must include a topic to create (PUT)"
         }
         resp = jsonify(message)
         resp.status_code = 400
