@@ -61,7 +61,8 @@ public class MappingStore {
                         structureDefinitionFile.canWrite() && mappingsDir.isDirectory() &&
                         mappingsDir.canWrite() && mappingsDir.canRead();
                 if (canReadWriteToDisk) {
-                    logger.info("Terminology service accessing disk.");
+                    logger.info("Terminology service accessing disk: storing mappings at " +
+                            mappingsDir.getAbsolutePath() + " and storing structure definitions in " + structureDefinitionFile.getAbsolutePath());
                 } else {
                     logger.info("Terminology service cannot access disk, changes will be transient.");
                 }
