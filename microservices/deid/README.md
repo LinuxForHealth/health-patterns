@@ -1,6 +1,11 @@
 # microservices/deid
 
-REST API for communicating with a deidentification service and FHIR server
+REST API for communicating with a deidentification service and FHIR server.
+
+> This project is built with Quarkus; to deploy changes, ensure that
+> `quarkus.container-image.group` in `/src/main/resources/application.properties`
+> is set to your DockerHub username, then run `./mvnw package`. The new yml
+> file will be located in `/target/kubernetes/`.
 
 ## Configuration
 
@@ -25,6 +30,11 @@ kubectl apply -f kubernetes.yml
 > the `PersistentVolume` definition in `kubernetes.yml` to some unique name for each instance.
 
 ## Usage
+
+The service listens on port 8080.
+
+> TODO: Add explanation of configs, where to find examples, how to use
+
 | Action | Method | Endpoint | Body | Parameters | Returns on Success |
 |:------:|:------:|:---------|:----:|:-----------|:-------:|
 | Deidentify | `POST` | `/` | FHIR bundle or resource | `configName`: Name of config to use *(optional, default: "default")* </br> `pushToFHIR`: (true/false) Whether to push the deidentified object to the FHIR server *(optional, default: true)* | Deidentified object |
