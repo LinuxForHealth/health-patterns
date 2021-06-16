@@ -16,6 +16,7 @@ These values are stored in ConfigMap `terminology-config`.
 | `fhirserver.url` | URL of the FHIR server | `"http://ingestion-fhir/fhir-server/api/v4"` |
 | `fhirserver.username` | Username for the FHIR server | `fhiruser` |
 | `fhirserver.password` | Password for the FHIR server | `integrati0n` |
+| `pv.path` | Mount path for the persistent volume | `/mnt/data/` |
 
 ## Installation
 
