@@ -12,7 +12,6 @@ That main chart has many dependent sub-charts.  These are referenced via their H
 
 - [FHIR Chart](./fhir): Chart used to install a FHIR server
 - [NiFi Registry Chart](./nifi-registry): Chart used to install a [NiFi Registry](https://nifi.apache.org/registry.html)
-- [DeID Service Chart](./deid): Chart used to install a [De-Identification Service](https://github.com/Alvearie/de-identification)
 
 ## Updating
 
