@@ -16,7 +16,7 @@ That main chart has many dependent sub-charts.  These are referenced via their H
 
 ## Updating
 
-The sub-charts maintained here are source-only.  The main chart references the packaged version of these, hosted in the helm repo located [here](../../docs/charts).  Whenever any of these sub-charts are updated, the following steps are required:
+The sub-charts maintained here are source-only.  The main chart references the packaged version of these, hosted in the helm repo located in the docs/charts folder of health-patterns.  Whenever any of these sub-charts are updated, the following steps are required:
 
 1. Navigate to the Helm repo folder: `cd health-patterns/docs/charts`
 2. Run: `helm package ../../helm-charts/<chart_folder>`
