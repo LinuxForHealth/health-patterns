@@ -53,7 +53,7 @@ public class DeIdentifyTest extends FHIRCustomProcessorTest {
 	 */
 	public DeIdentifyTest() {
 		// This URL is for IBM Cloud services that we setup specifically to run these tests 
-		deidURL = "http://git-test-deid.wh-health-patterns.dev.watson-health.ibm.com/api/v1";
+		deidURL = "https://git-test-deid.wh-health-patterns.dev.watson-health.ibm.com/api/v1";
 	}
 
 	/**
