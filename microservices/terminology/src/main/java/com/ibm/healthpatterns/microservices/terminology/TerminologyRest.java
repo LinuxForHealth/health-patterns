@@ -44,9 +44,17 @@ public class TerminologyRest {
     private void initializeService() throws Exception {
         if (mappingStore == null) {
             logger.info("initializing MappingStore...");
-            File mappingsDirFile = new File(PV_PATH + "mappings");
-            File structureDefinitionFile = new File(PV_PATH + "structureDefinition.mappings");
-            mappingStore = new MappingStore(structureDefinitionFile, mappingsDirFile);
+            if (PV_PATH.isBlank()) {
+                mappingStore = new MappingStore(null, null);
+            } else {
+                if (!PV_PATH.endsWith("/")) PV_PATH = PV_PATH + "/";
+                File mappingsDirFile = new File(PV_PATH + "mappings");
+                logger.info(mappingsDirFile.getAbsolutePath());
+                File structureDefinitionFile = new File(PV_PATH + "structureDefinition.mappings");
+                logger.info(structureDefinitionFile.getAbsolutePath());
+                mappingStore = new MappingStore(structureDefinitionFile, mappingsDirFile);
+            }
+
         }
         if (terminologyService == null) {
 

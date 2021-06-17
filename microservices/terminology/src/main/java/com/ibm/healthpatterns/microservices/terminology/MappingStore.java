@@ -71,9 +71,11 @@ public class MappingStore {
             if (structureDefinitionFile != null && mappingsDir != null) {
                 if (!structureDefinitionFile.exists()) {
                     initialize = true;
+                    structureDefinitionFile.createNewFile();
                 }
                 if (!mappingsDir.exists()) {
                     initialize = true;
+                    mappingsDir.mkdirs();
                 }
                 this.canAccessDisc = structureDefinitionFile.isFile() && structureDefinitionFile.canRead() &&
                         structureDefinitionFile.canWrite() && mappingsDir.isDirectory() &&
@@ -179,7 +181,7 @@ public class MappingStore {
     public void saveMapping(String mappingName, String mapping) throws IOException {
         if (canAccessDisc) {
             JsonNode jsonNode;
-            File mappingFile = new File(mappingsDir + mappingName);
+            File mappingFile = new File(mappingsDir + "/" + mappingName);
             try (BufferedWriter out = new BufferedWriter(new FileWriter(mappingFile, false))){
                 jsonNode = jsonDeserializer.readTree(mapping);
                 out.write(jsonNode.toPrettyString());

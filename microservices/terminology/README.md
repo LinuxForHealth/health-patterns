@@ -18,11 +18,58 @@ These values are stored in ConfigMap `terminology-config`.
 | `fhirserver.password` | Password for the FHIR server | `integrati0n` |
 | `pv.path` | Mount path for the persistent volume | `/mnt/data/` |
 
-## Installation
+## Installing
+
+###Local: 
+From the project root, run:
+
+```shell 
+./mvnw compile quarkus:dev -DPV_PATH=./ \
+      -DFHIR_SERVER_URL=<FHIR_URL> \
+      -DFHIR_SERVER_PASSWORD=<FHIR_Password> \
+      -DFHIR_SERVER_USERNAME=<FHIR_User> \
+```
+
+Replace FHIR_URL, FHIR_Password, and FHIR_User with the values corresponding to a test FHIR service.  
+
+Endpoints are accessible at `localhost:8080` and the service will use the project's target directory as the mount for 
+data persistence.
+
+###Cluster:
+Ensure that you are logged in to Docker and Kubernetes, and are in a kubernetes namespace that has a 
+FHIR server deployed.
+
+In `/src/main/kubernetes/kubernetes.yml`, ensure that the following have been set to the correct values for your 
+FHIR server's configuration.
+
+```yml
+data:
+  fhirserver.url: "http://<FHIR-SERVER>/fhir-server/api/v4"
+  fhirserver.username: "<FHIR-USER>"
+  fhirserver.password: "<FHIR-PASSWORD>"
+  pv.path: "<Pesistent volume mount path - default = /mnt/data/>"
+```
+
+If pv.path is set `""` then the service will operate in memory-only mode.
+
+In `/src/main/resources/application.properties`, ensure that `quarkus.container-image.group` is set to your docker 
+username, 'quarkus.kubernetes.name' is set to the desired service name, 
+and `quarkus.kubernetes.mounts.mappings.path` is also set to the correct persistent volume path.
+
+From the project root, run:
 
 ```shell
-kubectl apply -f kubernetes.yml
+./mvnw package
+kubectl apply -f /target/kubernetes/kubernetes.yml
 ```
+
+To use curl/postman to test requests, port forward localhost:8080 to the service using 
+
+```shell
+kubectl port-forward service/<quarkus.kubernetes.name> 8080:8080
+```
+replacing <quarkus.kubernetes.name> with the value in the configuration file.
+
 > **_NOTE:_**  If multiple instances will be deployed on a single cluster, each instance's
 > persistent volume must have a unique name. The helm chart in `~/.../alvearie-ingestion/`
 > does this automatically, but for a manual install you must change "`deid-config-pv`" in
