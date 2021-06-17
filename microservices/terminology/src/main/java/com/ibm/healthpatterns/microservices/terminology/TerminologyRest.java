@@ -291,7 +291,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\""));
+            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
             return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
         }
         ObjectMapper jsonDeserializer = new ObjectMapper();
