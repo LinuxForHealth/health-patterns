@@ -19,11 +19,8 @@
 package com.ibm.healthpatterns.microservices.terminology;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.instance.model.api.IIdType;
@@ -173,7 +170,7 @@ public class TerminologyService extends FHIRService {
 	}
 
 	private void installSavedTranslationResources() {
-		Map<String, String> mappingResources = mappingStore.getSavedResourcesMapping();
+		Map<String, String> mappingResources = mappingStore.getSavedMappings();
 		Set<String> resourceNames = mappingResources.keySet();
 		boolean errors = false;
 		for (String resourceName : resourceNames) {
@@ -270,7 +267,7 @@ public class TerminologyService extends FHIRService {
 			}
 			// The resource's extension URL is the URL for the StructureDefinition, so we resolve a ValueSet if known
 			String structureDefinitionURL = urlJson.asText();
-			String valueSetURL = mappingStore.getValueSetMapping().get(structureDefinitionURL);
+			String valueSetURL = mappingStore.getStructureDefinitions().get(structureDefinitionURL);
 			// and if known we check the FHIR Server's known ConceptMaps to see if there is a corresponding one
 			// http://4603f72b-us-south.lb.appdomain.cloud/fhir-server/api/v4/ConceptMap?_format=json&source-uri=http://hl7.org/fhir/us/core/ValueSet/birthsex
 			Bundle bundle = fhirClient
@@ -347,7 +344,7 @@ public class TerminologyService extends FHIRService {
 				continue;
 			}
 			System.out.printf("Found ConceptMap %s which translates (valueCode, system) = (%s, %s) for StructureDefinition %s to (valueCode, system) = (%s, %s) %n", conceptMapId, valueCode, valueSetURL, structureDefinitionURL, translatedCode.getCode(),  translatedCode.getSystem());
-			String translatedStructuredData = mappingStore.getValueSetMapping().get(translatedCode.getSystem());
+			String translatedStructuredData = mappingStore.getStructureDefinitions().get(translatedCode.getSystem());
 			if (translatedStructuredData == null) {
 				System.err.printf("Cannot find the mapping from ValueSet '%s' to its corresponding StructureData for this translation, make sure the corresponding mappings configuration file has it.%n", translatedCode.getSystem());
 				continue;

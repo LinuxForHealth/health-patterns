@@ -30,9 +30,29 @@ kubectl apply -f kubernetes.yml
 
 ## Usage
 
-The service listens on port 8080.
+The service listens on port 8080. The default mappings and structure definitions can be found
+in `/src/main/resources/defaultMappings`.  Additional mappings can be added to the defaultMappings - if added, the 
+filename must also be added to the `DEFAULT_MAPPING_RESOURCES` String array in `MappingStore.java`.  Default mappings 
+are copied to the persistent volume only if the file structure has not been initialized yet, i.e. on the first run of 
+the microservice with a new persistent volume.  Default mappings are also used to initialize the MappingStore when it 
+cannot read/write to the disc.
 
-> TODO: Add explanation of mappings / structure definitions, where to find examples, how to use
+When the service is first deployed and queried on a cluster, it will try to copy the default mappings and
+structureDefinitions to the filesystem at the path specified in application.properties and kubernetes.yml.  The default
+location is `/mnt/data/`.  To persist data, ensure that a persistent volume is mounted at the specified path.
+
+> **_NOTE_**: Currently, due to a permissions bug with PersistentVolumes, any added mappings and
+> structure definitions beyond what is installed by default **will not** persist between pods. This
+> means that if a pod is terminated and replaced by kubernetes, the added mappings and structure
+> definitions will be lost.
+ 
+The Translation action applies any of the saved Structure Definition Mappings that match the extensions of the 
+given FHIR resource, if the corresponding ConceptMap is installed on the FHIR server.  Default ConceptMaps are installed
+when the service is first deployed, and more can be installed using the `Add Mapping` actions.  
+
+Deleting a mapping does not uninstall it from the FHIR server, it just prevents it from being reinstalled should the 
+service be restarted.
+
 
 | Action | Method | Endpoint | Body | Parameters | Returns on Success |
 |:------:|:------:|:---------|:----:|:-----------|:-------:|
@@ -46,3 +66,16 @@ The service listens on port 8080.
 | Get Structure Definitions | `GET` | `/structureDefinitions` | | | Newline-delimited list of structure definitions |
 | Delete Structure Definition | `DELETE` | `/structureDefinitions` | Structure Definition (json) | | Status `200` |
 | Health Check | `GET` | `/healthCheck` | | | Status `200` if OK </br> Status `500` if errors |
+
+## Example JSON Objects:
+
+Structure Definition Mapping :
+```
+{
+    "sdUri" : "https://www.exampleURI.org/FHIR/SD/exampleStructureDefinition",
+    "vsUri" : "https://www.exampleURI.org/FHIR/VS/exampleValueSet" 
+}
+```
+ConceptMap (Mapping) :
+
+See https://www.hl7.org/fhir/valueset-examples.html

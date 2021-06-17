@@ -31,67 +31,92 @@ public class MappingStore {
      */
     private static final String[] DEFAULT_MAPPING_RESOURCES = new String[] {"cdm-sex-assigned-at-birth-vs.json", "uscore-birthsex-vs.json", "uscore-to-cdm-cm.json"};
 
-    private final File structureDefinitionFile;
-    private final Map<String, String> valueSetMappings;
-    private final Map<String, String> savedResourcesMapping;
-    private final File mappingsDir;
-    public boolean canReadWriteToDisk;
-    private final InputStream defaultSDFile;
     private final ObjectMapper jsonDeserializer;
 
-    public MappingStore(File structureDefinitionFile, File mappingsDir){
+    private final File structureDefinitionFile;
+
+    private final File mappingsDir;
+
+    private final InputStream defaultSDFile;
+
+    private final Map<String, String> structureDefinitions;
+
+    private final Map<String, String> savedMappings;
+
+    private boolean canAccessDisc;
+
+
+    /**
+     * Initializes the MappingStore with the given structureDefinitionFile and mappingsDir pointing to the corresponding
+     * locations on the disc/persistent volume.
+     * If the given files are inaccessible, the MappingStore operates in memory only mode, so changes are not persisted.
+     * If the given files have not been created yet, the MappingStore firsts initializes them using the default resources.
+     * The MappingStore pulls the mappings and structure definitions into memory from the disc (or the default resources
+     * if the disc is inaccessible) then allows for further mappings and structure definitions to be
+     * added/deleted/accessed as needed.  If the disc is accessible, such changes will be reflected in the files stored
+     * on disc.
+     * @param structureDefinitionFile the file where structuredefinitions should be stored on disc, or null if running
+     *                                in memory-only mode.
+     * @param mappingsDir the directory where mappings should be stored on disc, or null if running in memory-only mode.
+     */
+    public MappingStore(File structureDefinitionFile, File mappingsDir) {
         this.structureDefinitionFile = structureDefinitionFile;
         this.mappingsDir = mappingsDir;
         this.defaultSDFile = this.getClass().getResourceAsStream(SD_TO_VS_MAPPINGS_FILE);
-        this.savedResourcesMapping = new HashMap<>();
-        this.valueSetMappings = new HashMap<>();
+        this.savedMappings = new HashMap<>();
+        this.structureDefinitions = new HashMap<>();
         this.jsonDeserializer = new ObjectMapper();
         try {
             boolean initialize = false;
             if (structureDefinitionFile != null && mappingsDir != null) {
                 if (!structureDefinitionFile.exists()) {
-                    structureDefinitionFile.createNewFile();
                     initialize = true;
                 }
                 if (!mappingsDir.exists()) {
-                    mappingsDir.mkdirs();
                     initialize = true;
                 }
-                this.canReadWriteToDisk = structureDefinitionFile.isFile() && structureDefinitionFile.canRead() &&
+                this.canAccessDisc = structureDefinitionFile.isFile() && structureDefinitionFile.canRead() &&
                         structureDefinitionFile.canWrite() && mappingsDir.isDirectory() &&
                         mappingsDir.canWrite() && mappingsDir.canRead();
-                if (canReadWriteToDisk) {
+
+                if (canAccessDisc) {
                     logger.info("Terminology service accessing disk: storing mappings at " +
                             mappingsDir.getAbsolutePath() + " and storing structure definitions in " + structureDefinitionFile.getAbsolutePath());
                 } else {
                     logger.info("Terminology service cannot access disk, changes will be transient.");
                 }
             } else {
-                this.canReadWriteToDisk = false;
+                this.canAccessDisc = false;
+                logger.info("Terminology service cannot access disk, changes will be transient .");
             }
-            if (initialize & canReadWriteToDisk) {
+            if (initialize & canAccessDisc) {
                 copyDefaultResourcesToDisk();
             }
-        } catch (IOException e) {
-            canReadWriteToDisk = false;
+
+        } catch (Exception e) {
+            logger.warn("Error initializing MappingStore", e);
+            canAccessDisc = false;
         }
 
-        if (this.canReadWriteToDisk) {
+        if (this.canAccessDisc) {
             // pull the resources currently saved to mappings dir
+            assert mappingsDir != null;
             File[] mappingFiles = mappingsDir.listFiles();
             assert mappingFiles != null;
             for (File mappingFile : mappingFiles) {
                 try {
-                    savedResourcesMapping.put(mappingFile.getName(), IOUtils.toString(new FileInputStream(mappingFile), Charset.defaultCharset()));
+                    savedMappings.put(mappingFile.getName(), IOUtils.toString(new FileInputStream(mappingFile), Charset.defaultCharset()));
                 } catch (IOException e) {
-                    System.err.println("Could not read the FHIR mapping resource: " + mappingFile.getName() + ", the Terminology Service might not be functional: " + e.getMessage());
+                    logger.warn("Could not read the FHIR mapping resource: " + mappingFile.getName(), e);
                 }
             }
             // add structureDefinitions from file into map.
             try {
+                assert structureDefinitionFile != null;
                 initializeStructureDefinition(new FileInputStream(structureDefinitionFile));
             } catch (IOException e) {
-                System.err.println("Could not read the structure definition file: the Terminology Service will not be functional: " + e.getMessage());
+                logger.warn("Could not read the structure definition file.  the Terminology Service will not be functional");
+                logger.trace(e);
             }
         } else {
             // pull default resources
@@ -99,18 +124,30 @@ public class MappingStore {
                 InputStream configInputStream = this.getClass().getResourceAsStream(MAPPINGS_DIRECTORY + fileName);
                 try {
                     assert configInputStream != null;
-                    savedResourcesMapping.put(fileName, IOUtils.toString(configInputStream, Charset.defaultCharset()));
+                    savedMappings.put(fileName, IOUtils.toString(configInputStream, Charset.defaultCharset()));
                 } catch (IOException e) {
-                    System.err.println("Could not read default FHIR mapping resource: " + fileName + ", the Terminology Service won't be functional: " + e.getMessage());
+                    logger.warn("Could not read default FHIR mapping resource: " + fileName);
+                    logger.trace(e);
                 }
             }
             // add default structureDefinition map
-            initializeStructureDefinition(defaultSDFile);
+            try {
+                initializeStructureDefinition(defaultSDFile);
+            } catch (IOException e) {
+                logger.warn("Error initializing structure definitions.");
+                logger.trace(e);
+            }
         }
+        logger.info("MappingStore Initialized");
     }
 
-    public void copyDefaultResourcesToDisk() {
-        if (canReadWriteToDisk) {
+    /**
+     * Copies mapping resources and the structure definition file from the /resource directory into the persistent
+     * volume, if the service can read/write to disk.
+     * @throws IOException if it cannot read the default resources or write to disk.
+     */
+    public void copyDefaultResourcesToDisk() throws IOException {
+        if (canAccessDisc) {
             for (String fileName : DEFAULT_MAPPING_RESOURCES) {
                 InputStream configInputStream = this.getClass().getResourceAsStream(MAPPINGS_DIRECTORY + fileName);
                 try {
@@ -118,62 +155,88 @@ public class MappingStore {
                     String mapping = IOUtils.toString(configInputStream, Charset.defaultCharset());
                     saveMapping(fileName, mapping);
                 } catch (IOException e) {
-                    System.err.println("Could not read default FHIR mapping resource: " + fileName + ", the Terminology Service won't be functional: " + e.getMessage());
+                    logger.warn("Error saving default FHIR mapping resource to disk: " + fileName);
+                    throw e;
                 }
             }
             try {
                 Files.copy(defaultSDFile, structureDefinitionFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 initializeStructureDefinition(new FileInputStream(structureDefinitionFile));
             } catch (IOException e) {
-                System.err.println("Could not read default structure definition file, the terminology service will not work");
-                e.printStackTrace();
+                logger.warn("Could not copy default structure definition file, the terminology service will not work");
+                throw e;
             }
         }
     }
 
-    public void saveMapping(String mappingName, String mapping) {
-        if (canReadWriteToDisk) {
+    /**
+     * Saves a mapping with the given name to persistent storage if this MappingStore can read/write to disk then saves
+     * a copy in memory.  If this MappingStore cannot read/write to disk, just stores the mapping in memory.
+     * @param mappingName The name identifying the mapping to be saved.
+     * @param mapping The json string for the mapping to be saved.
+     * @throws IOException if the mapping JSON cannot be parsed, or if this MappingStore tries and fails to write to disk.
+     */
+    public void saveMapping(String mappingName, String mapping) throws IOException {
+        if (canAccessDisc) {
             JsonNode jsonNode;
-            try {
+            File mappingFile = new File(mappingsDir + mappingName);
+            try (BufferedWriter out = new BufferedWriter(new FileWriter(mappingFile, false))){
                 jsonNode = jsonDeserializer.readTree(mapping);
-                File mappingFile = new File(mappingsDir + mappingName);
-                BufferedWriter out = new BufferedWriter(new FileWriter(mappingFile, false));
                 out.write(jsonNode.toPrettyString());
-                out.close();
             } catch (IOException e) {
-                //error?
+                logger.warn("Error parsing and saving mapping \"" + mappingName + "\" to disk.");
+                throw e;
             }
         }
-        savedResourcesMapping.put(mappingName, mapping);
+        savedMappings.put(mappingName, mapping);
     }
 
+    /**
+     * If the mapping with the name provided exists, this function deletes it from memory, and, if the MappingStore can
+     * read/write to disk, from the mappings directory on the persistent volume.
+     * @param mappingName The name of the mapping to be deleted.
+     */
     public void deleteMapping(String mappingName) {
-        if (canReadWriteToDisk) {
+        if (canAccessDisc) {
             File mappingFile = new File(mappingsDir + mappingName);
             if (mappingExists(mappingName) && mappingFile.exists()) {
                 boolean deleted = mappingFile.delete();
                 if (deleted) {
                     logger.info("Mapping file " + mappingName + " deleted");
-                    savedResourcesMapping.remove(mappingName);
+                    savedMappings.remove(mappingName);
                 } else {
                     logger.warn("Error deleting mapping " + mappingName + ".");
                 }
             }
         } else {
-            savedResourcesMapping.remove(mappingName);
+            savedMappings.remove(mappingName);
         }
     }
 
+    /**
+     * Checks whether a mapping with the given mappingName exists in memory
+     * @param mappingName name of the mapping queried.
+     * @return whether a mapping with the given mappingName exists in memory.
+     */
     public boolean mappingExists(String mappingName) {
-        return savedResourcesMapping.containsKey(mappingName);
+        return savedMappings.containsKey(mappingName);
     }
 
+    /**
+     * Gets the mapping associated with the given mappingName, or null if it doesn't exist.
+     * @param mappingName name of the mapping queried.
+     * @return The jsonstring mapping corresponding to the given mappingName in memory, or null if it doesn't exist.
+     */
     public String getMapping(String mappingName) {
-        return savedResourcesMapping.get(mappingName);
+        return savedMappings.get(mappingName);
     }
 
-    public Map<String, String> getSavedResourcesMapping() {
-        return savedResourcesMapping;
+    /**
+     * Gets the map of saved resources
+     * @return the saved resources mapping containing mappingNames and their corresponding json string mappings.
+     */
+    public Map<String, String> getSavedMappings() {
+        return savedMappings;
     }
 
     /**
@@ -186,25 +249,34 @@ public class MappingStore {
      * @param sdUri the URI for the StructureDefinition
      * @param vsUri the URI for the ValueSet
      */
-    public void addSDMapping(String sdUri, String vsUri) {
+    public void addSDMapping(String sdUri, String vsUri) throws IOException {
 
-        valueSetMappings.put(sdUri, vsUri);
-        valueSetMappings.put(vsUri, sdUri);
+        structureDefinitions.put(sdUri, vsUri);
+        structureDefinitions.put(vsUri, sdUri);
         boolean duplicate = containsSDMapping(sdUri, vsUri);
-        if (canReadWriteToDisk) {
+        if (canAccessDisc) {
             if (!duplicate) {
                 try (BufferedWriter out = new BufferedWriter(new FileWriter(structureDefinitionFile, true))) {
                     out.write("\n" + sdUri + " <=> " + vsUri);
                 } catch (IOException e) {
-                    //error?
+                    logger.warn("Error writing to structure definition file.");
+                    throw e;
                 }
             }
         }
     }
 
-    public boolean containsSDMapping(String sdUri, String vsUri) {
-        boolean duplicate = false;
-        if (canReadWriteToDisk) {
+    /**
+     * Checks whether a structure definition mapping exists between the given URI's on memory and, if the MappingStore
+     * can access the disk, in the structureDefinition file on the persistent volume.
+     * @param sdUri Structure definition URI
+     * @param vsUri Value Set URI
+     * @return whether or not the give SD Mapping exists already in this MappingStore
+     * @throws IOException if the MappingStore tries and fails to read the structureDefinition file on disk.
+     */
+    public boolean containsSDMapping(String sdUri, String vsUri) throws IOException {
+        boolean existsOnDisk = false;
+        if (canAccessDisc) {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(structureDefinitionFile), StandardCharsets.UTF_8))) {
                 for (String line : reader.lines().collect(Collectors.toList())) {
                     line = line.trim();
@@ -213,32 +285,46 @@ public class MappingStore {
                     }
                     String[] structureDefinitionToValueSet = line.split("<=>");
                     if (structureDefinitionToValueSet.length != 2) {
-                        System.err.println("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
+                        logger.warn("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
                     }
                     if (structureDefinitionToValueSet[0].trim().equals(sdUri) && structureDefinitionToValueSet[1].trim().equals(vsUri) ||
                             structureDefinitionToValueSet[1].trim().equals(sdUri) && structureDefinitionToValueSet[0].trim().equals(vsUri)) {
-                        duplicate = true;
+                        existsOnDisk = true;
                         break;
                     }
                 }
 
             } catch (IOException e) {
-                System.err.println("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional: " + e.getMessage());
+                logger.warn("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional: " + e.getMessage());
+                throw e;
             }
+            return structureDefinitions.containsKey(sdUri) && structureDefinitions.get(sdUri).equals(vsUri) && existsOnDisk;
+        } else {
+            return structureDefinitions.containsKey(sdUri) && structureDefinitions.get(sdUri).equals(vsUri);
         }
-        return valueSetMappings.containsKey(sdUri) && valueSetMappings.get(sdUri).equals(vsUri) && duplicate;
     }
 
-    public void deleteSDMapping(String sdUri, String vsUri) {
+    /**
+     * If this MappingStore can access the disk, this function searches the stored structureDefinition file for the line
+     * containing the given Structure Definition Mapping, then deletes it before also deleting it from memory.
+     * (probably not the best way to do this, as it pulls all the lines, deletes the selected one, then overwrites the
+     * old file with a new one containing all but the deleted line).
+     * @param sdUri Structure definition URI
+     * @param vsUri Value Set URI
+     * @throws IOException if the MappingStore tries and fails to read from or write to the structureDefinition file on
+     *              disk.
+     */
+    public void deleteSDMapping(String sdUri, String vsUri) throws IOException {
         if (containsSDMapping(sdUri,vsUri)) {
-            valueSetMappings.remove(sdUri);
-            valueSetMappings.remove(vsUri);
-            if (canReadWriteToDisk) {
-                List<String> lines = new ArrayList<>();
+            structureDefinitions.remove(sdUri);
+            structureDefinitions.remove(vsUri);
+            if (canAccessDisc) {
+                List<String> lines;
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(structureDefinitionFile), StandardCharsets.UTF_8))) {
-                    lines.addAll(reader.lines().collect(Collectors.toList()));
+                    lines = reader.lines().collect(Collectors.toList());
                 } catch (IOException e) {
-                    System.err.println("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional: " + e.getMessage());
+                    logger.warn("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional: " + e.getMessage());
+                    throw e;
                 }
                 String lineToDelete = null;
                 for (String line: lines) {
@@ -248,7 +334,7 @@ public class MappingStore {
                     }
                     String[] structureDefinitionToValueSet = lineCopy.split("<=>");
                     if (structureDefinitionToValueSet.length != 2) {
-                        System.err.println("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
+                        logger.warn("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
                     } else if(structureDefinitionToValueSet[0].trim().equals(sdUri) && structureDefinitionToValueSet[1].trim().equals(vsUri) ||
                             structureDefinitionToValueSet[1].trim().equals(sdUri) && structureDefinitionToValueSet[0].trim().equals(vsUri)) {
                         lineToDelete = line;
@@ -262,18 +348,22 @@ public class MappingStore {
                             out.write("\n");
                         }
                     } catch (IOException e) {
-                        //error?
+                        logger.warn("Error writing to Structure Definition File.");
+                        throw e;
                     }
                 }
-
             }
         }
     }
 
+    /**
+     * Gets all the structure definitions currently stored in memory.
+     * @return all structure definitions from memory.
+     */
     public Set<String> getAllStructureDefinitions() {
         HashSet<String> output = new HashSet<>();
-        for ( String left: valueSetMappings.keySet()){
-            String right = valueSetMappings.get(left);
+        for ( String left: structureDefinitions.keySet()){
+            String right = structureDefinitions.get(left);
             if (left.compareTo(right) <= 0) {
                 output.add(left + " <=> " + right);
             } else {
@@ -284,9 +374,13 @@ public class MappingStore {
     }
 
     /**
-     * pulls the mappings from the structure definition file into the valueSetMapping map.
+     * pulls the mappings from the given structure definition input stream into the valueSetMapping map.
+     * @param mappingInputStream the inputStream to pull definitions from.  If this MappingStore is operating without
+     *                           access to the disc, this will be used to pull from the default sd file from resources.
+     *                           Otherwise, will be used to pull from the structureDefintion file stored on disc.
+     * @throws IOException if the given inputStream cannot be accessed.
      */
-    public void initializeStructureDefinition(InputStream mappingInputStream) {
+    public void initializeStructureDefinition(InputStream mappingInputStream) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(mappingInputStream, StandardCharsets.UTF_8))) {
             reader.lines().forEach(line -> {
                 line = line.trim();
@@ -295,17 +389,34 @@ public class MappingStore {
                 }
                 String[] structureDefinitionToValueSet = line.split("<=>");
                 if (structureDefinitionToValueSet.length != 2) {
-                    System.err.println("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
+                    logger.info("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
                     return;
                 }
-                addSDMapping(structureDefinitionToValueSet[0].trim(), structureDefinitionToValueSet[1].trim());
+                try {
+                    addSDMapping(structureDefinitionToValueSet[0].trim(), structureDefinitionToValueSet[1].trim());
+                } catch (IOException e) {
+                    logger.warn("Error writing to Structure Definition file while initializing.");
+                }
             });
         } catch (IOException e) {
-            System.err.println("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional: " + e.getMessage());
+            logger.warn("Error reading from default structure definition file while initializing.");
+            throw e;
         }
     }
 
-    public Map<String, String> getValueSetMapping() {
-        return valueSetMappings;
+    /**
+     * Gets the map containing the structure definitions stored on disc.  Might need a better name.
+     * @return the structure definitions map.
+     */
+    public Map<String, String> getStructureDefinitions() {
+        return structureDefinitions;
+    }
+
+    /**
+     * accessor for canAccessDisc
+     * @return whether this MappingStore can access the disc.
+     */
+    public boolean getCanAccessDisc() {
+        return canAccessDisc;
     }
 }
