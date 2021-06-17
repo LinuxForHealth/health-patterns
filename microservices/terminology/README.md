@@ -30,9 +30,13 @@ kubectl apply -f kubernetes.yml
 
 ## Usage
 
-The service listens on port 8080.
+The service listens on port 8080. The default mappings and structure definitions can be found
+in `/src/main/resources/defaultMappings`.
 
-> TODO: Add explanation of mappings / structure definitions, where to find examples, how to use
+> **_NOTE_**: Currently, due to a permissions bug with PersistentVolumes, any added mappings and
+> structure definitions beyond what is installed by defauly **will not** persist between pods. This
+> means that if a pod is terminated and replaced by kubernetes, the added mappings and structure
+> definitions will be lost.
 
 | Action | Method | Endpoint | Body | Parameters | Returns on Success |
 |:------:|:------:|:---------|:----:|:-----------|:-------:|
