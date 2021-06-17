@@ -49,9 +49,7 @@ public class TerminologyRest {
             } else {
                 if (!PV_PATH.endsWith("/")) PV_PATH = PV_PATH + "/";
                 File mappingsDirFile = new File(PV_PATH + "mappings");
-                logger.info(mappingsDirFile.getAbsolutePath());
                 File structureDefinitionFile = new File(PV_PATH + "structureDefinition.mappings");
-                logger.info(structureDefinitionFile.getAbsolutePath());
                 mappingStore = new MappingStore(structureDefinitionFile, mappingsDirFile);
             }
 
