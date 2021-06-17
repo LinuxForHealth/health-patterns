@@ -46,13 +46,13 @@ def main():
 
     print("Configuring with Nifi at BaseURL: ", baseURL)
 
-    # STEP 1: find the desired flow and place it on the root canvas
+    # Find the desired flow and place it on the root canvas
 
     # If found, the flowURL will be used to get the versions so that the latest
     # version is placed on the canvas.  Need to know the registry, bucket, and flow for the
     # desired flow name
 
-    print("Step 1: Creating process group...")
+    print("Creating process group...")
 
     found = False
     flowURL = None
@@ -165,9 +165,7 @@ def main():
     newgroupid = (dict(resp.json()))["id"]
     if debug:
         print("New process group id...",newgroupid)
-    print("Step 1 complete: Process group created...")
-    print("Setup task complete")
-
+    print("Process group created...")
 
 if __name__ == '__main__':
     main()
