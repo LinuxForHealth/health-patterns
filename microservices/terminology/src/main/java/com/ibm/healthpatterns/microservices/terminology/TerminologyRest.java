@@ -35,9 +35,16 @@ public class TerminologyRest {
 
     private MappingStore mappingStore = null;
 
+    /**
+     * Used as a pseudo-constructor, as the constructor runs before the @ConfigProperties are injected.
+     * Initializes the mappingStore and terminologyService, should be invoked at the start of any rest function that
+     * needs to use either.
+     * @throws Exception if the FHIR credentials are not set.
+     */
     private void initializeService() throws Exception {
         if (mappingStore == null) {
-            File mappingsDirFile = new File(PV_PATH + "mappings/");
+            logger.info("initializing MappingStore...");
+            File mappingsDirFile = new File(PV_PATH + "mappings");
             File structureDefinitionFile = new File(PV_PATH + "structureDefinition.mappings");
             mappingStore = new MappingStore(structureDefinitionFile, mappingsDirFile);
         }
@@ -53,6 +60,12 @@ public class TerminologyRest {
         }
     }
 
+    /**
+     * Translates the provided FHIR resource using the structure definitions and mappings stored in the MappingStore and
+     * installed on the FHIR server.
+     * @param resourceInputStream the FHIR bundle to be translated.
+     * @return HTTP Response containing the result of the translation, or an error status.
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -60,8 +73,8 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
 
         try {
@@ -69,11 +82,15 @@ public class TerminologyRest {
             logger.info("Resource translation successful");
             return result.getTranslatedResource().toPrettyString();
         } catch (Exception e) {
-            logger.warn(e.toString());
+            logger.warn(e);
             return Response.status(400).entity("Request could not be processed with given data.").build(); // Bad request error
         }
     }
 
+    /**
+     * Healthcheck for the API - checks to see that the initialization is successful and the necessary services are up.
+     * @return a 200 HTTP response if the initialization runs cleanly and the terminology service is up, 500 otherwise.
+     */
     @GET
     @Path("healthCheck")
     @Produces(MediaType.APPLICATION_JSON)
@@ -81,8 +98,8 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
 
         StringWriter status = new StringWriter();
@@ -95,16 +112,23 @@ public class TerminologyRest {
         }
     }
 
+    /**
+     * Posts a ValueSet translation mapping to the MappingStore with the given name, then installs it on the FHIR
+     * server.  Does not overwrite a preexisting mapping with the same name.
+     * @param resourceInputStream Body of the request, the ValueSet mapping as JSON
+     * @param name the identifier with which to associate the ValueSet mapping.
+     * @return HTTP Response containing whether the post was successful, or an error status.
+     */
     @POST
     @Path("mapping/{mappingName}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postMapping(InputStream resourceInputStream, @PathParam("mappingName") String name) throws Exception {
+    public Response postMapping(InputStream resourceInputStream, @PathParam("mappingName") String name) {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         if (name == null || name.isEmpty()) {
             logger.warn("Mapping not given an identifier." +
@@ -114,8 +138,13 @@ public class TerminologyRest {
         }
         String resourceString;
         if (!mappingStore.mappingExists(name)) {
-            resourceString = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8);
-            mappingStore.saveMapping(name, resourceString);
+            try {
+                resourceString = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8);
+                mappingStore.saveMapping(name, resourceString);
+            } catch (IOException e) {
+                logger.warn("Error parsing and saving mapping: ", e);
+                return Response.status(500).entity("Error parsing and saving mapping: " + e).build();
+            }
             boolean installed = terminologyService.installTranslationResource(name, resourceString);
             if (!installed) {
                 logger.warn("Error installing FHIR Resource \"" + name + "\".  Translation might not work.");
@@ -129,6 +158,12 @@ public class TerminologyRest {
         return Response.ok("Mapping Resource \"" + name + "\" created:\n" + resourceString).build();
     }
 
+    /**
+     * PUTs a ValueSet translation mapping to the MappingStore with the given name, then installs it on the FHIR server.
+     * @param resourceInputStream Body of the request, the ValueSet mapping as JSON
+     * @param name the identifier with which to associate the ValueSet mapping.
+     * @return HTTP Response containing whether the post was successful, or an error status.
+     */
     @PUT
     @Path("mapping/{mappingName}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -137,8 +172,8 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         if (name == null || name.isEmpty()) {
             logger.warn("Mapping not given an identifier." +
@@ -161,6 +196,12 @@ public class TerminologyRest {
         return Response.ok("Mapping Resource \"" + name + "\" created:\n" + resourceString).build();
     }
 
+    /**
+     * Gets a list of the names of all mappings saved to the MappingStore which are installed on the FHIR server.
+     * @return a failure response or a success response containing a list of the mappings saved
+     * to the MappingStore.  Does not include mappings installed on the FHIR server that have been deleted from the
+     * mapping store.
+     */
     @GET
     @Path("mapping")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -169,17 +210,22 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         StringBuilder out = new StringBuilder();
-        for (String mappingName : mappingStore.getSavedResourcesMapping().keySet()) {
+        for (String mappingName : mappingStore.getSavedMappings().keySet()) {
             out.append(mappingName).append("\n");
         }
         logger.info("Returned mappings");
         return Response.ok(out.toString()).build();
     }
 
+    /**
+     * Gets the mapping identified with the given mapping.
+     * @param mappingName the name of the mapping to retrieve.
+     * @return HTTP response indicating success or failure, success containing the mapping's json in its body.
+     */
     @GET
     @Path("mapping/{mappingName}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -188,8 +234,8 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         if (mappingStore.mappingExists(mappingName)) {
             logger.info("Returned mapping \""+mappingName+"\"");
@@ -201,9 +247,10 @@ public class TerminologyRest {
     }
 
     /**
-     * Deletes the speicied mapping.
+     * Deletes the specified mapping.  Does not uninstall the mapping from the FHIR server if it is already installed,
+     * just prevents future deployments from attempting to install it.
      *
-     * @param mappingName Path parameter, specifies which mappinguration file to return
+     * @param mappingName Path parameter, specifies which mapping file to return
      * @return HTTP Response with success or failure.
      */
     @DELETE
@@ -213,8 +260,8 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         if (mappingStore.mappingExists(mappingName)) {
             mappingStore.deleteMapping(mappingName);
@@ -226,6 +273,15 @@ public class TerminologyRest {
         }
     }
 
+    /**
+     * Saves a new structure definition.
+     * @param sdInputStream body of the request, should be JSON of the following structure:
+     *                      {
+     *                          "sdUri" : "https://www.exampleURI.org/FHIR/SD/exampleStructureDefinition",
+     *                          "vsUri" : "https://www.exampleURI.org/FHIR/VS/exampleValueSet"
+     *                      }
+     * @return response with success or failure
+     */
     @POST
     @Path("structureDefinitions")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -234,8 +290,8 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         ObjectMapper jsonDeserializer = new ObjectMapper();
         JsonNode jsonNode;
@@ -249,15 +305,20 @@ public class TerminologyRest {
             }
             sdUri = jsonNode.get("sdUri").asText();
             vsUri = jsonNode.get("vsUri").asText();
+            mappingStore.addSDMapping(sdUri, vsUri);
+            logger.info("Successfully added structure definition \""+vsUri+" <=> "+sdUri+"\"");
+            return Response.ok("Successfully added structure definition \""+vsUri+" <=> "+sdUri+"\"").build();
         } catch (IOException e) {
-            logger.warn("Bad JSON: " + e.toString());
-            return Response.status(400).entity("Bad JSON: " + e.toString()).build();
+            logger.warn("Error posting structure definiton: " + e);
+            return Response.status(400).entity("Error posting structure definiton: " + e).build();
         }
-        mappingStore.addSDMapping(sdUri, vsUri);
-        logger.info("Successfully added structure definition \""+vsUri+" <=> "+sdUri+"\"");
-        return Response.ok().build();
     }
 
+    /**
+     * Gets all saved structureDefinitions.
+     *
+     * @return HTTP response with the saved structureDefinitions in the body, or a 500 response.
+     */
     @GET
     @Path("structureDefinitions")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -266,8 +327,8 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         String[] definitions = mappingStore.getAllStructureDefinitions().toArray(new String[0]);
         StringBuilder out = new StringBuilder();
@@ -279,7 +340,7 @@ public class TerminologyRest {
     }
 
     /**
-     * Deletes the speicied mapping.
+     * Deletes the specified mapping.
      *
      * @return HTTP Response with success or failure.
      */
@@ -291,8 +352,8 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e.toString()+"\"");
-            return Response.status(500).entity("Could not initialize terminology service: \""+e.toString()+"\"").build(); // Internal server error
+            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         ObjectMapper jsonDeserializer = new ObjectMapper();
         JsonNode jsonNode;
@@ -311,14 +372,18 @@ public class TerminologyRest {
             return Response.status(400).entity("Bad JSON: " + e).build();
         }
 
-
-        if (mappingStore.containsSDMapping(sdUri, vsUri)) {
-            mappingStore.deleteSDMapping(sdUri, vsUri);
-            logger.info("Mapping " +sdUri + " <=> " + vsUri +" deleted");
-            return Response.ok().entity("Mapping " +sdUri + " <=> " + vsUri +" deleted").build();
-        } else {
-            logger.warn("No mapping \"" +sdUri + " <=> " + vsUri +"\" exists");
-            return Response.status(400).entity("No mapping \"" +sdUri + " <=> " + vsUri +"\" exists").build();
+        try {
+            if (mappingStore.containsSDMapping(sdUri, vsUri)) {
+                    mappingStore.deleteSDMapping(sdUri, vsUri);
+                logger.info("Mapping " +sdUri + " <=> " + vsUri +" deleted");
+                return Response.ok().entity("Mapping " +sdUri + " <=> " + vsUri +" deleted").build();
+            } else {
+                logger.warn("No mapping \"" +sdUri + " <=> " + vsUri +"\" exists");
+                return Response.status(400).entity("No mapping \"" +sdUri + " <=> " + vsUri +"\" exists").build();
+            }
+        } catch (IOException e) {
+            logger.warn("Error deleting Structure Definition mapping: ", e);
+            return Response.status(400).entity("Error deleting Structure Definition mapping: " + e).build();
         }
     }
 }
