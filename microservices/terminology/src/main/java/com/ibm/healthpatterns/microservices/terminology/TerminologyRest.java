@@ -26,7 +26,7 @@ public class TerminologyRest {
     @ConfigProperty(name = "FHIR_SERVER_PASSWORD")
     String FHIR_SERVER_PASSWORD;
 
-    @ConfigProperty(name = "PV_PATH")
+    @ConfigProperty(name = "PV_PATH", defaultValue ="")
     String PV_PATH;
 
     private TerminologyService terminologyService = null;
