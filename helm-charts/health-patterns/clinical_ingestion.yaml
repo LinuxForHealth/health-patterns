@@ -10,7 +10,10 @@ pattern: "Clinical Ingestion"
 # ------------------------------------------------------------------------------
 nifi:
   extraContainers:
-    - command:
+    - name: post-start-setup
+      image: alvearie/nifi-setup:0.1.0
+      imagePullPolicy: Always
+      command:
         - bash
         - -c
         - |
@@ -20,12 +23,12 @@ nifi:
                    --reg=default \
                    --bucket=Health_Patterns \
                    --flowName="Clinical Ingestion" \
-                   --baseUrl=http://$HOSTNAME:8080/ \
+                   --baseUrl=http://$HOSTNAME:8080/
           python /scripts/loadHealthPatternsFlows.py \
                    --reg=default \
                    --bucket=Health_Patterns \
                    --flowName="FHIR Bundle Enrichment" \
-                   --baseUrl=http://$HOSTNAME:8080/ \
+                   --baseUrl=http://$HOSTNAME:8080/
           python /scripts/startHealthPatternsFlow.py \
                    --baseUrl=http://$HOSTNAME:8080/ \
                    --fhir_pw=integrati0n \

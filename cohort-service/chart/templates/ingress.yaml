@@ -20,7 +20,7 @@ spec:
             backend:
               service:
                 name: {{ .Release.Name }}-cohort-service
-              	  port: 
+                  port: 
                     number: {{ $ingressPort }}
 {{- end }}
 {{- end }}
