@@ -1,3 +1,0 @@
-# This property file contains the ValueSets used in the valueCode element for a given StructureDefinition
-http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex <=> http://hl7.org/fhir/us/core/ValueSet/birthsex
-http://ibm.com/fhir/cdm/StructureDefinition/sex-assigned-at-birth <=> http://ibm.com/fhir/cdm/ValueSet/sex-assigned-at-birth
