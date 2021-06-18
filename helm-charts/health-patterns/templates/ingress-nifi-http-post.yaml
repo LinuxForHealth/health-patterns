@@ -21,7 +21,7 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Release.Name }}-nifi
+                name: alvearie-nifi
                 port: 
                   number: {{ $ingressPort }}
 {{- end }}
