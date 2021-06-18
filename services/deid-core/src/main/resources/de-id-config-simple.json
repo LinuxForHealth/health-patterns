@@ -1,0 +1,25 @@
+{
+	"rules": [
+		{
+			"name": "HASH",
+			"maskingProviders": [
+				{
+					"type": "HASH"
+				}
+			]
+		}
+	],
+	"json": {
+		"schemaType": "FHIR",
+		"messageTypeKey": "resourceType",
+		"messageTypes": [
+			"Device"
+		],
+		"maskingRules": [
+			{
+				"jsonPath": "/fhir/Device/patient/display",
+				"rule": "HASH"
+			}
+		]
+	}
+}
