@@ -200,7 +200,7 @@ public class MappingStore {
      */
     public void deleteMapping(String mappingName) {
         if (canAccessDisc) {
-            File mappingFile = new File(mappingsDir + mappingName);
+            File mappingFile = new File(mappingsDir + "/" + mappingName);
             if (mappingExists(mappingName) && mappingFile.exists()) {
                 boolean deleted = mappingFile.delete();
                 if (deleted) {
