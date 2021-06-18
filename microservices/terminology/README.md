@@ -20,7 +20,7 @@ These values are stored in ConfigMap `terminology-config`.
 
 ## Installing
 
-###Local: 
+### Local: 
 From the project root, run:
 
 ```shell 
@@ -35,7 +35,7 @@ Replace FHIR_URL, FHIR_Password, and FHIR_User with the values corresponding to 
 Endpoints are accessible at `localhost:8080` and the service will use the project's target directory as the mount for 
 data persistence.
 
-###Cluster:
+### Cluster:
 Ensure that you are logged in to Docker and Kubernetes, and are in a kubernetes namespace that has a 
 FHIR server deployed.
 
@@ -53,7 +53,7 @@ data:
 If pv.path is set `""` then the service will operate in memory-only mode.
 
 In `/src/main/resources/application.properties`, ensure that `quarkus.container-image.group` is set to your docker 
-username, 'quarkus.kubernetes.name' is set to the desired service name, 
+username, `quarkus.kubernetes.name` is set to the desired service name, 
 and `quarkus.kubernetes.mounts.mappings.path` is also set to the correct persistent volume path.
 
 From the project root, run:
@@ -68,7 +68,7 @@ To use curl/postman to test requests, port forward localhost:8080 to the service
 ```shell
 kubectl port-forward service/<quarkus.kubernetes.name> 8080:8080
 ```
-replacing <quarkus.kubernetes.name> with the value in the configuration file.
+replacing `<quarkus.kubernetes.name>` with the value in the configuration file.
 
 > **_NOTE:_**  If multiple instances will be deployed on a single cluster, each instance's
 > persistent volume must have a unique name. The helm chart in `~/.../alvearie-ingestion/`
