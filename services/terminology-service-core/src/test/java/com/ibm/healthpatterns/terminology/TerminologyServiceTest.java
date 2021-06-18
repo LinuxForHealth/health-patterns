@@ -18,11 +18,12 @@
  */
 package com.ibm.healthpatterns.terminology;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.ibm.healthpatterns.core.FHIRService;
+import com.ibm.healthpatterns.core.FHIRServiceTest;
+
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,12 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.ibm.healthpatterns.core.FHIRService;
-import com.ibm.healthpatterns.core.FHIRServiceTest;
+import static org.junit.Assert.*;
 
 /**
  * This test runs the {@link TerminologyService} against a real FHIR server dedicated 
@@ -56,11 +52,11 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	 * 
 	 */
 	public TerminologyServiceTest() {
-		terminology = new TerminologyService(fhirURL, fhirUsername, fhirPassword);
+		terminology = new TerminologyService(fhirURL, fhirUsername, fhirPassword, new MappingStore(null, null));
 	}
 
 	/**
-	 * Test method for {@link com.ibm.healthpatterns.terminology.TerminologyService#healthCheck(java.io.StringWriter)}.
+	 * Test method for {@link com.ibm.healthpatterns.microservices.terminology.TerminologyService#healthCheck(java.io.StringWriter)}.
 	 */
 	@Test
 	public void testHealthCheck() {
@@ -71,11 +67,11 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	}
 
 	/**
-	 * Test method for {@link com.ibm.healthpatterns.terminology.TerminologyService#healthCheck(java.io.StringWriter)}.
+	 * Test method for {@link com.ibm.healthpatterns.microservices.terminology.TerminologyService#healthCheck(java.io.StringWriter)}.
 	 */
 	@Test
 	public void testHealthCheckBadFHIR() {
-		terminology = new TerminologyService("http://wrong-us-south.lb.appdomain.cloud:8080/api/v1", fhirUsername, fhirPassword);
+		terminology = new TerminologyService("http://wrong-us-south.lb.appdomain.cloud:8080/api/v1", fhirUsername, fhirPassword, new MappingStore(null, null));
 		StringWriter status = new StringWriter();
 		boolean healthCheck = terminology.healthCheck(status);
 		System.out.println(status);
@@ -83,11 +79,11 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	}
 	
 	/**
-	 * Test method for {@link com.ibm.healthpatterns.terminology.TerminologyService#healthCheck(java.io.StringWriter)}.
+	 * Test method for {@link com.ibm.healthpatterns.microservices.terminology.TerminologyService#healthCheck(java.io.StringWriter)}.
 	 */
 	@Test
 	public void testHealthCheckBadFHIRCredentials() {
-		terminology = new TerminologyService(fhirURL, "wronguser", fhirPassword);
+		terminology = new TerminologyService(fhirURL, "wronguser", fhirPassword, new MappingStore(null, null));
 		StringWriter status = new StringWriter();
 		boolean healthCheck = terminology.healthCheck(status);
 		System.out.println(status);
@@ -95,7 +91,7 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	}
 
 	/**
-	 * Test method for {@link com.ibm.healthpatterns.terminology.TerminologyService#translate(InputStream)}
+	 * Test method for {@link com.ibm.healthpatterns.microservices.terminology.TerminologyService#translate(InputStream)}
 	 * 
 	 * @throws IOException 
 	 * @throws TerminologyServiceException 
@@ -149,7 +145,7 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	}
 
 	/**
-	 * Test method for {@link com.ibm.healthpatterns.terminology.TerminologyService#translate(InputStream)}
+	 * Test method for {@link com.ibm.healthpatterns.microservices.terminology.TerminologyService#translate(InputStream)}
 	 * 
 	 * @throws IOException 
 	 * @throws TerminologyServiceException 
@@ -169,7 +165,7 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	}
 
 	/**
-	 * Test method for {@link com.ibm.healthpatterns.terminology.TerminologyService#translate(InputStream)}
+	 * Test method for {@link com.ibm.healthpatterns.microservices.terminology.TerminologyService#translate(InputStream)}
 	 * 
 	 * @throws IOException 
 	 * @throws TerminologyServiceException 
@@ -202,7 +198,7 @@ public class TerminologyServiceTest extends FHIRServiceTest {
 	}
 
 	/**
-	 * Test method for {@link com.ibm.healthpatterns.terminology.TerminologyService#translate(java.io.InputStream)}.
+	 * Test method for {@link com.ibm.healthpatterns.microservices.terminology.TerminologyService#translate(java.io.InputStream)}.
 	 * 
 	 * @throws IOException 
 	 * @throws TerminologyServiceException 
