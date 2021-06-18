@@ -18,19 +18,9 @@
  */
 package com.ibm.healthpatterns.terminology;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.instance.model.api.IIdType;
@@ -50,6 +40,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ibm.healthpatterns.core.FHIRService;
 
+
 import ca.uhn.fhir.rest.api.MethodOutcome;
 
 /**
@@ -60,7 +51,7 @@ import ca.uhn.fhir.rest.api.MethodOutcome;
  * a different StructureDefinition's ValueSet.
  * <p>
  * The mentioned ValueSet and ConceptMap resources need to exist in the FHIR server, and this class exposes a method
- * {@link #addStructureDefinitionToValueSetMapping(String, String)} to add the corresponding URI mappings from a
+ * {@link #(String, String)} to add the corresponding URI mappings from a
  * StructuredDefinition to a ValueSet.
  * <p>
  * By default the {@link TerminologyService} includes a sample translation, or mapping, from US Core BirthSex to
@@ -72,21 +63,6 @@ import ca.uhn.fhir.rest.api.MethodOutcome;
  */
 public class TerminologyService extends FHIRService {
 
-	/**
-	 * Directory in the classpath that has the default mappings FHIR resources
-	 */
-	private static final String MAPPINGS_DIRECTORY = "/mappings/";
-
-	/**
-	 * File that has the default StructureDefinition to ValueSet mappings
-	 */
-	private static final String SD_TO_VS_MAPPINGS_FILE = "/mappings/structureDefinition.mappings";
-
-	/**
-	 * The FHIR Resources used for the default terminology mapping from US Core Birth Sex to IBM CDM Sex Assigned at Birth
-	 */
-	private static final String[] SAMPLE_MAPPING_RESOURCES = new String[] {"cdm-sex-assigned-at-birth-vs.json", "uscore-birthsex-vs.json", "uscore-to-cdm-cm.json"};
-	
 	/**
 	 * The ConceptMap FHIR resource type
 	 */
@@ -127,15 +103,12 @@ public class TerminologyService extends FHIRService {
 	 */
 	private static final String MATCH_VALUE = "match";
 
-	/**
-	 * The types for which there is masking configuration ion this {@link DeIdentifier}s masking config.
-	 */
-	private static final String[] TRANSLATABLE_FHIR_TYPES = new String[] {"Patient"};
 
-	private Map<String, String> valueSetForStructureDefinition;
+	private static final String[] TRANSLATABLE_FHIR_TYPES = new String[] {"Patient"};
 
 	private boolean fhirResourcesInstalled;
 	private List<String> installedResources;
+	private MappingStore mappingStore;
 
 	/**
 	 * Create a {@link TerminologyService} that uses the given FHIR connection information.
@@ -144,109 +117,65 @@ public class TerminologyService extends FHIRService {
 	 * @param fhirServerUsername the FHIR server username
 	 * @param fhirServerPassword the FHIR server password
 	 */
-	public TerminologyService(String fhirServerURL, String fhirServerUsername, String fhirServerPassword) {
+	public TerminologyService(String fhirServerURL, String fhirServerUsername, String fhirServerPassword, MappingStore mappings) {
 		super(fhirServerURL, fhirServerUsername, fhirServerPassword);
 		installedResources = new ArrayList<>();
-		loadValueSetsForStructureDefinitions();
-	}
-
-	/**
-	 * Loads the mappings configuration file that contains the ValueSet that will be used in the valueCode element of a known StructureDefinition.
-	 */
-	private void loadValueSetsForStructureDefinitions() {
-		valueSetForStructureDefinition = new HashMap<>();
-		String fileName = SD_TO_VS_MAPPINGS_FILE;
-		InputStream inputStream = this.getClass().getResourceAsStream(fileName);
-	    try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-	    	reader.lines().forEach(line -> {
-	    		line = line.trim();
-	    		if (line.isEmpty() || line.startsWith("#")) {
-	    			return;
-	    		}
-	    		String[] structureDefinitionToValueSet = line.split("<=>");
-	    		if (structureDefinitionToValueSet.length != 2) {
-	    			System.err.println("Incorrect mapping found in " + fileName + " needs to be {structure definition url} <=> {value set url}, but was " + line);
-	    			return;
-	    		}
-	    		addStructureDefinitionToValueSetMapping(structureDefinitionToValueSet[0].trim(), structureDefinitionToValueSet[1].trim());
-	    	});
-	    } catch (IOException e) {
-	    	System.err.println("Could not read StructuredDefinition to ValueSet configuration mapping file: " + fileName + ", the Terminology Service won't be functional: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Adds a bi-directional relationship between a StructureDefinition and its corresponding ValueSet.
-	 * <p>
-	 * A bi-directional relationship is needed because this class will need to know the VS for an incoming 
-	 * codeValue given its StructuredDefinition url, and after translating it to its corresponding VS it 
-	 * will need to get the corresponding SD and set it as the new url.  
-	 * 
-	 * @param sdUri the URI for the StructureDefinition
-	 * @param vsUri the URI for the ValueSet
-	 */
-	public void addStructureDefinitionToValueSetMapping(String sdUri, String vsUri) {
-		valueSetForStructureDefinition.put(sdUri, vsUri);
-		valueSetForStructureDefinition.put(vsUri, sdUri);
+		this.mappingStore = mappings;
 	}
 
 	/**
 	 * Install the default translation FHIR resources on the FHIR server.
-	 * 
-	 * @param fileNames the resources to install
+	 *
 	 */
-	private void installTranslationResources(String... fileNames) {
+	public boolean installTranslationResource(String resourceName, String mappingResource) {
+		JsonNode mappingResourceJson;
+		try {
+			mappingResourceJson = jsonDeserializer.readTree(mappingResource);
+		} catch (JsonProcessingException e) {
+			System.err.println("The FHIR resource JSON file " + resourceName + " is not valid JSON , the Terminology Service may not be functional: " + e.getMessage());
+			return false;
+		}
+		String resourceType = getResourceType(mappingResourceJson);
+		String id = mappingResourceJson.get(ID_OBJECT).asText();
+		Class<? extends IBaseResource> type = null;
+		if (resourceType.equals(VALUE_SET_TYPE)) {
+			type = ValueSet.class;
+		} else if (resourceType.equals(CONCEPT_MAP_TYPE)) {
+			type = ConceptMap.class;
+		} else {
+			System.err.println("Unknown resource type " + type + " for mapping FHIR resource JSON file " + resourceName + ", the Terminology Service may not be functional.");
+			return false;
+		}
+		Bundle bundle = fhirClient
+				.search()
+				.forResource(type)
+				.withIdAndCompartment(id, null)
+				.returnBundle(Bundle.class)
+				.execute();
+		// We save the URI of the resources that this Terminology Service uses, that either are already there or were installed
+		// in case a consumer needs access to them, such as a test case to clean up
+		installedResources.add(fhirClient.getServerBase() + "/" + type.getSimpleName() + "/" + id);
+		if (bundle.getEntry().isEmpty()) {
+			System.out.println("Did not find Terminology Service FHIR mapping resource '" + type.getCanonicalName() + "' with ID '" + id + "' in the FHIR server, installing...");
+			MethodOutcome outcome = fhirClient.update()
+					   .resource(mappingResource)
+					   .encodedJson()
+					   .execute();
+			IIdType newId = outcome.getId();
+			System.out.println("Installed Terminology Service FHIR mapping resource in the FHIR server: " + newId.getValue());
+		} else {
+			System.out.println("Terminology Service FHIR mapping resource '" + type.getCanonicalName() + "' with ID '" + id + "' is already intalled in the FHIR server.");
+		}
+		return true;
+	}
+
+	private void installSavedTranslationResources() {
+		Map<String, String> mappingResources = mappingStore.getSavedMappings();
+		Set<String> resourceNames = mappingResources.keySet();
 		boolean errors = false;
-		for (String fileName : fileNames) {
-			InputStream configInputStream = this.getClass().getResourceAsStream(MAPPINGS_DIRECTORY + fileName);
-			String mappingResource;
-			try {
-				mappingResource = IOUtils.toString(configInputStream, Charset.defaultCharset());
-			} catch (IOException e) {
-				System.err.println("Could not read default FHIR mapping resource: " + fileName + ", the Terminology Service won't be functional: " + e.getMessage());
-				errors = true;
-				continue;
-			}
-			JsonNode mappingResourceJson;
-			try {
-				mappingResourceJson = jsonDeserializer.readTree(mappingResource);
-			} catch (JsonProcessingException e) {
-				System.err.println("The default FHIR resource JSON file " + fileName + " is not valid JSON , the Terminology Service may not be functional: " + e.getMessage());
-				errors = true;
-				continue;
-			} 
-			String resourceType = getResourceType(mappingResourceJson);
-			String id = mappingResourceJson.get(ID_OBJECT).asText();
-			Class<? extends IBaseResource> type = null;
-			if (resourceType.equals(VALUE_SET_TYPE)) {
-				type = ValueSet.class;
-			} else if (resourceType.equals(CONCEPT_MAP_TYPE)) {
-				type = ConceptMap.class;
-			} else {
-				System.err.println("Unknown resource type " + type + " for mapping FHIR resource JSON file " + fileName + ", the Terminology Service may not be functional.");
-				errors = true;
-				continue;
-			}
-			Bundle bundle = fhirClient
-					.search()
-					.forResource(type)
-					.withIdAndCompartment(id, null)
-					.returnBundle(Bundle.class)
-					.execute();
-			// We save the URI of the resources that this Terminology Service uses, that either are already there or were installed
-			// in case a consumer needs access to them, such as a test case to clean up 
-			installedResources.add(fhirClient.getServerBase() + "/" + type.getSimpleName() + "/" + id);
-			if (bundle.getEntry().isEmpty()) {
-				System.out.println("Did not find Terminology Service FHIR mapping resource '" + type.getCanonicalName() + "' with ID '" + id + "' in the FHIR server, installing...");
-				MethodOutcome outcome = fhirClient.update()
-						   .resource(mappingResource)
-						   .encodedJson()
-						   .execute();
-				IIdType newId = outcome.getId();
-				System.out.println("Installed Terminology Service FHIR mapping resource in the FHIR server: " + newId.getValue());
-			} else {
-				System.out.println("Terminology Service FHIR mapping resource '" + type.getCanonicalName() + "' with ID '" + id + "' is already intalled in the FHIR server.");
-			}
+		for (String resourceName : resourceNames) {
+			String mappingResource = mappingResources.get(resourceName);
+			if (!installTranslationResource(resourceName, mappingResource)) errors = true;
 		}
 		fhirResourcesInstalled = !errors;
 	}
@@ -264,7 +193,7 @@ public class TerminologyService extends FHIRService {
 	 */
 	public Translation translate(InputStream fhirResource) throws TerminologyServiceException, IOException {
 		if (!fhirResourcesInstalled) {
-			installTranslationResources(SAMPLE_MAPPING_RESOURCES);
+			installSavedTranslationResources();
 		}
 		JsonNode jsonNode;
 		try {
@@ -293,7 +222,7 @@ public class TerminologyService extends FHIRService {
 	/**
 	 * This method translates the resources in the given Bundle.
 	 * 
-	 * @param json with the FHIR Bundle to translate
+	 * @param jsonNode with the FHIR Bundle to translate
 	 * @return true if some contents of the Bundle were translated, false otherwise
 	 */
 	private boolean translateBundle(JsonNode jsonNode) {
@@ -315,7 +244,6 @@ public class TerminologyService extends FHIRService {
 	 *  
 	 * @param resource the FHIR resource to translate
 	 * @returns true if there was something to translate, false otherwise
-	 * @throws DeIdentifierException if there is an error in the de-identification REST API or parsing the JSON
 	 * @throws IllegalArgumentException if the given JSON does not have a 'resource' object
 	 */
 	private boolean translateResource(JsonNode resource) {
@@ -339,7 +267,7 @@ public class TerminologyService extends FHIRService {
 			}
 			// The resource's extension URL is the URL for the StructureDefinition, so we resolve a ValueSet if known
 			String structureDefinitionURL = urlJson.asText();
-			String valueSetURL = valueSetForStructureDefinition.get(structureDefinitionURL);
+			String valueSetURL = mappingStore.getStructureDefinitions().get(structureDefinitionURL);
 			// and if known we check the FHIR Server's known ConceptMaps to see if there is a corresponding one
 			// http://4603f72b-us-south.lb.appdomain.cloud/fhir-server/api/v4/ConceptMap?_format=json&source-uri=http://hl7.org/fhir/us/core/ValueSet/birthsex
 			Bundle bundle = fhirClient
@@ -416,7 +344,7 @@ public class TerminologyService extends FHIRService {
 				continue;
 			}
 			System.out.printf("Found ConceptMap %s which translates (valueCode, system) = (%s, %s) for StructureDefinition %s to (valueCode, system) = (%s, %s) %n", conceptMapId, valueCode, valueSetURL, structureDefinitionURL, translatedCode.getCode(),  translatedCode.getSystem());
-			String translatedStructuredData = valueSetForStructureDefinition.get(translatedCode.getSystem());
+			String translatedStructuredData = mappingStore.getStructureDefinitions().get(translatedCode.getSystem());
 			if (translatedStructuredData == null) {
 				System.err.printf("Cannot find the mapping from ValueSet '%s' to its corresponding StructureData for this translation, make sure the corresponding mappings configuration file has it.%n", translatedCode.getSystem());
 				continue;

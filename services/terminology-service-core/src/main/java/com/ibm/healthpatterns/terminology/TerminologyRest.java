@@ -1,4 +1,4 @@
-package com.ibm.healthpatterns.microservices.terminology;
+package com.ibm.healthpatterns.terminology;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +9,8 @@ import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibm.healthpatterns.terminology.TerminologyService;
+
 import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -26,7 +28,7 @@ public class TerminologyRest {
     @ConfigProperty(name = "FHIR_SERVER_PASSWORD")
     String FHIR_SERVER_PASSWORD;
 
-    @ConfigProperty(name = "PV_PATH")
+    @ConfigProperty(name = "PV_PATH", defaultValue ="")
     String PV_PATH;
 
     private TerminologyService terminologyService = null;

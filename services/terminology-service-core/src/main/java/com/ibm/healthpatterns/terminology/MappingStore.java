@@ -1,4 +1,4 @@
-package com.ibm.healthpatterns.microservices.terminology;
+package com.ibm.healthpatterns.terminology;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -200,7 +200,7 @@ public class MappingStore {
      */
     public void deleteMapping(String mappingName) {
         if (canAccessDisc) {
-            File mappingFile = new File(mappingsDir + "/" + mappingName);
+            File mappingFile = new File(mappingsDir + mappingName);
             if (mappingExists(mappingName) && mappingFile.exists()) {
                 boolean deleted = mappingFile.delete();
                 if (deleted) {

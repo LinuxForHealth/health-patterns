@@ -1,16 +1,39 @@
-/target
-/.m2
+#Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
 
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
 
-/.classpath
-/.project
-/.settings
+# IntelliJ
+.idea
+*.ipr
+*.iml
+*.iws
 
-/caches
-/local.properties
-.*.swp
+# NetBeans
+nb-configuration.xml
+
+# Visual Studio Code
+.vscode
+.factorypath
+
+# OSX
 .DS_Store
-/src/main/resources/application-local.properties
 
-src/main/resources/application-local.properties
-src/main/resources/localdev-config.json
+# Vim
+*.swp
+*.swo
+
+# patch
+*.orig
+*.rej
+
+# Local environment
+.env
