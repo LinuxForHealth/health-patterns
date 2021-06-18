@@ -1,0 +1,149 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: public-iks-k8s-nginx
+    app.quarkus.io/commit-id: f056442b9e2db19ce58c664659020dc1a6b5c87f
+    app.quarkus.io/vcs-url: https://github.com/bitwise-knot/health-patterns-interns.git
+    app.quarkus.io/build-timestamp: 2021-06-10 - 14:52:51 +0000
+  labels:
+    app.kubernetes.io/version: 0.0.1-SNAPSHOT
+    app.kubernetes.io/name: ingestion-deid-microservice
+  name: ingestion-deid-microservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: public-iks-k8s-nginx
+    app.quarkus.io/commit-id: f056442b9e2db19ce58c664659020dc1a6b5c87f
+    app.quarkus.io/vcs-url: https://github.com/bitwise-knot/health-patterns-interns.git
+    app.quarkus.io/build-timestamp: 2021-06-10 - 14:52:51 +0000
+  labels:
+    app.kubernetes.io/name: ingestion-deid-microservice
+    app.kubernetes.io/version: 0.0.1-SNAPSHOT
+  name: ingestion-deid-microservice
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: ingestion-deid-microservice
+    app.kubernetes.io/version: 0.0.1-SNAPSHOT
+  type: ClusterIP
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ingestion-deid-microservice-view
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: view
+subjects:
+- kind: ServiceAccount
+  name: ingestion-deid-microservice
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: deid-config-pv-claim
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ibmc-vpc-block-10iops-tier
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: deid-config
+data:
+  service.url: http://ingestion-deid:8080/api/v1
+  fhirserver.url: http://ingestion-fhir-deid/fhir-server/api/v4
+  fhirserver.username: fhiruser
+  fhirserver.password: integrati0n
+  pv.path: /mnt/data/
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: public-iks-k8s-nginx
+    app.quarkus.io/commit-id: f056442b9e2db19ce58c664659020dc1a6b5c87f
+    app.quarkus.io/vcs-url: https://github.com/bitwise-knot/health-patterns-interns.git
+    app.quarkus.io/build-timestamp: 2021-06-10 - 14:52:51 +0000
+  labels:
+    app.kubernetes.io/version: 0.0.1-SNAPSHOT
+    app.kubernetes.io/name: ingestion-deid-microservice
+  name: ingestion-deid-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/version: 0.0.1-SNAPSHOT
+      app.kubernetes.io/name: ingestion-deid-microservice
+  template:
+    metadata:
+      annotations:
+        kubernetes.io/ingress.class: public-iks-k8s-nginx
+        app.quarkus.io/commit-id: f056442b9e2db19ce58c664659020dc1a6b5c87f
+        app.quarkus.io/vcs-url: https://github.com/bitwise-knot/health-patterns-interns.git
+        app.quarkus.io/build-timestamp: 2021-06-10 - 14:52:51 +0000
+      labels:
+        app.kubernetes.io/version: 0.0.1-SNAPSHOT
+        app.kubernetes.io/name: ingestion-deid-microservice
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: DEID_SERVICE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: service.url
+              name: deid-config
+        - name: DEID_FHIR_SERVER_URL
+          valueFrom:
+            configMapKeyRef:
+              key: fhirserver.url
+              name: deid-config
+        - name: DEID_FHIR_SERVER_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: fhirserver.username
+              name: deid-config
+        - name: DEID_FHIR_SERVER_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: fhirserver.password
+              name: deid-config
+        - name: PV_PATH
+          valueFrom:
+            configMapKeyRef:
+              key: pv.path
+              name: deid-config
+        image: docker.io/kathrynelrod/deid:0.0.1-SNAPSHOT
+        imagePullPolicy: Always
+        name: ingestion-deid-microservice
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /mnt/data
+          name: configurations
+          readOnly: false
+          subPath: ""
+      serviceAccount: ingestion-deid-microservice
+      volumes:
+      - name: configurations
+        persistentVolumeClaim:
+          claimName: deid-config-pv-claim
+          readOnly: false

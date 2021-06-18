@@ -1,0 +1,42 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# A simple name describing the Alvearie pattern implemented by this Helm values file
+pattern: "Clinical Enrichment"
+
+# ------------------------------------------------------------------------------
+# Nifi Configuration
+# Values: https://github.com/cetic/helm-nifi/blob/master/values.yaml
+# ------------------------------------------------------------------------------
+nifi:
+  extraContainers:
+    - name: post-start-setup
+      image: alvearie/nifi-setup:0.1.0
+      imagePullPolicy: Always
+      command:
+        - bash
+        - -c
+        - |
+          /scripts/wait-for-nifi.sh $HOSTNAME 8080
+          /scripts/initialize-reporting-task.sh $HOSTNAME 8080
+          python /scripts/loadHealthPatternsFlows.py \
+                   --reg=default \
+                   --bucket=Health_Patterns \
+                   --flowName="FHIR Bundle Enrichment" \
+                   --baseUrl=http://$HOSTNAME:8080/
+          python /scripts/startHealthPatternsFlow.py \
+                   --baseUrl=http://$HOSTNAME:8080/ \
+                   --fhir_pw=integrati0n \
+                   --kafka_pw=integrati0n \
+                   --runASCVD=True \
+                   --deidentifyData=True \
+                   --resolveTerminology=True
+          if [ $? -eq 0 ]
+          then
+            echo "NiFi canvas setup was successful!"
+            echo "starting wait loop so container does not exit"
+            while true; do sleep 1000; done
+          else
+            echo "NiFi canvas setup failed"
+            exit 1
+          fi

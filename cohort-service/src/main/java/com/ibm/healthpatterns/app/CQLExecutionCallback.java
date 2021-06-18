@@ -56,9 +56,9 @@ class CQLExecutionCallback implements EvaluationResultCallback {
 	@Override
 	public void onEvaluationComplete(String contextId, String expression, Object result) {
 		
-		if (expression.equalsIgnoreCase("Numerator")) {
+		if (expression.equalsIgnoreCase("Numerator") || expression.equalsIgnoreCase("InPopulation")) {
 			numerator = Boolean.parseBoolean(result.toString());
-		} else if (expression.equalsIgnoreCase("Denominator")) {
+		} else if (expression.equalsIgnoreCase("Denominator") || expression.equalsIgnoreCase("MeetsInclusionCriteria")) {
 			denominator = Boolean.parseBoolean(result.toString());
 		}
 		

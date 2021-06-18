@@ -1,0 +1,7 @@
+{
+    "config": "#CONFIG",
+    "data": [
+        "#DATA"
+    ],
+    "schemaType": "FHIR"
+}
