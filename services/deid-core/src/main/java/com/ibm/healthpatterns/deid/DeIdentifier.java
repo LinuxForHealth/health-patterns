@@ -22,9 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
-import java.util.HashMap;
 
-import ca.uhn.fhir.parser.IParser;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.r4.model.Bundle;
@@ -40,6 +38,7 @@ import com.ibm.healthpatterns.core.FHIRService;
 import com.ibm.healthpatterns.deid.client.DeIdentifierClientException;
 import com.ibm.healthpatterns.deid.client.DeIdentifierServiceClient;
 
+import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.server.exceptions.BaseServerResponseException;
 
@@ -58,6 +57,11 @@ import ca.uhn.fhir.rest.server.exceptions.BaseServerResponseException;
 public class DeIdentifier extends FHIRService {
 
 	/**
+	 * The file that contains the masking config that will be used to configure the de-id service.
+	 */
+	private static final String DEID_CONFIG_JSON = "/de-id-config.json";
+
+	/**
 	 * The types for which there is masking configuration ion this {@link DeIdentifier}s masking config.
 	 */
 	private static final String[] DEIDENTIFIABLE_FHIR_TYPES = new String[] {"Patient", "Procedure", "Condition", "Observation", "MedicationRequest", "Encounter"};
@@ -74,23 +78,6 @@ public class DeIdentifier extends FHIRService {
 
 	DeIdentifierServiceClient deidClient;
 	String configJson;
-
-	private static final HashMap<Integer, DeIdentifier> DEIDENTIFIERS = new HashMap<>();
-
-	/**
-	 * Retrieve or initialize a deidentifier with the given parameters
-	 */
-	public static DeIdentifier getDeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword, String configJson) {
-		String signature = deidServiceURL + fhirServerURL + fhirServerUsername + fhirServerPassword + configJson;
-		int hashCode = signature.hashCode();
-		if (DEIDENTIFIERS.containsKey(hashCode)) {
-			return DEIDENTIFIERS.get(hashCode);
-		} else {
-			DeIdentifier newDeIdentifier = new DeIdentifier(deidServiceURL, fhirServerURL, fhirServerUsername, fhirServerPassword, configJson);
-			DEIDENTIFIERS.put(hashCode, newDeIdentifier);
-			return newDeIdentifier;
-		}
-	}
 	
 	/**
 	 * Create a {@link DeIdentifier} that uses the given de-id and FHIR connection information.
@@ -100,10 +87,15 @@ public class DeIdentifier extends FHIRService {
 	 * @param fhirServerUsername the FHIR server username
 	 * @param fhirServerPassword the FHIR server password
 	 */
-	public DeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword, String configJson) {
+	public DeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword) {
 		super(fhirServerURL, fhirServerUsername, fhirServerPassword);
 		deidClient = new DeIdentifierServiceClient(deidServiceURL);
-		this.configJson = configJson;
+		InputStream configInputStream = this.getClass().getResourceAsStream(DEID_CONFIG_JSON);
+		try {
+			configJson = IOUtils.toString(configInputStream, Charset.defaultCharset());
+		} catch (IOException e) {
+			System.err.println("Could not read de-identifier service configuration, the DeIdentifier won't be functional");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -133,7 +125,7 @@ public class DeIdentifier extends FHIRService {
 	 *                               de-identification operation or saving the resulting resource to FHIR
 	 * @throws IOException if there is an IO problem reading the input stream 
 	 */
-	public DeIdentification deIdentify(InputStream resourceInputStream, boolean pushToFHIR) throws DeIdentifierException, IOException {
+	public DeIdentification deIdentify(InputStream resourceInputStream) throws DeIdentifierException, IOException {
 		JsonNode jsonNode;
 		try {
 			jsonNode = jsonDeserializer.readTree(resourceInputStream);
@@ -147,11 +139,9 @@ public class DeIdentifier extends FHIRService {
 		deidentification.setOriginalResource(jsonNode);
 		JsonNode deIdentifiedJson = deIdentify(jsonNode);
 		deidentification.setDeIdentifiedResource(deIdentifiedJson);
-		if (pushToFHIR) {
-			pushToFHIR(deIdentifiedJson, deidentification);
-		}
+		pushToFHIR(deIdentifiedJson, deidentification);
 		return deidentification;
-	}
+	}	
 	
 	/**
 	 * De-identifies the FHIR resource represented in the given JSON object.
@@ -178,7 +168,7 @@ public class DeIdentifier extends FHIRService {
 	/**
 	 * This method de-identifies the resources in the given Bundle, and pushes them to a FHIR server.
 	 * 
-	 * @param jsonNode with the FHIR Bundle to de-identify
+	 * @param json with the FHIR Bundle to de-identify
 	 * @throws DeIdentifierException if the given bundle does not contain proper FHIR resources
 	 */
 	private void deIdentifyBundle(JsonNode jsonNode) throws DeIdentifierException {
@@ -194,14 +184,14 @@ public class DeIdentifier extends FHIRService {
 				continue;
 			}
 			// Replace the resource object with the de-identified JSON
-			resourceEntry.set(RESOURCE_OBJECT, deIdentifiedResource);
+			((ObjectNode) resourceEntry).set(RESOURCE_OBJECT, deIdentifiedResource);
 		}
 	}
 
 	/**
 	 * De-identifies the given single FHIR resource represented as a {@link JsonNode}.
 	 *  
-	 * @param resource the FHIR resource to de-identify
+	 * @param patient the FHIR resource to de-identify
 	 * @return the de-identified resource, or null if this resource is not of a type that can be de-identified
 	 * @throws DeIdentifierException if there is an error in the de-identification REST API or parsing the JSON
 	 * @throws IllegalArgumentException if the given JSON does not have a 'resource' object
@@ -221,7 +211,7 @@ public class DeIdentifier extends FHIRService {
 		try {
 			deIdentifiedResource = deidClient.deIdentify(resource.toString(), configJson);
 		} catch (DeIdentifierClientException e) {
-			throw new DeIdentifierException("Error invoking the de-identification REST API" + e.getMessage());
+			throw new DeIdentifierException("Error invoking the de-identification REST API", e);
 		}
 		JsonNode deidentifiedResourceResponse;
 		try {
@@ -302,7 +292,7 @@ public class DeIdentifier extends FHIRService {
 		// We don't know exactly what type of Resource we are going to POST to FHiR and the FHIR requires
 		// that when parsing a Resource a concrete class is used, so we load the concrete type reflexively 
 	    ClassLoader classLoader = this.getClass().getClassLoader();
-	    Class<? extends Resource> aClass;
+	    Class<? extends Resource> aClass = null;
 	    String resourceType = getResourceType(fhirResource);
 		try {
 			aClass = (Class<? extends Resource>) classLoader.loadClass("org.hl7.fhir.r4.model." + resourceType);
@@ -323,4 +313,5 @@ public class DeIdentifier extends FHIRService {
 		System.out.println("FHIR create resource done!");
 		return outcome.getId().toString();
 	}
+	
 }

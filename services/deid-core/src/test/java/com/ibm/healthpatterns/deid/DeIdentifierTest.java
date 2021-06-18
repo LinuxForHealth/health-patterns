@@ -54,16 +54,13 @@ public class DeIdentifierTest extends FHIRServiceTest {
 
 	private DeIdentifier deid;
 	private String deidURL;
-	private String configJson;
 	
 	/**
 	 * 
 	 */
 	public DeIdentifierTest() {
-		deidURL = "http://git-test.deid.integration-k8s-cluster-dcc48c44d831198cb8496b1ec68d7d12-0000.us-south.containers.appdomain.cloud/api/v1";
-		configJson = "{ \"rules\": [ { \"name\": \"hash\", \"maskingProviders\": [ { \"type\": \"HASH\" } ] }, { \"name\": \"date\", \"maskingProviders\": [ { \"type\": \"DATETIME\", \"maskShiftDate\": true, \"maskShiftSeconds\": 987678654 } ] }, { \"name\": \"random\", \"maskingProviders\": [ { \"type\": \"RANDOM\" } ] }, { \"name\": \"delete\", \"maskingProviders\": [ { \"type\": \"NULL\" } ] } ], \"json\": { \"schemaType\": \"FHIR\", \"messageTypeKey\": \"resourceType\", \"messageTypes\": [ \"Patient\", \"Observation\", \"Condition\", \"Procedure\" ], \"maskingRules\": [ { \"jsonPath\": \"/fhir/Patient\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/UUID\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/address/city\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/address/district\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/address/line\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/address/postalCode\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/address/text\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/birthDate\", \"rule\": \"date\" }, { \"jsonPath\": \"/fhir/Patient/contact/address/city\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/contact/address/district\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/contact/address/line\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/contact/address/postalCode\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/contact/address/text\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/contact/name/family\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/contact/name/given\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/contact/name/text\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/contact/telecom/value\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/deceasedDateTime\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/deviceInfo\", \"rule\": \"delete\" }, { \"jsonPath\": \"/fhir/Patient/name/family\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/name/given\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/federationNumber\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/given\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/identifier/assigner/display\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/identifier/assigner/reference\", \"rule\": \"hash\" }, { \"jsonPath\": \"/fhir/Patient/identifier/type/coding/code\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/identifier/type/coding/display\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/identifier/type/text\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/identifier/value\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/maritalStatus/coding/code\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/maritalStatus/coding/display\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/maritalStatus/text\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/messageID\", \"rule\": \"delete\" }, { \"jsonPath\": \"/fhir/Patient/ptpsIdentifier\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/ptpsVersion\", \"rule\": \"delete\" }, { \"jsonPath\": \"/fhir/Patient/requestID\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/telecom/value\", \"rule\": \"random\" }, { \"jsonPath\": \"/fhir/Patient/text\", \"rule\": \"delete\" } ] } }";
-		deid = new DeIdentifier(deidURL, fhirURL, fhirUsername, fhirPassword, configJson);
-
+		deidURL = "https://git-test-deid.wh-health-patterns.dev.watson-health.ibm.com/api/v1";
+		deid = new DeIdentifier(deidURL, fhirURL, fhirUsername, fhirPassword);
 	}
 
 	/**
@@ -82,7 +79,7 @@ public class DeIdentifierTest extends FHIRServiceTest {
 	 */
 	@Test
 	public void testHealthCheckBadDeID() {
-		deid = new DeIdentifier("http://wrong-us-south.lb.appdomain.cloud:8080/api/v1", fhirURL, fhirUsername, fhirPassword, configJson);
+		deid = new DeIdentifier("http://wrong-us-south.lb.appdomain.cloud:8080/api/v1", fhirURL, fhirUsername, fhirPassword);
 		StringWriter status = new StringWriter();
 		boolean healthCheck = deid.healthCheck(status);
 		System.out.println(status);
@@ -94,7 +91,7 @@ public class DeIdentifierTest extends FHIRServiceTest {
 	 */
 	@Test
 	public void testHealthCheckBadFHIR() {
-		deid = new DeIdentifier(deidURL, "http://wrong-us-south.lb.appdomain.cloud/fhir-server/api/v4", fhirUsername, fhirPassword, configJson);
+		deid = new DeIdentifier(deidURL, "http://wrong-us-south.lb.appdomain.cloud/fhir-server/api/v4", fhirUsername, fhirPassword);
 		StringWriter status = new StringWriter();
 		boolean healthCheck = deid.healthCheck(status);
 		System.out.println(status);
@@ -106,7 +103,7 @@ public class DeIdentifierTest extends FHIRServiceTest {
 	 */
 	@Test
 	public void testHealthCheckBadFHIRCredentials() {
-		deid = new DeIdentifier(deidURL, fhirURL, "wronguser", fhirPassword, configJson);
+		deid = new DeIdentifier(deidURL, fhirURL, "wronguser", fhirPassword);
 		StringWriter status = new StringWriter();
 		boolean healthCheck = deid.healthCheck(status);
 		System.out.println(status);
@@ -123,7 +120,7 @@ public class DeIdentifierTest extends FHIRServiceTest {
 	public void testDeIdentifyResource() throws IOException, DeIdentifierException {
 		Path jsonFile = Paths.get("src/test/resources/Antonia30_Acosta403_Patient.json");
 		InputStream inputStream = Files.newInputStream(jsonFile);
-		DeIdentification deidentification = deid.deIdentify(inputStream, false);
+		DeIdentification deidentification = deid.deIdentify(inputStream);
 		assertNotNull(deidentification.getFhirLocationHeader());
 		
 		// We test that the original patient is present and check its known birthdate
@@ -156,7 +153,7 @@ public class DeIdentifierTest extends FHIRServiceTest {
 	public void testDeIdentifyBundle() throws IOException, DeIdentifierException {
 		Path jsonFile = Paths.get("src/test/resources/Antonia30_Acosta403_Bundle.json");
 		InputStream inputStream = Files.newInputStream(jsonFile);
-		DeIdentification deidentification = deid.deIdentify(inputStream, false);
+		DeIdentification deidentification = deid.deIdentify(inputStream);
 		assertNotNull(deidentification);
 		
 		// We test that the Bundle contains the known birthdate for the original patient
@@ -192,7 +189,7 @@ public class DeIdentifierTest extends FHIRServiceTest {
 	@Test(expected = DeIdentifierException.class)
 	public void testDeIdentifyBadJSON() throws IOException, DeIdentifierException {
 		InputStream inputStream = IOUtils.toInputStream("some bad JSON", Charset.forName("UTF-8"));
-		deid.deIdentify(inputStream, false);
+		deid.deIdentify(inputStream);
 	}
 
 	/* (non-Javadoc)
