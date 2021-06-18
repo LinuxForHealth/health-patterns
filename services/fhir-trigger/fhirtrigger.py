@@ -84,7 +84,7 @@ def history():
                 #now process those patients
 
                 for pid in patientids:
-                    buildandpushtokafka(pid, rlist, producer, producertopic, fhirEndpoint, fhirusername, fhirpassword)
+                    build_and_push_to_kafka(pid, rlist, producer, producertopic, fhirEndpoint, fhirusername, fhirpassword)
 
             else:
                 print("No new history items--just sleep and recheck")
@@ -96,7 +96,7 @@ def history():
 
 # This helper method will build a fhir bundle for a given patient and push it to the
 # configured kafka endpoint, regardless of how the patient id was found (history or notification)
-def buildandpushtokafka(pid, rlist, producer, producertopic, fhirEndpoint, fhirusername, fhirpassword):
+def build_and_push_to_kafka(pid, rlist, producer, producertopic, fhirEndpoint, fhirusername, fhirpassword):
     newbundle = None
     resource_list = []
 
@@ -190,7 +190,7 @@ class Notificationthread(threading.Thread):
       #   with configured resources
       #produce the result bundle on the kafka topic
 
-      buildandpushtokafka(self.name, self.resourcelist, self.producer, self.topic, self.fhirendpoint,
+      build_and_push_to_kafka(self.name, self.resourcelist, self.producer, self.topic, self.fhirendpoint,
                           self.username, self.password)
 
       print("Exiting " + self.name)
