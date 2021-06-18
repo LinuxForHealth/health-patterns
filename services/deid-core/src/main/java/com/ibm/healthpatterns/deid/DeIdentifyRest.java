@@ -1,4 +1,4 @@
-package com.ibm.healthpatterns.microservices.deid;
+package com.ibm.healthpatterns.deid;
 
 import java.io.*;
 import java.nio.charset.Charset;

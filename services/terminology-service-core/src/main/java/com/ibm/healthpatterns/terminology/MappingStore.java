@@ -1,4 +1,4 @@
-package com.ibm.healthpatterns.microservices.terminology;
+package com.ibm.healthpatterns.terminology;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

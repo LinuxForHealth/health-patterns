@@ -19,7 +19,7 @@
 
     <parent>
         <groupId>com.ibm.healthpatterns</groupId>
-        <artifactId>core-services</artifactId>
+        <artifactId>microservices</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 

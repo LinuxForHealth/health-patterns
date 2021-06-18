@@ -1,4 +1,4 @@
-package com.ibm.healthpatterns.microservices.terminology;
+package com.ibm.healthpatterns.terminology;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +9,8 @@ import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibm.healthpatterns.terminology.TerminologyService;
+
 import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
