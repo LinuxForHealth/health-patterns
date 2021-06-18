@@ -23,6 +23,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+
+	<properties>
+		<compiler-plugin.version>3.8.1</compiler-plugin.version>
+		<maven.compiler.parameters>true</maven.compiler.parameters>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
     <artifactId>common</artifactId>
     <name>Health Patterns Common Component</name>
 
@@ -39,6 +47,13 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler-plugin.version}</version>
+				<configuration>
+					<parameters>${maven.compiler.parameters}</parameters>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
