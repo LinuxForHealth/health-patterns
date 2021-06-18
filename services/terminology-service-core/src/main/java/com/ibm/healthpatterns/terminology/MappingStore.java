@@ -331,7 +331,7 @@ public class MappingStore {
                 String lineToDelete = null;
                 for (String line: lines) {
                     String lineCopy = line.trim();
-                    if (lineCopy.startsWith("#") || lineCopy.isBlank()) {
+                    if (lineCopy.startsWith("#") || lineCopy.isEmpty()) {
                         continue;
                     }
                     String[] structureDefinitionToValueSet = lineCopy.split("<=>");

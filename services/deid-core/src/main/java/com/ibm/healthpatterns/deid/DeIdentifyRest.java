@@ -119,7 +119,7 @@ public class DeIdentifyRest {
             configString = defaultConfigJson;
         } else {
             try {
-                configString = Files.readString(java.nio.file.Path.of(PV_PATH + configName));
+                configString = IOUtils.toString(new FileInputStream(PV_PATH + configName), Charset.defaultCharset());
             } catch (IOException e) {
                 logger.warn("The config \"" + configName + "\" should exist, but the file could not be found.");
                 return Response.status(500).entity("The config \"" + configName + "\" should exist, but the file could not be found.").build();
@@ -261,7 +261,7 @@ public class DeIdentifyRest {
         File configFile = new File(configPath);
         if (configFile.exists()) {
             logger.info("Config found.");
-            return Response.ok(Files.readString(java.nio.file.Path.of(configPath))).build();
+            return Response.ok(IOUtils.toString(new FileInputStream(PV_PATH + configName), Charset.defaultCharset())).build();
         } else {
             logger.warn("No config with the identifier \"" + configName + "\" exists.");
             return Response.status(400).entity("No config with the identifier \"" + configName + "\" exists.").build();
