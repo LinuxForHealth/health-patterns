@@ -117,8 +117,7 @@ public class MappingStore {
                 assert structureDefinitionFile != null;
                 initializeStructureDefinition(new FileInputStream(structureDefinitionFile));
             } catch (IOException e) {
-                logger.warn("Could not read the structure definition file.  the Terminology Service will not be functional");
-                logger.trace(e);
+                logger.warn("Could not read the structure definition file. The Terminology Service will not be functional", e);
             }
         } else {
             // pull default resources
@@ -128,16 +127,14 @@ public class MappingStore {
                     assert configInputStream != null;
                     savedMappings.put(fileName, IOUtils.toString(configInputStream, Charset.defaultCharset()));
                 } catch (IOException e) {
-                    logger.warn("Could not read default FHIR mapping resource: " + fileName);
-                    logger.trace(e);
+                    logger.warn("Could not read default FHIR mapping resource: " + fileName, e);
                 }
             }
             // add default structureDefinition map
             try {
                 initializeStructureDefinition(defaultSDFile);
             } catch (IOException e) {
-                logger.warn("Error initializing structure definitions.");
-                logger.trace(e);
+                logger.warn("Error initializing structure definitions.", e);
             }
         }
         logger.info("MappingStore Initialized");
@@ -157,7 +154,7 @@ public class MappingStore {
                     String mapping = IOUtils.toString(configInputStream, Charset.defaultCharset());
                     saveMapping(fileName, mapping);
                 } catch (IOException e) {
-                    logger.warn("Error saving default FHIR mapping resource to disk: " + fileName);
+                    logger.warn("Error saving default FHIR mapping resource to disk: " + fileName, e);
                     throw e;
                 }
             }
@@ -165,7 +162,7 @@ public class MappingStore {
                 Files.copy(defaultSDFile, structureDefinitionFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 initializeStructureDefinition(new FileInputStream(structureDefinitionFile));
             } catch (IOException e) {
-                logger.warn("Could not copy default structure definition file, the terminology service will not work");
+                logger.warn("Could not copy default structure definition file, the terminology service will not work", e);
                 throw e;
             }
         }
@@ -186,7 +183,7 @@ public class MappingStore {
                 jsonNode = jsonDeserializer.readTree(mapping);
                 out.write(jsonNode.toPrettyString());
             } catch (IOException e) {
-                logger.warn("Error parsing and saving mapping \"" + mappingName + "\" to disk.");
+                logger.warn("Error parsing and saving mapping \"" + mappingName + "\" to disk.", e);
                 throw e;
             }
         }
@@ -261,7 +258,7 @@ public class MappingStore {
                 try (BufferedWriter out = new BufferedWriter(new FileWriter(structureDefinitionFile, true))) {
                     out.write("\n" + sdUri + " <=> " + vsUri);
                 } catch (IOException e) {
-                    logger.warn("Error writing to structure definition file.");
+                    logger.warn("Error writing to structure definition file.", e);
                     throw e;
                 }
             }
@@ -297,7 +294,7 @@ public class MappingStore {
                 }
 
             } catch (IOException e) {
-                logger.warn("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional: " + e.getMessage());
+                logger.warn("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional.", e);
                 throw e;
             }
             return structureDefinitions.containsKey(sdUri) && structureDefinitions.get(sdUri).equals(vsUri) && existsOnDisk;
@@ -325,7 +322,7 @@ public class MappingStore {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(structureDefinitionFile), StandardCharsets.UTF_8))) {
                     lines = reader.lines().collect(Collectors.toList());
                 } catch (IOException e) {
-                    logger.warn("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional: " + e.getMessage());
+                    logger.warn("Could not read StructuredDefinition to ValueSet configuration mapping file: the Terminology Service won't be functional.", e);
                     throw e;
                 }
                 String lineToDelete = null;
@@ -350,7 +347,7 @@ public class MappingStore {
                             out.write("\n");
                         }
                     } catch (IOException e) {
-                        logger.warn("Error writing to Structure Definition File.");
+                        logger.warn("Error writing to Structure Definition File.", e);
                         throw e;
                     }
                 }
@@ -397,11 +394,11 @@ public class MappingStore {
                 try {
                     addSDMapping(structureDefinitionToValueSet[0].trim(), structureDefinitionToValueSet[1].trim());
                 } catch (IOException e) {
-                    logger.warn("Error writing to Structure Definition file while initializing.");
+                    logger.warn("Error writing to Structure Definition file while initializing.", e);
                 }
             });
         } catch (IOException e) {
-            logger.warn("Error reading from default structure definition file while initializing.");
+            logger.warn("Error reading from default structure definition file while initializing.", e);
             throw e;
         }
     }

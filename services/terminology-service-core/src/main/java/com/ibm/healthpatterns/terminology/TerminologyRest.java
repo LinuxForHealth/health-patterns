@@ -9,7 +9,6 @@ import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibm.healthpatterns.terminology.TerminologyService;
 
 import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -20,16 +19,16 @@ import org.jboss.logging.Logger;
 public class TerminologyRest {
 
     @ConfigProperty(name = "FHIR_SERVER_URL")
-    String FHIR_SERVER_URL;
+    String fhirServerUrl;
 
     @ConfigProperty(name = "FHIR_SERVER_USERNAME")
-    String FHIR_SERVER_USERNAME;
+    String fhirServerUsername;
 
     @ConfigProperty(name = "FHIR_SERVER_PASSWORD")
-    String FHIR_SERVER_PASSWORD;
+    String fhirServerPassword;
 
-    @ConfigProperty(name = "PV_PATH", defaultValue ="")
-    String PV_PATH;
+    @ConfigProperty(name = "PV_PATH", defaultValue = "/mnt/data/")
+    String pvPath;
 
     private TerminologyService terminologyService = null;
 
@@ -46,25 +45,25 @@ public class TerminologyRest {
     private void initializeService() throws Exception {
         if (mappingStore == null) {
             logger.info("initializing MappingStore...");
-            if (PV_PATH.isBlank()) {
+            if (pvPath.isBlank()) {
                 mappingStore = new MappingStore(null, null);
             } else {
-                if (!PV_PATH.endsWith("/")) PV_PATH = PV_PATH + "/";
-                File mappingsDirFile = new File(PV_PATH + "mappings");
-                File structureDefinitionFile = new File(PV_PATH + "structureDefinition.mappings");
+                if (!pvPath.endsWith("/")) pvPath = pvPath + "/";
+                File mappingsDirFile = new File(pvPath + "mappings");
+                File structureDefinitionFile = new File(pvPath + "structureDefinition.mappings");
                 mappingStore = new MappingStore(structureDefinitionFile, mappingsDirFile);
             }
 
         }
         if (terminologyService == null) {
 
-            if (FHIR_SERVER_URL == null ||
-                FHIR_SERVER_USERNAME == null ||
-                FHIR_SERVER_PASSWORD == null
+            if (fhirServerUrl == null ||
+                fhirServerUsername == null ||
+                fhirServerPassword == null
             ) {
                 throw new Exception("FHIR server URL/credentials not set");
             }
-            terminologyService = new TerminologyService(FHIR_SERVER_URL, FHIR_SERVER_USERNAME, FHIR_SERVER_PASSWORD, mappingStore);
+            terminologyService = new TerminologyService(fhirServerUrl, fhirServerUsername, fhirServerPassword, mappingStore);
         }
     }
 
@@ -81,7 +80,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
 
@@ -90,7 +89,7 @@ public class TerminologyRest {
             logger.info("Resource translation successful");
             return result.getTranslatedResource().toPrettyString();
         } catch (Exception e) {
-            logger.warn(e);
+            logger.warn("Request could not be processed with given data.", e);
             return Response.status(400).entity("Request could not be processed with given data.").build(); // Bad request error
         }
     }
@@ -106,7 +105,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
 
@@ -135,7 +134,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         if (name == null || name.isEmpty()) {
@@ -180,7 +179,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         if (name == null || name.isEmpty()) {
@@ -218,7 +217,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         StringBuilder out = new StringBuilder();
@@ -242,7 +241,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         if (mappingStore.mappingExists(mappingName)) {
@@ -268,7 +267,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         if (mappingStore.mappingExists(mappingName)) {
@@ -298,7 +297,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         ObjectMapper jsonDeserializer = new ObjectMapper();
@@ -317,7 +316,7 @@ public class TerminologyRest {
             logger.info("Successfully added structure definition \""+vsUri+" <=> "+sdUri+"\"");
             return Response.ok("Successfully added structure definition \""+vsUri+" <=> "+sdUri+"\"").build();
         } catch (IOException e) {
-            logger.warn("Error posting structure definiton: " + e);
+            logger.warn("Error posting structure definiton.", e);
             return Response.status(400).entity("Error posting structure definiton: " + e).build();
         }
     }
@@ -335,7 +334,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         String[] definitions = mappingStore.getAllStructureDefinitions().toArray(new String[0]);
@@ -360,7 +359,7 @@ public class TerminologyRest {
         try {
             initializeService();
         } catch (Exception e) {
-            logger.warn("Could not initialize terminology service: \""+e+"\"");
+            logger.warn("Could not initialize terminology service.", e);
             return Response.status(500).entity("Could not initialize terminology service: \""+e+"\"").build(); // Internal server error
         }
         ObjectMapper jsonDeserializer = new ObjectMapper();
@@ -376,7 +375,7 @@ public class TerminologyRest {
                 return Response.status(400).entity("Improperly formatted json request:  should contain the fields \"sdUri\" and \"vsUri\"").build();
             }
         } catch (IOException e) {
-            logger.warn("Bad JSON: " + e);
+            logger.warn("Bad JSON.", e);
             return Response.status(400).entity("Bad JSON: " + e).build();
         }
 
@@ -390,7 +389,7 @@ public class TerminologyRest {
                 return Response.status(400).entity("No mapping \"" +sdUri + " <=> " + vsUri +"\" exists").build();
             }
         } catch (IOException e) {
-            logger.warn("Error deleting Structure Definition mapping: ", e);
+            logger.warn("Error deleting Structure Definition mapping.", e);
             return Response.status(400).entity("Error deleting Structure Definition mapping: " + e).build();
         }
     }
