@@ -1,4 +1,4 @@
-# microservices/terminology
+# services/terminology
 
 REST API for applying FHIR Terminology Services to FHIR resources.
 

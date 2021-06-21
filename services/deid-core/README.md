@@ -1,4 +1,4 @@
-# microservices/deid
+# services/deid
 
 REST API for communicating with a deidentification service and FHIR server.
 
