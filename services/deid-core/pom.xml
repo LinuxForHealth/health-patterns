@@ -6,7 +6,7 @@
 
   <parent>
     <groupId>com.ibm.healthpatterns</groupId>
-    <artifactId>microservices</artifactId>
+    <artifactId>services</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
@@ -40,11 +40,6 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
-    <!-- <dependency>
-      <groupId>com.ibm.fhir</groupId>
-      <artifactId>fhir-model</artifactId>
-      <version>${fhir.version}</version>
-    </dependency> -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy</artifactId>
