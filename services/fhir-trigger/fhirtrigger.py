@@ -18,7 +18,7 @@ kafkalock = threading.Lock()
 def history():
     #Fill in the configuration from env variables related to history triggers
     chunksize = int(os.getenv("CHUNKSIZE"))
-    rlist = os.getenv("RESOURCESLIST").split()
+    targetresourcelist = os.getenv("RESOURCESLIST").split()
     sleepseconds = int(os.getenv("SLEEPSECONDS"))
     kafkabootstrap = os.getenv("KAFKABOOTSTRAP")
     producertopic = os.getenv("PRODUCERTOPIC")
@@ -84,7 +84,7 @@ def history():
                 #now process those patients
 
                 for pid in patientids:
-                    build_and_push_to_kafka(pid, rlist, producer, producertopic, fhirEndpoint, fhirusername, fhirpassword)
+                    build_and_push_to_kafka(pid, targetresourcelist, producer, producertopic, fhirEndpoint, fhirusername, fhirpassword)
 
             else:
                 print("No new history items--just sleep and recheck")
@@ -96,7 +96,7 @@ def history():
 
 # This helper method will build a fhir bundle for a given patient and push it to the
 # configured kafka endpoint, regardless of how the patient id was found (history or notification)
-def build_and_push_to_kafka(pid, rlist, producer, producertopic, fhirEndpoint, fhirusername, fhirpassword):
+def build_and_push_to_kafka(pid, targetresourcelist, producer, producertopic, fhirEndpoint, fhirusername, fhirpassword):
     newbundle = None
     resource_list = []
 
@@ -119,7 +119,7 @@ def build_and_push_to_kafka(pid, rlist, producer, producertopic, fhirEndpoint, f
         else:
             entrylist = newbundle["entry"]
             for entry in entrylist: #only keep those that have been configured (* means keep everything)
-                if (entry["resource"]["resourceType"] in rlist) or ("*" in rlist):
+                if (entry["resource"]["resourceType"] in targetresourcelist) or ("*" in targetresourcelist):
                     entry["fullUrl"] = "urn:uuid::" + entry["resource"]["id"]
                     #transaction bundle needs proper request
                     entry["request"] = { "method": "POST", "url": entry["resource"]["resourceType"]}
@@ -199,7 +199,7 @@ class Notificationthread(threading.Thread):
 def notification():
     #Fill in the configuration from env variables
     maxiters = int(os.getenv("MAXITERATIONS"))
-    rlist = os.getenv("RESOURCESLIST").split()
+    targetresourcelist = os.getenv("RESOURCESLIST").split()
     alarmminutes = int(os.getenv("ALARMMINUTES"))
     consumertopic = os.getenv("CONSUMERTOPIC")
     kafkauser = os.getenv("KAFKAUSER")
@@ -264,14 +264,14 @@ def notification():
         if patientid not in notification_thread_dict:
             print("New pid-create thread",patientid)
             th = Notificationthread(patientid, timestamp, maxiters, producer, producertopic,
-                                    fhirEndpoint, fhirusername, fhirpassword, rlist[:], datetime.datetime.now(), alarmminutes)
+                                    fhirEndpoint, fhirusername, fhirpassword, targetresourcelist[:], datetime.datetime.now(), alarmminutes)
             notification_thread_dict[patientid] = th
             th.start()
         else:
             if patientid in notification_thread_dict:
                 if notification_thread_dict[patientid].getstatus() == 'complete':
                     th = Notificationthread(patientid, timestamp, maxiters, producer, producertopic,
-                                            fhirEndpoint, fhirusername, fhirpassword, rlist[:], datetime.datetime.now(), alarmminutes)
+                                            fhirEndpoint, fhirusername, fhirpassword, targetresourcelist[:], datetime.datetime.now(), alarmminutes)
                     notification_thread_dict[patientid] = th
                     th.start()
                 else:
