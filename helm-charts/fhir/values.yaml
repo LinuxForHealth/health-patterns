@@ -17,19 +17,19 @@ service:
 global:
   ingress:
     enabled: true
-    class: BAD
+    class: REQUIRED-NOT-USED
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-    subdomain: BAD 
+    subdomain: REQUIRED-NOT-USED
 
 ingress:
   enabled: true
-  class: BAD
+  class: REQUIRED-NOT-USED
        # IBM: public-iks-k8s-nginx
        # Azure: addon-http-application-routing
        # AWS: nginx
-  subdomain: BAD
+  subdomain: REQUIRED-NOT-USED
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
