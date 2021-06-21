@@ -40,3 +40,7 @@ nifi:
             echo "NiFi canvas setup failed"
             exit 1
           fi
+
+
+fhir-trigger:
+  enabled: true

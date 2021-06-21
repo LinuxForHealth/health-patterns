@@ -30,21 +30,28 @@ tolerations: []
 
 affinity: {}
 
-ingress:
-  enabled: true
-  class:
+global:
+  ingress:
+    enabled: true
+    class: BAD
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-  subdomain:
+    subdomain: BAD 
+
+ingress:
+  enabled: true
+  class: BAD
+       # IBM: public-iks-k8s-nginx
+       # Azure: addon-http-application-routing
+       # AWS: nginx
+  subdomain: BAD
 
 ascvd:
   enabled: true
 
 ascvd-from-fhir:
   enabled: true
-  ingress:
-    enabled: false
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
@@ -73,6 +80,9 @@ fhir:
 #    cosSrvinstid: yourcossrvinstid
 #    batchUserPw: youradminpw
 
+fhir-trigger:
+  enabled: false
+
 fhir-deid:
   enabled: false
   service:
@@ -95,6 +105,9 @@ fhir-deid:
 #    cosApikey: yourcosapikey
 #    cosSrvinstid: yourcossrvinstid
 #    batchUserPw: youradminpw
+
+fhir-deid-trigger:
+  enabled: false
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
