@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: terminology-mappings-pv-2
+  name: terminology-mappings-pv
 spec:
   storageClassName: ibmc-vpc-block-10iops-tier
   capacity:
@@ -36,16 +36,16 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ingestion-terminology-microservice
+  name: ingestion-terminology-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: ingestion-terminology-microservice
+      app.kubernetes.io/name: ingestion-terminology-service
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: ingestion-terminology-microservice
+        app.kubernetes.io/name: ingestion-terminology-service
     spec:
       securityContext:
         runAsUser: 0

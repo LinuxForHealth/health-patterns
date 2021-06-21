@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.jboss.logging.Logger;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -39,7 +41,7 @@ public class MappingStore {
 
     private final InputStream defaultSDFile;
 
-    private final Map<String, String> structureDefinitions;
+    private final BiMap<String, String> structureDefinitions;
 
     private final Map<String, String> savedMappings;
 
@@ -64,7 +66,7 @@ public class MappingStore {
         this.mappingsDir = mappingsDir;
         this.defaultSDFile = this.getClass().getResourceAsStream(SD_TO_VS_MAPPINGS_FILE);
         this.savedMappings = new HashMap<>();
-        this.structureDefinitions = new HashMap<>();
+        this.structureDefinitions = HashBiMap.create();
         this.jsonDeserializer = new ObjectMapper();
         try {
             boolean initialize = false;
@@ -197,7 +199,7 @@ public class MappingStore {
      */
     public void deleteMapping(String mappingName) {
         if (canAccessDisc) {
-            File mappingFile = new File(mappingsDir + mappingName);
+            File mappingFile = new File(mappingsDir + "/" + mappingName);
             if (mappingExists(mappingName) && mappingFile.exists()) {
                 boolean deleted = mappingFile.delete();
                 if (deleted) {
@@ -251,7 +253,6 @@ public class MappingStore {
     public void addSDMapping(String sdUri, String vsUri) throws IOException {
 
         structureDefinitions.put(sdUri, vsUri);
-        structureDefinitions.put(vsUri, sdUri);
         boolean duplicate = containsSDMapping(sdUri, vsUri);
         if (canAccessDisc) {
             if (!duplicate) {
@@ -286,8 +287,7 @@ public class MappingStore {
                     if (structureDefinitionToValueSet.length != 2) {
                         logger.warn("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
                     }
-                    if (structureDefinitionToValueSet[0].trim().equals(sdUri) && structureDefinitionToValueSet[1].trim().equals(vsUri) ||
-                            structureDefinitionToValueSet[1].trim().equals(sdUri) && structureDefinitionToValueSet[0].trim().equals(vsUri)) {
+                    if (structureDefinitionToValueSet[0].trim().equals(sdUri) && structureDefinitionToValueSet[1].trim().equals(vsUri)) {
                         existsOnDisk = true;
                         break;
                     }
@@ -316,7 +316,6 @@ public class MappingStore {
     public void deleteSDMapping(String sdUri, String vsUri) throws IOException {
         if (containsSDMapping(sdUri,vsUri)) {
             structureDefinitions.remove(sdUri);
-            structureDefinitions.remove(vsUri);
             if (canAccessDisc) {
                 List<String> lines;
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(structureDefinitionFile), StandardCharsets.UTF_8))) {
@@ -334,8 +333,7 @@ public class MappingStore {
                     String[] structureDefinitionToValueSet = lineCopy.split("<=>");
                     if (structureDefinitionToValueSet.length != 2) {
                         logger.warn("Incorrect mapping found in structure definition needs to be {structure definition url} <=> {value set url}, but was " + line);
-                    } else if(structureDefinitionToValueSet[0].trim().equals(sdUri) && structureDefinitionToValueSet[1].trim().equals(vsUri) ||
-                            structureDefinitionToValueSet[1].trim().equals(sdUri) && structureDefinitionToValueSet[0].trim().equals(vsUri)) {
+                    } else if (structureDefinitionToValueSet[0].trim().equals(sdUri) && structureDefinitionToValueSet[1].trim().equals(vsUri)) {
                         lineToDelete = line;
                     }
                 }
@@ -361,15 +359,12 @@ public class MappingStore {
      */
     public Set<String> getAllStructureDefinitions() {
         HashSet<String> output = new HashSet<>();
-        for ( String left: structureDefinitions.keySet()){
+        for (String left : structureDefinitions.keySet()) {
             String right = structureDefinitions.get(left);
-            if (left.compareTo(right) <= 0) {
-                output.add(left + " <=> " + right);
-            } else {
-                output.add(right + " <=> " + left);
-            }
+            output.add(left + " <=> " + right);
         }
         return output;
+
     }
 
     /**
@@ -407,7 +402,7 @@ public class MappingStore {
      * Gets the map containing the structure definitions stored on disc.  Might need a better name.
      * @return the structure definitions map.
      */
-    public Map<String, String> getStructureDefinitions() {
+    public BiMap<String, String> getStructureDefinitions() {
         return structureDefinitions;
     }
 
