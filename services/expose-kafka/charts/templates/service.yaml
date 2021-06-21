@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "kafka-helper.fullname" . }}
+  name: {{ include "expose-kafka.fullname" . }}
   labels:
-    {{- include "kafka-helper.labels" . | nindent 4 }}
+    {{- include "expose-kafka.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
-      name: kafka-helper
+      name: expose-kafka
   selector:
-    {{- include "kafka-helper.selectorLabels" . | nindent 4 }}
+    {{- include "expose-kafka.selectorLabels" . | nindent 4 }}

@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "kafka-helper.fullname" . }}
+  name: {{ include "expose-kafka.fullname" . }}
   labels:
-    {{- include "kafka-helper.labels" . | nindent 4 }}
+    {{- include "expose-kafka.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "kafka-helper.selectorLabels" . | nindent 6 }}
+      {{- include "expose-kafka.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -16,10 +16,10 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "kafka-helper.selectorLabels" . | nindent 8 }}
+        {{- include "expose-kafka.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - name: kafka-helper
+      - name: expose-kafka
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:

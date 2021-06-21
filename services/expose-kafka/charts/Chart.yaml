@@ -1,6 +1,6 @@
 apiVersion: v2
-name: kafka-helper
-description: A Helm Chart to deploy the Kafka Helper service.
+name: expose-kafka
+description: A Helm Chart to deploy the Expose Kafka service.
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -27,7 +27,7 @@ keywords:
   - alvearie
   - kafka
 
-home: https://github.com/Alvearie/health-patterns/tree/main/services/kafkahelper
+home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
 
 maintainers:
   - name: David Ranum

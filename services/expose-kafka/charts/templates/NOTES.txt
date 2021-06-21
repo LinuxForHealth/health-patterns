@@ -9,8 +9,8 @@ d88P     888 888   Y88P    "Y8888  "Y888888 888     888  "Y8888
 
 The Kafka Helper service can be accessed from within your cluster at the following location:
 
-  {{ include "kafka-helper.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
+  {{ include "expose-kafka.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
  
 {{- if .Values.global.ingress.enabled }}
-Kafka Helper Ingress was deployed to:  https://{{ .Release.Namespace }}-{{ .Release.Name }}-kafka-helper.{{ .Values.global.ingress.subdomain}}
+Expose Kafka Ingress was deployed to:  https://{{ .Release.Namespace }}-{{ .Release.Name }}-expose-kafka.{{ .Values.global.ingress.subdomain}}
 {{- end }}
