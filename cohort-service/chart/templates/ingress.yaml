@@ -6,13 +6,15 @@ kind: Ingress
 metadata:
   name: {{ .Release.Name }}-cohort-service-ingress
   namespace: {{ .Release.Namespace }}
+  {{- with index .Values "cohort-service" "labels" }}
   labels:
-    {{- include "cohort-service.labels" . | nindent 4 }}
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.class | default .Values.ingress.class }}
 spec:
   rules:
-    - host: {{ .Release.Namespace }}.cohort-service.{{ .Values.ingress.subdomain }}
+    - host: {{ .Release.Namespace }}-{{ .Release.Name }}-cohort-service.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
       http:
         paths:
           - path: /
@@ -20,7 +22,7 @@ spec:
             backend:
               service:
                 name: {{ .Release.Name }}-cohort-service
-                  port: 
-                    number: {{ $ingressPort }}
+                port: 
+                  number: {{ $ingressPort }}
 {{- end }}
 {{- end }}
