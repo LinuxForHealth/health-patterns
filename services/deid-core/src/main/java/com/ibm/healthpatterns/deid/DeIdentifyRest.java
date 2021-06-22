@@ -47,13 +47,14 @@ public class DeIdentifyRest {
 
     private static final Logger logger = Logger.getLogger(DeIdentifyRest.class);
 
+    private boolean hasInitializedDisk = false;
+
     /*
     / Used if the persistent volume is not available
      */
     private String defaultConfigJson;
 
     public DeIdentifyRest() {
-
         jsonDeserializer = new ObjectMapper();
         File defaultConfig = new File(pvPath + DEID_DEFAULT_CONFIG_NAME);
 
@@ -89,6 +90,19 @@ public class DeIdentifyRest {
                 deidFhirServerPassword, configString);
     }
 
+    private void diskSetup() {
+        if (!hasInitializedDisk) {
+            File configDir = new File(pvPath);
+            configDir.mkdirs();
+            boolean canAccessDisk = configDir.exists() && configDir.isDirectory() && configDir.canRead() && configDir.canWrite();
+
+            if (!canAccessDisk) {
+                pvPath = "./";
+            }
+            hasInitializedDisk = true;
+        }
+    }
+
     /**
      * Passes the given FHIR Resource through the deidentification service, pushing to the FHIR server if the pushToFHIR
      * parameter is set to true.
@@ -107,6 +121,8 @@ public class DeIdentifyRest {
             @QueryParam("pushToFHIR") @DefaultValue("true") Boolean pushToFHIR,
             InputStream resourceInputStream
     ) {
+        diskSetup();
+
         File configFile = new File(pvPath + configName);
 
         if (!configFile.exists() && !configName.equals(DEID_DEFAULT_CONFIG_NAME)) {
@@ -156,6 +172,8 @@ public class DeIdentifyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postConfig(InputStream resourceInputStream, @PathParam("configName") String name) throws IOException {
+        diskSetup();
+
         if (name == null || name.isEmpty()) {
             logger.warn("Config not given an identifier." +
                     "Specify an identifier for the config using the \"identifier\" query parameter");
@@ -196,6 +214,8 @@ public class DeIdentifyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response putConfig(InputStream resourceInputStream, @PathParam("configName") String name) throws Exception {
+        diskSetup();
+
         if (name == null || name.isEmpty()) {
             logger.warn("Config not given an identifier." +
                     "Specify an identifier for the config using the \"identifier\" query parameter");
@@ -231,6 +251,8 @@ public class DeIdentifyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllConfigs() {
+        diskSetup();
+
         File configPath = new File(pvPath);
         File[] files = configPath.listFiles();
         StringBuilder out = new StringBuilder();
@@ -255,6 +277,8 @@ public class DeIdentifyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getConfig(@PathParam("configName") String configName) throws IOException {
+        diskSetup();
+
         String configPath = pvPath + configName;
 
         File configFile = new File(configPath);
@@ -277,6 +301,8 @@ public class DeIdentifyRest {
     @Path("config/{configName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteConfig(@PathParam("configName") String configName) {
+        diskSetup();
+
         String configPath = pvPath + configName;
 
         File configFile = new File(configPath);
