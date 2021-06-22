@@ -42,7 +42,7 @@ public class DeIdentifyRest {
     String pvPath;
 
 
-    private DeIdentifier deid = null;
+    //private DeIdentifier deid = null;
     private final ObjectMapper jsonDeserializer;
 
     private static final Logger logger = Logger.getLogger(DeIdentifyRest.class);
@@ -86,7 +86,23 @@ public class DeIdentifyRest {
         ) {
             throw new Exception("FHIR server URL/credentials not set");
         }
-        deid = DeIdentifier.getDeIdentifier(deidServiceUrl, deidFhirServerUrl, deidFhirServerUsername,
+        DeIdentifier deid = DeIdentifier.getDeIdentifier(deidServiceUrl, deidFhirServerUrl, deidFhirServerUsername,
+                deidFhirServerPassword, configString);
+    }
+
+    private DeIdentifier getDeid(String configString) {
+        if (deidServiceUrl == null) {
+            logger.warn("DEID service URL not set");
+            return null;
+        }
+        if (deidFhirServerUrl == null ||
+                deidFhirServerUsername == null ||
+                deidFhirServerPassword == null
+        ) {
+            logger.warn("FHIR server URL/credentials not set");
+            return null;
+        }
+        return DeIdentifier.getDeIdentifier(deidServiceUrl, deidFhirServerUrl, deidFhirServerUsername,
                 deidFhirServerPassword, configString);
     }
 
@@ -140,12 +156,8 @@ public class DeIdentifyRest {
                 return Response.status(500).entity("The config \"" + configName + "\" should exist, but the file could not be found.").build();
             }
         }
-        try {
-            initializeDeid(configString);
-        } catch (Exception e) {
-            logger.warn("The Deidentifier could not be initialized.", e);
-            return Response.status(500).entity("The Deidentifier could not be initialized").build(); // Internal server error
-        }
+
+        DeIdentifier deid = getDeid(configString);
 
         try {
             DeIdentification result = deid.deIdentify(resourceInputStream, pushToFHIR);
@@ -335,12 +347,7 @@ public class DeIdentifyRest {
     @Path("healthCheck")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHealthCheck() {
-        try {
-            initializeDeid(defaultConfigJson);
-        } catch (Exception e) {
-            logger.warn("The Deidentifier could not be initialized.", e);
-            return Response.status(500).entity("The Deidentifier could not be initialized.").build(); // Internal server error
-        }
+        DeIdentifier deid = getDeid(defaultConfigJson);
 
         StringWriter status = new StringWriter();
         if (deid.healthCheck(status)) {
