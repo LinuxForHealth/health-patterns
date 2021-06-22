@@ -12,37 +12,38 @@ service:
   type: ClusterIP
   port: 5000
 
-enabled:
-  true
+enabled: true
 
 ingress:
   enabled: true
-  class: 
+  class: REQUIRED-NOT-USED
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-  subdomain:
+  subdomain: REQUIRED-NOT-USED
 
-env:
-  - name: RESOURCESLIST
-    value: [Patient, Observation, Condition]
-  - name: MAXITERATIONS
-    value: 15
-  - name: ALARMMINUTES
-    value: 10
-  - name: CONSUMERTOPIC
-    value: fhir.notification
-  - name: KAFKAUSER
-    value: token
-  - name: KAFKAPW
-    value: integrati0n
-  - name: KAFKABOOTSTRAP
-    value: ingestion-kafka:9092
-  - name: PRODUCERTOPIC
-    value:  patients.updated.out
-  - name: FHIRENDPOINT
-    value:  http://integration-fhir/fhir-server/api/v4
-  - name: FHIRUSERNAME
-    value:  fhiruser
-  - name: FHIRPW
-    value:  integrati0n
+trigger_type: history
+resources_list: [Patient, Observation, Condition]
+
+# Required for FHIR Notification
+max_iterations: 15
+alarm_minutes: 10
+
+# Required for FHIR History
+chunk_size: 200
+sleep_seconds: 60
+
+kafka:
+  username: token
+  password: integrati0n
+  # Optional - Will be generated if omitted
+  # bootstrap: 
+  producer_topic: patients.updated.out
+  # Required for FHIR Notification
+  consumer_topic: fhir.notification
+  
+fhir:
+  # Optional - Will be generated if omitted
+  # endpoint: 
+  username: fhiruser
+  password: integrati0n

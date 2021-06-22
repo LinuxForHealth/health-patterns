@@ -60,3 +60,25 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the bootstrap server to use
+*/}}
+{{- define "fhir-trigger.kafka.bootstrap" -}}
+{{- if .Values.kafka.bootstrap }}
+{{- .Values.kafka.bootstrap }}
+{{- else }}
+{{- .Release.Name }}-kafka:9092
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the fhir server to use
+*/}}
+{{- define "fhir-trigger.fhir.endpoint" -}}
+{{- if .Values.fhir.endpoint }}
+{{- .Values.fhir.endpoint }}
+{{- else }}
+http://{{- .Release.Name }}-fhir/fhir-server/api/v4
+{{- end }}
+{{- end }}

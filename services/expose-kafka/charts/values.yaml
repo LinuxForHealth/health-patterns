@@ -20,7 +20,7 @@ password: integrati0n
 ingress:
   enabled: true
   class: REQUIRED-NOT-USED
-       # IBM: public-iks-k8s-nginx
-       # Azure: addon-http-application-routing
-       # AWS: nginx
+         # IBM: public-iks-k8s-nginx
+         # Azure: addon-http-application-routing
+         # AWS: nginx
   subdomain: REQUIRED-NOT-USED
