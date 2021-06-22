@@ -62,9 +62,9 @@ public class DeIdentifyRest {
             defaultConfigJson = getDefaultConfig();
 
             if (defaultConfig.createNewFile()) {
-                BufferedWriter out = new BufferedWriter(new FileWriter(defaultConfig));
-                out.write(defaultConfigJson);
-                out.close();
+                try (BufferedWriter out = new BufferedWriter(new FileWriter(defaultConfig))) {
+                    out.write(defaultConfigJson);
+                }
             }
         } catch (IOException e) {
             logger.warn("Could not read default de-identifier service configuration, the DeIdentifier won't be " +
@@ -187,9 +187,9 @@ public class DeIdentifyRest {
         }
         File configFile = new File(pvPath + name);
         if (!configFile.exists()) {
-            BufferedWriter out = new BufferedWriter(new FileWriter(configFile));
-            out.write(jsonNode.toPrettyString());
-            out.close();
+            try (BufferedWriter out = new BufferedWriter(new FileWriter(configFile))) {
+                out.write(jsonNode.toPrettyString());
+            }
         } else {
             logger.warn("Config with the identifier \"" + name + "\" already exists.");
             return Response.status(400).entity("Config with the identifier \"" + name + "\" already exists.").build();
@@ -229,9 +229,9 @@ public class DeIdentifyRest {
         }
         File configFile = new File(pvPath + name);
         boolean update = configFile.exists();
-        BufferedWriter out = new BufferedWriter(new FileWriter(configFile, false));
-        out.write(jsonNode.toPrettyString());
-        out.close();
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(configFile, false))) {
+            out.write(jsonNode.toPrettyString());
+        }
         if (update) {
             logger.info("Config " + name + " updated.");
             return Response.ok("Config " + name + " updated to:\n" + jsonNode.toPrettyString()).build();
