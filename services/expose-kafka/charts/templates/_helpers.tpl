@@ -60,3 +60,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the bootstrap server to use
+*/}}
+{{- define "expose-kafka.bootstrap" -}}
+{{- if .Values.bootstrap }}
+{{- .Values.bootstrap }}
+{{- else }}
+{{- .Release.Name }}-kafka:9092
+{{- end }}
+{{- end }}

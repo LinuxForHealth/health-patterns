@@ -13,7 +13,9 @@ service:
   port: 5000
 
 enabled: true
-
+username: token
+password: integrati0n
+# bootstrap:
 
 ingress:
   enabled: true

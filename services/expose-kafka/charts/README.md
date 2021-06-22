@@ -1,8 +1,8 @@
-# ASCVD Service Helm Chart
+# Expose Kafka Helm Chart
 
 ## Introduction
 
-This [Helm](https://github.com/kubernetes/helm) chart installs an instance of the [Alvearie De-Identification](https://github.com/Alvearie/de-identification) service in a Kubernetes cluster.
+This [Helm](https://github.com/kubernetes/helm) chart installs an instance of the Alvearie Expose Kafka service in a Kubernetes cluster.
 
 ## Pre-Requisites
 
@@ -11,40 +11,43 @@ This [Helm](https://github.com/kubernetes/helm) chart installs an instance of th
 
 ## Installation
 
-### Checkout the Code
+Add Alvearie Health Patterns Helm repo to your local Helm environment:
 
-Git clone this repository and `cd` into this directory.
-
-```bash
-git clone https://github.com/Alvearie/health-analytics.git
-cd health-analytics/ascvd-from-fhir/charts/
+```
+helm add repo health-patterns https://alvearie.io/health-patterns/charts
 ```
 
-### Install the Chart
-
-Install the helm chart with a release name `ascvd-from-fhir`:
+Install the helm chart using:
 
 ```bash
-helm install ascvd-from-fhir . --set ingress.enabled=true  --set ingress.class=<<INGRESS_CLASS>> --set ingress.host=<<HOSTNAME>>
+helm install <<RELEASE_NAME>> health-patterns/expose-kafka
 ```
-where `<<INGRESS_CLASS>>` is the ingress class used by your cloud environment, and `<<HOSTNAME>>` is the configured hostname you wish to use for your ASCVD ingress.
+
+You can augment this install with the following configuration parameters:
+
+`bootstrap`: Set the URL of the bootstrap Kafka server. If this is not provided, it will be generated based on the release name provided to the install
+
+`username`: Set the username used to access the target Kafka server. (Default: `token`)
+
+`password`: Set the password used to access the target Kafka server. (Default: `integration`)
+
 ### Using the Chart
 
-See [ASCVD-From-Fhir](../README.md) for information about calling the deployed API.
+See [Expose Kafka](../README.md) for information about calling the deployed API.
 
 ## Uninstallation
 
-To uninstall/delete the `ascvd-from-fhir` deployment:
+To uninstall/delete the deployment:
 
 ```bash
-helm delete ascvd-from-fhir
+helm delete <<RELEASE_NAME>>
 ```
 
 ## Contributing
 
-Feel free to contribute by making a [pull request](https://github.com/Alvearie/health-analytics/pull/new/master).
+Feel free to contribute by making a [pull request](https://github.com/Alvearie/health-patterns/pull/new/master).
 
-Please review the [Contributing Guide](https://github.com/Alvearie/health-analytics/blob/main/CONTRIBUTING.md) for information on how to get started contributing to the project.
+Please review the [Contributing Guide](https://github.com/Alvearie/health-patterns/blob/main/CONTRIBUTING.md) for information on how to get started contributing to the project.
 
 ## License
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 

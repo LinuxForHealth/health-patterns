@@ -28,8 +28,8 @@ spec:
             protocol: TCP
         env:
           - name: KAFKAUSER
-            value: token
+            value: {{ .Values.username }}
           - name: KAFKAPW
-            value: integrati0n
+            value: {{ .Values.password }}
           - name: KAFKABOOTSTRAP
-            value: {{ .Release.Name }}-kafka:9092
+            value: {{ include "expose-kafka.bootstrap" . }}
