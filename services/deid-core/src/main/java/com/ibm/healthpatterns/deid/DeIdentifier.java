@@ -75,19 +75,18 @@ public class DeIdentifier extends FHIRService {
 	DeIdentifierServiceClient deidClient;
 	String configJson;
 
-	private static final HashMap<Integer, DeIdentifier> DEIDENTIFIERS = new HashMap<>();
+	private static final HashMap<String, DeIdentifier> DEIDENTIFIERS = new HashMap<>();
 
 	/**
 	 * Retrieve or initialize a deidentifier with the given parameters
 	 */
 	public static DeIdentifier getDeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword, String configJson) {
-		String signature = deidServiceURL + fhirServerURL + fhirServerUsername + fhirServerPassword + configJson;
-		int hashCode = signature.hashCode();
-		if (DEIDENTIFIERS.containsKey(hashCode)) {
-			return DEIDENTIFIERS.get(hashCode);
+		String signature = deidServiceURL + "," + fhirServerURL + "," + fhirServerUsername + "," + fhirServerPassword + "," + configJson;
+		if (DEIDENTIFIERS.containsKey(signature)) {
+			return DEIDENTIFIERS.get(signature);
 		} else {
 			DeIdentifier newDeIdentifier = new DeIdentifier(deidServiceURL, fhirServerURL, fhirServerUsername, fhirServerPassword, configJson);
-			DEIDENTIFIERS.put(hashCode, newDeIdentifier);
+			DEIDENTIFIERS.put(signature, newDeIdentifier);
 			return newDeIdentifier;
 		}
 	}
