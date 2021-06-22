@@ -74,23 +74,9 @@ public class DeIdentifyRest {
 
     /**
      * Initializes the DeIdentifier, which connects to the FHIR server
-     * @throws Exception If FHIR credentials are improperly initialized.
-     */
-    private void initializeDeid(String configString) throws Exception {
-        if (deidServiceUrl == null) {
-            throw new Exception("DEID service URL not set");
-        }
-        if (deidFhirServerUrl == null ||
-            deidFhirServerUsername == null ||
-            deidFhirServerPassword == null
-        ) {
-            throw new Exception("FHIR server URL/credentials not set");
-        }
-        DeIdentifier deid = DeIdentifier.getDeIdentifier(deidServiceUrl, deidFhirServerUrl, deidFhirServerUsername,
-                deidFhirServerPassword, configString);
-    }
-
-    private DeIdentifier getDeid(String configString) {
+     * @param  configString  A Deid config in JSON form
+     * @return A DeIdentifier object with the requested parameters
+     */private DeIdentifier getDeid(String configString) {
         if (deidServiceUrl == null) {
             logger.warn("DEID service URL not set");
             return null;
