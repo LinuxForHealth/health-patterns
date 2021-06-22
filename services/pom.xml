@@ -17,12 +17,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ibm.healthpatterns</groupId>
-    <artifactId>microservices</artifactId>
+    <artifactId>services</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     
-    <name>Alvearie Health Patterns - Microservices</name>
-    
+    <name>Alvearie Health Patterns - Services</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -30,7 +29,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <java.version>1.8</java.version>
         <opentracing-spring-jaeger-web-starter.version>3.1.1</opentracing-spring-jaeger-web-starter.version>
-        <app.name>microservices</app.name>
+        <app.name>services</app.name>
         <hapi.fhir.version>5.4.0</hapi.fhir.version>
     </properties>
 

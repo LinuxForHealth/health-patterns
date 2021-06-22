@@ -1,4 +1,4 @@
-# microservices/deid
+# services/deid
 
 REST API for communicating with a deidentification service and FHIR server.
 
@@ -25,7 +25,7 @@ These values are stored in ConfigMap `deid-config`.
 kubectl apply -f kubernetes.yml
 ```
 > **_NOTE:_**  If multiple instances will be deployed on a single cluster, each instance's
-> persistent volume must have a unique name. The helm chart in `~/.../alvearie-ingestion/`
+> persistent volume must have a unique name. The helm chart in `../../helm-charts/health-patterns/`
 > does this automatically, but for a manual install you must change "`deid-config-pv`" in
 > the `PersistentVolume` definition in `kubernetes.yml` to some unique name for each instance.
 

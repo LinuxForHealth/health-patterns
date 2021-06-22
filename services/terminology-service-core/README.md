@@ -1,6 +1,6 @@
-# microservices/terminology
+# services/terminology
 
-REST API for translating FHIR objects.
+REST API for applying FHIR Terminology Services to FHIR resources.
 
 > This project is built with Quarkus; to deploy changes, ensure that
 > `quarkus.container-image.group` in `/src/main/resources/application.properties`
@@ -71,7 +71,7 @@ kubectl port-forward service/<quarkus.kubernetes.name> 8080:8080
 replacing <quarkus.kubernetes.name> with the value in the configuration file.
 
 > **_NOTE:_**  If multiple instances will be deployed on a single cluster, each instance's
-> persistent volume must have a unique name. The helm chart in `~/.../alvearie-ingestion/`
+> persistent volume must have a unique name. The helm chart in `../../helm-charts/health-patterns/`
 > does this automatically, but for a manual install you must change "`deid-config-pv`" in
 > the `PersistentVolume` definition in `kubernetes.yml` to some unique name for each instance.
 
@@ -87,11 +87,6 @@ cannot read/write to the disc.
 When the service is first deployed and queried on a cluster, it will try to copy the default mappings and
 structureDefinitions to the filesystem at the path specified in application.properties and kubernetes.yml.  The default
 location is `/mnt/data/`.  To persist data, ensure that a persistent volume is mounted at the specified path.
-
-> **_NOTE_**: Currently, due to a permissions bug with PersistentVolumes, any added mappings and
-> structure definitions beyond what is installed by default **will not** persist between pods. This
-> means that if a pod is terminated and replaced by kubernetes, the added mappings and structure
-> definitions will be lost.
  
 The Translation action applies any of the saved Structure Definition Mappings that match the extensions of the 
 given FHIR resource, if the corresponding ConceptMap is installed on the FHIR server.  Default ConceptMaps are installed

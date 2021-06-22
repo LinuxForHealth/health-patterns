@@ -344,7 +344,7 @@ public class TerminologyService extends FHIRService {
 				continue;
 			}
 			System.out.printf("Found ConceptMap %s which translates (valueCode, system) = (%s, %s) for StructureDefinition %s to (valueCode, system) = (%s, %s) %n", conceptMapId, valueCode, valueSetURL, structureDefinitionURL, translatedCode.getCode(),  translatedCode.getSystem());
-			String translatedStructuredData = mappingStore.getStructureDefinitions().get(translatedCode.getSystem());
+			String translatedStructuredData = mappingStore.getStructureDefinitions().inverse().get(translatedCode.getSystem());
 			if (translatedStructuredData == null) {
 				System.err.printf("Cannot find the mapping from ValueSet '%s' to its corresponding StructureData for this translation, make sure the corresponding mappings configuration file has it.%n", translatedCode.getSystem());
 				continue;
