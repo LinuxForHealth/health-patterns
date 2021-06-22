@@ -7,10 +7,13 @@
  d8888888888 888  Y8bd8P  Y8b.     888  888 888     888 Y8b.
 d88P     888 888   Y88P    "Y8888  "Y888888 888     888  "Y8888
 
-The FHIR Trigger service can be accessed from within your cluster at the following location:
+The FHIR Trigger service has been successfully deployed.
+
+It can be accessed from within your cluster at the following location:
 
   {{ include "fhir-trigger.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
  
-{{- if .Values.ingress.enabled }}
-FHIR Trigger Ingress was deployed to:  https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-trigger.{{ .Values.ingress.subdomain}}
+{{- if .Values.global.ingress.enabled | default .Values.ingress.enabled }}
+It can also be accessed via ingress at this location:
+https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-trigger.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
 {{- end }}

@@ -10,9 +10,10 @@ d88P     888 888   Y88P    "Y8888  "Y888888 888     888  "Y8888
 The Expose Kafka service has been successfully deployed. 
 
 It can be accessed from within your cluster at the following location:
+
   {{ include "expose-kafka.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
  
-{{- if .Values.global.ingress.enabled }}
+{{- if .Values.global.ingress.enabled | default .Values.ingress.enabled }}
 It can also be accessed via ingress at this location:
-https://{{ .Release.Namespace }}-{{ .Release.Name }}-expose-kafka.{{ .Values.global.ingress.subdomain}}
+https://{{ .Release.Namespace }}-{{ .Release.Name }}-expose-kafka.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
 {{- end }}
