@@ -1,4 +1,4 @@
-# services/terminology
+# Terminology Service
 
 REST API for applying FHIR Terminology Services to FHIR resources.
 

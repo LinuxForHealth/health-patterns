@@ -1,4 +1,4 @@
-# services/deid
+# DEID Service
 
 REST API for communicating with a deidentification service and FHIR server.
 
