@@ -1,4 +1,4 @@
-# Default values for ascvd-from-fhir.
+# Default values for fhir-trigger.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -14,13 +14,22 @@ service:
 
 enabled: true
 
-ingress:
-  enabled: true
-  class: REQUIRED-NOT-USED
+global:
+  ingress:
+    enabled:
+    class:
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-  subdomain: REQUIRED-NOT-USED
+    subdomain:
+
+ingress:
+  enabled: false
+  class:
+       # IBM: public-iks-k8s-nginx
+       # Azure: addon-http-application-routing
+       # AWS: nginx
+  subdomain:
 
 trigger_type: history
 resources_list: [Patient, Observation, Condition]

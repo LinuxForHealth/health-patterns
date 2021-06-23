@@ -41,7 +41,7 @@ dependencies:
     condition: fhir.enabled
     repository: https://alvearie.github.io/health-patterns/charts
   - name: fhir-trigger
-    version: 0.0.1
+    version: 0.1.0
     condition: fhir-trigger.enabled
     repository: https://alvearie.github.io/health-patterns/charts
   - name: fhir
@@ -50,7 +50,7 @@ dependencies:
     alias: fhir-deid
     repository: https://alvearie.github.io/health-patterns/charts
   - name: fhir-trigger
-    version: 0.0.1
+    version: 0.1.0
     condition: fhir-deid-trigger.enabled
     alias: fhir-deid-trigger
     repository: https://alvearie.github.io/health-patterns/charts
@@ -59,7 +59,7 @@ dependencies:
     condition: deid.enabled
     repository: https://alvearie.github.io/health-patterns/charts
   - name: cohort-service
-    version: 0.0.1
+    version: 0.1.0
     repository: https://alvearie.github.io/health-patterns/charts
     condition: cohort-service.enabled
   - name: nifi-registry
@@ -87,7 +87,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: kafka.enabled
   - name: expose-kafka
-    version: 0.0.1
+    version: 0.1.0
     repository: https://alvearie.github.io/health-patterns/charts
     condition: kafka.enabled
   - name: kube-prometheus-stack

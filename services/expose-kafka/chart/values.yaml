@@ -1,4 +1,4 @@
-# Default values for ascvd-from-fhir.
+# Default values for expose-kafka.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -17,10 +17,19 @@ username: token
 password: integrati0n
 # bootstrap:
 
-ingress:
-  enabled: true
-  class: REQUIRED-NOT-USED
+global:
+  ingress:
+    enabled:
+    class:
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-  subdomain: REQUIRED-NOT-USED
+    subdomain:
+
+ingress:
+  enabled: true
+  class:
+       # IBM: public-iks-k8s-nginx
+       # Azure: addon-http-application-routing
+       # AWS: nginx
+  subdomain:

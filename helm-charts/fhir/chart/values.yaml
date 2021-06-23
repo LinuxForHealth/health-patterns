@@ -14,22 +14,24 @@ service:
   httpPort: 80
   httpsPort: 443
 
+enabled: true
+
 global:
   ingress:
-    enabled: true
-    class: REQUIRED-NOT-USED
+    enabled:
+    class:
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-    subdomain: REQUIRED-NOT-USED
+    subdomain:
 
 ingress:
   enabled: true
-  class: REQUIRED-NOT-USED
+  class:
        # IBM: public-iks-k8s-nginx
        # Azure: addon-http-application-routing
        # AWS: nginx
-  subdomain: REQUIRED-NOT-USED
+  subdomain:
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

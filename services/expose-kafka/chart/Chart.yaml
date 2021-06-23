@@ -1,6 +1,6 @@
 apiVersion: v2
-name: nifi-registry
-description: A Helm Chart to deploy a NiFi Registry.
+name: expose-kafka
+description: A Helm Chart to deploy the Expose Kafka service.
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -20,17 +20,17 @@ version: 0.1.0
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: 0.8.0
+appVersion: 0.0.1
 
 keywords:
   - ibm
-  - nifi-registry
-  - health records
-  - clinical data
   - alvearie
+  - kafka
 
-home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/nifi-registry
+home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
 
 maintainers:
-  - name: Luis A. Garcia
-    email: luisg@us.ibm.com
+  - name: David Ranum
+    email: dlranum@us.ibm.com
+  - name: Adam T. Clark
+    email: atclark@us.ibm.com

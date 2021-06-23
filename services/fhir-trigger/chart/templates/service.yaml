@@ -10,6 +10,6 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
-      name: {{ .Release.Name }}-fhir-trigger
+      name: {{ .Release.Namespace }}-{{ .Release.Name }}-fhir-trigger
   selector:
     {{- include "fhir-trigger.selectorLabels" . | nindent 4 }}
