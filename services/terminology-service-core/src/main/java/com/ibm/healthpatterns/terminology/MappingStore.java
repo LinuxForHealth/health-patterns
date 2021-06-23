@@ -1,5 +1,13 @@
 package com.ibm.healthpatterns.terminology;
 
+/**
+ * A {@link MappingStore} manages the storage and retrieval of Mappings and Structure Definitions for
+ * a {@link TerminologyService} wrapped by {@link TerminologyRest}, both in memory and to disk. This
+ * class requires the information for where the Mappings and Structure Definitions are stored.
+ *
+ * @author Bryce Hall
+ */
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
