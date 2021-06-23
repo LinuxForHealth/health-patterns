@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: alvearie/fhir-trigger
   pullPolicy: Always
-  tag: 0.0.1
+  tag: 0.1.0
 service:
   type: ClusterIP
   port: 5000
@@ -32,7 +32,7 @@ ingress:
   subdomain:
 
 trigger_type: history
-resources_list: [Patient, Observation, Condition]
+resources_list: "Patient Observation Condition"
 
 # Required for FHIR Notification
 max_iterations: 15

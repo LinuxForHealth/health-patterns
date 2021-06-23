@@ -39,7 +39,7 @@ You can augment this install with the following configuration parameters:
 
 `kafka.username`: See [KAFKAUSER](../README.md#kafkauser) (Default: `token`)
 
-`kafka.password`: See [KAFKAPW](../README.md#kafkapw) (Default: `integration`)
+`kafka.password`: See [KAFKAPW](../README.md#kafkapw) (Default: `integrati0n`)
 
 `kafka.producer_topic`: See [PRODUCERTOPIC](../README.md#producertopic) (Default: `patients.updated.out`)
 
@@ -51,7 +51,7 @@ You can augment this install with the following configuration parameters:
 
 `fhir.username`: See [FHIRUSERNAME](../README.md#fhirusername) (Default: `fhiruser`)
 
-`fhir.password`: See [FHIRPW](../README.md#fhirpw) (Default: `integration`)
+`fhir.password`: See [FHIRPW](../README.md#fhirpw) (Default: `integrati0n`)
 
 ### Using the Chart
 

@@ -71,6 +71,7 @@ notifications:
     topicName: ""
     bootstrapServers: ""
     password: ""
+    securityProtocol: "PLAINTEXT"
 
 bulkExportConfig:
     cosBucketName: fhir-r4-connectathon
