@@ -82,13 +82,7 @@ public class DeIdentifier extends FHIRService {
 	 */
 	public static DeIdentifier getDeIdentifier(String deidServiceURL, String fhirServerURL, String fhirServerUsername, String fhirServerPassword, String configJson) {
 		String signature = deidServiceURL + "," + fhirServerURL + "," + fhirServerUsername + "," + fhirServerPassword + "," + configJson;
-		if (DEIDENTIFIERS.containsKey(signature)) {
-			return DEIDENTIFIERS.get(signature);
-		} else {
-			DeIdentifier newDeIdentifier = new DeIdentifier(deidServiceURL, fhirServerURL, fhirServerUsername, fhirServerPassword, configJson);
-			DEIDENTIFIERS.put(signature, newDeIdentifier);
-			return newDeIdentifier;
-		}
+		return DEIDENTIFIERS.computeIfAbsent(signature, deidentifier -> new DeIdentifier(deidServiceURL, fhirServerURL, fhirServerUsername, fhirServerPassword, configJson));
 	}
 	
 	/**
