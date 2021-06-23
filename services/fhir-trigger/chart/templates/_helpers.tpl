@@ -79,6 +79,6 @@ Create the name of the fhir server to use
 {{- if .Values.fhir.endpoint }}
 {{- .Values.fhir.endpoint }}
 {{- else }}
-http://{{- .Release.Name }}-fhir/fhir-server/api/v4
+{{- printf "http://%s-%s" .Release.Namespace .Release.Name }}{{index .Values.service.port }}-fhir/fhir-server/api/v4
 {{- end }}
 {{- end }}
