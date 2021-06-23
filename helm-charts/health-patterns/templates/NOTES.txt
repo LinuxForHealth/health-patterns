@@ -36,18 +36,19 @@ The following services have been deployed:
 {{- if index .Values "nifi-registry" "enabled" }}
 - NiFi Registry{{- if .Values.global.ingress.enabled }} --------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-registry.{{ .Values.global.ingress.subdomain}}/nifi-registry{{- end }}
 {{- end }}
+{{- if index .Values "cohort-service" "enabled" }}
+- Cohort Service{{- if .Values.global.ingress.enabled }} -------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-cohort-service.{{ .Values.global.ingress.subdomain}}{{- end }}
+{{- end }}
+{{- if .Values.kafka.enabled }}
+- Expose Kafka Service{{- if .Values.global.ingress.enabled }} -------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-expose-kafka.{{ .Values.global.ingress.subdomain}}{{- end }}
+- Kafka
+{{- end }}
 {{- if .Values.zookeeper.enabled }}
 - Zookeeper
 {{- end }}
 {{- if index .Values "kube-prometheus-stack" "enabled" }}
 - Prometheus
 - Grafana{{- if .Values.global.ingress.enabled }} --------------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-grafana.{{ .Values.global.ingress.subdomain}}{{- end }}
-{{- end }}
-{{- if index .Values "cohort-service" "enabled" }}
-- Cohort Service{{- if .Values.global.ingress.enabled }} -------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-cohort-service.{{ .Values.global.ingress.subdomain}}{{- end }}
-{{- end }}
-{{- if .Values.kafka.enabled }}
-- Kafka
 {{- end }}
 
 {{- if .Values.global.ingress.enabled }}

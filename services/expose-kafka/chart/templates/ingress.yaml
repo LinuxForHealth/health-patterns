@@ -19,7 +19,7 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Release.Namespace }}-{{ .Release.Name }}-expose-kafka
+                name: {{ include "expose-kafka.fullname" . }}
                 port: 
                   number: {{ $ingressPort }}
 {{- end }}
