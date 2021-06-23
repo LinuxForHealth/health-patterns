@@ -31,19 +31,12 @@ We recommend exposing the services in this chart via ingress.  This provides the
 
 In order to deploy via ingress, you will need to identify your ingress subdomain as defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.  Instructions can be found [here](README_INGRESS_SUBDOMAIN.md) on how to identify your ingress subdomain.
 
-Once you have your ingress subdomain, you can add it to your helm install command shown later.
-
-`--set ingress.subdomain=INGRESS_SUBDOMAIN`
-
 Ingress also requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider:
   - IBM: public-iks-k8s-nginx
   - Azure: addon-http-application-routing
   - AWS: nginx
  
-You can add your ingress class to the helm install using: 
-
-`--set ingress.class=INGRESS_CLASS`
-
+Use both of these values to update the ingress_values.yaml file.
 
 ### Optional: Deploy a FHIR UI
 
@@ -82,10 +75,7 @@ By specifying your preferred variation in the Helm command below, you can custom
 
 ```
 helm install ingestion . \
-    --set ingress.class=INGRESS_CLASS \
-    --set ingress.subdomain=INGRESS_SUBDOMAIN \
-    --set fhir.proxy.enabled=true \
-    --set fhir.deid.proxy.enabled=true \
+    -f ingress_values.yaml \
     -f <<VARIATION_YAML>>
 ```
 
@@ -95,11 +85,8 @@ When deploying this chart, there are many configuration parameters specified in 
 
 ```
 helm install ingestion alvearie/health-patterns \
-    --set ingress.class=INGRESS_CLASS \
-    --set ingress.subdomain=INGRESS_SUBDOMAIN \
-    --set fhir.proxy.enabled=true \
-    --set fhir.deid.proxy.enabled=true \
     -f value_overrides.yaml \
+    -f ingress_values.yaml \
     -f <<VARIATION_YAML>>
 ```
 

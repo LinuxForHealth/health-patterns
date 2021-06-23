@@ -32,7 +32,7 @@ You can [deploy this application to Kubernetes](#deploying-to-kubernetes) or [bu
 Run:
 
 1. `git clone https://github.com/Alvearie/health-patterns.git`
-1. `cd clinical-ingestion/cohort-service`
+1. `cd cohort-service`
 1. `kubectl apply -f manifests/kube.deploy.yaml`
 
 ### Building Locally
@@ -51,7 +51,7 @@ As mentioned above, this project depends on the [quality-measure-and-cohort-serv
 #### Building
 
 1. `git clone https://github.com/Alvearie/health-patterns.git`
-1. `cd clinical-ingestion/cohort-service`
+1. `cd cohort-service`
 1. `maven install`
 1. `java -jar ./target/cohort-service-{version}.jar`
 

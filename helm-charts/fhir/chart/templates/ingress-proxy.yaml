@@ -7,7 +7,7 @@ kind: Ingress
 metadata:
   name: {{ .Release.Name }}-fhir-proxy-ingress
   namespace: {{ .Release.Namespace }}
-  {{- with .Values.fhir.proxy.labels }}
+  {{- with .Values.proxy.labels }}
   labels:
     {{ toYaml . | nindent 4 }}
   {{- end }}
@@ -22,7 +22,7 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Release.Namespace }}-{{ .Release.Name }}-fhir
+                name: {{ include "fhir.fullname" . }}
                 port: 
                   number: {{ $ingressPort }}
 {{- end }}
