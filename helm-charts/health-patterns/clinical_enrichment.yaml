@@ -41,6 +41,14 @@ nifi:
             exit 1
           fi
 
+fhir:
+  notifications:
+    kafka:
+      enabled: true
+      topicName: "fhir.notification"
+      bootstrapServers: "enrichment-kafka:9092"
+      password: "integrati0n"
+      securityProtocol: "PLAINTEXT"
 
 fhir-trigger:
   enabled: true
