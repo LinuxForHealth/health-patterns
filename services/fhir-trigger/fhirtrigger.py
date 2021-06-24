@@ -1,6 +1,5 @@
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
-from kafka import BrokerConnection
 from kafka.admin import KafkaAdminClient, NewTopic
 
 import json

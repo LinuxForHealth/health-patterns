@@ -211,9 +211,12 @@ def updateParameters(baseURL, fhir_password, kafka_password, releaseName, runASC
             if debug:
                 print("FHIR context:", contextId)
 
+            update_parameter(baseURL, contextId, "FHIR_URL_PatientAccess", "http://" + releaseName + "-fhir/fhir-server/api/v4", False)
+            update_parameter(baseURL, contextId, "FHIR_URL_ProviderDirectory", "http://" + releaseName + "-fhir/fhir-server/api/v4", False)
             update_parameter(baseURL, contextId, "FHIR_UserPwd_PatientAccess", fhir_password, True)
             update_parameter(baseURL, contextId, "FHIR_UserPwd_ProviderDirectory", fhir_password, True)
             update_parameter(baseURL, contextId, "kafka.auth.password", kafka_password, True)
+            update_parameter(baseURL, contextId, "kafka.brokers", releaseName + "-kafka:9092", False)
 
         if "De-Identification" in context["component"]["name"]:
             if debug:
@@ -226,9 +229,6 @@ def updateParameters(baseURL, fhir_password, kafka_password, releaseName, runASC
             update_parameter(baseURL, contextId, "DEID_FHIR_PASSWORD", fhir_password, True)
             update_parameter(baseURL, contextId, "DEID_FHIR_SERVER", "http://" + releaseName + "-fhir-deid/fhir-server/api/v4", False)
             update_parameter(baseURL, contextId, "DEID_SERVICE_API_URL", "http://" + releaseName + "-deid:8080/api/v1", False)
-            update_parameter(baseURL, contextId, "FHIR_URL_PatientAccess", "http://" + releaseName + "-fhir/fhir-server/api/v4", False)
-            update_parameter(baseURL, contextId, "FHIR_URL_ProviderDirectory", "http://" + releaseName + "-fhir/fhir-server/api/v4", False)
-            update_parameter(baseURL, contextId, "kafka.brokers", releaseName + "-kafka:9092", False)
 
         if "Enrichment" in context["component"]["name"]:
             if debug:
