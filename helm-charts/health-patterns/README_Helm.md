@@ -92,10 +92,15 @@ helm install <<RELEASE_NAME>> alvearie/health-patterns \
 
 **NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
 
-**NOTE:** Due to a limitation in Helm, when using the Clinical Enrichment configuration the expected location for the kafka bootstrap servers is hard-coded to `enrich-kafka:9092`. This aligns with a release name of `enrich`, but will not work if other release names are used. In order to change this, you can either:
+**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion` and `enrich`, you are required to update the corresponding values.yaml file to correspond to the correct release name.  
 
-1. Provide environment variables to the helm install command (`--set fhir.notifications.kafka.bootstrapServers="host:port"`)
-2. Edit the clinical_enrichment.yaml file to directly change this value.
+For Clinical Ingestion, update:
+-- the line `--releaseName=ingest` to include the correct Helm release name.
+
+For Clinical Enrichment, update:
+- the line `--releaseName=enrich` to include the correct Helm release name.
+- the line `bootstrapServers: "enrich-kafka:9092"` to include the correct Kafka broker, including the release name.
+
 
 ### Using the Chart
 

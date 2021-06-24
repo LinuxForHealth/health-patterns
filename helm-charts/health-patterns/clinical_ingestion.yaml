@@ -35,7 +35,8 @@ nifi:
                    --kafka_pw=integrati0n \
                    --runASCVD=True \
                    --deidentifyData=True \
-                   --resolveTerminology=True
+                   --resolveTerminology=True \
+                   --releaseName=ingest
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"
