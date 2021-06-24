@@ -36,7 +36,7 @@ nifi:
                    --runASCVD=True \
                    --deidentifyData=True \
                    --resolveTerminology=True \
-                   --releaseName=ingest
+                   --releaseName=ingestion
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"
