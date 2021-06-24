@@ -1,5 +1,6 @@
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
+from kafka import BrokerConnection
 from kafka.admin import KafkaAdminClient, NewTopic
 
 import json
@@ -278,9 +279,40 @@ def notification():
                     #it is alive so reset the counter
                     notification_thread_dict[patientid].reset()
 
+def wait_for_initialize():
+    print("Beginning Wait for Initialize")
+    kafkabootstrap = os.getenv("KAFKABOOTSTRAP")
+    fhirEndpoint=os.getenv("FHIRENDPOINT")
+    fhirusername=os.getenv("FHIRUSERNAME")
+    fhirpassword=os.getenv("FHIRPW")
+
+    while True:
+      try:
+        KafkaConsumer(bootstrap_servers=kafkabootstrap)
+        break
+      except: 
+        pass # Ignore error
+
+    print("Kafka up and running.")
+
+    while True:
+        healthcheck_url = fhirEndpoint + "/$healthcheck"
+        try:
+          resp = requests.get(healthcheck_url, auth=(fhirusername, fhirpassword))
+          if (resp.status_code == 200):
+            break
+        except:
+            pass # Ignore error
+        time.sleep(1)
+    print("FHIR up and running.")
+
+
 def main():
     triggertype = os.getenv("TRIGGERTYPE")
     print("Trigger service is configured to use ", triggertype)
+
+    wait_for_initialize()
+    print("Initialized.")
 
     if triggertype == "notification":
         notification()

@@ -68,13 +68,13 @@ helm dependency update
 ### Deploy
 
 There are two variations of the health-patterns Helm chart currently supported:
-- Clinical Ingestion (clinical_ingestion.yaml) - This variation will deploy an entire pipeline ready to normalize, validate, enrich, and persist FHIR data to a FHIR server
-- Clinical Enrichment (clinical_enrichment.yaml) - This variation will deploy a data enrichment pipeline aimed at consuming FHIR data and returning an updated FHIR response with the requested modifications. 
+- Clinical Ingestion - This variation will deploy an entire pipeline ready to normalize, validate, enrich, and persist FHIR data to a FHIR server.  This variation typically involves a RELEASE_NAME of `ingestion` and uses the VARIATION_YAML of `clinical_ingestion.yaml`.
+- Clinical Enrichment - This variation will deploy a data enrichment pipeline aimed at consuming FHIR data and returning an updated FHIR response with the requested modifications. This variation typically involves a RELEASE_NAME of `enrich` and uses the VARIATION_YAML of `clinical_enrichment.yaml`.
 
 By specifying your preferred variation in the Helm command below, you can customize this deployment to your needs.
 
 ```
-helm install ingestion . \
+helm install <<RELEASE_NAME>> . \
     -f ingress_values.yaml \
     -f <<VARIATION_YAML>>
 ```
@@ -84,14 +84,18 @@ helm install ingestion . \
 When deploying this chart, there are many configuration parameters specified in the values.yaml file.  These can all be overridden based on individual preferences.  To do so, you can create a secondary YAML file containing your changes and specify it to the `helm install` command to override default configuration.
 
 ```
-helm install ingestion alvearie/health-patterns \
+helm install <<RELEASE_NAME>> alvearie/health-patterns \
     -f value_overrides.yaml \
     -f ingress_values.yaml \
     -f <<VARIATION_YAML>>
 ```
 
-NOTE: You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
+**NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
 
+**NOTE:** Due to a limitation in Helm, when using the Clinical Enrichment configuration the expected location for the kafka bootstrap servers is hard-coded to `enrich-kafka:9092`. This aligns with a release name of `enrich`, but will not work if other release names are used. In order to change this, you can either:
+
+1. Provide environment variables to the helm install command (`--set fhir.notifications.kafka.bootstrapServers="host:port"`)
+2. Edit the clinical_enrichment.yaml file to directly change this value.
 
 ### Using the Chart
 

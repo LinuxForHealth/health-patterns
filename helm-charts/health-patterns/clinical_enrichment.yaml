@@ -30,7 +30,8 @@ nifi:
                    --kafka_pw=integrati0n \
                    --runASCVD=True \
                    --deidentifyData=True \
-                   --resolveTerminology=True
+                   --resolveTerminology=True \
+                   --releaseName=enrich
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"
@@ -46,7 +47,7 @@ fhir:
     kafka:
       enabled: true
       topicName: "fhir.notification"
-      bootstrapServers: "enrichment-kafka:9092"
+      bootstrapServers: "enrich-kafka:9092"
       password: "integrati0n"
       securityProtocol: "PLAINTEXT"
 

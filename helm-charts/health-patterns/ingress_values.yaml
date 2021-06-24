@@ -1,8 +1,8 @@
 global:
   ingress:
     enabled: true
-    class:
+    class: public-iks-k8s-nginx
          # IBM: public-iks-k8s-nginx
          # Azure: addon-http-application-routing
          # AWS: nginx
-    subdomain:
+    subdomain: wh-health-patterns.dev.watson-health.ibm.com

@@ -78,7 +78,7 @@ fhir-trigger:
   enabled: false
 
 fhir-deid:
-  enabled: false
+  enabled: true
   service:
     type: ClusterIP
     port: 80
@@ -259,7 +259,7 @@ kafka:
 # Values: https://github.com/Alvearie/health-patterns/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
-  enabled: false
+  enabled: true
   image:
     tag: 0.0.1
   ingress:
