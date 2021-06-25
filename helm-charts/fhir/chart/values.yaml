@@ -26,7 +26,7 @@ global:
     subdomain:
 
 ingress:
-  enabled: true
+  enabled: false
   class:
        # IBM: public-iks-k8s-nginx
        # Azure: addon-http-application-routing

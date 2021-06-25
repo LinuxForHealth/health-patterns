@@ -6,3 +6,27 @@ global:
          # Azure: addon-http-application-routing
          # AWS: nginx
     subdomain: wh-health-patterns.dev.watson-health.ibm.com
+
+expose-kafka:
+  ingress:
+    enabled: true
+
+fhir:
+  ingress:
+    enabled: true
+
+fhir-deid:
+  ingress:
+    enabled: true
+
+nifi:
+  ingress:
+    enabled: true
+
+cohort-service:
+  ingress:
+    enabled: true
+
+hl7-resource-generator:
+  ingress:
+    enabled: true
