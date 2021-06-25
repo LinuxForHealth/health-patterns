@@ -252,7 +252,7 @@ kafka:
 # Values: https://github.com/Alvearie/health-patterns/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
-  enabled: false
+  enabled: true
   image:
     tag: 0.0.1
   ingress:
