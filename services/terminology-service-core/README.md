@@ -47,7 +47,7 @@ data:
   fhirserver.url: "http://<FHIR-SERVER>/fhir-server/api/v4"
   fhirserver.username: "<FHIR-USER>"
   fhirserver.password: "<FHIR-PASSWORD>"
-  pv.path: "<Pesistent volume mount path - default = /mnt/data/>"
+  pv.path: "<Persistent volume mount path - default = /mnt/data/>"
 ```
 
 If pv.path is set `""` then the service will operate in memory-only mode.

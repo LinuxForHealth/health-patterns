@@ -214,7 +214,7 @@ public class DeIdentifier extends FHIRService {
 		try {
 			deIdentifiedResource = deidClient.deIdentify(resource.toString(), configJson);
 		} catch (DeIdentifierClientException e) {
-			throw new DeIdentifierException("Error invoking the de-identification REST API" + e.getMessage());
+			throw new DeIdentifierException("Error invoking the de-identification REST API", e);
 		}
 		JsonNode deidentifiedResourceResponse;
 		try {
@@ -267,14 +267,14 @@ public class DeIdentifier extends FHIRService {
 					.withBundle(bundle)
 					.execute();
 		} catch (BaseServerResponseException e) {
-			throw new DeIdentifierException("The FHIR transaction could not be executed: " + e.getMessage(), e);	
+			throw new DeIdentifierException("The FHIR transaction could not be executed: ", e);
 		}
 		String jsonResponseString = parser.setPrettyPrint(true).encodeResourceToString(resp);
 		JsonNode jsonResponse;
 		try {
 			jsonResponse = jsonDeserializer.readTree(jsonResponseString);
 		} catch (JsonProcessingException e) {
-			throw new DeIdentifierException("The FHIR response JSON could not be parsed: " + e.getMessage(), e);
+			throw new DeIdentifierException("The FHIR response JSON could not be parsed: ", e);
 		}
 		System.out.println("FHIR transacton with Bundle done!");
 		return jsonResponse;
@@ -300,7 +300,7 @@ public class DeIdentifier extends FHIRService {
 		try {
 			aClass = (Class<? extends Resource>) classLoader.loadClass("org.hl7.fhir.r4.model." + resourceType);
 	    } catch (ClassNotFoundException e) {
-	    	throw new DeIdentifierException("A Resource of type '" + resourceType + "' could not be found in the current HAPI FHIR JAR: " + e.getMessage(), e);
+	    	throw new DeIdentifierException("A Resource of type '" + resourceType + "' could not be found in the current HAPI FHIR JAR: ", e);
 	    }
 		
 	    Resource resource = parser.parseResource(aClass, fhirResource.toString());
@@ -311,7 +311,7 @@ public class DeIdentifier extends FHIRService {
 					   .encodedJson()
 					   .execute();
 		} catch (BaseServerResponseException e) {
-			throw new DeIdentifierException("The FHIR transaction could not be executed: " + e.getMessage(), e);	
+			throw new DeIdentifierException("The FHIR transaction could not be executed: ", e);
 		}
 		System.out.println("FHIR create resource done!");
 		return outcome.getId().toString();

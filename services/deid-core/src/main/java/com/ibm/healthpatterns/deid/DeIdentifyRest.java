@@ -19,33 +19,32 @@ import org.jboss.logging.Logger;
 @Path("/")
 public class DeIdentifyRest {
 
-	/**
-	 * The file that contains the masking config that will be used to configure the de-id service.
-	 */
-	private static final String DEID_DEFAULT_CONFIG_JSON = "/de-id-config.json";
-	private static final String DEID_DEFAULT_CONFIG_NAME = "default";
+    /**
+     * The file that contains the masking config that will be used to configure the de-id service.
+     */
+    private static final String DEID_DEFAULT_CONFIG_JSON = "/de-id-config.json";
+    private static final String DEID_DEFAULT_CONFIG_NAME = "default";
 
-	@ConfigProperty(name = "DEID_SERVICE_URL")
-	String deidServiceUrl;
+    @ConfigProperty(name = "DEID_SERVICE_URL")
+    String deidServiceUrl;
 
     @ConfigProperty(name = "DEID_FHIR_SERVER_URL")
-	String deidFhirServerUrl;
+    String deidFhirServerUrl;
 
     @ConfigProperty(name = "DEID_FHIR_SERVER_USERNAME")
-	String deidFhirServerUsername;
+    String deidFhirServerUsername;
 
     @ConfigProperty(name = "DEID_FHIR_SERVER_PASSWORD")
-	String deidFhirServerPassword;
+    String deidFhirServerPassword;
 
     @ConfigProperty(name = "PV_PATH", defaultValue = "/mnt/data/")
     String pvPath;
 
-
-    //private DeIdentifier deid = null;
     private final ObjectMapper jsonDeserializer;
 
     private static final Logger logger = Logger.getLogger(DeIdentifyRest.class);
 
+    boolean canAccessDisk;
     private boolean hasInitializedDisk = false;
 
     /*
@@ -55,16 +54,9 @@ public class DeIdentifyRest {
 
     public DeIdentifyRest() {
         jsonDeserializer = new ObjectMapper();
-        File defaultConfig = new File(pvPath + DEID_DEFAULT_CONFIG_NAME);
 
         try {
             defaultConfigJson = getDefaultConfig();
-
-            if (defaultConfig.createNewFile()) {
-                try (BufferedWriter out = new BufferedWriter(new FileWriter(defaultConfig))) {
-                    out.write(defaultConfigJson);
-                }
-            }
         } catch (IOException e) {
             logger.warn("Could not read default de-identifier service configuration, the DeIdentifier won't be " +
                     "functional if a different configuration is not set.");
@@ -91,16 +83,31 @@ public class DeIdentifyRest {
                 deidFhirServerPassword, configString);
     }
 
-    private void diskSetup() {
-        if (!hasInitializedDisk) {
+    /**
+     * Gets the PV path if can access disk, otherwise gets the local directory
+     * @return A String representing the PV path to use
+     */private String getPVPath() {
+        if (canAccessDisk == null) {
             File configDir = new File(pvPath);
             configDir.mkdirs();
-            boolean canAccessDisk = configDir.exists() && configDir.isDirectory() && configDir.canRead() && configDir.canWrite();
+            canAccessDisk = configDir.exists() && configDir.isDirectory() && configDir.canRead() && configDir.canWrite();
 
-            if (!canAccessDisk) {
-                pvPath = "./";
+            File defaultConfig = new File(getPVPath() + DEID_DEFAULT_CONFIG_NAME);
+            try {
+                if (defaultConfig.createNewFile()) {
+                    try (BufferedWriter out = new BufferedWriter(new FileWriter(defaultConfig))) {
+                        out.write(defaultConfigJson);
+                    }
+                }
+            } catch (IOException e) {
+                logger.warn("Unable to save default config to disk.", e);
             }
-            hasInitializedDisk = true;
+        }
+
+        if (canAccessDisk) {
+            return pvPath;
+        } else {
+            return "./";
         }
     }
 
@@ -122,9 +129,7 @@ public class DeIdentifyRest {
             @QueryParam("pushToFHIR") @DefaultValue("true") Boolean pushToFHIR,
             InputStream resourceInputStream
     ) {
-        diskSetup();
-
-        File configFile = new File(pvPath + configName);
+        File configFile = new File(getPVPath() + configName);
 
         if (!configFile.exists() && !configName.equals(DEID_DEFAULT_CONFIG_NAME)) {
             logger.warn("No config with the identifier \"" + configName + "\" exists.");
@@ -135,7 +140,7 @@ public class DeIdentifyRest {
             configString = defaultConfigJson;
         } else {
             try {
-                configString = IOUtils.toString(new FileInputStream(pvPath + configName), Charset.defaultCharset());
+                configString = IOUtils.toString(new FileInputStream(getPVPath() + configName), Charset.defaultCharset());
             } catch (IOException e) {
                 logger.warn("The config \"" + configName + "\" should exist, but the file could not be found.");
                 return Response.status(500).entity("The config \"" + configName + "\" should exist, but the file could not be found.").build();
@@ -169,8 +174,6 @@ public class DeIdentifyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postConfig(InputStream resourceInputStream, @PathParam("configName") String name) throws IOException {
-        diskSetup();
-
         if (name == null || name.isEmpty()) {
             logger.warn("Config not given an identifier." +
                     "Specify an identifier for the config using the \"identifier\" query parameter");
@@ -184,7 +187,7 @@ public class DeIdentifyRest {
             logger.warn("The given input stream did not contain valid JSON: ", e);
             return Response.status(400).entity("The given input stream did not contain valid JSON: " + e).build();
         }
-        File configFile = new File(pvPath + name);
+        File configFile = new File(getPVPath() + name);
         if (!configFile.exists()) {
             try (BufferedWriter out = new BufferedWriter(new FileWriter(configFile))) {
                 out.write(jsonNode.toPrettyString());
@@ -211,8 +214,6 @@ public class DeIdentifyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response putConfig(InputStream resourceInputStream, @PathParam("configName") String name) throws Exception {
-        diskSetup();
-
         if (name == null || name.isEmpty()) {
             logger.warn("Config not given an identifier." +
                     "Specify an identifier for the config using the \"identifier\" query parameter");
@@ -226,7 +227,7 @@ public class DeIdentifyRest {
             logger.warn("The given input stream did not contain valid JSON: ", e);
             return Response.status(400).entity("The given input stream did not contain valid JSON: " + e).build();
         }
-        File configFile = new File(pvPath + name);
+        File configFile = new File(getPVPath() + name);
         boolean update = configFile.exists();
         try (BufferedWriter out = new BufferedWriter(new FileWriter(configFile, false))) {
             out.write(jsonNode.toPrettyString());
@@ -248,9 +249,7 @@ public class DeIdentifyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllConfigs() {
-        diskSetup();
-
-        File configPath = new File(pvPath);
+        File configPath = new File(getPVPath());
         File[] files = configPath.listFiles();
         StringBuilder out = new StringBuilder();
         assert files != null;
@@ -274,14 +273,12 @@ public class DeIdentifyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getConfig(@PathParam("configName") String configName) throws IOException {
-        diskSetup();
-
-        String configPath = pvPath + configName;
+        String configPath = getPVPath() + configName;
 
         File configFile = new File(configPath);
         if (configFile.exists()) {
             logger.info("Config found.");
-            return Response.ok(IOUtils.toString(new FileInputStream(pvPath + configName), Charset.defaultCharset())).build();
+            return Response.ok(IOUtils.toString(new FileInputStream(getPVPath() + configName), Charset.defaultCharset())).build();
         } else {
             logger.warn("No config with the identifier \"" + configName + "\" exists.");
             return Response.status(400).entity("No config with the identifier \"" + configName + "\" exists.").build();
@@ -298,9 +295,7 @@ public class DeIdentifyRest {
     @Path("config/{configName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteConfig(@PathParam("configName") String configName) {
-        diskSetup();
-
-        String configPath = pvPath + configName;
+        String configPath = getPVPath() + configName;
 
         File configFile = new File(configPath);
         if (configFile.exists()) {
