@@ -58,7 +58,7 @@ import ca.uhn.fhir.rest.server.exceptions.BaseServerResponseException;
 public class DeIdentifier extends FHIRService {
 
 	/**
-	 * The types for which there is masking configuration ion this {@link DeIdentifier}s masking config.
+	 * The types for which there is masking configuration in this {@link DeIdentifier}'s masking config.
 	 */
 	private static final String[] DEIDENTIFIABLE_FHIR_TYPES = new String[] {"Patient", "Procedure", "Condition", "Observation", "MedicationRequest", "Encounter"};
 	
