@@ -29,7 +29,7 @@ You can augment this install with the following configuration parameters:
 
 `username`: Set the username used to access the target Kafka server. (Default: `token`)
 
-`password`: Set the password used to access the target Kafka server. (Default: `integration`)
+`password`: Set the password used to access the target Kafka server. (Default: `integrati0n`)
 
 ### Using the Chart
 

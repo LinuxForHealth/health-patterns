@@ -15,5 +15,5 @@ The NiFi Registry can be accessed from within your cluster at the following loca
 
 {{- if .Values.global.ingress.enabled | default .Values.ingress.enabled }}
 
-ASCVD Ingress was deployed to:  https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-registry.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+Nifi Registry Ingress was deployed to:  https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-registry.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
 {{- end }}
