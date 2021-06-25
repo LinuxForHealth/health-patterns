@@ -45,7 +45,7 @@ public class TerminologyRest {
     private void initializeService() throws Exception {
         if (mappingStore == null) {
             logger.info("initializing MappingStore...");
-            if (pvPath.isBlank()) {
+            if (pvPath.equals("") || pvPath == null) {
                 mappingStore = new MappingStore(null, null);
             } else {
                 if (!pvPath.endsWith("/")) pvPath = pvPath + "/";
