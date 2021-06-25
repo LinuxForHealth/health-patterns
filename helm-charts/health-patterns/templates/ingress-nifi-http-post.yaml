@@ -1,4 +1,4 @@
-{{- if .Values.enabled -}}
+{{- if .Values.nifi.enabled -}}
 {{- if .Values.global.ingress.enabled -}}
 {{- $ingressPort := .Values.nifi.service.httpInputPort -}}
 apiVersion: networking.k8s.io/v1
