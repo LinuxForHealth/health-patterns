@@ -40,8 +40,9 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ibm.healthpatterns.core.FHIRService;
 
-
 import ca.uhn.fhir.rest.api.MethodOutcome;
+
+import org.jboss.logging.Logger;
 
 /**
  * A {@link TerminologyService} translates FHIR resource extension codes using the IBM FHIR Terminology Service.
@@ -110,6 +111,8 @@ public class TerminologyService extends FHIRService {
 	private List<String> installedResources;
 	private MappingStore mappingStore;
 
+	private static final Logger logger = Logger.getLogger(TerminologyService.class);
+
 	/**
 	 * Create a {@link TerminologyService} that uses the given FHIR connection information.
 	 * 
@@ -132,7 +135,7 @@ public class TerminologyService extends FHIRService {
 		try {
 			mappingResourceJson = jsonDeserializer.readTree(mappingResource);
 		} catch (JsonProcessingException e) {
-			System.err.println("The FHIR resource JSON file " + resourceName + " is not valid JSON , the Terminology Service may not be functional: " + e.getMessage());
+			logger.warn("The FHIR resource JSON file " + resourceName + " is not valid JSON , the Terminology Service may not be functional: ", e);
 			return false;
 		}
 		String resourceType = getResourceType(mappingResourceJson);
@@ -143,7 +146,7 @@ public class TerminologyService extends FHIRService {
 		} else if (resourceType.equals(CONCEPT_MAP_TYPE)) {
 			type = ConceptMap.class;
 		} else {
-			System.err.println("Unknown resource type " + type + " for mapping FHIR resource JSON file " + resourceName + ", the Terminology Service may not be functional.");
+			logger.warn("Unknown resource type " + type + " for mapping FHIR resource JSON file " + resourceName + ", the Terminology Service may not be functional.");
 			return false;
 		}
 		Bundle bundle = fhirClient
@@ -156,15 +159,15 @@ public class TerminologyService extends FHIRService {
 		// in case a consumer needs access to them, such as a test case to clean up
 		installedResources.add(fhirClient.getServerBase() + "/" + type.getSimpleName() + "/" + id);
 		if (bundle.getEntry().isEmpty()) {
-			System.out.println("Did not find Terminology Service FHIR mapping resource '" + type.getCanonicalName() + "' with ID '" + id + "' in the FHIR server, installing...");
+			logger.info("Did not find Terminology Service FHIR mapping resource '" + type.getCanonicalName() + "' with ID '" + id + "' in the FHIR server, installing...");
 			MethodOutcome outcome = fhirClient.update()
 					   .resource(mappingResource)
 					   .encodedJson()
 					   .execute();
 			IIdType newId = outcome.getId();
-			System.out.println("Installed Terminology Service FHIR mapping resource in the FHIR server: " + newId.getValue());
+			logger.info("Installed Terminology Service FHIR mapping resource in the FHIR server: " + newId.getValue());
 		} else {
-			System.out.println("Terminology Service FHIR mapping resource '" + type.getCanonicalName() + "' with ID '" + id + "' is already intalled in the FHIR server.");
+			logger.info("Terminology Service FHIR mapping resource '" + type.getCanonicalName() + "' with ID '" + id + "' is already intalled in the FHIR server.");
 		}
 		return true;
 	}
@@ -207,13 +210,13 @@ public class TerminologyService extends FHIRService {
 		JsonNode resourceToTranslate = jsonNode.deepCopy();
 		boolean translatedSomething = false;
 		if (isBundle(resourceToTranslate)) {
-			System.out.println("Translating bundle...");
+			logger.info("Translating bundle...");
 			translatedSomething = translateBundle(resourceToTranslate);
-			System.out.println("Translating bundle done!");
+			logger.info("Translating bundle done!");
 		} else {
-			System.out.println("Translating single resource...");
+			logger.info("Translating single resource...");
 			translatedSomething = translateResource(resourceToTranslate);
-			System.out.println("Translating single resource done!");
+			logger.info("Translating single resource done!");
 		}
 		return new Translation(jsonNode, translatedSomething ? resourceToTranslate : null);
 		
@@ -280,13 +283,13 @@ public class TerminologyService extends FHIRService {
 			if (!bundle.getEntry().isEmpty()) {
 				Resource conceptMap = bundle.getEntry().get(0).getResource();
 				if (bundle.getEntry().size() > 1) {
-					System.err.println("Found multiple ConceptMaps that will map " + valueSetURL + " for this StructureDefinition, will use the first one " + conceptMap.getId());	
+					logger.warn("Found multiple ConceptMaps that will map " + valueSetURL + " for this StructureDefinition, will use the first one " + conceptMap.getId());
 				} else {
-					System.out.println("Found ConceptMap for " + valueSetURL + ": " + conceptMap.getId() + " !!");					
+					logger.info("Found ConceptMap for " + valueSetURL + ": " + conceptMap.getId() + " !!");
 				}
 				conceptMapId = conceptMap.getIdElement().getIdPart();
 			} else {
-				System.out.println("Did not find ConceptMap for " + valueSetURL + "!!");
+				logger.info("Did not find ConceptMap for " + valueSetURL + "!!");
 				continue;
 			}
 
@@ -332,7 +335,7 @@ public class TerminologyService extends FHIRService {
 								translatedCode = (Coding) part.getValue();
 							} catch (ClassCastException e) {
 								String jsonResponse = fhirClient.getFhirContext().newJsonParser().encodeResourceToString(translationResponse);
-								System.err.println("Found a ConceptMap that will map " + valueSetURL + " for this StructureDefinition, but the FHIR server returned an unknown $translate response (expected a 'valueCoding' part): " + jsonResponse);
+								logger.warn("Found a ConceptMap that will map " + valueSetURL + " for this StructureDefinition, but the FHIR server returned an unknown $translate response (expected a 'valueCoding' part): " + jsonResponse);
 							}
 						}
 					}
@@ -340,7 +343,7 @@ public class TerminologyService extends FHIRService {
 			}
 			if (translatedCode == null) {
 				String jsonResponse = fhirClient.getFhirContext().newJsonParser().encodeResourceToString(translationResponse);
-				System.err.println("Found a ConceptMap that will map " + valueSetURL + " for this StructureDefinition, but the FHIR server returned an unknown $translate response: " + jsonResponse);
+				logger.warn("Found a ConceptMap that will map " + valueSetURL + " for this StructureDefinition, but the FHIR server returned an unknown $translate response: " + jsonResponse);
 				continue;
 			}
 			System.out.printf("Found ConceptMap %s which translates (valueCode, system) = (%s, %s) for StructureDefinition %s to (valueCode, system) = (%s, %s) %n", conceptMapId, valueCode, valueSetURL, structureDefinitionURL, translatedCode.getCode(),  translatedCode.getSystem());
