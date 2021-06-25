@@ -87,10 +87,11 @@ public class DeIdentifyRest {
      * Gets the PV path if can access disk, otherwise gets the local directory
      * @return A String representing the PV path to use
      */private String getPVPath() {
-        if (canAccessDisk == null) {
+        if (!hasInitializedDisk) {
             File configDir = new File(pvPath);
             configDir.mkdirs();
             canAccessDisk = configDir.exists() && configDir.isDirectory() && configDir.canRead() && configDir.canWrite();
+            hasInitializedDisk = true;
 
             File defaultConfig = new File(getPVPath() + DEID_DEFAULT_CONFIG_NAME);
             try {
