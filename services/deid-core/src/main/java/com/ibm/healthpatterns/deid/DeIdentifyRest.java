@@ -44,8 +44,7 @@ public class DeIdentifyRest {
 
     private static final Logger logger = Logger.getLogger(DeIdentifyRest.class);
 
-    boolean canAccessDisk;
-    private boolean hasInitializedDisk = false;
+    private Boolean canAccessDisk = null;
 
     /*
     / Used if the persistent volume is not available
@@ -87,21 +86,23 @@ public class DeIdentifyRest {
      * Gets the PV path if can access disk, otherwise gets the local directory
      * @return A String representing the PV path to use
      */private String getPVPath() {
-        if (!hasInitializedDisk) {
-            File configDir = new File(pvPath);
-            configDir.mkdirs();
-            canAccessDisk = configDir.exists() && configDir.isDirectory() && configDir.canRead() && configDir.canWrite();
-            hasInitializedDisk = true;
-
-            File defaultConfig = new File(getPVPath() + DEID_DEFAULT_CONFIG_NAME);
-            try {
-                if (defaultConfig.createNewFile()) {
-                    try (BufferedWriter out = new BufferedWriter(new FileWriter(defaultConfig))) {
-                        out.write(defaultConfigJson);
+        if (canAccessDisk == null) {
+            synchronized(this) {
+                if (canAccessDisk == null) {
+                    File configDir = new File(pvPath);
+                    configDir.mkdirs();
+                    canAccessDisk = configDir.exists() && configDir.isDirectory() && configDir.canRead() && configDir.canWrite();
+                    File defaultConfig = new File(getPVPath() + DEID_DEFAULT_CONFIG_NAME);
+                    try {
+                        if (defaultConfig.createNewFile()) {
+                            try (BufferedWriter out = new BufferedWriter(new FileWriter(defaultConfig))) {
+                                out.write(defaultConfigJson);
+                            }
+                        }
+                    } catch (IOException e) {
+                        logger.warn("Unable to save default config to disk.", e);
                     }
                 }
-            } catch (IOException e) {
-                logger.warn("Unable to save default config to disk.", e);
             }
         }
 
