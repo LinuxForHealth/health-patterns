@@ -19,10 +19,6 @@ fhir-deid:
   ingress:
     enabled: true
 
-nifi:
-  ingress:
-    enabled: true
-
 cohort-service:
   ingress:
     enabled: true
