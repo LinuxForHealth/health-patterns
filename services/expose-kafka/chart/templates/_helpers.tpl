@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "health-patterns.name" -}}
+{{- define "expose-kafka.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "health-patterns.fullname" -}}
+{{- define "expose-kafka.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "health-patterns.chart" -}}
+{{- define "expose-kafka.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "health-patterns.labels" -}}
-helm.sh/chart: {{ include "health-patterns.chart" . }}
-{{ include "health-patterns.selectorLabels" . }}
+{{- define "expose-kafka.labels" -}}
+helm.sh/chart: {{ include "expose-kafka.chart" . }}
+{{ include "expose-kafka.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,18 +45,29 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "health-patterns.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "health-patterns.name" . }}
+{{- define "expose-kafka.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "expose-kafka.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "health-patterns.serviceAccountName" -}}
+{{- define "expose-kafka.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "health-patterns.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "expose-kafka.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the bootstrap server to use
+*/}}
+{{- define "expose-kafka.bootstrap" -}}
+{{- if .Values.bootstrap }}
+{{- .Values.bootstrap }}
+{{- else }}
+{{- .Release.Name }}-kafka:9092
 {{- end }}
 {{- end }}

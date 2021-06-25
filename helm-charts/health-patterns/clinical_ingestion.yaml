@@ -11,7 +11,7 @@ pattern: "Clinical Ingestion"
 nifi:
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.0
+      image: alvearie/nifi-setup:0.1.1
       imagePullPolicy: Always
       command:
         - bash
@@ -35,7 +35,8 @@ nifi:
                    --kafka_pw=integrati0n \
                    --runASCVD=True \
                    --deidentifyData=True \
-                   --resolveTerminology=True
+                   --resolveTerminology=True \
+                   --releaseName=ingestion
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"

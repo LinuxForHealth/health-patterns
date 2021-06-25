@@ -2,6 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+enabled: true
+
 replicaCount: 1
 
 image:
@@ -54,3 +56,20 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+global:
+  ingress:
+    enabled:
+    class:
+         # IBM: public-iks-k8s-nginx
+         # Azure: addon-http-application-routing
+         # AWS: nginx
+    subdomain:
+
+ingress:
+  enabled: false
+  class:
+       # IBM: public-iks-k8s-nginx
+       # Azure: addon-http-application-routing
+       # AWS: nginx
+  subdomain:

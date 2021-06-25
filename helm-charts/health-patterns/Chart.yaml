@@ -7,7 +7,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.6.12
+version: 0.7.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -39,32 +39,41 @@ dependencies:
   - name: fhir
     version: 0.4.0
     condition: fhir.enabled
-    repository: "https://alvearie.github.io/health-patterns/charts"
+    repository: https://alvearie.github.io/health-patterns/charts
+  - name: fhir-trigger
+    version: 0.1.0
+    condition: fhir-trigger.enabled
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: fhir
     version: 0.4.0
     condition: fhir-deid.enabled
     alias: fhir-deid
-    repository: "https://alvearie.github.io/health-patterns/charts"
+    repository: https://alvearie.github.io/health-patterns/charts
+  - name: fhir-trigger
+    version: 0.1.0
+    condition: fhir-deid-trigger.enabled
+    alias: fhir-deid-trigger
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: deid
     version: 1.0.1
     condition: deid.enabled
-    repository: "https://alvearie.github.io/health-patterns/charts"
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: cohort-service
-    version: 0.0.1
-    repository: "https://alvearie.github.io/health-patterns/charts"
+    version: 0.1.0
+    repository: https://alvearie.github.io/health-patterns/charts
     condition: cohort-service.enabled
   - name: nifi-registry
     version: 0.1.0
     condition: nifi-registry.enabled
-    repository: "https://alvearie.github.io/health-patterns/charts"
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: ascvd
     version: 0.1.0
     condition: ascvd.enabled
-    repository: "https://alvearie.github.io/health-analytics/charts"
+    repository: https://alvearie.github.io/health-analytics/charts
   - name: ascvd-from-fhir
     version: 0.1.0
     condition: ascvd.enabled
-    repository: "https://alvearie.github.io/health-analytics/charts"
+    repository: https://alvearie.github.io/health-analytics/charts
   - name: zookeeper
     version: 6.0.0
     repository: https://charts.bitnami.com/bitnami
@@ -76,6 +85,10 @@ dependencies:
   - name: kafka
     version: 12.1.0
     repository: https://charts.bitnami.com/bitnami
+    condition: kafka.enabled
+  - name: expose-kafka
+    version: 0.1.0
+    repository: https://alvearie.github.io/health-patterns/charts
     condition: kafka.enabled
   - name: kube-prometheus-stack
     version: 12.0.4

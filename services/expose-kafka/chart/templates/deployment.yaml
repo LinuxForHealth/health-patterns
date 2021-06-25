@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "expose-kafka.fullname" . }}
+  labels:
+    {{- include "expose-kafka.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "expose-kafka.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "expose-kafka.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: expose-kafka
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
+        env:
+          - name: KAFKAUSER
+            value: {{ .Values.username }}
+          - name: KAFKAPW
+            value: {{ .Values.password }}
+          - name: KAFKABOOTSTRAP
+            value: {{ include "expose-kafka.bootstrap" . }}

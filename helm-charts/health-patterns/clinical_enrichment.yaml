@@ -11,7 +11,7 @@ pattern: "Clinical Enrichment"
 nifi:
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.0
+      image: alvearie/nifi-setup:0.1.1
       imagePullPolicy: Always
       command:
         - bash
@@ -30,7 +30,8 @@ nifi:
                    --kafka_pw=integrati0n \
                    --runASCVD=True \
                    --deidentifyData=True \
-                   --resolveTerminology=True
+                   --resolveTerminology=True \
+                   --releaseName=enrich
           if [ $? -eq 0 ]
           then
             echo "NiFi canvas setup was successful!"
@@ -40,3 +41,15 @@ nifi:
             echo "NiFi canvas setup failed"
             exit 1
           fi
+
+fhir:
+  notifications:
+    kafka:
+      enabled: true
+      topicName: "fhir.notification"
+      bootstrapServers: "enrich-kafka:9092"
+      password: "integrati0n"
+      securityProtocol: "PLAINTEXT"
+
+fhir-trigger:
+  enabled: true

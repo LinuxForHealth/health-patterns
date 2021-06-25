@@ -30,12 +30,15 @@ tolerations: []
 
 affinity: {}
 
+global:
+  ingress:
+    enabled: false
+    class: 
+    subdomain:
+
 ingress:
-  enabled: true
+  enabled: false
   class:
-         # IBM: public-iks-k8s-nginx
-         # Azure: addon-http-application-routing
-         # AWS: nginx
   subdomain:
 
 ascvd:
@@ -43,8 +46,6 @@ ascvd:
 
 ascvd-from-fhir:
   enabled: true
-  ingress:
-    enabled: false
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
@@ -73,8 +74,11 @@ fhir:
 #    cosSrvinstid: yourcossrvinstid
 #    batchUserPw: youradminpw
 
-fhir-deid:
+fhir-trigger:
   enabled: false
+
+fhir-deid:
+  enabled: true
   service:
     type: ClusterIP
     port: 80
@@ -95,6 +99,9 @@ fhir-deid:
 #    cosApikey: yourcosapikey
 #    cosSrvinstid: yourcossrvinstid
 #    batchUserPw: youradminpw
+
+fhir-deid-trigger:
+  enabled: false
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
@@ -140,7 +147,7 @@ nifi:
           targetPort: 12667
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.0
+      image: alvearie/nifi-setup:0.1.1
       imagePullPolicy: Always
       command:
         - bash
@@ -252,7 +259,7 @@ kafka:
 # Values: https://github.com/Alvearie/health-patterns/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
-  enabled: false
+  enabled: true
   image:
     tag: 0.0.1
   ingress:

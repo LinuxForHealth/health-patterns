@@ -31,19 +31,12 @@ We recommend exposing the services in this chart via ingress.  This provides the
 
 In order to deploy via ingress, you will need to identify your ingress subdomain as defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.  Instructions can be found [here](README_INGRESS_SUBDOMAIN.md) on how to identify your ingress subdomain.
 
-Once you have your ingress subdomain, you can add it to your helm install command shown later.
-
-`--set ingress.subdomain=INGRESS_SUBDOMAIN`
-
 Ingress also requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider:
   - IBM: public-iks-k8s-nginx
   - Azure: addon-http-application-routing
   - AWS: nginx
  
-You can add your ingress class to the helm install using: 
-
-`--set ingress.class=INGRESS_CLASS`
-
+Use both of these values to update the ingress_values.yaml file.
 
 ### Optional: Deploy a FHIR UI
 
@@ -75,17 +68,14 @@ helm dependency update
 ### Deploy
 
 There are two variations of the health-patterns Helm chart currently supported:
-- Clinical Ingestion (clinical_ingestion.yaml) - This variation will deploy an entire pipeline ready to normalize, validate, enrich, and persist FHIR data to a FHIR server
-- Clinical Enrichment (clinical_enrichment.yaml) - This variation will deploy a data enrichment pipeline aimed at consuming FHIR data and returning an updated FHIR response with the requested modifications. 
+- Clinical Ingestion - This variation will deploy an entire pipeline ready to normalize, validate, enrich, and persist FHIR data to a FHIR server.  This variation typically involves a RELEASE_NAME of `ingestion` and uses the VARIATION_YAML of `clinical_ingestion.yaml`.
+- Clinical Enrichment - This variation will deploy a data enrichment pipeline aimed at consuming FHIR data and returning an updated FHIR response with the requested modifications. This variation typically involves a RELEASE_NAME of `enrich` and uses the VARIATION_YAML of `clinical_enrichment.yaml`.
 
 By specifying your preferred variation in the Helm command below, you can customize this deployment to your needs.
 
 ```
-helm install ingestion . \
-    --set ingress.class=INGRESS_CLASS \
-    --set ingress.subdomain=INGRESS_SUBDOMAIN \
-    --set fhir.proxy.enabled=true \
-    --set fhir.deid.proxy.enabled=true \
+helm install <<RELEASE_NAME>> . \
+    -f ingress_values.yaml \
     -f <<VARIATION_YAML>>
 ```
 
@@ -94,16 +84,22 @@ helm install ingestion . \
 When deploying this chart, there are many configuration parameters specified in the values.yaml file.  These can all be overridden based on individual preferences.  To do so, you can create a secondary YAML file containing your changes and specify it to the `helm install` command to override default configuration.
 
 ```
-helm install ingestion alvearie/health-patterns \
-    --set ingress.class=INGRESS_CLASS \
-    --set ingress.subdomain=INGRESS_SUBDOMAIN \
-    --set fhir.proxy.enabled=true \
-    --set fhir.deid.proxy.enabled=true \
+helm install <<RELEASE_NAME>> alvearie/health-patterns \
     -f value_overrides.yaml \
+    -f ingress_values.yaml \
     -f <<VARIATION_YAML>>
 ```
 
-NOTE: You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
+**NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
+
+**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion` and `enrich`, you are required to update the corresponding values.yaml file to correspond to the correct release name.  
+
+For Clinical Ingestion, update:
+-- the line `--releaseName=ingest` to include the correct Helm release name.
+
+For Clinical Enrichment, update:
+- the line `--releaseName=enrich` to include the correct Helm release name.
+- the line `bootstrapServers: "enrich-kafka:9092"` to include the correct Kafka broker, including the release name.
 
 
 ### Using the Chart

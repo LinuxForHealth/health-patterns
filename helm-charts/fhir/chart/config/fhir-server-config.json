@@ -43,10 +43,9 @@
         },
         "notifications": {
             "common": {
-                "__comment_includeResourceTypes": [
+                "includeResourceTypes": [
                     "Patient",
                     "Condition",
-                    "Procedure",
                     "Observation"
                 ]
             },
@@ -55,15 +54,15 @@
                 "enabled": false
             },
             "kafka": {
-                "enabled": {{.Values.notifications.kafka.enabled}},
+                "enabled": "{{.Values.notifications.kafka.enabled}}",
                 "topicName": "{{.Values.notifications.kafka.topicName}}",
                 "connectionProperties": {
                     "group.id": "securing-kafka-group",
                     "bootstrap.servers": "{{.Values.notifications.kafka.bootstrapServers}}",
-                    "security.protocol": "SASL_SSL",
-					"sasl.mechanism": "PLAIN",
-					"sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"token\" password=\"{{.Values.notifications.kafka.password}}\";",
-					"ssl.protocol": "TLSv1.2",
+                    "security.protocol": "{{.Values.notifications.kafka.securityProtocol}}",
+                    "sasl.mechanism": "PLAIN",
+                    "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"token\" password=\"{{.Values.notifications.kafka.password}}\";",
+                    "ssl.protocol": "TLSv1.2",
                     "acks": "all",
                     "retries": "60",
                     "request.timeout.ms": "10000",

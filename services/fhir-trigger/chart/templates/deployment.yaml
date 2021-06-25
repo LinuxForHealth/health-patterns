@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fhir-trigger.fullname" . }}
+  labels:
+    {{- include "fhir-trigger.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "fhir-trigger.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "fhir-trigger.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: fhir-trigger
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        tty: true
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
+        env:
+          - name: TRIGGERTYPE
+            value: "{{ .Values.trigger_type }}"
+          - name: RESOURCESLIST
+            value: "{{ .Values.resources_list }}"
+          - name: MAXITERATIONS
+            value: "{{ .Values.max_iterations }}"
+          - name: ALARMMINUTES
+            value: "{{ .Values.alarm_minutes }}"
+          - name: CONSUMERTOPIC
+            value: "{{ .Values.kafka.consumer_topic }}"
+          - name: KAFKAUSER
+            value: "{{ .Values.kafka.username }}"
+          - name: KAFKAPW
+            value: "{{ .Values.kafka.password }}"
+          - name: KAFKABOOTSTRAP
+            value: "{{ include "fhir-trigger.kafka.bootstrap" . }}"
+          - name: PRODUCERTOPIC
+            value: "{{ .Values.kafka.producer_topic }}"
+          - name: FHIRENDPOINT
+            value: "{{ include "fhir-trigger.fhir.endpoint" . }}"
+          - name: FHIRUSERNAME
+            value: "{{ .Values.fhir.username }}"
+          - name: FHIRPW
+            value: "{{ .Values.fhir.password }}"
+          - name: CHUNKSIZE
+            value: "{{ .Values.chunk_size }}"
+          - name: SLEEPSECONDS
+            value: "{{ .Values.sleep_seconds }}"

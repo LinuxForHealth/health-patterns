@@ -6,7 +6,6 @@
 import requests
 import sys
 import time
-
 import argparse
 
 debug = False # turn off debug by default
@@ -17,6 +16,7 @@ def main():
     runASCVD = False
     deidentifyData = False
     resolveTerminology = False
+    releaseName = ""
     
     parser = argparse.ArgumentParser()
     parser.add_argument("--baseUrl", help="Base url for nifi instance")
@@ -25,6 +25,7 @@ def main():
     parser.add_argument("--runASCVD", help="Enable ASCVD by default")
     parser.add_argument("--deidentifyData", help="Enable Deidentify Data by default")
     parser.add_argument("--resolveTerminology", help="Enable Terminology Services by default")
+    parser.add_argument("--releaseName", help="Release Name")
 
     args = parser.parse_args()
 
@@ -39,6 +40,8 @@ def main():
         deidentifyData = args.deidentifyData
     if args.resolveTerminology:
         resolveTerminology = args.resolveTerminology
+    if args.releaseName:
+        releaseName = args.releaseName
 
     #now fix trailing / problem if needed
     if baseURL[-1] != "/":
@@ -48,7 +51,7 @@ def main():
     #Set specific passwords in the parameter contexts for fhir, kafka, and deid
 
     print("Updating parameter context parameters based on config...")
-    updateParameters(baseURL, fhir_password, kafka_password, runASCVD, deidentifyData, resolveTerminology)
+    updateParameters(baseURL, fhir_password, kafka_password, releaseName, runASCVD, deidentifyData, resolveTerminology)
     print("Parameter update complete...\n")
 
     print("Finding all processor groups to update")
@@ -189,7 +192,7 @@ def startAllProcessors(baseURL, finalGroupList):
             stoppedcount = statusdict["stoppedCount"]
             print("Stopped Count: ", agroup, "is ", int(stoppedcount))
 
-def updateParameters(baseURL, fhir_password, kafka_password, runASCVD, deidentifyData, resolveTerminology):
+def updateParameters(baseURL, fhir_password, kafka_password, releaseName, runASCVD, deidentifyData, resolveTerminology):
     #Get parameter contexts
     resp = requests.get(url=baseURL + "nifi-api/flow/parameter-contexts")
     if debug:
@@ -208,9 +211,12 @@ def updateParameters(baseURL, fhir_password, kafka_password, runASCVD, deidentif
             if debug:
                 print("FHIR context:", contextId)
 
+            update_parameter(baseURL, contextId, "FHIR_URL_PatientAccess", "http://" + releaseName + "-fhir/fhir-server/api/v4", False)
+            update_parameter(baseURL, contextId, "FHIR_URL_ProviderDirectory", "http://" + releaseName + "-fhir/fhir-server/api/v4", False)
             update_parameter(baseURL, contextId, "FHIR_UserPwd_PatientAccess", fhir_password, True)
             update_parameter(baseURL, contextId, "FHIR_UserPwd_ProviderDirectory", fhir_password, True)
             update_parameter(baseURL, contextId, "kafka.auth.password", kafka_password, True)
+            update_parameter(baseURL, contextId, "kafka.brokers", releaseName + "-kafka:9092", False)
 
         if "De-Identification" in context["component"]["name"]:
             if debug:
@@ -221,19 +227,31 @@ def updateParameters(baseURL, fhir_password, kafka_password, runASCVD, deidentif
                 print("DeId context: ", contextId)
 
             update_parameter(baseURL, contextId, "DEID_FHIR_PASSWORD", fhir_password, True)
+            update_parameter(baseURL, contextId, "DEID_FHIR_SERVER", "http://" + releaseName + "-fhir-deid/fhir-server/api/v4", False)
+            update_parameter(baseURL, contextId, "DEID_SERVICE_API_URL", "http://" + releaseName + "-deid:8080/api/v1", False)
 
         if "Enrichment" in context["component"]["name"]:
             if debug:
                 print("Processing enrichment")
-            #set deid passwords
+            #set Enrichment Parameters
             contextId = context["id"]
             if debug:
                 print("Enrichment context: ", contextId)
 
             update_parameter(baseURL, contextId, "kafka.auth.password", kafka_password, True)
+            update_parameter(baseURL, contextId, "kafka.brokers", releaseName + "-kafka:9092", False)
             update_parameter(baseURL, contextId, "RunASCVD", runASCVD)
             update_parameter(baseURL, contextId, "DeidentifyData", deidentifyData)
             update_parameter(baseURL, contextId, "ResolveTerminology", resolveTerminology)
+
+        if "ASCVD Parameter Context" in context["component"]["name"]:
+            if debug:
+                print("Processing ASCVD")
+            contextId = context["id"]
+            if debug:
+                print("ASCVD context: ", contextId)
+            update_parameter(baseURL, contextId, "ASCVD_FROM_FHIR_URL", "http://" + releaseName + "-ascvd-from-fhir:5000", False)
+
 
 def update_parameter(baseURL, contextId, name, value, sensitive=False):
     # Updates a parameter in the given context and polls the request for completion

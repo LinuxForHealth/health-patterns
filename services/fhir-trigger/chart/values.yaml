@@ -1,0 +1,58 @@
+# Default values for fhir-trigger.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: alvearie/fhir-trigger
+  pullPolicy: Always
+  tag: 0.1.0
+service:
+  type: ClusterIP
+  port: 5000
+
+enabled: true
+
+global:
+  ingress:
+    enabled:
+    class:
+         # IBM: public-iks-k8s-nginx
+         # Azure: addon-http-application-routing
+         # AWS: nginx
+    subdomain:
+
+ingress:
+  enabled: false
+  class:
+       # IBM: public-iks-k8s-nginx
+       # Azure: addon-http-application-routing
+       # AWS: nginx
+  subdomain:
+
+trigger_type: history
+resources_list: "Patient Observation Condition"
+
+# Required for FHIR Notification
+max_iterations: 15
+alarm_minutes: 10
+
+# Required for FHIR History
+chunk_size: 200
+sleep_seconds: 60
+
+kafka:
+  username: token
+  password: integrati0n
+  # Optional - Will be generated if omitted
+  # bootstrap: 
+  producer_topic: patients.updated.out
+  # Required for FHIR Notification
+  consumer_topic: fhir.notification
+  
+fhir:
+  # Optional - Will be generated if omitted
+  # endpoint: 
+  username: fhiruser
+  password: integrati0n
