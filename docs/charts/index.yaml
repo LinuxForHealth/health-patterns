@@ -86,7 +86,7 @@ entries:
     appVersion: 4.7.1
     created: "2021-06-29T09:23:22.277686-05:00"
     description: A Helm Chart to deploy the IBM FHIR Server.
-    digest: a651d5fefa83f8408b814728874420591a1c9d9298f69cbf66b9fd17ac5f744e
+    digest: 70f05905331a7aab780662850db740a551862094fb5551e000bcc4d9426f1b5f
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir
     keywords:
     - ibm
