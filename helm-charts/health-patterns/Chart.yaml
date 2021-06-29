@@ -7,7 +7,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.7.0
+version: 0.8.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -43,7 +43,7 @@ dependencies:
   - name: term-services-prep
     version: 0.1.0
     condition: fhir.enabled
-    repository: https://ibmatc.github.io/health-patterns/charts
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: fhir-trigger
     version: 0.1.0
     condition: fhir-trigger.enabled
@@ -65,7 +65,7 @@ dependencies:
   - name: deid-prep
     version: 0.1.0
     condition: deid.enabled
-    repository: https://ibmatc.github.io/health-patterns/charts
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: cohort-service
     version: 0.1.0
     condition: cohort-service.enabled
@@ -105,4 +105,4 @@ dependencies:
   - name: hl7-resource-generator
     version: 0.1.0
     condition: hl7-resource-generator.enabled
-    repository: https://ibmatc.github.io/hl7-resource-generator-service/charts
+    repository: https://alvearie.github.io/hl7-resource-generator-service/charts
