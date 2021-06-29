@@ -3,7 +3,7 @@ entries:
   cohort-service:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2021-06-25T12:46:51.381983-05:00"
+    created: "2021-06-29T09:23:22.274175-05:00"
     description: A Helm Chart to deploy the Alvearie Health Patterns Cohort Service App.
     digest: d2e7853064b2025b83de35e34723972be654c0fa55e4ff95a4b0928b542bf090
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/cohort-service
@@ -23,7 +23,7 @@ entries:
   deid:
   - apiVersion: v2
     appVersion: 1.0.1
-    created: "2021-06-25T12:46:51.382377-05:00"
+    created: "2021-06-29T09:23:22.274985-05:00"
     description: A Helm Chart to deploy the Alvearie De-Identification service.
     digest: 6b37a20c44af8225ae05455c32d2328e40c3fdff61fc67e2a878b01a0d9c8714
     home: https://github.com/Alvearie/de-identification
@@ -41,10 +41,29 @@ entries:
     urls:
     - deid-1.0.1.tgz
     version: 1.0.1
+  deid-prep:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2021-06-29T09:23:22.275502-05:00"
+    description: A Helm Chart to deploy the Deid Prep service.
+    digest: 0f22cd822e74d7ed60bd68d02f49ddde255b3a39cd31d9d8f8a8759510552e3d
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/deid-prep
+    keywords:
+    - ibm
+    - alvearie
+    - deid
+    maintainers:
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    name: deid-prep
+    type: application
+    urls:
+    - deid-prep-0.1.0.tgz
+    version: 0.1.0
   expose-kafka:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-06-25T12:46:51.382789-05:00"
+    created: "2021-06-29T09:23:22.276355-05:00"
     description: A Helm Chart to deploy the Expose Kafka service.
     digest: d7e037ba643428e360c655bedcc881e2ec8067a8ccd968219181cdbc9a64d11c
     home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
@@ -65,7 +84,7 @@ entries:
   fhir:
   - apiVersion: v2
     appVersion: 4.7.1
-    created: "2021-06-25T12:46:51.383589-05:00"
+    created: "2021-06-29T09:23:22.277686-05:00"
     description: A Helm Chart to deploy the IBM FHIR Server.
     digest: a651d5fefa83f8408b814728874420591a1c9d9298f69cbf66b9fd17ac5f744e
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir
@@ -86,7 +105,7 @@ entries:
   fhir-trigger:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-06-25T12:46:51.384493-05:00"
+    created: "2021-06-29T09:23:22.279206-05:00"
     description: A Helm Chart to deploy the Alvearie FHIR Trigger service.
     digest: 3931afbfb73021ea1b499170bf12a37c4c32375ffe4a8f86740ebad5a2af8aff
     home: https://github.com/Alvearie/health-patterns/tree/main/services/fhir-trigger
@@ -107,7 +126,7 @@ entries:
   nifi-registry:
   - apiVersion: v2
     appVersion: 0.9.0
-    created: "2021-06-25T12:46:51.38522-05:00"
+    created: "2021-06-29T09:23:22.280107-05:00"
     description: A Helm Chart to deploy a NiFi Registry.
     digest: dc8100e69257e53922024c81a4c251160931131bab13d420eaca359f1ee8b142
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/nifi-registry
@@ -125,4 +144,24 @@ entries:
     urls:
     - nifi-registry-0.1.0.tgz
     version: 0.1.0
-generated: "2021-06-25T12:46:51.38113-05:00"
+  term-services-prep:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2021-06-29T09:23:22.280624-05:00"
+    description: A Helm Chart to deploy the Terminology Services Prep service.
+    digest: 50858e8c3857864699fae00d91df5508fb551a327f1d0a28a426dd01dfefd0ae
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/term-services-prep
+    keywords:
+    - ibm
+    - alvearie
+    - fhir
+    - terminology services
+    maintainers:
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    name: term-services-prep
+    type: application
+    urls:
+    - term-services-prep-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-06-29T09:23:22.273171-05:00"

@@ -18,7 +18,7 @@
 
     <groupId>com.ibm.healthpatterns</groupId>
     <artifactId>services</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>pom</packaging>
     
     <name>Alvearie Health Patterns - Services</name>
@@ -34,13 +34,12 @@
     </properties>
 
     <modules>
-      <module>common</module>        
-      <module>deid-core</module>
-      <module>terminology-service-core</module>
+      <module>common</module>
+      <module>deid-prep</module>
+      <module>term-services-prep</module>
     </modules>
     
     <dependencies>
-    
         <!-- FHIR Client dependencies -->
         <dependency>
           <groupId>ca.uhn.hapi.fhir</groupId>
@@ -57,11 +56,11 @@
           <artifactId>hapi-fhir-converter</artifactId>
           <version>${hapi.fhir.version}</version>
         </dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-r4</artifactId>
-			<version>${hapi.fhir.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-structures-r4</artifactId>
+            <version>${hapi.fhir.version}</version>
+        </dependency>
         <dependency>
             <groupId>ca.uhn.hapi.fhir</groupId>
             <artifactId>org.hl7.fhir.r4</artifactId>
@@ -75,21 +74,20 @@
           <version>2.12.3</version>
        </dependency>
 
-
         <!-- Logging dependencies -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.30</version>
-			<scope>test</scope>
-		</dependency>
-			
-		<!-- Testing dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>		
-    </dependencies>    
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.30</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Testing dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
