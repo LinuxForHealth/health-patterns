@@ -15,7 +15,7 @@ metadata:
     kubernetes.io/ingress.class: {{ .Values.global.ingress.class | default .Values.ingress.class }}
 spec:
   rules:
-    - host: {{ .Release.Namespace }}-{{ .Release.Name }}-fhir-proxy.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+    - host: {{ .Release.Namespace }}-{{ include "fhir.fullname" . }}-proxy.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
       http:
         paths:
           - path: /
