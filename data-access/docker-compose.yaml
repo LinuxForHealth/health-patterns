@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   fhir-server:
-    image: ibmcom/ibm-fhir-server:latest
+    image: ibmcom/ibm-fhir-server:4.8.3
     hostname: fhir
     volumes:
       - type: bind
@@ -20,7 +20,9 @@ services:
         source: ./fhir/derby
         target: /output/derby
     environment:
-      - BOOTSTRAP_DB=true
+      - BOOTSTRAP_DB=false
+      - TRACE_SPEC=com.ibm.fhir.*=info
+      - TRACE_FILE=stdout
     ports:
       - 9080:9080
       - 9443:9443
@@ -33,7 +35,7 @@ services:
     networks:
       - fhir
   keycloak:
-    image: alvearie/smart-keycloak:latest
+    image: alvearie/smart-keycloak:0.2.0
     hostname: keycloak
     environment:
       - KEYCLOAK_USER=admin
