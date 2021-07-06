@@ -51,7 +51,7 @@ When specifying the FHIR URL (fhirServer parameter) you must use an open server 
 and
 
 ```
---set fhir.deid.proxy.enabled=true
+--set fhir-deid.proxy.enabled=true
 ```
 
 ### Checkout the Code
