@@ -47,6 +47,9 @@ ascvd:
 ascvd-from-fhir:
   enabled: true
 
+hl7-resource-generator:
+  enabled: true
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # Values: https://github.com/Alvearie/health-patterns/helm-charts/fhir/values.yaml
@@ -147,7 +150,7 @@ nifi:
           targetPort: 12667
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.1
+      image: alvearie/nifi-setup:0.1.2
       imagePullPolicy: Always
       command:
         - bash

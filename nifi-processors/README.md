@@ -9,8 +9,8 @@ The container can be downloaded from Dockher Hub here: [alvearie/nars](https://h
 
 To rebuild the alvearie/nars container, run the following command: 
 
-- `docker build -t alvearie/nars:0.0.1 .`
+- `docker build -t alvearie/nars:0.0.5 .`
 
 Following this, you can push the container using this command:
 
-- `docker push alvearie/nars:0.0.1`
+- `docker push alvearie/nars:0.0.5`

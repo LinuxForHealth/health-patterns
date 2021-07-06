@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "term-services-prep.fullname" . }}
+  labels:
+    {{- include "term-services-prep.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "term-services-prep.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "term-services-prep.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: term-services-prep
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
+        env:
+        - name: FHIR_SERVER_URL
+          value: {{ include "term-services-prep.fhir.url" . }}
+        - name: FHIR_SERVER_USERNAME
+          value: {{ .Values.fhir.username }}
+        - name: FHIR_SERVER_PASSWORD
+          value: {{ .Values.fhir.password }}
+        - name: PV_PATH
+          value: '/mnt/data/'

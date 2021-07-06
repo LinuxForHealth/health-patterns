@@ -24,7 +24,7 @@
 
     <groupId>com.ibm.healthpatterns</groupId>
     <artifactId>nifi-health-patterns-bundle</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.5</version>
     <packaging>pom</packaging>
 
     <modules>

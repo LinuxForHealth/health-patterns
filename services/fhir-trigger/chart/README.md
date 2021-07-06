@@ -14,7 +14,8 @@ This [Helm](https://github.com/kubernetes/helm) chart installs an instance of th
 Add Alvearie Health Patterns Helm repo to your local Helm environment:
 
 ```
-helm add repo health-patterns https://alvearie.io/health-patterns/charts
+helm repo add health-patterns https://alvearie.io/health-patterns/charts
+helm repo update
 ```
 
 Install the helm chart using:

@@ -7,7 +7,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.7.0
+version: 0.8.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -40,6 +40,10 @@ dependencies:
     version: 0.4.0
     condition: fhir.enabled
     repository: https://alvearie.github.io/health-patterns/charts
+  - name: term-services-prep
+    version: 0.1.0
+    condition: fhir.enabled
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: fhir-trigger
     version: 0.1.0
     condition: fhir-trigger.enabled
@@ -58,10 +62,14 @@ dependencies:
     version: 1.0.1
     condition: deid.enabled
     repository: https://alvearie.github.io/health-patterns/charts
+  - name: deid-prep
+    version: 0.1.0
+    condition: deid.enabled
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: cohort-service
     version: 0.1.0
-    repository: https://alvearie.github.io/health-patterns/charts
     condition: cohort-service.enabled
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: nifi-registry
     version: 0.1.0
     condition: nifi-registry.enabled
@@ -76,21 +84,25 @@ dependencies:
     repository: https://alvearie.github.io/health-analytics/charts
   - name: zookeeper
     version: 6.0.0
-    repository: https://charts.bitnami.com/bitnami
     condition: zookeeper.enabled
+    repository: https://charts.bitnami.com/bitnami
   - name: nifi
     version: 0.6.0
-    repository: https://cetic.github.io/helm-charts
     condition: nifi.enabled
+    repository: https://cetic.github.io/helm-charts
   - name: kafka
     version: 12.1.0
-    repository: https://charts.bitnami.com/bitnami
     condition: kafka.enabled
+    repository: https://charts.bitnami.com/bitnami
   - name: expose-kafka
     version: 0.1.0
-    repository: https://alvearie.github.io/health-patterns/charts
     condition: kafka.enabled
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: kube-prometheus-stack
     version: 12.0.4
-    repository: https://prometheus-community.github.io/helm-charts
     condition: kube-prometheus-stack.enabled
+    repository: https://prometheus-community.github.io/helm-charts
+  - name: hl7-resource-generator
+    version: 0.1.0
+    condition: hl7-resource-generator.enabled
+    repository: https://alvearie.github.io/hl7-resource-generator-service/charts
