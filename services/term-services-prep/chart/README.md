@@ -26,7 +26,8 @@ Specifying your preferred values for the variables in `<<>>`
 Add Alvearie Health Patterns Helm repo to your local Helm environment:
 
 ```
-helm add repo health-patterns https://alvearie.io/health-patterns/charts
+helm repo add health-patterns https://alvearie.io/health-patterns/charts
+helm repo update
 ```
 
 Install the helm chart using:
