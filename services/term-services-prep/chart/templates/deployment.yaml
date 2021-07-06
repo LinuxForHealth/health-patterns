@@ -26,6 +26,11 @@ spec:
           - name: http
             containerPort: {{ .Values.service.port }}
             protocol: TCP
+        volumeMounts:
+        - mountPath: /mnt/data/
+          name: mappings
+          readOnly: false
+          subPath: ""
         env:
         - name: FHIR_SERVER_URL
           value: {{ include "term-services-prep.fhir.url" . }}
@@ -35,3 +40,8 @@ spec:
           value: {{ .Values.fhir.password }}
         - name: PV_PATH
           value: '/mnt/data/'
+      volumes:
+      - name: mappings
+        persistentVolumeClaim:
+          claimName: {{ .Release.Namespace }}-{{ include "term-services-prep.fullname" . }}-pv-claim
+          readOnly: false
