@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "deid-prep.fullname" . }}-pv-claim
+  name: {{ .Release.Namespace }}-{{ include "deid-prep.fullname" . }}-pv-claim
 spec:
   accessModes:
   - ReadWriteMany

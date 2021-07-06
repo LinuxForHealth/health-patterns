@@ -49,5 +49,5 @@ spec:
       volumes:
       - name: configurations
         persistentVolumeClaim:
-          claimName: {{ include "deid-prep.fullname" . }}-pv-claim
+          claimName: {{ .Release.Namespace }}-{{ include "deid-prep.fullname" . }}-pv-claim
           readOnly: false
