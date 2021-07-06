@@ -1,0 +1,886 @@
+Metadata-Version: 2.1
+Name: fhir.resources
+Version: 6.1.0
+Summary: FHIR Resources as Model Class
+Home-page: https://github.com/nazrulworld/fhir.resources
+Author: Md Nazrul Islam
+Author-email: email2nazrul@gmail.com
+License: BSD license
+Project-URL: CI: Travis, https://travis-ci.org/github/nazrulworld/fhir.resources
+Project-URL: Coverage: codecov, https://codecov.io/gh/nazrulworld/fhir.resources
+Project-URL: GitHub: issues, https://github.com/nazrulworld/fhir.resources/issues
+Project-URL: GitHub: repo, https://github.com/nazrulworld/fhir.resources
+Keywords: fhir,resources,python,hl7,health IT,healthcare
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Healthcare Industry
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: Typing :: Typed
+Requires-Python: >=3.6
+Requires-Dist: pydantic[email] (>=1.7.2)
+Provides-Extra: all
+Requires-Dist: coverage ; extra == 'all'
+Requires-Dist: flake8 (==3.8.3) ; extra == 'all'
+Requires-Dist: flake8-isort (==3.0.0) ; extra == 'all'
+Requires-Dist: flake8-bugbear (==20.1.4) ; extra == 'all'
+Requires-Dist: requests (==2.23.0) ; extra == 'all'
+Requires-Dist: isort (==4.3.21) ; extra == 'all'
+Requires-Dist: black ; extra == 'all'
+Requires-Dist: mypy ; extra == 'all'
+Requires-Dist: pytest-runner ; extra == 'all'
+Requires-Dist: Jinja2 (==2.11.1) ; extra == 'all'
+Requires-Dist: MarkupSafe (==1.1.1) ; extra == 'all'
+Requires-Dist: colorlog (==2.10.0) ; extra == 'all'
+Requires-Dist: certifi ; extra == 'all'
+Requires-Dist: fhirspec ; extra == 'all'
+Requires-Dist: zest-releaser[recommended] ; extra == 'all'
+Requires-Dist: orjson (>=3.4.3) ; extra == 'all'
+Requires-Dist: pytest (>5.4.0) ; (python_version >= "3.6") and extra == 'all'
+Requires-Dist: pytest-cov (>=2.10.0) ; (python_version >= "3.6") and extra == 'all'
+Provides-Extra: orjson
+Requires-Dist: orjson (>=3.4.3) ; extra == 'orjson'
+Provides-Extra: test
+Requires-Dist: coverage ; extra == 'test'
+Requires-Dist: flake8 (==3.8.3) ; extra == 'test'
+Requires-Dist: flake8-isort (==3.0.0) ; extra == 'test'
+Requires-Dist: flake8-bugbear (==20.1.4) ; extra == 'test'
+Requires-Dist: requests (==2.23.0) ; extra == 'test'
+Requires-Dist: isort (==4.3.21) ; extra == 'test'
+Requires-Dist: black ; extra == 'test'
+Requires-Dist: mypy ; extra == 'test'
+Requires-Dist: pytest-runner ; extra == 'test'
+Requires-Dist: pytest (>5.4.0) ; (python_version >= "3.6") and extra == 'test'
+Requires-Dist: pytest-cov (>=2.10.0) ; (python_version >= "3.6") and extra == 'test'
+
+=================================
+FHIR® Resources (R4, STU3, DSTU2)
+=================================
+
+
+.. image:: https://img.shields.io/pypi/v/fhir.resources.svg
+        :target: https://pypi.python.org/pypi/fhir.resources
+
+.. image:: https://img.shields.io/pypi/pyversions/fhir.resources.svg
+        :target: https://pypi.python.org/pypi/fhir.resources
+        :alt: Supported Python Versions
+
+.. image:: https://img.shields.io/travis/nazrulworld/fhir.resources.svg
+        :target: https://travis-ci.org/nazrulworld/fhir.resources
+
+.. image:: https://ci.appveyor.com/api/projects/status/0qu5vyue1jwxb4km?svg=true
+        :target: https://ci.appveyor.com/project/nazrulworld/fhir-resources
+        :alt: Windows Build
+
+.. image:: https://codecov.io/gh/nazrulworld/fhir.resources/branch/master/graph/badge.svg
+        :target: https://codecov.io/gh/nazrulworld/fhir.resources
+
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+
+.. image:: https://static.pepy.tech/personalized-badge/fhir-resources?period=total&units=international_system&left_color=black&right_color=green&left_text=Downloads
+    :target: https://pepy.tech/project/fhir-resources
+    :alt: Downloads
+
+.. image:: https://www.hl7.org/fhir/assets/images/fhir-logo-www.png
+        :target: https://www.hl7.org/implement/standards/product_brief.cfm?product_id=449
+        :alt: HL7® FHIR®
+
+
+Powered by pydantic_, all `FHIR Resources <https://www.hl7.org/fhir/resourcelist.html>`_ are available as python class with built-in
+data validation, faster in performance and optionally ``orjson`` support has been included as a performance booster! Written in modern python.
+
+* Easy to construct, easy to extended validation, easy to export.
+* By inheriting behaviour from pydantic_, compatible with `ORM <https://en.wikipedia.org/wiki/Object-relational_mapping>`_.
+* Full support of FHIR® Extensibility for Primitive Data Types are available.
+* Previous release of FHIR® Resources are available.
+* Free software: BSD license
+
+
+FHIR® Version Info
+------------------
+
+FHIR® (Release R4, version 4.0.1) is available as default. Also previous versions are available as Python sub-package
+(each release name string becomes sub-package name, i.e ``STU3`` ).
+
+**Available Previous Versions**:
+
+* ``STU3`` (3.0.2)
+* ``DSTU2`` (1.0.2) [see `issue#13 <https://github.com/nazrulworld/fhir.resources/issues/13>`_][don't have full tests coverage]
+
+
+Installation
+------------
+
+Just a simple ``pip install fhir.resources`` or ``easy_install fhir.resources`` is enough. But if you want development
+version, just clone from https://github.com/nazrulworld/fhir.resources and ``pip install -e .[all]``.
+
+
+Usages
+------
+
+**Example: 1**: Construct Resource Model object::
+
+    >>> from fhir.resources.organization import Organization
+    >>> from fhir.resources.address import Address
+    >>> data = {
+    ...     "id": "f001",
+    ...     "active": True,
+    ...     "name": "Acme Corporation",
+    ...     "address": [{"country": "Swizterland"}]
+    ... }
+    >>> org = Organization(**data)
+    >>> org.resource_type == "Organization"
+    True
+    >>> isinstance(org.address[0], Address)
+    >>> True
+    >>> org.address[0].country == "Swizterland"
+    True
+    >>> org.dict()['active'] is True
+    True
+
+**Example: 2**: Resource object created from json string::
+
+    >>> from fhir.resources.organization import Organization
+    >>> from fhir.resources.address import Address
+    >>> json_str = '''{"resourceType": "Organization",
+    ...     "id": "f001",
+    ...     "active": True,
+    ...     "name": "Acme Corporation",
+    ...     "address": [{"country": "Swizterland"}]
+    ... }'''
+    >>> org = Organization.parse_raw(json_str)
+    >>> isinstance(org.address[0], Address)
+    >>> True
+    >>> org.address[0].country == "Swizterland"
+    True
+    >>> org.dict()['active'] is True
+    True
+
+
+**Example: 3**: Resource object created from json object(py dict)::
+
+    >>> from fhir.resources.patient import Patient
+    >>> from fhir.resources.humanname import HumanName
+    >>> from datetime import date
+    >>> json_obj = {"resourceType": "Patient",
+    ...     "id": "p001",
+    ...     "active": True,
+    ...     "name": [
+    ...         {"text": "Adam Smith"}
+    ...      ],
+    ...     "birthDate": "1985-06-12"
+    ... }
+    >>> pat = Patient.parse_obj(json_obj)
+    >>> isinstance(pat.name[0], HumanName)
+    >>> True
+    >>> org.birthDate == date(year=1985, month=6, day=12)
+    True
+    >>> org.active is True
+    True
+
+
+**Example: 4**: Construct Resource object from json file::
+
+    >>> from fhir.resources.patient import Patient
+    >>> import os
+    >>> import pathlib
+    >>> filename = pathlib.Path("foo/bar.json")
+    >>> pat = Patient.parse_file(filename)
+    >>> pat.resource_type == "Patient"
+    True
+
+
+**Example: 5**: Construct resource object in python way::
+
+    >>> from fhir.resources.organization import Organization
+    >>> from fhir.resources.address import Address
+    >>> json_obj = {"resourceType": "Organization",
+    ...     "id": "f001",
+    ...     "active": True,
+    ...     "name": "Acme Corporation",
+    ...     "address": [{"country": "Swizterland"}]
+    ... }
+
+    >>> org = Organization.construct()
+    >>> org.id = "f001"
+    >>> org.active = True
+    >>> org.name = "Acme Corporation"
+    >>> org.address = list()
+    >>> address = Address.construct()
+    >>> address.country = "Swizterland"
+    >>> org.address.append(address)
+    >>> org.dict() == json_obj
+    True
+
+
+**Example: 4**: Using Resource Factory Function::
+
+    >>> from fhir.resources import construct_fhir_element
+    >>> json_dict = {"resourceType": "Organization",
+    ...     "id": "mmanu",
+    ...     "active": True,
+    ...     "name": "Acme Corporation",
+    ...     "address": [{"country": "Swizterland"}]
+    ... }
+    >>> org = construct_fhir_element('Organization', json_dict)
+    >>> org.address[0].country == "Swizterland"
+    True
+    >>> org.dict()['active'] is True
+    True
+
+
+**Example: 5**: Auto validation while providing wrong datatype::
+
+    >>> try:
+    ...     org = Organization({"id": "fmk", "address": ["i am wrong type"]})
+    ...     raise AssertionError("Code should not come here")
+    ... except ValueError:
+    ...     pass
+
+
+
+Advanced Usages
+---------------
+
+FHIR Comments (JSON)
+~~~~~~~~~~~~~~~~~~~~
+
+It is possible to add comments inside json like xml, but need to follow some convention, what is suggested by `Grahame Grieve <http://www.healthintersections.com.au/?p=2569>`_;
+is implemented here.
+
+Also it is possible to generate json string output without comments.
+
+Examples::
+
+    >>> observation_str = b"""{
+    ...  "resourceType": "Observation",
+    ...  "id": "f001",
+    ...    "fhir_comments": [
+    ...      "   a specimen identifier - e.g. assigned when the specimen was taken by the orderer/placer  use the accession number for the filling lab   ",
+    ...      "  Placer ID  "
+    ...    ],
+    ...  "text": {
+    ...      "fhir_comments": [
+    ...      "   a specimen identifier - e.g. assigned when the specimen was taken by the orderer/placer  use the accession number for the filling lab   ",
+    ...      "  Placer ID  "
+    ...    ],
+    ...    "status": "generated",
+    ...    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">.........</div>"
+    ...  },
+    ...  "identifier": [
+    ...    {
+    ...      "use": "official",
+    ...      "system": "http://www.bmc.nl/zorgportal/identifiers/observations",
+    ...      "value": "6323"
+    ...    }
+    ...  ],
+    ...  "status": "final",
+    ...  "_status": {
+    ...      "fhir_comments": [
+    ...            "  EH: Note to balloters  - lots of choices for whole blood I chose this.  "
+    ...          ]
+    ...  },
+    ...  "code": {
+    ...    "coding": [
+    ...      {
+    ...        "system": "http://loinc.org",
+    ...        "code": "15074-8",
+    ...        "display": "Glucose [Moles/volume] in Blood"
+    ...      }
+    ...    ]
+    ...  },
+    ...  "subject": {
+    ...    "reference": "Patient/f001",
+    ...    "display": "P. van de Heuvel"
+    ...  },
+    ...  "effectivePeriod": {
+    ...    "start": "2013-04-02T09:30:10+01:00"
+    ...  },
+    ...  "issued": "2013-04-03T15:30:10+01:00",
+    ...  "performer": [
+    ...    {
+    ...      "reference": "Practitioner/f005",
+    ...      "display": "A. Langeveld"
+    ...    }
+    ...  ],
+    ...  "valueQuantity": {
+    ...    "value": 6.3,
+    ...    "unit": "mmol/l",
+    ...    "system": "http://unitsofmeasure.org",
+    ...    "code": "mmol/L"
+    ...  },
+    ...  "interpretation": [
+    ...    {
+    ...      "coding": [
+    ...        {
+    ...          "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+    ...          "code": "H",
+    ...          "display": "High"
+    ...        }
+    ...      ]
+    ...    }
+    ...  ],
+    ...  "referenceRange": [
+    ...    {
+    ...      "low": {
+    ...        "value": 3.1,
+    ...        "unit": "mmol/l",
+    ...        "system": "http://unitsofmeasure.org",
+    ...        "code": "mmol/L"
+    ...      },
+    ...      "high": {
+    ...        "value": 6.2,
+    ...        "unit": "mmol/l",
+    ...        "system": "http://unitsofmeasure.org",
+    ...        "code": "mmol/L"
+    ...      }
+    ...    }
+    ...  ]
+    ... }"""
+    >>> from fhir.resources.observation import Observation
+    >>> obj = Observation.parse_raw(observation_str)
+    >>> "fhir_comments" in obj.json()
+    >>> # Test comments filtering
+    >>> "fhir_comments" not in obj.json(exclude_comments=True)
+
+*Unfortunately comments filtering is not available for FHIRAbstractModel::dict*
+
+
+Special Case: Missing data
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`In some cases <https://www.hl7.org/fhir/extensibility.html#Special-Case>`_, implementers might
+find that they do not have appropriate data for an element with minimum cardinality = 1.
+In this case, the element must be present, but unless the resource or a profile on it has made the
+actual value of the primitive data type mandatory, it is possible to provide an extension that
+explains why the primitive value is not present.
+Example (required ``intent`` element is missing but still valid because of extension)::
+
+    >>> json_str = b"""{
+    ...    "resourceType": "MedicationRequest",
+    ...    "id": "1620518",
+    ...    "meta": {
+    ...        "versionId": "1",
+    ...        "lastUpdated": "2020-10-27T11:04:42.215+00:00",
+    ...        "source": "#z072VeAlQWM94jpc",
+    ...        "tag": [
+    ...            {
+    ...                "system": "http://www.alpha.alp/use-case",
+    ...                "code": "EX20"
+    ...            }
+    ...        ]
+    ...    },
+    ...    "status": "completed",
+    ...    "_intent": {
+    ...        "extension": [
+    ...            {
+    ...                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+    ...                "valueCode": "unknown"
+    ...            }
+    ...        ]
+    ...    },
+    ...    "medicationReference": {
+    ...        "reference": "Medication/1620516",
+    ...        "display": "Erythromycin 250 MG Oral Tablet"
+    ...    },
+    ...    "subject": {
+    ...        "reference": "Patient/1620472"
+    ...    },
+    ...    "encounter": {
+    ...        "reference": "Encounter/1620506",
+    ...        "display": "Follow up encounter"
+    ...    },
+    ...    "authoredOn": "2018-06-16",
+    ...    "requester": {
+    ...        "reference": "Practitioner/1620502",
+    ...        "display": "Dr. Harold Hippocrates"
+    ...    },
+    ...    "reasonReference": [
+    ...        {
+    ...            "reference": "Condition/1620514",
+    ...            "display": "Otitis Media"
+    ...        }
+    ...    ],
+    ...    "dosageInstruction": [
+    ...        {
+    ...            "text": "250 mg 4 times per day for 10 days",
+    ...            "timing": {
+    ...                "repeat": {
+    ...                    "boundsDuration": {
+    ...                        "value": 10,
+    ...                        "unit": "day",
+    ...                        "system": "http://unitsofmeasure.org",
+    ...                        "code": "d"
+    ...                    },
+    ...                    "frequency": 4,
+    ...                    "period": 1,
+    ...                    "periodUnit": "d"
+    ...                }
+    ...            },
+    ...            "doseAndRate": [
+    ...                {
+    ...                    "doseQuantity": {
+    ...                        "value": 250,
+    ...                        "unit": "mg",
+    ...                        "system": "http://unitsofmeasure.org",
+    ...                        "code": "mg"
+    ...                    }
+    ...                }
+    ...            ]
+    ...        }
+    ...    ],
+    ...    "priorPrescription": {
+    ...        "reference": "MedicationRequest/1620517",
+    ...        "display": "Amoxicillin prescription"
+    ...    }
+    ... }"""
+    >>> from fhir.resources.medicationrequest import MedicationRequest
+    >>> obj = MedicationRequest.parse_raw(json_str)
+    >>> "intent" not in obj.dict()
+
+
+Custom Validators
+~~~~~~~~~~~~~~~~~
+
+``fhir.resources`` is providing the extensive API to create and attach custom validator into any model. See more `about root validator <https://pydantic-docs.helpmanual.io/usage/validators/#root-validators>`_
+Some convention you have to follow though, while creating a root validator.
+
+1. Number of arguments are fixed, as well as names are also. i.e ``(cls, values)``.
+2. Should return ``values``, unless any exception need to be raised.
+3. Validator should be attached only one time for individual Model. Update [from now, it's not possible to attach multiple time same name validator on same class]
+
+Example 1: Validator for Patient::
+
+    from typing import Dict
+    from fhir.resources.patient import Patient
+
+    import datetime
+
+    def validate_birthdate(cls, values: Dict):
+        if not values:
+            return values
+        if "birthDate" not in values:
+            raise ValueError("Patient's ``birthDate`` is required.")
+
+        minimum_date = datetime.date(2002, 1, 1)
+        if values["birthDate"] > minimum_date:
+            raise ValueError("Minimum 18 years patient is allowed to use this system.")
+        return values
+    # we want this validator to execute after data evaluating by individual field validators.
+    Patient.add_root_validator(validate_gender, pre=False)
+
+
+Example 2: Validator for Patient from Validator Class::
+
+    from typing import Dict
+    from fhir.resources.patient import Patient
+
+    import datetime
+
+    class MyValidator:
+        @classmethod
+        def validate_birthdate(cls, values: Dict):
+            if not values:
+                return values
+            if "birthDate" not in values:
+                raise ValueError("Patient's ``birthDate`` is required.")
+
+            minimum_date = datetime.date(2002, 1, 1)
+            if values["birthDate"] > minimum_date:
+                raise ValueError("Minimum 18 years patient is allowed to use this system.")
+            return values
+    # we want this validator to execute after data evaluating by individual field validators.
+    Patient.add_root_validator(MyValidator.validate_gender, pre=False)
+
+
+**important notes** It is possible add root validator into any base class like ``DomainResource``.
+In this case you have to make sure root validator is attached before any import of derived class, other
+than validator will not trigger for successor class (if imported before) by nature.
+
+ENUM Validator
+~~~~~~~~~~~~~~
+
+``fhir.resources`` is providing API for enum constraint for each field (where applicable), but it-self doesn't
+enforce enum based validation! see `discussion here <https://github.com/nazrulworld/fhir.resources/issues/23>`_.
+If you want to enforce enum constraint, you have to create a validator for that.
+
+Example: Gender Enum::
+
+    from typing import Dict
+    from fhir.resources.patient import Patient
+
+    def validate_gender(cls, values: Dict):
+        if not values:
+            return values
+        enums = cls.__fields__["gender"].field_info.extra["enum_values"]
+        if "gender" in values and values["gender"] not in enums:
+            raise ValueError("write your message")
+        return values
+
+    Patient.add_root_validator(validate_gender, pre=True)
+
+
+Reference Validator
+~~~~~~~~~~~~~~~~~~~
+
+``fhir.resources`` is also providing enum like list of permitted resource types through field property ``enum_reference_types``.
+You can get that list by following above (Enum) approaches  ``resource_types = cls.__fields__["managingOrganization"].field_info.extra["enum_reference_types"]``
+
+
+Usages of orjson
+~~~~~~~~~~~~~~~~
+
+orjson_ is one of the fastest Python library for JSON and is more correct than the standard json library (according to their docs).
+Good news is that ``fhir.resource`` has an extensive support for orjson_ and it's too easy to enable it automatically. What you need to do, just make orjson_ as your project dependency!
+
+
+pydantic_ Field Type Support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All available fhir resources (types) can be use as pydantic_'s Field's value types. See issue#46 `Support for FastAPI pydantic response models <https://github.com/nazrulworld/fhir.resources/issues/46>`_.
+The module ``fhirtypes.py`` contains all fhir resources related types and should trigger validator automatically.
+
+
+``Resource.id aka fhirtypes.Id`` constraint extensibility
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There are a lots of discussion here here i.) https://bit.ly/360HksL ii.) https://bit.ly/3o1fZgl about the length of ``Resource.Id``'s value.
+Based on those discussions, we recommend that keep your ``Resource.Id`` size within 64 letters (for the seek of intercompatibility with third party system), but we are also providing freedom
+about the length of Id, in respect with others opinion that 64 chr length is not sufficient. ``fhirtypes.Id.configure_constraints()``
+is offering to customize as your own requirement.
+
+Examples::
+    >>> from fhir.resources.fhirtypes import Id
+    >>> Id.configure_constraints(min_length=16, max_length=128)
+
+Note: when you will change that behaviour, that would impact into your whole project.
+
+
+Migration (from later than ``6.X.X``)
+-------------------------------------
+
+This migration guide states some underlying changes of ``API`` and replacement, those are commonly used from later than ``6.X.X`` version.
+
+
+``fhir.resources.fhirelementfactory.FHIRElementFactory::instantiate``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Replacement:** ``fhir.resources.construct_fhir_element``
+
+- First parameter value is same as previous, the Resource name.
+
+- Second parameter is more flexible than previous! it is possible to provide not only json ``dict`` but also
+  json string or json file path.
+
+- No third parameter, what was in previous version.
+
+
+``fhir.resources.fhirabstractbase.FHIRAbstractBase::__init__``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Replacement:** ``fhir.resources.fhirabstractmodel.FHIRAbstractModel::parse_obj<classmethod>``
+
+- First parameter value is same as previous, json dict.
+
+- No second parameter, what was in previous version.
+
+
+``fhir.resources.fhirabstractbase.FHIRAbstractBase::as_json``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Replacement:** ``fhir.resources.fhirabstractmodel.FHIRAbstractModel::dict``
+
+- Output are almost same previous, but there has some difference in case of some date type, for example py date,
+  datetime, Decimal are in object representation.
+
+- It is possible to use ``fhir.resources.fhirabstractmodel.FHIRAbstractModel::json`` as replacement, when
+  json string is required (so not need further, json dumps from dict)
+
+
+Note:
+
+All resources/classes are derived from ``fhir.resources.fhirabstractmodel.FHIRAbstractModel`` what was previously
+from ``fhir.resources.fhirabstractbase.FHIRAbstractBase``.
+
+
+Release and Version Policy
+--------------------------
+
+Starting from  version ``5.0.0`` we are following our own release policy and we although follow Semantic Versioning scheme like FHIR® version.
+Unlike previous statement (bellow), releasing now is not dependent on FHIR®.
+
+
+**removed statement**
+
+    This package is following `FHIR® release and versioning policy <https://www.hl7.org/fhir/versions.html>`_, for example say, FHIR releases next version 4.0.1,
+    we also release same version here.
+
+
+Credits
+-------
+
+All FHIR® Resources (python classes) are generated using fhir-parser_ which is forked from https://github.com/smart-on-fhir/fhir-parser.git.
+
+
+This package skeleton was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _`fhir-parser`: https://github.com/nazrulworld/fhir-parser
+.. _`pydantic`: https://pydantic-docs.helpmanual.io/
+.. _`orjson`: <https://pypi.org/project/orjson/>
+
+© Copyright HL7® logo, FHIR® logo and the flaming fire are registered trademarks
+owned by `Health Level Seven International <https://www.hl7.org/legal/trademarks.cfm?ref=https://pypi.org/project/fhir-resources/>`_
+
+.. role:: strike
+    :class: strike
+.. role:: raw-html(raw)
+    :format: html
+
+
+=======
+History
+=======
+
+6.1.0 (2021-02-13)
+------------------
+
+- Breaking/Fixes: `PR#48 <https://github.com/nazrulworld/fhir.resources/pull/48>`_ ``Resource.id`` type has been replaced with ``fhirtypes.Id`` from ``fhirtypes.String`` (only for R4) [ItayGoren]
+
+- Fixes: constraints regex for fhirtypes ``Id``, ``Code``, ``Integer``, ``Decimal``, ``UnsignedInt``, ``PositiveInt`` and so on. [nazrulworld]
+
+
+6.0.0 (2020-12-17)
+------------------
+
+- Issue #21 Remaining resources are added. [iatechicken]
+
+
+6.0.0b11 (2020-11-25)
+---------------------
+
+- Fixes: wrong ``ClaimResponseAddItemAdjudicationType`` resource type name into ``DTSU2``.
+
+
+6.0.0b10 (2020-11-15)
+---------------------
+
+Improvements
+
+- ``FHIRAbstractModel::add_root_validator`` is more improved and practical with proper validation, more now possible provide class method as root validator.
+
+
+Bugfixes
+
+- `Issue #41 <https://github.com/nazrulworld/fhir.resources/issues/41>`_ pydantic.errors.ConfigError: duplicate validator function.
+
+6.0.0b9 (2020-11-05)
+--------------------
+
+Improvements
+
+- Now supports of ``simplejson`` is available automatically (depends on importable) along side with ``orjson`` and default ``json`` library.
+  Order of json serializer available (orjson -> simplejson(as fallback) -> json(as default)).
+
+Breaking
+
+- ``orjson`` is not available by default, have to use extra_require ``orjson`` to available that.
+
+
+6.0.0b8 (2020-11-02)
+--------------------
+
+- ``pydantic`` minimum version has been set to ``1.7.2``.
+
+
+6.0.0b7 (2020-10-31)
+--------------------
+
+*If you face import error ``from pydantic.utils import ROOT_KEY``, please upgrade your pydnatic version to <1.7*
+
+Fixes
+
+- `Issue #39 <https://github.com/nazrulworld/fhir.resources/issues/39>`_ added compatibility with ``pydantic`` version between ``1.6.x`` and ``1.7.x`` [nazrulworld]
+
+Improvements
+
+- Issue #40 `Make fhir primitive element field optional if extension value is provided. <https://github.com/nazrulworld/fhir.resources/issues/40>`_
+
+6.0.0b6 (2020-10-24)
+--------------------
+
+Improvements
+
+- ``FHIRAbstractModel::json`` now takes additional parameter ``return_bytes``, indicates json string would be bytes. [nazrulworld]
+
+- Issue#38 Add support for FHIR comments. As per suggestion of comments in json from `Grahame Grieve <http://www.healthintersections.com.au/?p=2569>`_, now ``fhir_comments`` is accepted. [nazrulworld]
+
+- FHIR comments filter option is added in ``FHIRAbstractModel::json``, means it is possible to exclude any comments while generating json string by providing parameter ``exclude_comments`` value. [nazrulworld]
+
+- More FHIR DSTU2 resources have been added. [Itay Goren]
+
+6.0.0b5 (2020-10-04)
+--------------------
+
+Improvements
+
+- ``visionprescription`` and ``supplyrequest`` resources added for DSTU2 [iatechicken]
+
+Fixes
+
+- Issue #28 `'construct_fhir_element' change the given dict <https://github.com/nazrulworld/fhir.resources/issues/28>`_
+
+
+6.0.0b4 (2020-09-24)
+--------------------
+
+Improvements
+
+- orjson_ supports have been available as default json ``dumps`` and ``loads`` for Model.
+
+- ``FHIRAbstractModel::get_json_encoder`` class method now available, which return pydantic compatible json encoder callable, can be used with any json serializer.
+
+- More DSTU2 FHIR Resources have added, https://github.com/nazrulworld/fhir.resources/issues/21. Thanks to [mmabey].
+
+Fixes
+
+- Fixes URL validation in the case where a primitive type is used as URL (which is allowed in StructureDefinition). [simonvadee]
+
+- Fixes `Issue#19 <https://github.com/nazrulworld/fhir.resources/issues/19>`_ Getting validation errors that don't make sense.
+
+
+6.0.0b3 (2020-08-07)
+--------------------
+
+- ``FHIRAbstractModel::get_resource_type`` class method now available, which returning name of the resource.
+
+
+6.0.0b2 (2020-07-09)
+--------------------
+
+- ``FHIRAbstractModel::element_properties`` class method now available, which returning generator of ``ModelField``,
+  those are elements of the resource.
+
+- Minor fixes on ``enum_values``.
+
+6.0.0b1 (2020-07-05)
+--------------------
+
+Revolutionary evolution has been made, now fully rewritten with modern python, underlying APIs (almost all) have been changed.
+Please have look at readme section, for howto.
+
+Improvements
+
+- Full support of FHIR `Extensibility <https://www.hl7.org/fhir/extensibility.html>`_ for `Primitive Data Types <https://www.hl7.org/fhir/datatypes.html#primitive>`_
+
+Breaking
+
+- Drop support for python 2.7.
+
+
+
+5.1.0 (2020-04-11)
+------------------
+
+Improvements
+
+- FHIR ``STU3`` release version upgraded from ``3.0.1`` to ``3.0.2``, Please find changes history here https://www.hl7.org/fhir/history.html.
+
+- FHIR ``R4`` release version upgraded from ``4.0.0`` to ``4.0.1``, find changes history here https://www.hl7.org/fhir/history.html.
+
+
+5.0.1 (2019-07-18)
+------------------
+
+Bugfixes:
+
+- `Issue#5 <https://github.com/nazrulworld/fhir.resources/issues/5>`_ confusing error message "name 'self' is not defined" [nazrulworld]
+
+
+5.0.0 (2019-06-08)
+------------------
+
+- Nothing but release stable version.
+
+
+5.0.0b3 (2019-05-14)
+--------------------
+
+New features
+
+- Isuue#1 `Add DSTU2 Support <https://github.com/nazrulworld/fhir.resources/issues/1>`_
+
+
+5.0.0b2 (2019-05-13)
+--------------------
+
+Breaking or Improvments
+
+- ``elementProperties``: element now has extra property ``type_name``. Now format like ``(name, json_name, type, type_name, is_list, "of_many", not_optional)``
+  The ``type_name`` refers original type name (code) from FHIR Structure Definition and it would be very helpful while
+  making fhir search, fhirpath navigator.
+
+
+
+5.0.0b1 (2019-01-19)
+--------------------
+
+New features
+
+- Implemented own build policy, now previous version of FHIR® resources are available as python sub-package.
+
+Build info
+
+- Default version is ``R4`` (see version info at `4.0.0b1 (2019-01-13)` section)
+
+- ``STU3`` (see version info at `3.0.1 (2019-01-13)` section)
+
+
+4.0.0 (2019-01-14)
+------------------
+
+- see version info at ``4.0.0b1`` section.
+
+
+4.0.0b1 (2019-01-13)
+--------------------
+
+`Version Info (R4)`_ ::
+
+    [FHIR]
+    FhirVersion=4.0.0-a53ec6ee1b
+    version=4.0.0
+    buildId=a53ec6ee1b
+    date=20181227223754
+
+
+
+3.0.1 (2019-01-13)
+------------------
+
+`Version Info (STU3)`_ ::
+
+    [FHIR]
+    FhirVersion=3.0.1.11917
+    version=3.0.1
+    revision=11917
+    date=20170419074443
+
+
+.. _`Version Info (STU3)`: http://hl7.org/fhir/stu3/
+.. _`Version Info (R4)`: http://hl7.org/fhir/R4/
+
+

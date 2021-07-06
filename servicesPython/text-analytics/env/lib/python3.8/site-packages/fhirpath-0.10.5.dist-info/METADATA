@@ -1,0 +1,681 @@
+Metadata-Version: 2.1
+Name: fhirpath
+Version: 0.10.5
+Summary: FHIRPath implementation in Python.
+Home-page: https://nazrul.me/fhirpath/
+Author: Md Nazrul Islam
+Author-email: email2nazrul@gmail.com
+License: GNU General Public License v3
+Project-URL: CI: Travis, https://travis-ci.org/nazrulworld/fhirpath
+Project-URL: Coverage: codecov, https://codecov.io/github/nazrulworld/fhirpath
+Project-URL: Docs: RTD, https://fhirpath.readthedocs.io/
+Project-URL: GitHub: issues, https://github.com/nazrulworld/fhirpath/issues
+Project-URL: GitHub: repo, https://github.com/nazrulworld/fhirpath
+Keywords: fhirpath,HL7,FHIR,healthcare
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Healthcare Industry
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Typing :: Typed
+Requires-Python: >=3.6
+Requires-Dist: zope.interface (>=5.1.2)
+Requires-Dist: multidict
+Requires-Dist: fhirspec (>=0.2.5)
+Requires-Dist: fhir.resources (<7.0,>=6.0.0)
+Requires-Dist: yarl
+Requires-Dist: isodate
+Provides-Extra: all
+Requires-Dist: more-itertools ; extra == 'all'
+Requires-Dist: pytest (>=6.0.1) ; extra == 'all'
+Requires-Dist: pytest-cov ; extra == 'all'
+Requires-Dist: pytest-mock ; extra == 'all'
+Requires-Dist: pytest-asyncio ; extra == 'all'
+Requires-Dist: pytest-docker-fixtures ; extra == 'all'
+Requires-Dist: psycopg2 ; extra == 'all'
+Requires-Dist: elasticsearch[async] (<8.0.0,>7.8.0) ; extra == 'all'
+Requires-Dist: SQLAlchemy ; extra == 'all'
+Requires-Dist: pytz ; extra == 'all'
+Requires-Dist: mypy ; extra == 'all'
+Requires-Dist: requests (==2.23.0) ; extra == 'all'
+Requires-Dist: flake8 (==3.8.3) ; extra == 'all'
+Requires-Dist: flake8-isort (==3.0.0) ; extra == 'all'
+Requires-Dist: flake8-bugbear (==20.1.4) ; extra == 'all'
+Requires-Dist: isort (==4.3.21) ; extra == 'all'
+Requires-Dist: black ; extra == 'all'
+Requires-Dist: pytest-runner ; extra == 'all'
+Requires-Dist: setuptools-scm[toml] ; extra == 'all'
+Requires-Dist: wheel ; extra == 'all'
+Requires-Dist: sphinx ; extra == 'all'
+Requires-Dist: sphinx-rtd-theme ; extra == 'all'
+Requires-Dist: sphinxcontrib-httpdomain ; extra == 'all'
+Requires-Dist: sphinxcontrib-httpexample ; extra == 'all'
+Requires-Dist: Jinja2 (==2.11.1) ; extra == 'all'
+Requires-Dist: MarkupSafe (==1.1.1) ; extra == 'all'
+Requires-Dist: colorlog (==2.10.0) ; extra == 'all'
+Requires-Dist: certifi ; extra == 'all'
+Requires-Dist: orjson ; extra == 'all'
+Requires-Dist: zest-releaser[recommended] ; extra == 'all'
+Provides-Extra: docs
+Requires-Dist: sphinx ; extra == 'docs'
+Requires-Dist: sphinx-rtd-theme ; extra == 'docs'
+Requires-Dist: sphinxcontrib-httpdomain ; extra == 'docs'
+Requires-Dist: sphinxcontrib-httpexample ; extra == 'docs'
+Provides-Extra: test
+Requires-Dist: more-itertools ; extra == 'test'
+Requires-Dist: pytest (>=6.0.1) ; extra == 'test'
+Requires-Dist: pytest-cov ; extra == 'test'
+Requires-Dist: pytest-mock ; extra == 'test'
+Requires-Dist: pytest-asyncio ; extra == 'test'
+Requires-Dist: pytest-docker-fixtures ; extra == 'test'
+Requires-Dist: psycopg2 ; extra == 'test'
+Requires-Dist: elasticsearch[async] (<8.0.0,>7.8.0) ; extra == 'test'
+Requires-Dist: SQLAlchemy ; extra == 'test'
+Requires-Dist: pytz ; extra == 'test'
+Requires-Dist: mypy ; extra == 'test'
+Requires-Dist: requests (==2.23.0) ; extra == 'test'
+Requires-Dist: flake8 (==3.8.3) ; extra == 'test'
+Requires-Dist: flake8-isort (==3.0.0) ; extra == 'test'
+Requires-Dist: flake8-bugbear (==20.1.4) ; extra == 'test'
+Requires-Dist: isort (==4.3.21) ; extra == 'test'
+Requires-Dist: black ; extra == 'test'
+Requires-Dist: pytest-runner ; extra == 'test'
+Requires-Dist: setuptools-scm[toml] ; extra == 'test'
+Requires-Dist: wheel ; extra == 'test'
+
+============
+Introduction
+============
+
+.. image:: https://img.shields.io/travis/nazrulworld/fhirpath.svg
+        :target: https://travis-ci.org/nazrulworld/fhirpath
+
+.. image:: https://readthedocs.org/projects/fhirpath/badge/?version=latest
+        :target: https://fhirpath.readthedocs.io/en/latest/?badge=latest
+        :alt: Documentation Status
+
+.. image:: https://codecov.io/gh/nazrulworld/fhirpath/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/nazrulworld/fhirpath/branch/master
+   :alt: Test Coverage
+
+.. image:: https://img.shields.io/pypi/pyversions/fhirpath.svg
+   :target: https://pypi.python.org/pypi/fhirpath/
+   :alt: Python Versions
+
+.. image:: https://img.shields.io/lgtm/grade/python/g/nazrulworld/fhirpath.svg?logo=lgtm&logoWidth=18
+    :target: https://lgtm.com/projects/g/nazrulworld/fhirpath/context:python
+    :alt: Language grade: Python
+
+.. image:: https://img.shields.io/pypi/v/fhirpath.svg
+   :target: https://pypi.python.org/pypi/fhirpath
+
+.. image:: https://img.shields.io/pypi/l/fhirpath.svg
+   :target: https://pypi.python.org/pypi/fhirpath/
+   :alt: License
+
+.. image:: https://static.pepy.tech/personalized-badge/fhirpath?period=total&units=international_system&left_color=black&right_color=green&left_text=Downloads
+    :target: https://pepy.tech/project/fhirpath
+    :alt: Downloads
+
+.. image:: https://www.hl7.org/fhir/assets/images/fhir-logo-www.png
+        :target: https://www.hl7.org/fhir/fhirpath.html
+        :alt: HL7® FHIR®
+
+FHIRPath_ Normative Release (v2.0.0) implementation in Python, along side it
+provides support for `FHIR Search <https://www.hl7.org/fhir/search.html>`_ API and
+Query (we called it ``fql(FHIR Query Language)``)
+API to fetch FHIR resources from any data-source(database).
+This library is built in ORM_ like approach. Our goal is to make 100% (as much as possible)
+FHIRPath_ Normative Release (v2.0.0) specification compliance product.
+
+* Supports FHIR® ``STU3`` and ``R4``.
+* Supports multiple provider´s engine. Now Plone_ & guillotina_ framework powered providers `fhirpath-guillotina`_ and `collective.fhirpath`_ respectively are supported and more coming soon.
+* Supports multiple dialects, for example elasticsearch_, GraphQL_, PostgreSQL_. Although now elasticsearch_ has been supported.
+* Provide full support of `FHIR Search <https://www.hl7.org/fhir/search.html>`_ with easy to use API.
+
+
+Usages
+------
+
+This library is kind of abstract type, where all specifications from FHIRPath_ Normative Release (v2.0.0) are implemented rather than completed solution (ready to go).
+The main reason behind this design pattern, to support multiple database systems as well as well as any framework, there is no dependency.
+
+``fhirpath`` never taking care of creating indexes, mappings (elasticsearch) and storing data, if you want to use this library, you have to go
+through any of existing providers (see list bellow) or make your own provider (should not too hard work).
+
+
+Simple example
+~~~~~~~~~~~~~~
+
+Assumption:
+
+1. Elasticsearch server 7.x.x Installed.
+
+2. Mappings and indexes are handled manually.
+
+3. Data (document) also are stored manually.
+
+
+Create Connection and Engine::
+
+    >>> from fhirpath.connectors import create_connection
+    >>> from fhirpath.engine.es import ElasticsearchEngine
+    >>> from fhirpath.engine import dialect_factory
+    >>> from fhirpath.enums import FHIR_VERSION
+
+    >>> host, port = "127.0.0.1", 9200
+    >>> conn_str = "es://@{0}:{1}/".format(host, port)
+    >>> connection = create_connection(conn_str, "elasticsearch.Elasticsearch")
+    >>> connection.raw_connection.ping()
+    True
+    >>> engine = ElasticsearchEngine(FHIR_VERSION.R4, lambda x: connection, dialect_factory)
+
+
+Basic Search::
+
+    >>> from fhirpath.search import Search
+    >>> from fhirpath.search import SearchContext
+
+    >>> search_context = SearchContext(engine, "Organization")
+    >>> params = (
+    ....    ("active", "true"),
+    ....    ("_lastUpdated", "2010-05-28T05:35:56+00:00"),
+    ....    ("_profile", "http://hl7.org/fhir/Organization"),
+    ....    ("identifier", "urn:oid:2.16.528.1|91654"),
+    ....    ("type", "http://hl7.org/fhir/organization-type|prov"),
+    ....    ("address-postalcode", "9100 AA"),
+    ....    ("address", "Den Burg"),
+    .... )
+    >>> fhir_search = Search(search_context, params=params)
+    >>> bundle = fhir_search()
+    >>> len(bundle.entry) == 0
+    True
+
+Basic Query::
+
+    >>> from fhirpath.enums import SortOrderType
+    >>> from fhirpath.query import Q_
+    >>> from fhirpath.fql import T_
+    >>> from fhirpath.fql import V_
+    >>> from fhirpath.fql import exists_
+    >>> query_builder = Q_(resource="Organization", engine=engine)
+    >>>  query_builder = (
+    ....    query_builder.where(T_("Organization.active") == V_("true"))
+    ....    .where(T_("Organization.meta.lastUpdated", "2010-05-28T05:35:56+00:00"))
+    ....    .sort(sort_("Organization.meta.lastUpdated", SortOrderType.DESC))
+    .... )
+    >>> query_result = query_builder(async_result=False)
+    >>> for resource in query_result:
+    ....    assert resource.__class__.__name__ == "OrganizationModel"
+    >>> # test fetch all
+    >>> result = query_result.fetchall()
+    >>> result.__class__.__name__ == "EngineResult"
+    True
+
+    >>> query_builder = Q_(resource="ChargeItem", engine=engine)
+    >>> query_builder = query_builder.where(exists_("ChargeItem.enteredDate"))
+    >>> result = query_builder(async_result=False).single()
+    >>> result is not None
+    True
+    >>> isinstance(result, builder._from[0][1])
+    True
+
+    >>> query_builder = Q_(resource="ChargeItem", engine=engine)
+    >>> query_builder = query_builder.where(exists_("ChargeItem.enteredDate"))
+    >>> result = query_builder(async_result=False).first()
+    >>> result is not None
+    True
+    >>> isinstance(result, builder._from[0][1])
+    True
+
+
+Available Provider (known)
+--------------------------
+
+Currently very few numbers of providers available, however more will coming soon.
+
+`fhirpath-guillotina`_
+~~~~~~~~~~~~~~~~~~~~~~
+
+A `guillotina`_ framework powered provider, battery included, ready to go! `Please follow associated documentation. <https://fhirpath-guillotina.readthedocs.io/en/latest/>`_
+
+1. **Engine**: Elasticsearch
+
+2. **PyPi**: https://pypi.org/project/fhirpath-guillotina/
+
+3. **Source**: https://github.com/nazrulworld/fhirpath_guillotina
+
+
+`collective.fhirpath`_
+~~~~~~~~~~~~~~~~~~~~~~
+
+A `Plone`_ powered provider, like `fhirpath-guillotina`_ every thing is included. ready to go, although has a dependency
+on `plone.app.fhirfield`_.
+
+1. **Engine**: Elasticsearch
+
+2. **PyPi**: https://pypi.org/project/collective.fhirpath/
+
+3. **Source**: https://github.com/nazrulworld/collective.fhirpath
+
+
+unlisted
+~~~~~~~~
+Why are you waiting for? You are welcome to list your provider here!
+Developing provider should not be so hard, as ``fhirpath`` is giving you convenient APIs.
+
+
+Elasticsearch Custom Analyzer
+-----------------------------
+To get some special search features for reference type field, you will need to setup custom analyzer for your elasticsearch index.
+
+Example Custom Analyzer::
+
+    settings = {
+        "analysis": {
+            "normalizer": {
+                "fhir_token_normalizer": {"filter": ["lowercase", "asciifolding"]}
+            },
+            "analyzer": {
+                "fhir_reference_analyzer": {
+                    "tokenizer": "keyword",
+                    "filter": ["fhir_reference_filter"],
+                },
+            },
+            "filter": {
+                "fhir_reference_filter": {
+                    "type": "pattern_capture",
+                    "preserve_original": True,
+                    "patterns": [r"(?:\w+\/)?(https?\:\/\/.*|[a-zA-Z0-9_-]+)"],
+                },
+            },
+            "char_filter": {},
+            "tokenizer": {},
+        }
+
+
+Example Mapping (Reference Field)::
+
+    "properties": {
+      "reference": {
+        "type": "text",
+        "index": true,
+        "store": false,
+        "analyzer": "fhir_reference_analyzer"
+    }
+
+
+ToDo
+----
+
+1. `fhirbase`_ engine aka provider implementation.
+
+2. All methods/functions are defined in `FHIRPath`_ specification, would be completed.
+
+3. Implement https://github.com/ijl/orjson
+4. https://developers.redhat.com/blog/2017/11/16/speed-python-using-rust/
+
+Credits
+-------
+
+This package skeleton was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _`FHIRPath`: http://hl7.org/fhirpath/N1/
+.. _`FHIR`: http://hl7.org/fhir/
+.. _`ORM`: https://en.wikipedia.org/wiki/Object-relational_mapping
+.. _`Plone`: https://plone.org
+.. _`guillotina`: https://guillotina.readthedocs.io/en/latest/
+.. _`elasticsearch`: https://www.elastic.co/products/elasticsearch
+.. _`GraphQL`: https://graphql.org/
+.. _`PostgreSQL`: https://www.postgresql.org/
+.. _`fhirpath-guillotina`: https://pypi.org/project/fhirpath-guillotina/
+.. _`collective.fhirpath`: https://pypi.org/project/collective.fhirpath/
+.. _`plone.app.fhirfield`: https://pypi.org/project/plone.app.fhirfield/
+.. _`fhirbase`: https://github.com/fhirbase/fhirbase
+
+
+© Copyright HL7® logo, FHIR® logo and the flaming fire are registered trademarks
+owned by `Health Level Seven International <https://www.hl7.org/legal/trademarks.cfm?ref=https://pypi.org/project/fhir-resources/>`_
+
+**"FHIR® is the registered trademark of HL7 and is used with the permission of HL7.
+Use of the FHIR trademark does not constitute endorsement of this product by HL7"**
+
+
+=======
+History
+=======
+
+0.10.5 (2020-12-17)
+-------------------
+
+Improvement
+
+- ``BundleWrapper`` is providing two optional methods, ``calculate_fhir_base_url`` and ``resolve_absolute_uri`` and is now also taking optional parameter ``base_url``.
+
+
+Fixes
+- fixes ``ElasticSearchDialect.create_term`` [Kartik Sayani]
+
+- fixes ``EngineResult.extract_references``. [Jason Paumier]
+
+- fixes how composite search params are parsed. [Jason Paumier]
+
+- Issue#28 `Nested GroupTerm search returns no matches <https://github.com/nazrulworld/fhirpath/issues/28>`_
+
+- fixes ``SearchContext.normalize_param`` for composite search params [nazrulworld]
+
+0.10.4 (2020-11-19)
+-------------------
+
+- fixes ``FHIRAbstractModel`` comparing at ``utils`` module for BundleWrapper.
+
+- ``fallback_callable`` helper function is available at ``utils`` module.
+
+
+0.10.3 (2020-11-17)
+-------------------
+
+Improvements
+
+- More helper functions (``get_local_timezone``, ``timestamp_utc``, ``timestamp_utc``) are created.
+
+- ``initial_bundle_data`` method is now available in Base Elasticsearch engine class,
+  meaning that it is possible construct Bundle initial data into the derived class, so more flexibility.
+
+Bugfixes
+
+- Default bundle initial data was constructed ``meta.lastUpdated`` value with utc now time but without timezone offset, so
+  during json serialization, timezone info was missed as a result reverse construct of Bundle complains validation error.
+
+0.10.2 (2020-11-06)
+-------------------
+
+Improvements
+
+- ``orjson`` is no longer required. ``json_dumps`` and ``json_loads`` now dynamically supports
+  orjson and simplejson.
+
+
+0.10.1 (2020-11-04)
+-------------------
+
+Bugfixes
+
+- ``Connection.raw_connection`` was wrongly wrapped by ``AsyncElasticsearchConnection/ElasticsearchConnection.from_url()`` with self, instead of ``elasticsearch.AsyncElasticsearch/elasticsearch.Elasticsearch``'s instance.
+
+
+0.10.0 (2020-11-04)
+-------------------
+
+Improvements
+
+
+- Introducing `AsyncElasticsearchConnection`` and ``AsyncElasticsearchEngine`` the asyncio based connection and engine for Elasticsearch. See `Using Asyncio with Elasticsearch <https://elasticsearch-py.readthedocs.io/en/7.9.1/async.html>`_
+
+- Added ``orjson`` based json serializer for Elasticsearch by default (when connection is made from connection factory).
+
+- Added support for `_summary=text|data|count|true|false`. [arkhn]
+
+- Added support for `_elements` search parameter. [arkhn]
+
+
+Breaking
+
+- ``async_result`` parameter is no longer needed for SearchContext, Search and Query (included async version) as from now all
+  engine contains that information (``engine_class.is_async()``).
+
+0.9.1 (2020-10-24)
+------------------
+
+- Added supports for ``_format`` and ``_pretty`` params, now there should no complain for those, instead of simply ignored. [nazrulworld]
+
+
+0.9.0 (2020-10-24)
+------------------
+
+- Handle ``:identifier`` modifier for reference search parameters [simonvadee]
+
+- fixes `BundleWrapper`` as_json mode, now includes with ``resourceType`` value. [nazrulworld]
+
+- ``Dict`` response option has bee added in ``fhirpath.search.fhir_search`` [nazrulworld]
+
+- Ignore empty search params #21 [simonvadee]
+
+- Just for performance optimization issue minimum required ``zope.interface`` version is ``5.1.2``.
+
+0.8.1 (2020-10-05)
+------------------
+
+- Disable pydantic validation for Bundle in fhirpath.utils.BundleWrapper [simonvadee]
+
+- Two helper functions ``json_dumps`` and ``json_loads`` are now available under utils module [nazrulworld]
+
+- Only apply search prefix on affected types #17 [simonvadee]
+
+0.8.0 (2020-09-25)
+------------------
+
+Improvements
+
+- add supports for some important FHIR search parameters (``_has``, ``_include`` and ``_revinclude``) [simonvadee]
+
+- enable search on several resource types (_type search param) [Jasopaum]
+
+- Issue #8 `Add search support for without any params or query string if context has resource type <https://github.com/nazrulworld/fhirpath/issues/8>`_ [nazrulworld]
+
+- Issue #9 `multiple negative not working <https://github.com/nazrulworld/fhirpath/issues/9>`_ [nazrulworld]
+
+Breaking
+
+- ``fhirpath.search.SearchContext.resource_name`` has been changed ``fhirpath.search.SearchContext.resource_type`` and
+  now datatype is List instead of string. Please check your API. [Jasopaum]
+
+- For case of ``Elasticsearch`` based engine, you should use custom analyzer (``fhir_reference_analyzer``) for FHIR Reference type. For details see readme.
+
+
+0.7.1 (2020-08-07)
+------------------
+
+- added missing ``isodate`` package dependency.
+
+
+0.7.0 (2020-08-07)
+------------------
+
+Improvements
+
+- Issue#5: Now ``ElasticsearchEngine::get_index_name`` takes one optional parameter ``resource_type``.
+
+- Add supports for python version 3.6.
+
+Breaking
+
+- Make full capability with `fhir.resources <https://pypi.org/project/fhir.resources/>`_ version ``6.x.x``,
+  please have a look of revolutionary changes of ``fhir.resources``.
+
+0.6.2 (2020-06-30)
+------------------
+
+- ``fhirspec`` and ``fhir.resources`` versions are pinned.
+
+
+0.6.1 (2020-05-09)
+------------------
+A must update release (from ``0.6.0``)!
+
+Bugfixes
+
+- fix: issues, those arieses due to fix bellow issue.
+- fix: ``fhirpath.storage.FHIR_RESOURCE_CLASS_STORAGE``, ``fhirpath.storage.PATH_INFO_STORAGE``, ``fhirpath.storage.SEARCH_PARAMETERS_STORAGE`` and ``fhirpath.storage.FHIR_RESOURCE_SPEC_STORAGE`` took wrong FHIR release as keys.
+
+
+0.6.0 (2020-05-08)
+------------------
+
+Breaking
+
+- Hard dependency on `fhirspec <https://pypi.org/project/fhirspec/>`_.
+- Minimum python version 3.7 is required.
+- Minimum required ``fhir.resources`` version is now ``5.1.0`` meaning FHIR R4 4.0.1 and STU3 3.0.2.
+  Please follow changes log https://pypi.org/project/fhir.resources/5.1.0/.
+
+
+
+0.5.1 (2020-03-18)
+------------------
+
+New features
+
+- ``__main__`` module has been created, now possible to see version and/or initiated required FHIR versions.
+  For example ``python -m "fhirpath" --version``, ``python -m "fhirpath" --init-setup`` [nazrulworld]
+
+Improvements
+
+- Updated fix version of elasticsearch mappings.
+
+
+0.5.0 (2020-03-11)
+------------------
+
+New Features
+
+- ``FHIRPath`` (Normative Release) support available. A dedicated class is now available ```fhirpath.FHIRPath``,
+  although it is working in progress (meaning that many methods/functions are yet to do complete.)
+
+Improvements
+
+- Add support for important FHIR search modifier ``:contains``. See https://github.com/nazrulworld/fhirpath/issues/1
+
+- Add support for ``:above``FHIR search modifier and `èb`` prefix. See https://github.com/nazrulworld/fhirpath/issues/2
+
+- Add support for ``:bellow`` FHIR search modifier and ``sa`` prefix. See https://github.com/nazrulworld/fhirpath/issues/2
+
+
+Bugfixes
+
+- Upgrade to this version is recommended as it includes couples of major bug fixes.
+
+
+Breaking
+
+- The ``fhirpath.navigator`` module has been removed and introduced new module ``fhirpath.model``.
+  ``fhirpath.utils.Model`` has been moved to `fhirpath.model``.
+
+
+0.4.1 (2019-11-05)
+------------------
+
+Bugfixes
+
+- ``fhirpath.search.Search.parse_query_string`` now returning ``MuliDict``(what is expected) instead of ``MultiDictProxy``.
+
+
+0.4.0 (2019-10-24)
+------------------
+
+Improvements
+
+- Now full ``select`` features are accepted, meaning that you can provide multiple path in ``select`` section. for example ``select(Patient.name, Patient.gender)``.
+
+- FHIRPath ``count()`` and ``empty()`` functions are supported.
+
+- Supports path navigation with index and functions inside ``select``. Example ``[index]``, ``last()``, ``first()``, ``Skip()``, ``Take()``, ``count()``.
+
+Breakings
+
+- ``QueryResult.first`` and ``QueryResult.single`` are no longer return FHIR Model instance instead returning ``fhirpath.engine.EngineResultRow``.
+
+- ``QueryResult.fetchall`` returning list of ``fhirpath.engine.EngineResultRow`` instead of FHIR JSON.
+
+- ``QueryResult`` iteration returning list of FHIR Model instance on condition (if select is `*`), other than returning list of ``fhirpath.engine.EngineResultRow``.
+
+
+0.3.1 (2019-10-08)
+------------------
+
+Improvements
+
+- Add support for search parameter expression that contains with space+as (``MedicationRequest.medication as CodeableConcept``)
+
+Bugfixes
+
+- ``not`` modifier is now working for ``Coding`` and ``CodeableConcept``.
+
+- "ignore_unmapped" now always True in case of nested query.
+
+- "unmapped_type" now set explicitly long value. See related issue https://stackoverflow.com/questions/17051709/no-mapping-found-for-field-in-order-to-sort-on-in-elasticsearch
+
+
+0.3.0 (2019-09-30)
+------------------
+
+Improvements
+
+- Supports multiple AND values for same search parameter!.
+
+- Add support FHIR version ``STU3`` compability for Money type search.[nazrulworld]
+
+- IN Query support added.[nazrulworld]
+
+- Support PathElement that contains string path with .as(), thus suports for Search also.
+
+- Supports ``Duration`` type in Search.
+
+- Add support ``composite`` type search param.
+
+
+Bugfixes
+
+- Multiple search values (IN search)
+
+- Missing ``text`` for HumanName and Address search.
+
+
+
+0.2.0 (2019-09-15)
+------------------
+
+Breakings:
+
+- Built-in providers ( ``guillotina_app`` and ``plone_app`` ) have been wiped as both becoming separate pypi project.
+
+- ``queries`` module has been moved from ``fql`` sub-package to fhirpath package and also renamed as ``query``.
+
+
+Improvements:
+
+- There are so many improvements made for almost all most modules.
+
+- FhirSearch coverages are increased.
+
+- Sort, Limit facilities added in Query as well in FhirSearch.
+
+
+Bugfixes:
+
+- numbers of bugs fixed.
+
+
+
+0.1.1 (2019-08-15)
+------------------
+
+- First working version has been released. Of-course not full featured.
+
+
+0.1.0 (2018-12-15)
+------------------
+
+* First release on PyPI.(Just register purpose, not usable at all, next release coming soon)
+
+

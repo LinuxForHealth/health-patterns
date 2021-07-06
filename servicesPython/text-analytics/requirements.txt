@@ -1,0 +1,6 @@
+ibm-whcs-sdk==1.9.0
+ibm-cloud-sdk-core==3.8.0
+fhir.resources==6.1.0
+deepdiff==5.5.0
+flask==2.0.1
+fhirpath==0.10.5
