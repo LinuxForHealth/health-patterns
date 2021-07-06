@@ -101,8 +101,8 @@ dependencies:
   - name: kube-prometheus-stack
     version: 12.0.4
     condition: kube-prometheus-stack.enabled
-    repository: https://prometheus-community.github.io/helm-chart
+    repository: https://prometheus-community.github.io/helm-charts
   - name: hl7-resource-generator
     version: 0.1.0
     condition: hl7-resource-generator.enabled
-    repository: https://alvearie.github.io/hl7-resource-generator-service/charts
+    repository: https://alvearie.github.io/hl7-resource-generator-service/chart
