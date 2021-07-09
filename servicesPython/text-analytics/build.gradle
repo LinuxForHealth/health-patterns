@@ -1,0 +1,167 @@
+/*******************************************************************************
+* IBM Watson Imaging Common Application Framework 3.2                         *
+*                                                                             *
+* IBM Confidential                                                            *
+*                                                                             *
+* OCO Source Materials                                                        *
+*                                                                             *
+*  Copyright IBM Corporation 2019, 2021                                       *
+*                                                                             *
+* The source code for this program is not published or otherwise              *
+* divested of its trade secrets, irrespective of what has been                *
+* deposited with the U.S. Copyright Office.                                   *
+*******************************************************************************/
+
+/* buildscript {
+    repositories {
+		maven {
+            url "https://na.artifactory.swg-devops.com/artifactory/wh-imaging-external-maven-virtual"
+            credentials {
+                username = "${taasArtifactoryUsername}"
+                password = "${taasArtifactoryPassword}"
+            }
+            metadataSources {
+                mavenPom()
+                artifact()
+            }
+        }
+	}
+} */
+
+plugins {
+    id "ru.vyarus.use-python" version "2.3.0"
+    id "org.sonarqube" version "3.0"
+}
+
+group = 'com.ibm.watson.health.imaging'
+version = "1.0.0"
+description = """CDP Text Analytics"""
+
+sonarqube {
+    properties {
+        property "sonar.sources", pySrcDir
+        property "sonar.tests", pyTestDir
+        property "sonar.python.coverage.reportPaths", pyXmlCoveragePath
+        property "sonar.python.xunit.reportPath", pyTestReportPath
+    }
+}
+
+// --------
+//CDP Text Analytics Python Build Section
+python {
+    //Python dependencies start
+    // pip 'attrs:18.1.0'
+    pip 'ibm-whcs-sdk:1.9.0'
+    pip 'ibm-cloud-sdk-core:3.8.0'
+    pip 'fhir.resources:6.1.0'
+    pip 'deepdiff:5.5.0'
+    //pip 'whpa-cdp-lib-fhir-compare:0.0.1'
+    //Python dependencies end
+
+      envPath = 'build/venv'
+    // for LOCAL builds only
+    // pythonPath = '/Library/Frameworks/Python.framework/Versions/3.7/bin'
+      pythonBinary = 'python3'
+    }
+
+
+task cdpTextAnalyticsPySetupBuild(type: PythonTask) {
+    module = 'pip'
+    extraArgs = ['install', 'pytest==4.6.3', 'pytest-cov==2.7.1', 'twine==1.14.0', 'flake8==3.7.8', 'wheel==0.36.2']
+}
+
+task cdpTextAnalyticsPyGenerateReqs {
+    doLast {
+        def newFile = new File("${project.projectDir}/pinned.txt")
+        newFile.delete()
+        newFile.createNewFile()
+        python.modules.each { module ->
+            newFile.append(module.replace(":", "==") + "\n")
+        }
+    }
+}
+
+task cdpTextAnalyticsPySetupBuildProperties {
+    doLast {
+        def newFile = new File("${project.projectDir}/setup.properties")
+        newFile.delete()
+        newFile.createNewFile()
+        newFile.append("[default]")
+        newFile.append("\nproject_name=${project.name}")
+        newFile.append("\nproject_version=${project.version}")
+        newFile.append("\nproject_srcDir=${pySrcDir}")
+    }
+}
+
+task cdpTextAnalyticsPyBuildWheel(type: PythonTask) {
+    command = 'setup.py'
+    extraArgs = ['bdist_wheel', '-d', pyDistDir, '-k']
+}
+
+task cdpTextAnalyticsPyTestPrep(type: PythonTask) {
+    command = 'setup.py'
+    extraArgs = ['develop']
+}
+
+/*
+task cdpTextAnalyticsPyTest(type: PythonTask) {
+    module = 'pytest'
+    extraArgs = [pyTestDir, '--junitxml='+pyTestReportPath, '-v']
+}
+*/
+
+task cdpTextAnalyticsPyCoverage(type: PythonTask) {
+    module = 'pytest'
+    extraArgs = [pyTestDir, '--cov', pySrcDir, '--cov-report=xml:'+pyXmlCoveragePath, '--cov-report=html:'+pyHtmlCoveragePath, '--cov-report=term']
+}
+
+task cdpTextAnalyticsClean {
+    doLast {
+        exec {
+            commandLine 'rm', '-rf', 'build'
+        }
+    }
+}
+
+task cdpTextAnalyticsPyPublishArtifacts(type: PythonTask) {
+    doFirst {
+        def taasArtifactoryUsername = "${taasArtifactoryUsername}"
+        def taasArtifactoryPassword = "${taasArtifactoryPassword}"
+        module = 'twine'
+        extraArgs = ['upload', '--repository-url', whiPypiRepositoryUrl, '-u', taasArtifactoryUsername, '-p', taasArtifactoryPassword, pyDistDir+'/*.whl']
+    }
+}
+
+task cdpTextAnalyticsPyFlake8(type: PythonTask) {
+    module = 'flake8'
+    extraArgs = [pySrcDir]
+}
+
+task build {}
+task test {}
+task coverage {}
+task uploadArchives {}
+task flake8 {}
+task clean {}
+
+//project.tasks.cdpTextAnalyticsPyTest.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
+//project.tasks.cdpTextAnalyticsPyTest.dependsOn project.tasks.cdpTextAnalyticsPyTestPrep
+project.tasks.cdpTextAnalyticsPyTestPrep.dependsOn project.tasks.cdpTextAnalyticsPySetupBuildProperties
+project.tasks.cdpTextAnalyticsPyCoverage.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
+project.tasks.cdpTextAnalyticsPyCoverage.dependsOn project.tasks.cdpTextAnalyticsPyTestPrep
+project.tasks.cdpTextAnalyticsPyPublishArtifacts.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
+project.tasks.cdpTextAnalyticsPyFlake8.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
+
+project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
+project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPySetupBuildProperties
+project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPyGenerateReqs
+//project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPyTest
+project.tasks.build.finalizedBy project.tasks.cdpTextAnalyticsPyBuildWheel
+
+//project.tasks.test.finalizedBy project.tasks.cdpTextAnalyticsPyTest
+project.tasks.coverage.finalizedBy project.tasks.cdpTextAnalyticsPyCoverage
+project.tasks.clean.finalizedBy project.tasks.cdpTextAnalyticsClean
+project.tasks.uploadArchives.finalizedBy project.tasks.cdpTextAnalyticsPyPublishArtifacts
+project.tasks.flake8.finalizedBy project.tasks.cdpTextAnalyticsPyFlake8
+
+// -----------
