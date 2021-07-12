@@ -1,8 +1,8 @@
 from flask import Flask, request
-from acd.acd_service import ACDService
-from quickUMLS.quickUMLS_service import QuickUMLSService
+from text_analytics.acd.acd_service import ACDService
+from text_analytics.quickUMLS.quickUMLS_service import QuickUMLSService
 import json
-from call_nlp_then_enhance import call_service_then_enhance
+from text_analytics.call_nlp_then_enhance import call_service_then_enhance
 
 app = Flask(__name__)
 

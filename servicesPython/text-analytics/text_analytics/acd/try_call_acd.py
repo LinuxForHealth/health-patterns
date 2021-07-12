@@ -11,7 +11,7 @@
 # ******************************************************************************/
  
 # from text_analytics.call_acd_then_enhance import call_acd_with_text_then_enhance
-from src.main.py.call_nlp_then_enhance import call_service_then_enhance
+from text_analytics.call_nlp_then_enhance import call_service_then_enhance
 
 # from text_analytics.config import config
 

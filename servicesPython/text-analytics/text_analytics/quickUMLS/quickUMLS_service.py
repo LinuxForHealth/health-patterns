@@ -10,12 +10,9 @@
 # deposited with the U.S. Copyright Office.                                   *
 # ******************************************************************************/
 
-from ibm_whcs_sdk import annotator_for_clinical_data as acd
-from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
-
 # get the secrets
-from quickUMLS.config import get_config
-from quickUMLS.semtype_lookup import lookup
+from text_analytics.quickUMLS.config import get_config
+from text_analytics.quickUMLS.semtype_lookup import lookup
 # from nlp_service import NLP_SERVICE
 import json
 import requests
@@ -32,10 +29,10 @@ class QuickUMLSService:
         print("url:", self.quickUMLS_url)
 
         try:
-            print("Calling QUICKUMLS")
+            #print("Calling QUICKUMLS")
             request_body = {"text": text.decode('utf-8')}
             resp = requests.post(self.quickUMLS_url, json=request_body)
-            print("RAW QUICKUMLS Response: ", resp.text, "<end>")
+            #print("RAW QUICKUMLS Response: ", resp.text, "<end>")
             return {"concepts": json.loads(resp.text)}
         except requests.exceptions:
             return None

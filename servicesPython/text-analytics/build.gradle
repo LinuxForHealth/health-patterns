@@ -12,22 +12,6 @@
 * deposited with the U.S. Copyright Office.                                   *
 *******************************************************************************/
 
-/* buildscript {
-    repositories {
-		maven {
-            url "https://na.artifactory.swg-devops.com/artifactory/wh-imaging-external-maven-virtual"
-            credentials {
-                username = "${taasArtifactoryUsername}"
-                password = "${taasArtifactoryPassword}"
-            }
-            metadataSources {
-                mavenPom()
-                artifact()
-            }
-        }
-	}
-} */
-
 plugins {
     id "ru.vyarus.use-python" version "2.3.0"
     id "org.sonarqube" version "3.0"
@@ -55,6 +39,7 @@ python {
     pip 'ibm-cloud-sdk-core:3.8.0'
     pip 'fhir.resources:6.1.0'
     pip 'deepdiff:5.5.0'
+    pip 'flask:2.0.1'
     //pip 'whpa-cdp-lib-fhir-compare:0.0.1'
     //Python dependencies end
 

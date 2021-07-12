@@ -10,29 +10,22 @@
 # deposited with the U.S. Copyright Office.                                   *
 # ******************************************************************************/
 
-import os
-import configparser
+#import caf_logger.logger as caflogger
+from text_analytics import logging_codes
+#logger = caflogger.get_logger('whpa-cdp-text_analytics')
 
-# if the following is an environment variable on the system, the service will pull config from the corresponding file,
-# otherwise default to the source config
-QUICKUMLS_CONFIG_ENVVAR = 'WHPA_CDP_UMLS_CONFIG'
+IMMUNIZATION_APPEND = " vaccine"
 
-quickumls_header = 'QUICKUMLS_CONFIG'
-quickumls_required_keys = ['QUICKUMLS_URL']
-
-_quickumls_configs = None
-
-
-def _load_configs():
-    global _quickumls_configs
-
-    quickumls_config_file_path = os.getenv(QUICKUMLS_CONFIG_ENVVAR, 'quickUMLS/quickumls_config.ini')
-    configParser = configparser.ConfigParser()
-    configParser.read(quickumls_config_file_path)
-    _quickumls_configs = configParser[quickumls_header]
-
-
-def get_config():
-    if _quickumls_configs is None:
-        _load_configs()
-    return _quickumls_configs
+def adjust_vaccine_text(text):
+    # Add "vaccine" to the text so NLP will get codes for the vaccine, not the disease
+    # If there is a comma in the text, "vaccine" is added before the comma.  Example:
+     #     DTaP, unspecified formulation --> DTaP vaccine, unspecified formulation
+    # Otherwise, "vaccine" is added at the end.  Example:
+    #     DTaP --> DTaP vaccine
+    comma_location = text.find(',')
+    if comma_location == -1:
+        adjusted_text = text + IMMUNIZATION_APPEND
+    else:
+        adjusted_text = text[:comma_location] + IMMUNIZATION_APPEND + text[comma_location:len(text)]
+    #logger.info(logging_codes.WHPA_CDP_TEXT_ANALYTICS_CALLING_ACD_INFO, text)
+    return adjusted_text

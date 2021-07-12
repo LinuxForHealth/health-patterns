@@ -26,7 +26,7 @@ _acd_configs = None
 def _load_configs():
     global _acd_configs
 
-    acd_config_file_path = os.getenv(ACD_CONFIG_ENVVAR, 'acd/acd_config.ini')
+    acd_config_file_path = os.getenv(ACD_CONFIG_ENVVAR, 'text_analytics/acd/acd_config.ini')
     # acd_secrets_folder = os.getenv(ACD_SECRETS_ENVVAR, '/var/app/config/acd/secrets')
     configParser = configparser.ConfigParser()
     configParser.read(acd_config_file_path)

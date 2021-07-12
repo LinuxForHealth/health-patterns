@@ -14,7 +14,7 @@ from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
 
 # get the secrets
-from acd.config import get_config
+from text_analytics.acd.config import get_config
 # from nlp_service import NLP_SERVICE
 import json
 
