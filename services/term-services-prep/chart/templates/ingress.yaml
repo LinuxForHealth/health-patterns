@@ -12,7 +12,7 @@ metadata:
     kubernetes.io/ingress.class: {{ .Values.global.ingress.class | default .Values.ingress.class }}
 spec:
   rules:
-    - host: {{ include "term-services-prep.fullname" .}}.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+    - host: {{ .Release.Namespace }}-{{ include "term-services-prep.fullname" .}}.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
       http:
         paths:
           - path: /
