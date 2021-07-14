@@ -68,7 +68,7 @@ Create the name of the FHIR server to use
 {{- if .Values.fhir.url }}
 {{- .Values.fhir.url }}
 {{- else }}
-{{- printf "\"http://%s-fhir/fhir-server/api/v4\"" .Release.Name }}
+{{- printf "\"http://%s-fhir-deid/fhir-server/api/v4\"" .Release.Name }}
 {{- end }}
 {{- end }}
 
