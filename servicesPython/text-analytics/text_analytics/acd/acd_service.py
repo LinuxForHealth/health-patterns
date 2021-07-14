@@ -46,7 +46,8 @@ class ACDService:
             resp = service.analyze_with_flow(self.acd_flow, text)
             print("RAW ACD Response: ", resp, "<end>")
             print(type(resp))
-            return vars(resp)
+            out = resp.to_dict()
+            return out
 
         except acd.ACDException:
             return None
@@ -60,25 +61,27 @@ class ACDService:
 
     @staticmethod
     def concept_to_dict(concept):
+        return concept
         output = {"Structure": "Concept"}
-        output["CUI"] = concept.cui
-        output["Span"] = concept.covered_text
-        output["Begin"] = concept.begin
-        output["End"] = concept.end
-        output["PreferredName"] = concept.preferred_name
-        output["Type"] = concept.type
+        output["generating_service"] = "ACD"
+        output["cui"] = concept["cui"]
+        output["coveredText"] = concept["coveredText"]
+        output["begin"] = concept.begin
+        output["end"] = concept.end
+        output["preferred_name"] = concept.preferred_name
+        output["type"] = concept.type
         if concept.nci_code is not None:
-            output["NCI"] = concept.nci_code
+            output["nci_code"] = concept.nci_code
         if concept.rx_norm_id is not None:
-            output["RxNorm"] = concept.rx_norm_id
+            output["rx_norm_id"] = concept.rx_norm_id
         if concept.mesh_id is not None:
-            output["Mesh"] = concept.mesh_id
+            output["mesh_id"] = concept.mesh_id
         if concept.snomed_concept_id is not None:
-            output["Snowmed"] = concept.snomed_concept_id
+            output["snomed_concept_id"] = concept.snomed_concept_id
         if concept.loinc_id is not None:
-            output["LOINC"] = concept.loinc_id
+            output["loinc_id"] = concept.loinc_id
         if concept.vocabs is not None:
-            output["Vocabs"] = concept.vocabs
+            output["vocabs"] = concept.vocabs
         output["negated"] = concept.negated
         # print(concept)  # if you want to see what the structure is like
         return output
@@ -86,18 +89,19 @@ class ACDService:
     @staticmethod
     def symptom_to_dict(symptom):
         output = {"Structure": "Symptom"}
-        output["CUI"] = symptom.cui
-        output["Span"] = symptom.covered_text
-        output["Begin"] = symptom.begin
-        output["End"] = symptom.end
-        output["PreferredName"] = symptom.symptom_disease_normalized_name
-        output["Type"] = symptom.type
+        output["generating_service"] = "ACD"
+        output["cui"] = symptom.cui
+        output["covered_text"] = symptom.covered_text
+        output["begin"] = symptom.begin
+        output["end"] = symptom.end
+        output["preferred_name"] = symptom.symptom_disease_normalized_name
+        output["type"] = symptom.type
         if symptom.hcc_code is not None:
-            output["HCC"] = symptom.hcc_code
+            output["hcc_code"] = symptom.hcc_code
         if symptom.snomed_concept_id is not None:
-            output["Snomed"] = symptom.snomed_concept_id
+            output["snomed_concept_id"] = symptom.snomed_concept_id
         if symptom.modality is not None:
-            output["Modality"] = symptom.modality
+            output["modality"] = symptom.modality
         output["negated"] = symptom.negated
         # print(symptom) # if you want to see what the structure is like
         return output

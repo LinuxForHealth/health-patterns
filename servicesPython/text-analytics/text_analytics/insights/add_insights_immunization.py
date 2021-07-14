@@ -26,10 +26,10 @@ def update_immunization_with_insights(immunization, acd_results):
     insight_num = 0
     # build insight set from ACD output
     # initially using ICMedication concepts; this could change when we do analysis / tune ACD
-    concepts = acd_results.concepts
+    concepts = acd_results["concepts"]
     if concepts is not None:
         for concept in concepts:
-            if concept.type == "ICMedication":
+            if concept["type"] == "ICMedication":
                 # TODO check if the coding already exists in the FHIR reqource
 
                 # Add a new insight
@@ -38,7 +38,7 @@ def update_immunization_with_insights(immunization, acd_results):
 
                 if immunization.vaccineCode is None:
                     codeable_concept = CodeableConcept.construct()
-                    codeable_concept.text = concept.preferred_name
+                    codeable_concept.text = concept["preferredName"]
                     immunization.vaccineCode = codeable_concept
                     codeable_concept.coding = []
                 fhir_object_utils.add_codings(concept, immunization.vaccineCode, insight_id, insight_constants.INSIGHT_ID_STRUCTURED_SYSTEM)
@@ -78,7 +78,7 @@ Parameters:
 def _build_resource_data(immunization, concept, insight_id):
     if immunization.vaccineCode is None:
         codeable_concept = CodeableConcept.construct()
-        codeable_concept.text = concept.preferred_name
+        codeable_concept.text = concept["preferredName"]
         immunization.vaccineCode = codeable_concept
         codeable_concept.coding = []
     fhir_object_utils.add_codings(concept, immunization.vaccineCode, insight_id, insight_constants.INSIGHT_ID_STRUCTURED_SYSTEM)

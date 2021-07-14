@@ -11,7 +11,6 @@
 # ******************************************************************************/
 
 #import caf_logger.logger as caflogger
-from text_analytics import logging_codes
 #logger = caflogger.get_logger('whpa-cdp-text_analytics')
 
 IMMUNIZATION_APPEND = " vaccine"

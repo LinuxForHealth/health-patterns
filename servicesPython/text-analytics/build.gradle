@@ -15,6 +15,7 @@
 plugins {
     id "ru.vyarus.use-python" version "2.3.0"
     id "org.sonarqube" version "3.0"
+    id "com.palantir.docker" version "0.22.1"
 }
 
 group = 'com.ibm.watson.health.imaging'
@@ -120,6 +121,12 @@ task cdpTextAnalyticsPyPublishArtifacts(type: PythonTask) {
 task cdpTextAnalyticsPyFlake8(type: PythonTask) {
     module = 'flake8'
     extraArgs = [pySrcDir]
+}
+
+
+docker {
+     name "${project.name}:${project.version}"
+     files '.'
 }
 
 task build {}

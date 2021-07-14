@@ -2,7 +2,9 @@ from flask import Flask, request
 from text_analytics.acd.acd_service import ACDService
 from text_analytics.quickUMLS.quickUMLS_service import QuickUMLSService
 import json
-from text_analytics.call_nlp_then_enhance import call_service_then_enhance
+from enhance.enhance_allergy_intolerance_payload import enhance_allergy_intolerance_payload_to_fhir
+from enhance.enhance_diagnostic_report_payload import enhance_diagnostic_report_payload_to_fhir
+from enhance.enhance_immunization_payload import enhance_immunization_payload_to_fhir
 
 app = Flask(__name__)
 
@@ -30,5 +32,33 @@ def apply_analytics():
     request_data = request.data
     if nlp_service is not None:
         # resp = nlp_service.process(request_data)
-        resp = call_service_then_enhance(nlp_service, request_data)
-    return str(resp)
+        resp = nlp_service.process(request_data)
+        return str(resp)
+    return "Internal Server Error"
+
+
+@app.route("/processAllergy", methods=['POST'])
+def process_Allergy():
+    request_data = json.loads(request.data)
+    if nlp_service is not None:
+        resp = enhance_allergy_intolerance_payload_to_fhir(nlp_service, request_data)
+        return resp.json()
+    return "NLP service not specified"
+
+
+@app.route("/processDiagnosticReport", methods=['POST'])
+def process_Diagnostic_Report():
+    request_data = json.loads(request.data)
+    if nlp_service is not None:
+        resp = enhance_diagnostic_report_payload_to_fhir(nlp_service, request_data)
+        return str(resp)
+    return "NLP service not specified"
+
+
+@app.route("/processImmunization", methods=['POST'])
+def process_Immunization():
+    request_data = json.loads(request.data)
+    if nlp_service is not None:
+        resp = enhance_immunization_payload_to_fhir(nlp_service, request_data)
+        return str(resp)
+    return "NLP service not specified"

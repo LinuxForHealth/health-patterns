@@ -17,7 +17,6 @@ from fhir.resources.extension import Extension
 from fhir.resources.medicationstatement import MedicationStatement
 from fhir.resources.quantity import Quantity
 from fhir.resources.timing import Timing
-from text_analytics import logging_codes
 from text_analytics.insights import insight_constants
 from text_analytics.utils import fhir_object_utils
 

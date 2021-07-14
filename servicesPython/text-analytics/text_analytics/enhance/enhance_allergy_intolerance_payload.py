@@ -12,8 +12,6 @@
 
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from fhir.resources.allergyintolerance import AllergyIntolerance
-from text_analytics.call_acd_service import call_acd_with_text
-from text_analytics import logging_codes
 from text_analytics.insights.add_insights_allergy import update_allergy_with_insights
 from text_analytics.utils.fhir_object_utils import create_transaction_bundle
 
@@ -22,7 +20,7 @@ from text_analytics.utils.fhir_object_utils import create_transaction_bundle
 #logger = caflogger.get_logger('whpa-cdp-text_analytics')
 
 
-def enhance_allergy_intolerance_payload_to_fhir(input_json):
+def enhance_allergy_intolerance_payload_to_fhir(nlp, input_json):
     try:
         # Parse the AllergyIntolerance json
         allergy_intolerance_fhir = AllergyIntolerance.parse_obj(input_json)
@@ -40,7 +38,8 @@ def enhance_allergy_intolerance_payload_to_fhir(input_json):
             # AllergyIntolerance.code.text will have "Allergy to " appended to it to assist in getting correct codes
             text = 'Allergy to ' + allergy_intolerance_fhir.code.text
             #logger.info(logging_codes.WHPA_CDP_TEXT_ANALYTICS_CALLING_ACD_INFO, "AllergyIntolerance.code.text")
-            acd_resp = call_acd_with_text(text)
+            acd_resp = nlp.process(text)
+            print(acd_resp)
             acd_results.append([allergy_intolerance_fhir.code, acd_resp])
 
         if allergy_intolerance_fhir.reaction is not None:
@@ -48,7 +47,8 @@ def enhance_allergy_intolerance_payload_to_fhir(input_json):
                 for mf in reaction.manifestation:
                     # Process the manifestation
                     # Call ACD for each manifestation individually
-                    acd_resp = call_acd_with_text(mf.text)
+                    # acd_resp = call_service_then_enhance(nlp, mf.text)
+                    acd_resp = nlp.process(mf.text)
                     #logger.info(logging_codes.WHPA_CDP_TEXT_ANALYTICS_CALLING_ACD_INFO, "AllergyIntolerance.reaction["
                                 #+ str(allergy_intolerance_fhir.reaction.index(reaction)) + "].manifestation["
                                 #+ str(reaction.manifestation.index(mf)) + "].text")

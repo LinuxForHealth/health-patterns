@@ -12,21 +12,21 @@
 
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from fhir.resources.diagnosticreport import DiagnosticReport
-from text_analytics.call_acd_service import call_acd_with_text
 from text_analytics.insights.add_insights_condition import create_conditions_from_insights
 from text_analytics.insights.add_insights_medication import create_med_statements_from_insights
 from text_analytics.utils import fhir_object_utils
-from text_analytics import logging_codes
 
 #logger = caflogger.get_logger('whpa-cdp-text_analytics')
 
 
-def enhance_diagnostic_report_payload_to_fhir(diagnostic_report_json):
+def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
     try:
         # Parse the diagnostic report json
         diagnostic_report_fhir = DiagnosticReport.parse_obj(diagnostic_report_json)
+
         text = fhir_object_utils.get_diagnostic_report_data(diagnostic_report_fhir)
-        acd_resp = call_acd_with_text(text)
+        #acd_resp = call_service_then_enhance(nlp, text)
+        acd_resp = nlp.process(text)
         create_conditions_fhir = create_conditions_from_insights(diagnostic_report_fhir, acd_resp)
         create_med_statements_fhir = create_med_statements_from_insights(diagnostic_report_fhir, acd_resp)
     except acd.ACDException as ex:

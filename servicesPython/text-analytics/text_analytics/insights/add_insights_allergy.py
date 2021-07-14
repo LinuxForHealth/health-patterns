@@ -25,13 +25,13 @@ def update_allergy_with_insights(allergy, acd_results):
     insight_num = 0
     # adding codings to each field run through ACD
     for codeable_concept, acd_response in acd_results:
-        concepts = acd_response.concepts
+        concepts = acd_response["concepts"]
         if concepts is not None:
             for concept in concepts:
                 # Allergen types umls.DiseaseOrSyndrome or umls.PathologicFunction
                 # Manifestation types umls.DiseaseOrSyndrome or umls.SignOrSymptom
                 # For now not separating the types accepted by field, may have to in the future if we see issues
-                if concept.type == "umls.DiseaseOrSyndrome" or concept.type == "umls.PathologicFunction" or concept.type == "umls.SignOrSymptom":
+                if concept["type"] == "umls.DiseaseOrSyndrome" or concept["type"] == "umls.PathologicFunction" or concept["type"] == "umls.SignOrSymptom":
 
                     # Add a new insight
                     insight_num = insight_num + 1

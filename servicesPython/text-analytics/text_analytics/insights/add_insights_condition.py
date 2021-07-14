@@ -25,16 +25,16 @@ def _build_resource(diagnostic_report, acd_output):
     conditions_found = {}            # key is UMLS ID, value is the FHIR resource
     conditions_insight_counter = {}  # key is UMLS ID, value is the current insight_id_num
     for concept in acd_concepts:
-        if concept.type == "ICDiagnosis":
-            condition = conditions_found.get(concept.cui)
+        if concept["type"] == "ICDiagnosis":
+            condition = conditions_found.get(concept["cui"])
             if condition is None:
                 condition = Condition.construct()
                 condition.meta = fhir_object_utils.add_resource_meta_unstructured(diagnostic_report)
-                conditions_found[concept.cui] = condition
+                conditions_found[concept["cui"]] = condition
                 insight_id_num = 1
             else:
-                insight_id_num = conditions_insight_counter[concept.cui] + 1
-            conditions_insight_counter[concept.cui] = insight_id_num
+                insight_id_num = conditions_insight_counter[concept["cui"]] + 1
+            conditions_insight_counter[concept["cui"]] = insight_id_num
             insight_id_string = "insight-" + str(insight_id_num)
             _build_resource_data(condition, concept, insight_id_string)
 
@@ -51,10 +51,8 @@ def _build_resource(diagnostic_report, acd_output):
             insight.extension.append(insight_span)
 
             # if there is insight model data, save confidences to insight extension
-            insight_model_data = concept.insight_model_data
- 
-            if insight_model_data is not None:
-                fhir_object_utils.add_diagnosis_confidences(insight.extension, insight_model_data)
+            if "insightModelData" in concept:
+                fhir_object_utils.add_diagnosis_confidences(insight.extension, concept["insightModelData"])
 
             result_extension = condition.meta.extension[0]
             result_extension.extension.append(insight)
@@ -67,7 +65,7 @@ def _build_resource(diagnostic_report, acd_output):
 def _build_resource_data(condition, concept, insight_id):
     if condition.code is None:
         codeable_concept = CodeableConcept.construct()
-        codeable_concept.text = concept.preferred_name
+        codeable_concept.text = concept["preferredName"]
         condition.code = codeable_concept
         codeable_concept.coding = []
     fhir_object_utils.add_codings(concept, condition.code, insight_id, insight_constants.INSIGHT_ID_UNSTRUCTURED_SYSTEM)

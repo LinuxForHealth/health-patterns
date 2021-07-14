@@ -29,11 +29,22 @@ class QuickUMLSService:
         print("url:", self.quickUMLS_url)
 
         try:
-            #print("Calling QUICKUMLS")
-            request_body = {"text": text.decode('utf-8')}
+            if type(text) is bytes:
+                print("Calling QUICKUMLS" + text.decode('utf-8'))
+                request_body = {"text": text.decode('utf-8')}
+            else:
+                print("Calling QUICKUMLS" + text)
+                request_body = {"text": text}
             resp = requests.post(self.quickUMLS_url, json=request_body)
-            #print("RAW QUICKUMLS Response: ", resp.text, "<end>")
-            return {"concepts": json.loads(resp.text)}
+            print("RAW QUICKUMLS Response: ", resp.text, "<end>")
+            concepts = json.loads(resp.text)
+            print(concepts)
+            conceptsList = []
+            if concepts is not None:
+                for concept in concepts:
+                    conceptsList.append(self.concept_to_dict(concept))
+            print(conceptsList)
+            return {"concepts": conceptsList}
         except requests.exceptions:
             return None
 
@@ -47,12 +58,14 @@ class QuickUMLSService:
     @staticmethod
     def concept_to_dict(concept):
         output = {"Structure": "Concept"}
-        output["GeneratingService"] = "quickUMLS"
-        output["CUI"] = concept["cui"]
-        output["Begin"] = concept["start"]
-        output["End"] = concept["end"]
-        output["PreferredName"] = concept["term"]
-        output["Type"] = "umls." + lookup(concept["semtypes"][0] or None)
+        output["generatingService"] = "quickUMLS"
+        output["coveredText"] = concept["ngram"]
+        output["cui"] = concept["cui"]
+        output["begin"] = concept["start"]
+        output["end"] = concept["end"]
+        output["preferredName"] = concept["term"]
+        output["type"] = lookup(concept["semtypes"][0] or None)
+        output["negated"] = False
         # print(concept)  # if you want to see what the structure is like
         return output
 

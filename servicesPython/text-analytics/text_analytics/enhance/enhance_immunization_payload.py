@@ -12,16 +12,14 @@
 
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from fhir.resources.immunization import Immunization
-from text_analytics.call_acd_service import call_acd_with_text
 from text_analytics.insights.add_insights_immunization import update_immunization_with_insights
 from text_analytics.utils.fhir_object_utils import create_transaction_bundle
-from text_analytics import logging_codes
 from text_analytics.insights.text_adjustments import adjust_vaccine_text
 
 #logger = caflogger.get_logger('whpa-cdp-text_analytics')
 
 
-def enhance_immunization_payload_to_fhir(immunization_json):
+def enhance_immunization_payload_to_fhir(nlp, immunization_json):
     immunization_fhir = {}
     try:
         # Parse the immunization json
@@ -30,7 +28,7 @@ def enhance_immunization_payload_to_fhir(immunization_json):
         if immunization_fhir.vaccineCode.text is not None:
             text = adjust_vaccine_text(immunization_fhir.vaccineCode.text)
             #logger.info(logging_codes.WHPA_CDP_TEXT_ANALYTICS_CALLING_ACD_INFO, text)
-            acd_resp = call_acd_with_text(text)
+            acd_resp = nlp.process(text)
             updated_immunization = update_immunization_with_insights(immunization_fhir, acd_resp)
     except acd.ACDException as ex:
         print("err")
