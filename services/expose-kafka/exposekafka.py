@@ -83,7 +83,7 @@ def produce():
 
     post_data = request.data.decode("utf-8")
 
-    producer = KafkaProducer(bootstrap_servers=kafkabootstrap)
+    producer = KafkaProducer(bootstrap_servers=kafkabootstrap, max_request_size=10000000)
 
     producer.send(topic, value=bytes(post_data, 'utf-8'), headers=headers)
     producer.flush()
