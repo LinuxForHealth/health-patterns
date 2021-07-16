@@ -7,7 +7,7 @@ Clinical Ingestion is a reference implementation of a clinical data ingestion pr
 
 The Clinical Ingestion flow is designed to read medical data from a configured [kafka](https://kafka.apache.org/) topic.  As the data is processed, any errors that are detected are logged and posted to target kafka topics.
 
-The current flow is designed to operate on FHIR resources. If [HL7](https://www.hl7.org/implement/standards/product_section.cfm?section=13) data is passed in, the pipeline is capable of converting it to FHIR and allowing it run through the pipeline.  Other data types (such as [DICOM](https://www.dicomstandard.org/) image data) are being considered but are currently supported.
+The current flow is designed to operate on FHIR resources. If [HL7](https://www.hl7.org/implement/standards/product_section.cfm?section=13) data is passed in, the pipeline is capable of converting it to FHIR and allowing it run through the pipeline.  Other data types (such as [DICOM](https://www.dicomstandard.org/) image data) are being considered but are currently not supported.
 
 The Clinical Ingestion flow can also enrich the data as it flows through. This relies on the Clinical Enrichment flow described below.
 
@@ -16,7 +16,7 @@ Clinical Enrichment is a reference implementation of a clinical data enrichment 
 
 The Clinical Enrichment Flow is designed to read medical data (in FHIR format) from a configured [kafka](https://kafka.apache.org/) topic.  As the data is processed, any errors that are detected are logged and posted to target kafka topics (if configured).  Once complete, the updated FHIR data is posted back to a Kafka topic for further use.
 
-The current flow is designed to operate on FHIR resources. If [HL7](https://www.hl7.org/implement/standards/product_section.cfm?section=13) data is passed in, the pipeline is capable of converting it to FHIR and allowing it run through the pipeline.  Other data types (such as [DICOM](https://www.dicomstandard.org/) image data) are being considered but are currently supported.
+The current flow is designed to operate on FHIR resources. If [HL7](https://www.hl7.org/implement/standards/product_section.cfm?section=13) data is passed in, the pipeline is capable of converting it to FHIR and allowing it run through the pipeline.  Other data types (such as [DICOM](https://www.dicomstandard.org/) image data) are being considered but are currently not supported.
 
 Currently we support the following enrichment steps:
 
