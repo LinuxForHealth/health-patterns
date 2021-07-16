@@ -1,0 +1,16 @@
+{
+    "scenarioName": "********enrich_DEID_prep_healthCheck********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "healthCheck",
+            "url": "${deid_prep}/healthCheck",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+                }
+        }
+     ]
+}

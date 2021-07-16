@@ -1,0 +1,211 @@
+{
+    "scenarioName": "********enrich_DEID_Store_Patient********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "deidPatient",
+            "url": "${deid_prep}${3}",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },  
+        {
+            "name": "verifyDeIDFamilyName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Family Name",
+                 "deid": "${$.deidPatient.response.body.entry[0].resource.name[0].family}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.name[0].family}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyDeIDGivenName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Given Name",
+                 "deid": "${$.deidPatient.response.body.entry[0].resource.name[0].given}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.name[0].given}"
+            },
+            "verify": {"result": true }
+        },               
+        {
+            "name": "verifyDeIDBirthDate",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Birth Date",
+                 "deid": "${$.deidPatient.response.body.entry[0].resource.birthDate}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.birthDate}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyDeIDAddressLine",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Address Line",
+                 "deid": "${$.deidPatient.response.body.entry[0].resource.address[0].line[0]}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].line[0]}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyDeIDCity",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "City",
+                 "deid": "${$.deidPatient.response.body.entry[0].resource.address[0].city}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].city}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyDeIDPostalCode",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Postal Code",
+                 "deid": "${$.deidPatient.response.body.entry[0].resource.address[0].postalCode}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].postalCode}"
+            },
+            "verify": { "result": true }
+        },
+        {
+            "name": "waitForIngestion",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 10,
+            "verify": {
+            }
+        },
+         {
+            "name": "verifyStoredDeIDPatient",
+            "url": "${deid_fhir_server}/fhir-server/api/v4/Patient",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 ,
+                    "entry":[ {
+                        "resource": {
+                            "name": [{
+                              "family" : "$IS.NOTNULL",
+                              "given" : [ "$IS.NOTNULL" ]
+                            }],
+                           "birthDate" : "$IS.NOTNULL",
+                           "address" : [ {
+                               "line" : [ "$IS.NOTNULL" ],
+                               "city" : "$IS.NOTNULL",
+                               "state" : "$IS.NOTNULL",
+                               "postalCode" : "$IS.NOTNULL"
+                           } ]
+                        }
+                    } ]
+                }
+            }
+        },  
+        {
+            "name": "verifyStoredDeIDFamilyName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Family Name",
+                 "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.name[0].family}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.name[0].family}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyStoredDeIDGivenName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Given Name",
+                 "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.name[0].given}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.name[0].given}"
+            },
+            "verify": {"result": true }
+        },               
+        {
+            "name": "verifyStoredDeIDBirthDate",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Birth Date",
+                 "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.birthDate}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.birthDate}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyStoredDeIDAddressLine",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Address Line",
+                 "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.address[0].line[0]}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].line[0]}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyStoredDeIDCity",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "City",
+                 "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.address[0].city}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].city}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyStoredDeIDPostalCode",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Postal Code",
+                 "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.address[0].postalCode}",
+                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].postalCode}"
+            },
+            "verify": { "result": true }
+        },
+        {
+            "name": "deleteStoredPatientOnDeIDFHIR",
+            "url": "${deid_fhir_server}/fhir-server/api/v4/Patient/${$.verifyStoredDeIDPatient.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyStoredDeIDPatient.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }         
+        
+     ],
+     "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738,/",
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738,/?pushToFHIR=true"
+        ]
+    }
+}
