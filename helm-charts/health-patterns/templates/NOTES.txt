@@ -31,7 +31,6 @@ The following services have been deployed:
 {{- end }}
 {{- if .Values.nifi.enabled }}
 - NiFi Server{{- if .Values.global.ingress.enabled }} ----------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi.{{ .Values.global.ingress.subdomain}}/nifi{{- end }}
-- NiFi HTTP Post API{{- if .Values.global.ingress.enabled }} ---------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-http-post.{{ .Values.global.ingress.subdomain}}{{- end }}
 {{- end }}
 {{- if index .Values "nifi-registry" "enabled" }}
 - NiFi Registry{{- if .Values.global.ingress.enabled }} --------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-registry.{{ .Values.global.ingress.subdomain}}/nifi-registry{{- end }}
