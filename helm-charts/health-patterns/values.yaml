@@ -136,14 +136,9 @@ nifi:
   service:
     type: ClusterIP
     port: 8080
-    httpInputPort: 7001
     processors:
       enabled: true
       ports:
-        # Expose the HTTP server for the processor that accepts FHIR bundles
-        - name: fhir-over-http
-          port: 7001
-          targetPort: 7001
         # Expose nifi metrics port
         - name: nifi-metrics
           port: 12667
