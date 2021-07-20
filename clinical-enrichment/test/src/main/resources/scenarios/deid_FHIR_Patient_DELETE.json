@@ -1,5 +1,5 @@
 {
-    "scenarioName": "List All Patients, Delete First One in the Bundle, List All Patient Again",
+    "scenarioName": "List All DEID FHIR Server Patients, Delete First One in the Bundle, List All Patient Again",
     "ignoreStepFailures": false, 
     "steps": [
         {

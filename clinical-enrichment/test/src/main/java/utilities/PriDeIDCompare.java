@@ -14,33 +14,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class PhiDeIDCompare {
-    private String phiString;
+public class PriDeIDCompare {
+    private String priString;
     private String deidString;
     private String dataName;
     private boolean result;
 
     @JsonCreator
-    public PhiDeIDCompare(
+    public PriDeIDCompare(
     		@JsonProperty("result")boolean result,
     		@JsonProperty("dataName")String dataName,
-            @JsonProperty("phi")String phiString,
+            @JsonProperty("pri")String priString,
             @JsonProperty("deid")String deidString) {
         this.dataName = dataName;
-    	this.phiString = phiString;
+    	this.priString = priString;
         this.deidString = deidString;
         this.result = true;
     }
 
-    public String getdeidString() {
+    public String getDeidString() {
         return deidString;
     }
 
-    public String getphiString() {
-        return phiString;
+    public String getPriString() {
+        return priString;
     }
 
-    public String getdataName() {
+    public String getDataName() {
         return dataName;
     }
     
@@ -55,7 +55,7 @@ public class PhiDeIDCompare {
     @Override
     public String toString() {
         return dataName+" Strings Compared {" +
-                "phi ='" + phiString +
+                "pri ='" + priString +
                 "', deid='" + deidString +"'}";
          
     }

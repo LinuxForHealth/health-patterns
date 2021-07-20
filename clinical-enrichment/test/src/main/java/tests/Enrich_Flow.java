@@ -13,7 +13,6 @@ package tests;
 import org.jsmart.zerocode.core.domain.Scenario;
 import org.jsmart.zerocode.core.domain.TargetEnv;
 import org.jsmart.zerocode.core.runner.ZeroCodeUnitRunner;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -26,35 +25,30 @@ import categories.BasicEnrichment;
 
 public class Enrich_Flow {
 	
-//	 @Ignore
 	 @Test
 	 @Category({BasicEnrichment.class})
 	 @Scenario("scenarios/enrich_DEID_Prep_healthCheck.json")
 	    public void enrich_DEID_Prep_Health() throws Exception {
 	    }
 
-//	 @Ignore
 	 @Test
 	 @Category({BasicEnrichment.class})
 	 @Scenario("scenarios/enrich_DEID_Prep_Store_Patient.json")
 	    public void enrich_DEID_Prep_Store_Patient() throws Exception {
 	    }
 	 
-//	 @Ignore
 	 @Test
 	 @Category({BasicEnrichment.class})
 	 @Scenario("scenarios/enrich_DEID_Prep_No_Store_Patient.json")
 	    public void enrich_DEID_Prep_No_Store_Patient() throws Exception {
 	    }
 
-//	 @Ignore
 	 @Test
 	 @Category({BasicEnrichment.class})
 	 @Scenario("scenarios/enrich_TERM_Prep_healthCheck.json")
 	    public void enrich_TERM_Prep_healthCheck() throws Exception {
 	    }
 	 
-//	 @Ignore
 	 @Test
 	 @Category({BasicEnrichment.class})
 	 @Scenario("scenarios/enrich_TERM_Prep.json")

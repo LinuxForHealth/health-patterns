@@ -10,8 +10,26 @@
                 "request": {
                     "body":  "${0}" },            
             "verify": {
-                "status": 200
-                }
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "entry":[ {
+                        "resource": {
+                            "name": [{
+                              "family" : "$IS.NOTNULL",
+                              "given" : [ "$IS.NOTNULL" ]
+                            }],
+                           "birthDate" : "$IS.NOTNULL",
+                           "address" : [ {
+                               "line" : [ "$IS.NOTNULL" ],
+                               "city" : "$IS.NOTNULL",
+                               "state" : "$IS.NOTNULL",
+                               "postalCode" : "$IS.NOTNULL"
+                           } ]
+                        }
+                    } ]
+                }                
+            }
         },  
         {
             "name": "verifyDeIDFamilyName",
@@ -20,7 +38,7 @@
             "request": {
                  "dataName": "Family Name",
                  "deid": "${$.deidPatient.response.body.entry[0].resource.name[0].family}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.name[0].family}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.name[0].family}"
             },
             "verify": { "result": true }
         },              
@@ -31,7 +49,7 @@
             "request": {
                  "dataName": "Given Name",
                  "deid": "${$.deidPatient.response.body.entry[0].resource.name[0].given}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.name[0].given}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.name[0].given}"
             },
             "verify": {"result": true }
         },               
@@ -42,7 +60,7 @@
             "request": {
                  "dataName": "Birth Date",
                  "deid": "${$.deidPatient.response.body.entry[0].resource.birthDate}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.birthDate}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.birthDate}"
             },
             "verify": { "result": true }
         },              
@@ -53,7 +71,7 @@
             "request": {
                  "dataName": "Address Line",
                  "deid": "${$.deidPatient.response.body.entry[0].resource.address[0].line[0]}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].line[0]}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.address[0].line[0]}"
             },
             "verify": { "result": true }
         },              
@@ -64,7 +82,7 @@
             "request": {
                  "dataName": "City",
                  "deid": "${$.deidPatient.response.body.entry[0].resource.address[0].city}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].city}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.address[0].city}"
             },
             "verify": { "result": true }
         },              
@@ -75,7 +93,7 @@
             "request": {
                  "dataName": "Postal Code",
                  "deid": "${$.deidPatient.response.body.entry[0].resource.address[0].postalCode}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].postalCode}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.address[0].postalCode}"
             },
             "verify": { "result": true }
         },
@@ -123,7 +141,7 @@
             "request": {
                  "dataName": "Family Name",
                  "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.name[0].family}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.name[0].family}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.name[0].family}"
             },
             "verify": { "result": true }
         },              
@@ -134,7 +152,7 @@
             "request": {
                  "dataName": "Given Name",
                  "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.name[0].given}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.name[0].given}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.name[0].given}"
             },
             "verify": {"result": true }
         },               
@@ -145,7 +163,7 @@
             "request": {
                  "dataName": "Birth Date",
                  "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.birthDate}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.birthDate}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.birthDate}"
             },
             "verify": { "result": true }
         },              
@@ -156,7 +174,7 @@
             "request": {
                  "dataName": "Address Line",
                  "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.address[0].line[0]}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].line[0]}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.address[0].line[0]}"
             },
             "verify": { "result": true }
         },              
@@ -167,7 +185,7 @@
             "request": {
                  "dataName": "City",
                  "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.address[0].city}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].city}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.address[0].city}"
             },
             "verify": { "result": true }
         },              
@@ -178,7 +196,7 @@
             "request": {
                  "dataName": "Postal Code",
                  "deid": "${$.verifyStoredDeIDPatient.response.body.entry[0].resource.address[0].postalCode}",
-                 "phi":  "${$.deidPatient.request.body.entry[0].resource.address[0].postalCode}"
+                 "pri":  "${$.deidPatient.request.body.entry[0].resource.address[0].postalCode}"
             },
             "verify": { "result": true }
         },

@@ -12,6 +12,10 @@ package utilities;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/****************************************************************************/
+/* This class has not been used, and is not tested.   It is being included  */
+/* as a reference in case it is needed in the future.                       */
+/****************************************************************************/
 
 public class OneLineData {
 

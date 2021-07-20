@@ -33,46 +33,21 @@ public class ZerocodeUtilities {
     	return true;
 	}
 	
-    public OneLineData makeOneLine(OneLineData ol) throws InterruptedException {
     
-    	String fileIn = ol.getFileIn();
-   
-    	
-        if (executeCMD("chmod +x src/test/scripts/createSingleLineJSON.sh")) {
-        	ol.setResult(executeCMD("src/test/scripts/createSingleLineJSON.sh "+fileIn));
-        }
-        else {
-        	ol.setResult(false);
-        }
-    	
-        return ol;
-        
-    }
-    
-    public PhiDeIDCompare notEqual(PhiDeIDCompare pd) throws InterruptedException {
+    public PriDeIDCompare notEqual(PriDeIDCompare pd) throws InterruptedException {
         
     	System.out.println("input object: "+pd.toString());
    	
-    	String phiStr = pd.getphiString();
-    	String deidStr = pd.getdeidString();
+    	String priStr = pd.getPriString();
+    	String deidStr = pd.getDeidString();
     	
-    	if(phiStr.equals(deidStr)) {
+    	if(priStr.equals(deidStr)) {
     		pd.setResult(false);
-    		System.out.println("PHI and DeID data identical for "+pd.getdataName()+" ");
+    		System.out.println("PRIMARY FHIR and DEID FHIR data identical for "+pd.getDataName()+" ");
     	}
         
         return pd;
         
-    }
-    
-    
-    public KafkaTopic getLastTopicMessage(KafkaTopic tk)  {
-    	
-    	tk.setLastMessage();
-    	
-    	System.out.println("Last Message:"+tk.getLastMessage());
-    	
-    	return tk;
     }
     
     
@@ -88,7 +63,35 @@ public class ZerocodeUtilities {
     public void minutesDelay(int min) throws InterruptedException {
         Thread.sleep(min*60*1000);
     }
-        
+  
+    
+// Functions that have not been used and have not been tested.   Included in
+// in case they are needed in the future.  
+    
+    public KafkaTopic getLastTopicMessage(KafkaTopic tk)  {
+    	 	
+    	tk.setLastMessage();
+    	
+    	System.out.println("Last Message:"+tk.getLastMessage());
+    	
+    	return tk;
+    }
+    
+    public OneLineData makeOneLine(OneLineData ol) throws InterruptedException {
+    	
 
+    	String fileIn = ol.getFileIn();
+   
+    	
+        if (executeCMD("chmod +x src/test/scripts/createSingleLineJSON.sh")) {
+        	ol.setResult(executeCMD("src/test/scripts/createSingleLineJSON.sh "+fileIn));
+        }
+        else {
+        	ol.setResult(false);
+        }
+    	
+        return ol;
+        
+    }
 	
 }

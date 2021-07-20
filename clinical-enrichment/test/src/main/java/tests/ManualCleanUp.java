@@ -31,8 +31,8 @@ public class ManualCleanUp {
 	 
 //	 @Ignore
 	 @Test
-	 @Scenario("scenarios/phi_FHIR_Patient_DELETE.json")
-	    public void phiPatientDELETE() throws Exception {
+	 @Scenario("scenarios/pri_FHIR_Patient_DELETE.json")
+	    public void priPatientDELETE() throws Exception {
 	 }
 	 
 }
