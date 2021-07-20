@@ -52,7 +52,6 @@ hl7-resource-generator:
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
-# Values: https://github.com/Alvearie/health-patterns/helm-charts/fhir/values.yaml
 # ------------------------------------------------------------------------------
 fhir:
   enabled: true
@@ -108,7 +107,6 @@ fhir-deid-trigger:
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
-# Values: https://github.com/cetic/helm-nifi/blob/master/values.yaml
 # ------------------------------------------------------------------------------
 nifi-registry:
   enabled: true
@@ -117,7 +115,6 @@ nifi-registry:
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
-# Values: https://github.com/bitnami/charts/blob/master/bitnami/zookeeper/values.yaml
 # ------------------------------------------------------------------------------
 zookeeper:
   enabled: true
@@ -128,7 +125,6 @@ zookeeper:
 
 # ------------------------------------------------------------------------------
 # Nifi Configuration
-# Values: https://github.com/cetic/helm-nifi/blob/master/values.yaml
 # ------------------------------------------------------------------------------
 nifi:
   fullnameOverride: alvearie-nifi
@@ -143,42 +139,6 @@ nifi:
         - name: nifi-metrics
           port: 12667
           targetPort: 12667
-  extraContainers:
-    - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.2
-      imagePullPolicy: Always
-      command:
-        - bash
-        - -c
-        - |
-          /scripts/wait-for-nifi.sh $HOSTNAME 8080
-          /scripts/initialize-reporting-task.sh $HOSTNAME 8080
-          python /scripts/loadHealthPatternsFlows.py \
-                   --reg=default \
-                   --bucket=Health_Patterns \
-                   --flowName="Clinical Ingestion" \
-                   --baseUrl=http://$HOSTNAME:8080/
-          python /scripts/loadHealthPatternsFlows.py \
-                   --reg=default \
-                   --bucket=Health_Patterns \
-                   --flowName="FHIR Bundle Enrichment" \
-                   --baseUrl=http://$HOSTNAME:8080/
-          python /scripts/startHealthPatternsFlow.py \
-                   --baseUrl=http://$HOSTNAME:8080/ \
-                   --fhir_pw=integrati0n \
-                   --kafka_pw=integrati0n \
-                   --runASCVD=True \
-                   --deidentifyData=True \
-                   --resolveTerminology=True
-          if [ $? -eq 0 ]
-          then
-            echo "NiFi canvas setup was successful!"
-            echo "starting wait loop so container does not exit"
-            while true; do sleep 1000; done
-          else
-            echo "NiFi canvas setup failed"
-            exit 1
-          fi
   url: ""
   port: 80
   zookeeper:
@@ -212,7 +172,6 @@ nifi:
 
 # ------------------------------------------------------------------------------
 # Kafka Configuration
-# Values: https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
 # ------------------------------------------------------------------------------
 kafka:
   enabled: true
@@ -254,7 +213,6 @@ kafka:
 
 # ------------------------------------------------------------------------------
 # De-Identification Service
-# Values: https://github.com/Alvearie/health-patterns/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
   enabled: true
@@ -265,8 +223,23 @@ deid:
     # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
 
 # ------------------------------------------------------------------------------
+# De-Identification Prep Service
+# ------------------------------------------------------------------------------
+deid-prep:
+  ingress:
+    enabled: false
+  configName: default
+  pushToFhir: true
+
+# ------------------------------------------------------------------------------
+# Terminology Services Prep Service
+# ------------------------------------------------------------------------------
+term-services-prep:
+  ingress:
+    enabled: false
+
+# ------------------------------------------------------------------------------
 # Cohort Service
-# Values: https://github.com/Alvearie/health-patterns/helm-charts/cohort-service/chart/values.yaml
 # ------------------------------------------------------------------------------
 cohort-service:
   enabled: false
