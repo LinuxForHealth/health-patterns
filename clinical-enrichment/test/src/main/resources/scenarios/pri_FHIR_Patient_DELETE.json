@@ -1,0 +1,46 @@
+{
+    "scenarioName": "List All Primary FHIR Server Patients, Delete First One in the Bundle, List All Patient Again",
+    "ignoreStepFailures": false, 
+    "steps": [
+        {
+            "name": "all_patients",
+            "url": "${pri_fhir_server}/fhir-server/api/v4/Patient",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : "$GT.0"
+                }
+            }
+        },
+        {
+            "name": "delete_patient",
+            "url": "${pri_fhir_server}/fhir-server/api/v4/Patient/${$.all_patients.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome"
+                }
+            }
+        },
+        {
+            "name": "all_patients_again",
+            "url": "${pri_fhir_server}/fhir-server/api/v4/Patient",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle"
+                }
+            }
+        }    
+    ]
+}
