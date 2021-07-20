@@ -20,8 +20,8 @@ python /scripts/loadHealthPatternsFlows.py \
   --bucket=Health_Patterns \
   --flowName="FHIR Bundle Enrichment" \
   --baseUrl=http://$HOSTNAME:8080/ \
-  --x_pos=0.0 \
-  --y_pos=200.0
+  --x=0.0 \
+  --y=200.0
 fi
 
 python /scripts/startHealthPatternsFlow.py \
