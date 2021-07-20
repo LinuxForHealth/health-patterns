@@ -17,6 +17,8 @@ def main():
     deidentifyData = False
     resolveTerminology = False
     releaseName = ""
+    deidConfigName = "default"
+    deidPushToFhir = "True"
     
     parser = argparse.ArgumentParser()
     parser.add_argument("--baseUrl", help="Base url for nifi instance")
@@ -26,6 +28,8 @@ def main():
     parser.add_argument("--deidentifyData", help="Enable Deidentify Data by default")
     parser.add_argument("--resolveTerminology", help="Enable Terminology Services by default")
     parser.add_argument("--releaseName", help="Release Name")
+    parser.add_argument("--deidConfigName", help="Deidentification Config Name")
+    parser.add_argument("--deidPushToFhir", help="Boolean indicating deidentified data should be persisted")
 
     args = parser.parse_args()
 
@@ -42,6 +46,10 @@ def main():
         resolveTerminology = args.resolveTerminology
     if args.releaseName:
         releaseName = args.releaseName
+    if args.deidConfigName:
+        deidConfigName = args.deidConfigName
+    if args.deidPushToFhir:
+        deidPushToFhir = args.deidPushToFhir
 
     #now fix trailing / problem if needed
     if baseURL[-1] != "/":
@@ -51,7 +59,7 @@ def main():
     #Set specific passwords in the parameter contexts for fhir, kafka, and deid
 
     print("Updating parameter context parameters based on config...")
-    updateParameters(baseURL, fhir_password, kafka_password, releaseName, runASCVD, deidentifyData, resolveTerminology)
+    updateParameters(baseURL, fhir_password, kafka_password, releaseName, runASCVD, deidentifyData, resolveTerminology, deidConfigName, deidPushToFhir)
     print("Parameter update complete...\n")
 
     print("Finding all processor groups to update")
@@ -192,7 +200,7 @@ def startAllProcessors(baseURL, finalGroupList):
             stoppedcount = statusdict["stoppedCount"]
             print("Stopped Count: ", agroup, "is ", int(stoppedcount))
 
-def updateParameters(baseURL, fhir_password, kafka_password, releaseName, runASCVD, deidentifyData, resolveTerminology):
+def updateParameters(baseURL, fhir_password, kafka_password, releaseName, runASCVD, deidentifyData, resolveTerminology, deidConfigName, deidPushToFhir):
     #Get parameter contexts
     resp = requests.get(url=baseURL + "nifi-api/flow/parameter-contexts")
     if debug:
@@ -234,6 +242,8 @@ def updateParameters(baseURL, fhir_password, kafka_password, releaseName, runASC
             update_parameter(baseURL, contextId, "RunASCVD", runASCVD)
             update_parameter(baseURL, contextId, "DeidentifyData", deidentifyData)
             update_parameter(baseURL, contextId, "ResolveTerminology", resolveTerminology)
+            update_parameter(baseURL, contextId, "DEID_CONFIG_NAME", deidConfigName)
+            update_parameter(baseURL, contextId, "DEID_PUSH_TO_FHIR", deidPushToFhir)
 
         if "ASCVD Parameter Context" in context["component"]["name"]:
             if debug:
