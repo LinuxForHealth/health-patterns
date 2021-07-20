@@ -16,6 +16,8 @@ def main():
     bucketName = "Health_Patterns"  #default bucket to use
     version = None #will search for latest version unless explicity set
     flowName = "Clinical Ingestion"  #assume that we want clinical ingestion flow for now
+    x_pos = 0 # Specify an x position to place this component
+    y_pos = 0 # Specify an y position to place this component
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--baseUrl", help="Base url for nifi instance")
@@ -23,6 +25,8 @@ def main():
     parser.add_argument("--bucket", help="Bucket")
     parser.add_argument("--flowName", help="Flow Name")
     parser.add_argument("--version", help="Version")
+    parser.add_argument("--x", help="Horizontal position to place new component")
+    parser.add_argument("--y", help="Vertical position to place new component")
 
     args = parser.parse_args()
     if args.reg:
@@ -33,6 +37,10 @@ def main():
         version = int(args.version)
     if args.flowName:
         flowName = args.flowName
+    if args.x:
+        x_pos = args.x
+    if args.y:
+        y_pos = args.y_pos
 
     baseURL = args.baseUrl
 
@@ -156,7 +164,7 @@ def main():
 
     #Create new process group from repo
 
-    createJson = {"revision":{"version":0},"component":{"versionControlInformation":{"registryId":theRegistry,"bucketId":theBucket,"flowId":theFlow,"version":version}}}
+    createJson = {"revision":{"version":0},"component":{"versionControlInformation":{"registryId":theRegistry,"bucketId":theBucket,"flowId":theFlow,"version":version},"position":{"x":x_pos,"y":y_pos}}}
     createPostEndpoint = "nifi-api/process-groups/" + rootId + "/process-groups"
     resp = requests.post(url=baseURL + createPostEndpoint, json=createJson)
     if debug:
