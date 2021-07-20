@@ -4,8 +4,7 @@ scripts/wait-for-nifi.sh $HOSTNAME 8080
 
 scripts/initialize-reporting-task.sh $HOSTNAME 8080
 
-if [ $ADD_CLINICAL_INGESTION ]
-then
+if [ "$ADD_CLINICAL_INGESTION" = true ] ; then
 python /scripts/loadHealthPatternsFlows.py \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
@@ -13,8 +12,7 @@ python /scripts/loadHealthPatternsFlows.py \
   --baseUrl=http://$HOSTNAME:8080/
 fi
 
-if [ $ADD_CLINICAL_ENRICHMENT ]
-then
+if [ "$ADD_CLINICAL_ENRICHMENT" = true ] ; then
 python /scripts/loadHealthPatternsFlows.py \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
@@ -35,8 +33,7 @@ python /scripts/startHealthPatternsFlow.py \
   --deidConfigName=$DEID_CONFIG_NAME \
   --deidPushToFhir=$DEID_PUSH_TO_FHIR
 
-if [ $? -eq 0 ]
-then
+if [ $? -eq 0 ] ; then
     echo "NiFi canvas setup was successful!"
     echo "starting wait loop so container does not exit"
     sleep infinity

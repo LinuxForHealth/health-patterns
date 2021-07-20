@@ -40,7 +40,7 @@ def main():
     if args.x:
         x_pos = args.x
     if args.y:
-        y_pos = args.y_pos
+        y_pos = args.y
 
     baseURL = args.baseUrl
 
