@@ -13,12 +13,17 @@
 # get the secrets
 from text_analytics.quickUMLS.config import get_config
 from text_analytics.quickUMLS.semtype_lookup import lookup
+from text_analytics.enhance import *
 # from nlp_service import NLP_SERVICE
 import json
 import requests
 
 
 class QuickUMLSService:
+
+    types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir, 
+                        'Immunization': enhance_immunization_payload_to_fhir,
+                        'DiagnosticReport': enhance_diagnostic_report_payload_to_fhir}
 
     def __init__(self, json_string):
         _config = get_config()

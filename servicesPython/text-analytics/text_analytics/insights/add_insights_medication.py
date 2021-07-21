@@ -42,12 +42,15 @@ def _create_med_statement_from_template():
 def _build_resource(diagnostic_report, acd_output):
     # build insight set from ACD output
     # initially using aci.MedicationInd
-    acd_medications = acd_output.medication_ind
+    # acd_medications = acd_output.medication_ind
+    # acd_medications = acd_output['MedicationInd']
+    acd_medications = acd_output.get('MedicationInd')
     med_statements_found = {}            # key is UMLS ID, value is the FHIR resource
     med_statements_insight_counter = {}  # key is UMLS ID, value is the current insight_num
     if acd_medications is not None:
         for acd_medication in acd_medications:
-            cui = acd_medication.cui
+            # cui = acd_medication.cui
+            cui = acd_medication['cui']
             med_statement = med_statements_found.get(cui)
             if med_statement is None:
                 med_statement = _create_med_statement_from_template()
@@ -59,25 +62,19 @@ def _build_resource(diagnostic_report, acd_output):
             med_statements_insight_counter[cui] = insight_num
             insight_id = "insight-" + str(insight_num)
             _build_resource_data(med_statement, acd_medication, insight_id)
-
             insight = Extension.construct()
             insight.url = insight_constants.INSIGHT_INSIGHT_ENTRY_URL
-
             insight_id_ext = fhir_object_utils.create_insight_extension(insight_id, insight_constants.INSIGHT_ID_UNSTRUCTURED_SYSTEM)
             insight.extension = [insight_id_ext]
-
             insight_detail = fhir_object_utils.create_insight_detail_extension(acd_output)
             insight.extension.append(insight_detail)
-
             insight_span = fhir_object_utils.create_insight_span_extension(acd_medication)
             insight.extension.append(insight_span)
-
             # if there is insight model data, save confidences to insight extension
-            insight_model_data = acd_medication.insight_model_data
-
+            # insight_model_data = acd_medication.insight_model_data
+            insight_model_data = acd_medication.get('insightModelData')
             if insight_model_data is not None:
                 fhir_object_utils.add_medication_confidences(insight.extension, insight_model_data)
-
             result_extension = med_statement.meta.extension[0]
             result_extension.extension.append(insight)
 

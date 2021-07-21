@@ -205,13 +205,16 @@ def create_derived_resource_extension(resource):
 def create_insight_span_extension(concept):
     offset_begin = Extension.construct()
     offset_begin.url = insight_constants.INSIGHT_SPAN_OFFSET_BEGIN_URL
-    offset_begin.valueInteger = concept.begin
+    # offset_begin.valueInteger = concept.begin
+    offset_begin.valueInteger = concept.get('begin')
     offset_end = Extension.construct()
     offset_end.url = insight_constants.INSIGHT_SPAN_OFFSET_END_URL
-    offset_end.valueInteger = concept.end
+    # offset_end.valueInteger = concept.end
+    offset_end.valueInteger = concept.get('end')
     covered_text = Extension.construct()
     covered_text.url = insight_constants.INSIGHT_SPAN_COVERED_TEXT_URL
-    covered_text.valueString = concept.covered_text
+    # covered_text.valueString = concept.covered_text
+    covered_text.valueString = concept.get('coveredText')
 
     insight_span = Extension.construct()
     insight_span.url = insight_constants.INSIGHT_SPAN_URL
@@ -335,19 +338,19 @@ def find_codable_concept(codeable_concept, id, system):
 
 def add_diagnosis_confidences(insight_ext, insight_model_data):
     confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_EXPLICIT,
-                                   insight_model_data.diagnosis.usage.explicit_score)
+                                   insight_model_data['diagnosis']['usage']['explicitScore'])
     insight_ext.append(confidence)
     confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_PATIENT_REPORTED,
-                                   insight_model_data.diagnosis.usage.patient_reported_score)
+                                   insight_model_data['diagnosis']['usage']['patientReportedScore'])
     insight_ext.append(confidence)
     confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_DISCUSSED,
-                                   insight_model_data.diagnosis.usage.discussed_score)
+                                   insight_model_data['diagnosis']['usage']['discussedScore'])
     insight_ext.append(confidence)
     confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_FAMILY_HISTORY,
-                                   insight_model_data.diagnosis.family_history_score)
+                                   insight_model_data['diagnosis']['familyHistoryScore'])
     insight_ext.append(confidence)
     confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_SUSPECTED,
-                                   insight_model_data.diagnosis.suspected_score)
+                                   insight_model_data['diagnosis']['suspectedScore'])
     insight_ext.append(confidence)
 
 
@@ -356,17 +359,17 @@ def add_medication_confidences(insight_ext, insight_model_data):
     # For alpha only pulling medication.usage scores
     # Not using startedEvent scores, stoppedEvent scores, doseChangedEvent scores, adversetEvent scores
     confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_MEDICATION_TAKEN,
-                                   insight_model_data.medication.usage.taken_score)
+                                   insight_model_data['medication']['usage']['takenScore'])
     insight_ext.append(confidence)
 
     confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_MEDICATION_CONSIDERING,
-                                   insight_model_data.medication.usage.considering_score)
+                                   insight_model_data['medication']['usage']['consideringScore'])
     insight_ext.append(confidence)
     confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_MEDICATION_DISCUSSED,
-                                   insight_model_data.medication.usage.discussed_score)
+                                   insight_model_data['medication']['usage']['discussedScore'])
     insight_ext.append(confidence)
     confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_MEDICATION_MEASUREMENT,
-                                   insight_model_data.medication.usage.lab_measurement_score)
+                                   insight_model_data['medication']['usage']['labMeasurementScore'])
     insight_ext.append(confidence)
 
 

@@ -41,6 +41,7 @@ python {
     pip 'fhir.resources:6.1.0'
     pip 'deepdiff:5.5.0'
     pip 'flask:2.0.1'
+    pip 'jsonpath-ng:1.5.3'
     //pip 'whpa-cdp-lib-fhir-compare:0.0.1'
     //Python dependencies end
 

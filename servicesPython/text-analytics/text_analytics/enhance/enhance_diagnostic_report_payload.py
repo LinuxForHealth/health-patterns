@@ -15,6 +15,7 @@ from fhir.resources.diagnosticreport import DiagnosticReport
 from text_analytics.insights.add_insights_condition import create_conditions_from_insights
 from text_analytics.insights.add_insights_medication import create_med_statements_from_insights
 from text_analytics.utils import fhir_object_utils
+import logging
 
 #logger = caflogger.get_logger('whpa-cdp-text_analytics')
 
@@ -30,9 +31,11 @@ def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
         create_conditions_fhir = create_conditions_from_insights(diagnostic_report_fhir, acd_resp)
         create_med_statements_fhir = create_med_statements_from_insights(diagnostic_report_fhir, acd_resp)
     except acd.ACDException as ex:
+        logging.error('acd exception', ex)
         #logger.error(logging_codes.WHPA_CDP_TEXT_ANALYTICS_ACD_ERROR, ex.code, ex.message, ex.correlation_id)
         return None
     except Exception as e:
+        logging.error('exception', e)
         #logger.error(logging_codes.WHPA_CDP_TEXT_ANALYTICS_COULD_NOT_FIND_DATA, str(diagnostic_report_json), exc_info=e)
         return None
 

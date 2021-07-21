@@ -1,16 +1,15 @@
 {
-
       "resourceTypes": [
         "AllergyIntolerance",
         "DiagnosticReport",
         "Immunization"
         ],
       "resourcePaths": [
-         {"jsonPath": "/fhir/Patient"},
-         {"jsonPath": "/fhir/Patient/birthdate"}
+         "/fhir/Patient",
+         "/fhir/Patient/birthdate"
         ],
       "queryBy": "<tag>",
-      "nlpService": "ACD",
+      "nlpService": "quickUMLS",
       "createNew": "False"  
 
   }

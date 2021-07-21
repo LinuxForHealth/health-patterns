@@ -3,3 +3,4 @@ ibm-cloud-sdk-core==3.8.0
 fhir.resources==6.1.0
 deepdiff==5.5.0
 flask==2.0.1
+jsonpath-ng==1.5.3

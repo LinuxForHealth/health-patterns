@@ -12,7 +12,7 @@
 
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
-
+from text_analytics.enhance import *
 # get the secrets
 from text_analytics.acd.config import get_config
 # from nlp_service import NLP_SERVICE
@@ -20,6 +20,10 @@ import json
 
 
 class ACDService:
+
+    types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir, 
+                        'Immunization': enhance_immunization_payload_to_fhir,
+                        'DiagnosticReport': enhance_diagnostic_report_payload_to_fhir}
 
     def __init__(self, json_string):
         _config = get_config()
@@ -42,9 +46,10 @@ class ACDService:
         service.set_service_url(self.acd_url)
 
         try:
-            print("Calling ACD")
+            # print("Calling ACD")
+            print(text)
             resp = service.analyze_with_flow(self.acd_flow, text)
-            print("RAW ACD Response: ", resp, "<end>")
+            # print("RAW ACD Response: ", resp, "<end>")
             print(type(resp))
             out = resp.to_dict()
             return out
