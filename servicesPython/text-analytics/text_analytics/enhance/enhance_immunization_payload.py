@@ -37,6 +37,9 @@ def enhance_immunization_payload_to_fhir(nlp, immunization_json):
     # create fhir bundle with transaction
     bundle = None
     if updated_immunization is not None:
-        url_transaction = updated_immunization.resource_type + "/" + str(updated_immunization.id)
-        bundle = create_transaction_bundle([[updated_immunization, 'PUT', url_transaction]])
+        # url_transaction = updated_immunization.resource_type + "/" + str(updated_immunization.id)
+        # bundle = create_transaction_bundle([[updated_immunization, 'PUT', url_transaction]])
+        return updated_immunization.json()
+    else:
+        return None
     return bundle

@@ -47,7 +47,7 @@ class ACDService:
 
         try:
             # print("Calling ACD")
-            print(text)
+            # print(text)
             resp = service.analyze_with_flow(self.acd_flow, text)
             # print("RAW ACD Response: ", resp, "<end>")
             print(type(resp))

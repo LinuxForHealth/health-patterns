@@ -39,7 +39,6 @@ def enhance_allergy_intolerance_payload_to_fhir(nlp, input_json):
             text = 'Allergy to ' + allergy_intolerance_fhir.code.text
             #logger.info(logging_codes.WHPA_CDP_TEXT_ANALYTICS_CALLING_ACD_INFO, "AllergyIntolerance.code.text")
             acd_resp = nlp.process(text)
-            print(acd_resp)
             acd_results.append([allergy_intolerance_fhir.code, acd_resp])
 
         if allergy_intolerance_fhir.reaction is not None:
@@ -63,8 +62,9 @@ def enhance_allergy_intolerance_payload_to_fhir(nlp, input_json):
 
     if result_allergy is not None:
         # create fhir bundle with transaction
-        url_transaction = result_allergy.resource_type + "/" + str(result_allergy.id)
-        bundle = create_transaction_bundle([[result_allergy, 'PUT', url_transaction]])
-        return bundle
+        # url_transaction = result_allergy.resource_type + "/" + str(result_allergy.id)
+        # bundle = create_transaction_bundle([[result_allergy, 'PUT', url_transaction]])
+        # return bundle
+        return result_allergy.json()
     else:
         return None

@@ -104,7 +104,6 @@ def setupService(configName):
     else:
         if configJson["nlpService"] == "ACD":
             nlp_service = ACDService(jsonString)
-            nlp_services_dict[configName] = nlp_service
         if configJson["nlpService"] == "quickUMLS":
             nlp_service = QuickUMLSService(jsonString)
         else:
@@ -120,8 +119,10 @@ def process_bundle(jsonString):
     for match in jsonpath_exp.find(jsonString):
         request_body = match.value['resource']
         resp = requests.post('http://127.0.0.1:5000/process/', json=request_body)
-        print(json.loads(resp.text))
-        new_resource_dict[match.value['fullUrl']] = resp.text
+        # print(json.loads(resp.text))
+        print(resp.text)
+        
+        new_resource_dict[match.value['fullUrl']] = json.loads(resp.text)
     
     for resource in jsonString['entry']:
         resource['resource'] = new_resource_dict[resource['fullUrl']]
