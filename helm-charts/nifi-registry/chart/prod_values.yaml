@@ -1,6 +1,0 @@
-git:
-  branch: origin
-  username: ibmatc
-  password: 
-  # By default this registry loads the health-patterns NiFi flows
-  repository: https://github.com/Alvearie/health-patterns-nifi-flows.git
