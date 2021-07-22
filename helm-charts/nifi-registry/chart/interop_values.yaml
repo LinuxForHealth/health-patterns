@@ -1,6 +1,0 @@
-git:
-  branch: origin
-  username: atclark@us.ibm.com
-  password: fec2f83f8a2ae508bb616f3ab67a248d085e7d52
-  # By default this registry loads the health-patterns NiFi flows
-  repository: https://github.ibm.com/wh-cms-interop/vpc-nifi-flows-dev.git
