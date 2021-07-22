@@ -13,7 +13,7 @@ image:
 
 service:
   type: ClusterIP
-  port: 80
+  port: 18080
 
 git:
   branch: origin
@@ -72,4 +72,4 @@ ingress:
        # IBM: public-iks-k8s-nginx
        # Azure: addon-http-application-routing
        # AWS: nginx
-  subdomain:
+  hostname:

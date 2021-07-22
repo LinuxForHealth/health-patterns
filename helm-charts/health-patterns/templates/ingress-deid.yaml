@@ -1,23 +1,25 @@
 {{- if .Values.deid.enabled -}}
-{{- if .Values.global.ingress.enabled -}}
+{{- if .Values.ingress.enabled -}}
 {{- $ingressPort := .Values.deid.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-deid-ingress
+  name: {{ .Release.Name }}-deid
   namespace: {{ .Release.Namespace }}
   {{- with .Values.deid.labels }}
   labels:
     {{ toYaml . | nindent 4 }}
   {{- end }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.global.ingress.class | default .Values.ingress.class }}
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /api/v1/$1
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
 spec:
   rules:
-    - host: {{ .Release.Namespace }}-{{ .Release.Name }}-deid.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+    - host: {{ .Values.ingress.hostname }}
       http:
         paths:
-          - path: /
+          - path: /deid(.*)
             pathType: ImplementationSpecific
             backend:
               service:
