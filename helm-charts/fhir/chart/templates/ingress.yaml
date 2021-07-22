@@ -1,23 +1,25 @@
 {{- if .Values.enabled -}}
-{{- if .Values.global.ingress.enabled | default .Values.ingress.enabled -}}
+{{- if .Values.ingress.enabled -}}
 {{- $ingressPort := .Values.service.httpPort -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "fhir.fullname" . }}-ingress
+  name: {{ include "fhir.fullname" . }}
   namespace: {{ .Release.Namespace }}
   {{- with .Values.labels }}
   labels:
     {{ toYaml . | nindent 4 }}
   {{- end }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.global.ingress.class | default .Values.ingress.class }}
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /fhir-server/api/v4/$2
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
 spec:
   rules:
-    - host: {{ .Release.Namespace }}-{{ include "fhir.fullname" . }}.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+    - host: {{ .Values.ingress.hostname }}
       http:
         paths:
-          - path: /
+          - path: /{{ .Chart.Name }}(/?)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
