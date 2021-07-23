@@ -12,6 +12,10 @@ package utilities;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 
 public class ZerocodeUtilities {
 
@@ -50,6 +54,57 @@ public class ZerocodeUtilities {
         
     }
     
+    public ZerocodeString containsString(ZerocodeString zs) throws InterruptedException {
+    	
+    	if (zs.getString1().contains(zs.getString2())) {
+    		zs.setResult("true");
+    	}
+    	else
+    		zs.setResult("false");
+    	
+    	return zs;
+    }
+    
+    public ZerocodeString getLastOccurenceDate(ZerocodeString zs)throws InterruptedException {
+    	
+    	if (zs.getString1().contains("occurrenceDateTime")) {
+    		int dateStart = zs.getString1().lastIndexOf("occurrenceDateTime")+21;
+    		int dateEnd = dateStart + 20;
+    		
+    		String dateString = zs.getString1().substring(dateStart,dateEnd);
+    	    
+    	    zs.setString2(dateString);
+    	    zs.setResult("true");
+    	}
+    	else
+    		zs.setResult("false");
+    	
+    	return zs;
+    }
+    
+    public ZerocodeString stringEqual(ZerocodeString zs)throws InterruptedException {
+    	
+    	if (zs.getString1().equals(zs.getString2())) {
+
+    		zs.setResult("true");
+    	}
+    	else
+    		zs.setResult("false");
+    	
+    	return zs;
+    }
+    
+    public ZerocodeString stringNotEqual(ZerocodeString zs)throws InterruptedException {
+    	
+    	if (zs.getString1().equals(zs.getString2())) {
+
+    		zs.setResult("false");
+    	}
+    	else
+    		zs.setResult("true");
+    	
+    	return zs;
+    }
     
 // Functions for delaying the test steps
     public void milliSecondsDelay(int milliSec) throws InterruptedException {
