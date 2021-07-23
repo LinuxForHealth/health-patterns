@@ -25,13 +25,13 @@ def hello_world():
 def nlp_configs(configName):
 
     if request.method == 'GET':
-        jsonFile = open('configs/' + configName, "r")
+        jsonFile = open('text_analytics/configs/' + configName, "r")
         jsonString = jsonFile.read()
         return jsonString
 
     elif request.method == 'POST':
         try:
-            jsonFile = open('configs/' + configName, 'x')
+            jsonFile = open('text_analytics/configs/' + configName, 'x')
         except FileExistsError as error:
             print(error)
             print('File already exists')    
@@ -40,14 +40,14 @@ def nlp_configs(configName):
         return request.data
 
     elif request.method == 'PUT':
-        jsonFile = open('configs/' + configName, 'w')
+        jsonFile = open('text_analytics/configs/' + configName, 'w')
         jsonFile.write(request.data.decode('utf-8'))
         # setupService(request.data)
         return request.data
     
     elif request.method == 'DELETE':
         try:
-            os.remove('configs/' + configName)
+            os.remove('text_analytics/configs/' + configName)
         except OSError as error:
             print(error)
         return Response(status=200)
@@ -57,7 +57,7 @@ def nlp_configs(configName):
 @app.route("/config/", methods=['GET'])
 def get_all_configs():
     configs = []
-    directory = os.fsencode('configs')
+    directory = os.fsencode('text_analytics/configs')
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
         configs.append(filename)
@@ -121,7 +121,7 @@ def process_bundle(jsonString):
         resp = requests.post('http://127.0.0.1:5000/process/', json=request_body)
         # print(json.loads(resp.text))
         print(resp.text)
-        
+
         new_resource_dict[match.value['fullUrl']] = json.loads(resp.text)
     
     for resource in jsonString['entry']:
