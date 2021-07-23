@@ -96,7 +96,7 @@ def setupService(configName):
     global nlp_service
     # with open('configs/' + configName, 'r') as jsonFile:
     #     configJson = json.load(jsonFile)
-    jsonFile = open('configs/' + configName, "r")
+    jsonFile = open('text_analytics/configs/' + configName, "r")
     jsonString = jsonFile.read()
     configJson = json.loads(jsonString)
     if configName in nlp_services_dict.keys():
