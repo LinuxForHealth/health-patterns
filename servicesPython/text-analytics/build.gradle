@@ -15,7 +15,8 @@
 plugins {
     id "ru.vyarus.use-python" version "2.3.0"
     id "org.sonarqube" version "3.0"
-    id "com.palantir.docker" version "0.22.1"
+    id "com.palantir.docker" version "0.27.0"
+    id 'com.palantir.docker-run' version "0.27.0"
 }
 
 group = 'com.ibm.watson.health.imaging'
@@ -124,10 +125,18 @@ task cdpTextAnalyticsPyFlake8(type: PythonTask) {
     extraArgs = [pySrcDir]
 }
 
-
 docker {
-     name "${project.name}:${project.version}"
-     files '.'
+     copySpec.from(".").into(".").include("pinned.txt", "setup.py", "setup.properties", "text_analytics/**")
+     name dockerUser + "/cdp-text-analytics-service:" + version
+     dockerfile file('Dockerfile')
+}
+
+dockerPush {}
+
+dockerRun {
+    name 'cdp-text-analytics-service'
+    image dockerUser + '/cdp-text-analytics-service:' + version
+    ports '5000:5000'
 }
 
 task build {}
