@@ -26,7 +26,7 @@ _quickumls_configs = None
 def _load_configs():
     global _quickumls_configs
 
-    quickumls_config_file_path = os.getenv(QUICKUMLS_CONFIG_ENVVAR, 'quickUMLS/quickumls_config.ini')
+    quickumls_config_file_path = os.getenv(QUICKUMLS_CONFIG_ENVVAR, 'text_analytics/quickUMLS/quickumls_config.ini')
     configParser = configparser.ConfigParser()
     configParser.read(quickumls_config_file_path)
     _quickumls_configs = configParser[quickumls_header]
