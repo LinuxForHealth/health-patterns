@@ -1,21 +1,19 @@
-# Default values for expose-kafka.
+# Default values for nlp-insights.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: alvearie/expose-kafka
+  repository: alvearie/cdp-text-analytics-service
   pullPolicy: Always
-  tag: 0.0.2
+  tag: 0.0.1
+
 service:
   type: ClusterIP
   port: 5000
 
 enabled: true
-username: token
-password: integrati0n
-# bootstrap:
 
 global:
   ingress:

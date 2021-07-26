@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nlp-insights.fullname" . }}
+  labels:
+    {{- include "nlp-insights.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: {{ include "nlp-insights.fullname" . }}
+  selector:
+    {{- include "nlp-insights.selectorLabels" . | nindent 4 }}

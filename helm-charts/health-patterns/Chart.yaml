@@ -98,6 +98,10 @@ dependencies:
     version: 0.1.0
     condition: kafka.enabled
     repository: https://alvearie.github.io/health-patterns/charts
+  - name: nlp-insights
+    version: 0.1.0
+    condition: nlp-insights.enabled
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: kube-prometheus-stack
     version: 12.0.4
     condition: kube-prometheus-stack.enabled

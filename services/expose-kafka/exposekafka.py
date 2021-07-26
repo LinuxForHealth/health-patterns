@@ -64,11 +64,15 @@ def produce():
     resolveterminology = request.headers.get("ResolveTerminology", "false")
     deidentifydata = request.headers.get("DeidentifyData", "false")
     runascvd = request.headers.get("RunASCVD", "false")
+    add_nlp_insights = request.headers.get("AddNLPInsights", "false")
     resourceid = request.headers.get("ResourceId", "")
 
-    headers = [("ResolveTerminology",bytes(resolveterminology, 'utf-8')),
-               ("DeidentifyData",bytes(deidentifydata, 'utf-8')),
-               ("RunASCVD",bytes(runascvd, 'utf-8'))]
+    headers = [
+                ("ResolveTerminology",bytes(resolveterminology, 'utf-8')),
+                ("DeidentifyData",bytes(deidentifydata, 'utf-8')),
+                ("RunASCVD",bytes(runascvd, 'utf-8')),
+                ("AddNLPInsights",bytes(add_nlp_insights, 'utf-8'))
+               ]
 
     if len(resourceid) > 0:
         headers.append(("ResourceId", bytes(resourceid, 'utf-8')))
