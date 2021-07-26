@@ -50,6 +50,9 @@ ascvd-from-fhir:
 hl7-resource-generator:
   enabled: true
 
+nlp-insights:
+  enabled: false
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # ------------------------------------------------------------------------------

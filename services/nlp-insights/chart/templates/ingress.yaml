@@ -1,0 +1,26 @@
+{{- if .Values.enabled -}}
+{{- if .Values.global.ingress.enabled | default .Values.ingress.enabled -}}
+{{- $ingressPort := .Values.service.port -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "nlp-insights.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "nlp-insights.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.global.ingress.class | default .Values.ingress.class }}
+spec:
+  rules:
+    - host: {{ .Release.Namespace }}-{{ .Release.Name }}-nlp-insights.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ include "nlp-insights.fullname" . }}
+                port: 
+                  number: {{ $ingressPort }}
+{{- end }}
+{{- end }}
