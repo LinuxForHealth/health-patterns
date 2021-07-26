@@ -4,7 +4,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-expose-kafka-ingress
+  name: {{ include "expose-kafka.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "expose-kafka.labels" . | nindent 4 }}

@@ -13,7 +13,7 @@ image:
 
 service:
   type: ClusterIP
-  port: 18080
+  port: 80
 
 git:
   branch: origin

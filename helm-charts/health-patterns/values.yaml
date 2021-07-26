@@ -36,19 +36,37 @@ ingress:
        # IBM: public-iks-k8s-nginx
        # Azure: addon-http-application-routing
        # AWS: nginx
-  hostname: &hostname 
+  hostname: &hostname atc.wh-health-patterns.dev.watson-health.ibm.com
+  subdomain: *hostname
+
+global:
+  ingress:
+    class: public-iks-k8s-nginx
+    subdomain: wh-health-patterns.dev.watson-health.ibm.com
 
 ascvd:
   enabled: true
 
 ascvd-from-fhir:
   enabled: true
+  ingress:
+    enabled: *ingressEnabled
+    class: *ingressClass
+    hostname: *hostname
 
 hl7-resource-generator:
   enabled: true
+  ingress:
+    enabled: *ingressEnabled
+    class: *ingressClass
+    hostname: *hostname
 
 nlp-insights:
   enabled: false
+  ingress:
+    enabled: *ingressEnabled
+    class: *ingressClass
+    hostname: *hostname
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
@@ -106,6 +124,7 @@ fhir-deid:
     - name: BOOTSTRAP_DB
       value: 'true'
   ingress:
+    enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
   proxy:
@@ -155,7 +174,7 @@ nifi:
   fullnameOverride: alvearie-nifi
   enabled: true
   ingress:
-    #enabled: *ingressEnabled
+    enabled: false
     class: *ingressClass
     hostname: *hostname
   service:
@@ -198,7 +217,7 @@ nifi:
   properties:
     customLibPath: ./custom-nars
     safetyValve:
-      nifi.web.proxy.context.path: /nifi, /nifi/nifi
+      nifi.web.proxy.context.path: /demo, /demo/nifi, /nifi
 
 # ------------------------------------------------------------------------------
 # Kafka Configuration
@@ -262,6 +281,8 @@ deid-prep:
     enabled: false
     class: *ingressClass
     hostname: *hostname
+  configName: default
+  pushToFhir: true
 
 # ------------------------------------------------------------------------------
 # Terminology Services Prep Service
@@ -291,7 +312,7 @@ cohort-service:
     type: ClusterIP
   ingress:
     # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
-    enabled: false
+    enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
 
