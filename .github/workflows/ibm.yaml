@@ -41,8 +41,6 @@ jobs:
       run: |
         kubectl config current-context
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
-        mkdir helm-charts/health-patterns/charts
-        cp docs/charts/*.tgz helm-charts/health-patterns/charts/
         helm dependency update helm-charts/health-patterns
         helm install ingestion helm-charts/health-patterns --values helm-charts/health-patterns/ci/chart-testing-values.yaml --values helm-charts/health-patterns/clinical_ingestion.yaml --wait --timeout 6m0s
         kubectl get all
