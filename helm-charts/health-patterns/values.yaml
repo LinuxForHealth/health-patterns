@@ -89,7 +89,7 @@ fhir:
     hostname: *hostname
   proxy:
     name: fhir-proxy
-    enabled: true
+    enabled: false
     ingress:
       enabled: *ingressEnabled
       class: *ingressClass
@@ -106,10 +106,6 @@ fhir:
 
 fhir-trigger:
   enabled: false
-  ingress:
-    enabled: false
-    class: *ingressClass
-    hostname: *hostname
 
 fhir-deid:
   name: fhir-deid
@@ -129,8 +125,10 @@ fhir-deid:
     hostname: *hostname
   proxy:
     name: fhir-deid-proxy
-    enabled: true
+    enabled: false
     ingress:
+      enabled: *ingressEnabled
+      class: *ingressClass
       hostname: *hostname
 
 ## Configure these to allow bulk access from fhir-deid server

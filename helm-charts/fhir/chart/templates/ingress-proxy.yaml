@@ -18,7 +18,7 @@ spec:
     - host: {{ .Values.ingress.hostname }}
       http:
         paths:
-          - path: /{{ .Chart.Name }}-proxy(/?)(.*)
+          - path: /{{ .Chart.Name }}-proxy(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
