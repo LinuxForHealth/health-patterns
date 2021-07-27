@@ -9,7 +9,7 @@ To this point, there has been focus on 5 patterns for healthcare data:
   - **Clinical Data _Analytics_**  Coming soon
 
 
-### See a summary of all of the [patterns here](https://alvearie.io/health-patterns/)
+#### See a summary of all of the patterns [here](https://alvearie.io/health-patterns/)
 
 Components currently used by health-patterns clinical data ingestion reference implementation
 
