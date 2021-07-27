@@ -33,3 +33,5 @@ spec:
             value: {{ .Values.password }}
           - name: KAFKABOOTSTRAP
             value: {{ include "expose-kafka.bootstrap" . }}
+          - name: INITTOPICS
+            value: {{ .Values.inittopics }}
