@@ -55,4 +55,15 @@ public class Enrich_Flow {
 	    public void enrich_TERM_Prep() throws Exception {
 	    }
 	 
+	 @Test
+	 @Category({BasicEnrichment.class})
+	 @Scenario("scenarios/enrich_ASCVD_New.json")
+	    public void enrich_ASCVD_New() throws Exception {
+	    }
+	 
+	 @Test
+	 @Category({BasicEnrichment.class})
+	 @Scenario("scenarios/enrich_ASCVD_Update.json")
+	    public void enrich_ASCVD_Update() throws Exception {
+	    }
 }
