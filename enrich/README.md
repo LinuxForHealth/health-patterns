@@ -1,7 +1,7 @@
 # Enrichment
 
 # Table of Contents
-- [Welcome and overview](#enrich-overview)
+- [Welcome to health-patterns](#enrich-overview)
 - [How to deploy](#how-to-deploy)
 - [Using the pattern](#using-the-pattern)
 - [Options](#options)
@@ -9,13 +9,7 @@
 
 ## Welcome to health-patterns
 
-health-patterns is a place to find cloud reference implementations for the overall Alvearie architecture (https://alvearie.io/architecture) that incorporate best practices using open technologies.  
-
-The conceptual architecture below is brought into reality with a combination of implementations and documentation.  
-
-![AlvearieConceptualArchitecture](../docs/images/AlvearieConceptualArchitecture.png)
-
-Each pattern incorporates parts of [Alvearie](https://alvearie.io/) along with other open technologies that can be used to start building your own healthcare solutions using a common base of proven technology.
+health-patterns is a place to find cloud reference implementations for the overall Alvearie architecture (https://alvearie.io/architecture) that incorporate best practices using open technologies. Each pattern incorporates parts of [Alvearie](https://alvearie.io/) along with other open technologies that can be used to start building your own healthcare solutions using a common base of proven technology.
 
 
 #### Enrichment Pattern Overview
@@ -90,7 +84,7 @@ After running the command above, you will see notes that give you information ab
 
 To uninstall/delete the deployment, use:
 ```
-helm delete <<RELEASE_NAME>>
+helm delete enrich
 ```
 
 ## Using the pattern
@@ -163,7 +157,9 @@ The FHIR response with the requested modifications will be placed on a topic cal
 
 #### Other data formats
 Currently, the enrichment pattern is designed to operate only on data in FHIR format.
-If HL7 data is passed in, the pipeline is capable of converting it to FHIR and allowing it run through the pipeline. Other data types (such as DICOM image data) are being considered but are currently not supported.
+Note that if the enrichment pattern is being used as part of the ingestion pattern, then HL7 data will be
+converted to FHIR (by ingestion) before it is allowed to run through the enrichment pipeline.
+Other data types (such as DICOM image data) are being considered but are currently not supported.
 
 #### Alternate configuration for Helm Chart
 

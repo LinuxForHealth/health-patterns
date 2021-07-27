@@ -1,7 +1,7 @@
 # Ingestion
 
 # Table of Contents
-- [Welcome and overview](#ingestion-overview)
+- [Welcome to health-patterns](#ingestion-overview)
 - [How to deploy](#how-to-deploy)
 - [Using the pattern](#using-the-pattern)
 - [Options](#options)
@@ -9,18 +9,12 @@
 
 ## Welcome to health-patterns
 
-health-patterns is a place to find cloud reference implementations for the overall Alvearie architecture (https://alvearie.io/architecture) that incorporate best practices using open technologies.  
-
-The conceptual architecture below is brought into reality with a combination of implementations and documentation.  
-
-![AlvearieConceptualArchitecture](../docs/images/AlvearieConceptualArchitecture.png)
-
-Each pattern incorporates parts of [Alvearie](https://alvearie.io/) along with other open technologies that can be used to start building your own healthcare solutions using a common base of proven technology.
+health-patterns is a place to find cloud reference implementations for the overall Alvearie architecture (https://alvearie.io/architecture) that incorporate best practices using open technologies. Each pattern incorporates parts of [Alvearie](https://alvearie.io/) along with other open technologies that can be used to start building your own healthcare solutions using a common base of proven technology.
 
 
 #### Ingestion Pattern Overview
 
-The **Ingestion** health pattern (which can optionally incorporate the [Enrich](../enrich/README.md) pattern) is a flexible approach to processing healthcare data and storing it into a FHIR server.
+The **Ingestion** health pattern (which can optionally incorporate the [Enrichment](../enrich/README.md) pattern) is a flexible approach to processing healthcare data and storing it into a FHIR server.
 At the most basic level, the Ingestion pattern will read HL7 or FHIR data from a [Kafka](https://kafka.apache.org) topic, use [NiFi](https://github.com/apache/nifi) to orchestrate any desired conversion or validation, and then store the results into a [FHIR Server](https://github.com/ibm/fhir).  In addition, it is
 cloud agnostic, meaning it has been run on many different platforms including IBM Cloud, AWS, Azure, Google.
 
@@ -89,7 +83,7 @@ After running the command above, you will see notes that give you information ab
 
 To uninstall/delete the deployment, use:
 ```
-helm delete <<RELEASE_NAME>>
+helm delete ingestion
 ```
 
 

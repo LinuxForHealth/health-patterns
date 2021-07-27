@@ -1,7 +1,7 @@
 # Cohort
 
 # Table of Contents
-- [Welcome and overview](#cohort-overview)
+- [Welcome to health-patterns](#cohort-overview)
 - [How to deploy](#how-to-deploy)
 - [Using the pattern](#using-the-pattern)
 - [Options](#options)
@@ -9,13 +9,7 @@
 
 ## Welcome to health-patterns
 
-health-patterns is a place to find cloud reference implementations for the overall Alvearie architecture (https://alvearie.io/architecture) that incorporate best practices using open technologies.  
-
-The conceptual architecture below is brought into reality with a combination of implementations and documentation.  
-
-![AlvearieConceptualArchitecture](../docs/images/AlvearieConceptualArchitecture.png)
-
-Each pattern incorporates parts of [Alvearie](https://alvearie.io/) along with other open technologies that can be used to start building your own healthcare solutions using a common base of proven technology.
+health-patterns is a place to find cloud reference implementations for the overall Alvearie architecture (https://alvearie.io/architecture) that incorporate best practices using open technologies.  Each pattern incorporates parts of [Alvearie](https://alvearie.io/) along with other open technologies that can be used to start building your own healthcare solutions using a common base of proven technology.
 
 
 #### Cohort Service Overview
@@ -96,7 +90,7 @@ After running the command above, you will see notes that give you information ab
 
 To uninstall/delete the deployment, use:
 ```
-helm delete <<RELEASE_NAME>>
+helm delete ingestion
 ```
 
 
