@@ -4,7 +4,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-fhir-trigger-ingress
+  name: {{ include "fhir-trigger.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "fhir-trigger.labels" . | nindent 4 }}
@@ -21,7 +21,7 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Release.Namespace }}-{{ .Release.Name }}-fhir-trigger
+                name: {{ include "fhir-trigger.fullname" . }}
                 port: 
                   number: {{ $ingressPort }}
 {{- end }}

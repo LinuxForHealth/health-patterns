@@ -6,10 +6,8 @@ kind: Ingress
 metadata:
   name: {{ include "fhir.fullname" . }}
   namespace: {{ .Release.Namespace }}
-  {{- with .Values.labels }}
   labels:
-    {{ toYaml . | nindent 4 }}
-  {{- end }}
+    {{- include "fhir.labels" . | nindent 4 }}
   annotations:
     nginx.ingress.kubernetes.io/use-regex: 'true'
     nginx.ingress.kubernetes.io/rewrite-target: /fhir-server/api/v4/$2

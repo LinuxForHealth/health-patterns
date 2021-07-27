@@ -6,10 +6,8 @@ kind: Ingress
 metadata:
   name: {{ include "nifi-registry.fullname" . }}
   namespace: {{ .Release.Namespace }}
-  {{- with .Values.labels }}
   labels:
-    {{ toYaml . | nindent 4 }}
-  {{- end }}
+    {{- include "nifi-registry.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
 spec:

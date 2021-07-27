@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: alvearie/cdp-text-analytics-service
+  repository: alvearie/nlp-insights
   pullPolicy: Always
   tag: 0.0.1
 

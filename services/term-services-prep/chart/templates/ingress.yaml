@@ -4,7 +4,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-term-services-prep-ingress
+  name: {{ include "term-services-prep.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "term-services-prep.labels" . | nindent 4 }}
