@@ -15,7 +15,9 @@ service:
 enabled: true
 username: token
 password: integrati0n
-inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in"
+inittopics:
+inittopicnumpartitions:
+inittopicreplication:
 # bootstrap:
 
 ingress:

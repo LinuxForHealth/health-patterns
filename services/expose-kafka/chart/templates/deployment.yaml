@@ -35,3 +35,7 @@ spec:
             value: {{ include "expose-kafka.bootstrap" . }}
           - name: INITTOPICS
             value: {{ .Values.inittopics }}
+          - name: INITTOPICNUMPARTITIONS
+            value: {{ .Values.inittopicnumpartitions | quote }}
+          - name: INITTOPICREPLICATION
+            value: {{ .Values.inittopicreplication | quote }}

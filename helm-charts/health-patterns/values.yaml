@@ -33,7 +33,7 @@ affinity: {}
 ingress:
   enabled: &ingressEnabled true
   class: &ingressClass public-iks-k8s-nginx
-  hostname: &hostname 
+  hostname: &hostname
 
 ascvd:
   enabled: true
@@ -154,7 +154,7 @@ zookeeper:
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
   fullnameOverride: alvearie-zookeeper
   persistence:
-    enabled: false 
+    enabled: false
 
 # ------------------------------------------------------------------------------
 # Nifi Configuration
@@ -246,6 +246,14 @@ kafka:
 
     serviceMonitor:
       enabled: false
+
+# ------------------------------------------------------------------------------
+# expose-kafka Configuration
+# ------------------------------------------------------------------------------
+expose-kafka:
+  inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in"
+  inittopicnumpartitions: 1
+  inittopicreplication: 1
 
 # ------------------------------------------------------------------------------
 # De-Identification Service
