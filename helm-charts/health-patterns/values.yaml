@@ -33,7 +33,7 @@ affinity: {}
 ingress:
   enabled: &ingressEnabled true
   class: &ingressClass public-iks-k8s-nginx
-  hostname: &hostname atc.wh-health-patterns.dev.watson-health.ibm.com
+  hostname: &hostname 
 
 ascvd:
   enabled: true
