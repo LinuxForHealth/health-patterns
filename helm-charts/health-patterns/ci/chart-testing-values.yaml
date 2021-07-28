@@ -1,12 +1,6 @@
 # A simple name describing the Alvearie pattern implemented by this Helm values file
 pattern: "Chart Test"
 
-global:
-  ingress:
-    enabled: true
-    class: public-iks-k8s-nginx
-    hostname: github.wh-health-patterns.dev.watson-health.ibm.com
-
 expose-kafka:
   ingress:
     enabled: true
