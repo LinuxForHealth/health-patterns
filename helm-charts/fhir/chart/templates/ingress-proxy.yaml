@@ -1,24 +1,24 @@
 {{- if .Values.enabled -}}
 {{- if .Values.proxy.enabled -}}
-{{- if .Values.global.ingress.enabled | default .Values.ingress.enabled -}}
+{{- if .Values.ingress.enabled -}}
 {{- $ingressPort := .Values.proxy.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "fhir.fullname" . }}-proxy-ingress
+  name: {{ include "fhir.fullname" . }}-proxy
   namespace: {{ .Release.Namespace }}
-  {{- with .Values.proxy.labels }}
   labels:
-    {{ toYaml . | nindent 4 }}
-  {{- end }}
+    {{- include "fhir.labels" . | nindent 4 }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.global.ingress.class | default .Values.ingress.class }}
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /fhir-server/api/v4/$2
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
 spec:
   rules:
-    - host: {{ .Release.Namespace }}-{{ include "fhir.fullname" . }}-proxy.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+    - host: {{ .Values.ingress.hostname }}
       http:
         paths:
-          - path: /
+          - path: /{{ .Chart.Name }}-proxy(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:

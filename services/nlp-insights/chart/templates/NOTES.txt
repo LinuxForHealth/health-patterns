@@ -14,8 +14,10 @@ The NLP Insights service has been successfully deployed.
 It can be accessed from within your cluster at the following location:
 
   {{ include "nlp-insights.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
- 
-{{- if .Values.global.ingress.enabled | default .Values.ingress.enabled }}
+
+{{- if .Values.ingress.enabled }}
+
 It can also be accessed via ingress at this location:
-https://{{ .Release.Namespace }}-{{ .Release.Name }}-nlp-insights.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+
+https://{{ .Values.ingress.hostname }}/{{ .Chart.Name }}
 {{- end }}

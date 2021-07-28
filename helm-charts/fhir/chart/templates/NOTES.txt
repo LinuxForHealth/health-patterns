@@ -61,9 +61,9 @@ This chart deployment included creating an unauthenticated FHIR proxy, you can a
 
 {{- end }}
 
-{{- if .Values.global.ingress.enabled | default .Values.ingress.enabled }}
+{{- if .Values.ingress.enabled }}
 
-FHIR Ingress was deployed to:  https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+FHIR Ingress was deployed to:  https://{{ .Values.ingress.hostname }}/{{ .Chart.Name }}
 {{- end }}
 
 To get the credentials to access this FHIR server run the following command:

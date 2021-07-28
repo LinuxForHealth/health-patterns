@@ -17,19 +17,7 @@ username: token
 password: integrati0n
 # bootstrap:
 
-global:
-  ingress:
-    enabled:
-    class:
-         # IBM: public-iks-k8s-nginx
-         # Azure: addon-http-application-routing
-         # AWS: nginx
-    subdomain:
-
 ingress:
   enabled: false
-  class:
-       # IBM: public-iks-k8s-nginx
-       # Azure: addon-http-application-routing
-       # AWS: nginx
-  subdomain:
+  class: public-iks-k8s-nginx
+  hostname:

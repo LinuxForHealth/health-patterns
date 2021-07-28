@@ -14,8 +14,10 @@ The Terminology Services Prep service has been successfully deployed.
 It can be accessed from within your cluster at the following location:
 
   {{ include "term-services-prep.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
- 
-{{- if .Values.global.ingress.enabled | default .Values.ingress.enabled }}
+
+{{- if .Values.ingress.enabled }}
+
 It can also be accessed via ingress at this location:
-https://{{ include "term-services-prep.fullname" .}}.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+
+https://{{ .Values.ingress.hostname }}/{{ .Chart.Name }}
 {{- end }}

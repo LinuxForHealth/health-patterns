@@ -30,33 +30,40 @@ tolerations: []
 
 affinity: {}
 
-global:
-  ingress:
-    enabled: false
-    class: 
-    subdomain:
-
 ingress:
-  enabled: false
-  class:
-  subdomain:
+  enabled: &ingressEnabled true
+  class: &ingressClass public-iks-k8s-nginx
+  hostname: &hostname 
 
 ascvd:
   enabled: true
 
 ascvd-from-fhir:
   enabled: true
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
 
 hl7-resource-generator:
   enabled: true
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
 
 nlp-insights:
   enabled: false
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # ------------------------------------------------------------------------------
 fhir:
+  name: fhir
   enabled: true
   service:
     type: ClusterIP
@@ -67,8 +74,17 @@ fhir:
       value: '600s'
     - name: BOOTSTRAP_DB
       value: 'true'
+  ingress:
+    enabled: *ingressEnabled
+    class: *ingressClass
+    hostname: *hostname
   proxy:
+    name: fhir-proxy
     enabled: false
+    ingress:
+      enabled: *ingressEnabled
+      class: *ingressClass
+      hostname: *hostname
 
 ## Configure these to allow bulk access from fhir server
 #  bulkExportConfig:
@@ -83,6 +99,7 @@ fhir-trigger:
   enabled: false
 
 fhir-deid:
+  name: fhir-deid
   enabled: true
   service:
     type: ClusterIP
@@ -93,8 +110,17 @@ fhir-deid:
       value: '600s'
     - name: BOOTSTRAP_DB
       value: 'true'
+  ingress:
+    enabled: *ingressEnabled
+    class: *ingressClass
+    hostname: *hostname
   proxy:
+    name: fhir-deid-proxy
     enabled: false
+    ingress:
+      enabled: *ingressEnabled
+      class: *ingressClass
+      hostname: *hostname
 
 ## Configure these to allow bulk access from fhir-deid server
 #  bulkExportConfig:
@@ -115,6 +141,10 @@ nifi-registry:
   enabled: true
   # The fullname is overridden to some static name in order to automatically register the NiFi Registry with the NiFi deployment
   fullnameOverride: alvearie-nifi-registry
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
@@ -132,6 +162,10 @@ zookeeper:
 nifi:
   fullnameOverride: alvearie-nifi
   enabled: true
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
   service:
     type: ClusterIP
     port: 8080
@@ -171,7 +205,6 @@ nifi:
       emptyDir: {}
   properties:
     customLibPath: ./custom-nars
-
 
 # ------------------------------------------------------------------------------
 # Kafka Configuration
@@ -222,15 +255,20 @@ deid:
   image:
     tag: 0.0.1
   ingress:
-    enabled: false
     # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
 
 # ------------------------------------------------------------------------------
 # De-Identification Prep Service
 # ------------------------------------------------------------------------------
 deid-prep:
+  enabled: true
   ingress:
     enabled: false
+    class: *ingressClass
+    hostname: *hostname
   configName: default
   pushToFhir: true
 
@@ -238,19 +276,35 @@ deid-prep:
 # Terminology Services Prep Service
 # ------------------------------------------------------------------------------
 term-services-prep:
+  enabled: true
   ingress:
     enabled: false
+    class: *ingressClass
+    hostname: *hostname
+
+# ------------------------------------------------------------------------------
+# Expose Kafka Service
+# ------------------------------------------------------------------------------
+expose-kafka:
+  enabled: true
+  ingress:
+    enabled: *ingressEnabled
+    class: *ingressClass
+    hostname: *hostname
+
 
 # ------------------------------------------------------------------------------
 # Cohort Service
 # ------------------------------------------------------------------------------
 cohort-service:
-  enabled: false
+  enabled: true
   service:
     type: ClusterIP
   ingress:
-    enabled: false
     # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration
