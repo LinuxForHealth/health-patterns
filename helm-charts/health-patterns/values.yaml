@@ -33,16 +33,7 @@ affinity: {}
 ingress:
   enabled: &ingressEnabled true
   class: &ingressClass public-iks-k8s-nginx
-       # IBM: public-iks-k8s-nginx
-       # Azure: addon-http-application-routing
-       # AWS: nginx
   hostname: &hostname atc.wh-health-patterns.dev.watson-health.ibm.com
-  subdomain: *hostname
-
-global:
-  ingress:
-    class: public-iks-k8s-nginx
-    subdomain: wh-health-patterns.dev.watson-health.ibm.com
 
 ascvd:
   enabled: true
@@ -50,21 +41,21 @@ ascvd:
 ascvd-from-fhir:
   enabled: true
   ingress:
-    enabled: *ingressEnabled
+    enabled: false
     class: *ingressClass
     hostname: *hostname
 
 hl7-resource-generator:
   enabled: true
   ingress:
-    enabled: *ingressEnabled
+    enabled: false
     class: *ingressClass
     hostname: *hostname
 
 nlp-insights:
   enabled: false
   ingress:
-    enabled: *ingressEnabled
+    enabled: false
     class: *ingressClass
     hostname: *hostname
 
@@ -151,7 +142,7 @@ nifi-registry:
   # The fullname is overridden to some static name in order to automatically register the NiFi Registry with the NiFi deployment
   fullnameOverride: alvearie-nifi-registry
   ingress:
-    enabled: true
+    enabled: false
     class: *ingressClass
     hostname: *hostname
 
@@ -275,6 +266,7 @@ deid:
 # De-Identification Prep Service
 # ------------------------------------------------------------------------------
 deid-prep:
+  enabled: true
   ingress:
     enabled: false
     class: *ingressClass
@@ -286,8 +278,9 @@ deid-prep:
 # Terminology Services Prep Service
 # ------------------------------------------------------------------------------
 term-services-prep:
+  enabled: true
   ingress:
-    enabled: true
+    enabled: false
     class: *ingressClass
     hostname: *hostname
 
@@ -295,6 +288,7 @@ term-services-prep:
 # Expose Kafka Service
 # ------------------------------------------------------------------------------
 expose-kafka:
+  enabled: true
   ingress:
     enabled: *ingressEnabled
     class: *ingressClass
@@ -310,7 +304,7 @@ cohort-service:
     type: ClusterIP
   ingress:
     # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
-    enabled: *ingressEnabled
+    enabled: false
     class: *ingressClass
     hostname: *hostname
 

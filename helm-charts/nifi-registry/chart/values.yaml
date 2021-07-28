@@ -57,19 +57,7 @@ tolerations: []
 
 affinity: {}
 
-global:
-  ingress:
-    enabled:
-    class:
-         # IBM: public-iks-k8s-nginx
-         # Azure: addon-http-application-routing
-         # AWS: nginx
-    subdomain:
-
 ingress:
   enabled: false
-  class:
-       # IBM: public-iks-k8s-nginx
-       # Azure: addon-http-application-routing
-       # AWS: nginx
+  class: public-iks-k8s-nginx
   hostname:

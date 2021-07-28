@@ -38,6 +38,15 @@ The following services have been deployed:
 {{- if index .Values "cohort-service" "enabled" }}
 - Cohort Service{{- if index .Values "cohort-service" "ingress" "enabled" }} -------------- https://{{ index .Values "cohort-service" "ingress" "hostname"}}/cohort-service{{- end }}
 {{- end }}
+{{- if index .Values "deid-prep" "enabled" }}
+- Deid Prep{{- if index .Values "deid-prep" "ingress" "enabled" }} -------------- https://{{ index .Values "deid-prep" "ingress" "hostname"}}/deid-prep{{- end }}
+{{- end }}
+{{- if index .Values "term-services-prep" "enabled" }}
+- Terminology Services Prep{{- if index .Values "term-services-prep" "ingress" "enabled" }} --- https://{{ index .Values "term-services-prep" "ingress" "hostname"}}/term-services-prep{{- end }}
+{{- end }}
+{{- if index .Values "nlp-insights" "enabled" }}
+- NLP Insights{{- if index .Values "nlp-insights" "ingress" "enabled" }} ---------------- https://{{ index .Values "nlp-insights" "ingress" "hostname"}}/nlp-insights{{- end }}
+{{- end }}
 {{- if .Values.kafka.enabled }}
 - Expose Kafka Service{{- if index .Values "expose-kafka" "ingress" "enabled" }} -------- https://{{ index .Values "expose-kafka" "ingress" "hostname"}}/expose-kafka{{- end }}
 - Kafka
