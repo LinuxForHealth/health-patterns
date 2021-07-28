@@ -205,8 +205,6 @@ nifi:
       emptyDir: {}
   properties:
     customLibPath: ./custom-nars
-    safetyValve:
-      nifi.web.proxy.context.path: /demo, /demo/nifi, /nifi
 
 # ------------------------------------------------------------------------------
 # Kafka Configuration
