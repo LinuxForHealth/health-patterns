@@ -120,7 +120,7 @@ The entry point into the clinical ingestion flow is a Kakfa topic called `ingest
 For example, the curl command below will place the contents of the file `testpatient.json` (a patient FHIR bundle) on the ingest.clinical.in kafka topic.  At that point, the ingestion flow is listening for messages and will immediately take the new bundle and begin to process it.  You should see one bundle appear in the “success” state at the end of the flow.
 
 ```
-curl -X POST https://<<external-hostname>>/expost-kafka?topic=ingest.clinical.in  \
+curl -X POST https://<<external-hostname>>/expose-kafka?topic=ingest.clinical.in  \
    --header "Content-Type: text/plain" \
    --data-binary  @<<pathtofile/testpatient.json
 ```
