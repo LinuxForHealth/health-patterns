@@ -1,3 +1,4 @@
 # Clinical Ingestion
 
-See [Clinical Ingestion](../helm-charts/health-patterns/README.md#clinical-ingestion)
+- [**Clinical Data _Ingestion_**](..ingest/README.md)
+- [**Clinical Data _Enrichment_**](..enrich/README.md)
