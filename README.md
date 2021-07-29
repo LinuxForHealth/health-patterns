@@ -2,17 +2,16 @@
 health-patterns is a collection of documentation and cloud agnostic reference implementations of the overall [Alvearie architecture](https://alvearie.io/architecture). They highlight how to combine various technologies into meaningful patterns for healthcare.
 
 To this point, there has been focus on 5 patterns for healthcare data:
-1) [**Clinical Data _Ingestion_**](clinical-ingestion)
-2) [**Clinical Data _Enrichment_**](clinical-ingestion)  is currently combined with clinical data ingestion but will be separately availalbe in the near future
-3) [**Quality Measure & _Cohorting_**](cohort-service)
-4) [**Clinical Data _Access_**](data-access)
-5) **Clinical Data _Analytics_**  Coming soon
+  - [**Clinical Data _Ingestion_**](ingest/README.md)
+  - [**Clinical Data _Enrichment_**](enrich/README.md)  
+  - [**Quality Measure & _Cohorting_**](cohort/README.md)
+  - [**Clinical Data _Access_**](data-access)
+  - **Clinical Data _Analytics_**  Coming soon
 
 
-### See a summary of all of the [patterns here](https://alvearie.io/health-patterns/)
+#### See a summary of all of the patterns [here](https://alvearie.io/health-patterns/)
 
 Components currently used by health-patterns clinical data ingestion reference implementation
-
 
 - [Apache Kafka](https://kafka.apache.org/) is a distributed streaming platform for publishing and subscribing records as well as storing and processing streams of records.  
 
