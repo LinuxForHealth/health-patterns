@@ -35,20 +35,20 @@ class QuickUMLSService:
 
         try:
             if type(text) is bytes:
-                print("Calling QUICKUMLS" + text.decode('utf-8'))
+                # print("Calling QUICKUMLS" + text.decode('utf-8'))
                 request_body = {"text": text.decode('utf-8')}
             else:
-                print("Calling QUICKUMLS" + text)
+                # print("Calling QUICKUMLS" + text)
                 request_body = {"text": text}
             resp = requests.post(self.quickUMLS_url, json=request_body)
-            print("RAW QUICKUMLS Response: ", resp.text, "<end>")
+            # print("RAW QUICKUMLS Response: ", resp.text, "<end>")
             concepts = json.loads(resp.text)
-            print(concepts)
+            # print(concepts)
             conceptsList = []
             if concepts is not None:
                 for concept in concepts:
                     conceptsList.append(self.concept_to_dict(concept))
-            print(conceptsList)
+            print({"concepts": conceptsList})
             return {"concepts": conceptsList}
         except requests.exceptions:
             return None

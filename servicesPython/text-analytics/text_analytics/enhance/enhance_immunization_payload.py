@@ -29,7 +29,7 @@ def enhance_immunization_payload_to_fhir(nlp, immunization_json):
             text = adjust_vaccine_text(immunization_fhir.vaccineCode.text)
             #logger.info(logging_codes.WHPA_CDP_TEXT_ANALYTICS_CALLING_ACD_INFO, text)
             acd_resp = nlp.process(text)
-            updated_immunization = update_immunization_with_insights(immunization_fhir, acd_resp)
+            updated_immunization = update_immunization_with_insights(nlp, immunization_fhir, acd_resp)
     except acd.ACDException as ex:
         print("err")
         #logger.error(logging_codes.WHPA_CDP_TEXT_ANALYTICS_ACD_ERROR, ex.code, ex.message, ex.correlation_id)

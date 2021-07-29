@@ -28,8 +28,8 @@ def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
         text = fhir_object_utils.get_diagnostic_report_data(diagnostic_report_fhir)
         #acd_resp = call_service_then_enhance(nlp, text)
         acd_resp = nlp.process(text)
-        create_conditions_fhir = create_conditions_from_insights(diagnostic_report_fhir, acd_resp)
-        create_med_statements_fhir = create_med_statements_from_insights(diagnostic_report_fhir, acd_resp)
+        create_conditions_fhir = create_conditions_from_insights(nlp, diagnostic_report_fhir, acd_resp)
+        create_med_statements_fhir = create_med_statements_from_insights(nlp, diagnostic_report_fhir, acd_resp)
     except acd.ACDException as ex:
         logging.error('acd exception', ex)
         #logger.error(logging_codes.WHPA_CDP_TEXT_ANALYTICS_ACD_ERROR, ex.code, ex.message, ex.correlation_id)
@@ -64,4 +64,4 @@ def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
     if len(bundle_entries) > 0:
         bundle = fhir_object_utils.create_transaction_bundle(bundle_entries)
 
-    return bundle
+    return bundle.json()

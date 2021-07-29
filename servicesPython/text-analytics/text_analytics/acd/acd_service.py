@@ -50,8 +50,8 @@ class ACDService:
             # print(text)
             resp = service.analyze_with_flow(self.acd_flow, text)
             # print("RAW ACD Response: ", resp, "<end>")
-            print(type(resp))
             out = resp.to_dict()
+            print(out)
             return out
 
         except acd.ACDException:

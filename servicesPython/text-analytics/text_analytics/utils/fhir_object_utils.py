@@ -143,14 +143,19 @@ def _add_resource_meta(meta):
     meta.extension = [result_extension]
 
 
-def add_resource_meta_unstructured(diagnostic_report):
+def add_resource_meta_unstructured(nlp, diagnostic_report):
     meta = Meta.construct()
     _add_resource_meta(meta)
     result_extension = meta.extension[0]
 
     process_type_extension = Extension.construct()
     process_type_extension.url = insight_constants.PROCESS_TYPE_URL
-    process_type_extension.valueString = insight_constants.PROCESS_TYPE_UNSTRUCTURED
+    nlp_name = type(nlp).__name__
+    if nlp_name == 'ACDService': 
+        process_type_extension.valueString = insight_constants.ACD_PROCESS_TYPE_UNSTRUCTURED
+    elif nlp_name == 'QuickUMLSService':
+        process_type_extension.valueString = insight_constants.QUICKUMLS_PROCESS_TYPE_UNSTRUCTURED
+    # process_type_extension.valueString = insight_constants.PROCESS_TYPE_UNSTRUCTURED
     result_extension.extension.append(process_type_extension)
 
     based_on_extension = Extension.construct()
@@ -166,7 +171,7 @@ def add_resource_meta_unstructured(diagnostic_report):
 # Creates resource "meta:" section if it does not exist.
 # Adds the extensions in the meta for the resource, if an extension does not already exist.
 # This method currently does NOT check if the extension matches our insights.
-def add_resource_meta_structured(resource):
+def add_resource_meta_structured(nlp, resource):
     # Create meta if it doesn't exist
     if resource.meta is None:
         new_meta = Meta.construct()
@@ -184,7 +189,12 @@ def add_resource_meta_structured(resource):
     # Add structured process meta extension
     process_type_extension = Extension.construct()
     process_type_extension.url = insight_constants.PROCESS_TYPE_URL
-    process_type_extension.valueString = insight_constants.PROCESS_TYPE_STRUCTURED
+    nlp_name = type(nlp).__name__
+    if nlp_name == 'ACDService': 
+        process_type_extension.valueString = insight_constants.ACD_PROCESS_TYPE_STRUCTURED
+    elif nlp_name == 'QuickUMLSService':
+        process_type_extension.valueString = insight_constants.QUICKUMLS_PROCESS_TYPE_STRUCTURED
+    # process_type_extension.valueString = insight_constants.PROCESS_TYPE_STRUCTURED
     result_extension.extension.append(process_type_extension)
 
 
@@ -303,7 +313,8 @@ def add_codings(concept, codeable_concept, insight_id, insight_system):
                               insight_system)
 
 
-def add_codings_drug(acd_drug, codeable_concept, insight_id, insight_system):
+def add_codings_drug(nlp, acd_drug, codeable_concept, insight_id, insight_system):
+    nlp_name = type(nlp).__name__
     if acd_drug.get("cui") is not None:
         # For CUIs, we do not handle comma-delimited values (have not seen that we ever have more than one value)
         # We use the preferred name from UMLS for the display text
@@ -316,7 +327,10 @@ def add_codings_drug(acd_drug, codeable_concept, insight_id, insight_system):
             # the Concept exists, but no derived extension
             coding = create_coding_system_entry(insight_constants.UMLS_URL, acd_drug.get("cui"), insight_id,
                                                 insight_system)
-            coding.display = acd_drug.get("drugSurfaceForm")
+            if nlp_name == 'ACDService':
+                coding.display = acd_drug.get("drugSurfaceForm")
+            if nlp_name == 'QuickUMLSService':
+                coding.display = acd_drug.get("preferredName")
             codeable_concept.coding.append(coding)
     if acd_drug.get("rxNormID") is not None:
         create_coding_entries(codeable_concept, insight_constants.RXNORM_URL, acd_drug.get("rxNormID"), insight_id,

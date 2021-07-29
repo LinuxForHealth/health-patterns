@@ -21,7 +21,7 @@ acd_results --> list of list(s) - where the sub list is the fhir field object to
     example: [[AllergyIntolerance.code, acd_resp1],[AllergyIntolerance.reaction[0].manifestation[0], acd_resp2],
         [AllergyIntolerance.reaction[0].manifestation[1], acd_resp3]]
 """
-def update_allergy_with_insights(allergy, acd_results):
+def update_allergy_with_insights(nlp, allergy, acd_results):
     insight_num = 0
     # adding codings to each field run through ACD
     for codeable_concept, acd_response in acd_results:
@@ -51,7 +51,7 @@ def update_allergy_with_insights(allergy, acd_results):
                     insight.extension.append(insight_detail)
 
                     # Add meta if any insights were added
-                    fhir_object_utils.add_resource_meta_structured(allergy)
+                    fhir_object_utils.add_resource_meta_structured(nlp, allergy)
                     if allergy.meta.extension is None:
                         ext = Extension.construct()
                         ext.url = insight_constants.INSIGHT_RESULT_URL

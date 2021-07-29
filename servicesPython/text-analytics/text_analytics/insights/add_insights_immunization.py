@@ -22,14 +22,14 @@ Parameters:
   acd_results: json ACD response]
 Returns the updated resource if any insights were added to it.  Returns None if no insights found (resource not updated).
 """
-def update_immunization_with_insights(immunization, acd_results):
+def update_immunization_with_insights(nlp, immunization, acd_results):
     insight_num = 0
     # build insight set from ACD output
     # initially using ICMedication concepts; this could change when we do analysis / tune ACD
     concepts = acd_results["concepts"]
     if concepts is not None:
         for concept in concepts:
-            if concept["type"] == "ICMedication":
+            if concept["type"] == "ICMedication" or concept["type"] == "umls.ImmunologicFactor":
                 # TODO check if the coding already exists in the FHIR reqource
 
                 # Add a new insight
@@ -53,7 +53,7 @@ def update_immunization_with_insights(immunization, acd_results):
                 insight.extension.append(insight_detail)
 
                 # Add meta if any insights were added
-                fhir_object_utils.add_resource_meta_structured(immunization)
+                fhir_object_utils.add_resource_meta_structured(nlp, immunization)
                 if immunization.meta.extension is None:
                     ext = Extension.construct()
                     ext.url = insight_constants.INSIGHT_RESULT_URL

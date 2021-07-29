@@ -54,7 +54,7 @@ def enhance_allergy_intolerance_payload_to_fhir(nlp, input_json):
                     acd_results.append([mf, acd_resp])
 
         # update fhir resource with insights
-        result_allergy = update_allergy_with_insights(allergy_intolerance_fhir, acd_results)
+        result_allergy = update_allergy_with_insights(nlp, allergy_intolerance_fhir, acd_results)
 
     except acd.ACDException as ex:
         print("err")
