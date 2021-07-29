@@ -248,14 +248,6 @@ kafka:
       enabled: false
 
 # ------------------------------------------------------------------------------
-# expose-kafka Configuration
-# ------------------------------------------------------------------------------
-expose-kafka:
-  inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in"
-  inittopicnumpartitions: 1
-  inittopicreplication: 1
-
-# ------------------------------------------------------------------------------
 # De-Identification Service
 # ------------------------------------------------------------------------------
 deid:
@@ -299,7 +291,9 @@ expose-kafka:
     enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
-
+  inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in"
+  inittopicnumpartitions: 1
+  inittopicreplication: 1
 
 # ------------------------------------------------------------------------------
 # Cohort Service
