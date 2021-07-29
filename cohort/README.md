@@ -59,14 +59,30 @@ kubectl config set-context --current --namespace=alvearie
 
 We recommend exposing the services in this chart via ingress.  This provides the most robust and secure approach.  If you choose to expose services via port-forwarding, load-balancer, or other options, please be careful to ensure proper security.
 
-In order to deploy via ingress, you will need to identify your ingress subdomain as defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.  Instructions can be found [here](README_INGRESS_SUBDOMAIN.md) on how to identify your ingress subdomain.
-
-Ingress also requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider.  For example,
+Ingress requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider.  For example, some possible choices might be:
   - IBM: public-iks-k8s-nginx
   - Azure: addon-http-application-routing
   - AWS: nginx
 
-Once you know these values, use both of them to update and save the ```ingress_values.yaml``` file.
+You will also need to provide a hostname for your ingress.  What this is and how it gets created will be unique to your cloud infrastructure.  
+
+Once you know these values, use both of them to update and save the ```helm-charts/health-patterns/values.yaml``` file in the `ingress` section as shown below.
+
+```
+ingress:
+  enabled: &ingressEnabled true
+  class: &ingressClass <<classname>
+  hostname: &hostname <<external-hostname>>
+```
+
+For example, to deploy in the IBM Cloud environment, we would add
+
+```
+ingress:
+  enabled: &ingressEnabled true
+  class: &ingressClass public-iks-k8s-nginx
+  hostname: &hostname <<your-ibm-hostname>>
+```
 
 #### Enable the cohort service
 
@@ -80,7 +96,7 @@ cohort-service:
 
 The following Helm command will deploy the ingestion pattern including the initiation of the cohort service.
 ```
-helm install ingestion . -f ingress_values.yaml  -f clinical_ingestion.yaml
+helm install ingestion .  -f clinical_ingestion.yaml
 ```
 After running the command above, you will see notes that give you information about the deployment, in particular, where the important services (e.g. cohort-service) have been deployed.
 
@@ -124,13 +140,13 @@ define "Numerator":
 To upload this cql, simply POST it to the cohort service `libraries` endpoint.
 
 ```
-https://<<external-cohort-service-url>>/cohort-service/libraries
+https://<<external-hostname>>/cohort-service/libraries
 ```
 
 After adding a new library, it is possible to list the current libraries by doing a GET request to the same endpoint.  In order to run the cql against the current FHIR server, note the name and version number for the cql.  A GET request to the endpoint formed by `libaryname`-`version` using the `patientIds` function will return all the patient ids that match the criteria from the cql.  For example,
 
 ```
-https://<<external-cohort-service-url>>/cohort-service/libraries/FemalePatientsOver25-1.0.1/patientIds
+https://<<external-hostname>>/cohort-service/libraries/FemalePatientsOver25-1.0.1/patientIds
 ```
 
 
@@ -153,7 +169,6 @@ When deploying this chart, there are many configuration parameters specified in 
 ```
 helm install <<RELEASE_NAME>> . \
     -f value_overrides.yaml \
-    -f ingress_values.yaml \
     -f clinical_ingestion.yaml
 ```
 

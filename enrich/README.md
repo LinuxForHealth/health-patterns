@@ -61,19 +61,36 @@ kubectl config set-context --current --namespace=alvearie
 
 We recommend exposing the services in this chart via ingress.  This provides the most robust and secure approach.  If you choose to expose services via port-forwarding, load-balancer, or other options, please be careful to ensure proper security.
 
-In order to deploy via ingress, you will need to identify your ingress subdomain as defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.  Instructions can be found [here](README_INGRESS_SUBDOMAIN.md) on how to identify your ingress subdomain.
-
-Ingress also requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider.  For example,
+Ingress requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider.  For example, some possible choices might be:
   - IBM: public-iks-k8s-nginx
   - Azure: addon-http-application-routing
   - AWS: nginx
 
-Once you know these values, use both of them to update and save the ```ingress_values.yaml``` file.
+You will also need to provide a hostname for your ingress.  What this is and how it gets created will be unique to your cloud infrastructure.  
+
+Once you know these values, use both of them to update and save the ```helm-charts/health-patterns/values.yaml``` file in the `ingress` section as shown below.
+
+```
+ingress:
+  enabled: &ingressEnabled true
+  class: &ingressClass <<classname>
+  hostname: &hostname <<external-hostname>>
+```
+
+For example, to deploy in the IBM Cloud environment, we would add
+
+```
+ingress:
+  enabled: &ingressEnabled true
+  class: &ingressClass public-iks-k8s-nginx
+  hostname: &hostname <<your-ibm-hostname>>
+```
+
 
 #### Deployment
 The following Helm command will deploy the enrichment pattern.  The enrichment pipeline will be ready to accept FHIR data and run it through a series of steps producing a possibly updated FHIR bundle with resources that have been added or modified by the enrichment process.
 ```
-helm install enrich .  -f ingress_values.yaml  -f clinical_enrichment.yaml
+helm install enrich .  -f clinical_enrichment.yaml
 ```
 After running the command above, you will see notes that give you information about the deployment, in particular, where the important services (e.g. Nifi, expose-kafka) have been deployed.
 
@@ -92,7 +109,7 @@ helm delete enrich
 By default, there are two important external services exposed by the Alvearie Enrichment Pattern: NiFi and Kafka via expose-kafka. Again, as mentioned above, the urls for those services are provided in the post-deployment information.  Let’s go through them one by one and discuss their corresponding functionality.
 
 #### [NiFi](https://github.com/apache/nifi)
-Let’s start with the alvearie-nifi service: `https://<<nifi-external-url>>/nifi`.
+Let’s start with the alvearie-nifi service: `https://<<external-hostname>>/nifi`.
 The NiFi canvas will show a pre-configured main process group called **Enrich FHIR Data** which is the entry point to the Enrichment Pattern’s NiFi components. From here you can add, remove, or modify ingestion processing elements, add new inputs or outputs, change the URLs to some of the other services, update parameter contexts, etc.
 
 #### [Kafka](https://kafka.apache.org)
@@ -103,7 +120,7 @@ The entry point into the enrichment flow is a Kakfa topic called `patients.updat
 The example curl command below will place the contents of the file `testpatient.json` (a patient FHIR bundle) on the patients.updated.out kafka topic.  At that point, the enrichment flow is listening for messages and will immediately take the new bundle and begin to process it.  
 
 ```
-curl -X POST https://<<expose-kafka-external-url>>?topic=patients.updated.out  \
+curl -X POST https://<<external-hostname>>/expose-kafka?topic=patients.updated.out  \
    --header "Content-Type: text/plain" \
    --header "ResolveTerminology: true" \
    --header "DeidentifyData: false" \
@@ -122,7 +139,7 @@ When the Enrichment process is complete, the updated FHIR result will be placed 
 In order to see those results, you can use the expose-kafka service and request to see all the messages on the patient.enriched.out topic.
 
 ```
-curl -X GET https://<<external-expose-kafka-url>>?topic=patient.enriched.out
+curl -X GET https://<<external-hostname>>/expose-kafka?topic=patient.enriched.out
 ```
 
 
@@ -168,7 +185,6 @@ When deploying this chart, there are many configuration parameters specified in 
 ```
 helm install <<RELEASE_NAME>> . \
     -f value_overrides.yaml \
-    -f ingress_values.yaml \
     -f clinical_enrichment.yaml
 ```
 

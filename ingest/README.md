@@ -61,19 +61,36 @@ kubectl config set-context --current --namespace=alvearie
 
 We recommend exposing the services in this chart via ingress.  This provides the most robust and secure approach.  If you choose to expose services via port-forwarding, load-balancer, or other options, please be careful to ensure proper security.
 
-In order to deploy via ingress, you will need to identify your ingress subdomain as defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.  Instructions can be found [here](README_INGRESS_SUBDOMAIN.md) on how to identify your ingress subdomain.
-
-Ingress also requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider.  For example,
+Ingress requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider.  For example, some possible choices might be:
   - IBM: public-iks-k8s-nginx
   - Azure: addon-http-application-routing
   - AWS: nginx
 
-Once you know these values, use both of them to update and save the ```ingress_values.yaml``` file.
+You will also need to provide a hostname for your ingress.  What this is and how it gets created will be unique to your cloud infrastructure.  
+
+Once you know these values, use both of them to update and save the ```helm-charts/health-patterns/values.yaml``` file in the `ingress` section as shown below.
+
+```
+ingress:
+  enabled: &ingressEnabled true
+  class: &ingressClass <<classname>
+  hostname: &hostname <<external-hostname>>
+```
+
+For example, to deploy in the IBM Cloud environment, we would add
+
+```
+ingress:
+  enabled: &ingressEnabled true
+  class: &ingressClass public-iks-k8s-nginx
+  hostname: &hostname <<your-ibm-hostname>>
+```
+
 
 #### Deployment
 The following Helm command will deploy the ingestion pattern.  The entire pipeline will be ready to normalize, validate, enrich, and finally persist FHIR data to a FHIR server.
 ```
-helm install ingestion .  -f ingress_values.yaml -f clinical_ingestion.yaml
+helm install ingestion .  -f clinical_ingestion.yaml
 ```
 After running the command above, you will see notes that give you information about the deployment, in particular, where the important services (e.g. FHIR, Nifi, expose-kafka) have been deployed.
 
@@ -92,7 +109,7 @@ helm delete ingestion
 By default, there are three important external services exposed by the Alvearie Ingestion Pattern: NiFi, Kafka via expose-kafka, and FHIR. Again, as mentioned above, the urls for those services are provided in the post-deployment information.  Let’s go through them one by one and discuss their corresponding functionality.
 
 #### [NiFi](https://github.com/apache/nifi)
-Let’s start with the alvearie-nifi service: `https://<<nifi-external-url>>/nifi`.
+Let’s start with the alvearie-nifi service: `https://<<external-hostname>>/nifi`.
 The NiFi canvas will show a pre-configured main process group called **Clinical Ingestion** which is the entry point to the Ingestion Pattern’s NiFi components. From here you can add, remove, or modify ingestion processing elements, add new inputs or outputs, change the URLs to some of the other services, update parameter contexts, etc. You will also see a second process group called **Enrich FHIR Data** that provides data enrichment functionality to the pipeline.  This is currently configured to be included automatically by the Clinical Ingestion installation but could also be deployed stand-alone by providing the appropriate helm variation [[see Enrichment]](../enrich/README.md).
 
 #### [Kafka](https://kafka.apache.org)
@@ -103,7 +120,7 @@ The entry point into the clinical ingestion flow is a Kakfa topic called `ingest
 For example, the curl command below will place the contents of the file `testpatient.json` (a patient FHIR bundle) on the ingest.clinical.in kafka topic.  At that point, the ingestion flow is listening for messages and will immediately take the new bundle and begin to process it.  You should see one bundle appear in the “success” state at the end of the flow.
 
 ```
-curl -X POST https://<<expose-kafka-external-url>>?topic=ingest.clinical.in  \
+curl -X POST https://<<external-hostname>>/expost-kafka?topic=ingest.clinical.in  \
    --header "Content-Type: text/plain" \
    --data-binary  @<<pathtofile/testpatient.json
 ```
@@ -112,7 +129,7 @@ curl -X POST https://<<expose-kafka-external-url>>?topic=ingest.clinical.in  \
 After posting the patient through Kafka, if no errors have occurred, the patient will be persisted in the FHIR server. From the list of services provided after the deployment, grab the deployment base url for the FHIR server. You can then query the list of FHIR resources using your browser or an HTTP client. For instance, for querying patients you would do the following (using default credentials: _fhiruser_/_integrati0n_):
 
 ```
-https://<<fhir-external-url>>/fhir-server/api/v4/Patient?_format=json
+https://<<external-hostname>>/fhir/Patient?_format=json
 ```
 
 
@@ -158,7 +175,6 @@ When deploying this chart, there are many configuration parameters specified in 
 ```
 helm install <<RELEASE_NAME>> . \
     -f value_overrides.yaml \
-    -f ingress_values.yaml \
     -f clinical_ingestion.yaml
 ```
 
