@@ -4,7 +4,7 @@
     "steps": [
         {
             "name": "all_patients",
-            "url": "${pri_fhir_server}/fhir-server/api/v4/Patient",
+            "url": "${pri_fhir_server}/Patient",
             "method": "GET",
             "request": {
             },
@@ -31,7 +31,7 @@
         },
         {
             "name": "all_patients_again",
-            "url": "${pri_fhir_server}/fhir-server/api/v4/Patient",
+            "url": "${pri_fhir_server}/Patient",
             "method": "GET",
             "request": {
             },

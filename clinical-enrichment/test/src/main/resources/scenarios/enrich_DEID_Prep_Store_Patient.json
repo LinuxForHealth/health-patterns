@@ -107,7 +107,7 @@
         },
          {
             "name": "verifyStoredDeIDPatient",
-            "url": "${deid_fhir_server}/fhir-server/api/v4/Patient",
+            "url": "${deid_fhir_server}/Patient",
             "method": "GET",
             "request": {
             },
@@ -202,7 +202,7 @@
         },
         {
             "name": "deleteStoredPatientOnDeIDFHIR",
-            "url": "${deid_fhir_server}/fhir-server/api/v4/Patient/${$.verifyStoredDeIDPatient.response.body.entry[0].resource.id}",
+            "url": "${deid_fhir_server}/Patient/${$.verifyStoredDeIDPatient.response.body.entry[0].resource.id}",
             "method": "DELETE",
             "request": {
             },
