@@ -68,7 +68,7 @@ Ingress requires a specific ingress class to be used.  Different cloud providers
 
 You will also need to provide a hostname for your ingress.  What this is and how it gets created will be unique to your cloud infrastructure.  
 
-Once you know these values, use both of them to update and save the ```helm-charts/health-patterns/values.yaml``` file in the `ingress` section as shown below.
+Once you know these values, use both of them to update the `ingress` section of the file ```helm-charts/health-patterns/values.yaml```  as shown below.
 
 ```
 ingress:
