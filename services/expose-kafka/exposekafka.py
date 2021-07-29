@@ -15,6 +15,55 @@ kafkauser = os.getenv("KAFKAUSER")
 kafkapw = os.getenv("KAFKAPW")
 kafkabootstrap = os.getenv("KAFKABOOTSTRAP")
 
+# create the kafka topics before use
+initial_topics = os.getenv("INITTOPICS", "")  #empty list if missing
+numpartitions = os.getenv("INITTOPICNUMPARTITIONS", "1")
+if len(numpartitions) == 0:
+    numpartitions = 1
+else:
+    numpartitions = int(numpartitions)
+
+replication = os.getenv("INITTOPICREPLICATION", "1")
+if len(replication) == 0:
+    replication = 1
+else:
+    replication = int(replication)
+
+init_topics = initial_topics.replace(",", " ")
+topiclist = init_topics.split()
+
+while True:
+    try:
+        KafkaConsumer(bootstrap_servers=kafkabootstrap,
+                                 sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
+        break
+    except:
+        pass # Ignore error-just retry
+
+# kafka is now up and running
+
+initconsumer = KafkaConsumer(bootstrap_servers=kafkabootstrap,
+                         sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
+
+existing_topics = initconsumer.topics()
+
+init_admin_client = KafkaAdminClient(
+    bootstrap_servers=kafkabootstrap,
+    client_id="initbootstrapclient"
+)
+
+new_topic_list = []
+for new_topic in topiclist:
+    if new_topic not in existing_topics:
+        new_topic_list.append(NewTopic(name=new_topic, num_partitions=numpartitions, replication_factor=replication))
+init_admin_client.create_topics(new_topics=new_topic_list, validate_only=False)
+
+existing_topics = initconsumer.topics() #reset the existing_topics since new ones may have been added
+
+for atopic in existing_topics:
+    initconsumer.partitions_for_topic(atopic) # populate cache for each topic
+
+
 @app.route("/healthcheck", methods=['GET'])
 def healthcheck():
 
