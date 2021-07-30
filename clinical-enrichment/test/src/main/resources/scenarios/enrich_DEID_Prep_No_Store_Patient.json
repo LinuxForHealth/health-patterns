@@ -107,7 +107,7 @@
         },
          {
             "name": "verifyDeIDPatientNotStored",
-            "url": "${deid_fhir_server}/fhir-server/api/v4/Patient",
+            "url": "${deid_fhir_server}/Patient",
             "method": "GET",
             "request": {
             },

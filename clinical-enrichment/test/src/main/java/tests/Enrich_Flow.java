@@ -18,6 +18,7 @@ import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import categories.BasicEnrichment;
+import categories.EnrichmentConfig;
 
 
 @TargetEnv("enrich-flow.properties")
@@ -66,4 +67,11 @@ public class Enrich_Flow {
 	 @Scenario("scenarios/enrich_ASCVD_Update.json")
 	    public void enrich_ASCVD_Update() throws Exception {
 	    }
+	 
+	 @Test
+	 @Category({EnrichmentConfig.class})
+	 @Scenario("scenarios/enrich_DEID_Prep_Config_CRUD.json")
+	    public void enrich_DEID_Config_CRUD() throws Exception {
+	    }
+
 }
