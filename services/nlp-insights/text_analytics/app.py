@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request, Response, jsonify, make_response
 from text_analytics.acd.acd_service import ACDService
 from text_analytics.quickUMLS.quickUMLS_service import QuickUMLSService
 from text_analytics.enhance import *
@@ -16,10 +16,26 @@ nlp_service = None
 nlp_services_dict = {}
 
 
+def setupConfigDir():
+    pvPath = os.path.join(os.getcwd(), '..', 'mnt', 'data')
+    localPath = os.path.join('text_analytics', 'configs')
+    if os.access(pvPath, os.W_OK) == True:
+        try:
+            defaultJsonFile = open('text_analytics/configs/default', 'r')
+            defaultJson = defaultJsonFile.read()
+            defaultPVFile = open(pvPath + '/default', 'w')
+            defaultPVFile.write(defaultJson)
+        except:
+            return localPath
+        return pvPath
+    else:
+        return localPath
+
+
 
 def setupService(configName):
     global nlp_service
-    jsonFile = open('text_analytics/configs/' + configName, "r")
+    jsonFile = open(configDir + f'/{configName}', "r")
     jsonString = jsonFile.read()
     configJson = json.loads(jsonString)
     if configName in nlp_services_dict.keys():
@@ -27,7 +43,7 @@ def setupService(configName):
     else:
         if configJson["nlpService"] == "ACD":
             nlp_service = ACDService(jsonString)
-        if configJson["nlpService"] == "quickUMLS":
+        elif configJson["nlpService"] == "quickUMLS":
             nlp_service = QuickUMLSService(jsonString)
         else:
             logger.error("NLP service was unable to be configured. Config in incorrect format")
@@ -45,26 +61,21 @@ def process_bundle(jsonString):
         logger.warn("Bundle has no resources or is improperly formatted")
     for match in resources:
         request_body = match.value['resource']
+        resp = process(request_body)
         try:
-            resp = requests.post('http://127.0.0.1:5000/process/', json=request_body)
-        except requests.exceptions as ex:
-            logger.error("Error with sending individual resource back into the service: " + ex.message)
-            return Response("Error with sending individual resource back into the service: " + ex.message, status=400)
-        try:
-            new_resource_dict[match.value['fullUrl']] = json.loads(resp.text)
+            new_resource_dict[match.value['fullUrl']] = json.loads(resp)
         except KeyError:
             logger.error("Bundle doesn't have fullUrls for resources")
             return Response("Bundle doesn't have fullUrls for resources", status=400)
     
     for resource in jsonString['entry']:
         resource['resource'] = new_resource_dict[resource['fullUrl']]
-    return Response(jsonString, status=200, mimetype='application/json')
+    return jsonString
 
 
 
-
+configDir = setupConfigDir()
 setupService('default')
-
 
 
 
@@ -73,7 +84,8 @@ def nlp_configs(configName):
 
     if request.method == 'GET':
         try:
-            jsonFile = open('text_analytics/configs/' + configName, "r")
+            # jsonFile = open('text_analytics/configs/' + configName, "r")
+            jsonFile = open(configDir + f'/{configName}', 'r')
             jsonString = jsonFile.read()
         except FileNotFoundError:
             logger.error("Config with the name: " + configName + " doesn't exist.")
@@ -83,7 +95,8 @@ def nlp_configs(configName):
 
     elif request.method == 'POST':
         try:
-            jsonFile = open('text_analytics/configs/' + configName, 'x')
+            # jsonFile = open('text_analytics/configs/' + configName, 'x')
+            jsonFile = open(configDir + f'/{configName}', 'x')
             jsonFile.write(request.data.decode('utf-8'))
         except FileExistsError as error:
             logger.error("Config with the name: " + configName + "already exists.")  
@@ -93,7 +106,8 @@ def nlp_configs(configName):
 
     elif request.method == 'PUT':
         try:
-            jsonFile = open('text_analytics/configs/' + configName, 'w')
+            # jsonFile = open('text_analytics/configs/' + configName, 'w')
+            jsonFile = open(configDir + f'/{configName}', 'w')
             jsonFile.write(request.data.decode('utf-8'))
         except:
             logger.exception("Error when trying to persist given config.")
@@ -103,7 +117,8 @@ def nlp_configs(configName):
     
     elif request.method == 'DELETE':
         try:
-            os.remove('text_analytics/configs/' + configName)
+            # os.remove('text_analytics/configs/' + configName)
+            os.remove(configDir + f'/{configName}')
         except OSError as error:
             logger.error("Error when trying to delete config: " + error.message)
             return Response("Error when trying to delete config: " + error.message, status=400)
@@ -115,7 +130,8 @@ def nlp_configs(configName):
 @app.route("/config/", methods=['GET'])
 def get_all_configs():
     configs = []
-    directory = os.fsencode('text_analytics/configs')
+    # directory = os.fsencode('text_analytics/configs')
+    directory = os.fsencode(configDir)
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
         configs.append(filename)
@@ -135,6 +151,14 @@ def setup_nlp(configName):
 @app.route("/process/", methods=['POST'])
 def apply_analytics():
     request_data = json.loads(request.data)
+    resp = process(request_data)
+    if resp == "Error":
+        return Response("No NLP service configured", status=400)
+    else:
+        return Response(resp, status=200, mimetype='application/json')
+
+
+def process(request_data):
     if nlp_service is not None:
         inputType = request_data['resourceType']
         if inputType in nlp_service.types_can_handle.keys():
@@ -146,9 +170,9 @@ def apply_analytics():
             resp = nlp_service.process(request.data)
         jsonResponse = str(resp).replace("'","\"").replace("True","true")
         logger.info("Resource successfully updated")
-        return Response(jsonResponse, status=200, mimetype='application/json')
+        return jsonResponse
     logger.error("No NLP Service configured")
-    return Response("No NLP service configured", status=400)
+    return "Error"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
