@@ -296,6 +296,25 @@ expose-kafka:
   inittopicreplication: 1
 
 # ------------------------------------------------------------------------------
+# CQL-BulkExport Service
+# ------------------------------------------------------------------------------
+cql-bulkexport:
+  enabled: false
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
+  fhirendpoint:
+  fhiruser:
+  fhirpw:
+  cohortendpoint:
+  cosendpoint:
+  cosapikey:
+  cosinstancecrn:
+  bucketname:
+  resourcelist:
+
+# ------------------------------------------------------------------------------
 # Cohort Service
 # ------------------------------------------------------------------------------
 cohort-service:

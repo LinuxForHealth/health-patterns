@@ -1,0 +1,28 @@
+{{- if .Values.enabled -}}
+{{- if .Values.ingress.enabled -}}
+{{- $ingressPort := .Values.service.port -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "cql-bulkexport.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cql-bulkexport.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+spec:
+  rules:
+    - host: {{ .Values.ingress.hostname }}
+      http:
+        paths:
+          - path: /{{ .Chart.Name }}(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ include "cql-bulkexport.fullname" . }}
+                port:
+                  number: {{ $ingressPort }}
+{{- end }}
+{{- end }}

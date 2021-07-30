@@ -98,6 +98,10 @@ dependencies:
     version: 0.1.0
     condition: kafka.enabled
     repository: https://alvearie.github.io/health-patterns/charts
+  - name: cql-bulkexport
+    version: 0.1.0
+    condition: cql-bulkexport.enabled
+    repository: https://alvearie.github.io/health-patterns/charts
   - name: nlp-insights
     version: 0.1.0
     condition: nlp-insights.enabled
