@@ -1,0 +1,4 @@
+{
+    "sdUri" : "https://www.exampleURI.org/FHIR/SD/exampleStructureDefinition",
+    "vsUri" : "https://www.exampleURI.org/FHIR/VS/exampleValueSet" 
+}

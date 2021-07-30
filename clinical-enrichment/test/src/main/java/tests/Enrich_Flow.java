@@ -74,4 +74,16 @@ public class Enrich_Flow {
 	    public void enrich_DEID_Config_CRUD() throws Exception {
 	    }
 
+	@Test
+	 @Category({EnrichmentConfig.class})
+	 @Scenario("scenarios/enrich_TERM_Prep_Map_CRUD.json")
+	    public void enrich_TERM_Prep_Map_CRUD() throws Exception {
+	    }
+	
+	@Test
+	 @Category({EnrichmentConfig.class})
+	 @Scenario("scenarios/enrich_TERM_Prep_SD_CRUD.json")
+	    public void enrich_TERM_Prep_SD_CRUD() throws Exception {
+	    }
+
 }
