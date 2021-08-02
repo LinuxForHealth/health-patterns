@@ -122,15 +122,6 @@ fhir-deid:
       class: *ingressClass
       hostname: *hostname
 
-## Configure these to allow bulk access from fhir-deid server
-#  bulkExportConfig:
-#    cosBucketName: yourbucketnamehere
-#    cosLocation: yourcosregion
-#    cosEndpointInternal: yourbucketendpointhere
-#    cosApikey: yourcosapikey
-#    cosSrvinstid: yourcossrvinstid
-#    batchUserPw: youradminpw
-
 fhir-deid-trigger:
   enabled: false
 
