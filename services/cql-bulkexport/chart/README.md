@@ -26,19 +26,19 @@ helm install <<RELEASE_NAME>> health-patterns/cql-bulkexport
 
 You can augment this install with the following configuration parameters:
 
-`fhirendpoint`: Set the endpoint for the FHIR server api
+`fhir.endpoint`: Set the endpoint for the FHIR server api
 
-`fhiruser`: Set the username used to access the FHIR server
+`fhir.user`: Set the username used to access the FHIR server
 
-`fhirpw`: Set the password used to access the FHIR server
+`fhir.pw`: Set the password used to access the FHIR server
 
-`cohortendoint`: Set the cohorting service endpoint
+`cohort.endpoint`: Set the cohorting service endpoint
 
-`cosendpoint`: Set the COS endpoint that matches you credentials for your bucket
+`cos.endpoint`: Set the COS endpoint that matches you credentials for your bucket
 
-`cosapikey`: Set the apikey for the COS bucket
+`cos.apikey`: Set the apikey for the COS bucket
 
-`cosinstancecrn`: Set the service id crn for the COS bucket
+`cos.instancecrn`: Set the service id crn for the COS bucket
 
 `bucketname`: Set the name of the COS bucket
 

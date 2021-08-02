@@ -13,15 +13,22 @@ service:
   port: 5000
 
 enabled: false
-fhirendpoint: http://ingestion-fhir/fhir-server/api/v4
-fhiruser:
-fhirpw:
-cohortendpoint: http://ingestion-cohort-service
-cosendpoint:
-cosapikey:
-cosinstancecrn:
+
+fhir:
+  endpoint: http://ingestion-fhir/fhir-server/api/v4
+  user:
+  pw:
+
+cohort:
+  endpoint: http://ingestion-cohort-service
+
+cos:
+  endpoint:
+  apikey:
+  instancecrn:
+
 bucketname:
-resourcelist:
+resourcelist: ""
 
 ingress:
   enabled: false

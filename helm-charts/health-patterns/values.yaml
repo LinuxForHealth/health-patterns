@@ -304,13 +304,16 @@ cql-bulkexport:
     enabled: false
     class: *ingressClass
     hostname: *hostname
-  fhirendpoint:
-  fhiruser:
-  fhirpw:
-  cohortendpoint:
-  cosendpoint:
-  cosapikey:
-  cosinstancecrn:
+  fhir:
+    endpoint:
+    user:
+    pw:
+  cohort:
+    endpoint:
+  cos:
+    endpoint:
+    apikey:
+    instancecrn:
   bucketname:
   resourcelist:
 

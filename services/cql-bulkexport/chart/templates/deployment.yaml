@@ -28,19 +28,19 @@ spec:
             protocol: TCP
         env:
           - name: FHIR_ENDPOINT
-            value: {{ .Values.fhirendpoint }}
+            value: {{ .Values.fhir.endpoint }}
           - name: FHIRUSER
-            value: {{ .Values.fhiruser }}
+            value: {{ .Values.fhir.user }}
           - name: FHIRPW
-            value: {{ .Values.fhirpw }}
+            value: {{ .Values.fhir.pw }}
           - name: COHORT_ENDPOINT
-            value: {{ .Values.cohortendpoint }}
+            value: {{ .Values.cohort.endpoint }}
           - name: COS_ENDPOINT
-            value: {{ .Values.cosendpoint }}
+            value: {{ .Values.cos.endpoint }}
           - name: COS_API_KEY
-            value: {{ .Values.cosapikey }}
+            value: {{ .Values.cos.apikey }}
           - name: COS_INSTANCE_CRN
-            value: {{ .Values.cosinstancecrn }}
+            value: {{ .Values.cos.instancecrn }}
           - name: BUCKET_NAME
             value: {{ .Values.bucketname }}
           - name: RESOURCE_LIST

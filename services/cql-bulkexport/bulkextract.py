@@ -115,7 +115,7 @@ def group_bulk_export(group_id):
                 url_dict[item["type"]] = item["url"]
             return url_dict
         else:
-            raise Exception("ERROR-bulk export did not complete properly")
+            raise Exception("ERROR-bulk export did not complete properly-returned status code " + str(respStatusCode))
 
 
 def build_new_temp_ndjson_file(cos_urls):
