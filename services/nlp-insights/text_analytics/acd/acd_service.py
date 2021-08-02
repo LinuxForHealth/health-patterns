@@ -7,10 +7,12 @@ from text_analytics.enhance.enhance_immunization_payload import enhance_immuniza
 import json
 import logging
 
+from text_analytics.abstract_nlp_service import NLPService
+
 logger = logging.getLogger()
 
 
-class ACDService:
+class ACDService(NLPService):
     types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir,
                         'Immunization': enhance_immunization_payload_to_fhir,
                         'DiagnosticReport': enhance_diagnostic_report_payload_to_fhir}

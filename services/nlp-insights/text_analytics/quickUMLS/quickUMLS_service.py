@@ -1,6 +1,7 @@
 from text_analytics.enhance.enhance_allergy_intolerance_payload import enhance_allergy_intolerance_payload_to_fhir
 from text_analytics.enhance.enhance_diagnostic_report_payload import enhance_diagnostic_report_payload_to_fhir
 from text_analytics.enhance.enhance_immunization_payload import enhance_immunization_payload_to_fhir
+from text_analytics.abstract_nlp_service import NLPService
 from text_analytics.quickUMLS.config import get_config
 from text_analytics.quickUMLS.semtype_lookup import lookup
 from text_analytics.enhance import *
@@ -11,7 +12,7 @@ import logging
 logger = logging.getLogger()
 
 
-class QuickUMLSService:
+class QuickUMLSService(NLPService):
     types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir,
                         'Immunization': enhance_immunization_payload_to_fhir,
                         'DiagnosticReport': enhance_diagnostic_report_payload_to_fhir}
