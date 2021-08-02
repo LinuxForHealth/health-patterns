@@ -29,12 +29,9 @@ python {
     pip 'deepdiff:5.5.0'
     pip 'flask:2.0.1'
     pip 'jsonpath-ng:1.5.3'
-    //pip 'whpa-cdp-lib-fhir-compare:0.0.1'
     //Python dependencies end
 
       envPath = 'build/venv'
-    // for LOCAL builds only
-    // pythonPath = '/Library/Frameworks/Python.framework/Versions/3.7/bin'
       pythonBinary = 'python3'
     }
 
@@ -76,13 +73,6 @@ task cdpTextAnalyticsPyTestPrep(type: PythonTask) {
     command = 'setup.py'
     extraArgs = ['develop']
 }
-
-/*
-task cdpTextAnalyticsPyTest(type: PythonTask) {
-    module = 'pytest'
-    extraArgs = [pyTestDir, '--junitxml='+pyTestReportPath, '-v']
-}
-*/
 
 task cdpTextAnalyticsPyCoverage(type: PythonTask) {
     module = 'pytest'
@@ -132,8 +122,6 @@ task uploadArchives {}
 task flake8 {}
 task clean {}
 
-//project.tasks.cdpTextAnalyticsPyTest.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
-//project.tasks.cdpTextAnalyticsPyTest.dependsOn project.tasks.cdpTextAnalyticsPyTestPrep
 project.tasks.cdpTextAnalyticsPyTestPrep.dependsOn project.tasks.cdpTextAnalyticsPySetupBuildProperties
 project.tasks.cdpTextAnalyticsPyCoverage.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
 project.tasks.cdpTextAnalyticsPyCoverage.dependsOn project.tasks.cdpTextAnalyticsPyTestPrep
@@ -143,13 +131,10 @@ project.tasks.cdpTextAnalyticsPyFlake8.dependsOn project.tasks.cdpTextAnalyticsP
 project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
 project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPySetupBuildProperties
 project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPyGenerateReqs
-//project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPyTest
 project.tasks.build.finalizedBy project.tasks.cdpTextAnalyticsPyBuildWheel
 
-//project.tasks.test.finalizedBy project.tasks.cdpTextAnalyticsPyTest
 project.tasks.coverage.finalizedBy project.tasks.cdpTextAnalyticsPyCoverage
 project.tasks.clean.finalizedBy project.tasks.cdpTextAnalyticsClean
 project.tasks.uploadArchives.finalizedBy project.tasks.cdpTextAnalyticsPyPublishArtifacts
 project.tasks.flake8.finalizedBy project.tasks.cdpTextAnalyticsPyFlake8
 
-// -----------

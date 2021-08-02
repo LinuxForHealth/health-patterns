@@ -1,3 +1,6 @@
+from text_analytics.enhance.enhance_allergy_intolerance_payload import enhance_allergy_intolerance_payload_to_fhir
+from text_analytics.enhance.enhance_diagnostic_report_payload import enhance_diagnostic_report_payload_to_fhir
+from text_analytics.enhance.enhance_immunization_payload import enhance_immunization_payload_to_fhir
 from text_analytics.quickUMLS.config import get_config
 from text_analytics.quickUMLS.semtype_lookup import lookup
 from text_analytics.enhance import *

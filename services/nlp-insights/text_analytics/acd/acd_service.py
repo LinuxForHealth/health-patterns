@@ -1,15 +1,17 @@
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
-from text_analytics.enhance import *
 from text_analytics.acd.config import get_config
+from text_analytics.enhance.enhance_allergy_intolerance_payload import enhance_allergy_intolerance_payload_to_fhir
+from text_analytics.enhance.enhance_diagnostic_report_payload import enhance_diagnostic_report_payload_to_fhir
+from text_analytics.enhance.enhance_immunization_payload import enhance_immunization_payload_to_fhir
 import json
 import logging
 
 logger = logging.getLogger()
 
-class ACDService:
 
-    types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir, 
+class ACDService:
+    types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir,
                         'Immunization': enhance_immunization_payload_to_fhir,
                         'DiagnosticReport': enhance_diagnostic_report_payload_to_fhir}
 
@@ -19,7 +21,7 @@ class ACDService:
         self.acd_url = _config['WHPA_CDP_ACD_URL']
         self.acd_flow = _config['WHPA_CDP_ACD_FLOW']
 
-        #self.parse_config(json_string)
+        # self.parse_config(json_string)
 
     def process(self, text):
         # Instantiate service instance
@@ -44,8 +46,8 @@ class ACDService:
 
         except acd.ACDException as err:
             logger.error("ACD could not be run on text: " + text + " with error: {}".format(err.message))
-            return 
-    
+            return
+
     def parse_config(self, jsonString):
         configJson = json.loads(jsonString)
         self.resourceTypes = configJson["resourceTypes"] or None
