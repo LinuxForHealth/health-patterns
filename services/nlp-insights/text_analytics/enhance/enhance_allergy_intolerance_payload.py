@@ -1,20 +1,6 @@
-# *******************************************************************************
-# IBM Confidential                                                            *
-#                                                                             *
-# OCO Source Materials                                                        *
-#                                                                             *
-# (C) Copyright IBM Corp. 2021                                                *
-#                                                                             *
-# The source code for this program is not published or otherwise              *
-# divested of its trade secrets, irrespective of what has been                *
-# deposited with the U.S. Copyright Office.                                   *
-# ******************************************************************************/
-
-from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from fhir.resources.allergyintolerance import AllergyIntolerance
 from text_analytics.insights.add_insights_allergy import update_allergy_with_insights
-from text_analytics.utils.fhir_object_utils import create_transaction_bundle
-import logging 
+import logging
 
 logger = logging.getLogger()
 

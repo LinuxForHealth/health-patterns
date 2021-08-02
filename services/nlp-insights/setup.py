@@ -1,17 +1,3 @@
- #*******************************************************************************
- # IBM Watson Imaging Common Application Framework 2.0                         *
- #                                                                             *
- # IBM Confidential                                                            *
- #                                                                             *
- # OCO Source Materials                                                        *
- #                                                                             *
- # (C) Copyright IBM Corp. 2019                                                *
- #                                                                             *
- # The source code for this program is not published or otherwise              *
- # divested of its trade secrets, irrespective of what has been                *
- # deposited with the U.S. Copyright Office.                                   *
- #******************************************************************************/
-
 from __future__ import print_function
 
 import os
@@ -23,8 +9,8 @@ import configparser
 from setuptools import setup, find_packages
 from setuptools.dist import Distribution
 
-class GradleDistribution(Distribution, object):
 
+class GradleDistribution(Distribution, object):
     PINNED_TXT = 'pinned.txt'
 
     excluded_platform_packages = {}
@@ -32,7 +18,7 @@ class GradleDistribution(Distribution, object):
     def __init__(self, attrs):
         config = configparser.ConfigParser()
         configDir = os.path.dirname(os.path.realpath(__file__))
-        config.read(configDir+"/setup.properties")
+        config.read(configDir + "/setup.properties")
         attrs['name'] = config['default']['project_name']
         attrs['version'] = config['default']['project_version']
         attrs['package_dir'] = {'': config['default']['project_srcDir']}
@@ -62,6 +48,7 @@ class GradleDistribution(Distribution, object):
                         yield name
         except IOError:
             raise StopIteration
+
 
 setup(
     distclass=GradleDistribution,

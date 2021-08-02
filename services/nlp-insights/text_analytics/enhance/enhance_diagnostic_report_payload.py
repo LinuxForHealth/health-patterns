@@ -1,16 +1,3 @@
-# *******************************************************************************
-# IBM Confidential                                                            *
-#                                                                             *
-# OCO Source Materials                                                        *
-#                                                                             *
-# (C) Copyright IBM Corp. 2021                                                *
-#                                                                             *
-# The source code for this program is not published or otherwise              *
-# divested of its trade secrets, irrespective of what has been                *
-# deposited with the U.S. Copyright Office.                                   *
-# ******************************************************************************/
-
-from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from fhir.resources.diagnosticreport import DiagnosticReport
 from text_analytics.insights.add_insights_condition import create_conditions_from_insights
 from text_analytics.insights.add_insights_medication import create_med_statements_from_insights

@@ -1,15 +1,3 @@
-# *******************************************************************************
-# IBM Confidential                                                            *
-#                                                                             *
-# OCO Source Materials                                                        *
-#                                                                             *
-# (C) Copyright IBM Corp. 2021                                                *
-#                                                                             *
-# The source code for this program is not published or otherwise              *
-# divested of its trade secrets, irrespective of what has been                *
-# deposited with the U.S. Copyright Office.                                   *
-# ******************************************************************************/
-
 from text_analytics.quickUMLS.config import get_config
 from text_analytics.quickUMLS.semtype_lookup import lookup
 from text_analytics.enhance import *
@@ -19,9 +7,9 @@ import logging
 
 logger = logging.getLogger()
 
-class QuickUMLSService:
 
-    types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir, 
+class QuickUMLSService:
+    types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir,
                         'Immunization': enhance_immunization_payload_to_fhir,
                         'DiagnosticReport': enhance_diagnostic_report_payload_to_fhir}
 

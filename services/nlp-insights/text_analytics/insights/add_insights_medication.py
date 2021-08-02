@@ -1,16 +1,3 @@
-# *******************************************************************************
-# IBM Confidential                                                            *
-#                                                                             *
-# OCO Source Materials                                                        *
-#                                                                             *
-# (C) Copyright IBM Corp. 2021                                                *
-#                                                                             *
-# The source code for this program is not published or otherwise              *
-# divested of its trade secrets, irrespective of what has been                *
-# deposited with the U.S. Copyright Office.                                   *
-# ******************************************************************************/
-
-#import caf_logger.logger as caflogger
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.dosage import Dosage, DosageDoseAndRate
 from fhir.resources.extension import Extension

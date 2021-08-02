@@ -1,15 +1,3 @@
-# *******************************************************************************
-# IBM Confidential                                                            *
-#                                                                             *
-# OCO Source Materials                                                        *
-#                                                                             *
-# (C) Copyright IBM Corp. 2021                                                *
-#                                                                             *
-# The source code for this program is not published or otherwise              *
-# divested of its trade secrets, irrespective of what has been                *
-# deposited with the U.S. Copyright Office.                                   *
-# ******************************************************************************/
-
 # Extension URL used in standard FHIR resource extension (extension directly under the resource type)
 INSIGHT_REFERENCE_URL = "http://ibm.com/fhir/cdm/insight/reference"               # general extension for a resource
 INSIGHT_CLASSIFICATION_URL = "http://ibm.com/fhir/cdm/insight/classification"     # indicates if derived

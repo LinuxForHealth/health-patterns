@@ -1,19 +1,5 @@
-# *******************************************************************************
-# IBM Confidential                                                            *
-#                                                                             *
-# OCO Source Materials                                                        *
-#                                                                             *
-# (C) Copyright IBM Corp. 2021                                                *
-#                                                                             *
-# The source code for this program is not published or otherwise              *
-# divested of its trade secrets, irrespective of what has been                *
-# deposited with the U.S. Copyright Office.                                   *
-# ******************************************************************************/
-
-from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from fhir.resources.immunization import Immunization
 from text_analytics.insights.add_insights_immunization import update_immunization_with_insights
-from text_analytics.utils.fhir_object_utils import create_transaction_bundle
 from text_analytics.insights.text_adjustments import adjust_vaccine_text
 import logging
 

@@ -1,15 +1,3 @@
-# *******************************************************************************
-# IBM Confidential                                                            *
-#                                                                             *
-# OCO Source Materials                                                        *
-#                                                                             *
-# (C) Copyright IBM Corp. 2021                                                *
-#                                                                             *
-# The source code for this program is not published or otherwise              *
-# divested of its trade secrets, irrespective of what has been                *
-# deposited with the U.S. Copyright Office.                                   *
-# ******************************************************************************/
-
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
 from text_analytics.enhance import *

@@ -4,3 +4,6 @@ fhir.resources==6.1.0
 deepdiff==5.5.0
 flask==2.0.1
 jsonpath-ng==1.5.3
+
+setuptools~=57.1.0
+requests~=2.26.0
