@@ -122,15 +122,6 @@ fhir-deid:
       class: *ingressClass
       hostname: *hostname
 
-## Configure these to allow bulk access from fhir-deid server
-#  bulkExportConfig:
-#    cosBucketName: yourbucketnamehere
-#    cosLocation: yourcosregion
-#    cosEndpointInternal: yourbucketendpointhere
-#    cosApikey: yourcosapikey
-#    cosSrvinstid: yourcossrvinstid
-#    batchUserPw: youradminpw
-
 fhir-deid-trigger:
   enabled: false
 
@@ -294,6 +285,28 @@ expose-kafka:
   inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in"
   inittopicnumpartitions: 1
   inittopicreplication: 1
+
+# ------------------------------------------------------------------------------
+# CQL-BulkExport Service
+# ------------------------------------------------------------------------------
+cql-bulkexport:
+  enabled: false
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
+  fhir:
+    endpoint:
+    user:
+    password:
+  cohort:
+    endpoint:
+  cos:
+    endpoint:
+    apikey:
+    instancecrn:
+  bucketname:
+  resourcelist:
 
 # ------------------------------------------------------------------------------
 # Cohort Service
