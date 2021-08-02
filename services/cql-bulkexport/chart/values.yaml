@@ -17,7 +17,7 @@ enabled: false
 fhir:
   endpoint: http://ingestion-fhir/fhir-server/api/v4
   user:
-  pw:
+  password:
 
 cohort:
   endpoint: http://ingestion-cohort-service

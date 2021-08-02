@@ -30,7 +30,7 @@ You can augment this install with the following configuration parameters:
 
 `fhir.user`: Set the username used to access the FHIR server
 
-`fhir.pw`: Set the password used to access the FHIR server
+`fhir.password`: Set the password used to access the FHIR server
 
 `cohort.endpoint`: Set the cohorting service endpoint
 
