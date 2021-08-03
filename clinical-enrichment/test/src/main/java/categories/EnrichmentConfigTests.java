@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Categories.class)
 @SuiteClasses(AllTests.class) 
-@Categories.IncludeCategory(BasicEnrichment.class)
+@Categories.IncludeCategory(EnrichmentConfig.class)
 
 public class EnrichmentConfigTests {
 
