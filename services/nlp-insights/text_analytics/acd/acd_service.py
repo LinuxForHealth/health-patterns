@@ -1,9 +1,7 @@
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
 from text_analytics.acd.config import get_config
-from text_analytics.enhance.enhance_allergy_intolerance_payload import enhance_allergy_intolerance_payload_to_fhir
-from text_analytics.enhance.enhance_diagnostic_report_payload import enhance_diagnostic_report_payload_to_fhir
-from text_analytics.enhance.enhance_immunization_payload import enhance_immunization_payload_to_fhir
+from text_analytics.enhance import *
 import json
 import logging
 
@@ -19,15 +17,14 @@ class ACDService(NLPService):
 
     def __init__(self, json_string):
         _config = get_config()
-        self.acd_key = _config['WHPA_CDP_ACD_KEY']
-        self.acd_url = _config['WHPA_CDP_ACD_URL']
-        self.acd_flow = _config['WHPA_CDP_ACD_FLOW']
+        self.acd_key = _config['ACD_KEY']
+        self.acd_url = _config['ACD_URL']
+        self.acd_flow = _config['ACD_FLOW']
 
         # self.parse_config(json_string)
 
     def process(self, text):
         # Instantiate service instance
-        # Replace {version}, {apikey}, and {url} below
         print("key:", self.acd_key)
         print("url:", self.acd_url)
         print("flow:", self.acd_flow)
@@ -38,12 +35,9 @@ class ACDService(NLPService):
         service.set_service_url(self.acd_url)
 
         try:
-            print("Calling ACD")
-            print(text)
             resp = service.analyze_with_flow(self.acd_flow, text)
             # print("RAW ACD Response: ", resp, "<end>")
             out = resp.to_dict()
-            print(out)
             return out
 
         except acd.ACDException as err:

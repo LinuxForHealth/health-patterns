@@ -3,10 +3,10 @@ import configparser
 
 # if the following is an environment variable on the system, the service will pull config from the corresponding file,
 # otherwise default to the source config
-ACD_CONFIG_ENVVAR = 'WHPA_CDP_ACD_CONFIG'
+ACD_CONFIG_ENVVAR = 'ACD_CONFIG'
 
 acd_header = 'ACD_CONFIG'
-acd_required_keys = ['WHPA_CDP_ACD_KEY', 'WHPA_CDP_ACD_URL', 'WHPA_CDP_ACD_FLOW']
+acd_required_keys = ['ACD_KEY', 'ACD_URL', 'ACD_FLOW']
 
 _acd_configs = None
 

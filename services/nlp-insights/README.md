@@ -30,7 +30,7 @@ Then to run on localhost:5000, run `gradle dockerRun`
 
 To push the docker image and deploy on a kubernetes cluster, first replace the field `<replace with docker user id>` with your docker id 
 in both `kubernetes.yml` and `gradle.properties`
-Then run `gradle dockerPush` to push the image 'cdp-text-analytics-service' to your repository.
+Then run `gradle dockerPush` to push the image 'nlp-insights' to your repository.
 To deploy, run `kubectl apply -f kubernetes.yml` to deploy both the service and the persistent volume/claim needed to persist configurations.
 If deploying on a cluster where the service is already deployed in another namespace, change the name of the persistent volume to something unique to avoid conflicts.
 
@@ -54,8 +54,8 @@ open-source QuickUMLS.
 
 #### Example Resources
 
-##### FHIR bundle:
-//todo
+Example json FHIR that is able to be processed by the service can be found in text_analytics/test/resources
+
 ##### Config json:
 { "nlpService": "quickUMLS" }
 { "nlpService": "ACD" }

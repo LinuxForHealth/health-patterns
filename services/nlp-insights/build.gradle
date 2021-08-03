@@ -5,7 +5,7 @@ plugins {
     id 'com.palantir.docker-run' version "0.27.0"
 }
 
-group = 'com.ibm.watson.health.imaging'
+group = 'org.alvearie.health-patterns'
 version = "1.0.0"
 description = """NLP Insights"""
 
@@ -19,10 +19,9 @@ sonarqube {
 }
 
 // --------
-//CDP Text Analytics Python Build Section
+//Python Build Section
 python {
     //Python dependencies start
-    // pip 'attrs:18.1.0'
     pip 'ibm-whcs-sdk:1.9.0'
     pip 'ibm-cloud-sdk-core:3.8.0'
     pip 'fhir.resources:6.1.0'
@@ -36,12 +35,12 @@ python {
     }
 
 
-task cdpTextAnalyticsPySetupBuild(type: PythonTask) {
+task textAnalyticsPySetupBuild(type: PythonTask) {
     module = 'pip'
     extraArgs = ['install', 'pytest==4.6.3', 'pytest-cov==2.7.1', 'twine==1.14.0', 'flake8==3.7.8', 'wheel==0.36.2']
 }
 
-task cdpTextAnalyticsPyGenerateReqs {
+task textAnalyticsPyGenerateReqs {
     doLast {
         def newFile = new File("${project.projectDir}/pinned.txt")
         newFile.delete()
@@ -52,7 +51,7 @@ task cdpTextAnalyticsPyGenerateReqs {
     }
 }
 
-task cdpTextAnalyticsPySetupBuildProperties {
+task textAnalyticsPySetupBuildProperties {
     doLast {
         def newFile = new File("${project.projectDir}/setup.properties")
         newFile.delete()
@@ -64,22 +63,22 @@ task cdpTextAnalyticsPySetupBuildProperties {
     }
 }
 
-task cdpTextAnalyticsPyBuildWheel(type: PythonTask) {
+task textAnalyticsPyBuildWheel(type: PythonTask) {
     command = 'setup.py'
     extraArgs = ['bdist_wheel', '-d', pyDistDir, '-k']
 }
 
-task cdpTextAnalyticsPyTestPrep(type: PythonTask) {
+task textAnalyticsPyTestPrep(type: PythonTask) {
     command = 'setup.py'
     extraArgs = ['develop']
 }
 
-task cdpTextAnalyticsPyCoverage(type: PythonTask) {
+task textAnalyticsPyCoverage(type: PythonTask) {
     module = 'pytest'
     extraArgs = [pyTestDir, '--cov', pySrcDir, '--cov-report=xml:'+pyXmlCoveragePath, '--cov-report=html:'+pyHtmlCoveragePath, '--cov-report=term']
 }
 
-task cdpTextAnalyticsClean {
+task textAnalyticsClean {
     doLast {
         exec {
             commandLine 'rm', '-rf', 'build'
@@ -87,7 +86,7 @@ task cdpTextAnalyticsClean {
     }
 }
 
-task cdpTextAnalyticsPyPublishArtifacts(type: PythonTask) {
+task textAnalyticsPyPublishArtifacts(type: PythonTask) {
     doFirst {
         def taasArtifactoryUsername = "${taasArtifactoryUsername}"
         def taasArtifactoryPassword = "${taasArtifactoryPassword}"
@@ -96,22 +95,22 @@ task cdpTextAnalyticsPyPublishArtifacts(type: PythonTask) {
     }
 }
 
-task cdpTextAnalyticsPyFlake8(type: PythonTask) {
+task textAnalyticsPyFlake8(type: PythonTask) {
     module = 'flake8'
     extraArgs = [pySrcDir]
 }
 
 docker {
      copySpec.from(".").into(".").include("pinned.txt", "setup.py", "setup.properties", "text_analytics/**")
-     name dockerUser + "/nlp-insights-service:" + version
+     name dockerUser + "/nlp-insights:" + version
      dockerfile file('Dockerfile')
 }
 
 dockerPush {}
 
 dockerRun {
-    name 'nlp-insights-service'
-    image dockerUser + '/nlp-insights-service:' + version
+    name 'nlp-insights'
+    image dockerUser + '/nlp-insights:' + version
     ports '5000:5000'
 }
 
@@ -122,19 +121,19 @@ task uploadArchives {}
 task flake8 {}
 task clean {}
 
-project.tasks.cdpTextAnalyticsPyTestPrep.dependsOn project.tasks.cdpTextAnalyticsPySetupBuildProperties
-project.tasks.cdpTextAnalyticsPyCoverage.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
-project.tasks.cdpTextAnalyticsPyCoverage.dependsOn project.tasks.cdpTextAnalyticsPyTestPrep
-project.tasks.cdpTextAnalyticsPyPublishArtifacts.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
-project.tasks.cdpTextAnalyticsPyFlake8.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
+project.tasks.textAnalyticsPyTestPrep.dependsOn project.tasks.textAnalyticsPySetupBuildProperties
+project.tasks.textAnalyticsPyCoverage.dependsOn project.tasks.textAnalyticsPySetupBuild
+project.tasks.textAnalyticsPyCoverage.dependsOn project.tasks.textAnalyticsPyTestPrep
+project.tasks.textAnalyticsPyPublishArtifacts.dependsOn project.tasks.textAnalyticsPySetupBuild
+project.tasks.textAnalyticsPyFlake8.dependsOn project.tasks.textAnalyticsPySetupBuild
 
-project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPySetupBuild
-project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPySetupBuildProperties
-project.tasks.build.dependsOn project.tasks.cdpTextAnalyticsPyGenerateReqs
-project.tasks.build.finalizedBy project.tasks.cdpTextAnalyticsPyBuildWheel
+project.tasks.build.dependsOn project.tasks.textAnalyticsPySetupBuild
+project.tasks.build.dependsOn project.tasks.textAnalyticsPySetupBuildProperties
+project.tasks.build.dependsOn project.tasks.textAnalyticsPyGenerateReqs
+project.tasks.build.finalizedBy project.tasks.textAnalyticsPyBuildWheel
 
-project.tasks.coverage.finalizedBy project.tasks.cdpTextAnalyticsPyCoverage
-project.tasks.clean.finalizedBy project.tasks.cdpTextAnalyticsClean
-project.tasks.uploadArchives.finalizedBy project.tasks.cdpTextAnalyticsPyPublishArtifacts
-project.tasks.flake8.finalizedBy project.tasks.cdpTextAnalyticsPyFlake8
+project.tasks.coverage.finalizedBy project.tasks.textAnalyticsPyCoverage
+project.tasks.clean.finalizedBy project.tasks.textAnalyticsClean
+project.tasks.uploadArchives.finalizedBy project.tasks.textAnalyticsPyPublishArtifacts
+project.tasks.flake8.finalizedBy project.tasks.textAnalyticsPyFlake8
 
