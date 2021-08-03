@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nlp-insights-service
+  name: nlp-insights
   labels:
     app: flask
 spec:
@@ -15,8 +15,8 @@ spec:
         app: flask
     spec:
       containers:
-      - name: nlp-insights-service
-        image: docker.io/*add your docker id here*/nlp-insights-service:1.0.0
+      - name: nlp-insights
+        image: docker.io/*add your docker id here*/nlp-insights:1.0.0
         imagePullPolicy: Always
         ports:
           - containerPort: 5000
@@ -64,7 +64,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nlp-insights-service
+  name: nlp-insights
   labels:
     app: flask
 spec:

@@ -3,7 +3,7 @@ import configparser
 
 # if the following is an environment variable on the system, the service will pull config from the corresponding file,
 # otherwise default to the source config
-QUICKUMLS_CONFIG_ENVVAR = 'WHPA_CDP_UMLS_CONFIG'
+QUICKUMLS_CONFIG_ENVVAR = 'QUICKUMLS_CONFIG'
 
 quickumls_header = 'QUICKUMLS_CONFIG'
 quickumls_required_keys = ['QUICKUMLS_URL']

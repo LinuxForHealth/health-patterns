@@ -7,8 +7,8 @@ from text_analytics.utils import fhir_object_utils
 
 
 def _build_resource(nlp, diagnostic_report, nlp_output):
-    # build insight set from ACD output
-    # initially using ICDiagnosis concepts this could change when we do analysis / tune ACD
+    # build insight set from NLP output
+    # initially using ICDiagnosis concepts this could change when we do analysis / tune NLP
     nlp_name = type(nlp).__name__
     nlp_concepts = nlp_output.get('concepts')
     conditions_found = {}            # key is UMLS ID, value is the FHIR resource
@@ -65,5 +65,4 @@ def create_conditions_from_insights(nlp, diagnostic_report, nlp_output):
         for condition in conditions:
             condition.subject = diagnostic_report.subject
             fhir_object_utils.create_derived_resource_extension(condition)
-    # print(conditions)
     return conditions
