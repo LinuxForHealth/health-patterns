@@ -23,14 +23,7 @@ class ACDService(NLPService):
         self.acd_url = _config['WHPA_CDP_ACD_URL']
         self.acd_flow = _config['WHPA_CDP_ACD_FLOW']
 
-        # self.parse_config(json_string)
-
     def process(self, text):
-        # Instantiate service instance
-        # Replace {version}, {apikey}, and {url} below
-        print("key:", self.acd_key)
-        print("url:", self.acd_url)
-        print("flow:", self.acd_flow)
         service = acd.AnnotatorForClinicalDataV1(
             authenticator=IAMAuthenticator(apikey=self.acd_key),
             version="2021-01-01"
@@ -38,12 +31,9 @@ class ACDService(NLPService):
         service.set_service_url(self.acd_url)
 
         try:
-            print("Calling ACD")
-            print(text)
+            logger.info("Calling ACD")
             resp = service.analyze_with_flow(self.acd_flow, text)
-            # print("RAW ACD Response: ", resp, "<end>")
             out = resp.to_dict()
-            print(out)
             return out
 
         except acd.ACDException as err:
@@ -81,7 +71,6 @@ class ACDService(NLPService):
         if concept.vocabs is not None:
             output["vocabs"] = concept.vocabs
         output["negated"] = concept.negated
-        # print(concept)  # if you want to see what the structure is like
         return output
 
     @staticmethod
@@ -101,5 +90,4 @@ class ACDService(NLPService):
         if symptom.modality is not None:
             output["modality"] = symptom.modality
         output["negated"] = symptom.negated
-        # print(symptom) # if you want to see what the structure is like
         return output
