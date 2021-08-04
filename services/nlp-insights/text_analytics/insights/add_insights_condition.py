@@ -12,9 +12,8 @@ def _build_resource(nlp, diagnostic_report, nlp_output):
     conditions_found = {}            # key is UMLS ID, value is the FHIR resource
     conditions_insight_counter = {}  # key is UMLS ID, value is the current insight_id_num
     for concept in nlp_concepts:
-        if (nlp_name == 'ACDService' and concept["type"] == "ICDiagnosis") or (nlp_name == 'QuickUMLSService' 
-        and concept["type"] in ('umls.DiseaseOrSyndrome', 'umls.PathologicFunction', 'umls.SignOrSymptom', 'umls.NeoplasticProcess', 
-        'umls.CellOrMolecularDysfunction', 'umls.MentalOrBehavioralDysfunction')):
+        if concept['type'] in ("ICDiagnosis", 'umls.DiseaseOrSyndrome', 'umls.PathologicFunction', 'umls.SignOrSymptom', 'umls.NeoplasticProcess', 
+        'umls.CellOrMolecularDysfunction', 'umls.MentalOrBehavioralDysfunction'):
             condition = conditions_found.get(concept["cui"])
             if condition is None:
                 condition = Condition.construct()
