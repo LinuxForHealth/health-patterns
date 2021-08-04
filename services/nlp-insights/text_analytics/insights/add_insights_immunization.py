@@ -12,13 +12,10 @@ Returns the updated resource if any insights were added to it.  Returns None if 
 """
 def update_immunization_with_insights(nlp, immunization, nlp_results):
     insight_num = 0
-    # build insight set from ACD output
-    # initially using ICMedication concepts; this could change when we do analysis / tune ACD
     concepts = nlp_results["concepts"]
     if concepts is not None:
         for concept in concepts:
             if concept["type"] == "ICMedication" or concept["type"] == "umls.ImmunologicFactor":
-                # TODO check if the coding already exists in the FHIR reqource
 
                 # Add a new insight
                 insight_num = insight_num + 1

@@ -71,54 +71,64 @@ def process_bundle(json_string):
     return json_string
 
 
+
+
 configDir = setup_config_dir()
 setup_service('default')
 
 
-@app.route("/config/<config_name>", methods=['POST', 'GET', 'PUT', 'DELETE'])
-def nlp_configs(config_name):
-    if request.method == 'GET':
-        try:
-            # json_file = open('text_analytics/configs/' + configName, "r")
-            json_file = open(configDir + f'/{config_name}', 'r')
-            json_string = json_file.read()
-        except FileNotFoundError:
-            logger.error("Config with the name: " + config_name + " doesn't exist.")
-            return Response("Config with the name: " + config_name + " doesn't exist.", status=400)
-        logger.info("Config found")
-        return Response(json_string, status=200, mimetype='application/json')
 
-    elif request.method == 'POST':
-        try:
-            # json_file = open('text_analytics/configs/' + configName, 'x')
-            json_file = open(configDir + f'/{config_name}', 'x')
-            json_file.write(request.data.decode('utf-8'))
-        except FileExistsError as error:
-            logger.error("Config with the name: " + config_name + "already exists.")
-            return Response("Config with the name: " + config_name + "already exists.", status=400)
-        logger.info("Config successfully added")
-        return Response(status=200)
+@app.route("/config/<config_name>", methods=['GET'])
+def get_config(config_name):
+    try:
+        # json_file = open('text_analytics/configs/' + configName, "r")
+        json_file = open(configDir + f'/{config_name}', 'r')
+        json_string = json_file.read()
+    except FileNotFoundError:
+        logger.error("Config with the name: " + config_name + " doesn't exist.")
+        return Response("Config with the name: " + config_name + " doesn't exist.", status=400)
+    logger.info("Config found")
+    return Response(json_string, status=200, mimetype='application/json')
 
-    elif request.method == 'PUT':
-        try:
-            # json_file = open('text_analytics/configs/' + configName, 'w')
-            json_file = open(configDir + f'/{config_name}', 'w')
-            json_file.write(request.data.decode('utf-8'))
-        except:
-            logger.exception("Error when trying to persist given config.")
-            return Response("Error when trying to persist given config.", status=400)
-        logger.info("Config successfully added/updated")
-        return Response(status=200)
 
-    elif request.method == 'DELETE':
-        try:
-            # os.remove('text_analytics/configs/' + configName)
-            os.remove(configDir + f'/{config_name}')
-        except OSError as error:
-            logger.error("Error when trying to delete config: " + error.message)
-            return Response("Error when trying to delete config: " + error.message, status=400)
-        logger.info("Config successfully deleted")
-        return Response("Config successfully deleted", status=200)
+@app.route("/config/<config_name>", methods=['POST'])
+def post_config(config_name):
+    try:
+        # json_file = open('text_analytics/configs/' + configName, 'x')
+        json_file = open(configDir + f'/{config_name}', 'x')
+        json_file.write(request.data.decode('utf-8'))
+    except FileExistsError as error:
+        logger.error("Config with the name: " + config_name + "already exists.")
+        return Response("Config with the name: " + config_name + "already exists.", status=400)
+    logger.info("Config successfully added")
+    return Response(status=200)
+
+
+@app.route("/config/<config_name>", methods=['PUT'])
+def put_config(config_name):
+    try:
+        # json_file = open('text_analytics/configs/' + configName, 'w')
+        json_file = open(configDir + f'/{config_name}', 'w')
+        json_file.write(request.data.decode('utf-8'))
+    except:
+        logger.exception("Error when trying to persist given config.")
+        return Response("Error when trying to persist given config.", status=400)
+    logger.info("Config successfully added/updated")
+    return Response(status=200)
+
+
+@app.route("/config/<config_name>", methods=['DELETE'])
+def delete_config(config_name):
+    try:
+        # os.remove('text_analytics/configs/' + configName)
+        os.remove(configDir + f'/{config_name}')
+    except OSError as error:
+        logger.error("Error when trying to delete config: " + error.message)
+        return Response("Error when trying to delete config: " + error.message, status=400)
+    logger.info("Config successfully deleted")
+    return Response("Config successfully deleted", status=200)
+
+
 
 
 @app.route("/config/", methods=['GET'])

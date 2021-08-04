@@ -7,16 +7,13 @@ from text_analytics.utils import fhir_object_utils
 
 
 def _build_resource(nlp, diagnostic_report, nlp_output):
-    # build insight set from NLP output
-    # initially using ICDiagnosis concepts this could change when we do analysis / tune NLP
     nlp_name = type(nlp).__name__
     nlp_concepts = nlp_output.get('concepts')
     conditions_found = {}            # key is UMLS ID, value is the FHIR resource
     conditions_insight_counter = {}  # key is UMLS ID, value is the current insight_id_num
     for concept in nlp_concepts:
-        if (nlp_name == 'ACDService' and concept["type"] == "ICDiagnosis") or (nlp_name == 'QuickUMLSService' 
-        and concept["type"] in ('umls.DiseaseOrSyndrome', 'umls.PathologicFunction', 'umls.SignOrSymptom', 'umls.NeoplasticProcess', 
-        'umls.CellOrMolecularDysfunction', 'umls.MentalOrBehavioralDysfunction')):
+        if concept['type'] in ("ICDiagnosis", 'umls.DiseaseOrSyndrome', 'umls.PathologicFunction', 'umls.SignOrSymptom', 'umls.NeoplasticProcess', 
+        'umls.CellOrMolecularDysfunction', 'umls.MentalOrBehavioralDysfunction'):
             condition = conditions_found.get(concept["cui"])
             if condition is None:
                 condition = Condition.construct()
@@ -38,7 +35,6 @@ def _build_resource(nlp, diagnostic_report, nlp_output):
             insight.extension.append(insight_detail)
             insight_span = fhir_object_utils.create_insight_span_extension(concept)
             insight.extension.append(insight_span)
-            # if there is insight model data, save confidences to insight extension
             if "insightModelData" in concept:
                 fhir_object_utils.add_diagnosis_confidences(insight.extension, concept["insightModelData"])
             result_extension = condition.meta.extension[0]
@@ -59,7 +55,6 @@ def _build_resource_data(condition, concept, insight_id):
 
 
 def create_conditions_from_insights(nlp, diagnostic_report, nlp_output):
-    # Create Condition FHIR resource
     conditions = _build_resource(nlp, diagnostic_report, nlp_output)
     if conditions is not None:
         for condition in conditions:

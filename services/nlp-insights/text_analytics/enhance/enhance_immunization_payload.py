@@ -9,7 +9,6 @@ logger = logging.getLogger()
 def enhance_immunization_payload_to_fhir(nlp, immunization_json):
     immunization_fhir = {}
     try:
-        # Parse the immunization json
         immunization_fhir = Immunization.parse_obj(immunization_json)
 
         if immunization_fhir.vaccineCode.text is not None:
@@ -17,14 +16,10 @@ def enhance_immunization_payload_to_fhir(nlp, immunization_json):
             nlp_resp = nlp.process(text)
             updated_immunization = update_immunization_with_insights(nlp, immunization_fhir, nlp_resp)
     except Exception as ex:
-        logger.exception("Error enhancing immunization FHIR")
+        logger.exception("Error enhancing immunization FHIR", ex)
 
-    # create fhir bundle with transaction
     bundle = None
     if updated_immunization is not None:
-        # url_transaction = updated_immunization.resource_type + "/" + str(updated_immunization.id)
-        # bundle = create_transaction_bundle([[updated_immunization, 'PUT', url_transaction]])
         return updated_immunization.json()
     else:
         return None
-    # return bundle

@@ -14,6 +14,9 @@ class QuickUMLSService(NLPService):
                         'Immunization': enhance_immunization_payload_to_fhir,
                         'DiagnosticReport': enhance_diagnostic_report_payload_to_fhir}
 
+    PROCESS_TYPE_UNSTRUCTURED = "QuickUMLS Unstructured"
+    PROCESS_TYPE_STRUCTURED = "QuickUMLS Structured"
+    
     def __init__(self, json_string):
         _config = get_config()
         self.quickUMLS_url = _config['QUICKUMLS_URL']
