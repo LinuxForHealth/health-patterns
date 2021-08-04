@@ -111,6 +111,9 @@ class ACDService(NLPService):
             output["modality"] = symptom.modality
         output["negated"] = symptom.negated
         return output
+
+    def get_drug_name():
+        return "drugSurfaceForm"
     
     def add_medications(nlp, diagnostic_report, nlp_output, med_statements_found, med_statements_insight_counter):
         medications = nlp_output.get('MedicationInd')

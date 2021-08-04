@@ -1,6 +1,5 @@
 import json
 import base64
-from text_analytics.app import process
 
 from fhir.resources.attachment import Attachment
 from fhir.resources.bundle import Bundle
@@ -15,18 +14,12 @@ from fhir.resources.reference import Reference
 from text_analytics.insights import insight_constants
 
 
-def create_coding(system, code):
+def create_coding_with_display(system, code, display=None):
     coding_element = Coding.construct()
     coding_element.system = system
     coding_element.code = code
-    return coding_element
-
-
-def create_coding_with_display(system, code, display):
-    coding_element = Coding.construct()
-    coding_element.system = system
-    coding_element.code = code
-    coding_element.display = display
+    if display is not None:
+        coding_element.display = display
     return coding_element
 
 
@@ -73,7 +66,7 @@ def create_insight_reference(insight_id, insight_system):
 
 # Creating coding system entry with the extensions for classfication/insight id
 def create_coding_system_entry(coding_system_url, code_id, insight_id, insight_system):
-    coding = create_coding(coding_system_url, code_id)
+    coding = create_coding_with_display(coding_system_url, code_id)
     coding.extension = [create_insight_reference(insight_id, insight_system)]
     return coding
 
@@ -289,7 +282,6 @@ def add_codings(concept, codeable_concept, insight_id, insight_system):
 
 
 def add_codings_drug(nlp, drug, codeable_concept, insight_id, insight_system):
-    nlp_name = type(nlp).__name__
     if drug.get("cui") is not None:
         # For CUIs, we do not handle comma-delimited values (have not seen that we ever have more than one value)
         # We use the preferred name from UMLS for the display text
@@ -302,9 +294,9 @@ def add_codings_drug(nlp, drug, codeable_concept, insight_id, insight_system):
             # the Concept exists, but no derived extension
             coding = create_coding_system_entry(insight_constants.UMLS_URL, drug.get("cui"), insight_id,
                                                 insight_system)
-            if nlp_name == 'ACDService':
-                coding.display = drug.get("drugSurfaceForm")
-            if nlp_name == 'QuickUMLSService':
+            if hasattr(nlp, 'get_drug_name'):
+                coding.display = drug.get(nlp.get_drug_name())
+            else:
                 coding.display = drug.get("preferredName")
             codeable_concept.coding.append(coding)
     if drug.get("rxNormID") is not None:
