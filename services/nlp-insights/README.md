@@ -3,13 +3,13 @@ NLP Text Analytics
 A flask API for applying NLP-powered text analytics to FHIR resources.  
 
 ### Currently supported resource types:
-<!-- //TODO fill in overview of how resource is augmented -->
 
-Allergy Intolerance --> Produces enhanced Allergy Intolerance resource
+Allergy Intolerance --> Adds an extension to the resource containing diseases/syndromes, symptoms, and pathologic 
+functions and their codes inferred from the resource.
 
-Immunization --> Produces enhanced Immunization resource
+Immunization --> Adds an extension to the resource containing immunizations/immunologic factors and their codes inferred from the resource.
 
-Diagnostic Report --> Creates Condition and/or Medication Statement resources
+Diagnostic Report --> Creates Condition and/or Medication Statement resources generated from the diagnostic report
 
 ### Running the service
 To run the app on its own, fill in `text_analytics/acd/acd_config.ini` and `text_analytics/quickUMLS/quickumls_config.ini` with your config information for each service.
@@ -44,17 +44,16 @@ open-source QuickUMLS.
 | Action | Method | Endpoint | Body | Parameters | Returns on Success |
 |:------:|:------:|:---------|:----:|:-----------|:-------:|
 | Apply Analytics | `POST` | `/process` | FHIR bundle or resource | | Object annotated with NLP insights |
-| Add Config (will not overwrite) | `POST` | `/config/{configName}` | Config (json) | | Status `200` |
-| Add Config (will overwrite) | `PUT` | `/config/{configName}` | Config (json) | | Status `200`
-| Get Configs | `GET` | `/config` | | | Newline-delimited list of config names |
+| Add Config  | `PUT/POST` | `/config/{configName}` | Config (json) | | Status `200`
+| Get All Configs | `GET` | `/all_configs` | | | Newline-delimited list of config names |
+| Get Current Config | `GET` | `/config` | | | Currently active config |
 | Get Config | `GET` | `/config/{configName}` | | | Config named `configName` |
 | Delete Config | `DELETE` | `/config/{configName}` | | | Status `200` |
-| Set up NLP with specified config | `POST` | `/setup/{configName}` | | | Status `200` |
-<!-- | Health Check | `GET` | `/healthCheck` | | | Status `200` if OK </br> Status `500` if errors | -->
+| Set up NLP with specified config | `POST/PUT` | `/config?name={configName}` | | | Status `200` |
 
 #### Example Resources
 
-Example json FHIR that is able to be processed by the service can be found in text_analytics/test/resources
+Example json FHIR that can be processed by the service can be found in text_analytics/test/resources
 
 ##### Config json:
 { "nlpService": "quickUMLS" }
