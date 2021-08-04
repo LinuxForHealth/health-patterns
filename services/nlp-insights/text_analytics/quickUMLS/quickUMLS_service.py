@@ -17,9 +17,10 @@ class QuickUMLSService(NLPService):
     PROCESS_TYPE_UNSTRUCTURED = "QuickUMLS Unstructured"
     PROCESS_TYPE_STRUCTURED = "QuickUMLS Structured"
     
-    def __init__(self, config_dict):
+    def __init__(self, jsonString):
         _config = get_config()
         self.quickUMLS_url = _config['QUICKUMLS_URL']
+        self.jsonString = jsonString
 
     def process(self, text):
         try:

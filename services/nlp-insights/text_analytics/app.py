@@ -10,7 +10,11 @@ logger = logging.getLogger()
 
 app = Flask(__name__)
 
+#Maps values seen in configs to NLP python classes
+all_nlp_services = {'acd': ACDService, 'quickumls': QuickUMLSService}
+#NLP Service currently configured
 nlp_service = None
+#Stores instances of configured NLP Services
 nlp_services_dict = {}
 
 
@@ -41,10 +45,9 @@ def setup_service(config_name):
     if config_name in nlp_services_dict.keys():
         nlp_service = nlp_services_dict[config_name]
     else:
-        if config_dict["nlpService"].lower() == "acd":
-            nlp_service = ACDService(config_dict)
-        elif config_dict["nlpService"].lower() == "quickumls":
-            nlp_service = QuickUMLSService(config_dict)
+        nlp_name = config_dict.get('nlpService')
+        if nlp_name is not None and nlp_name.lower() in all_nlp_services.keys():
+            nlp_service = all_nlp_services[nlp_name.lower()](jsonString)
         else:
             logger.error("NLP service was unable to be configured. Config in incorrect format")
             return Response("NLP service was unable to be configured. Config in incorrect format", status=400)
@@ -93,20 +96,8 @@ def get_config(config_name):
     return Response(json_string, status=200, mimetype='application/json')
 
 
-@app.route("/config/<config_name>", methods=['POST'])
-def post_config(config_name):
-    try:
-        json_file = open(configDir + f'/{config_name}', 'x')
-        json_file.write(request.data.decode('utf-8'))
-    except FileExistsError as error:
-        logger.error("Config with the name: " + config_name + "already exists.")
-        return Response("Config with the name: " + config_name + "already exists.", status=400)
-    logger.info("Config successfully added")
-    return Response(status=200)
-
-
-@app.route("/config/<config_name>", methods=['PUT'])
-def put_config(config_name):
+@app.route("/config/<config_name>", methods=['POST', 'PUT'])
+def persist_config(config_name):
     try:
         json_file = open(configDir + f'/{config_name}', 'w')
         json_file.write(request.data.decode('utf-8'))
@@ -130,7 +121,7 @@ def delete_config(config_name):
 
 
 
-@app.route("/config/", methods=['GET'])
+@app.route("/all_configs/", methods=['GET'])
 def get_all_configs():
     configs = []
     directory = os.fsencode(configDir)
@@ -145,10 +136,23 @@ def get_all_configs():
     return Response(output, status=200)
 
 
-@app.route("/setup/<config_name>", methods=['GET'])
-def setup_nlp(config_name):
-    setup_service(config_name)
-    return Response(status=200)
+@app.route("/config/", methods = ['GET'])
+def get_current_config():
+    return Response(nlp_service.jsonString, status=200, mimetype='application/json')
+
+
+@app.route("/config/", methods = ['POST', 'PUT'])
+def setup_config():
+    if request.args and request.args.get('name'):
+        name = request.args.get('name')
+        try:
+            setup_service(name)
+        except Exception as ex:
+            logger.warn('Error in setting up service with a config name of: ' + name, ex)
+            return Response('Error in setting up service with a config name of: ' + name, status=400)
+    else:
+        logger.warn('Did not provide query parameter name to set up service')
+        return Response("Did not provide query parameter name to set up service", status=400)
 
 
 @app.route("/process/", methods=['POST'])
