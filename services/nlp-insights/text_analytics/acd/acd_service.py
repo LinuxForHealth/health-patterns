@@ -129,7 +129,7 @@ class ACDService(NLPService):
                 if code is not None and display is not None:
                     timing = Timing.construct()
                     timing_codeable_concept = CodeableConcept.construct()
-                    timing_codeable_concept.coding = [fhir_object_utils.create_coding_with_display(insight_constants.TIMING_URL, code, display)]
+                    timing_codeable_concept.coding = [fhir_object_utils.create_coding(insight_constants.TIMING_URL, code, display)]
                     timing_codeable_concept.text = frequency
                     timing.code = timing_codeable_concept
                     dose.timing = timing

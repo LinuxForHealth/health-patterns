@@ -14,7 +14,7 @@ from fhir.resources.reference import Reference
 from text_analytics.insights import insight_constants
 
 
-def create_coding_with_display(system, code, display=None):
+def create_coding(system, code, display=None):
     coding_element = Coding.construct()
     coding_element.system = system
     coding_element.code = code
@@ -66,7 +66,7 @@ def create_insight_reference(insight_id, insight_system):
 
 # Creating coding system entry with the extensions for classfication/insight id
 def create_coding_system_entry(coding_system_url, code_id, insight_id, insight_system):
-    coding = create_coding_with_display(coding_system_url, code_id)
+    coding = create_coding(coding_system_url, code_id)
     coding.extension = [create_insight_reference(insight_id, insight_system)]
     return coding
 

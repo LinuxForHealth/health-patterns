@@ -12,3 +12,6 @@ def adjust_vaccine_text(text):
     else:
         adjusted_text = text[:comma_location] + IMMUNIZATION_APPEND + text[comma_location:len(text)]
     return adjusted_text
+
+def adjust_allergy_text(text):
+    return 'Allergy to ' + text
