@@ -7,12 +7,3 @@ class NLPService(ABC):
     def process(self, text):
         return None
 
-    @staticmethod
-    @abstractmethod
-    def concept_to_dict(concept):
-        return None
-
-    @staticmethod
-    @abstractmethod
-    def symptom_to_dict(symptom):
-        return None

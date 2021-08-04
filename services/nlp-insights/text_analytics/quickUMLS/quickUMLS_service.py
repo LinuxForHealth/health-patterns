@@ -43,16 +43,12 @@ class QuickUMLSService(NLPService):
     def concept_to_dict(concept):
         output = {"Structure": "Concept"}
         output["generatingService"] = "quickUMLS"
-        output["coveredText"] = concept["ngram"]
-        output["cui"] = concept["cui"]
-        output["begin"] = concept["start"]
-        output["end"] = concept["end"]
-        output["preferredName"] = concept["term"]
-        output["type"] = lookup(concept["semtypes"][0] or None)
+        output["coveredText"] = concept["ngram"] if "ngram" in concept else None
+        output["cui"] = concept["cui"] if "cui" in concept else None
+        output["begin"] = concept["start"] if "start" in concept else None
+        output["end"] = concept["end"] if "end" in concept else None
+        output["preferredName"] = concept["term"] if "term" in concept else None
+        output["type"] = lookup(concept["semtypes"][0]) if "semtypes" in concept and len(concept["semtypes"]) > 0 else None
         output["negated"] = False
         return output
 
-    @staticmethod
-    def symptom_to_dict(symptom):
-        return None
-        # Since quickUMLS does not explicitly generate symptoms.

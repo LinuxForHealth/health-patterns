@@ -57,6 +57,7 @@ class ACDService(NLPService):
             return
 
 
+<<<<<<< HEAD
     @staticmethod
     def concept_to_dict(concept):
         return concept
@@ -109,6 +110,8 @@ class ACDService(NLPService):
         return output
 
     
+=======
+>>>>>>> 0009c7e57f93c54d221e93181cec818806d29e13
     def add_medications(nlp, diagnostic_report, nlp_output, med_statements_found, med_statements_insight_counter):
         medications = nlp_output.get('MedicationInd')
         for medication in medications:

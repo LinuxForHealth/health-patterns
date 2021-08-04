@@ -317,21 +317,28 @@ def find_codable_concept(codeable_concept, id, system):
 
 
 def add_diagnosis_confidences(insight_ext, insight_model_data):
-    confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_EXPLICIT,
-                                   insight_model_data['diagnosis']['usage']['explicitScore'])
-    insight_ext.append(confidence)
-    confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_PATIENT_REPORTED,
-                                   insight_model_data['diagnosis']['usage']['patientReportedScore'])
-    insight_ext.append(confidence)
-    confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_DISCUSSED,
-                                   insight_model_data['diagnosis']['usage']['discussedScore'])
-    insight_ext.append(confidence)
-    confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_FAMILY_HISTORY,
-                                   insight_model_data['diagnosis']['familyHistoryScore'])
-    insight_ext.append(confidence)
-    confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_SUSPECTED,
-                                   insight_model_data['diagnosis']['suspectedScore'])
-    insight_ext.append(confidence)
+    if insight_model_data['diagnosis'] is not None:
+        if insight_model_data['diagnosis']['usage'] is not None:
+            if insight_model_data['diagnosis']['usage']['explicitScore'] is not None:
+                confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_EXPLICIT,
+                                               insight_model_data['diagnosis']['usage']['explicitScore'])
+                insight_ext.append(confidence)
+            if insight_model_data['diagnosis']['usage']['patientReportedScore'] is not None:
+                confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_PATIENT_REPORTED,
+                                               insight_model_data['diagnosis']['usage']['patientReportedScore'])
+                insight_ext.append(confidence)
+            if insight_model_data['diagnosis']['usage']['discussedScore'] is not None:
+                confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_DISCUSSED,
+                                               insight_model_data['diagnosis']['usage']['discussedScore'])
+                insight_ext.append(confidence)
+            if insight_model_data['diagnosis']['usage']['familyHistoryScore'] is not None:
+                confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_FAMILY_HISTORY,
+                                               insight_model_data['diagnosis']['familyHistoryScore'])
+                insight_ext.append(confidence)
+            if insight_model_data['diagnosis']['usage']['suspectedScore'] is not None:
+                confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_SUSPECTED,
+                                               insight_model_data['diagnosis']['suspectedScore'])
+                insight_ext.append(confidence)
 
 
 def add_medication_confidences(insight_ext, insight_model_data):
