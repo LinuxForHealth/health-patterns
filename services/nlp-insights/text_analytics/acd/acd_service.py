@@ -27,20 +27,22 @@ class ACDService(NLPService):
     PROCESS_TYPE_UNSTRUCTURED = "ACD Unstructured"
     PROCESS_TYPE_STRUCTURED = "ACD Structured"
 
-    medications = 'MedicationInd'
+    version = "2021-01-01"
+
     
-    def __init__(self, json_string):
+    def __init__(self, config_dict):
         _config = get_config()
         self.acd_key = _config['ACD_KEY']
         self.acd_url = _config['ACD_URL']
         self.acd_flow = _config['ACD_FLOW']
-
-        # self.parse_config(json_string)
+        if config_dict.get('version') is not None:
+            self.version = config_dict.get('version')
+        
 
     def process(self, text):
         service = acd.AnnotatorForClinicalDataV1(
             authenticator=IAMAuthenticator(apikey=self.acd_key),
-            version="2021-01-01"
+            version=self.version
         )
         service.set_service_url(self.acd_url)
 
@@ -54,12 +56,6 @@ class ACDService(NLPService):
             logger.error("ACD could not be run on text: " + text + " with error: {}".format(err.message))
             return
 
-    def parse_config(self, jsonString):
-        configJson = json.loads(jsonString)
-        self.resourceTypes = configJson["resourceTypes"] or None
-        self.resourcePaths = configJson["resourcePaths"]
-        self.queryBy = configJson["queryBy"]
-        self.createNew = configJson["createNew"]
 
     @staticmethod
     def concept_to_dict(concept):
@@ -112,8 +108,6 @@ class ACDService(NLPService):
         output["negated"] = symptom.negated
         return output
 
-    def get_drug_name():
-        return "drugSurfaceForm"
     
     def add_medications(nlp, diagnostic_report, nlp_output, med_statements_found, med_statements_insight_counter):
         medications = nlp_output.get('MedicationInd')
@@ -122,20 +116,21 @@ class ACDService(NLPService):
 
         return med_statements_found, med_statements_insight_counter
 
-    def build_medication(nlp, med_statement, medication, insight_id):
+    def build_medication(med_statement, medication, insight_id):
         if med_statement.status is None:
             med_statement.status = 'unknown'
 
         acd_drug = medication.get('drug')[0].get("name1")[0]
+        acd_drug_name = acd_drug.get("drugSurfaceForm")
 
 
         if type(med_statement.medicationCodeableConcept) is dict and med_statement.medicationCodeableConcept.get("text") == "template":
             codeable_concept = CodeableConcept.construct()
-            codeable_concept.text = acd_drug.get("drugSurfaceForm")
+            codeable_concept.text = acd_drug_name
             med_statement.medicationCodeableConcept = codeable_concept
             codeable_concept.coding = []
 
-        fhir_object_utils.add_codings_drug(nlp, acd_drug, med_statement.medicationCodeableConcept, insight_id, insight_constants.INSIGHT_ID_UNSTRUCTURED_SYSTEM)
+        fhir_object_utils.add_codings_drug(acd_drug, acd_drug_name, med_statement.medicationCodeableConcept, insight_id, insight_constants.INSIGHT_ID_UNSTRUCTURED_SYSTEM)
 
         if hasattr(medication, "administration"):
             if med_statement.dosage is None:

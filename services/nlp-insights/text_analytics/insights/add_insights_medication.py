@@ -53,7 +53,7 @@ def create_insight(concept, nlp, nlp_output, diagnostic_report, build_resource, 
         insight_num = med_statements_insight_counter[cui] + 1
     med_statements_insight_counter[cui] = insight_num
     insight_id = "insight-" + str(insight_num)
-    build_resource(nlp, med_statement, concept, insight_id)
+    build_resource(med_statement, concept, insight_id)
     insight = Extension.construct()
     insight.url = insight_constants.INSIGHT_INSIGHT_ENTRY_URL
     insight_id_ext = fhir_object_utils.create_insight_extension(insight_id, insight_constants.INSIGHT_ID_UNSTRUCTURED_SYSTEM)
@@ -71,7 +71,7 @@ def create_insight(concept, nlp, nlp_output, diagnostic_report, build_resource, 
 
 
 
-def _build_resource_data(nlp, med_statement, concept, insight_id):
+def _build_resource_data(med_statement, concept, insight_id):
     if med_statement.status is None:
         med_statement.status = 'unknown'
     
@@ -83,7 +83,7 @@ def _build_resource_data(nlp, med_statement, concept, insight_id):
         med_statement.medicationCodeableConcept = codeable_concept
         codeable_concept.coding = []
 
-    fhir_object_utils.add_codings_drug(nlp, concept, med_statement.medicationCodeableConcept, insight_id, insight_constants.INSIGHT_ID_UNSTRUCTURED_SYSTEM)
+    fhir_object_utils.add_codings_drug(concept, drug, med_statement.medicationCodeableConcept, insight_id, insight_constants.INSIGHT_ID_UNSTRUCTURED_SYSTEM)
 
 
 

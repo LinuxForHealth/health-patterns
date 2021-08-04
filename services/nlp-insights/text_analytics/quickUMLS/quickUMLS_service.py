@@ -17,7 +17,7 @@ class QuickUMLSService(NLPService):
     PROCESS_TYPE_UNSTRUCTURED = "QuickUMLS Unstructured"
     PROCESS_TYPE_STRUCTURED = "QuickUMLS Structured"
     
-    def __init__(self, json_string):
+    def __init__(self, config_dict):
         _config = get_config()
         self.quickUMLS_url = _config['QUICKUMLS_URL']
 
@@ -38,13 +38,6 @@ class QuickUMLSService(NLPService):
         except requests.exceptions as ex:
             logger.error("Error calling QuickUMLS on: " + text + ", with error " + ex.message)
             return None
-
-    def parse_config(self, jsonString):
-        configJson = json.loads(jsonString)
-        self.resourceTypes = configJson["resourceTypes"]
-        self.resourcePaths = configJson["resourcePaths"]
-        self.queryBy = configJson["queryBy"]
-        self.createNew = configJson["createNew"]
 
     @staticmethod
     def concept_to_dict(concept):

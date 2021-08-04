@@ -281,7 +281,7 @@ def add_codings(concept, codeable_concept, insight_id, insight_system):
                               insight_system)
 
 
-def add_codings_drug(nlp, drug, codeable_concept, insight_id, insight_system):
+def add_codings_drug(drug, drug_name, codeable_concept, insight_id, insight_system):
     if drug.get("cui") is not None:
         # For CUIs, we do not handle comma-delimited values (have not seen that we ever have more than one value)
         # We use the preferred name from UMLS for the display text
@@ -294,10 +294,9 @@ def add_codings_drug(nlp, drug, codeable_concept, insight_id, insight_system):
             # the Concept exists, but no derived extension
             coding = create_coding_system_entry(insight_constants.UMLS_URL, drug.get("cui"), insight_id,
                                                 insight_system)
-            if hasattr(nlp, 'get_drug_name'):
-                coding.display = drug.get(nlp.get_drug_name())
-            else:
-                coding.display = drug.get("preferredName")
+
+            coding.display = drug_name
+            
             codeable_concept.coding.append(coding)
     if drug.get("rxNormID") is not None:
         create_coding_entries(codeable_concept, insight_constants.RXNORM_URL, drug.get("rxNormID"), insight_id,

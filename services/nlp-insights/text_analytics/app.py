@@ -37,19 +37,19 @@ def setup_service(config_name):
     global nlp_service
     jsonFile = open(configDir + f'/{config_name}', "r")
     jsonString = jsonFile.read()
-    configJson = json.loads(jsonString)
+    config_dict = json.loads(jsonString)
     if config_name in nlp_services_dict.keys():
         nlp_service = nlp_services_dict[config_name]
     else:
-        if configJson["nlpService"].lower() == "acd":
-            nlp_service = ACDService(jsonString)
-        elif configJson["nlpService"].lower() == "quickumls":
-            nlp_service = QuickUMLSService(jsonString)
+        if config_dict["nlpService"].lower() == "acd":
+            nlp_service = ACDService(config_dict)
+        elif config_dict["nlpService"].lower() == "quickumls":
+            nlp_service = QuickUMLSService(config_dict)
         else:
             logger.error("NLP service was unable to be configured. Config in incorrect format")
             return Response("NLP service was unable to be configured. Config in incorrect format", status=400)
         nlp_services_dict[config_name] = nlp_service
-    logger.info("NLP service configured with: " + configJson['nlpService'])
+    logger.info("NLP service configured with: " + config_dict['nlpService'])
     return Response(jsonString, status=200, mimetype='application/json')
 
 
