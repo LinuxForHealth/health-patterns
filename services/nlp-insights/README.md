@@ -41,15 +41,15 @@ open-source QuickUMLS.
 
 #### HTTP Endpoints
 
-| Action | Method | Endpoint | Body | Parameters | Returns on Success |
-|:------:|:------:|:---------|:----:|:-----------|:-------:|
-| Apply Analytics | `POST` | `/process` | FHIR bundle or resource | | Object annotated with NLP insights |
-| Add Config  | `PUT/POST` | `/config/{configName}` | Config (json) | | Status `200`
-| Get All Configs | `GET` | `/all_configs` | | | Newline-delimited list of config names |
-| Get Current Config | `GET` | `/config` | | | Currently active config |
-| Get Config | `GET` | `/config/{configName}` | | | Config named `configName` |
-| Delete Config | `DELETE` | `/config/{configName}` | | | Status `200` |
-| Set up NLP with specified config | `POST/PUT` | `/config?name={configName}` | | | Status `200` |
+| Action | Method | Endpoint | Body | Returns on Success |
+|:------:|:------:|:---------|:----:|:-------:|
+| Apply Analytics | `POST` | `/process` | FHIR bundle or resource | Object annotated with NLP insights |
+| Add Config  | `PUT/POST` | `/config/{configName}` | Config (json) | Status `200`
+| Get All Configs | `GET` | `/all_configs` | | Newline-delimited list of config names |
+| Get Current Config | `GET` | `/config` | | Currently active config |
+| Get Config | `GET` | `/config/{configName}` | | Config named `configName` |
+| Delete Config | `DELETE` | `/config/{configName}` | | Status `200` |
+| Set up NLP with specified config | `POST/PUT` | `/config?name={configName}` | | Status `200` |
 
 #### Example Resources
 
