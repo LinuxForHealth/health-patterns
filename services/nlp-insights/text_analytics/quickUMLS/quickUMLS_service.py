@@ -19,23 +19,18 @@ class QuickUMLSService(NLPService):
         self.quickUMLS_url = _config['QUICKUMLS_URL']
 
     def process(self, text):
-        print("url:", self.quickUMLS_url)
-
         try:
             if type(text) is bytes:
                 request_body = {"text": text.decode('utf-8')}
             else:
-                # print("Calling QUICKUMLS" + text)
                 request_body = {"text": text}
+            logger.info("Calling QUICKUMLS")
             resp = requests.post(self.quickUMLS_url, json=request_body)
-            # print("RAW QUICKUMLS Response: ", resp.text, "<end>")
             concepts = json.loads(resp.text)
-            # print(concepts)
             conceptsList = []
             if concepts is not None:
                 for concept in concepts:
                     conceptsList.append(self.concept_to_dict(concept))
-            print({"concepts": conceptsList})
             return {"concepts": conceptsList}
         except requests.exceptions as ex:
             logger.error("Error calling QuickUMLS on: " + text + ", with error " + ex.message)
@@ -59,7 +54,6 @@ class QuickUMLSService(NLPService):
         output["preferredName"] = concept["term"]
         output["type"] = lookup(concept["semtypes"][0] or None)
         output["negated"] = False
-        # print(concept)  # if you want to see what the structure is like
         return output
 
     @staticmethod
