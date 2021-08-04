@@ -16,6 +16,7 @@
         <opentracing-spring-jaeger-web-starter.version>3.1.1</opentracing-spring-jaeger-web-starter.version>
         <app.name>cohort-service</app.name>
         <hapi.fhir.version>5.2.0</hapi.fhir.version>
+        <cqframework.version>1.5.1</cqframework.version>
     </properties>
 
     <parent>
@@ -23,6 +24,41 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.4.RELEASE</version>
     </parent>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>info.cqframework</groupId>
+                <artifactId>cql-to-elm</artifactId>
+                <version>${cqframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.cqframework</groupId>
+                <artifactId>elm</artifactId>
+                <version>${cqframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.cqframework</groupId>
+                <artifactId>cql</artifactId>
+                <version>${cqframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.cqframework</groupId>
+                <artifactId>model</artifactId>
+                <version>${cqframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.cqframework</groupId>
+                <artifactId>quick</artifactId>
+                <version>${cqframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.cqframework</groupId>
+                <artifactId>qdm</artifactId>
+                <version>${cqframework.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- Core -->
@@ -74,7 +110,13 @@
         	<groupId>com.ibm.cohort</groupId>
         	<artifactId>cohort-engine</artifactId>
         	<!-- This is a fixed version from the Cohort Team's SNAPSHOTs that we are currently using that we got from Corey Snders. -->
-        	<version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1-20210803.165707-125</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.ibm.cohort</groupId>
+        	<artifactId>cohort-util</artifactId>
+        	<!-- This is a fixed version from the Cohort Team's SNAPSHOTs that we are currently using that we got from Corey Snders. -->
+            <version>0.0.1-20210803.165339-105</version>
         </dependency>
 
 	    <dependency>
@@ -120,6 +162,28 @@
     </build>
 
 	<repositories>
+		<repository>
+			<id>cql.releases</id>
+			<name>CQL Framework and Engine Releases</name>
+			<url>https://oss.sonatype.org/content/repositories/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>cql.snapshots</id>
+			<name>CQL Framework and Engine Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
  		<repository>
 			<id>github</id>
 			<name>GitHub Alvearie Cohort Service Dependencies</name>
