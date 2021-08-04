@@ -1,5 +1,6 @@
 import json
 import base64
+from text_analytics.app import process
 
 from fhir.resources.attachment import Attachment
 from fhir.resources.bundle import Bundle
@@ -100,7 +101,6 @@ def create_transaction_bundle(fhir_resource_action):
     for resource, request_type, url in fhir_resource_action:
         bundle_entry = BundleEntry.construct()
         bundle_entry.resource = resource
-        # TODO: Figure out how to create BundleEntryRequest not using json
         json = {
             "method": request_type,
             "url": url
@@ -138,11 +138,7 @@ def add_resource_meta_unstructured(nlp, diagnostic_report):
 
     process_type_extension = Extension.construct()
     process_type_extension.url = insight_constants.PROCESS_TYPE_URL
-    nlp_name = type(nlp).__name__
-    if nlp_name == 'ACDService': 
-        process_type_extension.valueString = insight_constants.ACD_PROCESS_TYPE_UNSTRUCTURED
-    elif nlp_name == 'QuickUMLSService':
-        process_type_extension.valueString = insight_constants.QUICKUMLS_PROCESS_TYPE_UNSTRUCTURED
+    process_type_extension.valueString = nlp.PROCESS_TYPE_UNSTRUCTURED
     result_extension.extension.append(process_type_extension)
 
     based_on_extension = Extension.construct()
@@ -176,11 +172,7 @@ def add_resource_meta_structured(nlp, resource):
     # Add structured process meta extension
     process_type_extension = Extension.construct()
     process_type_extension.url = insight_constants.PROCESS_TYPE_URL
-    nlp_name = type(nlp).__name__
-    if nlp_name == 'ACDService': 
-        process_type_extension.valueString = insight_constants.ACD_PROCESS_TYPE_STRUCTURED
-    elif nlp_name == 'QuickUMLSService':
-        process_type_extension.valueString = insight_constants.QUICKUMLS_PROCESS_TYPE_STRUCTURED
+    process_type_extension.valueString = nlp.PROCESS_TYPE_STRUCTURED
     result_extension.extension.append(process_type_extension)
 
 

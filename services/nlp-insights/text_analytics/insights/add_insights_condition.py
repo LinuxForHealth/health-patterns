@@ -7,8 +7,6 @@ from text_analytics.utils import fhir_object_utils
 
 
 def _build_resource(nlp, diagnostic_report, nlp_output):
-    # build insight set from NLP output
-    # initially using ICDiagnosis concepts this could change when we do analysis / tune NLP
     nlp_name = type(nlp).__name__
     nlp_concepts = nlp_output.get('concepts')
     conditions_found = {}            # key is UMLS ID, value is the FHIR resource
@@ -38,7 +36,6 @@ def _build_resource(nlp, diagnostic_report, nlp_output):
             insight.extension.append(insight_detail)
             insight_span = fhir_object_utils.create_insight_span_extension(concept)
             insight.extension.append(insight_span)
-            # if there is insight model data, save confidences to insight extension
             if "insightModelData" in concept:
                 fhir_object_utils.add_diagnosis_confidences(insight.extension, concept["insightModelData"])
             result_extension = condition.meta.extension[0]
@@ -59,7 +56,6 @@ def _build_resource_data(condition, concept, insight_id):
 
 
 def create_conditions_from_insights(nlp, diagnostic_report, nlp_output):
-    # Create Condition FHIR resource
     conditions = _build_resource(nlp, diagnostic_report, nlp_output)
     if conditions is not None:
         for condition in conditions:
