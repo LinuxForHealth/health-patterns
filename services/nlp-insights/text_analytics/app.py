@@ -121,7 +121,7 @@ def delete_config(config_name):
 
 
 
-@app.route("/all_configs/", methods=['GET'])
+@app.route("/all_configs", methods=['GET'])
 def get_all_configs():
     configs = []
     directory = os.fsencode(configDir)
@@ -136,12 +136,12 @@ def get_all_configs():
     return Response(output, status=200)
 
 
-@app.route("/config/", methods = ['GET'])
+@app.route("/config", methods = ['GET'])
 def get_current_config():
     return Response(nlp_service.jsonString, status=200, mimetype='application/json')
 
 
-@app.route("/config/", methods = ['POST', 'PUT'])
+@app.route("/config", methods = ['POST', 'PUT'])
 def setup_config():
     if request.args and request.args.get('name'):
         name = request.args.get('name')
@@ -155,7 +155,7 @@ def setup_config():
         return Response("Did not provide query parameter name to set up service", status=400)
 
 
-@app.route("/process/", methods=['POST'])
+@app.route("/process", methods=['POST'])
 def apply_analytics():
     request_data = json.loads(request.data)
     resp = process(request_data)
