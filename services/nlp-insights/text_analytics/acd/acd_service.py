@@ -61,60 +61,9 @@ class ACDService(NLPService):
         self.queryBy = configJson["queryBy"]
         self.createNew = configJson["createNew"]
 
-    @staticmethod
-    def concept_to_dict(concept):
-        return concept
-        output = {"Structure": "Concept"}
-        output["generating_service"] = "ACD"
-        output["cui"] = concept["cui"]
-        output["coveredText"] = concept["coveredText"]
-        output["begin"] = concept.begin
-        output["end"] = concept.end
-        output["preferred_name"] = concept.preferred_name
-        output["type"] = concept.type
-        if concept.nci_code is not None:
-            output["nci_code"] = concept.nci_code
-        if concept.rx_norm_id is not None:
-            output["rx_norm_id"] = concept.rx_norm_id
-        if concept.mesh_id is not None:
-            output["mesh_id"] = concept.mesh_id
-        if concept.snomed_concept_id is not None:
-            output["snomed_concept_id"] = concept.snomed_concept_id
-        if concept.loinc_id is not None:
-            output["loinc_id"] = concept.loinc_id
-        if concept.vocabs is not None:
-            output["vocabs"] = concept.vocabs
-        output["negated"] = concept.negated
-        return output
-
-    @staticmethod
-    def symptom_to_dict(symptom):
-        output = {"Structure": "Symptom"}
-        output["generating_service"] = "ACD"
-        if symptom.cui is not None:
-            output["cui"] = symptom.cui
-        if symptom.covered_text is not None:
-            output["covered_text"] = symptom.covered_text
-        if symptom.begin is not None:
-            output["begin"] = symptom.begin
-        if symptom.end is not None:
-            output["end"] = symptom.end
-        if symptom.symptom_disease_normalized_name is not None:
-            output["preferred_name"] = symptom.symptom_disease_normalized_name
-        if symptom.type is not None:
-            output["type"] = symptom.type
-        if symptom.hcc_code is not None:
-            output["hcc_code"] = symptom.hcc_code
-        if symptom.snomed_concept_id is not None:
-            output["snomed_concept_id"] = symptom.snomed_concept_id
-        if symptom.modality is not None:
-            output["modality"] = symptom.modality
-        output["negated"] = symptom.negated
-        return output
-
     def get_drug_name():
         return "drugSurfaceForm"
-    
+
     def add_medications(nlp, diagnostic_report, nlp_output, med_statements_found, med_statements_insight_counter):
         medications = nlp_output.get('MedicationInd')
         for medication in medications:

@@ -59,7 +59,3 @@ class QuickUMLSService(NLPService):
         output["negated"] = False
         return output
 
-    @staticmethod
-    def symptom_to_dict(symptom):
-        return None
-        # Since quickUMLS does not explicitly generate symptoms.

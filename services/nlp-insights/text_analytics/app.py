@@ -84,7 +84,6 @@ setup_service('default')
 @app.route("/config/<config_name>", methods=['GET'])
 def get_config(config_name):
     try:
-        # json_file = open('text_analytics/configs/' + configName, "r")
         json_file = open(configDir + f'/{config_name}', 'r')
         json_string = json_file.read()
     except FileNotFoundError:
@@ -97,7 +96,6 @@ def get_config(config_name):
 @app.route("/config/<config_name>", methods=['POST'])
 def post_config(config_name):
     try:
-        # json_file = open('text_analytics/configs/' + configName, 'x')
         json_file = open(configDir + f'/{config_name}', 'x')
         json_file.write(request.data.decode('utf-8'))
     except FileExistsError as error:
@@ -110,7 +108,6 @@ def post_config(config_name):
 @app.route("/config/<config_name>", methods=['PUT'])
 def put_config(config_name):
     try:
-        # json_file = open('text_analytics/configs/' + configName, 'w')
         json_file = open(configDir + f'/{config_name}', 'w')
         json_file.write(request.data.decode('utf-8'))
     except:
@@ -123,7 +120,6 @@ def put_config(config_name):
 @app.route("/config/<config_name>", methods=['DELETE'])
 def delete_config(config_name):
     try:
-        # os.remove('text_analytics/configs/' + configName)
         os.remove(configDir + f'/{config_name}')
     except OSError as error:
         logger.error("Error when trying to delete config: " + error.message)
@@ -137,7 +133,6 @@ def delete_config(config_name):
 @app.route("/config/", methods=['GET'])
 def get_all_configs():
     configs = []
-    # directory = os.fsencode('text_analytics/configs')
     directory = os.fsencode(configDir)
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
