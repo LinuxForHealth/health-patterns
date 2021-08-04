@@ -44,8 +44,8 @@ import com.ibm.cohort.engine.CqlEvaluator;
 import com.ibm.cohort.engine.DirectoryLibrarySourceProvider;
 import com.ibm.cohort.engine.MultiFormatLibrarySourceProvider;
 import com.ibm.cohort.engine.TranslatingLibraryLoader;
-import com.ibm.cohort.engine.translation.CqlTranslationProvider;
-import com.ibm.cohort.engine.translation.InJVMCqlTranslationProvider;
+import com.ibm.cohort.translator.provider.CqlTranslationProvider;
+import com.ibm.cohort.translator.provider.InJVMCqlTranslationProvider;
 import com.ibm.cohort.fhir.client.config.FhirClientBuilder;
 import com.ibm.cohort.fhir.client.config.FhirClientBuilderFactory;
 import com.ibm.cohort.fhir.client.config.FhirServerConfig;
@@ -287,6 +287,7 @@ public class CohortService {
 		// We persist the library for the next time the service starts
 		Files.copy(new ByteArrayInputStream(cql.getBytes()), path, StandardCopyOption.REPLACE_EXISTING);
 		cqls.put(cqlFile.toString(), cqlFile);
+		resetCQLDirectory();
 		return cqlFile;
 	}
 
