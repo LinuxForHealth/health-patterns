@@ -24,9 +24,12 @@ def setup_config_dir():
             defaultPVFile = open(pvPath + '/default', 'w')
             defaultPVFile.write(defaultJson)
         except:
+            logger.info(localPath)
             return localPath
+        logger.info(pvPath)
         return pvPath
     else:
+        logger.info(localPath)
         return localPath
 
 
@@ -38,9 +41,9 @@ def setup_service(config_name):
     if config_name in nlp_services_dict.keys():
         nlp_service = nlp_services_dict[config_name]
     else:
-        if configJson["nlpService"] == "ACD":
+        if configJson["nlpService"].lower() == "acd":
             nlp_service = ACDService(jsonString)
-        elif configJson["nlpService"] == "quickUMLS":
+        elif configJson["nlpService"].lower() == "quickumls":
             nlp_service = QuickUMLSService(jsonString)
         else:
             logger.error("NLP service was unable to be configured. Config in incorrect format")
