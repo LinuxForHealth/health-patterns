@@ -137,7 +137,7 @@ kubectl get all
 echo "****************************************************" 
 echo "* Goto the testcase folder in the repo             *"
 echo "****************************************************"
-cd /workspace/$TEST_NAMESPACE/clinical-enrichment/
+cd /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/
 
 echo "*************************************" 
 echo "* Build the testcases               *"
