@@ -53,8 +53,8 @@ echo "*************************************"
 echo "* Clinical Ingestion Deploy         *"
 echo "*************************************"
 
-echo " clone clinical ingestion git repo"
-git clone https://github.com/Alvearie/health-patterns.git
+echo " clone clinical ingestion git repo using "$GIT_BRANCH " branch"
+git clone --branch $GIT_BRANCH https://github.com/Alvearie/health-patterns.git
 
 echo " change to the correct directory"
 cd health-patterns/helm-charts/health-patterns
@@ -138,6 +138,8 @@ echo "****************************************************"
 echo "* Goto the testcase folder in the repo             *"
 echo "****************************************************"
 cd /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/
+pwd
+ls
 
 echo "*************************************" 
 echo "* Build the testcases               *"
