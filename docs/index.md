@@ -21,7 +21,7 @@ At the most basic level, the Ingestion pattern will read HL7 or FHIR data from a
         - In case of errors within the bundle, individual resources are retried
         - Errors are reported back to the data integrator via the kafka topic
 
-Get started using the [clinical data ingestion & enrichment pattern today](https://github.com/Alvearie/health-patterns/tree/main/clinical-ingestion)
+Get started using the [clinical data ingestion pattern](https://github.com/Alvearie/health-patterns/tree/main/ingest) today.
 
 ## Clinical Data Enrichment
 The _Clinical Enrichment_ health pattern has been separated from the _Ingestion_ pattern.  It is still available to be deployed and run as part of ingestion, but it can also be set up on its own.
@@ -36,16 +36,16 @@ _Enrichment_ will read FHIR data from a [Kafka](https://kafka.apache.org) topic 
 
 The flexibility of this approach allows the consumer to use enrichment at the appropriate time.  For instance, some of the enrichment could happen at Ingestion time (FHIR Terminology for  instance) prior to storing the data, but after the data is persisted in the FHIR Server, Enrichment can run again to only run NLP and/or an analtyic algorithm.
 
-To get started today, use the [clinical data ingestion & enrichment pattern today](https://github.com/Alvearie/health-patterns/tree/main/clinical-ingestion) but watch this space - the _Enrichment_ pattern will be available separately soon.
+Get started using the [clinical data enrichment pattern](https://github.com/Alvearie/health-patterns/tree/main/enrich) today.
 
 
-## Quality Measure & Cohorting 
+## Quality Measure & Cohorting
 The _Clinical Data Cohorting_ pattern provides a reference implementation that uses the [quality measure & cohort service](https://github.com/Alvearie/quality-measure-and-cohort-service) to find patients within the FHIR server that match a given cohort as defined using [CQL](https://cql.hl7.org).
 
-Get started using the [cohorting pattern today](https://github.com/Alvearie/health-patterns/tree/main/cohort-service)
+Get started using the [cohorting pattern](https://github.com/Alvearie/health-patterns/tree/main/cohort) today.
 
 
-## Clinical Data Access 
+## Clinical Data Access
 The _Clinical Data Access_ pattern shows how to configure access to the FHIR server for traditional access methods, in particular how to configure the FHIR server for [SMART on FHIR](https://smarthealthit.org/) using [Keycloak](https://www.keycloak.org/) and the [Keycloak extensions for FHIR](https://github.com/Alvearie/keycloak-extensions-for-fhir)
 
 Get started using the [Data Access pattern today](https://github.com/Alvearie/health-patterns/tree/main/data-access)
@@ -53,14 +53,11 @@ Get started using the [Data Access pattern today](https://github.com/Alvearie/he
 ## Clinical Data Analytics -- COMING SOON
 In addition, the _Clinical Data Analytics_ reference implementation will incorporate various types of analytics using Kubeflow.  To begin, we will incorporate all of the analytics found in the _Enrichment_ pattern into Kubeflow by calling the same set of Microservices that were used by Enrichment.
 
-We will have examples of 
+We will have examples of
 - using single patient data from the FHIR server to score against a model
 - bulk export data from the FHIR Server, transform the data and run the model/analytic in Kubeflow pipelines against multiple patients
 - bulk export data from the FHIR Server and transform it to train a new model
 - serving an existing trained model
 
 
-The main Alvearie page shows the longer term [Alvearie architecture](https://alvearie.io/architecture) 
-
-
-
+The main Alvearie page shows the longer term [Alvearie architecture](https://alvearie.io/architecture)
