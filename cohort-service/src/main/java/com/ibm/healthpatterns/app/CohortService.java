@@ -42,6 +42,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.cohort.engine.CqlEvaluator;
 import com.ibm.cohort.engine.DirectoryLibrarySourceProvider;
+import com.ibm.cohort.engine.LoggingEnum;
 import com.ibm.cohort.engine.MultiFormatLibrarySourceProvider;
 import com.ibm.cohort.engine.TranslatingLibraryLoader;
 import com.ibm.cohort.translator.provider.CqlTranslationProvider;
@@ -341,7 +342,7 @@ public class CohortService {
 		// TODO: Add support for parameters
 		// parameters = parseParameterArguments(arguments.parameters);
 		try {
-			cqlEngine.evaluate(cql.getName(), cql.getVersion(), null, null, patientIds, new CQLExecutionCallback(cohort, reverseMatch));
+			cqlEngine.evaluate(cql.getName(), cql.getVersion(), null, null, patientIds, LoggingEnum.NA, new CQLExecutionCallback(cohort, reverseMatch));
 		} catch (Exception e) {
 			throw new CQLExecutionException(e);
 		}
