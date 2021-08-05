@@ -36,7 +36,7 @@
     <build>
     <finalName>${project.artifactId}</finalName>
     <testOutputDirectory>target/test-classes</testOutputDirectory>
-    <testSourceDirectory>src/main/java</testSourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
     <plugins>   
     <plugin>
                     <groupId>com.google.code.maven-replacer-plugin</groupId>
@@ -53,7 +53,7 @@
                     </executions>
                     <configuration>
                         <includes> 
-                        	<include>src/main/resources/enrich-flow.properties</include>
+                        	<include>src/test/resources/enrich-flow.properties</include>
                         </includes>
                         <replacements>
 							<replacement>
