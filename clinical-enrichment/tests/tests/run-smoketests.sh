@@ -146,15 +146,16 @@ echo "* Build the testcases               *"
 echo "*************************************"
 mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.deid.prep=$DEID_PREP_IP -Dport.deid.prep=$DEID_PREP_PORT -Dip.term.prep=$TERM_PREP_IP -Dport.term.prep=$TERM_PREP_PORT -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dport.ascvd.from.fhir=$ASCVD_FROM_FHIR_PORT -Dpw=$DEFAULT_PASSWORD
 
-
 echo "*************************************" 
-echo "* Initialize the testcases          *"
+echo "* Properties File:                  *"
 echo "*************************************"
-mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
+cat src/test/resources/enrich-flow.properties
+
 
 echo "*************************************" 
 echo "* Execute the testcases             *"
 echo "*************************************"
+mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
 mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
 
 
