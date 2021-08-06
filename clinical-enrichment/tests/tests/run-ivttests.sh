@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Run the Alvearie Clinical Ingestion Deploy install per documented instructions
+# Run the Avlearie Clinical Enrichment Deploy install per documented instructions
 #
-# Run the Clinical Ingestion flow IVT tests and add test results to ivttest.xml for the Insights Quality Dashboard
+# Run the Clinical Enrichment smoke tests and add test results to ivttest.xml for the Insights Quality Dashboard
 
 echo "*************************************"
 echo "* Linux version                     *"
@@ -15,31 +15,24 @@ echo "*************************************"
 pwd
   
 #echo "*************************************"
-#echo "* Install OpenJDK 14                *"
+#echo "* Install OpenJDK 11                *"
 #echo "*************************************"
-#wget --quiet https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_linux-x64_bin.tar.gz
-#tar -xf openjdk-14.0.2_linux-x64_bin.tar.gz
+#wget --quiet https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz
+#tar -xf openjdk-11+28_linux-x64_bin.tar.gz
 #sudo mv jdk-14.0.2 /usr/lib/jvm
 
 #ls /usr/lib/jvm
- 
+
 echo "*************************************"
 echo "* Set Test env variables            *"
 echo "*************************************"
 export DEFAULT_PASSWORD=integrati0n
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0
-export HELM_RELEASE=ingestion
+export HELM_RELEASE=enrich
 export TEST_NAMESPACE=$CLUSTER_NAMESPACE"-ivt"
 #This is for VPC cluster health-patterns-1
 export INGRESS_SUBDOMAIN=wh-health-patterns.dev.watson-health.ibm.com
-export INGRESS_CLASS=public-iks-k8s-nginx
-#export JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.3
-
-
-echo "**************************************" 
-echo "* What SSL/TSL Versions we are using *"
-echo "**************************************"
-openssl ciphers -v | awk '{print $2}' | sort | uniq 
+#export JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.3 
 
 echo "*************************************"
 echo "* setup base directory for test     *"
@@ -60,8 +53,8 @@ echo "*************************************"
 echo "* Clinical Ingestion Deploy         *"
 echo "*************************************"
 
-echo " clone clinical ingestion git repo"
-git clone https://github.com/Alvearie/health-patterns.git
+echo " clone clinical ingestion git repo using "$GIT_BRANCH " branch"
+git clone --branch $GIT_BRANCH https://github.com/Alvearie/health-patterns.git
 
 echo " change to the correct directory"
 cd health-patterns/helm-charts/health-patterns
@@ -78,14 +71,13 @@ pwd
 #export INGRESS_SUBDOMAIN=${INGRESS_SUBDOMAIN:21}
 #export INGRESS_SUBDOMAIN=${INGRESS_SUBDOMAIN:0:${#INGRESS_SUBDOMAIN}-2}
 
-
 # Add hostname to values.yaml
 sed -i -e "s/\&hostname/\&hostname $TEST_NAMESPACE.$INGRESS_SUBDOMAIN/g" values.yaml
 cat values.yaml | grep $TEST_NAMESPACE.$INGRESS_SUBDOMAIN
  
 # deploy 
-echo "Deploy via helm3 with De-id service, enabling FHIR Proxy server IPs,  using Ingress"
-helm3 install $HELM_RELEASE . -f de-id-pattern-values.yaml -f clinical_ingestion.yaml --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true
+echo "Deploy via helm3  using Ingress"
+helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true
 
 # setup all the env vars for input to maven
 # FHIR Using INGRESS
@@ -95,25 +87,11 @@ echo "*************************************"
 echo FHIR server: $FHIR_IP$FHIR_PORT
 echo "*************************************"
 
-# FHIR PROXY Using INGRESS
-export FHIR_PROXY_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir-proxy
-export FHIR__PROXY_PORT=
-echo "*************************************"
-echo FHIR Proxy server: $FHIR_PROXY_IP$FHIR_PROXY_PORT
-echo "*************************************"
-
 # FHIR DEID - using INGRESS
 export FHIR_DEID_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir-deid
 export FHIR_DEID_PORT=
 echo "*************************************"
 echo FHIR DEID server: $FHIR_DEID_IP$FHIR_DEID_PORT
-echo "*************************************"
-
-# FHIR DEID PROXY- using INGRESS
-export FHIR_DEID_PROXY_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir-deid-proxy
-export FHIR_DEID_PROXY_PORT=
-echo "*************************************"
-echo FHIR DEID PROXY server: $FHIR_DEID_PROXY_IP$FHIR_DEID_PROXY_PORT
 echo "*************************************"
 
 # DEID - using INGRESS
@@ -123,35 +101,34 @@ echo "*************************************"
 echo DEID server: $DEID_IP$DEID_PORT
 echo "*************************************"
 
-
-# NIFI - using INGRESS
-export NIFI_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/
-export NIFI_PORT=
+# DEID Prep - using INGRESS
+export DEID_PREP_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/deid-prep
+export DEID_PREP_PORT=
 echo "*************************************"
-echo NIFI server: $NIFI_IP$NIFI_PORT
-echo "*************************************"
-
-# NIFI API using INGRESS
-export NIFI_API_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/nifi-http-post
-export NIFI_API_PORT=
-echo "*************************************"
-echo NIFI HTTP Post API: $NIFI_API_IP$NIFI_API_PORT
+echo DEID-PREP server: $DEID_PREP_IP$DEID_PREP_PORT
 echo "*************************************"
 
-# EXPOSE KAFKA Service using INGRESS
-export EXP_KAFKA_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/expose-kafka
-export EXP_KAFKA_PORT=
+# TERM Services Prep - using INGRESS
+export TERM_PREP_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/term-services-prep
+export TERM_PREP_PORT=
 echo "*************************************"
-echo EXPOSE KAFKA Service: $EXP_KAFKA_IP$EXP_KAFKA_PORTT
+echo TERM-SERVICES-PREP server: $TERM_PREP_IP$TERM_PREP_PORT
+echo "*************************************"
+
+# ASCVD From FHIR Service - using INGRESS
+export ASCVD_FROM_FHIR_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/ascvd-from-fhir
+export ASCVD_FROM_FHIR_PORT=
+echo "*************************************"
+echo ASCVD-FROM-FHIR server: $ASCVD_FROM_FHIR_IP$ASCVD_FROM_FHIR_PORT
 echo "*************************************"
 
 # Wait a bit for Nifi to come up
 # Need to change this to some polling of service status for more reliability 
 echo "*************************************"
-echo "* Waiting for 5 minutes             *"
+echo "* Waiting for 1 minute              *"
 echo "*************************************"
 date
-sleep 300  
+sleep 60  
 date
 
 # KAFKA - using Load Balancer
@@ -164,56 +141,46 @@ echo "* A Look At Everything              *"
 echo "*************************************"
 kubectl get all
 
-echo "*************************************" 
-echo "* Get the testcase repo             *"
-echo "*************************************"
-cd /workspace/$TEST_NAMESPACE
-git clone -b $UMBRELLA_GIT_BRANCH https://${gitApiKey}@github.ibm.com/integrationsquad/test.git
-cd /workspace/$TEST_NAMESPACE/test
+echo "****************************************************" 
+echo "* Goto the testcase folder in the repo             *"
+echo "****************************************************"
+cd /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/
+pwd
+ls
 
 echo "*************************************" 
 echo "* Build the testcases               *"
 echo "*************************************"
-mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.proxy=$FHIR_PROXY_IP -Dport.fhir.proxy=$FHIR__PROXY_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.fhir.deid.proxy=$FHIR_DEID_PROXY_IP -Dport.fhir.deid.proxy=$FHIR_DEID_PROXY_PORT -Dip.nifi=$NIFI_IP -Dport.nifi=$NIFI_PORT -Dip.nifi.api=$NIFI_API_IP -Dport.nifi.api=$NIFI_API_PORT -Dip.kafka=$KAFKA_IP -Dport.nifi.api=$NIFI_API_PORT -Dip.deid=$DEID_IP -Dport.deid=$DEID_PORT  -Dip.expkafka=$EXP_KAFKA_IP -Dport.expkafka=$EXP_KAFKA_PORT -Dpw=$DEFAULT_PASSWORD
+mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.deid.prep=$DEID_PREP_IP -Dport.deid.prep=$DEID_PREP_PORT -Dip.term.prep=$TERM_PREP_IP -Dport.term.prep=$TERM_PREP_PORT -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dport.ascvd.from.fhir=$ASCVD_FROM_FHIR_PORT -Dpw=$DEFAULT_PASSWORD
 
 echo "*************************************" 
-echo "* Initialize the testcases          *"
+echo "* Properties File:                  *"
 echo "*************************************"
-mvn -e -DskipTests=false -Dtest=BasicClinicalIngestionInitTests test
+cat src/test/resources/enrich-flow.properties
+
 
 echo "*************************************" 
 echo "* Execute the testcases             *"
 echo "*************************************"
-mvn  -e -DskipTests=false -Dtest=FHIRProxyClinicalIngestionFlowTests test
-mvn  -e -DskipTests=false -Dtest=BasicClinicalIngestionFlowTests test
-mvn  -e -DskipTests=false -Dtest=DeIDClinicalIngestionFlowTests test
-mvn  -e -DskipTests=false -Dtest=ASCVDClinicalIngestionFlowTests test
+mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
+mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
 
-echo "**************************************" 
-echo "* What SSL/TSL Versions we are using *"
-echo "**************************************"
-openssl ciphers -v | awk '{print $2}' | sort | uniq 
 
 # JUNIT execution reports available in the below folder
 ls -lrt target/surefire-reports
-cat target/surefire-reports/integration.categories.FHIRProxyClinicalIngestionFlowTests.txt
-cat target/surefire-reports/integration.categories.BasicClinicalIngestionInitTests.txt
-cat target/surefire-reports/integration.categories.BasicClinicalIngestionFlowTests.txt
-cat target/surefire-reports/integration.categories.DeIDClinicalIngestionFlowTests.txt
-cat target/surefire-reports/integration.categories.ASCVDClinicalIngestionFlowTests.txt
+cat target/surefire-reports/categories.BasicEnrichmentTests.txt
+cat target/surefire-reports/categories.EnrichmentConfigTestsTests.txt
 
 echo "*************************************" 
 echo "* Report Test Results to Insights   *"
 echo "*************************************"
-echo "<testsuites>" > /workspace/clinical-ingestion/e2e-tests/ivttest.xml
-cat target/surefire-reports/*.xml >> /workspace/clinical-ingestion/e2e-tests/ivttest.xml
-echo "</testsuites>" >> /workspace/clinical-ingestion/e2e-tests/ivttest.xml
-
-ls -lrt /workspace/clinical-ingestion/e2e-tests
+echo "<testsuites>" > /workspace/clinical-enrichment/tests/ivttest.xml
+cat target/surefire-reports/*.xml >> /workspace/clinical-enrichment/tests/ivttest.xml
+echo "</testsuites>" >> /workspace/clinical-enrichment/tests/ivttest.xml
 
 # then clean up
 echo "*************************************"
-echo "* Delete the Deployment & Namespace *"
+echo "* Delete the Deployment             *"
 echo "*************************************"
 helm3 delete $HELM_RELEASE
 kubectl delete namespace $TEST_NAMESPACE

@@ -2,7 +2,7 @@
 
 # Run the Avlearie Clinical Enrichment Deploy install per documented instructions
 #
-# Run the Clinical Enrichment smoke tests and add test results to smoketest.xml for the Insights Quality Dashboard
+# Run the Clinical Enrichment smoke tests and add test results to smoketests.xml for the Insights Quality Dashboard
 
 echo "*************************************"
 echo "* Linux version                     *"
