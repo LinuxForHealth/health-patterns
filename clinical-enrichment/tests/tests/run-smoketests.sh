@@ -109,10 +109,17 @@ echo DEID-PREP server: $DEID_PREP_IP$DEID_PREP_PORT
 echo "*************************************"
 
 # TERM Services Prep - using INGRESS
-export TERM_PREP_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/term-services-prpe
+export TERM_PREP_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/term-services-prep
 export TERM_PREP_PORT=
 echo "*************************************"
 echo TERM-SERVICES-PREP server: $TERM_PREP_IP$TERM_PREP_PORT
+echo "*************************************"
+
+# ASCVD From FHIR Service - using INGRESS
+export ASCVD_FROM_FHIR_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/ascvd-from-fhir
+export ASCVD_FROM_FHIR_PORT=
+echo "*************************************"
+echo ASCVD-FROM-FHIR server: $ASCVD_FROM_FHIR_IP$ASCVD_FROM_FHIR_PORT
 echo "*************************************"
 
 # Wait a bit for Nifi to come up
