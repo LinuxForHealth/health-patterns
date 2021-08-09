@@ -49,7 +49,7 @@ public class Enrich_Flow {
 	 @Scenario("scenarios/enrich_TERM_Prep.json")
 	    public void enrich_TERM_Prep() throws Exception {
 	    }
-	 
+	/*  
 	 @Test
 	 @Category({BasicEnrichment.class})
 	 @Scenario("scenarios/enrich_ASCVD_New.json")
@@ -61,13 +61,14 @@ public class Enrich_Flow {
 	 @Scenario("scenarios/enrich_ASCVD_Update.json")
 	    public void enrich_ASCVD_Update() throws Exception {
 	    }
+	*/    
 	 
 	 @Test
 	 @Category({EnrichmentConfig.class})
 	 @Scenario("scenarios/enrich_DEID_Prep_Config_CRUD.json")
 	    public void enrich_DEID_Config_CRUD() throws Exception {
 	    }
-
+	    
 	@Test
 	 @Category({EnrichmentConfig.class})
 	 @Scenario("scenarios/enrich_TERM_Prep_Map_CRUD.json")
