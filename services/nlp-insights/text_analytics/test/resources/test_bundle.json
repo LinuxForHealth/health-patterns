@@ -1,0 +1,122 @@
+{
+    "resourceType": "Bundle",
+    "type": "transaction",
+    "entry": [
+        {
+            "fullUrl": "urn:uuid:aef7de5a-6345-4a2e-961b-dd1ba7e0478b",
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "aef7de5a-6345-4a2e-961b-dd1ba7e0478b",
+                "status": "completed",
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/sid/cvx",
+                            "code": "20",
+                            "display": "DTaP"
+                        }
+                    ],
+                    "text": "DTaP"
+                },
+                "patient": {
+                    "reference": "Patient/a4f9e870-3b56-4528-8db4-f0d38671afe0"
+                },
+                "occurrenceDateTime": "2014-07-30",
+                "primarySource": true,
+                "reportOrigin": {
+                    "coding": [
+                        {
+                            "code": "00",
+                            "display": "NEW IMMUNIZATION RECORD"
+                        }
+                    ],
+                    "text": "NEW IMMUNIZATION RECORD"
+                },
+                "lotNumber": "0039F",
+                "expirationDate": "2020-05-31",
+                "site": {
+                    "coding": [
+                        {
+                            "code": "LA",
+                            "display": "Left arm"
+                        }
+                    ],
+                    "text": "LEFT ARM"
+                },
+                "route": {
+                    "coding": [
+                        {
+                            "code": "IM",
+                            "display": "Injection, intramuscular"
+                        }
+                    ],
+                    "text": "INTRAMUSCULAR"
+                },
+                "programEligibility": [
+                    {
+                        "coding": [
+                            {
+                                "code": "V03"
+                            }
+                        ],
+                        "text": "VFC eligibility - Uninsured"
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:ebc77419-101d-4394-95c6-34e2189136d0",
+            "resource": {
+                "id": "ebc77419-101d-4394-95c6-34e2189136d0",
+                "category": [
+                    "medication"
+                ],
+                "clinicalStatus": {
+                    "coding": [
+                        {
+                            "code": "active",
+                            "display": "Active",
+                            "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"
+                        }
+                    ]
+                },
+                "code": {
+                    "coding": [
+                        {
+                            "code": "1558",
+                            "display": "Oxycodone"
+                        }
+                    ],
+                    "text": "Oxycodone"
+                },
+                "criticality": "low",
+                "patient": {
+                    "reference": "Patient/97b51b8d-1d1b-497f-866c-8df5d6cc05a7"
+                },
+                "reaction": [
+                    {
+                        "manifestation": [
+                            {
+                                "text": "Muscle Pain"
+                            },
+                            {
+                                "text": "hair loss"
+                            }
+                        ]
+                    }
+                ],
+                "verificationStatus": {
+                    "coding": [
+                        {
+                            "code": "confirmed",
+                            "display": "Confirmed",
+                            "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"
+                        }
+                    ]
+                },
+                "resourceType": "AllergyIntolerance"
+            }
+        }
+        
+    ]
+}

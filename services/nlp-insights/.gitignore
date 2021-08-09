@@ -1,0 +1,7 @@
+venv
+.vscode
+build
+.gradle
+*.idea
+.idea
+*.egg-info
