@@ -52,7 +52,7 @@ public class Enrich_Flow {
 	    }
 	  
 	 @Test
-	 @Category({BasicEnrichment.class})
+	 @Category({ASCVDEnrichment.class})
 	 @Scenario("scenarios/enrich_ASCVD_New.json")
 	    public void enrich_ASCVD_New() throws Exception {
 	    }
