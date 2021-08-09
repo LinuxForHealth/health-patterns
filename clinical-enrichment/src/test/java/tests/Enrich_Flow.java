@@ -12,6 +12,7 @@ import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import categories.BasicEnrichment;
+import categories.ASCVDEnrichment;
 import categories.EnrichmentConfig;
 
 
@@ -57,7 +58,7 @@ public class Enrich_Flow {
 	    }
 	 
 	 @Test
-	 @Category({BasicEnrichment.class})
+	 @Category({ASCVDEnrichment.class})
 	 @Scenario("scenarios/enrich_ASCVD_Update.json")
 	    public void enrich_ASCVD_Update() throws Exception {
 	    }
