@@ -33,7 +33,7 @@ affinity: {}
 ingress:
   enabled: &ingressEnabled true
   class: &ingressClass public-iks-k8s-nginx
-  hostname: &hostname
+  hostname: &hostname <<REPLACE_ME>>
 
 ascvd:
   enabled: true
