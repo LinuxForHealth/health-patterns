@@ -68,12 +68,12 @@ Ingress requires a specific ingress class to be used.  Different cloud providers
 
 You will also need to provide a hostname for your ingress.  What this is and how it gets created will be unique to your cloud infrastructure.  
 
-Once you know these values, use both of them to update the `ingress` section of the file ```helm-charts/health-patterns/values.yaml```  as shown below.
+Once you know these values, use both of them to update the `ingress` section of the file ```helm-charts/health-patterns/values.yaml```  as shown below. Note that the ingress class currently defaults to `public-iks-k8s-nginx` so if that is your choice, no update to the ingress class is needed.  However, the ingress hostname **MUST** be updated.
 
 ```
 ingress:
   enabled: &ingressEnabled true
-  class: &ingressClass <<classname>
+  class: &ingressClass public-iks-k8s-nginx
   hostname: &hostname <<external-hostname>>
 ```
 
