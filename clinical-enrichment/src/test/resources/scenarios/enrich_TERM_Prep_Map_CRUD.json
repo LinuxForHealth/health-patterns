@@ -28,7 +28,7 @@
             "operation": "POST",           
                 "request": {           		 
                     "headers" : { "Content-Type": "application/json"}, 
-		             "body": "${JSON.FILE:configs/example_map.json}" },            
+		             "body": "${JSON.FILE:configs/example_Map.json}" },            
             "verify": {
                 "status": 200
             }
@@ -62,7 +62,7 @@
             "operation": "POST",           
                 "request": {           		 
                     "headers" : { "Content-Type": "application/json"}, 
-		             "body": "${JSON.FILE:configs/example_map_Update.json}" },            
+		             "body": "${JSON.FILE:configs/example_Map_Update.json}" },            
             "verify": {
                 "status": 400
             }
@@ -86,7 +86,7 @@
             "operation": "PUT",           
                 "request": {           		 
                     "headers" : { "Content-Type": "application/json"}, 
-		             "body": "${JSON.FILE:configs/example_map_Update.json}" },            
+		             "body": "${JSON.FILE:configs/example_Map_Update.json}" },            
             "verify": {
                 "status": 200
             }
