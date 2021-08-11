@@ -72,7 +72,7 @@ pwd
 #export INGRESS_SUBDOMAIN=${INGRESS_SUBDOMAIN:0:${#INGRESS_SUBDOMAIN}-2}
 
 # Add hostname to values.yaml
-sed -i -e "s/\&hostname/\&hostname $TEST_NAMESPACE.$INGRESS_SUBDOMAIN/g" values.yaml
+sed -i -e "s/\&hostname replace-me/\&hostname $TEST_NAMESPACE.$INGRESS_SUBDOMAIN/g" values.yaml
 cat values.yaml | grep $TEST_NAMESPACE.$INGRESS_SUBDOMAIN
  
 # deploy 
