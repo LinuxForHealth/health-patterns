@@ -125,10 +125,10 @@ echo "*************************************"
 # Wait a bit for Nifi to come up
 # Need to change this to some polling of service status for more reliability 
 echo "*************************************"
-echo "* Waiting for 1 minute              *"
+echo "* Waiting for 2 minutes             *"
 echo "*************************************"
 date
-sleep 60  
+sleep 120  
 date
 
 # KAFKA - using Load Balancer
