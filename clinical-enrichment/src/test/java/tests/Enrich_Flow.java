@@ -69,6 +69,13 @@ public class Enrich_Flow {
 	 @Scenario("scenarios/enrich_DEID_Prep_Config_CRUD.json")
 	    public void enrich_DEID_Config_CRUD() throws Exception {
 	    }
+	 
+	 
+	 @Test
+	 @Category({EnrichmentConfig.class})
+	 @Scenario("scenarios/enrich_DEID_Prep_Config_Use.json")
+	    public void enrich_DEID_Config_Use() throws Exception {
+	    }
 	    
 	@Test
 	 @Category({EnrichmentConfig.class})
