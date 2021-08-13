@@ -30,28 +30,40 @@ tolerations: []
 
 affinity: {}
 
-global:
-  ingress:
-    enabled: false
-    class: 
-    subdomain:
-
 ingress:
-  enabled: false
-  class:
-  subdomain:
+  enabled: &ingressEnabled true
+  class: &ingressClass public-iks-k8s-nginx
+  hostname: &hostname replace-me
 
 ascvd:
   enabled: true
 
 ascvd-from-fhir:
   enabled: true
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
+
+hl7-resource-generator:
+  enabled: true
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
+
+nlp-insights:
+  enabled: false
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
 
 # ------------------------------------------------------------------------------
 # FHIR Configuration
-# Values: https://github.com/Alvearie/health-patterns/helm-charts/fhir/values.yaml
 # ------------------------------------------------------------------------------
 fhir:
+  name: fhir
   enabled: true
   service:
     type: ClusterIP
@@ -62,8 +74,17 @@ fhir:
       value: '600s'
     - name: BOOTSTRAP_DB
       value: 'true'
+  ingress:
+    enabled: *ingressEnabled
+    class: *ingressClass
+    hostname: *hostname
   proxy:
+    name: fhir-proxy
     enabled: false
+    ingress:
+      enabled: *ingressEnabled
+      class: *ingressClass
+      hostname: *hostname
 
 ## Configure these to allow bulk access from fhir server
 #  bulkExportConfig:
@@ -78,6 +99,7 @@ fhir-trigger:
   enabled: false
 
 fhir-deid:
+  name: fhir-deid
   enabled: true
   service:
     type: ClusterIP
@@ -88,99 +110,63 @@ fhir-deid:
       value: '600s'
     - name: BOOTSTRAP_DB
       value: 'true'
+  ingress:
+    enabled: *ingressEnabled
+    class: *ingressClass
+    hostname: *hostname
   proxy:
+    name: fhir-deid-proxy
     enabled: false
-
-## Configure these to allow bulk access from fhir-deid server
-#  bulkExportConfig:
-#    cosBucketName: yourbucketnamehere
-#    cosLocation: yourcosregion
-#    cosEndpointInternal: yourbucketendpointhere
-#    cosApikey: yourcosapikey
-#    cosSrvinstid: yourcossrvinstid
-#    batchUserPw: youradminpw
+    ingress:
+      enabled: *ingressEnabled
+      class: *ingressClass
+      hostname: *hostname
 
 fhir-deid-trigger:
   enabled: false
 
 # ------------------------------------------------------------------------------
 # Nifi Registry
-# Values: https://github.com/cetic/helm-nifi/blob/master/values.yaml
 # ------------------------------------------------------------------------------
 nifi-registry:
   enabled: true
   # The fullname is overridden to some static name in order to automatically register the NiFi Registry with the NiFi deployment
   fullnameOverride: alvearie-nifi-registry
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
-# Values: https://github.com/bitnami/charts/blob/master/bitnami/zookeeper/values.yaml
 # ------------------------------------------------------------------------------
 zookeeper:
   enabled: true
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
   fullnameOverride: alvearie-zookeeper
   persistence:
-    enabled: false 
+    enabled: false
 
 # ------------------------------------------------------------------------------
 # Nifi Configuration
-# Values: https://github.com/cetic/helm-nifi/blob/master/values.yaml
 # ------------------------------------------------------------------------------
 nifi:
   fullnameOverride: alvearie-nifi
   enabled: true
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
   service:
     type: ClusterIP
     port: 8080
-    httpInputPort: 7001
     processors:
       enabled: true
       ports:
-        # Expose the HTTP server for the processor that accepts FHIR bundles
-        - name: fhir-over-http
-          port: 7001
-          targetPort: 7001
         # Expose nifi metrics port
         - name: nifi-metrics
           port: 12667
           targetPort: 12667
-  extraContainers:
-    - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.1
-      imagePullPolicy: Always
-      command:
-        - bash
-        - -c
-        - |
-          /scripts/wait-for-nifi.sh $HOSTNAME 8080
-          /scripts/initialize-reporting-task.sh $HOSTNAME 8080
-          python /scripts/loadHealthPatternsFlows.py \
-                   --reg=default \
-                   --bucket=Health_Patterns \
-                   --flowName="Clinical Ingestion" \
-                   --baseUrl=http://$HOSTNAME:8080/
-          python /scripts/loadHealthPatternsFlows.py \
-                   --reg=default \
-                   --bucket=Health_Patterns \
-                   --flowName="FHIR Bundle Enrichment" \
-                   --baseUrl=http://$HOSTNAME:8080/
-          python /scripts/startHealthPatternsFlow.py \
-                   --baseUrl=http://$HOSTNAME:8080/ \
-                   --fhir_pw=integrati0n \
-                   --kafka_pw=integrati0n \
-                   --runASCVD=True \
-                   --deidentifyData=True \
-                   --resolveTerminology=True
-          if [ $? -eq 0 ]
-          then
-            echo "NiFi canvas setup was successful!"
-            echo "starting wait loop so container does not exit"
-            while true; do sleep 1000; done
-          else
-            echo "NiFi canvas setup failed"
-            exit 1
-          fi
   url: ""
   port: 80
   zookeeper:
@@ -211,10 +197,8 @@ nifi:
   properties:
     customLibPath: ./custom-nars
 
-
 # ------------------------------------------------------------------------------
 # Kafka Configuration
-# Values: https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
 # ------------------------------------------------------------------------------
 kafka:
   enabled: true
@@ -256,27 +240,86 @@ kafka:
 
 # ------------------------------------------------------------------------------
 # De-Identification Service
-# Values: https://github.com/Alvearie/health-patterns/helm-charts/deid/values.yaml
 # ------------------------------------------------------------------------------
 deid:
   enabled: true
   image:
     tag: 0.0.1
   ingress:
-    enabled: false
     # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
+
+# ------------------------------------------------------------------------------
+# De-Identification Prep Service
+# ------------------------------------------------------------------------------
+deid-prep:
+  enabled: true
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
+  configName: default
+  pushToFhir: true
+
+# ------------------------------------------------------------------------------
+# Terminology Services Prep Service
+# ------------------------------------------------------------------------------
+term-services-prep:
+  enabled: true
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
+
+# ------------------------------------------------------------------------------
+# Expose Kafka Service
+# ------------------------------------------------------------------------------
+expose-kafka:
+  enabled: true
+  ingress:
+    enabled: *ingressEnabled
+    class: *ingressClass
+    hostname: *hostname
+  inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in"
+  inittopicnumpartitions: 1
+  inittopicreplication: 1
+
+# ------------------------------------------------------------------------------
+# CQL-BulkExport Service
+# ------------------------------------------------------------------------------
+cql-bulkexport:
+  enabled: false
+  ingress:
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
+  fhir:
+    endpoint:
+    user:
+    password:
+  cohort:
+    endpoint:
+  cos:
+    endpoint:
+    apikey:
+    instancecrn:
+  bucketname:
+  resourcelist:
 
 # ------------------------------------------------------------------------------
 # Cohort Service
-# Values: https://github.com/Alvearie/health-patterns/helm-charts/cohort-service/chart/values.yaml
 # ------------------------------------------------------------------------------
 cohort-service:
-  enabled: false
+  enabled: true
   service:
     type: ClusterIP
   ingress:
-    enabled: false
     # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
+    enabled: false
+    class: *ingressClass
+    hostname: *hostname
 
 # ------------------------------------------------------------------------------
 # Prometheus-Grafana stack Configuration

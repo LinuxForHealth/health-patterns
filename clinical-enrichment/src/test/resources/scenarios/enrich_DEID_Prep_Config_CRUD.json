@@ -1,0 +1,166 @@
+{
+    "scenarioName": "********enrich_DEID_prep_config_CRUD********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "getInitialConfigList",
+            "url": "${deid_prep}/config",
+            "operation": "GET",           
+                "request": { 
+                 "headers" : { "Content-Type": "application/json"}},            
+            "verify": {
+                "status": 200,
+                      "rawBody" : "$CONTAINS.STRING:default" 
+             }
+        },
+        {
+            "name": "verifyNosimpleDEIDConfig",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getInitialConfigList.response.rawBody}",
+                 "string2": "simpleDEID"
+            },
+            "verify": { "result": "false" }
+        },
+        {
+            "name": "postNewConfig",
+            "url": "${deid_prep}/config/simpleDEID",
+            "operation": "POST",          
+            "request": {
+           		 "headers" : { "Content-Type": "application/json"}, 
+		         "body": "${JSON.FILE:configs/simpleDEID.json}"
+     	},            
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "getNewConfigList",
+            "url": "${deid_prep}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody" : "$CONTAINS.STRING:simpleDEID"
+             }
+        },
+        {
+            "name": "verifyDefaultConfig",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getInitialConfigList.response.rawBody}",
+                 "string2": "default"
+            },
+            "verify": { "result": "true" }
+        },
+        {
+            "name": "getNewConfig",
+            "url": "${deid_prep}/config/simpleDEID",
+            "operation": "GET",           
+                "request": {"headers" : { "Content-Type": "application/json"} },            
+            "verify": {
+                "status": 200,
+                "body": {
+                    "json": {
+                       "maskingRules": [{
+                              "jsonPath" : "/fhir/Patient"
+                            }] 
+                    } 
+                }    
+             }
+        },
+        {
+            "name": "updateViaPOST",
+            "url": "${deid_prep}/config/simpleDEID",
+            "operation": "POST",          
+            "request": {
+           		 "headers" : { "Content-Type": "application/json"}, 
+		         "body": "${JSON.FILE:configs/simpleDEIDUpdate.json}"
+     	    },            
+            "verify": {
+                "status": 400
+            }
+        },
+        {
+            "name": "updateViaPUT",
+            "url": "${deid_prep}/config/simpleDEID",
+            "operation": "PUT",          
+            "request": {
+           		 "headers" : { "Content-Type": "application/json"}, 
+		         "body": "${JSON.FILE:configs/simpleDEIDUpdate.json}"
+     	    },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getUpdatedConfig",
+            "url": "${deid_prep}/config/simpleDEID",
+            "operation": "GET",           
+                "request": {"headers" : { "Content-Type": "application/json"} },            
+            "verify": {
+                "status": 200,
+                "body": {
+                    "json": {
+                       "maskingRules": [{
+                              "jsonPath" : "/fhir/Patient/UUID"
+                            }] 
+                    } 
+                }    
+             }
+        },
+        {
+            "name": "postExistingConfig",
+            "url": "${deid_prep}/config/simpleDEID",
+            "operation": "POST",          
+            "request": {
+           		 "headers" : { "Content-Type": "application/json"}, 
+		         "body": "${JSON.FILE:configs/simpleDEID.json}"
+     	},            
+            "verify": {
+                "status": 400
+                }
+        },
+        {
+            "name": "deleteNewConfig",
+            "url": "${deid_prep}/config/simpleDEID",
+            "operation": "DELETE",          
+            "request": { },
+            "verify": {
+                "status": 200
+             }
+        },
+        { 
+            "name": "deleteNewConfig",
+            "url": "${deid_prep}/config/simpleDEID",
+            "operation": "DELETE",          
+            "request": { },
+            "verify": {
+                "status": 400
+             }
+        },
+        {
+            "name": "getLastConfigList",
+            "url": "${deid_prep}/config",
+            "operation": "GET",           
+                "request": { 
+                 "headers" : { "Content-Type": "application/json"}},            
+            "verify": {
+                "status": 200,
+                      "rawBody" : "$CONTAINS.STRING:default" 
+             }
+        },
+        {
+            "name": "verifyNosimpleDEIDConfig",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getLastConfigList.response.rawBody}",
+                 "string2": "simpleDEID"
+            },
+            "verify": { "result": "false" }
+        }    
+     ]
+}

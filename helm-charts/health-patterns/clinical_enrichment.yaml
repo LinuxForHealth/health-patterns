@@ -11,36 +11,31 @@ pattern: "Clinical Enrichment"
 nifi:
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.1
+      image: alvearie/nifi-setup:0.1.2
       imagePullPolicy: Always
-      command:
-        - bash
-        - -c
-        - |
-          /scripts/wait-for-nifi.sh $HOSTNAME 8080
-          /scripts/initialize-reporting-task.sh $HOSTNAME 8080
-          python /scripts/loadHealthPatternsFlows.py \
-                   --reg=default \
-                   --bucket=Health_Patterns \
-                   --flowName="FHIR Bundle Enrichment" \
-                   --baseUrl=http://$HOSTNAME:8080/
-          python /scripts/startHealthPatternsFlow.py \
-                   --baseUrl=http://$HOSTNAME:8080/ \
-                   --fhir_pw=integrati0n \
-                   --kafka_pw=integrati0n \
-                   --runASCVD=True \
-                   --deidentifyData=True \
-                   --resolveTerminology=True \
-                   --releaseName=enrich
-          if [ $? -eq 0 ]
-          then
-            echo "NiFi canvas setup was successful!"
-            echo "starting wait loop so container does not exit"
-            while true; do sleep 1000; done
-          else
-            echo "NiFi canvas setup failed"
-            exit 1
-          fi
+      env:
+      - name: "RELEASE_NAME"
+        value: "enrich"
+      - name: "NIFI_REGISTRY"
+        value: "default"
+      - name: "ADD_CLINICAL_INGESTION"
+        value: "false"
+      - name: "ADD_CLINICAL_ENRICHMENT"
+        value: "true"
+      - name: "FHIR_PW"
+        value: "integrati0n"
+      - name: "KAFKA_PW"
+        value: "integrati0n"
+      - name: "RUN_ASCVD"
+        value: "True"
+      - name: "RESOLVE_TERMINOLOGY"
+        value: "True"
+      - name: "DEIDENTIFY_DATA"
+        value: "True"
+      - name: "DEID_CONFIG_NAME"
+        value: "default"
+      - name: "DEID_PUSH_TO_FHIR"
+        value: "True"
 
 fhir:
   notifications:

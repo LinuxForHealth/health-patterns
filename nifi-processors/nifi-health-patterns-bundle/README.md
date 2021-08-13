@@ -3,9 +3,7 @@
 This bundle contains all custom processors created by/for the health-patterns project.  Currently, this includes:
 
 - **ACDProcessor** - This processor feeds the current flow file to the Annotator for Clinical Data (ACD) to add NLP annotations to the current FHIR resource.
-- **HL7ToFhirProcessor** - This processor converts an HL7-formatted flow file to FHIR
 - **[GenerateFHIRFromMimic](./docs/GenerateFHIRFromMimic.md)** - This processor reads all patients from a source Mimic database and produces one FHIR bundle per patient representing all known data for that patient.
-- **DeIdentifyAndPostToFHIR** - This processor takes the a FHIR resource (a Bundle or individual resources) de-identifies it and posts the result to a FHIR server.
 
 ## To build this artifact
 

@@ -1,23 +1,25 @@
 {{- if .Values.enabled -}}
-{{- if .Values.global.ingress.enabled -}}
+{{- if index .Values "kube-prometheus-stack" "grafana" "ingress" "enabled" -}}
 {{- $ingressPort := index .Values "kube-prometheus-stack" "grafana" "service" "portName" -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-grafana-ingress
+  name: {{ .Release.Name }}-grafana
   namespace: {{ .Release.Namespace }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.global.ingress.class | default .Values.ingress.class }}
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    kubernetes.io/ingress.class: {{ index .Values "kube-prometheus-stack" "grafana" "ingress" "class" }}
 spec:
   rules:
-    - host: {{ .Release.Namespace }}-{{ .Release.Name }}-grafana.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+    - host: {{ index .Values "kube-prometheus-stack" "grafana" "ingress" "hostname" }}
       http:
         paths:
-          - path: /
+          - path: /grafana(.*)
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Release.Name }}-grafana
+                name: {{ include "grafana.fullname" . }}
                 port: 
                   number: {{ $ingressPort }}
 {{- end }}

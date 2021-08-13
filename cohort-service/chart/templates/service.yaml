@@ -10,6 +10,6 @@ spec:
     - port: {{ .Values.service.httpPort }}
       targetPort: http
       protocol: TCP
-      name: {{ .Release.Namespace }}-{{ .Release.Name }}-cohort-service-http
+      name: {{ include "cohort-service.fullname" . }}
   selector:
     {{- include "cohort-service.selectorLabels" . | nindent 4 }}

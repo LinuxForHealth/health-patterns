@@ -36,13 +36,14 @@ jobs:
         ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g dev-env-wdc-kube
         ibmcloud ks cluster config --cluster health-patterns-1
 
-    # Setup and Install Chart
+    # Setup and Install Chart 
     - name: Install Chart
       run: |
         kubectl config current-context
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
         helm dependency update helm-charts/health-patterns
-        helm install ingestion helm-charts/health-patterns --values helm-charts/health-patterns/ci/chart-testing-values.yaml --wait --timeout 6m0s
+        sed -i -e "s/\&hostname replace-me/\&hostname github.wh-health-patterns.dev.watson-health.ibm.com/g" helm-charts/health-patterns/values.yaml
+        helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --wait --timeout 6m0s
         kubectl get all
 
     # Uninstall Chart

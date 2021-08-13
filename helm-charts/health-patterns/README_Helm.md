@@ -27,16 +27,13 @@ kubectl config set-context --current --namespace=alvearie
 
 ### Ingress parameters
 
-We recommend exposing the services in this chart via ingress.  This provides the most robust and secure approach.  If you choose to expose services via port-forwarding, load-balancer, or other optinos, please be careful to ensure proper security.
+We recommend exposing the services in this chart via ingress.  This provides the most robust and secure approach.  If you choose to expose services via port-forwarding, load-balancer, or other options, please be careful to ensure proper security.
 
-In order to deploy via ingress, you will need to identify your ingress subdomain as defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.  Instructions can be found [here](README_INGRESS_SUBDOMAIN.md) on how to identify your ingress subdomain.
+In order to deploy via ingress, you will need to identify:
 
-Ingress also requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider:
-  - IBM: public-iks-k8s-nginx
-  - Azure: addon-http-application-routing
-  - AWS: nginx
- 
-Use both of these values to update the ingress_values.yaml file.
+ingress.hostname: Defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.
+
+This value should be updated in the values file you use to deploy your pipeline.
 
 ### Optional: Deploy a FHIR UI
 
@@ -51,7 +48,7 @@ When specifying the FHIR URL (fhirServer parameter) you must use an open server 
 and
 
 ```
---set fhir.deid.proxy.enabled=true
+--set fhir-deid.proxy.enabled=true
 ```
 
 ### Checkout the Code
@@ -74,9 +71,7 @@ There are two variations of the health-patterns Helm chart currently supported:
 By specifying your preferred variation in the Helm command below, you can customize this deployment to your needs.
 
 ```
-helm install <<RELEASE_NAME>> . \
-    -f ingress_values.yaml \
-    -f <<VARIATION_YAML>>
+helm install <<RELEASE_NAME>> . -f <<VARIATION_YAML>>
 ```
 
 ### Alternate configuration for Helm Chart
@@ -86,7 +81,6 @@ When deploying this chart, there are many configuration parameters specified in 
 ```
 helm install <<RELEASE_NAME>> alvearie/health-patterns \
     -f value_overrides.yaml \
-    -f ingress_values.yaml \
     -f <<VARIATION_YAML>>
 ```
 

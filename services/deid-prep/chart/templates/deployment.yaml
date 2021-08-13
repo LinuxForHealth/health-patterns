@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "deid-prep.fullname" . }}	
+  labels:
+    {{- include "deid-prep.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "deid-prep.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "deid-prep.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: deid-prep
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+            protocol: TCP
+        volumeMounts:
+        - mountPath: /mnt/data/
+          name: configurations
+          readOnly: false
+          subPath: ""
+        env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: DEID_SERVICE_URL
+          value: {{ include "deid-prep.deid.url" .}}
+        - name: DEID_FHIR_SERVER_URL
+          value: {{ include "deid-prep.fhir.url" . }}
+        - name: DEID_FHIR_SERVER_USERNAME
+          value: {{ .Values.fhir.username }}
+        - name: DEID_FHIR_SERVER_PASSWORD
+          value: {{ .Values.fhir.password }}
+        - name: PV_PATH
+          value: '/mnt/data'
+      volumes:
+      - name: configurations
+        persistentVolumeClaim:
+          claimName: {{ .Release.Namespace }}-{{ include "deid-prep.fullname" . }}-pv-claim
+          readOnly: false

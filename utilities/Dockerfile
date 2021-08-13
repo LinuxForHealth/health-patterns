@@ -12,3 +12,5 @@ RUN mkdir /scripts
 COPY  *.sh scripts/
 COPY  *.py scripts/
 RUN chmod +x scripts/*.sh
+
+CMD scripts/initialize-nifi.sh

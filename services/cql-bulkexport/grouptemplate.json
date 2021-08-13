@@ -1,0 +1,27 @@
+{
+   "resourceType":"Bundle",
+   "id":"555",
+   "type":"transaction",
+   "entry":[
+      {
+         "fullUrl":"urn:uuid:63037c53-203c-4670-a0a7-9fa845475692",
+         "resource":{
+            "resourceType":"Group",
+            "id":"63037c53-203c-4670-a0a7-9fa845475692",
+            "text":{
+               "status":"additional",
+               "div":"<div xmlns=\"http://www.w3.org/1999/xhtml\"></div>"
+            },
+            "type":"person",
+            "actual":true,
+            "member":[
+
+            ]
+         },
+         "request":{
+            "method":"POST",
+            "url":"Group"
+         }
+      }
+   ]
+}

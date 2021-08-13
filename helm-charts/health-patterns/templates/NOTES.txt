@@ -15,32 +15,40 @@ Pattern: {{ .Values.pattern }}
 
 The following services have been deployed:
 {{- if .Values.fhir.enabled }}
-- Primary FHIR Server{{- if .Values.global.ingress.enabled }} --------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir.{{ .Values.global.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Primary FHIR Server{{- if .Values.fhir.ingress.enabled }} --------- https://{{ .Values.fhir.ingress.hostname}}/{{ .Values.fhir.name }}{{- end }}
 {{- if .Values.fhir.proxy.enabled }}
-- Primary FHIR Server Proxy {{- if .Values.global.ingress.enabled }} --- https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-proxy.{{ .Values.global.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Primary FHIR Server Proxy {{- if .Values.fhir.proxy.ingress.enabled }} --- https://{{ .Values.fhir.proxy.ingress.hostname}}/{{ .Values.fhir.proxy.name }}{{- end }}
 {{- end }}
 {{- end }}
 {{- if index .Values "fhir-deid" "enabled" }}
-- Secondary FHIR Server{{- if .Values.global.ingress.enabled }} ------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid.{{ .Values.global.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Secondary FHIR Server{{- if index .Values "fhir-deid" "ingress" "enabled" }} ------- https://{{ index .Values "fhir-deid" "ingress" "hostname" }}/{{ index .Values "fhir-deid" "name" }}{{- end }}
 {{- if index .Values "fhir-deid" "proxy" "enabled" }}
-- Secondary FHIR Server Proxy {{- if .Values.global.ingress.enabled }} - https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-deid-proxy.{{ .Values.global.ingress.subdomain}}/fhir-server/api/v4{{- end }}
+- Secondary FHIR Server Proxy {{- if index .Values "fhir-deid" "proxy" "ingress" "enabled" }} - https://{{ index .Values "fhir-deid" "proxy" "ingress" "hostname" }}/{{ index .Values "fhir-deid" "proxy" "name" }}{{- end }}
 {{- end }}
 {{- end }}
 {{- if .Values.deid.enabled }}
-- De-Identification Service{{- if .Values.global.ingress.enabled }} --- https://{{ .Release.Namespace }}-{{ .Release.Name }}-deid.{{ .Values.global.ingress.subdomain}}/api/v1/{{- end }}
+- De-Identification Service{{- if .Values.deid.ingress.enabled }} --- https://{{ .Values.deid.ingress.hostname}}/deid/api/v1/{{- end }}
 {{- end }}
 {{- if .Values.nifi.enabled }}
-- NiFi Server{{- if .Values.global.ingress.enabled }} ----------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi.{{ .Values.global.ingress.subdomain}}/nifi{{- end }}
-- NiFi HTTP Post API{{- if .Values.global.ingress.enabled }} ---------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-http-post.{{ .Values.global.ingress.subdomain}}{{- end }}
+- NiFi Server{{- if .Values.ingress.enabled }} ----------------- https://{{ .Values.nifi.ingress.hostname}}/nifi{{- end }}
 {{- end }}
 {{- if index .Values "nifi-registry" "enabled" }}
-- NiFi Registry{{- if .Values.global.ingress.enabled }} --------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-nifi-registry.{{ .Values.global.ingress.subdomain}}/nifi-registry{{- end }}
+- NiFi Registry{{- if index .Values "nifi-registry" "ingress" "enabled" }} --------------- https://{{ index .Values "nifi-registry" "ingress" "hostname"}}/nifi-registry{{- end }}
 {{- end }}
 {{- if index .Values "cohort-service" "enabled" }}
-- Cohort Service{{- if .Values.global.ingress.enabled }} -------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-cohort-service.{{ .Values.global.ingress.subdomain}}{{- end }}
+- Cohort Service{{- if index .Values "cohort-service" "ingress" "enabled" }} -------------- https://{{ index .Values "cohort-service" "ingress" "hostname"}}/cohort-service{{- end }}
+{{- end }}
+{{- if index .Values "deid-prep" "enabled" }}
+- Deid Prep{{- if index .Values "deid-prep" "ingress" "enabled" }} -------------- https://{{ index .Values "deid-prep" "ingress" "hostname"}}/deid-prep{{- end }}
+{{- end }}
+{{- if index .Values "term-services-prep" "enabled" }}
+- Terminology Services Prep{{- if index .Values "term-services-prep" "ingress" "enabled" }} --- https://{{ index .Values "term-services-prep" "ingress" "hostname"}}/term-services-prep{{- end }}
+{{- end }}
+{{- if index .Values "nlp-insights" "enabled" }}
+- NLP Insights{{- if index .Values "nlp-insights" "ingress" "enabled" }} ---------------- https://{{ index .Values "nlp-insights" "ingress" "hostname"}}/nlp-insights{{- end }}
 {{- end }}
 {{- if .Values.kafka.enabled }}
-- Expose Kafka Service{{- if .Values.global.ingress.enabled }} -------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-expose-kafka.{{ .Values.global.ingress.subdomain}}{{- end }}
+- Expose Kafka Service{{- if index .Values "expose-kafka" "ingress" "enabled" }} -------- https://{{ index .Values "expose-kafka" "ingress" "hostname"}}/expose-kafka{{- end }}
 - Kafka
 {{- end }}
 {{- if .Values.zookeeper.enabled }}
@@ -48,10 +56,10 @@ The following services have been deployed:
 {{- end }}
 {{- if index .Values "kube-prometheus-stack" "enabled" }}
 - Prometheus
-- Grafana{{- if .Values.global.ingress.enabled }} --------------------- https://{{ .Release.Namespace }}-{{ .Release.Name }}-grafana.{{ .Values.global.ingress.subdomain}}{{- end }}
+- Grafana{{- if index .Values "kube-prometheus-stack" "ingress" "enabled" }} --------------------- https://{{ index .Values "kube-prometheus-stack" "ingress" "hostname"}}/grafana{{- end }}
 {{- end }}
 
-{{- if .Values.global.ingress.enabled }}
+{{- if .Values.ingress.enabled }}
 {{- if .Values.kafka.enabled }}
 
 

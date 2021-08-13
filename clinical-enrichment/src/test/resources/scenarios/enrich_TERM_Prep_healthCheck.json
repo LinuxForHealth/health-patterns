@@ -1,0 +1,16 @@
+{
+    "scenarioName": "********enrich_TERM_prep_healthCheck********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "healthCheck",
+            "url": "${term_prep}/healthCheck",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+                }
+        }
+     ]
+}

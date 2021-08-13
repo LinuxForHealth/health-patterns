@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: alvearie/expose-kafka
   pullPolicy: Always
-  tag: 0.0.1
+  tag: 0.0.3
 service:
   type: ClusterIP
   port: 5000
@@ -15,21 +15,12 @@ service:
 enabled: true
 username: token
 password: integrati0n
+inittopics:
+inittopicnumpartitions:
+inittopicreplication:
 # bootstrap:
-
-global:
-  ingress:
-    enabled:
-    class:
-         # IBM: public-iks-k8s-nginx
-         # Azure: addon-http-application-routing
-         # AWS: nginx
-    subdomain:
 
 ingress:
   enabled: false
-  class:
-       # IBM: public-iks-k8s-nginx
-       # Azure: addon-http-application-routing
-       # AWS: nginx
-  subdomain:
+  class: public-iks-k8s-nginx
+  hostname:

@@ -1,0 +1,34 @@
+{
+    "scenarioName": "********enrich_ASCVD_New********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "getASCVDdataFromFHIR",
+            "url": "${ascvd_from_fhir}/fhir",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+             }
+      },
+      {
+            "name": "verifyASCVD",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getASCVDdataFromFHIR.response.body}",
+                 "string2": "RiskAssessment"
+            },
+            "verify": { "result": "${1}" }
+        }
+        
+     ],
+     "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/ascvd_bundle.json},true",
+            "${JSON.FILE:Patients/ascvd_bundle_no_birthdate.json},false"
+        ]
+    }
+}

@@ -17,7 +17,7 @@
 	<parent>
 		<groupId>com.ibm.healthpatterns</groupId>
 		<artifactId>nifi-health-patterns-bundle</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.5</version>
 	</parent>
 
 	<artifactId>nifi-health-patterns-nar</artifactId>
@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>com.ibm.healthpatterns</groupId>
 			<artifactId>nifi-health-patterns-processors</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
+			<version>0.0.5</version>
 		</dependency>
 	</dependencies>
 </project>

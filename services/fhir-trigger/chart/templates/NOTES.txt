@@ -15,7 +15,9 @@ It can be accessed from within your cluster at the following location:
 
   {{ include "fhir-trigger.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
  
-{{- if .Values.global.ingress.enabled | default .Values.ingress.enabled }}
+{{- if .Values.ingress.enabled }}
+
 It can also be accessed via ingress at this location:
-https://{{ .Release.Namespace }}-{{ .Release.Name }}-fhir-trigger.{{ .Values.global.ingress.subdomain | default .Values.ingress.subdomain }}
+
+https://{{ .Values.ingress.hostname }}/{{ .Chart.Name }}
 {{- end }}

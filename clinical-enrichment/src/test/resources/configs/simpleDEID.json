@@ -1,0 +1,52 @@
+		         {   "rules": [
+		            {
+		                "name": "hash",
+		                "maskingProviders": [
+		                    {
+		                        "type": "HASH"
+		                    }
+		                ]
+		            },
+		            {
+		                "name": "date",
+		                "maskingProviders": [
+		                    {
+		                        "type": "DATETIME",
+		                        "maskShiftDate": true,
+		                        "maskShiftSeconds": 987678654
+		                    }
+		                ]
+		            },
+		            {
+		                "name": "random",
+		                "maskingProviders": [
+		                    {
+		                        "type": "RANDOM"
+		                    }
+		                ]
+		            },
+		            {
+		                "name": "delete",
+		                "maskingProviders": [
+		                    {
+		                        "type": "NULL"
+		                    }
+		                ]
+		            }
+		        ],
+		        "json": {
+		            "schemaType": "FHIR",
+		            "messageTypeKey": "resourceType",
+		            "messageTypes": [
+		                "Patient",
+		                "Observation",
+		                "Condition",
+		                "Procedure"
+		            ],
+		            "maskingRules": [
+		                {
+		                    "jsonPath": "/fhir/Patient",
+		                    "rule": "random"
+		                }
+		            ]
+		        }}
