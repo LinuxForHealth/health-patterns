@@ -43,6 +43,7 @@ jobs:
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
         helm dependency update helm-charts/health-patterns
         sed 's/\(hostname\: \&hostname replace-me\)/\1 github.wh-health-patterns.dev.watson-health.ibm.com/1' helm-charts/health-patterns/clinical_ingestion.yaml > helm-charts/health-patterns/clinical_ingestion.yaml 
+        cat helm-charts/health-patterns/clinical_ingestion.yaml
         helm install ingestion helm-charts/health-patterns --values helm-charts/health-patterns/ci/chart-testing-values.yaml --values helm-charts/health-patterns/clinical_ingestion.yaml --wait --timeout 6m0s
         kubectl get all
 
