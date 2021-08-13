@@ -65,8 +65,12 @@ def process_bundle(json_string):
         logger.warning("Bundle has no resources or is improperly formatted")
     for match in resources:
         request_body = match.value['resource']
-        resp = process(request_body)
-        try:
+        resource_type = request_body['resourceType']
+        if resource_type in nlp_service.types_can_handle.keys():
+            resp = process(request_body)
+        else:
+            resp = request_body
+        try:                
             new_resource_dict[match.value['fullUrl']] = json.loads(resp)
         except KeyError:
             logger.error("Bundle doesn't have fullUrls for resources")
