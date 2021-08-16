@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<fhir.version>4.8.3</fhir.version>
+		<fhir.version>4.9.0</fhir.version>
 	</properties>
 
 	<dependencies>
