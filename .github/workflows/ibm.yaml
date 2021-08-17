@@ -53,8 +53,8 @@ jobs:
         helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --wait --timeout 6m0s
         kubectl get all
 
-    # Execute Ennrichment Tests 
-    - name: Execute Tests
+    # Build Enrichment Tests 
+    - name: Build Tests
       run: |
          cd clinical-enrichment
          echo "*************************************" 
@@ -65,6 +65,10 @@ jobs:
          echo "* Properties File:                  *"
          echo "*************************************"
          cat src/test/resources/enrich-flow.properties
+         
+    # Execute Enrichment Tests 
+    - name: Execute Tests
+      run: |
          echo "*************************************" 
          echo "* Execute the testcases             *"
          echo "*************************************"
