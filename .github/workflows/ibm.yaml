@@ -1,4 +1,4 @@
-name: Deploy to IBM Cloud
+name: Deploy to IBM Cloud And Execute Enrichment Tests
 
 on:
 #  release:
@@ -12,6 +12,13 @@ env:
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
   IBM_CLOUD_REGION: us-east
   CLUSTER_NAMESPACE: github
+  FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir
+  FHIR_DEID_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
+  ASCVD_FROM_FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
+  TERM_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
+  DEID_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
+  DEFAULT_PASSWORD: integrati0n
+  
 
 jobs:
   deploy:
@@ -43,8 +50,39 @@ jobs:
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
         helm dependency update helm-charts/health-patterns
         sed -i -e "s/\&hostname replace-me/\&hostname github.wh-health-patterns.dev.watson-health.ibm.com/g" helm-charts/health-patterns/values.yaml
-        helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --wait --timeout 6m0s
+        helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --wait --timeout 6m0s
         kubectl get all
+
+    # Build Enrichment Tests 
+    - name: Build Tests
+      run: |
+         cd clinical-enrichment
+         echo "*************************************" 
+         echo "* Build the testcases               *"
+         echo "*************************************"
+         mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.deid.prep=$DEID_PREP_IP -Dport.deid.prep=$DEID_PREP_PORT -Dip.term.prep=$TERM_PREP_IP -Dport.term.prep=$TERM_PREP_PORT -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dport.ascvd.from.fhir=$ASCVD_FROM_FHIR_PORT -Dpw=$DEFAULT_PASSWORD
+         echo "*************************************" 
+         echo "* Properties File:                  *"
+         echo "*************************************"
+         cat src/test/resources/enrich-flow.properties
+         
+    # Execute Enrichment Tests 
+    - name: Execute Tests
+      run: |
+         echo "*************************************"
+         echo "* Waiting for 1 minute              *"
+         echo "*************************************"
+         date
+         sleep 60  
+         date
+         cd clinical-enrichment
+         echo "*************************************" 
+         echo "* Execute the testcases             *"
+         echo "*************************************"
+         mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
+         mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
+
+      
 
     # Uninstall Chart
     - name: Uninstall Chart
