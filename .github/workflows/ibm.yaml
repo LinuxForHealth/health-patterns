@@ -81,9 +81,8 @@ jobs:
          echo "*************************************"
          mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
          mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
-         ls -lrt target/surefire-reports
-         cat target/surefire-reports/categories.BasicEnrichmentTests.txt
-         cat target/surefire-reports/categories.EnrichmentConfigTestsTests.txt
+         mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
+
       
 
     # Uninstall Chart
