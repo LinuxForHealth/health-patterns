@@ -69,6 +69,7 @@ jobs:
     # Execute Enrichment Tests 
     - name: Execute Tests
       run: |
+         cd clinical-enrichment
          echo "*************************************" 
          echo "* Execute the testcases             *"
          echo "*************************************"
