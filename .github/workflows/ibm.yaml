@@ -69,6 +69,12 @@ jobs:
     # Execute Enrichment Tests 
     - name: Execute Tests
       run: |
+         echo "*************************************"
+         echo "* Waiting for 2 minutes             *"
+         echo "*************************************"
+         date
+         sleep 120  
+         date
          cd clinical-enrichment
          echo "*************************************" 
          echo "* Execute the testcases             *"
