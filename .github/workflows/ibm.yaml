@@ -1,4 +1,4 @@
-name: Deploy to IBM Cloud
+name: Deploy to IBM Cloud And Execute Enrichment Tests
 
 on:
 #  release:
