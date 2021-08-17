@@ -32,6 +32,12 @@
     <artifactId>javafaker</artifactId>
     <version>1.0.2</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>5.0.1</version>
+    </dependency>
   </dependencies>
     <build>
     <finalName>${project.artifactId}</finalName>
