@@ -70,10 +70,10 @@ jobs:
     - name: Execute Tests
       run: |
          echo "*************************************"
-         echo "* Waiting for 2 minutes             *"
+         echo "* Waiting for 1 minute              *"
          echo "*************************************"
          date
-         sleep 120  
+         sleep 60  
          date
          cd clinical-enrichment
          echo "*************************************" 
@@ -81,7 +81,6 @@ jobs:
          echo "*************************************"
          mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
          mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
-         mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
 
       
 
