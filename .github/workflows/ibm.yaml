@@ -81,7 +81,7 @@ jobs:
          echo "*************************************"
          mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
          mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
-
+         mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
       
 
     # Uninstall Chart
