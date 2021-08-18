@@ -56,29 +56,6 @@ def setup_service(config_name):
     return Response(jsonString, status=200, mimetype='application/json')
 
 
-def process_bundle(json_string):
-    new_resource_dict = {}
-
-    jsonpath_exp = parse('entry[*]')
-    resources = jsonpath_exp.find(json_string)
-    if len(resources) == 0:
-        logger.warning("Bundle has no resources or is improperly formatted")
-    for match in resources:
-        request_body = match.value['resource']
-        resp = process(request_body)
-        try:
-            new_resource_dict[match.value['fullUrl']] = json.loads(resp)
-        except KeyError:
-            logger.error("Bundle doesn't have fullUrls for resources")
-            return Response("Bundle doesn't have fullUrls for resources", status=400)
-
-    for resource in json_string['entry']:
-        resource['resource'] = new_resource_dict[resource['fullUrl']]
-    return json_string
-
-
-
-
 configDir = setup_config_dir()
 setup_service('default')
 
@@ -146,7 +123,7 @@ def setup_config():
     if request.args and request.args.get('name'):
         name = request.args.get('name')
         try:
-            setup_service(name)
+            return setup_service(name)
         except Exception as ex:
             logger.warn('Error in setting up service with a config name of: ' + name, ex)
             return Response('Error in setting up service with a config name of: ' + name, status=400)
@@ -157,29 +134,51 @@ def setup_config():
 
 @app.route("/process", methods=['POST'])
 def apply_analytics():
-    request_data = json.loads(request.data)
-    resp = process(request_data)
-    if resp == "Error":
-        return Response("No NLP service configured", status=400)
+    if nlp_service == None:
+            return Response("No NLP service configured", status=400)
+
+    request_data = json.loads(request.data) #could be resource or bundle
+
+    input_type = request_data['resourceType']
+    resp_string = None
+    new_entries = []
+    if input_type == 'Bundle':
+        entrylist = request_data['entry']
+        for entry in entrylist:
+            if entry["resource"]["resourceType"] in nlp_service.types_can_handle.keys():
+                resp = process(entry["resource"])
+                if resp['resourceType'] == 'Bundle':
+                    #response is a bundle of new resources to keep for later
+                    for new_entry in resp['entry']:
+                        new_entries.append(new_entry) #keep new resources to be added later
+                else:
+                    entry["resource"] = resp #update existing resource
+
+        for new_entry in new_entries:
+            entrylist.append(new_entry) #add new resources to bundle
+
+        resp_string = request_data
     else:
-        return Response(resp, status=200, mimetype='application/json')
+        resp_string = process(request_data) #single resource so just return response
+
+    return_response = json.dumps(resp_string) #back to string
+
+    return Response(return_response, status=200, mimetype='application/json')
 
 
 def process(request_data):
-    if nlp_service is not None:
-        input_type = request_data['resourceType']
-        if input_type in nlp_service.types_can_handle.keys():
-            enhance_func = nlp_service.types_can_handle[input_type]
-            resp = enhance_func(nlp_service, request_data)
-        elif input_type == "Bundle":
-            resp = process_bundle(request_data)
-        else:
-            resp = nlp_service.process(request.data)
-        json_response = str(resp).replace("'", "\"").replace("True", "true")
+    input_type = request_data['resourceType']
+    if input_type in nlp_service.types_can_handle.keys():
+        enhance_func = nlp_service.types_can_handle[input_type]
+        resp = enhance_func(nlp_service, request_data)
+        json_response = json.loads(resp)
+
         logger.info("Resource successfully updated")
         return json_response
-    logger.error("No NLP Service configured")
-    return "Error"
+    else:
+        logger.info("Resource no handled so respond back with original")
+        return request_data
+
 
 
 if __name__ == "__main__":
