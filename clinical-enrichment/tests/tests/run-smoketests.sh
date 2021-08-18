@@ -164,12 +164,13 @@ echo "* Execute the testcases             *"
 echo "*************************************"
 mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
 mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
-
+mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
 
 # JUNIT execution reports available in the below folder
 ls -lrt target/surefire-reports
 cat target/surefire-reports/categories.BasicEnrichmentTests.txt
-cat target/surefire-reports/categories.EnrichmentConfigTestsTests.txt
+cat target/surefire-reports/categories.EnrichmentConfigTests.txt
+cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt
 
 echo "*************************************" 
 echo "* Report Test Results to Insights   *"
