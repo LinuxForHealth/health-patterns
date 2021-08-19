@@ -88,5 +88,11 @@ public class Enrich_Flow {
 	 @Scenario("scenarios/enrich_TERM_Prep_SD_CRUD.json")
 	    public void enrich_TERM_Prep_SD_CRUD() throws Exception {
 	    }
+	
+	@Test
+	 @Category({EnrichmentConfig.class})
+	 @Scenario("scenarios/enrich_TERM_Prep_SD_Use.json")
+	    public void enrich_TERM_Prep_SD_Use() throws Exception {
+	    }
 
 }
