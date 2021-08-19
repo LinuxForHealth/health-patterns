@@ -55,18 +55,18 @@ Now that the docker-compose environment is running, you can use Postman (or any 
     * Scope:  launch/patient openid fhirUser offline_access patient/*.read (see [SMART App Launch: Scopes and Launch Context](http://www.hl7.org/fhir/smart-app-launch/scopes-and-launch-context/index.html#quick-start))
     * State:  1234 (any random value)
     * Client Authentication:  Send as Basic Auth header
-    
+
     ![Postman screenshot](images/postman.png)
 
 3. Click `Get New Access Token` and enter the username and password of a registered user. For convenience, the default `alvearie/keycloak-config` image creates a single user with username `fhiruser` and password `change-password`. The user *must* have a corresponding `resourceId` attribute which matches the id of the corresponding Patient resource on the FHIR server.
 
 4. Consent and proceed. By default, the consent screen will only appear for a user a single time (per client).
 
-5. On the Token Details dialog, scroll to the bottom and look for the `patient` attribute. The value of this attribute should come from the corresponding `resoourceId` attribute of the user in Keycloak. If you are using the default `alvearie/keycloak-config` config, this should be `Patient1`.
+5. On the Token Details dialog, scroll to the bottom and look for the `patient` attribute. The value of this attribute should come from the corresponding `resourceId` attribute of the user in Keycloak. If you are using the default `alvearie/keycloak-config` config, this should be `Patient1`.
 
 6. Scroll back to the top of the Token Details page and click `Use Token`. This will automatically associate this access token with your request.
 
-7. Click `Send`. The response should contain only resources associated with this user. If you are using the default `fhiruser` user and the sampleDB provided with this pattern, you should see four ExplanationOfBenefit resources returned from the server.
+7. Enter a request URL like `https://localhost:9443/fhir-server/api/v4/ExplanationOfBenefit` and click `Send`. The response should contain only resources associated with this user. If you are using the default `fhiruser` user and the sampleDB provided with this pattern, you should see a single ExplanationOfBenefit resource returned from the server.
 
 #### Delegated user access
 What if the end user has access to multiple different patient records? The Keycloak extensions for FHIR provides a patient context picker.
@@ -77,10 +77,10 @@ What if the end user has access to multiple different patient records? The Keycl
 
 3. Click `View all users` and select the user from the list.
 
-4. Navigate to the Attributes tab and add another value to the list of values, separating each id with a single space. For example, if you are using the sampleDB, try changing `Patient1` to `Patient1 1` and click `Save`.
+4. Navigate to the Attributes tab and add another value to the list of values, separating each id with a single space. For example, if you are using the sampleDB, try changing `Patient1` to `Patient1 Child1` and click `Save`.
 
 5. Now head back to Postman, click `Get New Access Token`, and re-enter the login credentials. This time, you should be prompted with a patient selection form. The patient information on this form is populated from information that is retrieved from the configured FHIR resource server.
-    ![The patient selection screen](images/context-picker.png)
+    ![The patient selection form](images/context-picker.png)
 
 6. Choose a patient and press Submit. Then, on the Token Details dialog, scroll to the bottom to see the resourceId that is associated with the patient you selected in the patient attribute of the token response body.
 

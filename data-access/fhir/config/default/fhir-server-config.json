@@ -170,6 +170,8 @@
         "searchParameters": {
           "name": "http://hl7.org/fhir/SearchParameter/Practitioner-name",
           "identifier": "http://hl7.org/fhir/SearchParameter/Practitioner-identifier",
+          "given": "http://hl7.org/fhir/SearchParameter/individual-given",
+          "family": "http://hl7.org/fhir/SearchParameter/individual-family",
           "*": "*"
         }
       },
