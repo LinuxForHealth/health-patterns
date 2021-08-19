@@ -5,8 +5,8 @@ plugins {
     id 'com.palantir.docker-run' version "0.27.0"
 }
 
-group = 'org.alvearie.health-patterns'
-version = "1.0.0"
+group = ''
+version = "0.0.1"
 description = """NLP Insights"""
 
 sonarqube {
@@ -136,4 +136,3 @@ project.tasks.coverage.finalizedBy project.tasks.textAnalyticsPyCoverage
 project.tasks.clean.finalizedBy project.tasks.textAnalyticsClean
 project.tasks.uploadArchives.finalizedBy project.tasks.textAnalyticsPyPublishArtifacts
 project.tasks.flake8.finalizedBy project.tasks.textAnalyticsPyFlake8
-
