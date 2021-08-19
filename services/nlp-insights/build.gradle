@@ -6,7 +6,7 @@ plugins {
 }
 
 group = ''
-version = "0.0.1"
+version = ""
 description = """NLP Insights"""
 
 sonarqube {
