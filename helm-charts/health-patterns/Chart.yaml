@@ -67,7 +67,7 @@ dependencies:
     condition: deid.enabled
     repository: https://alvearie.github.io/health-patterns/charts
   - name: cohort-service
-    version: 0.1.0
+    version: 1.0.1
     condition: cohort-service.enabled
     repository: https://alvearie.github.io/health-patterns/charts
   - name: nifi-registry

@@ -36,10 +36,10 @@ public class Info {
 	public void contextRefreshedEvent() {
 		System.out.println("The following endpoints are available by default :-");
 		System.out.println("  Health        : http://localhost:8080/health");
-		System.out.println("  Application   : http://localhost:8080/cohort-service/config");
-		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries");
-		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries/{id}/patients");
-		System.out.println("  Application   : http://localhost:8080/cohort-service/libraries/{id}/patientIds");
+		System.out.println("  Application   : http://localhost:8080/config");
+		System.out.println("  Application   : http://localhost:8080/libraries");
+		System.out.println("  Application   : http://localhost:8080/libraries/{id}/patients");
+		System.out.println("  Application   : http://localhost:8080/libraries/{id}/patientIds");
 	}
 
 }

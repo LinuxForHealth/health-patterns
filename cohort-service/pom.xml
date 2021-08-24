@@ -5,7 +5,7 @@
 
     <groupId>com.ibm.healthpatterns</groupId>
     <artifactId>cohort-service</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -109,14 +109,12 @@
         <dependency>
         	<groupId>com.ibm.cohort</groupId>
         	<artifactId>cohort-engine</artifactId>
-        	<!-- This is a fixed version from the Cohort Team's SNAPSHOTs that we are currently using that we got from Corey Snders. -->
-            <version>0.0.1-20210803.165707-125</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
         	<groupId>com.ibm.cohort</groupId>
         	<artifactId>cohort-util</artifactId>
-        	<!-- This is a fixed version from the Cohort Team's SNAPSHOTs that we are currently using that we got from Corey Snders. -->
-            <version>0.0.1-20210803.165339-105</version>
+            <version>1.0.1</version>
         </dependency>
 
 	    <dependency>
