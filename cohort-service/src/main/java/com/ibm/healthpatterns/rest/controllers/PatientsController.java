@@ -44,7 +44,7 @@ import com.ibm.healthpatterns.app.CohortService;
  * @author Luis A. García
  */
 @RestController
-@RequestMapping("/cohort-service/libraries/{libraryID}")
+@RequestMapping("/libraries/{libraryID}")
 public class PatientsController {
 
 	private CohortService cohortService;

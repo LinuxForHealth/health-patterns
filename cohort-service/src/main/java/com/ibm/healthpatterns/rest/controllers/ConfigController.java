@@ -42,7 +42,7 @@ import com.ibm.healthpatterns.app.CohortService;
  * @author Luis A. García
  */
 @RestController
-@RequestMapping("/cohort-service/config")
+@RequestMapping("/config")
 public class ConfigController {
 
 	private CohortService cohortService;
