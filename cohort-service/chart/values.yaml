@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: alvearie/cohort-service
   pullPolicy: IfNotPresent
-  tag: 1.0.0
+  tag: 1.0.1
 
 service:
   type: ClusterIP
