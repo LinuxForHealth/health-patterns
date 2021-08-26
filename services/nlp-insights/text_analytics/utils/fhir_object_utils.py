@@ -213,7 +213,7 @@ def create_insight_extension(insight_id_string, insight_system):
 
 
 def create_insight_detail_extension(nlp_output):
-    nlp_dict = nlp_output #.to_dict()
+    nlp_dict = nlp_output  # .to_dict()
     nlp_dict_string = json.dumps(nlp_dict)  # get the string
     nlp_as_bytes = nlp_dict_string.encode('utf-8')  # convert to bytes including utf8 content
     nlp_base64_encoded_bytes = base64.b64encode(nlp_as_bytes)  # encode to base64
@@ -295,20 +295,17 @@ def add_codings_drug(drug, drug_name, codeable_concept, insight_id, insight_syst
                                                 insight_system)
 
             coding.display = drug_name
-            
+
             codeable_concept.coding.append(coding)
     if drug.get("rxNormID") is not None:
         create_coding_entries(codeable_concept, insight_constants.RXNORM_URL, drug.get("rxNormID"), insight_id,
                               insight_system)
 
 
-'''
-Looks through the array of the codeable_concept for an entry matching the id and system.
-Returns the entry if found, or None if not found.
-'''
-
-
 def find_codable_concept(codeable_concept, id, system):
+    """Looks through the array of the codeable_concept for an entry matching the id and system.
+       Returns the entry if found, or None if not found.
+    """
     for entry in codeable_concept.coding:
         if entry.system == system and entry.code == id:
             return entry
@@ -359,18 +356,16 @@ def add_medication_confidences(insight_ext, insight_model_data):
     insight_ext.append(confidence)
 
 
-'''
-Returns the attached document as a string, decoded.
-Parameters:
-  diagnostic_report - fhir.resources.diagnosticreport object where the text will be retrieved
-'''
-
-
 def get_diagnostic_report_data(diagnostic_report):
+    """Returns the attached document as a string, decoded.
+       
+       Parameters:
+          diagnostic_report - fhir.resources.diagnosticreport object where the text will be retrieved
+    """
     if diagnostic_report.presentedForm:
         encoded_data = diagnostic_report.presentedForm[0].data
         byte_text = base64.b64decode(encoded_data)
         text = byte_text.decode('utf8')  # This removes the b'..' around the text string
         return text
-    
+
     return None
