@@ -1,12 +1,15 @@
+import json
+import logging
+import os
+
 from flask import Flask, request, Response
+from jsonpath_ng import parse
 from text_analytics.acd.acd_service import ACDService
 from text_analytics.quickUMLS.quickUMLS_service import QuickUMLSService
-import json
-from jsonpath_ng import parse
-import os
-import logging
+
 
 logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
 
@@ -131,44 +134,39 @@ def setup_config():
         logger.warn('Did not provide query parameter name to set up service')
         return Response("Did not provide query parameter name to set up service", status=400)
 
+def _apply_analytics_to_bundle(request_data):
+    assert request_data['resourceType'] == 'Bundle'
+    
+    new_entries = []
+    for entry in request_data['entry']:
+        if entry["resource"]["resourceType"] in nlp_service.types_can_handle:
+            nlp_resp = process_resource(entry["resource"])
+            if nlp_resp['resourceType'] == 'Bundle':
+                new_entries.extend(nlp_resp['entry'])
+            else:
+                entry["resource"] = nlp_resp #update existing resource
+
+    request_data['entry'].extend(new_entries)
 
 @app.route("/process", methods=['POST'])
-def apply_analytics():
+def process():
     if nlp_service == None:
             return Response("No NLP service configured", status=400)
 
-    request_data = json.loads(request.data) #could be resource or bundle
+    fhir_data = json.loads(request.data) #could be resource or bundle
 
-    input_type = request_data['resourceType']
-    resp_string = None
     new_entries = []
-    if input_type == 'Bundle':
-        entrylist = request_data['entry']
-        for entry in entrylist:
-            if entry["resource"]["resourceType"] in nlp_service.types_can_handle.keys():
-                resp = process(entry["resource"])
-                if resp['resourceType'] == 'Bundle':
-                    #response is a bundle of new resources to keep for later
-                    for new_entry in resp['entry']:
-                        new_entries.append(new_entry) #keep new resources to be added later
-                else:
-                    entry["resource"] = resp #update existing resource
-
-        for new_entry in new_entries:
-            entrylist.append(new_entry) #add new resources to bundle
-
-        resp_string = request_data
+    if fhir_data['resourceType'] == 'Bundle':
+        _apply_analytics_to_bundle(fhir_data)
     else:
-        resp_string = process(request_data) #single resource so just return response
+        fhir_data = process_resource(fhir_data)
 
-    return_response = json.dumps(resp_string) #back to string
-
-    return Response(return_response, status=200, mimetype='application/json')
+    return Response(json.dumps(fhir_data), status=200, mimetype='application/json')
 
 
-def process(request_data):
+def process_resource(request_data):
     input_type = request_data['resourceType']
-    if input_type in nlp_service.types_can_handle.keys():
+    if input_type in nlp_service.types_can_handle:
         enhance_func = nlp_service.types_can_handle[input_type]
         resp = enhance_func(nlp_service, request_data)
         json_response = json.loads(resp)
@@ -178,8 +176,6 @@ def process(request_data):
     else:
         logger.info("Resource no handled so respond back with original")
         return request_data
-
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

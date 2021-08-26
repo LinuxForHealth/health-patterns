@@ -13,6 +13,9 @@ COPY . .
 
 RUN pip3 install .
 
+RUN useradd alvearie -m
+USER alvearie
+
 ENV FLASK_APP /app/text_analytics/app.py
 
 EXPOSE 5000

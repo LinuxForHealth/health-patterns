@@ -1,13 +1,15 @@
-from text_analytics.abstract_nlp_service import NLPService
-from text_analytics.quickUMLS.config import get_config
-from text_analytics.quickUMLS.semtype_lookup import lookup
-from text_analytics.enhance import *
 import json
-import requests
 import logging
 
-logger = logging.getLogger()
+import requests
 
+from text_analytics.abstract_nlp_service import NLPService
+from text_analytics.enhance import *
+from text_analytics.quickUMLS.config import get_config
+from text_analytics.quickUMLS.semtype_lookup import lookup
+
+
+logger = logging.getLogger()
 
 class QuickUMLSService(NLPService):
     types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir,
@@ -23,22 +25,19 @@ class QuickUMLSService(NLPService):
         self.jsonString = jsonString
 
     def process(self, text):
-        try:
-            if type(text) is bytes:
-                request_body = {"text": text.decode('utf-8')}
-            else:
-                request_body = {"text": text}
-            logger.info("Calling QUICKUMLS")
-            resp = requests.post(self.quickUMLS_url, json=request_body)
-            concepts = json.loads(resp.text)
-            conceptsList = []
-            if concepts is not None:
-                for concept in concepts:
-                    conceptsList.append(self.concept_to_dict(concept))
-            return {"concepts": conceptsList}
-        except requests.exceptions as ex:
-            logger.error("Error calling QuickUMLS on: " + text + ", with error " + ex.message)
-            return None
+        if type(text) is bytes:
+            request_body = {"text": text.decode('utf-8')}
+        else:
+            request_body = {"text": text}
+        logger.info(f"Calling QUICKUMLS at {self.quickUMLS_url}\n")
+        resp = requests.post(self.quickUMLS_url, json=request_body)
+        concepts = json.loads(resp.text)
+        conceptsList = []
+        if concepts:
+            for concept in concepts:
+                conceptsList.append(self.concept_to_dict(concept))
+        return {"concepts": conceptsList}
+
 
     @staticmethod
     def concept_to_dict(concept):

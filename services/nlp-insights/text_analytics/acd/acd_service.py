@@ -1,20 +1,21 @@
-from ibm_whcs_sdk import annotator_for_clinical_data as acd
-from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
-from text_analytics.acd.config import get_config
-from text_analytics.enhance import *
 import json
 import logging
-from text_analytics.insights.add_insights_medication import create_insight
+
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.dosage import Dosage, DosageDoseAndRate
 from fhir.resources.extension import Extension
 from fhir.resources.medicationstatement import MedicationStatement
 from fhir.resources.quantity import Quantity
 from fhir.resources.timing import Timing
-from text_analytics.utils import fhir_object_utils
-from text_analytics.insights import insight_constants
-
+from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
+from ibm_whcs_sdk import annotator_for_clinical_data as acd
 from text_analytics.abstract_nlp_service import NLPService
+from text_analytics.acd.config import get_config
+from text_analytics.enhance import *
+from text_analytics.insights import insight_constants
+from text_analytics.insights.add_insights_medication import create_insight
+from text_analytics.utils import fhir_object_utils
+
 
 logger = logging.getLogger()
 
@@ -48,15 +49,11 @@ class ACDService(NLPService):
         )
         service.set_service_url(self.acd_url)
 
-        try:
-            logger.info("Calling ACD")
-            resp = service.analyze_with_flow(self.acd_flow, text)
-            out = resp.to_dict()
-            return out
+        logger.info("Calling ACD")
+        resp = service.analyze_with_flow(self.acd_flow, text)
+        out = resp.to_dict()
+        return out
 
-        except acd.ACDException as err:
-            logger.error("ACD could not be run on text: " + text + " with error: {}".format(err.message))
-            return
 
     def add_medications(nlp, diagnostic_report, nlp_output, med_statements_found, med_statements_insight_counter):
         medications = nlp_output.get('MedicationInd')

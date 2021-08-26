@@ -1,5 +1,5 @@
-import json
 import base64
+import json
 
 from fhir.resources.attachment import Attachment
 from fhir.resources.bundle import Bundle
@@ -10,7 +10,6 @@ from fhir.resources.extension import Extension
 from fhir.resources.identifier import Identifier
 from fhir.resources.meta import Meta
 from fhir.resources.reference import Reference
-
 from text_analytics.insights import insight_constants
 
 
@@ -368,7 +367,10 @@ Parameters:
 
 
 def get_diagnostic_report_data(diagnostic_report):
-    encoded_data = diagnostic_report.presentedForm[0].data
-    byte_text = base64.b64decode(encoded_data)
-    text = byte_text.decode('utf8')  # This removes the b'..' around the text string
-    return text
+    if diagnostic_report.presentedForm:
+        encoded_data = diagnostic_report.presentedForm[0].data
+        byte_text = base64.b64decode(encoded_data)
+        text = byte_text.decode('utf8')  # This removes the b'..' around the text string
+        return text
+    
+    return None
