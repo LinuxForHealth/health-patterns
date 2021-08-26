@@ -32,6 +32,12 @@ bulk data configured.
 
     (GET)  https://\<cql-bulkexporturl>?cql=\<cqlname>
 
+  - returns a job id that is used to check status
+
+- check status of job (returns working or done)
+
+    (GET)  https://\<cql-bulkexporturl>/status?id=\<jobid>
+
 - general health of service-a simple sanity check on the service
 
     (GET)  https://\<cql-bulkexporturl>/healthcheck
