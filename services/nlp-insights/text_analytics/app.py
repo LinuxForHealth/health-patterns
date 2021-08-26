@@ -7,17 +7,16 @@ from jsonpath_ng import parse
 from text_analytics.acd.acd_service import ACDService
 from text_analytics.quickUMLS.quickUMLS_service import QuickUMLSService
 
-
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
 
-#Maps values seen in configs to NLP python classes
+# Maps values seen in configs to NLP python classes
 all_nlp_services = {'acd': ACDService, 'quickumls': QuickUMLSService}
-#NLP Service currently configured
+# NLP Service currently configured
 nlp_service = None
-#Stores instances of configured NLP Services
+# Stores instances of configured NLP Services
 nlp_services_dict = {}
 
 
@@ -63,7 +62,6 @@ configDir = setup_config_dir()
 setup_service('default')
 
 
-
 @app.route("/config/<config_name>", methods=['GET'])
 def get_config(config_name):
     try:
@@ -99,8 +97,6 @@ def delete_config(config_name):
     return Response("Config successfully deleted", status=200)
 
 
-
-
 @app.route("/all_configs", methods=['GET'])
 def get_all_configs():
     configs = []
@@ -116,12 +112,12 @@ def get_all_configs():
     return Response(output, status=200)
 
 
-@app.route("/config", methods = ['GET'])
+@app.route("/config", methods=['GET'])
 def get_current_config():
     return Response(nlp_service.jsonString, status=200, mimetype='application/json')
 
 
-@app.route("/config", methods = ['POST', 'PUT'])
+@app.route("/config", methods=['POST', 'PUT'])
 def setup_config():
     if request.args and request.args.get('name'):
         name = request.args.get('name')
@@ -134,26 +130,13 @@ def setup_config():
         logger.warn('Did not provide query parameter name to set up service')
         return Response("Did not provide query parameter name to set up service", status=400)
 
-def _apply_analytics_to_bundle(request_data):
-    assert request_data['resourceType'] == 'Bundle'
-    
-    new_entries = []
-    for entry in request_data['entry']:
-        if entry["resource"]["resourceType"] in nlp_service.types_can_handle:
-            nlp_resp = process_resource(entry["resource"])
-            if nlp_resp['resourceType'] == 'Bundle':
-                new_entries.extend(nlp_resp['entry'])
-            else:
-                entry["resource"] = nlp_resp #update existing resource
-
-    request_data['entry'].extend(new_entries)
 
 @app.route("/process", methods=['POST'])
 def process():
     if nlp_service == None:
             return Response("No NLP service configured", status=400)
 
-    fhir_data = json.loads(request.data) #could be resource or bundle
+    fhir_data = json.loads(request.data)  # could be resource or bundle
 
     new_entries = []
     if fhir_data['resourceType'] == 'Bundle':
@@ -164,7 +147,30 @@ def process():
     return Response(json.dumps(fhir_data), status=200, mimetype='application/json')
 
 
+def _apply_analytics_to_bundle(request_data):
+    """Adds insight resources to a bundle.
+
+       The provided bundle (a json object) is updated to include discovered insights (FHIR resources).
+    """
+    assert request_data['resourceType'] == 'Bundle'
+
+    new_entries = []
+    for entry in request_data['entry']:
+        if entry["resource"]["resourceType"] in nlp_service.types_can_handle:
+            nlp_resp = process_resource(entry["resource"])
+            if nlp_resp['resourceType'] == 'Bundle':
+                new_entries.extend(nlp_resp['entry'])
+            else:
+                entry["resource"] = nlp_resp  # update existing resource
+
+    request_data['entry'].extend(new_entries)
+
+
 def process_resource(request_data):
+    """Adds insight to a FHIR resource.
+
+       Returned is a json object that is either the original object or duplicate plus insights.
+    """
     input_type = request_data['resourceType']
     if input_type in nlp_service.types_can_handle:
         enhance_func = nlp_service.types_can_handle[input_type]
@@ -176,6 +182,7 @@ def process_resource(request_data):
     else:
         logger.info("Resource no handled so respond back with original")
         return request_data
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
