@@ -43,7 +43,7 @@ def generate_response(statuscode, otherdata={}):
     resp.status_code = statuscode
     return resp
 
-def targetfunction(cql, job_id):
+def cql_bulk_processing(cql, job_id):
     def get_patient_ids(cohort_endpoint, cql_name):
         # call of to cohort service to get patient ids for this cohort
 
@@ -262,7 +262,7 @@ def cql_bulkextract(cql = None):
                    "info" : {"job id": job_id,
                              "target name": target_name}}
     status_dict[job_id] = status_data
-    ex.submit(targetfunction, cql, job_id)
+    ex.submit(cql_bulk_processing, cql, job_id)
 
     return generate_response(202, {"message": message})
 
