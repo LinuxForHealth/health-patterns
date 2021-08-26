@@ -1,0 +1,9 @@
+name: Lint Charts
+
+on: pull_request
+
+
+action "Package stable charts" {
+  uses = "flydiverny/helm-package-action@master"
+  args = "./stable"
+}
