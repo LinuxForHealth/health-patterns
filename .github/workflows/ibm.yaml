@@ -27,8 +27,8 @@ env:
          "ttl" : 1, 
          "proxied" : true, 
          "session_affinity" : "cookie"}'
-  TEST_GLB_ID: (ibmcloud cis glb-create 6ff29db14b24b78a36227f49e18f3177 --json ${json} -i "Cloud Internet Services - Health Patterns" | grep ID)
-  TEST_GLB_ID: ${TEST_GLB_ID:23}
+  TEMP_ID: (ibmcloud cis glb-create 6ff29db14b24b78a36227f49e18f3177 --json ${json} -i "Cloud Internet Services - Health Patterns" | grep ID)
+  TEST_GLB_ID: ${TEMP_ID:23}
 
 jobs:
   deploy:
