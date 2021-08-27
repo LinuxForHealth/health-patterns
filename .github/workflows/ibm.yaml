@@ -21,7 +21,7 @@ env:
   DEFAULT_PASSWORD: integrati0n
   
   # Create the VPC Global Load Balancer specific to the health-patterns-1 cluster and save the GLB ID
-  json='{"name" : "$CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com",
+  json: '{"name" : "$CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com",
          "fallback_pool" : "64c39c1c0638d539cae6d5ff593a0493", 
          "default_pools" :["64c39c1c0638d539cae6d5ff593a0493"], 
          "ttl" : 1, 
