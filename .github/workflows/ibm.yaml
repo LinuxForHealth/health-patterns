@@ -11,14 +11,24 @@ env:
   GITHUB_SHA: ${{ github.sha }}
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
   IBM_CLOUD_REGION: us-east
-  CLUSTER_NAMESPACE: github
-  FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir
-  FHIR_DEID_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
-  ASCVD_FROM_FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
-  TERM_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
-  DEID_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
+  # Create a unique test namespace name
+  CLUSTER_NAMESPACE: github-$RANDOM
+  FHIR_IP: $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/fhir
+  FHIR_DEID_IP: $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
+  ASCVD_FROM_FHIR_IP: $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
+  TERM_PREP_IP: $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
+  DEID_PREP_IP: $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
   DEFAULT_PASSWORD: integrati0n
   
+  # Create the VPC Global Load Balancer specific to the health-patterns-1 cluster and save the GLB ID
+  json='{"name" : "$CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com",
+         "fallback_pool" : "64c39c1c0638d539cae6d5ff593a0493", 
+         "default_pools" :["64c39c1c0638d539cae6d5ff593a0493"], 
+         "ttl" : 1, 
+         "proxied" : true, 
+         "session_affinity" : "cookie"}'
+  TEST_GLB_ID: (ibmcloud cis glb-create 6ff29db14b24b78a36227f49e18f3177 --json ${json} -i "Cloud Internet Services - Health Patterns" | grep ID)
+  TEST_GLB_ID: ${TEST_GLB_ID:23}
 
 jobs:
   deploy:
@@ -43,13 +53,15 @@ jobs:
         ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g dev-env-wdc-kube
         ibmcloud ks cluster config --cluster health-patterns-1
 
+    
     # Setup and Install Chart 
     - name: Install Chart
       run: |
+        kubectl create namespace $CLUSTER_NAMESPACE
         kubectl config current-context
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
         helm dependency update helm-charts/health-patterns
-        sed -i -e "s/\&hostname replace-me/\&hostname github.wh-health-patterns.dev.watson-health.ibm.com/g" helm-charts/health-patterns/values.yaml
+        sed -i -e "s/\&hostname replace-me/\&hostname $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/g" helm-charts/health-patterns/values.yaml
         helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --wait --timeout 6m0s
         kubectl get all
 
@@ -87,4 +99,6 @@ jobs:
     # Uninstall Chart
     - name: Uninstall Chart
       run: helm uninstall ingestion
+           kubectl delete namespace $CLUSTER_NAMESPACE
+           ibmcloud cis glb-delete 64c39c1c0638d539cae6d5ff593a0493 $TEST_GLB_ID
       if: ${{ always() }}
