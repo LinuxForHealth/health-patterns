@@ -12,7 +12,7 @@ env:
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
   IBM_CLOUD_REGION: us-east
   # Create a unique test namespace name
-  CLUSTER_NAMESPACE: github-$RANDOM
+  CLUSTER_NAMESPACE: github-${RANDOM}
   FHIR_IP: $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/fhir
   FHIR_DEID_IP: $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
   ASCVD_FROM_FHIR_IP: $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
