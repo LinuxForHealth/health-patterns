@@ -5,7 +5,7 @@
         
         {
             "name": "getAllConfigs",
-            "url": "${nlp-insights}/all_configs",
+            "url": "${nlp_insights}/all_configs",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -15,7 +15,7 @@
         },
         {
             "name": "getActiveConfig",
-            "url": "${nlp-insights}/config",
+            "url": "${nlp_insights}/config",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -27,7 +27,7 @@
         },
         {
             "name": "getDefaultConfig",
-            "url": "${nlp-insights}/config/default",
+            "url": "${nlp_insights}/config/default",
             "operation": "GET",           
                 "request": { },            
             "verify": {

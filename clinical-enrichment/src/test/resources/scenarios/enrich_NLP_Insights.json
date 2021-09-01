@@ -5,7 +5,7 @@
         
         {
             "name": "getAllConfigs",
-            "url": "${nlp-insights}/all_configs",
+            "url": "${nlp_insights}/all_configs",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -14,7 +14,7 @@
         },
         {
             "name": "getCurrentConfig",
-            "url": "${nlp-insights}/config",
+            "url": "${nlp_insights}/config",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -23,7 +23,7 @@
         },
         {
             "name": "getDefaultConfig",
-            "url": "${nlp-insights}/config/default",
+            "url": "${nlp_insights}/config/default",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -32,7 +32,7 @@
         },
         {
             "name": "createConfigViaPOST",
-            "url": "${nlp-insights}/config/createViaPost",
+            "url": "${nlp_insights}/config/createViaPost",
             "operation": "POST",           
                 "request": {
                 "body" : { "nlpService" : "ACD"} 
@@ -43,7 +43,7 @@
         },
         {
             "name": "createConfigViaPUT",
-            "url": "${nlp-insights}/config/createViaPut",
+            "url": "${nlp_insights}/config/createViaPut",
             "operation": "PUT",           
                 "request": {
                 "body" : { "nlpService" : "ACD"} 
@@ -54,7 +54,7 @@
         },
         {
             "name": "activateConfigViaPUT",
-            "url": "${nlp-insights}/config?name=createViaPut",
+            "url": "${nlp_insights}/config?name=createViaPut",
             "operation": "PUT",           
                 "request": { },            
             "verify": {
@@ -63,7 +63,7 @@
         },        
         {
             "name": "getCurrentConfig",
-            "url": "${nlp-insights}/config",
+            "url": "${nlp_insights}/config",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -72,7 +72,7 @@
         },
         {
             "name": "deletecreateViaPostConfig",
-            "url": "${nlp-insights}/config/createViaPost",
+            "url": "${nlp_insights}/config/createViaPost",
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
@@ -81,7 +81,7 @@
         },
         {
             "name": "deleteActvatedConfig",
-            "url": "${nlp-insights}/config/createViaPut",
+            "url": "${nlp_insights}/config/createViaPut",
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
@@ -90,7 +90,7 @@
         },      
         {
             "name": "activateConfigViaPUT",
-            "url": "${nlp-insights}/config?name=createViaPut",
+            "url": "${nlp_insights}/config?name=createViaPut",
             "operation": "PUT",           
                 "request": { },            
             "verify": {
@@ -99,7 +99,7 @@
         },       
         {
             "name": "createConfigABC",
-            "url": "${nlp-insights}/config/createABC",
+            "url": "${nlp_insights}/config/createABC",
             "operation": "PUT",           
                 "request": {
                 "body" : { "nlpService" : "ABC"} 
@@ -110,7 +110,7 @@
         },       
         {
             "name": "activateConfigABC",
-            "url": "${nlp-insights}/config?name=createABC",
+            "url": "${nlp_insights}/config?name=createABC",
             "operation": "PUT",           
                 "request": { },            
             "verify": {
@@ -119,7 +119,7 @@
         },     
         {
             "name": "deleteConfigABC",
-            "url": "${nlp-insights}/config/createABC",
+            "url": "${nlp_insights}/config/createABC",
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
@@ -128,7 +128,7 @@
         },
                 {
             "name": "deleteConfigABC",
-            "url": "${nlp-insights}/config/createABC",
+            "url": "${nlp_insights}/config/createABC",
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
@@ -137,7 +137,7 @@
         },
         {
             "name": "getCurrentConfig",
-            "url": "${nlp-insights}/config",
+            "url": "${nlp_insights}/config",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -146,7 +146,7 @@
         },
         {
             "name": "getAllConfigs",
-            "url": "${nlp-insights}/all_configs",
+            "url": "${nlp_insights}/all_configs",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -155,7 +155,7 @@
         },
         {
             "name": "activateDefault",
-            "url": "${nlp-insights}/config?name=default",
+            "url": "${nlp_insights}/config?name=default",
             "operation": "PUT",           
                 "request": { },            
             "verify": {

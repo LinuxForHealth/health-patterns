@@ -4,7 +4,7 @@
     "steps": [ 
         {
             "name": "healthCheck",
-            "url": "${nlp-insights}/all_configs",
+            "url": "${nlp_insights}/all_configs",
             "operation": "GET",           
                 "request": { },            
             "verify": {

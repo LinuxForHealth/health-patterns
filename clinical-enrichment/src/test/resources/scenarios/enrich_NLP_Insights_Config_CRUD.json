@@ -5,7 +5,7 @@
 
         {
             "name": "createConfig${0}",
-            "url": "${nlp-insights}/config/${1}",
+            "url": "${nlp_insights}/config/${1}",
             "operation": "${0}",           
                 "request": {
                 "body" : { "nlpService" : "ACD"} 
@@ -16,7 +16,7 @@
         },
         {
             "name": "getConfig${0}",
-            "url": "${nlp-insights}/config/${1}",
+            "url": "${nlp_insights}/config/${1}",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -27,7 +27,7 @@
         },
         {
             "name": "getAllConfigs${0}",
-            "url": "${nlp-insights}/all_configs",
+            "url": "${nlp_insights}/all_configs",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -37,7 +37,7 @@
         },
         {
             "name": "activateConfig${0}",
-            "url": "${nlp-insights}/config?name=${1}",
+            "url": "${nlp_insights}/config?name=${1}",
             "operation": "${0}",           
                 "request": { },            
             "verify": {
@@ -46,7 +46,7 @@
         },        
         {
             "name": "getActiveConfig${0}",
-            "url": "${nlp-insights}/config",
+            "url": "${nlp_insights}/config",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -57,7 +57,7 @@
         },
         {
             "name": "updateConfig${0}",
-            "url": "${nlp-insights}/config/${1}",
+            "url": "${nlp_insights}/config/${1}",
             "operation": "${0}",           
                 "request": {
                 "body" : { "nlpService" : "quickUMLS"} 
@@ -68,7 +68,7 @@
         },
         {
             "name": "getUpdatedConfig${0}",
-            "url": "${nlp-insights}/config/${1}",
+            "url": "${nlp_insights}/config/${1}",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -79,7 +79,7 @@
         },
         {
             "name": "activateUpdatedConfig${0}",
-            "url": "${nlp-insights}/config?name=${1}",
+            "url": "${nlp_insights}/config?name=${1}",
             "operation": "${0}",           
                 "request": { },            
             "verify": {
@@ -88,7 +88,7 @@
         },        
         {
             "name": "getUpdatedActiveConfig${0}",
-            "url": "${nlp-insights}/config",
+            "url": "${nlp_insights}/config",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -99,7 +99,7 @@
         },
         {
             "name": "deleteConfig${0}",
-            "url": "${nlp-insights}/config/${1}",
+            "url": "${nlp_insights}/config/${1}",
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
@@ -108,7 +108,7 @@
         },
         {
             "name": "getAllConfigsAgain",
-            "url": "${nlp-insights}/all_configs",
+            "url": "${nlp_insights}/all_configs",
             "operation": "GET",           
                 "request": { },            
             "verify": {
@@ -127,7 +127,7 @@
         },
         {
             "name": "deleteNonExistentConfig${0}",
-            "url": "${nlp-insights}/config/${1}",
+            "url": "${nlp_insights}/config/${1}",
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
@@ -136,7 +136,7 @@
         },             
         {
             "name": "activateDefault${0}",
-            "url": "${nlp-insights}/config?name=default",
+            "url": "${nlp_insights}/config?name=default",
             "operation": "${0}",           
                 "request": { },            
             "verify": {
@@ -145,7 +145,7 @@
         },
         {
             "name": "getDefaultConfig${0}",
-            "url": "${nlp-insights}/config",
+            "url": "${nlp_insights}/config",
             "operation": "GET",           
                 "request": { },            
             "verify": {
