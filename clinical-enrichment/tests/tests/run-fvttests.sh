@@ -77,7 +77,7 @@ cat values.yaml | grep $TEST_NAMESPACE.$INGRESS_SUBDOMAIN
  
 # deploy 
 echo "Deploy via helm3  using Ingress"
-helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --wait --timeout 6m0s
+helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --wait --timeout 6m0s
 
 # setup all the env vars for input to maven
 # FHIR Using INGRESS
@@ -163,12 +163,14 @@ cat src/test/resources/enrich-flow.properties
 echo "*************************************" 
 echo "* Execute the testcases             *"
 echo "*************************************"
+mvn -e -DskipTests=false -Dtest=EnrichmentInitTests test
 mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
 mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
 mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
 
 # JUNIT execution reports available in the below folder
 ls -lrt target/surefire-reports
+cat target/surefire-reports/categories.EnrichmentInitTests.txt
 cat target/surefire-reports/categories.BasicEnrichmentTests.txt
 cat target/surefire-reports/categories.EnrichmentConfigTests.txt
 cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt

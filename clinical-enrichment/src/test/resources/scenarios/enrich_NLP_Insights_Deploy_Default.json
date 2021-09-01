@@ -1,0 +1,40 @@
+{
+    "scenarioName": "********enrich_NLP_Insights_Deploy_Default********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "getAllConfigs",
+            "url": "${nlp-insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody": "$MATCHES.STRING:default"      
+            }
+        },
+        {
+            "name": "getActiveConfig",
+            "url": "${nlp-insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "nlpService":"$MATCHES.STRING:quickUMLS"}
+                 
+            }
+        },
+        {
+            "name": "getDefaultConfig",
+            "url": "${nlp-insights}/config/default",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "nlpService":"$MATCHES.STRING:quickUMLS"}
+            }
+        }
+     ]
+}
