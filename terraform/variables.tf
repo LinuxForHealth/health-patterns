@@ -1,15 +1,20 @@
 variable namespace {
- type = string
- default = "alvearie"
+  description = "Target deploy namespace"
+  type        = string
 }
 
 variable hostname {
- type = string
- default = "wh-health-patterns.dev.watson-health.ibm.com"
+  description = "Hostname to use for ingress access of services"
+  type        = string
 }
 
 variable "tls_cert_organization" {
   description = "Organization name (OU) for TLS certificate"
   type        = string
-  default     = "IBM"
+}
+
+variable "postgres_name" {
+  description = "PostGres server name"
+  type        = string
+  default     = "my-postgres"
 }

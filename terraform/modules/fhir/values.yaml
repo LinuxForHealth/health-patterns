@@ -1,0 +1,7 @@
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/server-snippet: add_header Strict-Transport-Security "max-age=86400; includeSubDomains";
+    nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-FHIR-FORWARDED-URL "https://$host$request_uri";
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/proxy-ssl-protocols: TLSv1.2 TLSv1.3
+    nginx.ingress.kubernetes.io/proxy-ssl-verify: "true"

@@ -5,26 +5,29 @@ provider "helm" {
 }
 
 variable namespace {
- type = string
- default = "alvearie"
+  description = "Target deploy namespace"
+  type        = string
+  default     = "alvearie"
 }
 
 variable hostname {
- type = string
+  description = "Hostname to use for ingress access of services"
+  type        = string
 }
 
 resource "helm_release" "ascvd-from-fhir" {
   name       = "ascvd-from-fhir"
-
   repository = "https://alvearie.github.io/health-analytics/charts"
   chart      = "ascvd-from-fhir"
-  namespace = var.namespace
+  namespace  = var.namespace
+
   set {
-    name="ingress.enabled"
-    value="true"
+    name  = "ingress.enabled"
+    value = "true"
   }
+
   set {
-    name="ingress.hostname"
-    value="${var.hostname}"
+    name  = "ingress.hostname"
+    value = "${var.hostname}"
   }
 }

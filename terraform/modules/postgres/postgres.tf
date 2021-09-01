@@ -5,27 +5,29 @@ provider "helm" {
 }
 
 variable namespace {
- type = string
- default = "alvearie"
+  description = "Target deploy namespace"
+  type        = string
+  default     = "alvearie"
 }
 
 variable name {
- type = string
- default = "postgres"
+  description = "Name of PostGres server"
+  type        = string
+  default     = "postgres"
 }
 
 resource "helm_release" "postgres" {
-  name       = var.name
-  chart      = "bitnami/postgresql"
-  namespace = var.namespace
+  name        = var.name
+  chart       = "bitnami/postgresql"
+  namespace   = var.namespace
 
   set {
-    name = "fullnameOverride"
-    value = var.name
+    name      = "fullnameOverride"
+    value     = var.name
   }
- 
+
   set {
-    name = "postgresqlExtendedConf.maxPreparedTransactions"
-    value = 100
+    name      = "postgresqlExtendedConf.maxPreparedTransactions"
+    value     = 100
   }
 }
