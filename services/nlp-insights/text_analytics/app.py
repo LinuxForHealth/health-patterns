@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import sys
 
 from flask import Flask, request, Response
 from jsonpath_ng import parse
@@ -9,6 +10,11 @@ from text_analytics.quickUMLS.quickUMLS_service import QuickUMLSService
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+handler = logging.StreamHandler(sys.stderr)
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 app = Flask(__name__)
 

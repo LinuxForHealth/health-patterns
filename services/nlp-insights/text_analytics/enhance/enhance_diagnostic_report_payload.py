@@ -6,7 +6,7 @@ from text_analytics.insights.add_insights_medication import create_med_statement
 from text_analytics.utils import fhir_object_utils
 
 
-logger = logging.getLogger()
+logger = logging.getLogger("enhance_diagnostic_report_payload")
 
 def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
     """
@@ -29,21 +29,17 @@ def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
         # Only create and send back a bundle if there were conditions found.
         if create_conditions_fhir:
             for condition in create_conditions_fhir:
-                bundle_entry = []
-                bundle_entry.append(condition)
-                bundle_entry.append('POST')
-                bundle_entry.append(condition.resource_type)
+                bundle_entry = (condition, 'POST', condition.resource_type)
                 bundle_entries.append(bundle_entry)
         if create_med_statements_fhir:
             for med_statement in create_med_statements_fhir:
-                bundle_entry = []
-                bundle_entry.append(med_statement)
-                bundle_entry.append('POST')
-                bundle_entry.append(med_statement.resource_type)
+                bundle_entry = (med_statement, 'POST', med_statement.resource_type)
                 bundle_entries.append(bundle_entry)
     
         if bundle_entries:
             bundle = fhir_object_utils.create_transaction_bundle(bundle_entries)
+            logger.debug(f"Returning bundle of insights for diagnostics request {bundle.json()}")
             return bundle.json()
     
+    logger.debug(f"Returning unmodified diag report {bundle.json}")
     return diagnostic_report_fhir.json()
