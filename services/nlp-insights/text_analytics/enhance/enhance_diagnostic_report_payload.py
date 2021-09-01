@@ -18,13 +18,13 @@ def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
     # Parse the diagnostic report json
     diagnostic_report_fhir = DiagnosticReport.parse_obj(diagnostic_report_json)
     text = fhir_object_utils.get_diagnostic_report_data(diagnostic_report_fhir)
+    # create fhir bundle with transaction
+    bundle_entries = []
+        
     if text:
         nlp_resp = nlp.process(text)
         create_conditions_fhir = create_conditions_from_insights(nlp, diagnostic_report_fhir, nlp_resp)
         create_med_statements_fhir = create_med_statements_from_insights(nlp, diagnostic_report_fhir, nlp_resp)
-    
-        # create fhir bundle with transaction
-        bundle_entries = []
     
         # Only create and send back a bundle if there were conditions found.
         if create_conditions_fhir:
@@ -36,10 +36,7 @@ def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
                 bundle_entry = (med_statement, 'POST', med_statement.resource_type)
                 bundle_entries.append(bundle_entry)
     
-        if bundle_entries:
-            bundle = fhir_object_utils.create_transaction_bundle(bundle_entries)
-            logger.debug(f"Returning bundle of insights for diagnostics request {bundle.json()}")
-            return bundle.json()
-    
-    logger.debug(f"Returning unmodified diag report {diagnostic_report_fhir.json}")
-    return diagnostic_report_fhir.json()
+
+    bundle = fhir_object_utils.create_transaction_bundle(bundle_entries)
+    logger.debug(f"Returning bundle of insights for diagnostics request {bundle.json()}")
+    return bundle.json()
