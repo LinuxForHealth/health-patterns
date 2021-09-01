@@ -41,5 +41,5 @@ def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
             logger.debug(f"Returning bundle of insights for diagnostics request {bundle.json()}")
             return bundle.json()
     
-    logger.debug(f"Returning unmodified diag report {bundle.json}")
+    logger.debug(f"Returning unmodified diag report {diagnostic_report_fhir.json}")
     return diagnostic_report_fhir.json()
