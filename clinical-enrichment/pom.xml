@@ -121,7 +121,15 @@
                             <replacement>
                                 <token>@@port.ascvd.from.fhir@@</token>
                                 <value>${port.ascvd.from.fhir}</value>
-                            </replacement>                                                                            
+                            </replacement> 
+                            <replacement>
+                                <token>@@ip.nlp.insights@@</token>
+                                <value>${ip.nlp.insights}</value>
+                            </replacement>
+                            <replacement>
+                                <token>@@port.nlp.insights@@</token>
+                                <value>${port.nlp.insights}</value>
+                            </replacement>                                                                           
                         </replacements>
                     </configuration>
     </plugin>
