@@ -1,6 +1,6 @@
 
 /*******************************************************************************
- * jUnit Java Driver for the Zerocode-based Enrichemnt tests
+ * jUnit Java Driver for the Zerocode-based Enrichment tests
  *******************************************************************************/
 package tests;
 
@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import categories.BasicEnrichment;
 import categories.ASCVDEnrichment;
 import categories.EnrichmentConfig;
+import categories.EnrichmentInit;
 
 
 @TargetEnv("enrich-flow.properties")
@@ -22,7 +23,7 @@ import categories.EnrichmentConfig;
 public class Enrich_Flow {
 	
 	 @Test
-	 @Category({BasicEnrichment.class})
+	 @Category({EnrichmentInit.class})
 	 @Scenario("scenarios/enrich_DEID_Prep_healthCheck.json")
 	    public void enrich_DEID_Prep_Health() throws Exception {
 	    }
@@ -40,7 +41,7 @@ public class Enrich_Flow {
 	    }
 
 	 @Test
-	 @Category({BasicEnrichment.class})
+	 @Category({EnrichmentInit.class})
 	 @Scenario("scenarios/enrich_TERM_Prep_healthCheck.json")
 	    public void enrich_TERM_Prep_healthCheck() throws Exception {
 	    }
@@ -94,5 +95,30 @@ public class Enrich_Flow {
 	 @Scenario("scenarios/enrich_TERM_Prep_SD_Use.json")
 	    public void enrich_TERM_Prep_SD_Use() throws Exception {
 	    }
+	
+	@Test
+	 @Category({EnrichmentInit.class})
+	 @Scenario("scenarios/enrich_NLP_Insights_healthCheck.json")
+	    public void enrich_NLP_Insights_healthCheck() throws Exception {
+	    }
 
+	@Test
+	 @Category({EnrichmentInit.class})
+	 @Scenario("scenarios/enrich_NLP_Insights_Deploy_Default.json")
+	    public void enrich_NLP_Insights_Deploy_Default() throws Exception {
+	    }
+
+	@Test
+	 @Category({EnrichmentConfig.class})
+	 @Scenario("scenarios/enrich_NLP_Insights_Config_CRUD.json")
+	    public void enrich_NLP_Insights_Config_CRUD() throws Exception {
+	    }
+
+	@Test
+	 @Category({EnrichmentConfig.class})
+	 @Scenario("scenarios/enrich_NLP_Insights_Config_Errors.json")
+	    public void enrich_NLP_Insights_Config_Errors() throws Exception {
+	    }
+
+	
 }

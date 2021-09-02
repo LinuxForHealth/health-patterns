@@ -77,7 +77,7 @@ cat values.yaml | grep $TEST_NAMESPACE.$INGRESS_SUBDOMAIN
  
 # deploy 
 echo "Deploy via helm3  using Ingress"
-helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --wait --timeout 6m0s
+helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --wait --timeout 6m0s
 
 # setup all the env vars for input to maven
 # FHIR Using INGRESS
@@ -122,6 +122,13 @@ echo "*************************************"
 echo ASCVD-FROM-FHIR server: $ASCVD_FROM_FHIR_IP$ASCVD_FROM_FHIR_PORT
 echo "*************************************"
 
+# NLP Insights Service - using INGRESS
+export NLP_INSIGHTS_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/nlp-insights
+export NLP_INSIGHTS_PORT=
+echo "*************************************"
+echo NLP Insights server: $NLP_INSIGHTS_IP$NLP_INSIGHTS_PORT
+echo "*************************************"
+
 # Wait a bit for Nifi to come up
 # Need to change this to some polling of service status for more reliability 
 echo "*************************************"
@@ -151,7 +158,7 @@ ls
 echo "*************************************" 
 echo "* Build the testcases               *"
 echo "*************************************"
-mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.deid.prep=$DEID_PREP_IP -Dport.deid.prep=$DEID_PREP_PORT -Dip.term.prep=$TERM_PREP_IP -Dport.term.prep=$TERM_PREP_PORT -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dport.ascvd.from.fhir=$ASCVD_FROM_FHIR_PORT -Dpw=$DEFAULT_PASSWORD
+mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.deid.prep=$DEID_PREP_IP -Dport.deid.prep=$DEID_PREP_PORT -Dip.term.prep=$TERM_PREP_IP -Dport.term.prep=$TERM_PREP_PORT -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dport.ascvd.from.fhir=$ASCVD_FROM_FHIR_PORT -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dport.nlp.insights=$NLP_INSIGHTS_PORT -Dpw=$DEFAULT_PASSWORD
 
 echo "*************************************" 
 echo "* Properties File:                  *"
@@ -163,12 +170,14 @@ cat src/test/resources/enrich-flow.properties
 echo "*************************************" 
 echo "* Execute the testcases             *"
 echo "*************************************"
+mvn -e -DskipTests=false -Dtest=EnrichmentInitTests test
 mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
 mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
 mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
 
 # JUNIT execution reports available in the below folder
 ls -lrt target/surefire-reports
+cat target/surefire-reports/categories.EnrichmentInitTests.txt
 cat target/surefire-reports/categories.BasicEnrichmentTests.txt
 cat target/surefire-reports/categories.EnrichmentConfigTests.txt
 cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt

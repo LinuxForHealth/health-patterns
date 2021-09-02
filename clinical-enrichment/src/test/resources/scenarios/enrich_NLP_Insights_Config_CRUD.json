@@ -1,0 +1,164 @@
+{
+    "scenarioName": "********enrich_NLP_Insights_Config_CRUD********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+
+        {
+            "name": "createConfig${0}",
+            "url": "${nlp_insights}/config/${1}",
+            "operation": "${0}",           
+                "request": {
+                "body" : { "nlpService" : "ACD"} 
+                },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getConfig${0}",
+            "url": "${nlp_insights}/config/${1}",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "nlpService":"$MATCHES.STRING:ACD"}
+            }
+        },
+        {
+            "name": "getAllConfigs${0}",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody":"$CONTAINS.STRING:${1}"
+            }
+        },
+        {
+            "name": "activateConfig${0}",
+            "url": "${nlp_insights}/config?name=${1}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },        
+        {
+            "name": "getActiveConfig${0}",
+            "url": "${nlp_insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "nlpService":"$MATCHES.STRING:ACD"}
+            }
+        },
+        {
+            "name": "updateConfig${0}",
+            "url": "${nlp_insights}/config/${1}",
+            "operation": "${0}",           
+                "request": {
+                "body" : { "nlpService" : "quickUMLS"} 
+                },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getUpdatedConfig${0}",
+            "url": "${nlp_insights}/config/${1}",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "nlpService":"$MATCHES.STRING:quickUMLS"}
+            }
+        },
+        {
+            "name": "activateUpdatedConfig${0}",
+            "url": "${nlp_insights}/config?name=${1}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },        
+        {
+            "name": "getUpdatedActiveConfig${0}",
+            "url": "${nlp_insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "nlpService":"$MATCHES.STRING:ACD"}
+            }
+        },
+        {
+            "name": "deleteConfig${0}",
+            "url": "${nlp_insights}/config/${1}",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getAllConfigsAgain",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyConfigList${0}",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getAllConfigsAgain.response}",
+                 "string2": "${1}"
+            },
+            "verify": { "result": "false" }
+        },
+        {
+            "name": "deleteNonExistentConfig${0}",
+            "url": "${nlp_insights}/config/${1}",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 500
+            }
+        },             
+        {
+            "name": "activateDefault${0}",
+            "url": "${nlp_insights}/config?name=default",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getDefaultConfig${0}",
+            "url": "${nlp_insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "nlpService":"$MATCHES.STRING:quickUMLS"}
+            }
+        }                 
+     ],
+     "parameterized": {
+        "csvSource":[
+            "POST,createViaPost",
+            "PUT,createViaPut"
+        ]
+    }
+}
