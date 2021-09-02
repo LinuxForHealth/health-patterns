@@ -1,6 +1,7 @@
 import json
 import logging
 import requests
+
 from text_analytics.abstract_nlp_service import NLPService
 from text_analytics.enhance import *
 from text_analytics.quickUMLS.config import get_config

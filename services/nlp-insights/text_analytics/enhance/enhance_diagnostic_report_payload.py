@@ -1,8 +1,9 @@
+import logging
+
 from fhir.resources.diagnosticreport import DiagnosticReport
 from text_analytics.insights.add_insights_condition import create_conditions_from_insights
 from text_analytics.insights.add_insights_medication import create_med_statements_from_insights
 from text_analytics.utils import fhir_object_utils
-import logging
 
 logger = logging.getLogger()
 

@@ -1,4 +1,5 @@
 import logging
+
 from fhir.resources.immunization import Immunization
 from text_analytics.insights.add_insights_immunization import update_immunization_with_insights
 from text_analytics.insights.text_adjustments import adjust_vaccine_text
