@@ -95,12 +95,6 @@ public class Enrich_Flow {
 	 @Scenario("scenarios/enrich_TERM_Prep_SD_Use.json")
 	    public void enrich_TERM_Prep_SD_Use() throws Exception {
 	    }
-
-	@Test
-	 @Category({EnrichmentConfig.class})
-	 @Scenario("scenarios/enrich_NLP_Insights.json")
-	    public void enrich_NLP_Insights() throws Exception {
-	    }
 	
 	@Test
 	 @Category({EnrichmentInit.class})
