@@ -67,6 +67,6 @@ resource "helm_release" "fhir" {
 
   set {
     name      = "ingress.rules[0].paths[0]"
-    value     = "/"
+    value     = format("/%s(/|$)(.*)", var.name)
   }
 }
