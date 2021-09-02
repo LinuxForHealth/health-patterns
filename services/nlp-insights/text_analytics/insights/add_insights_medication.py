@@ -1,3 +1,5 @@
+import logging
+
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.dosage import Dosage, DosageDoseAndRate
 from fhir.resources.extension import Extension
@@ -6,7 +8,6 @@ from fhir.resources.quantity import Quantity
 from fhir.resources.timing import Timing
 from text_analytics.insights import insight_constants
 from text_analytics.utils import fhir_object_utils
-import logging
 
 logger = logging.getLogger()
 
