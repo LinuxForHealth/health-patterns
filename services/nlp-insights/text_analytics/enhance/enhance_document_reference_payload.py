@@ -1,4 +1,4 @@
-from fhir.resources.diagnosticreport import DiagnosticReport
+from fhir.resources.documentreference import DocumentReference
 from text_analytics.insights.add_insights_condition import create_conditions_from_insights
 from text_analytics.insights.add_insights_medication import create_med_statements_from_insights
 from text_analytics.utils import fhir_object_utils
@@ -6,20 +6,20 @@ import logging
 
 logger = logging.getLogger()
 
-def enhance_diagnostic_report_payload_to_fhir(nlp, diagnostic_report_json):
+def enhance_document_reference_payload_to_fhir(nlp, document_reference_json):
     """
-    Given an NLP service and diagnostic_report (as json object), returns a json string for
+    Given an NLP service and document_reference (as json object), returns a json string for
     a FHIR bundle resource with additional insights.
 
     """
     bundle_entries = []
 
-    diagnostic_report_fhir = DiagnosticReport.parse_obj(diagnostic_report_json)
-    text = fhir_object_utils.get_diagnostic_report_data(diagnostic_report_fhir)
+    document_reference_fhir = DocumentReference.parse_obj(document_reference_json)
+    text = fhir_object_utils.get_document_reference_data(document_reference_fhir)
     if text:
         nlp_resp = nlp.process(text)
-        create_conditions_fhir = create_conditions_from_insights(nlp, diagnostic_report_fhir, nlp_resp)
-        create_med_statements_fhir = create_med_statements_from_insights(nlp, diagnostic_report_fhir, nlp_resp)
+        create_conditions_fhir = create_conditions_from_insights(nlp, document_reference_fhir, nlp_resp)
+        create_med_statements_fhir = create_med_statements_from_insights(nlp, document_reference_fhir, nlp_resp)
 
         if create_conditions_fhir:
             for condition in create_conditions_fhir:

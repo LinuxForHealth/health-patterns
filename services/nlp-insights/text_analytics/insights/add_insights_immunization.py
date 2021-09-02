@@ -2,7 +2,9 @@ from text_analytics.insights import insight_constants
 from text_analytics.utils import fhir_object_utils
 from fhir.resources.extension import Extension
 from fhir.resources.codeableconcept import CodeableConcept
+import logging
 
+logger = logging.getLogger()
 
 """
 Parameters:
@@ -15,8 +17,10 @@ def update_immunization_with_insights(nlp, immunization, nlp_results):
     concepts = nlp_results["concepts"]
     if concepts is not None:
         for concept in concepts:
-            if concept["type"] == "ICMedication" or concept["type"] == "umls.ImmunologicFactor":
-
+            the_type = concept['type']
+            if isinstance(the_type, str):
+                the_type = [the_type]
+            if len(set(the_type) & set(["ICMedication", "umls.ImmunologicFactor"])) > 0:
                 # Add a new insight
                 insight_num = insight_num + 1
                 insight_id = "insight-" + str(insight_num)

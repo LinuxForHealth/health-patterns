@@ -131,3 +131,11 @@ def lookup(semtype_code):
     if semTypes.keys().__contains__(semtype_code):
         return semTypes.get(semtype_code)
     return semtype_code
+
+def get_semantic_type_list(sem_types):
+    sem_type_list = []
+    for sem_type in sem_types:
+        sem_type_list.append(lookup(sem_type))
+
+    return sem_type_list
+    

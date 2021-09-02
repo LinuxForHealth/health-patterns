@@ -9,8 +9,10 @@ def update_allergy_with_insights(nlp, allergy, nlp_results):
         concepts = nlp_response["concepts"]
         if concepts is not None:
             for concept in concepts:
-                if concept['type'] in ("umls.DiseaseOrSyndrome", "umls.PathologicFunction", "umls.SignOrSymptom"):
-
+                the_type = concept['type']
+                if isinstance(the_type, str):
+                    the_type = [the_type]
+                if len(set(the_type) & set(["umls.DiseaseOrSyndrome", "umls.PathologicFunction", "umls.SignOrSymptom"])) > 0:
                     insight_num = insight_num + 1
                     insight_id = "insight-" + str(insight_num)
 
@@ -35,7 +37,7 @@ def update_allergy_with_insights(nlp, allergy, nlp_results):
                         result_extension.extension = []
                     result_extension.extension.append(insight)
 
-    if insight_num == 0:  
+    if insight_num == 0:
         return None
 
     return allergy

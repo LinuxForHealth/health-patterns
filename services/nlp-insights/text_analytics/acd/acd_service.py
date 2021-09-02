@@ -1,35 +1,34 @@
-from ibm_whcs_sdk import annotator_for_clinical_data as acd
-from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
-from text_analytics.acd.config import get_config
-from text_analytics.enhance import *
 import json
 import logging
-from text_analytics.insights.add_insights_medication import create_insight
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.dosage import Dosage, DosageDoseAndRate
 from fhir.resources.extension import Extension
 from fhir.resources.medicationstatement import MedicationStatement
 from fhir.resources.quantity import Quantity
 from fhir.resources.timing import Timing
+from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
+from ibm_whcs_sdk import annotator_for_clinical_data as acd
+from text_analytics.acd.config import get_config
+from text_analytics.enhance import *
+from text_analytics.insights.add_insights_medication import create_insight
 from text_analytics.utils import fhir_object_utils
 from text_analytics.insights import insight_constants
-
 from text_analytics.abstract_nlp_service import NLPService
 
 logger = logging.getLogger()
 
-
 class ACDService(NLPService):
     types_can_handle = {'AllergyIntolerance': enhance_allergy_intolerance_payload_to_fhir,
                         'Immunization': enhance_immunization_payload_to_fhir,
-                        'DiagnosticReport': enhance_diagnostic_report_payload_to_fhir}
+                        'DiagnosticReport': enhance_diagnostic_report_payload_to_fhir,
+                        'DocumentReference': enhance_document_reference_payload_to_fhir
+                        }
 
     PROCESS_TYPE_UNSTRUCTURED = "ACD Unstructured"
     PROCESS_TYPE_STRUCTURED = "ACD Structured"
 
     version = "2021-01-01"
 
-    
     def __init__(self, jsonString):
         _config = get_config()
         self.acd_key = _config['ACD_KEY']
@@ -39,7 +38,6 @@ class ACDService(NLPService):
         config_dict = json.loads(jsonString)
         if config_dict.get('version') is not None:
             self.version = config_dict.get('version')
-        
 
     def process(self, text):
         service = acd.AnnotatorForClinicalDataV1(
@@ -47,19 +45,15 @@ class ACDService(NLPService):
             version=self.version
         )
         service.set_service_url(self.acd_url)
+        logger.info("Calling ACD")
+        resp = service.analyze_with_flow(self.acd_flow, text)
+        out = resp.to_dict()
+        return out
 
-        try:
-            logger.info("Calling ACD")
-            resp = service.analyze_with_flow(self.acd_flow, text)
-            out = resp.to_dict()
-            return out
-
-        except acd.ACDException as err:
-            logger.error("ACD could not be run on text: " + text + " with error: {}".format(err.message))
-            return
-
-    def add_medications(nlp, diagnostic_report, nlp_output, med_statements_found, med_statements_insight_counter):
-        medications = nlp_output.get('MedicationInd')
+    def add_medications(self, nlp, diagnostic_report, nlp_output, med_statements_found, med_statements_insight_counter):
+        medications = nlp_output.get('MedicationInd', [])
+        med_statements_found = {}
+        med_statements_insight_counter = {}
         for medication in medications:
             med_statements_found, med_statements_insight_counter = create_insight(medication, nlp, nlp_output, diagnostic_report, ACDService.build_medication, med_statements_found, med_statements_insight_counter)
 
@@ -92,7 +86,7 @@ class ACDService(NLPService):
                 dose_units = None
                 if ' ' in dose_with_units:
                     dose_info = dose_with_units.split(' ')
-                    amount = dose_info[0].replace(',','') 
+                    amount = dose_info[0].replace(',','')
                     try:
                         dose_amount = float(amount)
                     except OverflowError as err:
@@ -100,7 +94,7 @@ class ACDService(NLPService):
                     if isinstance(dose_info[1], str):
                         dose_units = dose_info[1]
                 else:
-                    amount = dose_with_units.replace(',','') 
+                    amount = dose_with_units.replace(',','')
                     try:
                         dose_amount = float(amount)
                     except OverflowError as err:
