@@ -1,7 +1,6 @@
 from fhir.resources.extension import Extension
 from fhir.resources.condition import Condition
 from fhir.resources.codeableconcept import CodeableConcept
-
 from text_analytics.insights import insight_constants
 from text_analytics.utils import fhir_object_utils
 
