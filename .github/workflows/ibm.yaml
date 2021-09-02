@@ -80,6 +80,7 @@ jobs:
          echo "*************************************" 
          echo "* Execute the testcases             *"
          echo "*************************************"
+         mvn -e -DskipTests=false -Dtest=EnrichmentInitTests test
          mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
          mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
          mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
