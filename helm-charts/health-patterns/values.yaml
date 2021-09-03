@@ -256,7 +256,7 @@ deid:
 deid-prep:
   enabled: true
   ingress:
-    enabled: true
+    enabled: false
     class: *ingressClass
     hostname: *hostname
   configName: default
