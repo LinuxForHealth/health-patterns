@@ -36,10 +36,11 @@ maintainers:
     email: luisg@us.ibm.com
 
 dependencies:
-  - name: fhir
-    version: 0.4.0
+  - name: ibm-fhir-server
+    alias: fhir
+    repository: https://alvearie.io/alvearie-helm
+    version: 0.1.0
     condition: fhir.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
   - name: term-services-prep
     version: 0.1.0
     condition: fhir.enabled
@@ -48,11 +49,11 @@ dependencies:
     version: 0.1.0
     condition: fhir-trigger.enabled
     repository: https://alvearie.github.io/health-patterns/charts
-  - name: fhir
-    version: 0.4.0
-    condition: fhir-deid.enabled
+  - name: ibm-fhir-server
     alias: fhir-deid
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://alvearie.io/alvearie-helm
+    version: 0.1.0
+    condition: fhir-deid.enabled
   - name: fhir-trigger
     version: 0.1.0
     condition: fhir-deid-trigger.enabled

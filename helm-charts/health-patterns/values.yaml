@@ -65,26 +65,26 @@ nlp-insights:
 fhir:
   name: fhir
   enabled: true
-  service:
-    type: ClusterIP
-    port: 80
-  env:
+#  env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
-    - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
-      value: '600s'
-    - name: BOOTSTRAP_DB
-      value: 'true'
+#    - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
+#      value: '600s'
+#    - name: BOOTSTRAP_DB
+#      value: 'true'
+  fhirUserPassword: integrati0n
   ingress:
     enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
-  proxy:
-    name: fhir-proxy
-    enabled: false
-    ingress:
-      enabled: *ingressEnabled
-      class: *ingressClass
-      hostname: *hostname
+    annotations:
+      nginx.ingress.kubernetes.io/server-snippet: add_header Strict-Transport-Security "max-age=86400; includeSubDomains";
+      nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-FHIR-FORWARDED-URL "https://$host$request_uri"; proxy_set_header Authorization "Basic {{ print "fhiruser:" .Values.fhirUserPassword | b64enc }}";
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      nginx.ingress.kubernetes.io/proxy-ssl-protocols: TLSv1.2 TLSv1.3
+      nginx.ingress.kubernetes.io/proxy-ssl-verify: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: /fhir-server/api/v4/$2
+      nginx.ingress.kubernetes.io/use-regex: 'true'
+
 
 ## Configure these to allow bulk access from fhir server
 #  bulkExportConfig:
@@ -101,26 +101,25 @@ fhir-trigger:
 fhir-deid:
   name: fhir-deid
   enabled: true
-  service:
-    type: ClusterIP
-    port: 80
-  env:
+#  env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
-    - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
-      value: '600s'
-    - name: BOOTSTRAP_DB
-      value: 'true'
+#    - name: FHIR_TRANSACTION_MANAGER_TIMEOUT
+#      value: '600s'
+#    - name: BOOTSTRAP_DB
+#      value: 'true'
+  fhirUserPassword: integrati0n
   ingress:
     enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
-  proxy:
-    name: fhir-deid-proxy
-    enabled: false
-    ingress:
-      enabled: *ingressEnabled
-      class: *ingressClass
-      hostname: *hostname
+    annotations:
+      nginx.ingress.kubernetes.io/server-snippet: add_header Strict-Transport-Security "max-age=86400; includeSubDomains";
+      nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-FHIR-FORWARDED-URL "https://$host$request_uri"; proxy_set_header Authorization "Basic {{ print "fhiruser:" .Values.fhirUserPassword | b64enc }}";
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      nginx.ingress.kubernetes.io/proxy-ssl-protocols: TLSv1.2 TLSv1.3
+      nginx.ingress.kubernetes.io/proxy-ssl-verify: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: /fhir-server/api/v4/$2
+      nginx.ingress.kubernetes.io/use-regex: 'true'
 
 fhir-deid-trigger:
   enabled: false
@@ -257,7 +256,7 @@ deid:
 deid-prep:
   enabled: true
   ingress:
-    enabled: false
+    enabled: true
     class: *ingressClass
     hostname: *hostname
   configName: default
