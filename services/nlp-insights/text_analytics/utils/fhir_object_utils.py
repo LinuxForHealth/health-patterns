@@ -1,5 +1,5 @@
-import json
 import base64
+import json
 
 from fhir.resources.attachment import Attachment
 from fhir.resources.bundle import Bundle
@@ -10,7 +10,6 @@ from fhir.resources.extension import Extension
 from fhir.resources.identifier import Identifier
 from fhir.resources.meta import Meta
 from fhir.resources.reference import Reference
-
 from text_analytics.insights import insight_constants
 
 
@@ -214,7 +213,7 @@ def create_insight_extension(insight_id_string, insight_system):
 
 
 def create_insight_detail_extension(nlp_output):
-    nlp_dict = nlp_output #.to_dict()
+    nlp_dict = nlp_output # .to_dict()
     nlp_dict_string = json.dumps(nlp_dict)  # get the string
     nlp_as_bytes = nlp_dict_string.encode('utf-8')  # convert to bytes including utf8 content
     nlp_base64_encoded_bytes = base64.b64encode(nlp_as_bytes)  # encode to base64
@@ -296,20 +295,20 @@ def add_codings_drug(drug, drug_name, codeable_concept, insight_id, insight_syst
                                                 insight_system)
 
             coding.display = drug_name
-            
             codeable_concept.coding.append(coding)
     if drug.get("rxNormID") is not None:
         create_coding_entries(codeable_concept, insight_constants.RXNORM_URL, drug.get("rxNormID"), insight_id,
                               insight_system)
 
 
-'''
-Looks through the array of the codeable_concept for an entry matching the id and system.
-Returns the entry if found, or None if not found.
-'''
+
 
 
 def find_codable_concept(codeable_concept, id, system):
+    '''
+    Looks through the array of the codeable_concept for an entry matching the id and system.
+    Returns the entry if found, or None if not found.
+    '''
     for entry in codeable_concept.coding:
         if entry.system == system and entry.code == id:
             return entry
@@ -319,23 +318,23 @@ def find_codable_concept(codeable_concept, id, system):
 def add_diagnosis_confidences(insight_ext, insight_model_data):
     if insight_model_data['diagnosis'] is not None:
         if insight_model_data['diagnosis']['usage'] is not None:
-            if insight_model_data['diagnosis']['usage']['explicitScore'] is not None:
+            if 'explicitScore' in insight_model_data['diagnosis']['usage'] and insight_model_data['diagnosis']['usage']['explicitScore'] is not None:
                 confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_EXPLICIT,
                                                insight_model_data['diagnosis']['usage']['explicitScore'])
                 insight_ext.append(confidence)
-            if insight_model_data['diagnosis']['usage']['patientReportedScore'] is not None:
+            if 'patientReportedScore' in insight_model_data['diagnosis']['usage'] and insight_model_data['diagnosis']['usage']['patientReportedScore'] is not None:
                 confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_PATIENT_REPORTED,
                                                insight_model_data['diagnosis']['usage']['patientReportedScore'])
                 insight_ext.append(confidence)
-            if insight_model_data['diagnosis']['usage']['discussedScore'] is not None:
+            if 'discussedScore' in insight_model_data['diagnosis']['usage'] and insight_model_data['diagnosis']['usage']['discussedScore'] is not None:
                 confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_DISCUSSED,
                                                insight_model_data['diagnosis']['usage']['discussedScore'])
                 insight_ext.append(confidence)
-            if insight_model_data['diagnosis']['usage']['familyHistoryScore'] is not None:
+            if 'familyHistoryScore' in insight_model_data['diagnosis']['usage'] and insight_model_data['diagnosis']['usage']['familyHistoryScore'] is not None:
                 confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_FAMILY_HISTORY,
                                                insight_model_data['diagnosis']['familyHistoryScore'])
                 insight_ext.append(confidence)
-            if insight_model_data['diagnosis']['usage']['suspectedScore'] is not None:
+            if 'suspectedScore' in insight_model_data['diagnosis']['usage'] and insight_model_data['diagnosis']['usage']['suspectedScore'] is not None:
                 confidence = create_confidence(insight_constants.CONFIDENCE_SCORE_SUSPECTED,
                                                insight_model_data['diagnosis']['suspectedScore'])
                 insight_ext.append(confidence)
@@ -359,16 +358,28 @@ def add_medication_confidences(insight_ext, insight_model_data):
                                    insight_model_data['medication']['usage']['labMeasurementScore'])
     insight_ext.append(confidence)
 
-
-'''
-Returns the attached document as a string, decoded.
-Parameters:
-  diagnostic_report - fhir.resources.diagnosticreport object where the text will be retrieved
-'''
-
-
 def get_diagnostic_report_data(diagnostic_report):
-    encoded_data = diagnostic_report.presentedForm[0].data
-    byte_text = base64.b64decode(encoded_data)
-    text = byte_text.decode('utf8')  # This removes the b'..' around the text string
-    return text
+    '''
+    Returns the attached document as a string, decoded.
+    Parameters:
+      diagnostic_report - fhir.resources.diagnosticreport object where the text will be retrieved
+    '''
+    if diagnostic_report.presentedForm and diagnostic_report.presentedForm[0] and diagnostic_report.presentedForm[0].data:
+        encoded_data = diagnostic_report.presentedForm[0].data
+        byte_text = base64.b64decode(encoded_data)
+        text = byte_text.decode('utf8')  # This removes the b'..' around the text string
+        return text
+    return None
+
+def get_document_reference_data(document_reference):
+    '''
+    Returns the attached document as a string, decoded.
+    Parameters:
+      document_reference - fhir.resources.documentreference object where the text will be retrieved
+    '''
+    if document_reference.content and document_reference.content[0] and document_reference.content[0].attachment and document_reference.content[0].attachment.data:
+        encoded_data = document_reference.content[0].attachment.data
+        byte_text = base64.b64decode(encoded_data)
+        text = byte_text.decode('utf8')  # This removes the b'..' around the text string
+        return text
+    return None

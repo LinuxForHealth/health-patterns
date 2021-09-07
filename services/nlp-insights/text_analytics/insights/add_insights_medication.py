@@ -1,3 +1,5 @@
+import logging
+
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.dosage import Dosage, DosageDoseAndRate
 from fhir.resources.extension import Extension
@@ -6,7 +8,6 @@ from fhir.resources.quantity import Quantity
 from fhir.resources.timing import Timing
 from text_analytics.insights import insight_constants
 from text_analytics.utils import fhir_object_utils
-import logging
 
 logger = logging.getLogger()
 
@@ -27,19 +28,20 @@ def _build_resource(nlp, diagnostic_report, nlp_output):
     concepts = nlp_output.get('concepts')
     med_statements_found = {}            # key is UMLS ID, value is the FHIR resource
     med_statements_insight_counter = {}  # key is UMLS ID, value is the current insight_num
-    
+
     if hasattr(nlp, 'add_medications'):
         med_statements_found, med_statements_insight_counter = nlp.add_medications(nlp, diagnostic_report, nlp_output, med_statements_found, med_statements_insight_counter)
 
     for concept in concepts:
-        if concept['type'] in ('umls.Antibiotic', 'umls.ClinicalDrug', 'umls.PharmacologicSubstance', 'umls.OrganicChemical'):
+        the_type = concept['type']
+        if isinstance(the_type, str):
+            the_type = [the_type]
+        if len(set(the_type) & set(['umls.Antibiotic', 'umls.ClinicalDrug', 'umls.PharmacologicSubstance', 'umls.OrganicChemical'])) > 0:
             med_statements_found, med_statements_insight_counter = create_insight(concept, nlp, nlp_output, diagnostic_report, _build_resource_data, med_statements_found, med_statements_insight_counter)
 
     if len(med_statements_found) == 0:
         return None
     return list(med_statements_found.values())
-
-
 
 def create_insight(concept, nlp, nlp_output, diagnostic_report, build_resource, med_statements_found, med_statements_insight_counter):
     cui = concept.get('cui')
@@ -69,12 +71,10 @@ def create_insight(concept, nlp, nlp_output, diagnostic_report, build_resource, 
     result_extension.extension.append(insight)
     return med_statements_found, med_statements_insight_counter
 
-
-
 def _build_resource_data(med_statement, concept, insight_id):
     if med_statement.status is None:
         med_statement.status = 'unknown'
-    
+
     drug = concept.get('preferredName')
 
     if type(med_statement.medicationCodeableConcept) is dict and med_statement.medicationCodeableConcept.get("text") == "template":
@@ -84,9 +84,6 @@ def _build_resource_data(med_statement, concept, insight_id):
         codeable_concept.coding = []
 
     fhir_object_utils.add_codings_drug(concept, drug, med_statement.medicationCodeableConcept, insight_id, insight_constants.INSIGHT_ID_UNSTRUCTURED_SYSTEM)
-
-
-
 
 def create_med_statements_from_insights(nlp, diagnostic_report, nlp_output):
     med_statements = _build_resource(nlp, diagnostic_report, nlp_output)
