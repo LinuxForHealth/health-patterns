@@ -9,12 +9,14 @@ from fhir.resources.quantity import Quantity
 from fhir.resources.timing import Timing
 from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
+
+from text_analytics.abstract_nlp_service import NLPService
 from text_analytics.acd.config import get_config
 from text_analytics.enhance import *
+from text_analytics.insights import insight_constants
 from text_analytics.insights.add_insights_medication import create_insight
 from text_analytics.utils import fhir_object_utils
-from text_analytics.insights import insight_constants
-from text_analytics.abstract_nlp_service import NLPService
+
 
 logger = logging.getLogger()
 
@@ -60,6 +62,7 @@ class ACDService(NLPService):
 
         return med_statements_found, med_statements_insight_counter
 
+    @staticmethod
     def build_medication(med_statement, medication, insight_id):
         if med_statement.status is None:
             med_statement.status = 'unknown'
@@ -90,16 +93,16 @@ class ACDService(NLPService):
                     amount = dose_info[0].replace(',','')
                     try:
                         dose_amount = float(amount)
-                    except OverflowError as err:
-                        logger.error("Error with dose amount overflow: {}".format(err.message))
+                    except OverflowError:
+                        logger.exception("Error with dose amount overflow")
                     if isinstance(dose_info[1], str):
                         dose_units = dose_info[1]
                 else:
                     amount = dose_with_units.replace(',','')
                     try:
                         dose_amount = float(amount)
-                    except OverflowError as err:
-                        logger.error("Error with dose amount overflow: {}".format(err.message))
+                    except OverflowError:
+                        logger.exception("Error with dose amount overflow")
 
                 if dose_amount is not None:
                     dose_quantity = Quantity.construct()
