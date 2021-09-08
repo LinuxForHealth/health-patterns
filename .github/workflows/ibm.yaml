@@ -47,11 +47,12 @@ jobs:
     # Setup and Install Chart 
     - name: Install Chart
       run: |
-        pwd
         kubectl config current-context
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
         helm dependency update helm-charts/health-patterns
         sed -i -e "s/\&hostname replace-me/\&hostname github.wh-health-patterns.dev.watson-health.ibm.com/g" helm-charts/health-patterns/values.yaml
+        cp -f /home/runner/work/health-patterns/clinical-enrichment/src/test/resources/configs/acd_config.ini /home/runner/work/health-patterns/services/nlp-insights/text_analytics/acd/acd_config.ini
+        cp -f /home/runner/work/health-patterns/clinical-enrichment/src/test/resources/configs/quickumls_config.ini /home/runner/work/health-patterns/services/nlp-insights/text_analytics/quickUMLS/quickumls_config.ini
         helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --wait --timeout 6m0s
         kubectl get all
 
