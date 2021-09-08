@@ -43,19 +43,19 @@ def setup_config_dir():
 
 def setup_service(config_name):
     global nlp_service
+
     jsonFile = open(configDir + f'/{config_name}', "r")
     jsonString = jsonFile.read()
     config_dict = json.loads(jsonString)
-    if config_name in nlp_services_dict.keys():
-        nlp_service = nlp_services_dict[config_name]
-    else:
-        nlp_name = config_dict.get('nlpService')
-        if nlp_name is not None and nlp_name.lower() in all_nlp_services.keys():
-            nlp_service = all_nlp_services[nlp_name.lower()](jsonString)
-        else:
-            logger.error("NLP service was unable to be configured. Config in incorrect format")
-            return Response("NLP service was unable to be configured. Config in incorrect format", status=400)
+
+    nlp_name = config_dict.get('nlpService')
+    if nlp_name is not None and nlp_name.lower() in all_nlp_services.keys():
+        nlp_service = all_nlp_services[nlp_name.lower()](jsonString)
         nlp_services_dict[config_name] = nlp_service
+    else:
+        logger.error("NLP service was unable to be configured. Config in incorrect format")
+        return Response("NLP service was unable to be configured. Config in incorrect format", status=400)
+
     logger.info("NLP service configured with: %s", config_dict['nlpService'])
     return Response(jsonString, status=200, mimetype='application/json')
 
