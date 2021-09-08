@@ -131,7 +131,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 500
+                "status": 400
             }
         },             
         {
