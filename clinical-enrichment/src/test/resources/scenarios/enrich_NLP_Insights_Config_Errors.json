@@ -12,27 +12,9 @@
                 "body" : { "nlpService" : "ABC"} 
                 },            
             "verify": {
-                "status": 200
-            }
-        },       
-        {
-            "name": "activateInvalidConfig${0}",
-            "url": "${nlp_insights}/config?name=createInvalidConfig",
-            "operation": "${0}",           
-                "request": { },            
-            "verify": {
                 "status": 400
             }
-        },     
-        {
-            "name": "deleteInvalidConfig${0}",
-            "url": "${nlp_insights}/config/createInvalidConfig",
-            "operation": "DELETE",           
-                "request": { },            
-            "verify": {
-                "status": 200
-            }
-        },
+        },            
         {
             "name": "activateNonExistentConfig${0}",
             "url": "${nlp_insights}/config?name=createInvalidConfig",
