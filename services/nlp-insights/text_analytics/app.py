@@ -79,11 +79,18 @@ def get_config(config_name):
 @app.route("/config/<config_name>", methods=['POST', 'PUT'])
 def persist_config(config_name):
     try:
+        request_str = request.data.decode('utf-8')
+        config_dict = json.loads(request_str)
+        if "nlpService" not in config_dict:
+            raise KeyError("'nlpService' must be a key in config")
+        nlp_service = config_dict["nlpService"]
+        if nlp_service.lower() not in all_nlp_services.keys():
+            raise ValueError("only 'acd' and 'quickumls' allowed at this time:" + nlp_service)
         json_file = open(configDir + f'/{config_name}', 'w')
-        json_file.write(request.data.decode('utf-8'))
-    except Exception:
+        json_file.write(request_str)
+    except Exception as ex:
         logger.exception("Error when trying to persist given config.")
-        return Response("Error when trying to persist given config.", status=400)
+        return Response("Error when trying to persist given config: " + str(ex), status=400)
     logger.info("Config successfully added/updated")
     return Response(status=200)
 
