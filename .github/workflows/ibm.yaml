@@ -47,6 +47,7 @@ jobs:
     # Setup and Install Chart 
     - name: Install Chart
       run: |
+        pwd
         kubectl config current-context
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
         helm dependency update helm-charts/health-patterns
