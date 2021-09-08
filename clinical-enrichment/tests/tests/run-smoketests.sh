@@ -75,6 +75,14 @@ pwd
 sed -i -e "s/\&hostname replace-me/\&hostname $TEST_NAMESPACE.$INGRESS_SUBDOMAIN/g" values.yaml
 cat values.yaml | grep $TEST_NAMESPACE.$INGRESS_SUBDOMAIN
  
+echo "********************************************************************" 
+echo "* Copy ACD and quickUMLS config files for the NLP-Insights Service *" 
+echo "********************************************************************" 
+# Setup config files for the NLP-Insights service for ACD
+cp -f /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/src/test/resources/configs/acd_config.ini  /workspace/$TEST_NAMESPACE/health-patterns/services/nlp-insights/text_analytics/acd/acd_config.ini
+# Setup config files for the NLP-Insights service for quickUMLS
+cp -f /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/src/test/resources/configs/quickumls_config.ini /workspace/$TEST_NAMESPACE/health-patterns/services/nlp-insights/text_analytics/quickUMLS/quickumls_config.ini
+  
 # deploy 
 echo "Deploy via helm3  using Ingress"
 helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --wait --timeout 6m0s

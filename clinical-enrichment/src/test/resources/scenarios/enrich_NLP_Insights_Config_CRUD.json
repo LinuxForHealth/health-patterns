@@ -94,7 +94,7 @@
             "verify": {
                 "status": 200,
                 "body": {
-                  "nlpService":"$MATCHES.STRING:ACD"}
+                  "nlpService":"$MATCHES.STRING:quickUMLS"}
             }
         },
         {
