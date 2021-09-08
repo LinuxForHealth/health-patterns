@@ -120,5 +120,11 @@ public class Enrich_Flow {
 	    public void enrich_NLP_Insights_Config_Errors() throws Exception {
 	    }
 
+	@Test
+	 @Category({EnrichmentConfig.class})
+	 @Scenario("scenarios/enrich_NLP_Insights_Config_Use.json")
+	    public void enrich_NLP_Insights_Config_Use() throws Exception {
+	    }
+
 	
 }

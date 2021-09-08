@@ -80,10 +80,8 @@ echo "* Copy ACD and quickUMLS config files for the NLP-Insights Service *"
 echo "********************************************************************" 
 # Setup config files for the NLP-Insights service for ACD
 cp -f /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/src/test/resources/configs/acd_config.ini  /workspace/$TEST_NAMESPACE/health-patterns/services/nlp-insights/text_analytics/acd/acd_config.ini
-cat /workspace/$TEST_NAMESPACE/health-patterns/services/nlp-insights/text_analytics/acd/acd_config.ini
 # Setup config files for the NLP-Insights service for quickUMLS
 cp -f /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/src/test/resources/configs/quickumls_config.ini /workspace/$TEST_NAMESPACE/health-patterns/services/nlp-insights/text_analytics/quickUMLS/quickumls_config.ini
-cat /workspace/$TEST_NAMESPACE/health-patterns/services/nlp-insights/text_analytics/quickUMLS/quickumls_config.ini
  
 # deploy 
 echo "Deploy via helm3  using Ingress"
