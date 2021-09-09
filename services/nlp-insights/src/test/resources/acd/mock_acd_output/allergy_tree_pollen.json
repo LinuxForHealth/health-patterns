@@ -1,0 +1,126 @@
+{
+  "spellCorrectedText": [
+    {
+      "correctedText": "Allergy to tree pollen"
+    }
+  ],
+  "SymptomDiseaseInd": [
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "begin": 0,
+      "end": 22,
+      "coveredText": "Allergy to tree pollen",
+      "negated": false,
+      "hypothetical": false,
+      "icd9Code": "995.3",
+      "icd10Code": "J30.1,Z91.0",
+      "sectionNormalizedName": "Allergies",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "Allergy to tree pollen",
+      "cui": "C1328962",
+      "disambiguationData": {
+        "comment": "Clinical Insights: This concept was excluded for being either invalid or uninteresting by: diagnosis.",
+        "validity": "INVALID"
+      },
+      "snomedConceptId": "419263009",
+      "ccsCode": "134",
+      "symptomDiseaseNormalizedName": "allergy to tree pollen",
+      "sectionSurfaceForm": "Allergy"
+    }
+  ],
+  "concepts": [
+    {
+      "cui": "C1328962",
+      "preferredName": "Allergy to tree pollen",
+      "semanticType": "patf",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.PathologicFunction",
+      "begin": 0,
+      "end": 22,
+      "coveredText": "Allergy to tree pollen",
+      "negated": false,
+      "hypothetical": false,
+      "uid": 2,
+      "icd9Code": "995.3",
+      "icd10Code": "J30.1,Z91.0",
+      "sectionNormalizedName": "Allergies",
+      "snomedConceptId": "419263009",
+      "vocabs": "CSP,SNOMEDCT_US",
+      "sectionSurfaceForm": "Allergy"
+    },
+    {
+      "source": "WHPA CDP Insights CustomSectionHeaders",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "com.ibm.ha.DictCustomSection",
+      "begin": 0,
+      "end": 7,
+      "coveredText": "Allergy",
+      "negated": false,
+      "hypothetical": false,
+      "sectionNormalizedName": "Allergies",
+      "lemma": "ALLERGY",
+      "sectionSurfaceForm": "Allergy"
+    }
+  ],
+  "attributeValues": [
+    {
+      "name": "CDP-Allergy",
+      "preferredName": "Allergy to tree pollen",
+      "values": [
+        {
+          "value": "Allergy to tree pollen"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 2
+      },
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "begin": 0,
+      "end": 22,
+      "coveredText": "Allergy to tree pollen",
+      "negated": false,
+      "hypothetical": false,
+      "icd9Code": "995.3",
+      "icd10Code": "J30.1,Z91.0",
+      "sectionNormalizedName": "Allergies",
+      "snomedConceptId": "419263009",
+      "sectionSurfaceForm": "Allergy"
+    }
+  ],
+  "AllergyInd": [
+    {
+      "type": "aci.AllergyInd",
+      "begin": 11,
+      "end": 22,
+      "coveredText": "tree pollen",
+      "negated": false,
+      "hypothetical": false,
+      "sectionNormalizedName": "Allergies",
+      "sectionSurfaceForm": "Allergy"
+    }
+  ],
+  "sections": [
+    {
+      "trigger": {
+        "sectionNormalizedName": "Allergies",
+        "type": "aci.SectionTrigger",
+        "begin": 0,
+        "end": 7,
+        "coveredText": "Allergy",
+        "source": "internal"
+      },
+      "type": "aci.Section",
+      "begin": 0,
+      "end": 22
+    }
+  ]
+}

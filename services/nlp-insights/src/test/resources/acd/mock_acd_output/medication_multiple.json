@@ -1,0 +1,942 @@
+{
+  "spellCorrectedText": [
+    {
+      "correctedText": "[PERSONALNAME] Hospital Emergency Room~MEDICATIONS:  Metformin 1,000 mg and Lisinopril 10 mg Q AM.~"
+    }
+  ],
+  "concepts": [
+    {
+      "source": "WHPA CDP Insights CustomSectionHeaders",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "com.ibm.ha.DictCustomSection",
+      "begin": 0,
+      "end": 24,
+      "coveredText": "[PERSONALNAME] Hospital ",
+      "negated": false,
+      "hypothetical": false,
+      "sectionNormalizedName": "HEADER",
+      "lemma": "HEADER",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0019994",
+      "preferredName": "Hospitals",
+      "semanticType": "mnob",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.ManufacturedObject",
+      "begin": 15,
+      "end": 23,
+      "coveredText": "Hospital",
+      "negated": false,
+      "hypothetical": false,
+      "loincId": "LP28648-1,LA12722-7,LP76009-7,LA6218-7,MTHU002722",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C16696",
+      "meshId": "M0010590",
+      "vocabs": "MTH,LNC,CSP,MSH,HL7V3.0,LCH,CHV,NCI_CDISC,NCI_FDA,MEDLINEPLUS,LCH_NW,NCI,AOD",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0562508",
+      "preferredName": "Accident and Emergency department",
+      "semanticType": "mnob",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.ManufacturedObject",
+      "begin": 24,
+      "end": 38,
+      "coveredText": "Emergency Room",
+      "negated": false,
+      "hypothetical": false,
+      "loincId": "MTHU005497,LA7172-5,LA10268-3,MTHU000059,LP66706-0",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C53513",
+      "snomedConceptId": "225728007",
+      "meshId": "M0007277",
+      "vocabs": "MTH,CHV,LNC,MSH,NCI_FDA,NCI,LCH_NW,AOD,SNOMEDCT_US,HL7V3.0",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "source": "WHPA CDP Insights CustomSectionHeaders",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "com.ibm.ha.DictCustomSection",
+      "begin": 39,
+      "end": 50,
+      "coveredText": "MEDICATIONS",
+      "negated": false,
+      "hypothetical": false,
+      "sectionNormalizedName": "HEADER",
+      "lemma": "MEDICATION",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0013227",
+      "preferredName": "Pharmaceutical Preparations",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "INVALID",
+        "comment": "Clinical Insights: This concept was excluded for being either invalid or uninteresting by: medication. Clinical Insights: This concept was excluded for being either invalid or uninteresting by: normality."
+      },
+      "type": "umls.PharmacologicSubstance",
+      "begin": 39,
+      "end": 50,
+      "coveredText": "MEDICATIONS",
+      "negated": false,
+      "hypothetical": false,
+      "uid": 2,
+      "loincId": "MTHU044418,LP100609-9,MTHU008870,LP18046-0,LA16120-0,LA20271-5,LP116700-8,MTHU038481",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C459",
+      "snomedConceptId": "410942007,763158003,373873005",
+      "meshId": "M0006857",
+      "vocabs": "MTH,LNC,CSP,MSH,NCI_CDISC-GLOSS,HL7V2.5,NCI_NCI-GLOSS,CHV,LCH,MEDLINEPLUS,LCH_NW,NCI,SNOMEDCT_US,PDQ,NCI_CPTAC",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "source": "WHPA CDP Insights CustomSectionHeaders",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "com.ibm.ha.DictCustomSection",
+      "begin": 49,
+      "end": 51,
+      "coveredText": "S:",
+      "negated": false,
+      "hypothetical": false,
+      "sectionNormalizedName": "HEADER",
+      "lemma": "SUBJECTIVE",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "semanticType": "orch",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.OrganicChemical",
+      "begin": 53,
+      "end": 62,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "uid": 5,
+      "rxNormId": "6809",
+      "loincId": "MTHU060554,LP33332-5",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C61612",
+      "snomedConceptId": "372567009,109081006",
+      "meshId": "M0013535",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,NCI_CTRP,NCI_FDA,NCI,LCH_NW,SNOMEDCT_US,DRUGBANK,VANDF",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "INVALID",
+        "comment": "Clinical Insights: This concept was shorter than an overlapping concept."
+      },
+      "type": "umls.PharmacologicSubstance",
+      "begin": 53,
+      "end": 62,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "uid": 3,
+      "rxNormId": "6809",
+      "loincId": "MTHU060554,LP33332-5",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C61612",
+      "snomedConceptId": "372567009,109081006",
+      "meshId": "M0013535",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,NCI_CTRP,NCI_FDA,NCI,LCH_NW,SNOMEDCT_US,DRUGBANK,VANDF",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "semanticType": "aapp",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.AminoAcidPeptideOrProtein",
+      "begin": 76,
+      "end": 86,
+      "coveredText": "Lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "uid": 6,
+      "rxNormId": "29046",
+      "loincId": "LP171618-4",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C29159",
+      "snomedConceptId": "386873009,108575001",
+      "meshId": "M0026771",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,USP,NCI_CTRP,NCI_FDA,NCI,USPMG,SNOMEDCT_US,PDQ,DRUGBANK,VANDF",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "INVALID",
+        "comment": "Clinical Insights: This concept was shorter than an overlapping concept."
+      },
+      "type": "umls.PharmacologicSubstance",
+      "begin": 76,
+      "end": 86,
+      "coveredText": "Lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "uid": 4,
+      "rxNormId": "29046",
+      "loincId": "LP171618-4",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C29159",
+      "snomedConceptId": "386873009,108575001",
+      "meshId": "M0026771",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,USP,NCI_CTRP,NCI_FDA,NCI,USPMG,SNOMEDCT_US,PDQ,DRUGBANK,VANDF",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0013227",
+      "preferredName": "Pharmaceutical Preparations",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "INVALID",
+        "comment": "Clinical Insights: This concept was excluded for being either invalid or uninteresting by: medication."
+      },
+      "type": "ICMedication",
+      "begin": 39,
+      "end": 50,
+      "coveredText": "MEDICATIONS",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ],
+      "loincId": "MTHU044418,LP100609-9,MTHU008870,LP18046-0,LA16120-0,LA20271-5,LP116700-8,MTHU038481",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C459",
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "snomedConceptId": "410942007,763158003,373873005",
+      "meshId": "M0006857",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0013227",
+      "preferredName": "Pharmaceutical Preparations",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "INVALID",
+        "comment": "Clinical Insights: This concept was excluded for being either invalid or uninteresting by: normality."
+      },
+      "type": "ICNormality",
+      "begin": 39,
+      "end": 50,
+      "coveredText": "MEDICATIONS",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ],
+      "loincId": "MTHU044418,LP100609-9,MTHU008870,LP18046-0,LA16120-0,LA20271-5,LP116700-8,MTHU038481",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C459",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+      "snomedConceptId": "410942007,763158003,373873005",
+      "meshId": "M0006857",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "INVALID",
+        "comment": "Clinical Insights: This concept was shorter than an overlapping concept."
+      },
+      "type": "ICMedication",
+      "begin": 53,
+      "end": 62,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ],
+      "rxNormId": "6809",
+      "loincId": "MTHU060554,LP33332-5",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C61612",
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "snomedConceptId": "372567009,109081006",
+      "meshId": "M0013535",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "ICNormality",
+      "begin": 53,
+      "end": 62,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ],
+      "rxNormId": "6809",
+      "loincId": "MTHU060554,LP33332-5",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C61612",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+      "snomedConceptId": "372567009,109081006",
+      "meshId": "M0013535",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "ICNormality",
+      "begin": 53,
+      "end": 62,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 5
+        }
+      ],
+      "sectionNormalizedName": "HEADER",
+      "ruleId": "343e6158-2c30-4726-be71-33a570b28703",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "INVALID",
+        "comment": "Clinical Insights: This concept was shorter than an overlapping concept."
+      },
+      "type": "ICMedication",
+      "begin": 76,
+      "end": 86,
+      "coveredText": "Lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 4
+        }
+      ],
+      "rxNormId": "29046",
+      "loincId": "LP171618-4",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C29159",
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "snomedConceptId": "386873009,108575001",
+      "meshId": "M0026771",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "ICNormality",
+      "begin": 76,
+      "end": 86,
+      "coveredText": "Lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 4
+        }
+      ],
+      "rxNormId": "29046",
+      "loincId": "LP171618-4",
+      "sectionNormalizedName": "HEADER",
+      "nciCode": "C29159",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+      "snomedConceptId": "386873009,108575001",
+      "meshId": "M0026771",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "ICNormality",
+      "begin": 76,
+      "end": 86,
+      "coveredText": "Lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 6
+        }
+      ],
+      "sectionNormalizedName": "HEADER",
+      "ruleId": "548ec9a6-13d8-4569-92eb-644b9f9fb7cb",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    }
+  ],
+  "conceptValues": [
+    {
+      "cui": "C0025598",
+      "dimension": "mass",
+      "preferredName": "metformin",
+      "trigger": "equal to",
+      "unit": "mg",
+      "value": "1,000",
+      "type": "ConceptValue",
+      "begin": 53,
+      "end": 71,
+      "coveredText": "Metformin 1,000 mg",
+      "negated": false,
+      "hypothetical": false,
+      "sectionNormalizedName": "HEADER",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "cui": "C0065374",
+      "dimension": "mass",
+      "preferredName": "lisinopril",
+      "trigger": "equal to",
+      "unit": "mg",
+      "value": "10",
+      "type": "ConceptValue",
+      "begin": 76,
+      "end": 92,
+      "coveredText": "Lisinopril 10 mg",
+      "negated": false,
+      "hypothetical": false,
+      "sectionNormalizedName": "HEADER",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    }
+  ],
+  "attributeValues": [
+    {
+      "name": "CDP-Medication",
+      "preferredName": "metformin",
+      "values": [
+        {
+          "value": "1,000 mg"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 8
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 53,
+      "end": 71,
+      "coveredText": "Metformin 1,000 mg",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "6809",
+      "sectionNormalizedName": "HEADER",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "name": "PrescribedMedication",
+      "preferredName": "metformin",
+      "values": [
+        {
+          "value": "1,000 mg"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 8
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 53,
+      "end": 71,
+      "coveredText": "Metformin 1,000 mg",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "6809",
+      "sectionNormalizedName": "HEADER",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "name": "CDP-Medication",
+      "preferredName": "lisinopril",
+      "values": [
+        {
+          "value": "10 mg",
+          "frequency": "Q AM."
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 9
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 76,
+      "end": 98,
+      "coveredText": "Lisinopril 10 mg Q AM.",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "29046",
+      "sectionNormalizedName": "HEADER",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "name": "PrescribedMedication",
+      "preferredName": "lisinopril",
+      "values": [
+        {
+          "value": "10 mg",
+          "frequency": "Q AM."
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 9
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 76,
+      "end": 98,
+      "coveredText": "Lisinopril 10 mg Q AM.",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "29046",
+      "sectionNormalizedName": "HEADER",
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    }
+  ],
+  "MedicationInd": [
+    {
+      "type": "aci.MedicationInd",
+      "begin": 53,
+      "end": 71,
+      "coveredText": "Metformin 1,000 mg",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "uid": 8,
+      "sectionNormalizedName": "HEADER",
+      "administration": [
+        {
+          "dosageValue": "1,000 mg",
+          "coveredText": "1,000 mg",
+          "end": 71,
+          "type": "aci.SubstanceAdministration",
+          "begin": 63
+        }
+      ],
+      "cui": "C0025598",
+      "disambiguationData": {
+        "comment": "marked VALID by clinical insight models.",
+        "validity": "VALID"
+      },
+      "drug": [
+        {
+          "coveredText": "Metformin",
+          "cui": "C0025598",
+          "complex": "false",
+          "end": 62,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "rxNormID": "6809",
+              "coveredText": "Metformin",
+              "cui": "C0025598",
+              "drugSurfaceForm": "Metformin",
+              "drugNormalizedName": "metformin",
+              "end": 62,
+              "type": "aci.DrugName",
+              "begin": 53
+            }
+          ],
+          "begin": 53
+        }
+      ],
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    },
+    {
+      "type": "aci.MedicationInd",
+      "begin": 76,
+      "end": 98,
+      "coveredText": "Lisinopril 10 mg Q AM.",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "uid": 9,
+      "sectionNormalizedName": "HEADER",
+      "administration": [
+        {
+          "dosageValue": "10 mg",
+          "coveredText": "10 mg Q AM.",
+          "frequencyValue": "Q AM.",
+          "end": 98,
+          "type": "aci.SubstanceAdministration",
+          "begin": 87
+        }
+      ],
+      "cui": "C0065374",
+      "disambiguationData": {
+        "comment": "marked VALID by clinical insight models.",
+        "validity": "VALID"
+      },
+      "drug": [
+        {
+          "coveredText": "Lisinopril",
+          "cui": "C0065374",
+          "complex": "false",
+          "end": 86,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "rxNormID": "29046",
+              "coveredText": "Lisinopril",
+              "cui": "C0065374",
+              "drugSurfaceForm": "Lisinopril",
+              "drugNormalizedName": "lisinopril",
+              "end": 86,
+              "type": "aci.DrugName",
+              "begin": 76
+            }
+          ],
+          "begin": 76
+        }
+      ],
+      "sectionSurfaceForm": "[PERSONALNAME] Hospital "
+    }
+  ],
+  "sections": [
+    {
+      "trigger": {
+        "sectionNormalizedName": "HEADER",
+        "type": "aci.SectionTrigger",
+        "begin": 0,
+        "end": 24,
+        "coveredText": "[PERSONALNAME] Hospital ",
+        "source": "WHPA CDP Insights CustomSectionHeaders"
+      },
+      "type": "aci.Section",
+      "begin": 0,
+      "end": 99
+    }
+  ]
+}

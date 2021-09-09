@@ -1,0 +1,622 @@
+{
+  "spellCorrectedText": [
+    {
+      "correctedText": "Patient has type 1 diabetes and hypertension, and is reporting shortness of breath."
+    }
+  ],
+  "SymptomDiseaseInd": [
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 10,
+      "icd9Code": "250.01",
+      "icd10Code": "E10.9",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "type 1 diabetes",
+      "cui": "C0011854",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "snomedConceptId": "46635009",
+      "ccsCode": "49",
+      "symptomDiseaseNormalizedName": "type 1 diabetes",
+      "hccCode": "19"
+    },
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "begin": 32,
+      "end": 44,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.997,
+            "patientReportedScore": 0,
+            "discussedScore": 0.002
+          },
+          "suspectedScore": 0.008,
+          "symptomScore": 0.135,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 11,
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "hypertension",
+      "cui": "C0857121",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "symptomDiseaseNormalizedName": "Hypertensive"
+    },
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "begin": 63,
+      "end": 82,
+      "coveredText": "shortness of breath",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.052,
+            "patientReportedScore": 0.84,
+            "discussedScore": 0.108
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.977,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 9,
+      "icd9Code": "786.09",
+      "icd10Code": "R06.00,R06.0",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "shortness of breath",
+      "cui": "C0013404",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "snomedConceptId": "267036007",
+      "ccsCode": "133",
+      "symptomDiseaseNormalizedName": "dyspnea"
+    }
+  ],
+  "concepts": [
+    {
+      "cui": "C0011854",
+      "preferredName": "Diabetes Mellitus, Insulin-Dependent",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.DiseaseOrSyndrome",
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 2,
+      "loincId": "LP36797-6,LA10551-2,MTHU020217",
+      "icd10Code": "E10.9",
+      "nciCode": "C2986",
+      "snomedConceptId": "46635009",
+      "meshId": "M0006152",
+      "vocabs": "MTH,LNC,NCI_NICHD,CSP,MSH,HPO,OMIM,COSTAR,CHV,CCSR_10,MEDLINEPLUS,NCI,SNOMEDCT_US,DXP"
+    },
+    {
+      "cui": "C0857121",
+      "source": "IBM Clinical Insights - Symptom Disease Extension v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "com.ibm.ha.DictCustomSymptomDisease",
+      "begin": 32,
+      "end": 44,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "icd10Code": "valueNotSet",
+      "conceptid": "valueNotSet",
+      "lemma": "Hypertensive",
+      "ccsCode": "valueNotSet",
+      "hccCode": "valueNotSet",
+      "icd9": "valueNotSet"
+    },
+    {
+      "cui": "C0020538",
+      "preferredName": "Hypertensive disease",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.DiseaseOrSyndrome",
+      "begin": 32,
+      "end": 44,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.997,
+            "patientReportedScore": 0,
+            "discussedScore": 0.002
+          },
+          "suspectedScore": 0.008,
+          "symptomScore": 0.135,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 3,
+      "loincId": "LA7444-8,LA14293-7,MTHU020789",
+      "icd10Code": "P29.2,I10",
+      "nciCode": "C3117",
+      "snomedConceptId": "38341003",
+      "meshId": "M0010859",
+      "vocabs": "MTH,LNC,HPO,CHV,NCI_FDA,NCI_CTRP,LCH_NW,AOD,ICD9CM,SNOMEDCT_US,PDQ,NCI_NICHD,CSP,MSH,CST,OMIM,NCI_CTCAE,COSTAR,NCI_NCI-GLOSS,LCH,CCS,MEDLINEPLUS,NCI,DXP,MTHICD9,NCI_CPTAC"
+    },
+    {
+      "cui": "C1963138",
+      "preferredName": "Hypertension, CTCAE",
+      "semanticType": "fndg",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.Finding",
+      "begin": 32,
+      "end": 44,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "nciCode": "C55060",
+      "vocabs": "MTH,NCI_CTCAE_5,NCI,NCI_CTCAE_3"
+    },
+    {
+      "cui": "C0700287",
+      "preferredName": "Reporting",
+      "semanticType": "hlca",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.HealthCareActivity",
+      "begin": 53,
+      "end": 62,
+      "coveredText": "reporting",
+      "negated": false,
+      "hypothetical": false,
+      "loincId": "LP6486-7,MTHU051529,MTHU002737,LA25254-6,LP7554-1",
+      "nciCode": "C25651",
+      "snomedConceptId": "223458004",
+      "vocabs": "MTH,CHV,LNC,NCI,AOD,SNOMEDCT_US"
+    },
+    {
+      "cui": "C0013404",
+      "preferredName": "Dyspnea",
+      "semanticType": "sosy",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.SignOrSymptom",
+      "begin": 63,
+      "end": 82,
+      "coveredText": "shortness of breath",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.052,
+            "patientReportedScore": 0.84,
+            "discussedScore": 0.108
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.977,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 4,
+      "icd9Code": "786.09",
+      "loincId": "MTHU038266,LP115812-2,MTHU020850,LA17611-7,LA17001-1",
+      "icd10Code": "R06.0,P28.89,R06.8,R06.00",
+      "nciCode": "C2998",
+      "snomedConceptId": "267036007,230145002",
+      "meshId": "M0006931",
+      "vocabs": "LNC,MTH,HPO,CHV,NCI_CDISC,NCI_FDA,NCI_CTRP,LCH_NW,AOD,ICD9CM,SNOMEDCT_US,PDQ,NCI_NICHD,CSP,MSH,CST,OMIM,NCI_CTCAE,COSTAR,NCI_NCI-GLOSS,ICPC,LCH,MEDLINEPLUS,NCI,DXP"
+    },
+    {
+      "cui": "C0011854",
+      "preferredName": "Diabetes Mellitus, Insulin-Dependent",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "type": "ICDiagnosis",
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ],
+      "uid": 6,
+      "loincId": "LP36797-6,LA10551-2,MTHU020217",
+      "icd10Code": "E10.9",
+      "nciCode": "C2986",
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "snomedConceptId": "46635009",
+      "meshId": "M0006152"
+    },
+    {
+      "cui": "C0020538",
+      "preferredName": "Hypertensive disease",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "type": "ICDiagnosis",
+      "begin": 32,
+      "end": 44,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.997,
+            "patientReportedScore": 0,
+            "discussedScore": 0.002
+          },
+          "suspectedScore": 0.008,
+          "symptomScore": 0.135,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ],
+      "uid": 7,
+      "loincId": "LA7444-8,LA14293-7,MTHU020789",
+      "icd10Code": "P29.2,I10",
+      "nciCode": "C3117",
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "snomedConceptId": "38341003",
+      "meshId": "M0010859"
+    },
+    {
+      "cui": "C0013404",
+      "preferredName": "Dyspnea",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "type": "ICDiagnosis",
+      "begin": 63,
+      "end": 82,
+      "coveredText": "shortness of breath",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.052,
+            "patientReportedScore": 0.84,
+            "discussedScore": 0.108
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.977,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "derivedFrom": [
+        {
+          "uid": 4
+        }
+      ],
+      "uid": 8,
+      "icd9Code": "786.09",
+      "loincId": "MTHU038266,LP115812-2,MTHU020850,LA17611-7,LA17001-1",
+      "icd10Code": "R06.0,P28.89,R06.8,R06.00",
+      "nciCode": "C2998",
+      "ruleId": "3cf38e29-77f0-47b3-9950-4a0292f64c93",
+      "snomedConceptId": "267036007,230145002",
+      "meshId": "M0006931"
+    }
+  ],
+  "attributeValues": [
+    {
+      "name": "CDP-Condition",
+      "preferredName": "Diabetes Mellitus, Insulin-Dependent",
+      "values": [
+        {
+          "value": "Diabetes Mellitus, Insulin-Dependent"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 6
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "loincId": "LP36797-6,LA10551-2,MTHU020217",
+      "icd10Code": "E10.9",
+      "nciCode": "C2986",
+      "snomedConceptId": "46635009",
+      "meshId": "M0006152"
+    },
+    {
+      "name": "Diagnosis",
+      "preferredName": "type 1 diabetes",
+      "values": [
+        {
+          "value": "type 1 diabetes"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 10
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "icd9Code": "250.01",
+      "icd10Code": "E10.9",
+      "snomedConceptId": "46635009",
+      "ccsCode": "49",
+      "hccCode": "19"
+    },
+    {
+      "name": "CDP-Condition",
+      "preferredName": "Hypertensive disease",
+      "values": [
+        {
+          "value": "Hypertensive disease"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 7
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 32,
+      "end": 44,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.997,
+            "patientReportedScore": 0,
+            "discussedScore": 0.002
+          },
+          "suspectedScore": 0.008,
+          "symptomScore": 0.135,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "loincId": "LA7444-8,LA14293-7,MTHU020789",
+      "icd10Code": "P29.2,I10",
+      "nciCode": "C3117",
+      "snomedConceptId": "38341003",
+      "meshId": "M0010859"
+    },
+    {
+      "name": "Diagnosis",
+      "preferredName": "Hypertensive",
+      "values": [
+        {
+          "value": "Hypertensive"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 11
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 32,
+      "end": 44,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.997,
+            "patientReportedScore": 0,
+            "discussedScore": 0.002
+          },
+          "suspectedScore": 0.008,
+          "symptomScore": 0.135,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      }
+    },
+    {
+      "name": "CDP-Condition",
+      "preferredName": "Dyspnea",
+      "values": [
+        {
+          "value": "Dyspnea"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 8
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 63,
+      "end": 82,
+      "coveredText": "shortness of breath",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.052,
+            "patientReportedScore": 0.84,
+            "discussedScore": 0.108
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.977,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "icd9Code": "786.09",
+      "loincId": "MTHU038266,LP115812-2,MTHU020850,LA17611-7,LA17001-1",
+      "icd10Code": "R06.0,P28.89,R06.8,R06.00",
+      "nciCode": "C2998",
+      "snomedConceptId": "267036007,230145002",
+      "meshId": "M0006931"
+    },
+    {
+      "name": "PatientReportedCondition",
+      "preferredName": "dyspnea",
+      "values": [
+        {
+          "value": "dyspnea"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 9
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 63,
+      "end": 82,
+      "coveredText": "shortness of breath",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.052,
+            "patientReportedScore": 0.84,
+            "discussedScore": 0.108
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.977,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "icd9Code": "786.09",
+      "icd10Code": "R06.00,R06.0",
+      "snomedConceptId": "267036007",
+      "ccsCode": "133"
+    }
+  ]
+}

@@ -5,3 +5,6 @@ build
 *.idea
 .idea
 *.egg-info
+*.pyc
+/.pytest_cache/
+/.mypy_cache/

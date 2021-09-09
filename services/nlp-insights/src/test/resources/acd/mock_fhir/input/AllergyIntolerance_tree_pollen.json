@@ -1,0 +1,38 @@
+{
+    "id": "2f251d35-faea-4df5-9ab3-23d70d46ea2d",
+    "category": [
+        "environment"
+    ],
+    "clinicalStatus": {
+        "coding": [
+            {    
+                "code": "active",
+                "display": "Active",
+                "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"
+            }
+        ]
+    },
+    "code": {
+        "coding": [
+            {
+                "code": "534453",
+                "display": "Tree Pollen"
+            }
+        ],
+        "text": "Tree Pollen"
+    },
+    "criticality": "high",
+    "patient": {
+        "reference": "Patient/97b51b8d-1d1b-497f-866c-8df5d6cc05a7"
+    },
+    "verificationStatus": {
+        "coding": [
+            {
+                "code": "confirmed",
+                "display": "Confirmed",
+                "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"
+            }
+        ]
+    },
+    "resourceType": "AllergyIntolerance"
+}

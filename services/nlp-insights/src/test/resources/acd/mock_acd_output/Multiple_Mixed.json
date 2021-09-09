@@ -1,0 +1,1462 @@
+{
+  "spellCorrectedText": [
+    {
+      "correctedText": "Patient has diabetes and is taking Metformin.\nPatient has hypertension and is taking lisinopril."
+    }
+  ],
+  "SymptomDiseaseInd": [
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "begin": 12,
+      "end": 20,
+      "coveredText": "diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.001,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 15,
+      "icd9Code": "250.00",
+      "icd10Code": "E14.9",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "diabetes",
+      "cui": "C0011849",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "snomedConceptId": "73211009",
+      "symptomDiseaseNormalizedName": "diabetes"
+    },
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "begin": 58,
+      "end": 70,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.4,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 16,
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "hypertension",
+      "cui": "C0857121",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "symptomDiseaseNormalizedName": "Hypertensive"
+    }
+  ],
+  "concepts": [
+    {
+      "cui": "C0011847",
+      "preferredName": "Diabetes",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.DiseaseOrSyndrome",
+      "begin": 12,
+      "end": 20,
+      "coveredText": "diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.001,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 4,
+      "loincId": "LP128793-9,LA10529-8,MTHU040702",
+      "vocabs": "LNC,MTH,LCH_NW,OMIM"
+    },
+    {
+      "cui": "C0011849",
+      "preferredName": "Diabetes Mellitus",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.DiseaseOrSyndrome",
+      "begin": 12,
+      "end": 20,
+      "coveredText": "diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "loincId": "LA14291-1,MTHU020781,LA27539-8",
+      "icd10Code": "E14.9,E11.9,E10.9",
+      "nciCode": "C2985",
+      "snomedConceptId": "73211009",
+      "meshId": "M0006148",
+      "vocabs": "MTH,NCI_NICHD,LNC,CSP,MSH,CST,HPO,OMIM,COSTAR,AIR,NCI_NCI-GLOSS,ICPC,CHV,NCI_CTRP,MEDLINEPLUS,NCI,AOD,QMR,ICD9CM,SNOMEDCT_US,PDQ,DXP,NCI_CPTAC"
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "semanticType": "orch",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.OrganicChemical",
+      "begin": 35,
+      "end": 44,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "uid": 6,
+      "rxNormId": "6809",
+      "loincId": "MTHU060554,LP33332-5",
+      "nciCode": "C61612",
+      "snomedConceptId": "372567009,109081006",
+      "meshId": "M0013535",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,NCI_CTRP,NCI_FDA,NCI,LCH_NW,SNOMEDCT_US,DRUGBANK,VANDF"
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.PharmacologicSubstance",
+      "begin": 35,
+      "end": 44,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "uid": 2,
+      "rxNormId": "6809",
+      "loincId": "MTHU060554,LP33332-5",
+      "nciCode": "C61612",
+      "snomedConceptId": "372567009,109081006",
+      "meshId": "M0013535",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,NCI_CTRP,NCI_FDA,NCI,LCH_NW,SNOMEDCT_US,DRUGBANK,VANDF"
+    },
+    {
+      "cui": "C0857121",
+      "source": "IBM Clinical Insights - Symptom Disease Extension v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "com.ibm.ha.DictCustomSymptomDisease",
+      "begin": 58,
+      "end": 70,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "icd10Code": "valueNotSet",
+      "conceptid": "valueNotSet",
+      "lemma": "Hypertensive",
+      "ccsCode": "valueNotSet",
+      "hccCode": "valueNotSet",
+      "icd9": "valueNotSet"
+    },
+    {
+      "cui": "C0020538",
+      "preferredName": "Hypertensive disease",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.DiseaseOrSyndrome",
+      "begin": 58,
+      "end": 70,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.4,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 5,
+      "loincId": "LA7444-8,LA14293-7,MTHU020789",
+      "icd10Code": "P29.2,I10",
+      "nciCode": "C3117",
+      "snomedConceptId": "38341003",
+      "meshId": "M0010859",
+      "vocabs": "MTH,LNC,HPO,CHV,NCI_FDA,NCI_CTRP,LCH_NW,AOD,ICD9CM,SNOMEDCT_US,PDQ,NCI_NICHD,CSP,MSH,CST,OMIM,NCI_CTCAE,COSTAR,NCI_NCI-GLOSS,LCH,CCS,MEDLINEPLUS,NCI,DXP,MTHICD9,NCI_CPTAC"
+    },
+    {
+      "cui": "C1963138",
+      "preferredName": "Hypertension, CTCAE",
+      "semanticType": "fndg",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.Finding",
+      "begin": 58,
+      "end": 70,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "nciCode": "C55060",
+      "vocabs": "MTH,NCI_CTCAE_5,NCI,NCI_CTCAE_3"
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "semanticType": "aapp",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.AminoAcidPeptideOrProtein",
+      "begin": 85,
+      "end": 95,
+      "coveredText": "lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "uid": 7,
+      "rxNormId": "29046",
+      "loincId": "LP171618-4",
+      "nciCode": "C29159",
+      "snomedConceptId": "386873009,108575001",
+      "meshId": "M0026771",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,USP,NCI_CTRP,NCI_FDA,NCI,USPMG,SNOMEDCT_US,PDQ,DRUGBANK,VANDF"
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.PharmacologicSubstance",
+      "begin": 85,
+      "end": 95,
+      "coveredText": "lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.01,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.01,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "uid": 3,
+      "rxNormId": "29046",
+      "loincId": "LP171618-4",
+      "nciCode": "C29159",
+      "snomedConceptId": "386873009,108575001",
+      "meshId": "M0026771",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,USP,NCI_CTRP,NCI_FDA,NCI,USPMG,SNOMEDCT_US,PDQ,DRUGBANK,VANDF"
+    },
+    {
+      "cui": "C0011847",
+      "preferredName": "Diabetes",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "type": "ICDiagnosis",
+      "begin": 12,
+      "end": 20,
+      "coveredText": "diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.001,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "derivedFrom": [
+        {
+          "uid": 4
+        }
+      ],
+      "uid": 9,
+      "loincId": "LP128793-9,LA10529-8,MTHU040702",
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c"
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "type": "ICMedication",
+      "begin": 35,
+      "end": 44,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ],
+      "uid": 10,
+      "rxNormId": "6809",
+      "loincId": "MTHU060554,LP33332-5",
+      "nciCode": "C61612",
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "snomedConceptId": "372567009,109081006",
+      "meshId": "M0013535"
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "ICNormality",
+      "begin": 35,
+      "end": 44,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ],
+      "rxNormId": "6809",
+      "loincId": "MTHU060554,LP33332-5",
+      "nciCode": "C61612",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+      "snomedConceptId": "372567009,109081006",
+      "meshId": "M0013535"
+    },
+    {
+      "cui": "C0025598",
+      "preferredName": "metformin",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "ICNormality",
+      "begin": 35,
+      "end": 44,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 6
+        }
+      ],
+      "ruleId": "343e6158-2c30-4726-be71-33a570b28703"
+    },
+    {
+      "cui": "C0020538",
+      "preferredName": "Hypertensive disease",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "type": "ICDiagnosis",
+      "begin": 58,
+      "end": 70,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.4,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "derivedFrom": [
+        {
+          "uid": 5
+        }
+      ],
+      "uid": 11,
+      "loincId": "LA7444-8,LA14293-7,MTHU020789",
+      "icd10Code": "P29.2,I10",
+      "nciCode": "C3117",
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "snomedConceptId": "38341003",
+      "meshId": "M0010859"
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "type": "ICMedication",
+      "begin": 85,
+      "end": 95,
+      "coveredText": "lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.01,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.01,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ],
+      "uid": 12,
+      "rxNormId": "29046",
+      "loincId": "LP171618-4",
+      "nciCode": "C29159",
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "snomedConceptId": "386873009,108575001",
+      "meshId": "M0026771"
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "ICNormality",
+      "begin": 85,
+      "end": 95,
+      "coveredText": "lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ],
+      "rxNormId": "29046",
+      "loincId": "LP171618-4",
+      "nciCode": "C29159",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+      "snomedConceptId": "386873009,108575001",
+      "meshId": "M0026771"
+    },
+    {
+      "cui": "C0065374",
+      "preferredName": "lisinopril",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "ICNormality",
+      "begin": 85,
+      "end": 95,
+      "coveredText": "lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 7
+        }
+      ],
+      "ruleId": "548ec9a6-13d8-4569-92eb-644b9f9fb7cb"
+    }
+  ],
+  "attributeValues": [
+    {
+      "name": "CDP-Allergy",
+      "preferredName": "Diabetes",
+      "values": [
+        {
+          "value": "Diabetes"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 4
+      },
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "begin": 12,
+      "end": 20,
+      "coveredText": "diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.001,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "loincId": "LP128793-9,LA10529-8,MTHU040702"
+    },
+    {
+      "name": "CDP-Condition",
+      "preferredName": "Diabetes",
+      "values": [
+        {
+          "value": "Diabetes"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 9
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 12,
+      "end": 20,
+      "coveredText": "diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.001,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "loincId": "LP128793-9,LA10529-8,MTHU040702"
+    },
+    {
+      "name": "Diagnosis",
+      "preferredName": "diabetes",
+      "values": [
+        {
+          "value": "diabetes"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 15
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 12,
+      "end": 20,
+      "coveredText": "diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.001,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "icd9Code": "250.00",
+      "icd10Code": "E14.9",
+      "snomedConceptId": "73211009"
+    },
+    {
+      "name": "CDP-Immunization",
+      "preferredName": "metformin",
+      "values": [
+        {
+          "value": "metformin"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 10
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 35,
+      "end": 44,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "6809",
+      "loincId": "MTHU060554,LP33332-5",
+      "nciCode": "C61612",
+      "snomedConceptId": "372567009,109081006",
+      "meshId": "M0013535"
+    },
+    {
+      "name": "CDP-Medication",
+      "preferredName": "metformin",
+      "values": [
+        {
+          "value": "metformin"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 13
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 35,
+      "end": 44,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "6809"
+    },
+    {
+      "name": "PrescribedMedication",
+      "preferredName": "metformin",
+      "values": [
+        {
+          "value": "metformin"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 13
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 35,
+      "end": 44,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "6809"
+    },
+    {
+      "name": "CDP-Allergy",
+      "preferredName": "Hypertensive disease",
+      "values": [
+        {
+          "value": "Hypertensive disease"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 5
+      },
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "begin": 58,
+      "end": 70,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.4,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "loincId": "LA7444-8,LA14293-7,MTHU020789",
+      "icd10Code": "P29.2,I10",
+      "nciCode": "C3117",
+      "snomedConceptId": "38341003",
+      "meshId": "M0010859"
+    },
+    {
+      "name": "CDP-Condition",
+      "preferredName": "Hypertensive disease",
+      "values": [
+        {
+          "value": "Hypertensive disease"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 11
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 58,
+      "end": 70,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.4,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "loincId": "LA7444-8,LA14293-7,MTHU020789",
+      "icd10Code": "P29.2,I10",
+      "nciCode": "C3117",
+      "snomedConceptId": "38341003",
+      "meshId": "M0010859"
+    },
+    {
+      "name": "Diagnosis",
+      "preferredName": "Hypertensive",
+      "values": [
+        {
+          "value": "Hypertensive"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 16
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 58,
+      "end": 70,
+      "coveredText": "hypertension",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0
+          },
+          "suspectedScore": 0,
+          "symptomScore": 0.4,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      }
+    },
+    {
+      "name": "CDP-Immunization",
+      "preferredName": "lisinopril",
+      "values": [
+        {
+          "value": "lisinopril"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 12
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 85,
+      "end": 95,
+      "coveredText": "lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.01,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.01,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "29046",
+      "loincId": "LP171618-4",
+      "nciCode": "C29159",
+      "snomedConceptId": "386873009,108575001",
+      "meshId": "M0026771"
+    },
+    {
+      "name": "CDP-Medication",
+      "preferredName": "lisinopril",
+      "values": [
+        {
+          "value": "lisinopril"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 14
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 85,
+      "end": 95,
+      "coveredText": "lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.01,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.01,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "29046"
+    },
+    {
+      "name": "PrescribedMedication",
+      "preferredName": "lisinopril",
+      "values": [
+        {
+          "value": "lisinopril"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 14
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 85,
+      "end": 95,
+      "coveredText": "lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.01,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.01,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "rxNormId": "29046"
+    }
+  ],
+  "MedicationInd": [
+    {
+      "type": "aci.MedicationInd",
+      "begin": 35,
+      "end": 44,
+      "coveredText": "Metformin",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "uid": 13,
+      "cui": "C0025598",
+      "disambiguationData": {
+        "comment": "marked VALID by clinical insight models.",
+        "validity": "VALID"
+      },
+      "drug": [
+        {
+          "coveredText": "Metformin",
+          "cui": "C0025598",
+          "complex": "false",
+          "end": 44,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "rxNormID": "6809",
+              "coveredText": "Metformin",
+              "cui": "C0025598",
+              "drugSurfaceForm": "Metformin",
+              "drugNormalizedName": "metformin",
+              "end": 44,
+              "type": "aci.DrugName",
+              "begin": 35
+            }
+          ],
+          "begin": 35
+        }
+      ]
+    },
+    {
+      "type": "aci.MedicationInd",
+      "begin": 85,
+      "end": 95,
+      "coveredText": "lisinopril",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1,
+            "consideringScore": 0,
+            "discussedScore": 0,
+            "labMeasurementScore": 0
+          },
+          "startedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.01,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.01,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "uid": 14,
+      "cui": "C0065374",
+      "disambiguationData": {
+        "comment": "marked VALID by clinical insight models.",
+        "validity": "VALID"
+      },
+      "drug": [
+        {
+          "coveredText": "lisinopril",
+          "cui": "C0065374",
+          "complex": "false",
+          "end": 95,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "rxNormID": "29046",
+              "coveredText": "lisinopril",
+              "cui": "C0065374",
+              "drugSurfaceForm": "lisinopril",
+              "drugNormalizedName": "lisinopril",
+              "end": 95,
+              "type": "aci.DrugName",
+              "begin": 85
+            }
+          ],
+          "begin": 85
+        }
+      ]
+    }
+  ]
+}

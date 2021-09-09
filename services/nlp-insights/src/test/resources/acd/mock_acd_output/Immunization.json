@@ -1,0 +1,454 @@
+{
+  "spellCorrectedText": [
+    {
+      "correctedText": "DTaP vaccine"
+    }
+  ],
+  "concepts": [
+    {
+      "cui": "C0535644",
+      "preferredName": "Diphtheria-Tetanus-acellular Pertussis Vaccines",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.PharmacologicSubstance",
+      "begin": 0,
+      "end": 12,
+      "coveredText": "DTaP vaccine",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.783,
+            "consideringScore": 0.004,
+            "discussedScore": 0.208,
+            "labMeasurementScore": 0.001
+          },
+          "startedEvent": {
+            "score": 0.001,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "uid": 2,
+      "snomedConceptId": "429321000124106,429511000124109",
+      "meshId": "M0272463",
+      "vocabs": "CHV,MSH,SNOMEDCT_US"
+    },
+    {
+      "source": "WHPA CDP Insights CustomSectionHeaders",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "com.ibm.ha.DictCustomSection",
+      "begin": 7,
+      "end": 9,
+      "coveredText": "cc",
+      "negated": false,
+      "hypothetical": false,
+      "lemma": "CHIEF_COMPLAINT"
+    },
+    {
+      "cui": "C0535644",
+      "preferredName": "Diphtheria-Tetanus-acellular Pertussis Vaccines",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "type": "ICMedication",
+      "begin": 0,
+      "end": 12,
+      "coveredText": "DTaP vaccine",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.783,
+            "consideringScore": 0.004,
+            "discussedScore": 0.208,
+            "labMeasurementScore": 0.001
+          },
+          "startedEvent": {
+            "score": 0.001,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ],
+      "uid": 4,
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "snomedConceptId": "429321000124106,429511000124109",
+      "meshId": "M0272463"
+    },
+    {
+      "cui": "C0535644",
+      "preferredName": "Diphtheria-Tetanus-acellular Pertussis Vaccines",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "INVALID",
+        "comment": "Clinical Insights: This concept was excluded for being either invalid or uninteresting by: normality."
+      },
+      "type": "ICNormality",
+      "begin": 0,
+      "end": 12,
+      "coveredText": "DTaP vaccine",
+      "negated": false,
+      "hypothetical": false,
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ],
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+      "snomedConceptId": "429321000124106,429511000124109",
+      "meshId": "M0272463"
+    }
+  ],
+  "attributeValues": [
+    {
+      "name": "CDP-Immunization",
+      "preferredName": "Diphtheria-Tetanus-acellular Pertussis Vaccines",
+      "values": [
+        {
+          "value": "Diphtheria-Tetanus-acellular Pertussis Vaccines"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 4
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 0,
+      "end": 12,
+      "coveredText": "DTaP vaccine",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.783,
+            "consideringScore": 0.004,
+            "discussedScore": 0.208,
+            "labMeasurementScore": 0.001
+          },
+          "startedEvent": {
+            "score": 0.001,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "snomedConceptId": "429321000124106,429511000124109",
+      "meshId": "M0272463"
+    },
+    {
+      "name": "CDP-Medication",
+      "preferredName": "DTaP",
+      "values": [
+        {
+          "value": "DTaP"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 5
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 0,
+      "end": 12,
+      "coveredText": "DTaP vaccine",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.783,
+            "consideringScore": 0.004,
+            "discussedScore": 0.208,
+            "labMeasurementScore": 0.001
+          },
+          "startedEvent": {
+            "score": 0.001,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "PrescribedMedication",
+      "preferredName": "DTaP",
+      "values": [
+        {
+          "value": "DTaP"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 5
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "begin": 0,
+      "end": 12,
+      "coveredText": "DTaP vaccine",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.783,
+            "consideringScore": 0.004,
+            "discussedScore": 0.208,
+            "labMeasurementScore": 0.001
+          },
+          "startedEvent": {
+            "score": 0.001,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "MedicationInd": [
+    {
+      "type": "aci.MedicationInd",
+      "begin": 0,
+      "end": 12,
+      "coveredText": "DTaP vaccine",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.783,
+            "consideringScore": 0.004,
+            "discussedScore": 0.208,
+            "labMeasurementScore": 0.001
+          },
+          "startedEvent": {
+            "score": 0.001,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0,
+            "usage": {
+              "explicitScore": 0,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.001,
+            "allergyScore": 0,
+            "usage": {
+              "explicitScore": 0.001,
+              "consideringScore": 0,
+              "discussedScore": 0
+            }
+          }
+        }
+      },
+      "uid": 5,
+      "cui": "C1579314",
+      "disambiguationData": {
+        "comment": "marked VALID by clinical insight models.",
+        "validity": "VALID"
+      },
+      "drug": [
+        {
+          "coveredText": "DTaP vaccine",
+          "cui": "C1579314",
+          "complex": "false",
+          "end": 12,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "coveredText": "DTaP",
+              "cui": "C1579314",
+              "drugSurfaceForm": "DTaP",
+              "drugNormalizedName": "DTaP",
+              "end": 4,
+              "type": "aci.DrugName",
+              "begin": 0
+            }
+          ],
+          "begin": 0
+        }
+      ]
+    }
+  ]
+}

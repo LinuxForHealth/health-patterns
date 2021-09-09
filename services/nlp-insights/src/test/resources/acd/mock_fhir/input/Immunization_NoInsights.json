@@ -1,0 +1,59 @@
+{
+    "resourceType": "Immunization",
+    "id": "aef7de5a-6345-4a2e-961b-dd1ba7e0478b",
+    "status": "completed",
+    "vaccineCode": {
+        "coding": [
+            {
+                "system": "http://hl7.org/fhir/sid/cvx",
+                "code": "141",
+                "display": "Influenza"
+            }
+        ],
+        "text": "Influenza"
+    },
+    "patient": {
+        "reference": "Patient/a4f9e870-3b56-4528-8db4-f0d38671afe0"
+    },
+    "occurrenceDateTime": "2014-07-30",
+    "primarySource": true,
+    "reportOrigin": {
+        "coding": [
+            {
+                "code": "00",
+                "display": "NEW IMMUNIZATION RECORD"
+            }
+        ],
+        "text": "NEW IMMUNIZATION RECORD"
+    },
+    "lotNumber": "0039F",
+    "expirationDate": "2020-05-31",
+    "site": {
+        "coding": [
+            {
+                "code": "LA",
+                "display": "LEFT ARM"
+            }
+        ],
+        "text": "LEFT ARM"
+    },
+    "route": {
+        "coding": [
+            {
+                "code": "C28161",
+                "display": "INTRAMUSCULAR"
+            }
+        ],
+        "text": "INTRAMUSCULAR"
+    },
+    "programEligibility": [
+        {
+            "coding": [
+                {
+                    "code": "V03"
+                }
+            ],
+            "text": "VFC eligibility ñ Uninsured"
+        }
+    ]
+}

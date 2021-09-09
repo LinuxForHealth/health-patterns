@@ -1,0 +1,10 @@
+{
+    "id": "ebc77419-101d-4394-95c6-34e2189136d0",
+    "code": {
+        "text": "abcd"
+    },
+    "patient": {
+        "reference": "Patient/97b51b8d-1d1b-497f-866c-8df5d6cc05a7"
+    },
+    "resourceType": "AllergyIntolerance"
+}

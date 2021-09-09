@@ -1,0 +1,284 @@
+{
+    "spellCorrectedText": [
+        {
+            "correctedText": "RASH"
+        }
+    ],
+    "SymptomDiseaseInd": [
+        {
+            "type": "aci.SymptomDiseaseInd",
+            "begin": 0,
+            "end": 4,
+            "coveredText": "RASH",
+            "negated": false,
+            "hypothetical": false,
+            "insightModelData": {
+                "diagnosis": {
+                    "usage": {
+                        "explicitScore": 0.938,
+                        "patientReportedScore": 0.001,
+                        "discussedScore": 0.061
+                    },
+                    "suspectedScore": 0.017,
+                    "symptomScore": 0.976,
+                    "traumaScore": 0,
+                    "familyHistoryScore": 0
+                }
+            },
+            "uid": 6,
+            "icd9Code": "782.1",
+            "icd10Code": "R21",
+            "modality": "positive",
+            "symptomDiseaseSurfaceForm": "RASH",
+            "cui": "C0015230",
+            "disambiguationData": {
+                "validity": "VALID"
+            },
+            "snomedConceptId": "271807003",
+            "ccsCode": "200",
+            "symptomDiseaseNormalizedName": "eruption of skin"
+        }
+    ],
+    "concepts": [
+        {
+            "cui": "C0015230",
+            "preferredName": "Exanthema",
+            "semanticType": "sosy",
+            "source": "umls",
+            "sourceVersion": "2020AA",
+            "disambiguationData": {
+                "validity": "NO_DECISION"
+            },
+            "type": "umls.SignOrSymptom",
+            "begin": 0,
+            "end": 4,
+            "coveredText": "RASH",
+            "negated": false,
+            "hypothetical": false,
+            "insightModelData": {
+                "diagnosis": {
+                    "usage": {
+                        "explicitScore": 0.938,
+                        "patientReportedScore": 0.001,
+                        "discussedScore": 0.061
+                    },
+                    "suspectedScore": 0.017,
+                    "symptomScore": 0.976,
+                    "traumaScore": 0,
+                    "familyHistoryScore": 0
+                }
+            },
+            "uid": 2,
+            "icd9Code": "782.1",
+            "loincId": "LA7469-5,LP30547-1,LA29194-0,MTHU015064,MTHU020933",
+            "icd10Code": "R21",
+            "nciCode": "C39594,C111884",
+            "snomedConceptId": "271807003",
+            "meshId": "M0007993",
+            "vocabs": "MTH,LNC,NCI_NICHD,MSH,CST,HPO,OMIM,COSTAR,CHV,LCH,NCI_FDA,MEDLINEPLUS,LCH_NW,NCI,AOD,ICD9CM,SNOMEDCT_US,MTHICD9"
+        },
+        {
+            "cui": "C0302295",
+            "preferredName": "Eruptions",
+            "semanticType": "patf",
+            "source": "umls",
+            "sourceVersion": "2020AA",
+            "disambiguationData": {
+                "validity": "NO_DECISION"
+            },
+            "type": "umls.PathologicFunction",
+            "begin": 0,
+            "end": 4,
+            "coveredText": "RASH",
+            "negated": false,
+            "hypothetical": false,
+            "uid": 5,
+            "snomedConceptId": "1806006",
+            "vocabs": "MTH,CHV,SNOMEDCT_US"
+        },
+        {
+            "cui": "C0015230",
+            "preferredName": "Exanthema",
+            "source": "IBM Clinical Insights - Derived Concepts v1.0",
+            "disambiguationData": {
+                "validity": "VALID",
+                "comment": "marked VALID by clinical insight models."
+            },
+            "type": "ICDiagnosis",
+            "begin": 0,
+            "end": 4,
+            "coveredText": "RASH",
+            "negated": false,
+            "hypothetical": false,
+            "insightModelData": {
+                "diagnosis": {
+                    "usage": {
+                        "explicitScore": 0.938,
+                        "patientReportedScore": 0.001,
+                        "discussedScore": 0.061
+                    },
+                    "suspectedScore": 0.017,
+                    "symptomScore": 0.976,
+                    "traumaScore": 0,
+                    "familyHistoryScore": 0
+                }
+            },
+            "derivedFrom": [
+                {
+                    "uid": 2
+                }
+            ],
+            "uid": 4,
+            "icd9Code": "782.1",
+            "loincId": "LA7469-5,LP30547-1,LA29194-0,MTHU015064,MTHU020933",
+            "icd10Code": "R21",
+            "nciCode": "C39594,C111884",
+            "ruleId": "3cf38e29-77f0-47b3-9950-4a0292f64c93",
+            "snomedConceptId": "271807003",
+            "meshId": "M0007993"
+        }
+    ],
+    "attributeValues": [
+        {
+            "name": "CDP-Condition",
+            "preferredName": "Exanthema",
+            "values": [
+                {
+                    "value": "Exanthema"
+                }
+            ],
+            "source": "WHPA CDP Attributes",
+            "concept": {
+                "uid": 4
+            },
+            "disambiguationData": {
+                "validity": "VALID",
+                "comment": "marked VALID by clinical insight models."
+            },
+            "begin": 0,
+            "end": 4,
+            "coveredText": "RASH",
+            "negated": false,
+            "hypothetical": false,
+            "insightModelData": {
+                "diagnosis": {
+                    "usage": {
+                        "explicitScore": 0.938,
+                        "patientReportedScore": 0.001,
+                        "discussedScore": 0.061
+                    },
+                    "suspectedScore": 0.017,
+                    "symptomScore": 0.976,
+                    "traumaScore": 0,
+                    "familyHistoryScore": 0
+                }
+            },
+            "icd9Code": "782.1",
+            "loincId": "LA7469-5,LP30547-1,LA29194-0,MTHU015064,MTHU020933",
+            "icd10Code": "R21",
+            "nciCode": "C39594,C111884",
+            "snomedConceptId": "271807003",
+            "meshId": "M0007993"
+        },
+        {
+            "name": "CDP-Allergy",
+            "preferredName": "Exanthema",
+            "values": [
+                {
+                    "value": "Exanthema"
+                }
+            ],
+            "source": "WHPA CDP Attributes",
+            "concept": {
+                "uid": 2
+            },
+            "disambiguationData": {
+                "validity": "NO_DECISION"
+            },
+            "begin": 0,
+            "end": 4,
+            "coveredText": "RASH",
+            "negated": false,
+            "hypothetical": false,
+            "insightModelData": {
+                "diagnosis": {
+                    "usage": {
+                        "explicitScore": 0.938,
+                        "patientReportedScore": 0.001,
+                        "discussedScore": 0.061
+                    },
+                    "suspectedScore": 0.017,
+                    "symptomScore": 0.976,
+                    "traumaScore": 0,
+                    "familyHistoryScore": 0
+                }
+            },
+            "icd9Code": "782.1",
+            "loincId": "LA7469-5,LP30547-1,LA29194-0,MTHU015064,MTHU020933",
+            "icd10Code": "R21",
+            "nciCode": "C39594,C111884",
+            "snomedConceptId": "271807003",
+            "meshId": "M0007993"
+        },
+        {
+            "name": "CDP-Allergy",
+            "preferredName": "Eruptions",
+            "values": [
+                {
+                    "value": "Eruptions"
+                }
+            ],
+            "source": "WHPA CDP Attributes",
+            "concept": {
+                "uid": 5
+            },
+            "disambiguationData": {
+                "validity": "NO_DECISION"
+            },
+            "begin": 0,
+            "end": 4,
+            "coveredText": "RASH",
+            "negated": false,
+            "hypothetical": false,
+            "snomedConceptId": "1806006"
+        },
+        {
+            "name": "Diagnosis",
+            "preferredName": "eruption of skin",
+            "values": [
+                {
+                    "value": "eruption of skin"
+                }
+            ],
+            "source": "IBM Clinical Insights - Attributes v1.0",
+            "concept": {
+                "uid": 6
+            },
+            "disambiguationData": {
+                "validity": "VALID"
+            },
+            "begin": 0,
+            "end": 4,
+            "coveredText": "RASH",
+            "negated": false,
+            "hypothetical": false,
+            "insightModelData": {
+                "diagnosis": {
+                    "usage": {
+                        "explicitScore": 0.938,
+                        "patientReportedScore": 0.001,
+                        "discussedScore": 0.061
+                    },
+                    "suspectedScore": 0.017,
+                    "symptomScore": 0.976,
+                    "traumaScore": 0,
+                    "familyHistoryScore": 0
+                }
+            },
+            "icd9Code": "782.1",
+            "icd10Code": "R21",
+            "snomedConceptId": "271807003",
+            "ccsCode": "200"
+        }
+    ]
+}

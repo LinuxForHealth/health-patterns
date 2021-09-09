@@ -6,7 +6,6 @@ plugins {
 }
 
 group = ''
-version = ""
 description = """NLP Insights"""
 
 sonarqube {
@@ -37,43 +36,52 @@ python {
 
 task textAnalyticsPySetupBuild(type: PythonTask) {
     module = 'pip'
-    extraArgs = ['install', 'pytest==4.6.3', 'pytest-cov==2.7.1', 'twine==1.14.0', 'flake8==3.7.8', 'wheel==0.36.2']
+    extraArgs = ['install', 'pytest==4.6.3', 'pytest-cov==2.7.1', 'twine==1.14.0', 'deepdiff==5.5.0', 'flake8==3.7.8', 'types-requests==2.25.9', 'wheel==0.36.2']
 }
 
 task textAnalyticsPyGenerateReqs {
+    outputs.file(layout.buildDirectory.file('pinned.txt')).withPropertyName("pinned")
+    
     doLast {
-        def newFile = new File("${project.projectDir}/pinned.txt")
-        newFile.delete()
-        newFile.createNewFile()
+        def pinned_text = new StringBuilder()
         python.modules.each { module ->
-            newFile.append(module.replace(":", "==") + "\n")
+            pinned_text.append(module.replace(":", "==") + "\n")
         }
+        outputs.files.singleFile.text = pinned_text.toString()
+        println("pinned.txt:\n" + outputs.files.singleFile.text.toString())
     }
 }
 
 task textAnalyticsPySetupBuildProperties {
+    inputs.property 'projectName', project.name
+    inputs.property 'projectVersion', project.version
+    inputs.property 'pySrcDir', pySrcDir
+    outputs.file(layout.buildDirectory.file('setup.properties')).withPropertyName("setup")
+    
     doLast {
-        def newFile = new File("${project.projectDir}/setup.properties")
-        newFile.delete()
-        newFile.createNewFile()
-        newFile.append("[default]")
-        newFile.append("\nproject_name=${project.name}")
-        newFile.append("\nproject_version=${project.version}")
-        newFile.append("\nproject_srcDir=${pySrcDir}")
+        outputs.files.singleFile.text = """[default]
+                                        |project_name=${inputs.properties['projectName']}
+                                        |project_version=${inputs.properties['projectVersion']}
+                                        |project_srcDir=${inputs.properties['pySrcDir']}
+        """.stripMargin()
+        println("setup.properties:\n" + outputs.files.singleFile.text.toString())
     }
 }
 
 task textAnalyticsPyBuildWheel(type: PythonTask) {
-    command = 'setup.py'
+    workDir = "${project.buildDir}"
+    command = "setup.py"
     extraArgs = ['bdist_wheel', '-d', pyDistDir, '-k']
 }
 
 task textAnalyticsPyTestPrep(type: PythonTask) {
-    command = 'setup.py'
+    workDir = "${project.buildDir}"
+    command = '${buildDir}/setup.py'
     extraArgs = ['develop']
 }
 
 task textAnalyticsPyCoverage(type: PythonTask) {
+    workDir = "${project.buildDir}"
     module = 'pytest'
     extraArgs = [pyTestDir, '--cov', pySrcDir, '--cov-report=xml:'+pyXmlCoveragePath, '--cov-report=html:'+pyHtmlCoveragePath, '--cov-report=term']
 }
@@ -96,13 +104,42 @@ task textAnalyticsPyPublishArtifacts(type: PythonTask) {
 }
 
 task textAnalyticsPyFlake8(type: PythonTask) {
+    workDir = "${project.buildDir}"
     module = 'flake8'
     extraArgs = [pySrcDir]
 }
 
+
+task copySource(type: Copy) {
+  from("src/main/py") {
+    include "**/*.py"
+  }
+  into "${project.buildDir}/src/main/py"
+}
+
+task copyRootPy(type: Copy) {
+  from('.') {
+    include '*.py'
+  }
+  into "${project.buildDir}"
+}
+
+task build {
+  dependsOn project.tasks.copySource
+  dependsOn project.tasks.copyRootPy
+}
+
 docker {
-     copySpec.from(".").into(".").include("pinned.txt", "setup.py", "setup.properties", "text_analytics/**")
+     dependsOn project.tasks.build
+
+     copySpec.from("${project.buildDir}").into(".").include(
+     "setup.py", 
+     textAnalyticsPySetupBuildProperties.outputs.files.singleFile.name,
+     textAnalyticsPyGenerateReqs.outputs.files.singleFile.name,
+     "src/main/py/text_analytics/**")
+     
      name dockerUser + "/nlp-insights:" + version
+     
      dockerfile file('Dockerfile')
 }
 
@@ -111,16 +148,16 @@ dockerPush {}
 dockerRun {
     name 'nlp-insights'
     image dockerUser + '/nlp-insights:' + version
-    ports '5000:5000'
+    ports "${dockerLocalPort}:5000"
 }
 
-task build {}
 task test {}
 task coverage {}
 task uploadArchives {}
 task flake8 {}
 task clean {}
 
+dockerPrepare.dependsOn project.tasks.build
 project.tasks.textAnalyticsPyTestPrep.dependsOn project.tasks.textAnalyticsPySetupBuildProperties
 project.tasks.textAnalyticsPyCoverage.dependsOn project.tasks.textAnalyticsPySetupBuild
 project.tasks.textAnalyticsPyCoverage.dependsOn project.tasks.textAnalyticsPyTestPrep

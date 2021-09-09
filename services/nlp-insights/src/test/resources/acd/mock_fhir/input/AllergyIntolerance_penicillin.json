@@ -1,0 +1,45 @@
+{
+     "id": "e43def8f-1c88-47e8-b384-00c57549bf62",
+     "category": [
+        "medication"
+    ],
+    "clinicalStatus": {
+        "coding": [
+            {
+                "code": "active",
+                "display": "Active",
+                "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"
+            }
+        ]
+    },
+    "code": {
+        "text": "PENICILLIN"
+    },
+    "criticality": "low",
+    "patient": {
+        "reference": "Patient/e82f0599-1e9f-4c25-bjcf-a87b70727f8a"
+    },
+    "reaction": [
+        {
+            "manifestation": [
+                {
+                    "text": "PRODUCES HIVES"
+                },
+                {
+                    "text": "RASH"
+                }
+            ]
+        }
+    ],
+    "verificationStatus": {
+        "coding": [
+            {     
+                "code": "confirmed",
+                "display": "Confirmed",
+                "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"
+            }
+        ]
+    },
+    "resourceType": "AllergyIntolerance"
+
+}

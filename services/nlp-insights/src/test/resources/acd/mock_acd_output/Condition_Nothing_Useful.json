@@ -1,0 +1,52 @@
+{
+    "spellCorrectedText": [
+        {
+            "correctedText": "Patient came in looking for a friend, he said he was lonely."
+        }
+    ],
+    "concepts": [
+        {
+            "cui": "C0023974",
+            "preferredName": "Loneliness",
+            "semanticType": "fndg",
+            "source": "umls",
+            "sourceVersion": "2020AA",
+            "disambiguationData": {
+                "validity": "NO_DECISION"
+            },
+            "type": "umls.Finding",
+            "begin": 53,
+            "end": 59,
+            "coveredText": "lonely",
+            "negated": false,
+            "icd9Code": "V62.89",
+            "loincId": "LA16670-4",
+            "icd10Code": "R45.8,R45.89",
+            "nciCode": "C34785",
+            "snomedConceptId": "267076002",
+            "meshId": "M0012682",
+            "vocabs": "LCH,MTH,CHV,LNC,MSH,LCH_NW,NCI,AOD,SNOMEDCT_US"
+        }
+    ],
+    "SymptomDiseaseInd": [
+        {
+            "type": "aci.SymptomDiseaseInd",
+            "begin": 53,
+            "end": 59,
+            "coveredText": "lonely",
+            "negated": false,
+            "icd9Code": "V62.89",
+            "icd10Code": "R45.8,R45.89",
+            "modality": "positive",
+            "symptomDiseaseSurfaceForm": "lonely",
+            "cui": "C0023974",
+            "disambiguationData": {
+                "comment": "Clinical Insights: This concept was invalidated by the diagnosis model.",
+                "validity": "INVALID"
+            },
+            "snomedConceptId": "267076002",
+            "ccsCode": "670",
+            "symptomDiseaseNormalizedName": "feeling lonely"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "spellCorrectedText": [
+        {
+            "correctedText": "abcd"
+        }
+    ],
+    "spellingCorrections": [
+        {
+            "begin": 0,
+            "end": 4,
+            "coveredText": "abcd",
+            "suggestions": [
+                {
+                    "applied": false,
+                    "confidence": 0.75,
+                    "text": "abmd"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,200 @@
+{
+  "spellCorrectedText": [
+    {
+      "correctedText": "Patient has type 1 diabetes"
+    }
+  ],
+  "SymptomDiseaseInd": [
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0.004,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 5,
+      "icd9Code": "250.01",
+      "icd10Code": "E10.9",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "type 1 diabetes",
+      "cui": "C0011854",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "snomedConceptId": "46635009",
+      "ccsCode": "49",
+      "symptomDiseaseNormalizedName": "type 1 diabetes",
+      "hccCode": "19"
+    }
+  ],
+  "concepts": [
+    {
+      "cui": "C0011854",
+      "preferredName": "Diabetes Mellitus, Insulin-Dependent",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "type": "umls.DiseaseOrSyndrome",
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0.004,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "uid": 2,
+      "loincId": "LP36797-6,LA10551-2,MTHU020217",
+      "icd10Code": "E10.9",
+      "nciCode": "C2986",
+      "snomedConceptId": "46635009",
+      "meshId": "M0006152",
+      "vocabs": "MTH,LNC,NCI_NICHD,CSP,MSH,HPO,OMIM,COSTAR,CHV,CCSR_10,MEDLINEPLUS,NCI,SNOMEDCT_US,DXP"
+    },
+    {
+      "cui": "C0011854",
+      "preferredName": "Diabetes Mellitus, Insulin-Dependent",
+      "source": "IBM Clinical Insights - Derived Concepts v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "type": "ICDiagnosis",
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0.004,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ],
+      "uid": 4,
+      "loincId": "LP36797-6,LA10551-2,MTHU020217",
+      "icd10Code": "E10.9",
+      "nciCode": "C2986",
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "snomedConceptId": "46635009",
+      "meshId": "M0006152"
+    }
+  ],
+  "attributeValues": [
+    {
+      "name": "CDP-Condition",
+      "preferredName": "Diabetes Mellitus, Insulin-Dependent",
+      "values": [
+        {
+          "value": "Diabetes Mellitus, Insulin-Dependent"
+        }
+      ],
+      "source": "WHPA CDP Attributes",
+      "concept": {
+        "uid": 4
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0.004,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "loincId": "LP36797-6,LA10551-2,MTHU020217",
+      "icd10Code": "E10.9",
+      "nciCode": "C2986",
+      "snomedConceptId": "46635009",
+      "meshId": "M0006152"
+    },
+    {
+      "name": "Diagnosis",
+      "preferredName": "type 1 diabetes",
+      "values": [
+        {
+          "value": "type 1 diabetes"
+        }
+      ],
+      "source": "IBM Clinical Insights - Attributes v1.0",
+      "concept": {
+        "uid": 5
+      },
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "begin": 12,
+      "end": 27,
+      "coveredText": "type 1 diabetes",
+      "negated": false,
+      "hypothetical": false,
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.999,
+            "patientReportedScore": 0,
+            "discussedScore": 0.001
+          },
+          "suspectedScore": 0.004,
+          "symptomScore": 0,
+          "traumaScore": 0,
+          "familyHistoryScore": 0
+        }
+      },
+      "icd9Code": "250.01",
+      "icd10Code": "E10.9",
+      "snomedConceptId": "46635009",
+      "ccsCode": "49",
+      "hccCode": "19"
+    }
+  ]
+}
