@@ -26,3 +26,12 @@ spec:
           - name: http
             containerPort: {{ .Values.service.port }}
             protocol: TCP
+        env:
+          - name: QUICKUMLS_ENDPOINT
+            value: {{ .Values.nlpservice.quickumls.endpoint }}
+          - name: ACD_ENDPOINT
+            value: {{ .Values.nlpservice.acd.endpoint }}
+          - name: ACD_API_KEY
+            value: {{ .Values.nlpservice.acd.apikey }}
+          - name: ACD_FLOW
+            value: {{ .Values.nlpservice.acd.flow }}

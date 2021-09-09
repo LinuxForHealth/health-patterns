@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.dosage import Dosage, DosageDoseAndRate
@@ -11,7 +12,6 @@ from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
 
 from text_analytics.abstract_nlp_service import NLPService
-from text_analytics.acd.config import get_config
 from text_analytics.enhance import *
 from text_analytics.insights import insight_constants
 from text_analytics.insights.add_insights_medication import create_insight
@@ -33,10 +33,9 @@ class ACDService(NLPService):
     version = "2021-01-01"
 
     def __init__(self, jsonString):
-        _config = get_config()
-        self.acd_key = _config['ACD_KEY']
-        self.acd_url = _config['ACD_URL']
-        self.acd_flow = _config['ACD_FLOW']
+        self.acd_key = os.getenv("ACD_API_KEY")
+        self.acd_url = os.getenv("ACD_ENDPOINT")
+        self.acd_flow = os.getenv("ACD_FLOW")
         self.jsonString = jsonString
         config_dict = json.loads(jsonString)
         if config_dict.get('version') is not None:

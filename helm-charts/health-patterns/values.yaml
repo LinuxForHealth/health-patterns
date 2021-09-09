@@ -59,6 +59,14 @@ nlp-insights:
     class: *ingressClass
     hostname: *hostname
 
+  nlpservice:
+    quickumls:
+      endpoint:
+    acd:
+      endpoint:
+      apikey:
+      flow:
+        
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # ------------------------------------------------------------------------------

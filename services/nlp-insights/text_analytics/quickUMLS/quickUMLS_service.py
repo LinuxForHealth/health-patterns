@@ -1,10 +1,10 @@
 import json
 import logging
 import requests
+import os
 
 from text_analytics.abstract_nlp_service import NLPService
 from text_analytics.enhance import *
-from text_analytics.quickUMLS.config import get_config
 from text_analytics.quickUMLS.semtype_lookup import lookup
 from text_analytics.quickUMLS.semtype_lookup import get_semantic_type_list
 
@@ -21,8 +21,7 @@ class QuickUMLSService(NLPService):
     PROCESS_TYPE_STRUCTURED = "QuickUMLS Structured"
 
     def __init__(self, jsonString):
-        _config = get_config()
-        self.quickUMLS_url = _config['QUICKUMLS_URL']
+        self.quickUMLS_url = os.getenv("QUICKUMLS_ENDPOINT")
         self.jsonString = jsonString
 
     def process(self, text):
