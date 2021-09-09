@@ -19,3 +19,11 @@ ingress:
   enabled: false
   class: public-iks-k8s-nginx
   hostname:
+
+nlpservice:
+  quickumls:
+    endpoint:
+  acd:
+    endpoint:
+    apikey:
+    flow:
