@@ -75,17 +75,10 @@ pwd
 sed -i -e "s/\&hostname replace-me/\&hostname $TEST_NAMESPACE.$INGRESS_SUBDOMAIN/g" values.yaml
 cat values.yaml | grep $TEST_NAMESPACE.$INGRESS_SUBDOMAIN
  
-echo "********************************************************************" 
-echo "* Copy ACD and quickUMLS config files for the NLP-Insights Service *" 
-echo "********************************************************************" 
-# Setup config files for the NLP-Insights service for ACD
-cp -f /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/src/test/resources/configs/acd_config.ini  /workspace/$TEST_NAMESPACE/health-patterns/services/nlp-insights/text_analytics/acd/acd_config.ini
-# Setup config files for the NLP-Insights service for quickUMLS
-cp -f /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/src/test/resources/configs/quickumls_config.ini /workspace/$TEST_NAMESPACE/health-patterns/services/nlp-insights/text_analytics/quickUMLS/quickumls_config.ini
-  
+
 # deploy 
 echo "Deploy via helm3  using Ingress"
-helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --wait --timeout 6m0s
+helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=9GSFDhHUrn03zCJZILz_ZmG7YqcjsXCOpppaqiejQqjd --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout 6m0s
 
 # setup all the env vars for input to maven
 # FHIR Using INGRESS
