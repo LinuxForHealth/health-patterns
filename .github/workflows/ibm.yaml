@@ -10,6 +10,7 @@ on:
 env:
   GITHUB_SHA: ${{ github.sha }}
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
+  ACD_API_KEY: ${{ secrets.ACD_API_KEY }}
   IBM_CLOUD_REGION: us-east
   CLUSTER_NAMESPACE: github
   FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir
@@ -52,7 +53,7 @@ jobs:
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
         helm dependency update helm-charts/health-patterns
         sed -i -e "s/\&hostname replace-me/\&hostname github.wh-health-patterns.dev.watson-health.ibm.com/g" helm-charts/health-patterns/values.yaml
-        helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=9GSFDhHUrn03zCJZILz_ZmG7YqcjsXCOpppaqiejQqjd --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout 6m0s
+        helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_API_KEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout 6m0s
         kubectl get all
 
     # Build Enrichment Tests 
