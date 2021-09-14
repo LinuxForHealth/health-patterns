@@ -15,6 +15,9 @@ env:
   CLUSTER_NAMESPACE: github
   FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir
   FHIR_DEID_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
+  NIFI_IP: github.wh-health-patterns.dev.watson-health.ibm.com/
+  DEID_IP: github.wh-health-patterns.dev.watson-health.ibm.com/deid
+  EXP_KAFKA_IP: github.wh-health-patterns.dev.watson-health.ibm.com/expose-kafka
   ASCVD_FROM_FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
   TERM_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
   DEID_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
@@ -57,7 +60,7 @@ jobs:
         kubectl get all
 
     # Build Enrichment Tests 
-    - name: Build Tests
+    - name: Build Enrichment Tests
       run: |
          cd clinical-enrichment
          echo "*************************************" 
@@ -70,7 +73,7 @@ jobs:
          cat src/test/resources/enrich-flow.properties
          
     # Execute Enrichment Tests 
-    - name: Execute Tests
+    - name: Execute Enrichment Tests
       run: |
          echo "*************************************"
          echo "* Waiting for 1 minute              *"
