@@ -25,17 +25,6 @@ import categories.BasicIngestionInit;
 
 public class Ingestion_Initialize {
 
-//	 @Test
-//	 @Category({BasicClinicalIngestionInit.class})
-//	 @Scenario("integration/flow/tests/create_Kafka_Topic.json")
-	 
-	 /* This creates a kafka topic and posts a blank message to it. */
-	 /* This is done to get the initial create/post overhead done   */
-	 /* before the real testing starts                              */
-	 
-//	    public void create_Kafka_Topic() throws Exception {
-//	    }
-
 	 @Test
 	 @Category({BasicIngestionInit.class})
 	 @Scenario("scenarios/ingest_HealthCheck.json")
