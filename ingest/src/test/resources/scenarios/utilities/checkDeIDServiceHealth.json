@@ -1,0 +1,12 @@
+[         
+        {
+            "name": "DeIDServiceHealthCheck",
+            "url": "${deid_service}/api/v1/health",
+            "method": "GET",
+            "request": { },
+            "verify": {
+                "status": 200,
+                "body.status": "UP"
+            }
+        }
+   ]

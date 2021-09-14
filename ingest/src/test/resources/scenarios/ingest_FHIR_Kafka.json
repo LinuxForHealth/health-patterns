@@ -1,0 +1,94 @@
+{
+    "scenarioName": "********ingest_FHIR_Kafka********",
+    "ignoreStepFailures": true,
+    "steps": [
+       {
+            "name": "getNiFiCanvassRoot",
+            "url": "${nifi_server}/nifi-api/flow/process-groups/root",
+            "method": "GET",
+               "request": {  },
+            "verify": {
+                "status": 200,
+                "body.processGroupFlow.flow.processGroups[0].component.name":"Clinical Ingestion"
+            }           
+        },        
+        {
+            "name": "startClinicalIngestionProcessGroup",
+            "url": "${nifi_server}/nifi-api/flow/process-groups/${$.getNiFiCanvassRoot.response.body.processGroupFlow.flow.processGroups[0].component.id}",
+            "method": "PUT",
+               "request": { 
+               "headers" : { "Content-Type": "application/json" },
+               "body": {
+                 "id":"${$.getNiFiCanvassRoot.response.body.processGroupFlow.flow.processGroups[0].component.id}" ,
+                 "state":"RUNNING"  }},
+            "verify": {
+                "status": 200
+            }        
+        },
+        {
+			"name": "ingestPatientKafka",
+			"url": "kafka-topic:${kafka.ingestion.topic}",
+			"operation": "produce",
+			"request": {
+			         "recordType":"JSON",
+                     "file":"Patients/singleline/Luis_Miguel102_Gurule738.json" 
+		    },
+			"assertions": {
+				"status": "Ok",
+				"recordMetadata": {
+					"topicPartition": {
+						"topic": "${kafka.ingestion.topic}"
+					}
+				}
+			}
+		},
+               
+        {
+            "name": "waitForIngestion",
+            "url": "integration.utils.Delay",
+            "method": "seconds",
+            "request": 15,
+            "verify": {
+            }
+        },
+        
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${phi_fhir_server}/fhir-server/api/v4/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                }
+            }
+        },   
+
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${phi_fhir_server}/fhir-server/api/v4/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }         
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/singleline/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738"
+        ]
+    }
+}

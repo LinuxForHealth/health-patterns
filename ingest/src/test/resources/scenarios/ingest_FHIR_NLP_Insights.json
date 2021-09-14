@@ -1,0 +1,88 @@
+{
+    "scenarioName": "********ingest_FHIR_NLP_Insights********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "ingestPatient",
+            "url":  "${expose_kafka}?topic=${kafka.ingestion.topic}",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json", 
+                               "AddNLPInsights": "${3}",
+                               "DeidentifyData": "false" },
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+               
+        {
+            "name": "waitForIngestion",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 15,
+            "verify": {
+            }
+        },
+        
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${phi_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                }
+            }
+        },
+        {
+            "name": "getPatientImmunization",
+            "url": "${phi_fhir_server}/Immunization",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200 
+                }
+        },  
+        {
+            "name": "verifyAnalyticType",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getPatientImmunization.response.body}",
+                 "string2": "${4}"
+            },
+            "verify": { "result": "${3}" }
+        },  
+
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${phi_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }          
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/patientbundleNLP.json},Alethea978,Crooks007,true,QuickUMLS Structured",
+            "${JSON.FILE:Patients/patientbundleNLP.json},Alethea978,Crooks007,false,QuickUMLS Structured"       
+         ]
+    }
+}

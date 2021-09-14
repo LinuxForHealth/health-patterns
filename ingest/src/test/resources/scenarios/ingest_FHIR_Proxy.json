@@ -1,0 +1,27 @@
+{
+    "scenarioName": "ingest_FHIR_Proxy",
+    "ignoreStepFailures": true,
+    "steps": [ 
+
+        {
+            "name": "checkPHIFHIRProxy",
+           "url": "${phi_fhir_proxy_server}/$healthcheck",
+            "method": "GET",
+            "request": { },
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "checkDEIDFHIRProxy",
+           "url": "${deid_fhir_proxy_server}/$healthcheck",
+            "method": "GET",
+            "request": { },
+            "verify": {
+                "status": 200
+                }
+        }       
+          
+    ]
+ 
+}
