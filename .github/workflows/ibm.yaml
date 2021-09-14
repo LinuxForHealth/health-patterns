@@ -111,7 +111,7 @@ jobs:
          echo "*************************************" 
          echo "* Execute the testcases             *"
          echo "*************************************"
-         mvn -e -DskipTests=false -Dtest=IngestionInitTests test
+         mvn -e -DskipTests=false -Dtest=BasicIngestionInitTests test
          mvn -e -DskipTests=false -Dtest=BasicIngestionTests test
 
     # Uninstall Chart
