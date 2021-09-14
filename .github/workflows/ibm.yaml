@@ -11,7 +11,7 @@ env:
   GITHUB_SHA: ${{ github.sha }}
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
   ACD_API_KEY: ${{ secrets.ACD_API_KEY }}
-  DEFAULT_PASSWORD: i${{ secrets.DEFAULT_PASSWORD }}
+  DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}
   IBM_CLOUD_REGION: us-east
   CLUSTER_NAMESPACE: github
   FHIR_IP: $CLUSTER_NAMESPACE.wh-health-patterns.dev.watson-health.ibm.com/fhir
@@ -65,7 +65,7 @@ jobs:
          echo "*************************************" 
          echo "* Build the testcases               *"
          echo "*************************************"
-         mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.deid.prep=$DEID_PREP_IP -Dport.deid.prep=$DEID_PREP_PORT -Dip.term.prep=$TERM_PREP_IP -Dport.term.prep=$TERM_PREP_PORT -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dport.ascvd.from.fhir=$ASCVD_FROM_FHIR_PORT -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dport.nlp.insights=$NLP_INSIGHTS_PORT  -Dpw=$DEFAULT_PASSWORD
+         mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.deid.prep=$DEID_PREP_IP -Dport.deid.prep=$DEID_PREP_PORT -Dip.term.prep=$TERM_PREP_IP -Dport.term.prep=$TERM_PREP_PORT -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dport.ascvd.from.fhir=$ASCVD_FROM_FHIR_PORT -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dport.nlp.insights=$NLP_INSIGHTS_PORT -Dpw=$DEFAULT_PASSWORD
          echo "*************************************" 
          echo "* Properties File:                  *"
          echo "*************************************"
