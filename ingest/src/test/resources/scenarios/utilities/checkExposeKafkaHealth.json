@@ -1,0 +1,11 @@
+[         
+        {
+            "name": "ExposeKafkaHealthCheck",
+            "url": "${expose_kafka}/healthcheck",
+            "method": "GET",
+            "request": { },
+            "verify": {
+                "status": 200
+            }
+        }
+   ]

@@ -1,0 +1,22 @@
+{
+    "scenarioName": "********ingest_HealthCheck********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "id": "checkPriFHIRHealth",
+            "stepFiles": "${JSON.FILE:scenarios/utilities/checkPriFHIRHealth.json}"
+        },
+        {
+            "id": "checkDeIDFHIRHealth",
+            "stepFiles": "${JSON.FILE:scenarios/utilities/checkDeIDFHIRHealth.json}"
+        },
+        {
+            "id": "checkExposeKafkaHealth",
+            "stepFiles": "${JSON.FILE:scenarios/utilities/checkExposeKafkaHealth.json}"
+        },
+                {
+            "id": "checkNIFIHealth",
+            "stepFiles": "${JSON.FILE:scenarios/utilities/checkNIFIHealth.json}"
+        }        
+    ]
+}

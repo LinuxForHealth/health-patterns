@@ -1,0 +1,72 @@
+					{					
+							
+							"resourceType": "Condition",
+							"meta": {
+								"profile": [
+									"http://ibm.com/fhir/pdm/StructureDefinition/oncology-condition-primary-prostate-cancer-diagnosis-profile|1.0.0"
+								]
+							},
+							"recordedDate": "2014-04-06",
+							"code": {
+								"coding": [
+									{
+										"system": "http://snomed.info/sct",
+										"code": "126906006",
+										"display": "CancerType : Prostate Cancer"
+									}
+								]
+							},
+							"stage": [
+								{
+									"summary": {
+										"coding": [
+											{
+												"system": "http://loinc.org",
+												"code": "LA3660-3",
+												"display": "Stage : stage IIA"
+											}
+										]
+									}
+								}
+							],
+							"bodySite": [
+								{
+									"coding": [
+										{
+											"system": "http://snomed.info/sct",
+											"code": "41216001",
+											"display": "BodySite : Prostate structure (body structure)"
+										}
+									]
+								}
+							],
+							"category": [
+								{
+									"coding": [
+										{
+											"system": "http://terminology.hl7.org/CodeSystem/condition-category",
+											"code": "encounter-diagnosis"
+										}
+									]
+								}
+							],
+							"clinicalStatus": {
+								"coding": [
+									{
+										"system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+										"code": "active"
+									}
+								]
+							},
+							"verificationStatus": {
+								"coding": [
+									{
+										"system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+										"code": "differential"
+									}
+								]
+							},
+							"onsetDateTime": "2017-12-01T20:00:00.000Z"
+						
+					} }
+

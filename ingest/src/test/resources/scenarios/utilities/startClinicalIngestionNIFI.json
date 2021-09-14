@@ -1,0 +1,26 @@
+ [ 
+           {
+            "name": "getNiFiCanvassRoot",
+            "url": "${nifi_server}/nifi-api/flow/process-groups/root",
+            "method": "GET",
+               "request": {  },
+            "verify": {
+                "status": 200,
+                "body.processGroupFlow.flow.processGroups[0].component.name":"Clinical Ingestion"
+            }           
+        },        
+        {
+            "name": "startClinicalIngestionProcessGroup",
+            "url": "${nifi_server}/nifi-api/flow/process-groups/${$.getNiFiCanvassRoot.response.body.processGroupFlow.flow.processGroups[0].component.id}",
+            "method": "PUT",
+               "request": { 
+               "headers" : { "Content-Type": "application/json" },
+               "body": {
+                 "id":"${$.getNiFiCanvassRoot.response.body.processGroupFlow.flow.processGroups[0].component.id}" ,
+                 "state":"RUNNING"  }},
+            "verify": {
+                "status": 200,
+                "body.state": "RUNNING"
+            }        
+        }
+  ]

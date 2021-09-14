@@ -1,0 +1,103 @@
+{
+    "scenarioName": "********ingest_FHIR_ASCVD********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+         {
+            "name": "ingestPatientforASCVD",
+            "url": "${expose_kafka}?topic=${kafka.ingestion.topic}",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json",
+                "DeidentifyData": "false",
+                "RunASCVD" : "true"},
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+               
+        {
+            "name": "waitForIngestion",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 30,
+            "verify": {
+            }
+        },
+        
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${phi_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                }
+            }
+        },   
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${phi_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        },
+        {
+            "name": "getPatientRiskAssessment",
+            "url": "${phi_fhir_server}/RiskAssessment",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1,
+                    "entry[0].resource.prediction[0].probabilityDecimal" : "${3}"
+                }
+            }
+           
+        },
+        {
+            "name": "deletePatientRiskAssessment",
+            "url": "${phi_fhir_server}/RiskAssessment/${$.getPatientRiskAssessment.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.getPatientRiskAssessment.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+           
+        }            
+     ],
+     "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/ascvd_bundle.json},Adam631,Pouros728,$GT.0",
+            "${JSON.FILE:Patients/ascvd_bundle_old_ascvd.json},Adam631,Pouros728,$GT.0",
+            "${JSON.FILE:Patients/ascvd_bundle_old_ascvd_no_birthdate.json},Adam631,Pouros728,$EQ.0"
+        ]
+    }
+}

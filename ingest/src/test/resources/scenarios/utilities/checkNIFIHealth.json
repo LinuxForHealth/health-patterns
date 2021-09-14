@@ -1,0 +1,11 @@
+ [ 
+       {
+            "name": "getNiFiCanvassRoot",
+            "url": "${nifi_server}/nifi-api/flow/process-groups/root",
+            "method": "GET",
+               "request": {  },
+            "verify": {
+                "status": 200
+            }           
+        }
+  ]
