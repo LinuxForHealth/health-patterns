@@ -91,6 +91,28 @@ jobs:
          mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
          mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
       
+    # Build Ingestion Tests 
+    - name: Build Ingestion Tests
+      run: |
+         cd ingest
+         echo "*************************************" 
+         echo "* Build the testcases               *"
+         echo "*************************************"
+         mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.nifi=$NIFI_IP -Dport.nifi=$NIFI_PORT -Dip.nifi.api=$NIFI_API_IP -Dport.nifi.api=$NIFI_API_PORT -Dip.kafka=$KAFKA_IP -Dport.kafka=$KAFKA_PORT -Dip.deid=$DEID_IP -Dport.deid=$DEID_PORT -Dip.expkafka=$EXP_KAFKA_IP -Dport.expkafka=$EXP_KAFKA_PORT -Dpw=$DEFAULT_PASSWORD
+         echo "*************************************" 
+         echo "* Properties File:                  *"
+         echo "*************************************"
+         cat src/test/resources/clinical-ingestion-flow.properties
+         
+    # Execute Ingestion Tests 
+    - name: Execute Ingestion Tests
+      run: |
+         cd ingest
+         echo "*************************************" 
+         echo "* Execute the testcases             *"
+         echo "*************************************"
+         mvn -e -DskipTests=false -Dtest=IngestionInitTests test
+         mvn -e -DskipTests=false -Dtest=BasicIngestionTests test
 
     # Uninstall Chart
     - name: Uninstall Chart
