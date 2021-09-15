@@ -24,11 +24,12 @@ export TEST_NAMESPACE=$CLUSTER_NAMESPACE"-smoke"
 export INGRESS_SUBDOMAIN=wh-health-patterns.dev.watson-health.ibm.com
 #export JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.3 
 
+cnd=$CLUSTER_NAMESPACE
 
-if [$CLUSTER_NAMESPACE -eq "clinical-enrich"]
+if [$cnd -eq "clinical-enrich"]
 then
    export HELM_RELEASE=enrich
-elif [$CLUSTER_NAMESPACE -eq "clinical-ingestion"] 
+elif [$cnd -eq "clinical-ingestion"] 
 then
    export HELM_RELEASE=ingestion
 fi
@@ -69,12 +70,12 @@ pwd
 sed -i -e "s/\&hostname replace-me/\&hostname $TEST_NAMESPACE.$INGRESS_SUBDOMAIN/g" values.yaml
 cat values.yaml | grep $TEST_NAMESPACE.$INGRESS_SUBDOMAIN
 
-if [$CLUSTER_NAMESPACE -eq "clinical-enrich"] 
+if [$cnd -eq "clinical-enrich"] 
 then
    # deploy enrich
    echo "$CLUSTER_NAMESPACE - enrich : Deploy via helm3  using Ingress"
    helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout 6m0s
-elif [$CLUSTER_NAMESPACE -eq "clinical-ingestion"] 
+elif [$cnd -eq "clinical-ingestion"] 
 then
    # deploy ingestion
    echo "$CLUSTER_NAMESPACE - ingestion : Deploy via helm3  using Ingress"
@@ -148,7 +149,7 @@ echo NLP Insights server: $NLP_INSIGHTS_IP$NLP_INSIGHTS_PORT
 echo "*************************************"
 
 # Wait for deployment to be ready
-if [$CLUSTER_NAMESPACE -eq "clinical-enrich"] 
+if [$cnd -eq "clinical-enrich"] 
 then 
    echo "*************************************"
    echo "* Waiting for 2 minutes             *"
@@ -156,7 +157,7 @@ then
    date
    sleep 120  
    date   
-elif [$CLUSTER_NAMESPACE -eq "clinical-ingestion"] 
+elif [$cnd -eq "clinical-ingestion"] 
 then 
    echo "*************************************"
    echo "* Waiting for 5 minutes             *"
@@ -171,7 +172,7 @@ echo "* A Look At Everything              *"
 echo "*************************************"
 kubectl get all
 
-if [$CLUSTER_NAMESPACE -eq "clinical-enrich"] 
+if [$cnd -eq "clinical-enrich"] 
 then 
    echo "****************************************************" 
    echo "* Goto the testcase folder in the repo             *"
@@ -211,7 +212,7 @@ then
    echo "<testsuites>" > /workspace/clinical-enrichment/tests/smoketests.xml
    cat target/surefire-reports/*.xml >> /workspace/clinical-enrichment/tests/smoketests.xml
    echo "</testsuites>" >> /workspace/clinical-enrichment/tests/smoketests.xml
-elif [$CLUSTER_NAMESPACE -eq "clinical-ingestion"] 
+elif [$cnd -eq "clinical-ingestion"] 
 then
    echo "****************************************************" 
    echo "* Goto the testcase folder in the repo             *"
