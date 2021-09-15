@@ -24,6 +24,8 @@ export TEST_NAMESPACE=$CLUSTER_NAMESPACE"-smoke"
 export INGRESS_SUBDOMAIN=wh-health-patterns.dev.watson-health.ibm.com
 #export JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.3 
 
+echo "Cluster Namespace passed in is '"$CLUSTER_NAMESPACE"'"
+
 if [$CLUSTER_NAMESPACE = "clinical-enrich"] 
 then
    export HELM_RELEASE=enrich
