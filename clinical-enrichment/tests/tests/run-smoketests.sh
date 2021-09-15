@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Run the Avlearie Clinical Enrichment Deploy install per documented instructions
 #
