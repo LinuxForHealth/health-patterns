@@ -179,7 +179,7 @@ then
    echo "****************************************************" 
    echo "* Goto the testcase folder in the repo             *"
    echo "****************************************************"
-   cd /workspace/clinical-enrichment/health-patterns/clinical-enrichment/
+   cd /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/
    pwd
    ls
 
@@ -219,7 +219,7 @@ then
    echo "****************************************************" 
    echo "* Goto the testcase folder in the repo             *"
    echo "****************************************************"
-   cd /workspace/ingest/health-patterns/ingest/
+   cd /workspace/$TEST_NAMESPACE/health-patterns/ingest/
    pwd
    ls
    
@@ -246,9 +246,9 @@ then
    echo "*************************************" 
    echo "* Report Test Results to Insights   *"
    echo "*************************************"
-   echo "<testsuites>" > /workspace/ingest/tests/smoketests.xml
-   cat target/surefire-reports/*.xml >> /workspace/ingest/tests/smoketests.xml
-   echo "</testsuites>" >> /workspace/ingest/tests/smoketests.xml
+   echo "<testsuites>" > /workspace/clinical-enrichment/tests/smoketests.xml
+   cat target/surefire-reports/*.xml >> /workspace/clinical-enrichment/tests/smoketests.xml
+   echo "</testsuites>" >> /workspace/ingest/clinical-enrichment/smoketests.xml
 fi
 
 
