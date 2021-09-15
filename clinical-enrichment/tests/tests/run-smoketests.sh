@@ -231,17 +231,17 @@ then
    echo "*************************************" 
    echo "* Initialize the testcases          *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dtest=BasicClinicalIngestionInitTests test
+   mvn -e -DskipTests=false -Dtest=BasicIngestionInitTests test
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dtest=BasicClinicalIngestionFlowTests test 
+   mvn -e -DskipTests=false -Dtest=BasicIngestionTests test 
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
-   cat target/surefire-reports/categories.BasicClinicalIngestionInitTests.txt
-   cat target/surefire-reports/categories.BasicClinicalIngestionFlowTests.txt
+   cat target/surefire-reports/categories.BasicIngestionInitTests.txt
+   cat target/surefire-reports/categories.BasicIngestionTests.txt
 
    echo "*************************************" 
    echo "* Report Test Results to Insights   *"
