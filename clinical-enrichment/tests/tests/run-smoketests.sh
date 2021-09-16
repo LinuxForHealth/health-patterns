@@ -167,7 +167,7 @@ echo "* A Look At Everything              *"
 echo "*************************************"
 kubectl get all
 
-if [ $thisdeploy = $enrich ] 
+if [ $thisdeploy = $enrich ]  
 then 
    echo "****************************************************" 
    echo "* Goto the testcase folder in the repo             *"
