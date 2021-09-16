@@ -3,7 +3,12 @@
 # Run the Avlearie enrich/ingestion Deploy install per documented instructions (selection based on CLUSER_NAMESPACE from toolchain input
 #
 # Run the enrich/ingestion smoke tests and add test results to smoketests.xml for the Insights Quality Dashboard
+echo "*************************************" 
+echo "* Where are we located?             *"
+echo "*************************************"
+pwd
 cd tests
+ls
 chmod +x toolchain_envsetup.sh
 source ./toolchain_envsetup.sh "-smoke"
 
