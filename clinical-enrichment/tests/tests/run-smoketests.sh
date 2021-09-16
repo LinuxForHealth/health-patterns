@@ -3,9 +3,9 @@
 # Run the Avlearie enrich/ingestion Deploy install per documented instructions (selection based on CLUSER_NAMESPACE from toolchain input
 #
 # Run the enrich/ingestion smoke tests and add test results to smoketests.xml for the Insights Quality Dashboard
-
-chmod +x tests/toolchain_envsetup.sh
-source tests/toolchain_envsetup.sh "-smoke"
+cd tests
+chmod +x toolchain_envsetup.sh
+source ./toolchain_envsetup.sh "-smoke"
 
 echo " change to the correct directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
