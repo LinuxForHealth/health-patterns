@@ -4,6 +4,7 @@
 #
 # Run the enrich/ingestion smoke tests and add test results to smoketests.xml for the Insights Quality Dashboard
 
+# Setup the test environment
 chmod +x ./tests/toolchain-envsetup.sh
 source ./tests/toolchain-envsetup.sh "smoke"
 
@@ -41,8 +42,6 @@ then
    echo "* Goto the testcase folder in the repo             *"
    echo "****************************************************"
    cd /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/
-   pwd
-   ls
 
    echo "*************************************" 
    echo "* Build the testcases               *"
@@ -69,8 +68,6 @@ then
    echo "* Goto the testcase folder in the repo             *"
    echo "****************************************************"
    cd /workspace/$TEST_NAMESPACE/health-patterns/ingest/
-   pwd
-   ls
    
    echo "*************************************" 
    echo "* Build the testcases               *"
