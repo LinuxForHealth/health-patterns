@@ -90,10 +90,10 @@ then
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
-   cat target/surefire-reports/integration.categories.BasicIngestionInitTests.txt
-   cat target/surefire-reports/integration.categories.BasicIngestionTests.txt
-   cat target/surefire-reports/integration.categories.DeIDIngestionTests.txt
-   cat target/surefire-reports/integration.categories.ASCVDIngestionTests.txt
+   cat target/surefire-reports/categories.BasicIngestionInitTests.txt
+   cat target/surefire-reports/categories.BasicIngestionTests.txt
+   cat target/surefire-reports/categories.DeIDIngestionTests.txt
+   cat target/surefire-reports/categories.ASCVDIngestionTests.txt
 
 fi
 
