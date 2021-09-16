@@ -77,11 +77,25 @@ echo "*************************************"
 echo FHIR server: $FHIR_IP$FHIR_PORT
 echo "*************************************"
 
+# FHIR PROXY Using INGRESS
+export FHIR_PROXY_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir-proxy
+export FHIR__PROXY_PORT=
+echo "*************************************"
+echo FHIR Proxy server: $FHIR_PROXY_IP$FHIR_PROXY_PORT
+echo "*************************************"
+
 # FHIR DEID - using INGRESS
 export FHIR_DEID_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir-deid
 export FHIR_DEID_PORT=
 echo "*************************************"
 echo FHIR DEID server: $FHIR_DEID_IP$FHIR_DEID_PORT
+echo "*************************************"
+
+# FHIR DEID PROXY- using INGRESS
+export FHIR_DEID_PROXY_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir-deid-proxy
+export FHIR_DEID_PROXY_PORT=
+echo "*************************************"
+echo FHIR DEID PROXY server: $FHIR_DEID_PROXY_IP$FHIR_DEID_PROXY_PORT
 echo "*************************************"
 
 # DEID - using INGRESS
