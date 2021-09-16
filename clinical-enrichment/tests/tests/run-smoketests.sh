@@ -248,7 +248,7 @@ then
    echo "*************************************"
    echo "<testsuites>" > /workspace/clinical-enrichment/tests/smoketests.xml
    cat target/surefire-reports/*.xml >> /workspace/clinical-enrichment/tests/smoketests.xml
-   echo "</testsuites>" >> /workspace/ingest/clinical-enrichment/smoketests.xml
+   echo "</testsuites>" >> /workspace/clinical-enrichment/smoketests.xml
 fi
 
 
