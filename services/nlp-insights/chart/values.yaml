@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: alvearie/nlp-insights
   pullPolicy: Always
-  tag: 0.0.2
+  tag: 0.0.3
 
 service:
   type: ClusterIP
@@ -22,8 +22,13 @@ ingress:
 
 nlpservice:
   quickumls:
+    enableconfig: false
+    name:
     endpoint:
   acd:
+    enableconfig: false
+    name:
     endpoint:
     apikey:
     flow:
+  default:

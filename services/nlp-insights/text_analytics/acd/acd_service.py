@@ -32,12 +32,14 @@ class ACDService(NLPService):
 
     version = "2021-01-01"
 
-    def __init__(self, jsonString):
-        self.acd_key = os.getenv("ACD_API_KEY")
-        self.acd_url = os.getenv("ACD_ENDPOINT")
-        self.acd_flow = os.getenv("ACD_FLOW")
-        self.jsonString = jsonString
-        config_dict = json.loads(jsonString)
+    def __init__(self, json_string):
+        config_dict = json.loads(json_string)
+        self.acd_key = config_dict["config"]["apikey"]
+        self.acd_url = config_dict["config"]["endpoint"]
+        self.acd_flow = config_dict["config"]["flow"]
+        self.config_name = config_dict["name"]
+        self.jsonString = json_string
+        config_dict = json.loads(json_string)
         if config_dict.get('version') is not None:
             self.version = config_dict.get('version')
 
@@ -47,7 +49,7 @@ class ACDService(NLPService):
             version=self.version
         )
         service.set_service_url(self.acd_url)
-        logger.info("Calling ACD")
+        logger.info("Calling ACD-" + self.config_name)
         resp = service.analyze_with_flow(self.acd_flow, text)
         out = resp.to_dict()
         return out
