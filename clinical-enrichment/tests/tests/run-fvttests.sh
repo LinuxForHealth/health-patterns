@@ -8,11 +8,11 @@
 chmod +x ./tests/toolchain-envsetup.sh
 source ./tests/toolchain-envsetup.sh "fvt"
 
-echo " change to the correct directory"
+echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
 # Execute the desired deployment
-echo $CLUSTER_NAMESPACE" : Deploy via helm3"
+echo $TEST_NAMESPACE" : Deploy via helm3"
 if [ $CLUSTER_NAMESPACE = "clinical-enrich" ] 
 then
    # deploy enrich
@@ -24,7 +24,7 @@ then
 fi
 
 echo "*************************************"
-echo "* Waiting for "$deploywait" seconds             *"
+echo "* Waiting for "$deploywait" seconds           *"
 echo "*************************************"
 date
 sleep $deploywait  

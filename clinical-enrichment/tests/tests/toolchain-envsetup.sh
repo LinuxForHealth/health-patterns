@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Common toolchain setup code for smoketests, fvttests, and ivttest scripts
-# Input is test type (smoke, fvt, or ivt
+# Input is test type (smoke, fvt, or ivt)
 
 echo "*************************************"
 echo "* Linux version                     *"
