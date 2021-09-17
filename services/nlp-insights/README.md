@@ -44,15 +44,15 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 
 | Action | Method | Endpoint | Body | Returns on Success |
 |:------:|:------:|:---------|:----:|:-------:|
-| Apply NLP | `POST` | `/discoverInsights` | FHIR bundle or resource | Object annotated with NLP insights |
 | Get All Configs | `GET` | `/all_configs` | | Newline-delimited list of config names |
 | Add Named Config  | `PUT/POST` | `/config/definition` | Config (json) contains `name` | Status `200`
-| Get Current Active Config | `GET` | `/config` | | Currently active config |
-| Get Config Details | `GET` | `/config/{configName}` | | Config named `configName` |
+| Get Current Default Config | `GET` | `/config` | | Current default `configName` |
+| Get Config Details | `GET` | `/config/{configName}` | | Config details named `configName` |
 | Delete Config | `DELETE` | `/config/{configName}` | | Status `200` |
-| Make config active | `POST/PUT` | `/config/{configName}` | | Status `200` |
+| Make Config default | `POST/PUT` | `/config/setDefault?name={configName}` | | Status `200` |
+| Apply NLP | `POST` | `/discoverInsights` | FHIR bundle or resource | Object annotated with NLP insights |
 | Get all active overrides | `GET` | `/config/resource` | | dictionary-Status `200` |
-| Get the active override for a resource | `GET` | `/config/resource/{resource}` | | String-Status `200` |
+| Get the active override for a resource | `GET` | `/config/resource/{resource}` | | `configName`-Status `200` |
 | Add resource override | `POST/PUT` | `/config/resource/{resourcetype}/{configName}` | | Status `200` |
 | Delete a resource override | `DELETE` | `/config/resource/{resourcetype}` | | Status `200` |
 | Delete all resource overrides | `DELETE` | `/config/resource` | | Status `200` |

@@ -137,7 +137,7 @@ def delete_config(config_name):
         if nlp_service is not None:
             current_config = json.loads(nlp_service.jsonString)
             if config_name == current_config["name"]:
-                raise Exception("Cannot delete active nlp service")
+                raise Exception("Cannot delete the default nlp service")
         if config_name in list(override_resource_config.values()):
             raise ValueError(config_name + " has an existing override and cannot be deleted")
         os.remove(configDir + f'/{config_name}')
@@ -164,22 +164,27 @@ def get_all_configs():
 @app.route("/config", methods=['GET'])
 def get_current_config():
     if nlp_service is None:
-        return Response("No active nlp service is currently defined", status=400)
-    return Response(nlp_service.jsonString, status=200, mimetype='application/plaintext')
+        return Response("No default nlp service is currently set", status=400)
+    return Response(nlp_service.config_name, status=200, mimetype='application/plaintext')
 
 
-@app.route("/config/<config_name>", methods=['POST', 'PUT'])
-def set_active_config(config_name):
-    """Set the active nlp instance"""
+@app.route("/config/setDefault", methods=['POST', 'PUT'])
+def set_default_config():
+    """Set the default nlp instance"""
     global nlp_service
-    try:
-        if config_name not in nlp_services_dict:
-            raise KeyError(config_name + " is not a config")
-        nlp_service = nlp_services_dict[config_name]
-        return Response(nlp_service.jsonString, status=200, mimetype='application/plaintext')
-    except Exception:
-        logger.exception('Error in activating service with a config name of: %s', config_name)
-        return Response('Error in activating service with a config name of: ' + config_name, status=400)
+    if request.args and request.args.get('name'):
+        config_name = request.args.get('name')
+        try:
+            if config_name not in nlp_services_dict:
+                raise KeyError(config_name + " is not a config")
+            nlp_service = nlp_services_dict[config_name]
+            return Response('Default config set to: ' + config_name, status=200, mimetype='application/plaintext')
+        except Exception:
+            logger.exception('Error in setting default with a config name of: %s', config_name)
+            return Response('Error in setting default with a config name of: ' + config_name, status=400)
+    else:
+        logger.warning("Did not provide query parameter 'name' to set default config")
+        return Response("Did not provide query parameter 'name' to set default config", status=400)
 
 
 @app.route("/config/resource", methods=['GET'])
@@ -240,7 +245,7 @@ def delete_resources():
 def discover_insights():
     """Process a bundle or a resource to enhance/augment with insights"""
     if nlp_service is None:
-        return Response("No NLP service configured-need to set an active config", status=400)
+        return Response("No NLP service configured-need to set a default config", status=400)
 
     fhir_data = json.loads(request.data)  # could be resource or bundle
 
