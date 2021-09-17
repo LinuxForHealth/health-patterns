@@ -97,7 +97,7 @@ def init_configs():
 
 
 configDir = setup_config_dir()
-init_configs()  # initialize configurations from deployment if defined
+init_configs()
 
 
 @app.route("/config/<config_name>", methods=['GET'])
