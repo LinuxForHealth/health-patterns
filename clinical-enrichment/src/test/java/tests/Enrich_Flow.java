@@ -15,6 +15,7 @@ import categories.BasicEnrichment;
 import categories.ASCVDEnrichment;
 import categories.EnrichmentConfig;
 import categories.EnrichmentInit;
+import categories.NLPEnrichment;
 
 
 @TargetEnv("enrich-flow.properties")
@@ -97,31 +98,31 @@ public class Enrich_Flow {
 	    }
 	
 	@Test
-	 @Category({EnrichmentInit.class})
+	 @Category({NLPEnrichment.class})
 	 @Scenario("scenarios/enrich_NLP_Insights_healthCheck.json")
 	    public void enrich_NLP_Insights_healthCheck() throws Exception {
 	    }
 
 	@Test
-	 @Category({EnrichmentInit.class})
+	 @Category({NLPEnrichment.class})
 	 @Scenario("scenarios/enrich_NLP_Insights_Deploy_Default.json")
 	    public void enrich_NLP_Insights_Deploy_Default() throws Exception {
 	    }
 
 	@Test
-	 @Category({EnrichmentConfig.class})
+	 @Category({NLPEnrichment.class})
 	 @Scenario("scenarios/enrich_NLP_Insights_Config_CRUD.json")
 	    public void enrich_NLP_Insights_Config_CRUD() throws Exception {
 	    }
 
 	@Test
-	 @Category({EnrichmentConfig.class})
+	 @Category({NLPEnrichment.class})
 	 @Scenario("scenarios/enrich_NLP_Insights_Config_Errors.json")
 	    public void enrich_NLP_Insights_Config_Errors() throws Exception {
 	    }
 
 	@Test
-	 @Category({EnrichmentConfig.class})
+	 @Category({NLPEnrichment.class})
 	 @Scenario("scenarios/enrich_NLP_Insights_Config_Use.json")
 	    public void enrich_NLP_Insights_Config_Use() throws Exception {
 	    }

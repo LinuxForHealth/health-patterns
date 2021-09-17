@@ -90,7 +90,7 @@ then
    mvn  -e -DskipTests=false -Dtest=BasicIngestionTests test
    mvn  -e -DskipTests=false -Dtest=DeIDIngestionTests test
    mvn  -e -DskipTests=false -Dtest=ASCVDIngestionTests test
-   mvn  -e -DskipTests=false -Dtest=NLPIngestionTests test
+#   mvn  -e -DskipTests=false -Dtest=NLPIngestionTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -99,7 +99,7 @@ then
    cat target/surefire-reports/categories.BasicIngestionTests.txt
    cat target/surefire-reports/categories.DeIDIngestionTests.txt
    cat target/surefire-reports/categories.ASCVDIngestionTests.txt
-   cat target/surefire-reports/categories.NLPIngestionTests.txt
+#   cat target/surefire-reports/categories.NLPIngestionTests.txt
    
 fi   
 echo "*************************************" 
