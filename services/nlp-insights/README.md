@@ -67,7 +67,7 @@ Example json FHIR that can be processed by the service can be found in text_anal
   "name": "quickconfig1",
   "nlpServiceType": "quickumls",
   "config": {
-    "endpoint": "https://quickumlsURL/match"
+    "endpoint": "https://quickumlsEndpointURL/match"
   }
 }
 ```
@@ -78,7 +78,7 @@ Example json FHIR that can be processed by the service can be found in text_anal
   "nlpServiceType": "acd",
   "config": {
     "apikey": "apikeyxxxxxxxxx",
-    "endpoint": "https://acdendointRUL/api",
+    "endpoint": "https://acdEndpointURL/api",
     "flow": "acd_standard_flow"
   }
 }
