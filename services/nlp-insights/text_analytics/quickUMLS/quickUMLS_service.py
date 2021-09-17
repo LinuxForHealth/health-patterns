@@ -20,16 +20,19 @@ class QuickUMLSService(NLPService):
     PROCESS_TYPE_UNSTRUCTURED = "QuickUMLS Unstructured"
     PROCESS_TYPE_STRUCTURED = "QuickUMLS Structured"
 
-    def __init__(self, jsonString):
-        self.quickUMLS_url = os.getenv("QUICKUMLS_ENDPOINT")
-        self.jsonString = jsonString
+    def __init__(self, json_string):
+        config_dict = json.loads(json_string)
+        self.quickUMLS_url = config_dict["config"]["endpoint"]
+        self.jsonString = json_string
+        self.config_name = config_dict["name"]
+
 
     def process(self, text):
         if type(text) is bytes:
             request_body = {"text": text.decode('utf-8')}
         else:
             request_body = {"text": text}
-        logger.info("Calling QUICKUMLS")
+        logger.info("Calling QUICKUMLS-" + self.config_name)
         resp = requests.post(self.quickUMLS_url, json=request_body)
         concepts = json.loads(resp.text)
         conceptsList = []

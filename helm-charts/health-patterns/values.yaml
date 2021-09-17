@@ -58,15 +58,19 @@ nlp-insights:
     enabled: false
     class: *ingressClass
     hostname: *hostname
-
   nlpservice:
     quickumls:
+      enableconfig:
+      name:
       endpoint:
     acd:
+      enableconfig:
+      name:
       endpoint:
       apikey:
       flow:
-        
+    default:
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # ------------------------------------------------------------------------------
