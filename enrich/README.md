@@ -20,9 +20,11 @@ The Enrichment Flow is designed to read medical data (in FHIR format) from a con
 
 The current flow is designed to operate on FHIR resources only.  Currently, for any FHIR data that enters the pipeline, we support the following enrichment steps:
 
-  - FHIR Terminology Service - This step will update the clinical data by adding/updating values to adhere to the terminology service configuration. The configuration mapping rules are currently static and can be found [here](https://github.com/Alvearie/health-patterns/tree/main/services/term-services-prep/src/main/resources/defaultMappings)
+  - NLP Insights: This step will process FHIR resources (or a bundle of resources).  It will apply natural language processing to certain resource types in order to enhance resources by adding additional information to the resource or by adding new resources based on text found in the original resource.  At present, the supported resource types are AllergyIntolerance, Immunization, DiagnosticReport, and DocumentReference. For configuration details, see the [nlp-insights documentation](https://github.com/Alvearie/health-patterns/tree/main/services/nlp-insights).
 
-  - [De-Identification](https://github.com/Alvearie/de-identification) Service - This step will de-identify the clinical data flowing through the pipeline and store the de-identified version in a separate FHIR server. The de-identification rules are currently static and can be found here.
+  - FHIR Terminology Service: This step will update the clinical data by adding/updating values to adhere to the terminology service configuration. The configuration mapping rules are currently static and can be found [here](https://github.com/Alvearie/health-patterns/tree/main/services/term-services-prep/src/main/resources/defaultMappings)
+
+  - [De-Identification](https://github.com/Alvearie/de-identification) Service: This step will de-identify the clinical data flowing through the pipeline and store the de-identified version in a separate FHIR server. The de-identification rules are currently static and can be found here.
 
   - [Million Hearts ASCVD Model](https://github.com/Alvearie/health-analytics/tree/main/ascvd): This step will calculate a ten-year risk of cardiovascular disease using the Million Hearts ASCVD Model.
 

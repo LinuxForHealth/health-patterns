@@ -9,7 +9,9 @@ functions and their codes inferred from the resource.
 
 Immunization --> Adds an extension to the resource containing immunizations/immunologic factors and their codes inferred from the resource.
 
-Diagnostic Report --> Creates Condition and/or Medication Statement resources generated from the diagnostic report
+Diagnostic Report --> Creates Condition and/or Medication Statement resources generated from the diagnostic report resource
+
+DocumentReference --> Creates Condition and/or Medication Statement resources generated from the document reference resource
 
 ### Running the service
 To run the app on its own, fill in `text_analytics/acd/acd_config.ini` and `text_analytics/quickUMLS/quickumls_config.ini` with your config information for each service.
@@ -56,6 +58,27 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 | Add resource override | `POST/PUT` | `/config/resource/{resourcetype}/{configName}` | | Status `200` |
 | Delete a resource override | `DELETE` | `/config/resource/{resourcetype}` | | Status `200` |
 | Delete all resource overrides | `DELETE` | `/config/resource` | | Status `200` |
+#### Configuring at deploy time
+
+It is possible to provide an initial (deploy time) named configuration for quickulms and/or acd.  This is done by modifying the `values.yaml` file before deployment.  In the nlp-insights chart, the following configuration values are defined:
+
+```
+nlpservice:
+  quickumls:
+    enableconfig: false
+    name:
+    endpoint:
+  acd:
+    enableconfig: false
+    name:
+    endpoint:
+    apikey:
+    flow:
+  default:
+  ```
+
+By setting the appropriate `enableconfig` flag to true and providing the `name` of the config as well as the details (dependent on the type of the nlp engine), an initial named configuration will be created.  In addition, the configuration can be made the default by setting the `default` value to one of the previously defined names.
+
 
 #### Example Resources
 
