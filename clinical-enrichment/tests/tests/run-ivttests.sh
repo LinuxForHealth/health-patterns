@@ -20,7 +20,7 @@ then
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
    # deploy ingestion
-   helm3 install $HELM_RELEASE . -f de-id-pattern-values.yaml -f clinical_ingestion.yaml --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --wait --timeout 6m0s
+   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml -f de-id-pattern-values.yaml -f clinical_ingestion.yaml --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --wait --timeout 6m0s
 fi
 
 
@@ -90,7 +90,7 @@ then
    mvn  -e -DskipTests=false -Dtest=BasicIngestionTests test
    mvn  -e -DskipTests=false -Dtest=DeIDIngestionTests test
    mvn  -e -DskipTests=false -Dtest=ASCVDIngestionTests test
-#   mvn  -e -DskipTests=false -Dtest=NLPIngestionTests test
+   mvn  -e -DskipTests=false -Dtest=NLPIngestionTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -99,7 +99,7 @@ then
    cat target/surefire-reports/categories.BasicIngestionTests.txt
    cat target/surefire-reports/categories.DeIDIngestionTests.txt
    cat target/surefire-reports/categories.ASCVDIngestionTests.txt
-#   cat target/surefire-reports/categories.NLPIngestionTests.txt
+   cat target/surefire-reports/categories.NLPIngestionTests.txt
    
 fi   
 echo "*************************************" 
