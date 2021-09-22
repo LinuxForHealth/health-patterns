@@ -31,7 +31,7 @@ then
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
    export HELM_RELEASE=ingestion
-   export deploywait=300
+   export deploywait=600
 fi
 
 echo "*************************************"
