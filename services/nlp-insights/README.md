@@ -52,6 +52,7 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 | Get Config Details | `GET` | `/config/{configName}` | | Config details named `configName` |
 | Delete Config | `DELETE` | `/config/{configName}` | | Status `200` |
 | Make Config default | `POST/PUT` | `/config/setDefault?name={configName}` | | Status `200` |
+| Clear default config | `POST/PUT` | `/config/clearDefault` | | Status `200` |
 | Apply NLP | `POST` | `/discoverInsights` | FHIR bundle or resource | Object annotated with NLP insights |
 | Get all active overrides | `GET` | `/config/resource` | | dictionary-Status `200` |
 | Get the active override for a resource | `GET` | `/config/resource/{resource}` | | `configName`-Status `200` |
