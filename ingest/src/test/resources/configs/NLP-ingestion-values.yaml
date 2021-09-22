@@ -12,3 +12,4 @@ nlp-insights:
       enableconfig: true
       name: default
       endpoint: https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match
+    default: default
