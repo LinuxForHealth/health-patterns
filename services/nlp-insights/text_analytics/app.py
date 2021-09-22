@@ -187,6 +187,14 @@ def set_default_config():
         return Response("Did not provide query parameter 'name' to set default config", status=400)
 
 
+@app.route("/config/clearDefault", methods=['POST', 'PUT'])
+def clear_default_config():
+    """Clear the default nlp instance"""
+    global nlp_service
+    nlp_service = None
+    return Response('Default config has been cleared', status=200, mimetype='application/plaintext')
+
+
 @app.route("/config/resource", methods=['GET'])
 def get_current_override_configs():
     """Get and return all override definitions"""
