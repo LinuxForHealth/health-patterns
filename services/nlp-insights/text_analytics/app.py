@@ -133,7 +133,7 @@ def delete_config(config_name):
     """Delete a config by name"""
     try:
         if config_name not in nlp_services_dict:
-            raise KeyError("'config name' must exist")
+            raise KeyError(config_name + " must exist")
         if nlp_service is not None:
             current_config = json.loads(nlp_service.jsonString)
             if config_name == current_config["name"]:
