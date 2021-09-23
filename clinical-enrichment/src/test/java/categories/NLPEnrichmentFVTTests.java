@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Categories.class)
 @SuiteClasses(AllTests.class) 
-@Categories.IncludeCategory(NLPEnrichment.class)
+@Categories.IncludeCategory(NLPEnrichmentFVT.class)
 
 public class NLPEnrichmentFVTTests {
  
