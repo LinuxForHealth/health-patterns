@@ -16,7 +16,7 @@ echo $TEST_NAMESPACE" : Deploy via helm3"
 if [ $CLUSTER_NAMESPACE = "clinical-enrich" ] 
 then
   # deploy enrich
-  helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-IVT-values.yaml -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout 6m0s
+  helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/clinical-enrichment/src/test/resources/configs/NLP-IVT-values.yaml -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout 6m0s
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
    # deploy ingestion
