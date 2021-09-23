@@ -16,7 +16,7 @@ echo $TEST_NAMESPACE" : Deploy via helm3"
 if [ $CLUSTER_NAMESPACE = "clinical-enrich" ] 
 then
    # deploy enrich
-   helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout 6m0s
+   helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout 6m0s
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
    # deploy ingestion
@@ -55,6 +55,7 @@ then
    mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
    mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
    mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
+   mvn -e -DskipTests=false -Dtest=NLPEnrichmentFVTTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -62,6 +63,7 @@ then
    cat target/surefire-reports/categories.BasicEnrichmentTests.txt
    cat target/surefire-reports/categories.EnrichmentConfigTests.txt
    cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt
+   cat target/surefire-reports/categories.NLPEnrichmentFVTTests.txt
    
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
