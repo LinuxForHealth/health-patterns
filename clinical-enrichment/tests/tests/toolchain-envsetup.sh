@@ -27,7 +27,7 @@ export INGRESS_SUBDOMAIN=wh-health-patterns.dev.watson-health.ibm.com
 if [ $CLUSTER_NAMESPACE = "clinical-enrich" ]
 then
    export HELM_RELEASE=enrich
-   export deploywait=180
+   export deploywait=240
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
    export HELM_RELEASE=ingestion
