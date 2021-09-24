@@ -123,4 +123,15 @@ public class Enrich_Flow {
 	    }
 
 	
+	@Test
+	 @Category({NLPEnrichment.class,NLPEnrichmentFVT.class})
+	 @Scenario("scenarios/enrich_NLP_Insights_Override_CRUD.json")
+	    public void enrich_NLP_Insights_Override_CRUD() throws Exception {
+	    }
+	
+	@Test
+	 @Category({NLPEnrichment.class})
+	 @Scenario("scenarios/enrich_NLP_Insights_Override_Use.json")
+	    public void enrich_NLP_Insights_Override_Use() throws Exception {
+	    }
 }
