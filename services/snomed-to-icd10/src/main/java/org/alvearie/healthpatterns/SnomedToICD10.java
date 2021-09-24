@@ -12,8 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.structure.Edge;
@@ -21,7 +21,7 @@ import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 import com.ibm.fhir.term.graph.FHIRTermGraph;
 import com.ibm.fhir.term.graph.factory.FHIRTermGraphFactory;
-import com.ibm.fhir.term.graph.loader.impl.SnoMedICD10MapTermGraphLoader;
+import com.ibm.fhir.term.graph.loader.impl.SnomedICD10MapTermGraphLoader;
 import com.ibm.fhir.term.graph.loader.util.ConfigLoader;
 
 /**
@@ -61,7 +61,7 @@ public class SnomedToICD10 {
             List<Vertex> snoMedConcepts = g.V().has(CODE, snomedCode).toList();
             Vertex snoMedConcept = snoMedConcepts.get(0);
 
-            Iterator<Edge> edges = snoMedConcept.edges(Direction.IN, SnoMedICD10MapTermGraphLoader.MAPS_TO);
+            Iterator<Edge> edges = snoMedConcept.edges(Direction.IN, SnomedICD10MapTermGraphLoader.MAPS_TO);
             while (edges.hasNext()) {
                 Edge edge = edges.next();
                 Vertex outConcept = edge.outVertex();
