@@ -106,6 +106,10 @@ def get_config(config_name):
     try:
         json_file = open(configDir + f'/{config_name}', 'r')
         json_string = json_file.read()
+        c_dict = json.loads(json_string)
+        if c_dict["nlpServiceType"] == "acd":
+            c_dict["config"]["apikey"] = "*"*len(c_dict["config"]["apikey"])
+            json_string = json.dumps(c_dict)
     except FileNotFoundError:
         logger.error("Config with the name %s doesn't exist.", config_name)
         return Response("Config with the name: " + config_name + " doesn't exist.", status=400)
