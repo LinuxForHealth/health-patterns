@@ -3,52 +3,69 @@
     "ignoreStepFailures": false,
     "steps": [ 
         
-              
+        {
+            "name": "clearDefaultConfig${0}",
+            "url": "${nlp_insights}/config/clearDefault",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200
+             }
+        },              
         {
             "name": "createInvalidConfig${0}",
-            "url": "${nlp_insights}/config/createInvalidConfig",
+            "url": "${nlp_insights}/config/definition",
             "operation": "${0}",           
                 "request": {
-                "body" : { "nlpService" : "ABC"} 
+                "body" : "${1}"
                 },            
             "verify": {
                 "status": 400
             }
-        },            
+        }, 
         {
-            "name": "activateNonExistentConfig${0}",
-            "url": "${nlp_insights}/config?name=createInvalidConfig",
-            "operation": "${0}",           
-                "request": { },            
-            "verify": {
-                "status": 400
-            }
-        },
-        {
-            "name": "activateDefault${0}",
-            "url": "${nlp_insights}/config?name=default",
-            "operation": "${0}",           
+            "name": "getAllConfigs",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
                 "request": { },            
             "verify": {
                 "status": 200
             }
         },
         {
-            "name": "getDefaultConfig${0}",
+            "name": "verifyConfigList${0}",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getAllConfigs.response}",
+                 "string2": "${2}"
+            },
+            "verify": { "result": "false" }
+        },           
+        {
+            "name": "activateNonExistentConfig${0}",
+            "url": "${nlp_insights}/config/setDefault?name=${2}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 400
+            }
+        },
+        {
+            "name": "getActiveConfig${0}",
             "url": "${nlp_insights}/config",
             "operation": "GET",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "body": {
-                  "nlpService":"$MATCHES.STRING:quickUMLS"}
+                "status": 400,
+                "rawBody":"$CONTAINS.STRING:No default nlp service is currently set"
             }
         }             
      ],
      "parameterized": {
         "csvSource":[
-            "POST",
-            "PUT"
+            "POST,${JSON.FILE:configs/NLP-POST-invalid-config.json},NLP-POST-config",
+            "PUT,${JSON.FILE:configs/NLP-PUT-invalid-config.json},NLP-PUT-config"
         ]
     }
 }

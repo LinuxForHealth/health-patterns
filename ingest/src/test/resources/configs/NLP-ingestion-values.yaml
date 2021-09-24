@@ -1,0 +1,15 @@
+
+# Basic configuration for the NLP-Insights serivce for ingestion tests
+
+pattern: "NLP-Ingestion-Overrides"
+
+nlp-insights:
+  enabled: true
+  ingress:
+     enabled: true
+  nlpservice:
+    quickumls:
+      enableconfig: true
+      name: default
+      endpoint: https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match
+    default: default

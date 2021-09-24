@@ -1,0 +1,7 @@
+{
+  "name": "NLP-PUT-invalid-config",
+  "nlpServiceType": "slowumls",
+  "config": {
+    "endpoint": "https://configPUTURL/match"
+  }
+}
