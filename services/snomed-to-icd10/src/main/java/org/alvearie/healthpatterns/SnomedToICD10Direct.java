@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibm.fhir.term.graph.loader.impl.SnoMedICD10MapTermGraphLoader;
+import com.ibm.fhir.term.graph.loader.impl.SnomedICD10MapTermGraphLoader;
 
 /**
  * @author atclark
@@ -48,7 +48,7 @@ public class SnomedToICD10Direct {
             if (SNOMED_TO_ICD != null) {
                 return SNOMED_TO_ICD;
             }
-            SNOMED_TO_ICD = SnoMedICD10MapTermGraphLoader.loadMap(BUCKET_NAME);
+            SNOMED_TO_ICD = SnomedICD10MapTermGraphLoader.loadMap(BUCKET_NAME);
         }
         return SNOMED_TO_ICD;
     }
