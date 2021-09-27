@@ -1,0 +1,205 @@
+{
+    "scenarioName": "********enrich_NLP_Insights_Override_CRUD********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "getOverrides",
+            "url": "${nlp_insights}/config/resource",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyNoOverride${0}",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getOverrides.response.body}",
+                 "string2": "{}"
+            },
+            "verify": { "result": "true" }
+        },
+        {
+            "name": "createFirstConfig${0}",
+            "url": "${nlp_insights}/config/definition",
+            "operation": "${0}",           
+                "request": {
+                "body" : "${1}"
+                },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "createSecondConfig${0}",
+            "url": "${nlp_insights}/config/definition",
+            "operation": "${0}",           
+                "request": {
+                "body" : "${3}"
+                },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getOverrides${0}",
+            "url": "${nlp_insights}/config/resource",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "addDocumentReferenceOverride${0}",
+            "url": "${nlp_insights}/config/resource/DocumentReference/${2}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody": "$CONTAINS.STRING:'DocumentReference': '${2}'"
+            }
+        },
+        {
+            "name": "addAllergyIntoleranceOverride${0}",
+            "url": "${nlp_insights}/config/resource/AllergyIntolerance/${4}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody": "$CONTAINS.STRING:'AllergyIntolerance': '${4}'"
+            }
+        },
+        {
+            "name": "addDiagnosticReportOverride${0}",
+            "url": "${nlp_insights}/config/resource/DiagnosticReport/${2}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody": "$CONTAINS.STRING:'DiagnosticReport': '${2}'"
+            }
+        },        
+        {
+            "name": "addImmunizationOverride${0}",
+            "url": "${nlp_insights}/config/resource/Immunization/${4}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody": "$CONTAINS.STRING:'Immunization': '${4}'"
+            }
+        }, 
+        {
+            "name": "updateImmunizationOverride${0}",
+            "url": "${nlp_insights}/config/resource/Immunization/${2}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody": "$CONTAINS.STRING:'Immunization': '${2}'"
+            }
+        },       
+        {
+            "name": "deleteImmunizationOverride${0}",
+            "url": "${nlp_insights}/config/resource/Immunization",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getOverridesNoImmunization",
+            "url": "${nlp_insights}/config/resource",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyNoImmunizationOverride${0}",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getOverridesNoImmunization.response.rawBody}",
+                 "string2": "Immunization"
+            },
+            "verify": { "result": "false" }
+        }, 
+        {
+            "name": "deleteImmunizationOverrideAgain",
+            "url": "${nlp_insights}/config/resource/Immunization",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 400
+            }
+        },
+        {
+            "name": "deleteRemainingOverrides",
+            "url": "${nlp_insights}/config/resource",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getOverridesAfterDeleteRemaining",
+            "url": "${nlp_insights}/config/resource",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyNoOverride${0}",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getOverridesAfterDeleteRemaining.response.body}",
+                 "string2": "{}"
+            },
+            "verify": { "result": "true" }
+        }, 
+        {
+            "name": "deleteRemainingOverridesAgain",
+            "url": "${nlp_insights}/config/resource",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "deleteFirstConfig${0}",
+            "url": "${nlp_insights}/config/${2}",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "deleteSecondConfig${0}",
+            "url": "${nlp_insights}/config/${4}",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        }
+     ],
+     "parameterized": {
+        "csvSource":[
+            "PUT,${JSON.FILE:configs/NLP-PUT-config.json},NLP-PUT-config,${JSON.FILE:configs/NLP-POST-config.json},NLP-POST-config",
+            "POST,${JSON.FILE:configs/NLP-POST-config.json},NLP-POST-config,${JSON.FILE:configs/NLP-PUT-config.json},NLP-PUT-config"
+
+        ]
+    }
+}
