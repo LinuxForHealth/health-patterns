@@ -1,0 +1,61 @@
+{
+   "category":[
+      {
+         "coding":[
+            {
+               "code":"68607-1",
+               "display":"Progress note",
+               "system":"http://loinc.org"
+            }
+         ]
+      }
+   ],
+   "content":[
+      {
+         "attachment":{
+            "contentType":"text/plain",
+            "data":"UGF0aWVudCBoYXMgcG5ldW1vbmlhIGFuZCBpcyB0YWtpbmcgcGVuaWNpbGxpbg=="
+         }
+      }
+   ],
+   "date":"2018-06-02T09:14:06.370Z",
+   "description":"SiN0DhiCzFAxRANDOM BC:Doc Reference",
+   "docStatus":"final",
+   "identifier":[
+      {
+         "assigner":{
+            "display":"provider"
+         },
+         "type":{
+            "coding":[
+               {
+                  "code":"DOCID",
+                  "display":"Document Identifier",
+                  "system":"http://ibm.com/watson-health-wpd"
+               }
+            ]
+         },
+         "value":"1023-5"
+      }
+   ],
+   "meta":{
+      "profile":[
+         "http://ibm.com/fhir/pdm/StructureDefinition/pdm-general-document-reference-profile|1.0.0"
+      ]
+   },
+   "resourceType":"DocumentReference",
+	"id":"1234",
+   "status":"current",
+   "subject":{
+      "reference":"urn:uuid:a945ec00-17a5-957b-d984-5bfa4af26d1f"
+   },
+   "type":{
+      "coding":[
+         {
+            "code":"68607-1",
+            "display":"Progress note",
+            "system":"http://loinc.org"
+         }
+      ]
+   }
+}

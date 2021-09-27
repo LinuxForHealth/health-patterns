@@ -71,7 +71,9 @@
             "PUT,acd,${JSON.FILE:Patients/allergyintoleranceNLP.json},ACD Structured",
             "POST,default,${JSON.FILE:Patients/allergyintoleranceNLP.json},QuickUMLS Structured",
             "POST,acd,${JSON.FILE:Patients/immunizationNLP.json},ACD Structured",
-            "PUT,default,${JSON.FILE:Patients/immunizationNLP.json},QuickUMLS Structured"
+            "PUT,default,${JSON.FILE:Patients/immunizationNLP.json},QuickUMLS Structured",
+            "PUT,acd,${JSON.FILE:Patients/documentreferenceNLP.json},ACD Unstructured",
+            "POST,default,${JSON.FILE:Patients/documentreferenceNLP.json},QuickUMLS Unstructured"
 
         ]
     }
