@@ -55,12 +55,15 @@
      ],
      "parameterized": {
         "csvSource":[
+        
             "POST,acd,${JSON.FILE:Patients/diagnosticreportNLP.json},DiagnosticReport,default,QuickUMLS Unstructured",
             "PUT,default,${JSON.FILE:Patients/diagnosticreportNLP.json},DiagnosticReport,acd,ACD Unstructured",
             "POST,acd,${JSON.FILE:Patients/immunizationNLP.json},Immunization,default,QuickUMLS Structured",
             "PUT,default,${JSON.FILE:Patients/immunizationNLP.json},Immunization,acd,ACD Structured",
             "PUT,acd,${JSON.FILE:Patients/allergyintoleranceNLP.json},AllergyIntolerance,default,QuickUMLS Structured",
-            "POST,default,${JSON.FILE:Patients/allergyintoleranceNLP.json},AllergyIntolerance,acd,ACD Structured"
+            "POST,default,${JSON.FILE:Patients/allergyintoleranceNLP.json},AllergyIntolerance,acd,ACD Structured",
+            "POST,acd,${JSON.FILE:Patients/documentreferenceNLP.json},DocumentReference,default,QuickUMLS Unstructured",
+            "PUT,default,${JSON.FILE:Patients/documentreferenceNLP.json},DocumentReference,acd,ACD Unstructured"
 
         ]
     }
