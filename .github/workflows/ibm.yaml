@@ -77,10 +77,10 @@ jobs:
     - name: Execute Enrichment Tests
       run: |
          echo "*************************************"
-         echo "* Waiting for 1 minute              *"
+         echo "* Waiting for 2 minutes             *"
          echo "*************************************"
          date
-         sleep 60  
+         sleep 120  
          date
          cd clinical-enrichment
          echo "*************************************" 
