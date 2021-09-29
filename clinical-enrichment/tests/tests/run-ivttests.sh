@@ -20,7 +20,7 @@ then
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
    # deploy ingestion
-   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml -f de-id-pattern-values.yaml -f clinical_ingestion.yaml --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --wait --timeout 6m0s
+   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml -f de-id-pattern-values.yaml -f clinical_ingestion.yaml --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout 6m0s
 fi
 
 
