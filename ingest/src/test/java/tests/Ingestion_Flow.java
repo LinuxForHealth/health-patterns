@@ -81,4 +81,10 @@ public class Ingestion_Flow {
 	 @Scenario("scenarios/ingest_FHIR_NLP_Insights.json")
 	    public void ingest_FHIR_NLP_Insights() throws Exception {
 	    }
+	 
+	 @Test
+	 @Category({NLPIngestion.class})
+	 @Scenario("scenarios/ingest_FHIR_NLP_Insights_Override.json")
+	    public void ingest_FHIR_NLP_Insights_Override() throws Exception {
+	    }
 }
