@@ -122,7 +122,7 @@ For example, the curl command below will place the contents of the file `testpat
 ```
 curl -X POST https://<<external-hostname>>/expose-kafka?topic=ingest.clinical.in  \
    --header "Content-Type: text/plain" \
-   --data-binary  @<<pathtofile/testpatient.json
+   --data-binary  @/pathtofile/testpatient.json
 ```
 
 #### [FHIR](https://github.com/ibm/fhir)

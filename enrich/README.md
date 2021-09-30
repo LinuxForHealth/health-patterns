@@ -127,14 +127,16 @@ curl -X POST https://<<external-hostname>>/expose-kafka?topic=patients.updated.o
    --header "ResolveTerminology: true" \
    --header "DeidentifyData: false" \
    --header "RunASCVD: true" \
+   --header "AddNLPInsights: true" \
    --data-binary  @<<pathtofile/testpatient.json
 ```
 
-Note that there are three headers in the above request describing which enrichment steps should or should not be performed.  
+Note that there are four headers in the above request describing which enrichment steps should or should not be performed.  
 
  - **ResolveTerminology** will run the bundle through the terminology normalization process.
  - **DeidentifyData** will run the de-identify logic. This will store the de-identified data to a separate FHIR server and allow the original data to continue through the flow.
  - **RunASCVD** will run the FHIR bundle through the ASCVD service. This will calculate a ten-year risk of cardiovascular disease and store the result as an attribute in the flow file. Use of the attribute is left up to the user of the Clinical Ingestion pipeline to determine.
+ - **AddNLPInsights** will run apply natural language processing to certain resource types in order to enhance resources by adding additional information to the resource or by adding new resources based on text found in the original resource.
 
 When the Enrichment process is complete, the updated FHIR result will be placed on a different Kafka topic called `patient.enriched.out`.  From there it is up to the user to decide what to do with the FHIR result.
 

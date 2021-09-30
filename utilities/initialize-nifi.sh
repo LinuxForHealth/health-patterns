@@ -26,6 +26,7 @@ python /scripts/startHealthPatternsFlow.py \
   --baseUrl=http://$HOSTNAME:8080/ \
   --fhir_pw=$FHIR_PW \
   --kafka_pw=$KAFKA_PW \
+  --addNLPInsights=$ADD_NLP_INSIGHTS \
   --runASCVD=$RUN_ASCVD \
   --deidentifyData=$DEIDENTIFY_DATA \
   --resolveTerminology=$RESOLVE_TERMINOLOGY \
