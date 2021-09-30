@@ -11,7 +11,7 @@ pattern: "Clinical Enrichment"
 nifi:
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.2
+      image: alvearie/nifi-setup:0.1.3
       imagePullPolicy: Always
       env:
       - name: "RELEASE_NAME"
@@ -26,6 +26,8 @@ nifi:
         value: "integrati0n"
       - name: "KAFKA_PW"
         value: "integrati0n"
+      - name: "ADD_NLP_INSIGHTS"
+        value: "True"
       - name: "RUN_ASCVD"
         value: "True"
       - name: "RESOLVE_TERMINOLOGY"
