@@ -35,6 +35,17 @@ ingress:
   class: &ingressClass public-iks-k8s-nginx
   hostname: &hostname replace-me
 
+oidc:
+  users: &oidc_users
+    - identity: "replace-me@company.com"
+      name: "replace.me.no.spaces.or.caps"
+  discovery:
+    url: &oidc_discovery_url "replace-me"
+  client: 
+    id: &oidc_client_id replace-me
+    secret: &oidc_client_secret replace-me
+  storageClassName: &oidc_storage_class_name ibmc-vpc-block-metro-10iops-tier
+
 ascvd:
   enabled: true
 
@@ -156,8 +167,50 @@ zookeeper:
   enabled: true
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
   fullnameOverride: alvearie-zookeeper
-  persistence:
-    enabled: false
+
+zookeeper_new:
+  enabled: false
+  # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
+  fullnameOverride: alvearie-zookeeper
+
+# ------------------------------------------------------------------------------
+# Nifi Configuration
+# ------------------------------------------------------------------------------
+
+nifikop:
+  enabled: false
+  namespace: replace-me
+  image:
+    tag: v0.6.3-release
+  resources: 
+    requests: 
+      memory: 256Mi
+      cpu: 250m
+    limits: 
+      memory: 256Mi
+      cpu: 250m
+  namespaces: replace-me
+  rbacEnable: true
+
+nifi_new:
+  enabled: false
+  fullnameOverride: alvearie-nifi
+  image:
+    repository: apache/nifi
+    tag: 1.12.1
+  user: *oidc_users
+  oidc:
+    discovery:
+      url: *oidc_discovery_url
+    client: 
+      id: *oidc_client_id
+      secret: *oidc_client_secret
+  ingress:
+    class: *ingressClass
+    hostname: *hostname
+  service:
+    port: 8443
+  storageClassName: *oidc_storage_class_name
 
 # ------------------------------------------------------------------------------
 # Nifi Configuration
