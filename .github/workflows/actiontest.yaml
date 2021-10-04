@@ -38,3 +38,8 @@ jobs:
       run: |
         echo "Hello World"
         ls
+    - name: DockerMeta
+      id: meta
+      uses: docker/metadata-action@v3
+      with:
+        images: name/app
