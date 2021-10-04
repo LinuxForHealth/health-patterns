@@ -1,0 +1,40 @@
+name: Test out new github action for docker build push
+
+on:
+  pull_request:
+    branches: [ main ]
+
+# Environment variables available to all jobs and steps in this workflow
+# env:
+#   GITHUB_SHA: ${{ github.sha }}
+#   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
+#   ACD_API_KEY: ${{ secrets.ACD_API_KEY }}
+#   DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}
+#   IBM_CLOUD_REGION: us-east
+#   CLUSTER_NAMESPACE: github
+#   FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir
+#   FHIR_DEID_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
+#   NIFI_IP: github.wh-health-patterns.dev.watson-health.ibm.com/
+#   DEID_IP: github.wh-health-patterns.dev.watson-health.ibm.com/deid
+#   EXP_KAFKA_IP: github.wh-health-patterns.dev.watson-health.ibm.com/expose-kafka
+#   ASCVD_FROM_FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
+#   TERM_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
+#   DEID_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
+#   NLP_INSIGHTS_IP: github.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
+
+
+
+jobs:
+  SimpleTestIt:
+    name: Simple test of github action
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Download and Install IBM Cloud CLI
+    - name: SimpleEcho
+      run: |
+        echo "Hello World"
+        ls
