@@ -58,12 +58,19 @@ jobs:
       run: |
         cat services/nlp-insights/text_analytics/app.py
 
-    - name: Generate build ID
+    - name: Generate tag
       id: prep
       run: |
           ts=$(date +%s)
-          echo "::set-output name=BUILD_ID::${ts}"
+          echo "::set-output name=TAG::dlranum/nlp-insights:${ts}"
 
     - name: Print id
       run: |
-        echo "dlranum/nlp-insights:${{ steps.prep.outputs.BUILD_ID }}"
+        echo "${{ steps.prep.outputs.TAG }}"
+
+    # - name: Login to DockerHub Registry
+    #   run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
+    # - name: Build the tagged Docker image
+    #   run: docker build . --file Dockerfile --tag ${{steps.vars.outputs.tag}}
+    # - name: Push the tagged Docker image
+    #   run: docker push ${{steps.vars.outputs.tag}}
