@@ -75,11 +75,12 @@ jobs:
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
     - name: Build the tagged Docker image
-      run: docker build  -t ${{ secrets.DLR_DOCKERHUB_USERNAME }}/expose-kafka:${{steps.vars.outputs.tag}} .
+      run: docker build  -t dlranum/expose-kafka:${{steps.prep.outputs.tag}} .
     - name: Push the tagged Docker image
-      run: docker push ${{ secrets.DLR_DOCKERHUB_USERNAME }}/expose-kafka:${{steps.vars.outputs.tag}}
+      run: docker push dlranum/expose-kafka:${{steps.prep.outputs.tag}}
 
     - name: Update values yaml
       run: |
-        sed -i .old  "s@tag:.*@tag:${{steps.vars.outputs.tag}}@" values.yaml
+        sed -i .old  "s@tag:.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
+        sed -i .old  "s@repository:.*@repository: ${{steps.prep.outputs.tag}}@" values.yaml
         cat values.yaml
