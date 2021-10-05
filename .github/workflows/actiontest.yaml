@@ -26,7 +26,7 @@ name: Updates to nlp insights
 on:
  pull_request:
   paths:
-  - services/nlp-insights/text_analytics/app.py
+  - services/expose-kafka/exposekafka.py
 
 jobs:
   SimpleTestDevFlow:
@@ -40,13 +40,13 @@ jobs:
 
     - name: SimpleEcho
       run: |
-        echo "Change to the app.py"
+        echo "Change to the exposekafka.py"
 
     - name: Read Helm Chart
       id: chart
       uses: jacobtomlinson/gha-read-helm-chart@master
       with:
-        path: services/nlp-insights/chart
+        path: services/expose-kafka/chart
 
     - name: Print outputs
       run: |
@@ -56,21 +56,26 @@ jobs:
 
     - name: Cat the file
       run: |
-        cat services/nlp-insights/text_analytics/app.py
+        cat services/expose-kafka/exposekafka.py
 
     - name: Generate tag
       id: prep
       run: |
           ts=$(date +%s)
-          echo "::set-output name=TAG::dlranum/nlp-insights:${ts}"
+          echo "::set-output name=TAG::${ts}"
 
     - name: Print id
       run: |
-        echo "${{ steps.prep.outputs.TAG }}"
+        echo "TAG:${{ steps.prep.outputs.TAG }}"
 
-    # - name: Login to DockerHub Registry
-    #   run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
-    # - name: Build the tagged Docker image
-    #   run: docker build . --file Dockerfile --tag ${{steps.vars.outputs.tag}}
-    # - name: Push the tagged Docker image
-    #   run: docker push ${{steps.vars.outputs.tag}}
+    - name: Login to DockerHub Registry
+      run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
+    - name: Build the tagged Docker image
+      run: docker build . --file Dockerfile --tag dlranum/expose-kafka:${{steps.vars.outputs.tag}}
+    - name: Push the tagged Docker image
+      run: docker push dlranum/expose-kafka:${{steps.vars.outputs.tag}}
+
+    - name: Update values yaml
+      run: |
+        sed -i .old  "s@tag:.*@tag:${{steps.vars.outputs.tag}}@" values.yaml
+        cat values.yaml

@@ -1,3 +1,5 @@
+# Test comment
+
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
 from kafka.admin import KafkaAdminClient, NewTopic
