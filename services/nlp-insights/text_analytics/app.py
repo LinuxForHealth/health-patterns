@@ -1,4 +1,5 @@
 # Module comment
+# new comment
 
 import json
 import logging
