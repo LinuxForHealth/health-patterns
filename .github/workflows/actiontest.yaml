@@ -1,8 +1,13 @@
 name: Prototype github action
 
+# on:
+#   pull_request:
+#     branches: [ main ]
+
 on:
-  pull_request:
-    branches: [ main ]
+ pull_request:
+  paths:
+  - '**.py'
 
 # Environment variables available to all jobs and steps in this workflow
 # env:
@@ -34,7 +39,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Download and Install IBM Cloud CLI
+
     - name: SimpleEcho
       run: |
         echo "Hello World"
