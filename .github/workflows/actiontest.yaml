@@ -66,7 +66,7 @@ jobs:
 
     - name: Print id
       run: |
-        echo "TAG:${{ steps.prep.outputs.TAG }}"
+        echo "${{ steps.prep.outputs.TAG }}"
 
     - name: Change dir
       run: |
@@ -75,7 +75,7 @@ jobs:
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
     - name: Build the tagged Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DLR_DOCKERHUB_USERNAME }}/expose-kafka:${{steps.vars.outputs.tag}}
+      run: docker build  -t ${{ secrets.DLR_DOCKERHUB_USERNAME }}/expose-kafka:${{steps.vars.outputs.tag}} .
     - name: Push the tagged Docker image
       run: docker push ${{ secrets.DLR_DOCKERHUB_USERNAME }}/expose-kafka:${{steps.vars.outputs.tag}}
 
