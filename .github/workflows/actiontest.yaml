@@ -24,7 +24,7 @@ name: Updates to nlp insights
 
 
 on:
- push:
+ pull_request:
   paths:
   - services/nlp-insights/text_analytics/app.py
 
@@ -49,7 +49,7 @@ jobs:
         path: services/nlp-insights/Chart/chart.yaml
 
     - name: Print outputs
-        run: |
+      run: |
         echo "Name - ${{ steps.chart.outputs.name }}"
         echo "Version - ${{ steps.chart.outputs.version }}"
         echo "App Version - ${{ steps.chart.outputs.appVersion }}"
