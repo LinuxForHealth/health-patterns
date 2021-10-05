@@ -1,4 +1,4 @@
-name: Test out new github action for docker build push
+name: Prototype github action
 
 on:
   pull_request:
@@ -23,23 +23,27 @@ on:
 #   NLP_INSIGHTS_IP: github.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
 
 
+on:
+ pull_request:
+  paths:
+  - 'services/nlp-insights/text_analytics/app.py'
 
 jobs:
   SimpleTestIt:
-    name: Simple test of github action
+    name: Dev flow
     runs-on: ubuntu-latest
     steps:
 
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Download and Install IBM Cloud CLI
-    - name: SimpleEcho
-      run: |
-        echo "Hello World"
-        ls
-    - name: DockerMeta
-      id: meta
-      uses: docker/metadata-action@v3
+    - name: Read Helm Chart
+      id: chart
+      uses: jacobtomlinson/gha-read-helm-chart@master
       with:
-        images: name/app
+        path: services/nlp-insights/chart/Chart.yaml
+    - name: Print outputs
+        run: |
+        echo "Name - ${{ steps.chart.outputs.name }}"
+        echo "Version - ${{ steps.chart.outputs.version }}"
+        echo "App Version - ${{ steps.chart.outputs.appVersion }}"
