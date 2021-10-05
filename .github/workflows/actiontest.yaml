@@ -75,7 +75,7 @@ jobs:
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
     - name: Build the tagged Docker image
-      run: docker build  -t dlranum/expose-kafka:${{steps.prep.outputs.tag}} .
+      run: docker build  -t dlranum/expose-kafka:${{steps.prep.outputs.tag}} -f Dockerfile
     - name: Push the tagged Docker image
       run: docker push dlranum/expose-kafka:${{steps.prep.outputs.tag}}
 
