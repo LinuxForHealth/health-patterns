@@ -71,24 +71,17 @@ jobs:
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
 
-    # - name: Build and push
-    #   id: docker_build
-    #   uses: docker/build-push-action@v2
-    #   with:
-    #     push: true
-    #     tags: dlranum/expose-kafka:${{steps.prep.outputs.tag}}
+    - name: Build the tagged Docker image
+      run: |
+        cd services/expose-kafka
+        docker build  -t dlranum/expose-kafka:${{steps.prep.outputs.tag}} -f Dockerfile .
 
-    # - name: Build the tagged Docker image
-    #   run: |
-    #     cd services/expose-kafka
-    #     docker build  -t dlranum/expose-kafka:${{steps.prep.outputs.tag}} -f Dockerfile .
-    #
-    # - name: Push the tagged Docker image
-    #   run: docker push dlranum/expose-kafka:${{steps.prep.outputs.tag}}
+    - name: Push the tagged Docker image
+      run: docker push dlranum/expose-kafka:${{steps.prep.outputs.tag}}
 
     - name: Update values yaml
       run: |
         cd services/expose-kafka/chart
         sed -i   "s@tag:.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
-        sed -i   "s@repository:.*@repository: ${{steps.prep.outputs.tag}}@" values.yaml
+        sed -i   "s@repository:.*@repository: dlranum/expose-kafka@" values.yaml
         cat values.yaml
