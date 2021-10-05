@@ -23,10 +23,10 @@ on:
 #   NLP_INSIGHTS_IP: github.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
 
 
-on:
- pull_request:
-  paths:
-  - 'services/nlp-insights/text_analytics/app.py'
+# on:
+#  pull_request:
+#   paths:
+#   - 'services/nlp-insights/text_analytics/app.py'
 
 jobs:
   SimpleTestIt:
