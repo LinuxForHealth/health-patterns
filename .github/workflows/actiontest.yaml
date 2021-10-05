@@ -9,7 +9,7 @@ name: Prototype github action
 on:
  push:
   paths:
-  - '**.py'
+  - services/nlp-insights/text_analytics/app.py
 
 # Environment variables available to all jobs and steps in this workflow
 # env:
@@ -44,5 +44,5 @@ jobs:
 
     - name: SimpleEcho
       run: |
-        echo "Hello World"
+        echo "Change to the app.py"
         ls
