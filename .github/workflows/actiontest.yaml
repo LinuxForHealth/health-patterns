@@ -23,10 +23,7 @@ on:
 #   NLP_INSIGHTS_IP: github.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
 
 
-# on:
-#  pull_request:
-#   paths:
-#   - 'services/nlp-insights/text_analytics/app.py'
+
 
 jobs:
   SimpleTestIt:
@@ -37,13 +34,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Read Helm Chart
-      id: chart
-      uses: jacobtomlinson/gha-read-helm-chart@master
+    # Download and Install IBM Cloud CLI
+    - name: SimpleEcho
+      run: |
+        echo "Hello World"
+        ls
+    - name: DockerMeta
+      id: meta
+      uses: docker/metadata-action@v3
       with:
-        path: services/nlp-insights/chart/Chart.yaml
-    - name: Print outputs
-        run: |
-        echo "Name - ${{ steps.chart.outputs.name }}"
-        echo "Version - ${{ steps.chart.outputs.version }}"
-        echo "App Version - ${{ steps.chart.outputs.appVersion }}"
+        images: name/app
