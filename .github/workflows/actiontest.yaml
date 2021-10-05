@@ -1,4 +1,4 @@
-name: Updates to nlp insights
+name: Updates to expose kafka python source
 
 # on:
 #   pull_request:
@@ -83,5 +83,4 @@ jobs:
       run: |
         cd services/expose-kafka/chart
         sed -i   "s@tag:.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
-        sed -i   "s@repository:.*@repository: dlranum/expose-kafka@" values.yaml
         cat values.yaml
