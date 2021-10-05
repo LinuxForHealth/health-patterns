@@ -44,7 +44,6 @@ oidc:
   client: 
     id: &oidc_client_id replace-me
     secret: &oidc_client_secret replace-me
-  storageClassName: &oidc_storage_class_name ibmc-vpc-block-metro-10iops-tier
 
 ascvd:
   enabled: true
@@ -210,7 +209,7 @@ nifi_new:
     hostname: *hostname
   service:
     port: 8443
-  storageClassName: *oidc_storage_class_name
+  storageClassName: ibmc-vpc-block-metro-10iops-tier
 
 # ------------------------------------------------------------------------------
 # Nifi Configuration
