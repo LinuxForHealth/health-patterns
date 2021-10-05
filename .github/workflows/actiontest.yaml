@@ -7,7 +7,7 @@ name: Prototype github action
 # extra comment
 
 on:
- pull_request:
+ push:
   paths:
   - '**.py'
 
