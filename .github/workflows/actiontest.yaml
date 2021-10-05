@@ -57,3 +57,15 @@ jobs:
     - name: Cat the file
       run: |
         cat services/nlp-insights/text_analytics/app.py
+
+    - name: Generate build ID
+      id: prep
+      run: |
+#          branch=${GITHUB_REF##*/}
+#          sha=${GITHUB_SHA::8}
+          ts=$(date +%s)
+          echo "::set-output name=BUILD_ID::${ts}"
+
+    - name: Print id
+      run: |
+        echo "dlranum/nlp-insights:${{ steps.prep.outputs.BUILD_ID }}"
