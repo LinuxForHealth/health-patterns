@@ -82,11 +82,12 @@ jobs:
       run: |
         cd services/expose-kafka
         docker build  -t dlranum/expose-kafka:${{steps.prep.outputs.tag}} -f Dockerfile .
-    # - name: Push the tagged Docker image
-    #   run: docker push dlranum/expose-kafka:${{steps.prep.outputs.tag}}
+
+    - name: Push the tagged Docker image
+      run: docker push dlranum/expose-kafka:${{steps.prep.outputs.tag}}
 
     - name: Update values yaml
       run: |
-        sed -i .old  "s@tag:.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
+        sed -i .old  "s@tag:\.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
         sed -i .old  "s@repository:.*@repository: ${{steps.prep.outputs.tag}}@" values.yaml
         cat values.yaml
