@@ -71,6 +71,7 @@ jobs:
     - name: Change dir
       run: |
         cd services/expose-kafka
+        echo $pwd
 
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
