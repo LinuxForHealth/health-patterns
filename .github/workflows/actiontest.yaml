@@ -88,6 +88,7 @@ jobs:
 
     - name: Update values yaml
       run: |
-        sed -i .old  "s@tag:\\.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
+        cd services/expose-kafka/chart
+        sed -i .old  "s@tag:.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
         sed -i .old  "s@repository:.*@repository: ${{steps.prep.outputs.tag}}@" values.yaml
         cat values.yaml
