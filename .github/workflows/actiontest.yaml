@@ -46,10 +46,14 @@ jobs:
       id: chart
       uses: jacobtomlinson/gha-read-helm-chart@master
       with:
-        path: services/nlp-insights/Chart/chart.yaml
+        path: services/nlp-insights/Chart
 
     - name: Print outputs
       run: |
         echo "Name - ${{ steps.chart.outputs.name }}"
         echo "Version - ${{ steps.chart.outputs.version }}"
         echo "App Version - ${{ steps.chart.outputs.appVersion }}"
+
+    - name: Cat the file
+      run: |
+        cat services/nlp-insights/text_analytics/app.py
