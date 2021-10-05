@@ -4,13 +4,6 @@ name: Prototype github action
 #   pull_request:
 #     branches: [ main ]
 
-# extra comment
-
-on:
- push:
-  paths:
-  - services/nlp-insights/text_analytics/app.py
-
 # Environment variables available to all jobs and steps in this workflow
 # env:
 #   GITHUB_SHA: ${{ github.sha }}
@@ -30,7 +23,10 @@ on:
 #   NLP_INSIGHTS_IP: github.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
 
 
-
+on:
+ push:
+  paths:
+  - services/nlp-insights/text_analytics/app.py
 
 jobs:
   SimpleTestIt:
