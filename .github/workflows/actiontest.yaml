@@ -40,12 +40,6 @@ jobs:
         echo "Hello World"
         ls
 
-    - name: DockerMeta
-      id: meta
-      uses: docker/metadata-action@v3
-      with:
-        images: name/app
-
     - name: Test out some actions
         steps:
           - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
