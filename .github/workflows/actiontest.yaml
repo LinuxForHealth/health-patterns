@@ -46,7 +46,7 @@ jobs:
       id: chart
       uses: jacobtomlinson/gha-read-helm-chart@master
       with:
-        path: services/nlp-insights/Chart
+        path: services/nlp-insights/chart
 
     - name: Print outputs
       run: |
