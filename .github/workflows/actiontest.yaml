@@ -36,6 +36,8 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        ref: dlr-test-actions
 
 
     - name: SimpleEcho
@@ -84,6 +86,21 @@ jobs:
         cd services/expose-kafka/chart
         sed -i   "s@tag:.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
         cat values.yaml
+
+    - name: Add and commit change
+      run: |
+        cd services/expose-kafka/chart
+        git config --local user.email "dlranum@us.ibm.com"
+        git config --local user.name "David Ranum"
+        git add values.yaml
+        git commit -s -m "new tag"
+        git log
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.DLR_GITHUB_TOKEN }}
+        branch: dlr-test-actions
 
 # commit values.yaml back
 # not sure how to deal with branch
