@@ -34,73 +34,79 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        ref: dlr-test-actions
+    - name: Git branch name
+      id: git-branch-name
+      uses: EthanSK/git-branch-name-action@v1
+    - name: Echo the branch name
+      run: echo "Branch name ${GIT_BRANCH_NAME}"
 
-
-    - name: SimpleEcho
-      run: |
-        echo "Change to the exposekafka.py"
-
-    - name: Read Helm Chart
-      id: chart
-      uses: jacobtomlinson/gha-read-helm-chart@master
-      with:
-        path: services/expose-kafka/chart
-
-    - name: Print outputs
-      run: |
-        echo "Name - ${{ steps.chart.outputs.name }}"
-        echo "Version - ${{ steps.chart.outputs.version }}"
-        echo "App Version - ${{ steps.chart.outputs.appVersion }}"
-
-    - name: Cat the file
-      run: |
-        cat services/expose-kafka/exposekafka.py
-
-    - name: Generate tag
-      id: prep
-      run: |
-          ts=$(date +%s)
-          echo "::set-output name=TAG::${ts}"
-
-    - name: Print id
-      run: |
-        echo "${{ steps.prep.outputs.TAG }}"
-
-    - name: Login to DockerHub Registry
-      run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
-
-    - name: Build the tagged Docker image
-      run: |
-        cd services/expose-kafka
-        docker build  -t dlranum/expose-kafka:${{steps.prep.outputs.tag}} -f Dockerfile .
-
-    - name: Push the tagged Docker image
-      run: docker push dlranum/expose-kafka:${{steps.prep.outputs.tag}}
-
-    - name: Update values yaml
-      run: |
-        cd services/expose-kafka/chart
-        sed -i   "s@tag:.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
-        cat values.yaml
-
-    - name: Add and commit change
-      run: |
-        cd services/expose-kafka/chart
-        git config --local user.email "dlranum@us.ibm.com"
-        git config --local user.name "David Ranum"
-        git add values.yaml
-        git commit -s -m "new tag"
-        git log
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.DLR_GITHUB_TOKEN }}
-        branch: dlr-test-actions
+    # - name: Checkout
+    #   uses: actions/checkout@v2
+    #   with:
+    #     ref: dlr-test-actions
+    #
+    #
+    # - name: SimpleEcho
+    #   run: |
+    #     echo "Change to the exposekafka.py"
+    #
+    # - name: Read Helm Chart
+    #   id: chart
+    #   uses: jacobtomlinson/gha-read-helm-chart@master
+    #   with:
+    #     path: services/expose-kafka/chart
+    #
+    # - name: Print outputs
+    #   run: |
+    #     echo "Name - ${{ steps.chart.outputs.name }}"
+    #     echo "Version - ${{ steps.chart.outputs.version }}"
+    #     echo "App Version - ${{ steps.chart.outputs.appVersion }}"
+    #
+    # - name: Cat the file
+    #   run: |
+    #     cat services/expose-kafka/exposekafka.py
+    #
+    # - name: Generate tag
+    #   id: prep
+    #   run: |
+    #       ts=$(date +%s)
+    #       echo "::set-output name=TAG::${ts}"
+    #
+    # - name: Print id
+    #   run: |
+    #     echo "${{ steps.prep.outputs.TAG }}"
+    #
+    # - name: Login to DockerHub Registry
+    #   run: echo ${{ secrets.DLR_DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DLR_DOCKERHUB_USERNAME }} --password-stdin
+    #
+    # - name: Build the tagged Docker image
+    #   run: |
+    #     cd services/expose-kafka
+    #     docker build  -t dlranum/expose-kafka:${{steps.prep.outputs.tag}} -f Dockerfile .
+    #
+    # - name: Push the tagged Docker image
+    #   run: docker push dlranum/expose-kafka:${{steps.prep.outputs.tag}}
+    #
+    # - name: Update values yaml
+    #   run: |
+    #     cd services/expose-kafka/chart
+    #     sed -i   "s@tag:.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
+    #     cat values.yaml
+    #
+    # - name: Add and commit change
+    #   run: |
+    #     cd services/expose-kafka/chart
+    #     git config --local user.email "dlranum@us.ibm.com"
+    #     git config --local user.name "David Ranum"
+    #     git add values.yaml
+    #     git commit -s -m "new tag"
+    #     git log
+    #
+    # - name: Push changes
+    #   uses: ad-m/github-push-action@master
+    #   with:
+    #     github_token: ${{ secrets.DLR_GITHUB_TOKEN }}
+    #     branch: dlr-test-actions
 
 # commit values.yaml back
 # not sure how to deal with branch
