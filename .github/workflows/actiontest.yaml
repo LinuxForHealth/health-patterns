@@ -47,7 +47,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: ${{env.GIT_BRANCH_NAME}}
-    
+
     - name: SimpleEcho
       run: |
         echo "Change to the exposekafka.py"
@@ -108,4 +108,4 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.DLR_GITHUB_TOKEN }}
-        branch: ${GIT_BRANCH_NAME}
+        branch: ${{env.GIT_BRANCH_NAME}}
