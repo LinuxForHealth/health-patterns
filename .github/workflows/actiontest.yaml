@@ -84,3 +84,6 @@ jobs:
         cd services/expose-kafka/chart
         sed -i   "s@tag:.*@tag: ${{steps.prep.outputs.tag}}@" values.yaml
         cat values.yaml
+
+# commit values.yaml back
+# not sure how to deal with branch
