@@ -1,4 +1,4 @@
-# Test comment
+# Test comment for demo
 
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
