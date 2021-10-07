@@ -1,7 +1,7 @@
 [         
         {
-            "name": "PhiFHIRHealthCheck",
-            "url": "${phi_fhir_server}/$healthcheck",
+            "name": "PriFHIRHealthCheck",
+            "url": "${pri_fhir_server}/$healthcheck",
             "method": "GET",
             "request": { },
             "verify": {

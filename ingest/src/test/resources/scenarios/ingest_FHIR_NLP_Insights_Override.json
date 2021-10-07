@@ -37,7 +37,7 @@
         
         {
             "name": "verifyPatientIngestion",
-            "url": "${phi_fhir_server}/Patient?family=${2}&given=${1}",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
             "method": "GET",
             "request": {
             },
@@ -51,7 +51,7 @@
         },
         {
             "name": "getPatientImmunization",
-            "url": "${phi_fhir_server}/Immunization",
+            "url": "${pri_fhir_server}/Immunization",
             "method": "GET",
             "request": {
             },
@@ -71,7 +71,7 @@
         },  
         {
             "name": "getPatientAllergyIntolerance",
-            "url": "${phi_fhir_server}/AllergyIntolerance",
+            "url": "${pri_fhir_server}/AllergyIntolerance",
             "method": "GET",
             "request": {
             },
@@ -91,7 +91,7 @@
         },  
         {
             "name": "deletePatientOnPhiFHIR",
-            "url": "${phi_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
             "method": "DELETE",
             "request": {
             },

@@ -4,7 +4,7 @@
     "steps": [
         {
             "name": "all_patients",
-            "url": "${phi_fhir_server}/fhir-server/api/v4/Patient",
+            "url": "${pri_fhir_server}/fhir-server/api/v4/Patient",
             "method": "GET",
             "request": {
             },
@@ -18,7 +18,7 @@
         },
         {
             "name": "delete_patient",
-            "url": "${phi_fhir_server}/fhir-server/api/v4/Patient/${$.all_patients.response.body.entry[0].resource.id}",
+            "url": "${pri_fhir_server}/fhir-server/api/v4/Patient/${$.all_patients.response.body.entry[0].resource.id}",
             "method": "DELETE",
             "request": {
             },
@@ -31,7 +31,7 @@
         },
         {
             "name": "all_patients_again",
-            "url": "${phi_fhir_server}/fhir-server/api/v4/Patient",
+            "url": "${pri_fhir_server}/fhir-server/api/v4/Patient",
             "method": "GET",
             "request": {
             },

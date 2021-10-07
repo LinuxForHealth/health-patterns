@@ -23,7 +23,7 @@
         
                 {
             "name": "verifyPatientNotIngested",
-            "url": "${phi_fhir_server}/Patient?family=${2}&given=${1}",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
             "method": "GET",
             "request": {
             },
@@ -58,7 +58,7 @@
         
                 {
             "name": "verifyPatientIngested",
-            "url": "${phi_fhir_server}/Patient?family=${2}&given=${1}",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
             "method": "GET",
             "request": {
             },
@@ -73,7 +73,7 @@
 
         {
             "name": "deletePatientOnPhiFHIR",
-            "url": "${phi_fhir_server}/Patient/${$.verifyPatientIngested.response.body.entry[0].resource.id}",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngested.response.body.entry[0].resource.id}",
             "method": "DELETE",
             "request": {
             },
