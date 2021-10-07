@@ -5,7 +5,7 @@
 
         {
             "name": "checkPHIFHIRProxy",
-           "url": "${phi_fhir_proxy_server}/$healthcheck",
+           "url": "${pri_fhir_proxy_server}/$healthcheck",
             "method": "GET",
             "request": { },
             "verify": {
