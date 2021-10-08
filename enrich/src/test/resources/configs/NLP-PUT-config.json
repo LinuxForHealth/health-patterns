@@ -1,0 +1,7 @@
+{
+  "name": "NLP-PUT-config",
+  "nlpServiceType": "quickumls",
+  "config": {
+    "endpoint": "https://configPUTURL/match"
+  }
+}

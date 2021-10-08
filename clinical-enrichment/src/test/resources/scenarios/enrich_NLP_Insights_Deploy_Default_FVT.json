@@ -1,0 +1,28 @@
+{
+    "scenarioName": "********enrich_NLP_Insights_Deploy_Default_FVT********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "getAllConfigs",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody": "$CONTAINS.STRING:No configs found"      
+            }
+        },
+        {
+            "name": "getDefaultConfig",
+            "url": "${nlp_insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "nlpService":"$CONTAINS.STRING:No default nlp service is currently set"}  
+            }
+        }
+     ]
+}

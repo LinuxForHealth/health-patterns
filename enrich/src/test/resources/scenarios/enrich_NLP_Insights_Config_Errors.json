@@ -1,0 +1,71 @@
+{
+    "scenarioName": "********enrich_NLP_Insights_Config_Errors********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "clearDefaultConfig${0}",
+            "url": "${nlp_insights}/config/clearDefault",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200
+             }
+        },              
+        {
+            "name": "createInvalidConfig${0}",
+            "url": "${nlp_insights}/config/definition",
+            "operation": "${0}",           
+                "request": {
+                "body" : "${1}"
+                },            
+            "verify": {
+                "status": 400
+            }
+        }, 
+        {
+            "name": "getAllConfigs",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyConfigList${0}",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getAllConfigs.response}",
+                 "string2": "${2}"
+            },
+            "verify": { "result": "false" }
+        },           
+        {
+            "name": "activateNonExistentConfig${0}",
+            "url": "${nlp_insights}/config/setDefault?name=${2}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 400
+            }
+        },
+        {
+            "name": "getActiveConfig${0}",
+            "url": "${nlp_insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 400,
+                "rawBody":"$CONTAINS.STRING:No default nlp service is currently set"
+            }
+        }             
+     ],
+     "parameterized": {
+        "csvSource":[
+            "POST,${JSON.FILE:configs/NLP-POST-invalid-config.json},NLP-POST-config",
+            "PUT,${JSON.FILE:configs/NLP-PUT-invalid-config.json},NLP-PUT-config"
+        ]
+    }
+}

@@ -1,0 +1,127 @@
+{
+    "scenarioName": "********enrich_Terminology_Map_Use********",
+    "ignoreStepFailures": true,
+    "steps": [ 
+        
+        {
+            "name": "getMappings",
+            "url": "${term_prep}/mapping",
+            "operation": "GET",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}},            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "putModifiedUSCoreToCDM",
+            "url": "${term_prep}/mapping/uscore-to-cdm-cm.json",
+            "operation": "PUT",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/uscore-to-cdm-cm-modify.json}" },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "gettModifiedUSCoreToCDM",
+            "url": "${term_prep}/mapping/uscore-to-cdm-cm.json",
+            "operation": "GET",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}},            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "putModifiedUSCoreBirthSex",
+            "url": "${term_prep}/mapping/uscore-birthsex-vs.json",
+            "operation": "PUT",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/uscore-birthsex-vs-modify.json}" },            
+            "verify": {
+                "status": 200
+            }
+        }, 
+        {
+            "name": "getModifiedUSCoreBirthSex",
+            "url": "${term_prep}/mapping/uscore-birthsex-vs.json",
+            "operation": "GET",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"} },            
+            "verify": {
+                "status": 200
+            }
+        },                    
+        {
+            "name": "enrichPatientWithoutSexAtBirth",
+            "url": "${term_prep}/",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+            }
+        }, 
+        {
+            "name": "verifySexAtBirth",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.enrichPatientWithoutSexAtBirth.response.body}",
+                 "string2": "femail"
+            },
+            "verify": { "result": "true" }
+        },      
+        {
+            "name": "putUSCoreBirthSex",
+            "url": "${term_prep}/mapping/uscore-birthsex-vs.json",
+            "operation": "PUT",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/uscore-birthsex-vs.json}" },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "putUSCoreToCDM",
+            "url": "${term_prep}/mapping/uscore-to-cdm-cm.json",
+            "operation": "PUT",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/uscore-to-cdm-cm.json}" },            
+            "verify": {
+                "status": 200
+            }
+        },        
+        {
+            "name": "enrichPatientWithSexAtBirth",
+            "url": "${term_prep}/",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifySexAtBirth",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.enrichPatientWithSexAtBirth.response.body}",
+                 "string2": "female"
+            },
+            "verify": { "result": "true" }
+        }
+       
+     ],
+          "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/patient-with-us-core-birthsex.json},Brain142,Doyle959,true,sex-assigned-at-birth,female"
+        ]
+    }
+}

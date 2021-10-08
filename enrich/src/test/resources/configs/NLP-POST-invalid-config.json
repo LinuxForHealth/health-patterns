@@ -1,0 +1,7 @@
+{
+  "name": "NLP-POST-invalid-config",
+  "nlpServiceType": "ABC",
+  "config": {
+    "endpoint": "https://configPOSTURL/match"
+  }
+}

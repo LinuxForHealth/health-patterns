@@ -1,0 +1,154 @@
+{
+    "scenarioName": "********enrich_Terminology_Map********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "getInitialMapList",
+            "url": "${term_prep}/mapping",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyNoExampleMap",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getInitialMapList.response.rawBody}",
+                 "string2": "example-map.json"
+            },
+            "verify": { "result": "false" }
+        },
+        {
+            "name": "postNewExampleMap",
+            "url": "${term_prep}/mapping/example-map.json",
+            "operation": "POST",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/example_Map.json}" },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getNewMapList",
+            "url": "${term_prep}/mapping",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody" : "$CONTAINS.STRING:example-map.json"
+            }
+        },
+        {
+            "name": "verifyExampleMap",
+            "url": "${term_prep}/mapping/example-map.json",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body" : {
+                    "version" : "20150622",
+                    "date" : "2015-06-22"
+                }
+            }
+        },
+        {
+            "name": "postNewMapUpdate",
+            "url": "${term_prep}/mapping/example-map.json",
+            "operation": "POST",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/example_Map_Update.json}" },            
+            "verify": {
+                "status": 400
+            }
+        },
+        {
+            "name": "verifyExampleMapNotUpdated",
+            "url": "${term_prep}/mapping/example-map.json",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body" : {
+                    "version" : "20150622",
+                    "date" : "2015-06-22"
+                }
+            }
+        },
+        {
+            "name": "putNewMapUpdate",
+            "url": "${term_prep}/mapping/example-map.json",
+            "operation": "PUT",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/example_Map_Update.json}" },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyExampleMapNotUpdated",
+            "url": "${term_prep}/mapping/example-map.json",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body" : {
+                    "version" : "20210622",
+                    "date" : "2021-06-22"
+                }
+            }
+        },
+        {
+            "name": "deleteNewMap",
+            "url": "${term_prep}/mapping/example-map.json",
+            "operation": "DELETE",           
+                "request": {     },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getFinalMapList",
+            "url": "${term_prep}/mapping",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyNoExampleMap",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getFinalMapList.response.rawBody}",
+                 "string2": "example-map.json"
+            },
+            "verify": { "result": "false" }
+        },
+        {
+            "name": "deleteNonExistentMap",
+            "url": "${term_prep}/mapping/example-map.json",
+            "operation": "DELETE",           
+                "request": {     },            
+            "verify": {
+                "status": 400
+            }
+        },
+        {
+            "name": "getStructureList",
+            "url": "${term_prep}/structureDefinitions",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        }              
+     ]
+}
