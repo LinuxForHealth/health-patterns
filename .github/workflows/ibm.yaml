@@ -83,7 +83,6 @@ jobs:
          date
          sleep 120  
          date
-         cd clinical-enrichment
          echo "*************************************" 
          echo "* Execute the testcases             *"
          echo "*************************************"
