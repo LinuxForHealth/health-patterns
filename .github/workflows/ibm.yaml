@@ -76,6 +76,7 @@ jobs:
     # Execute Enrichment Tests 
     - name: Execute Enrichment Tests
       run: |
+         cd enrich
          echo "*************************************"
          echo "* Waiting for 2 minutes             *"
          echo "*************************************"
