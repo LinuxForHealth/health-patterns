@@ -1,0 +1,3231 @@
+{
+  "resourceType": "Bundle",
+  "id": "${UUID()}",
+  "type": "transaction",
+  "entry": [
+
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-064df56e-b3fe-4b62-8710-75dc506e500a",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.748Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "718-7",
+              "display": "Hemoglobin [Mass/volume] in Blood"
+            }
+          ],
+          "text": "Hemoglobin [Mass/volume] in Blood"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 15.245,
+          "unit": "g/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "g/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-76442947-863b-4f18-aeb3-e704c19eb4dc",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.739Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "789-8",
+              "display": "Erythrocytes [#/volume] in Blood by Automated count"
+            }
+          ],
+          "text": "Erythrocytes [#/volume] in Blood by Automated count"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 4.4973,
+          "unit": "10*6/uL",
+          "system": "http://unitsofmeasure.org",
+          "code": "10*6/uL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-1c0f34cb-00a8-498f-b394-c5133107b73c",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.729Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "6690-2",
+              "display": "Leukocytes [#/volume] in Blood by Automated count"
+            }
+          ],
+          "text": "Leukocytes [#/volume] in Blood by Automated count"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 6.5308,
+          "unit": "10*3/uL",
+          "system": "http://unitsofmeasure.org",
+          "code": "10*3/uL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-446466f1-bf75-432b-8899-ec2aafe8267c",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.718Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "14959-1",
+              "display": "Microalbumin Creatinine Ratio"
+            }
+          ],
+          "text": "Microalbumin Creatinine Ratio"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 11.88,
+          "unit": "mg/g",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/g"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-9c7a55f4-1bb2-4cfa-938d-b0835e1d70f8",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.708Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2085-9",
+              "display": "High Density Lipoprotein Cholesterol"
+            }
+          ],
+          "text": "High Density Lipoprotein Cholesterol"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 72.85,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-5d55cda3-5b53-4676-ab0c-f102a9511b19",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.693Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "18262-6",
+              "display": "Low Density Lipoprotein Cholesterol"
+            }
+          ],
+          "text": "Low Density Lipoprotein Cholesterol"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 98.39,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-fc843b01-753b-4ca2-93ba-542075c9817c",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.682Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2571-8",
+              "display": "Triglycerides"
+            }
+          ],
+          "text": "Triglycerides"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 113.92,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-c6ff3e2c-aa1a-4d95-b8f5-16b45186000d",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.673Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2093-3",
+              "display": "Total Cholesterol"
+            }
+          ],
+          "text": "Total Cholesterol"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 194.03,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-9724641c-2c36-459b-822a-2b9ee2d66164",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.664Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "20565-8",
+              "display": "Carbon Dioxide"
+            }
+          ],
+          "text": "Carbon Dioxide"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 27.86,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-4f470162-4e65-41e3-829a-5c02f20c07d3",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.655Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2069-3",
+              "display": "Chloride"
+            }
+          ],
+          "text": "Chloride"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 101.66,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-198b4013-a2a6-43aa-acac-f030cecbf028",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.645Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "6298-4",
+              "display": "Potassium"
+            }
+          ],
+          "text": "Potassium"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 4.74,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-e035ef8f-baaa-4f5f-90a3-f802759ba97c",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.636Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2947-0",
+              "display": "Sodium"
+            }
+          ],
+          "text": "Sodium"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 138.93,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-14591fb3-8837-47f2-a2fc-b603f0d3db47",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.626Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "49765-1",
+              "display": "Calcium"
+            }
+          ],
+          "text": "Calcium"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 9.92,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39241-cd769a6f-b52d-4899-a614-8c889d4ba89b",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.617Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "38483-4",
+              "display": "Creatinine"
+            }
+          ],
+          "text": "Creatinine"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 0.39,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39240-dfa28ed4-0815-4a66-86ba-63623d2c4a01",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.593Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2339-0",
+              "display": "Glucose"
+            }
+          ],
+          "text": "Glucose"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 71.09,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39240-a500201c-efe8-46e0-9de4-47458a65802e",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.582Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "9279-1",
+              "display": "Respiratory rate"
+            }
+          ],
+          "text": "Respiratory rate"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 13,
+          "unit": "/min",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39240-62f05fd6-4e96-4526-9c82-061e0f873ed2",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.571Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 76,
+          "unit": "/min",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39240-41434fd1-d6f4-46e4-b251-69a4ca880c91",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.55Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood Pressure"
+            }
+          ],
+          "text": "Blood Pressure"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4",
+                  "display": "Diastolic Blood Pressure"
+                }
+              ],
+              "text": "Diastolic Blood Pressure"
+            },
+            "valueQuantity": {
+              "value": 88,
+              "unit": "mm[Hg]",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6",
+                  "display": "Systolic Blood Pressure"
+                }
+              ],
+              "text": "Systolic Blood Pressure"
+            },
+            "valueQuantity": {
+              "value": 107,
+              "unit": "mm[Hg]",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39240-14599cee-8c53-48f8-be2e-91167d99cde0",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.539Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "Body Mass Index"
+            }
+          ],
+          "text": "Body Mass Index"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 27.68,
+          "unit": "kg/m2",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg/m2"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39240-6124cc4e-a914-44f2-8db2-c13e5a22976c",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.522Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7",
+              "display": "Body Weight"
+            }
+          ],
+          "text": "Body Weight"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 74.9,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39240-2e7e6d64-11c8-464e-a2fa-8eee45fa78f7",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.487Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8302-2",
+              "display": "Body Height"
+            }
+          ],
+          "text": "Body Height"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-31a09fb0-4251-4703-a5e0-81ce21186853"
+        },
+        "effectiveDateTime": "2014-02-14T12:49:18-06:00",
+        "issued": "2014-02-14T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 164.5,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad39240-8bc6ef13-40b0-4204-9523-5158664896ac",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.417Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8310-5",
+              "display": "Body temperature"
+            },
+            {
+              "system": "http://loinc.org",
+              "code": "8331-1",
+              "display": "Oral temperature"
+            }
+          ],
+          "text": "Body temperature"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad39240-315a9951-0e11-417c-8d31-d0fbd3e93fe8"
+        },
+        "effectiveDateTime": "2013-04-25T13:49:18-05:00",
+        "issued": "2013-04-25T13:49:18.047-05:00",
+        "valueQuantity": {
+          "value": 37.043,
+          "unit": "Cel",
+          "system": "http://unitsofmeasure.org",
+          "code": "Cel"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-303af269-e519-49ce-b1b5-66a0b13316a0",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.224Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+            }
+          ],
+          "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 5.42,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org",
+          "code": "%"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-9111fc59-fd32-4b62-a9ed-58afe6b4ff56",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.212Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "survey",
+                "display": "survey"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "72166-2",
+              "display": "Tobacco smoking status NHIS"
+            }
+          ],
+          "text": "Tobacco smoking status NHIS"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "266919005",
+              "display": "Never smoker"
+            }
+          ],
+          "text": "Never smoker"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-96399d18-7efd-4b53-ab03-3f7af394cd79",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.2Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "33914-3",
+              "display": "Estimated Glomerular Filtration Rate"
+            }
+          ],
+          "text": "Estimated Glomerular Filtration Rate"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 80.67,
+          "unit": "mL/min/{1.73_m2}",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL/min/{1.73_m2}"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-05b65b50-5c05-4bf6-b5ea-5a61db69d8b0",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.189Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "14959-1",
+              "display": "Microalbumin Creatinine Ratio"
+            }
+          ],
+          "text": "Microalbumin Creatinine Ratio"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 7.74,
+          "unit": "mg/g",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/g"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-8fbd75ac-d942-4ec8-866e-2985b3eb08ac",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.172Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2085-9",
+              "display": "High Density Lipoprotein Cholesterol"
+            }
+          ],
+          "text": "High Density Lipoprotein Cholesterol"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 63.69,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-01980d42-8558-4915-a018-b96a6cfbdae1",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.159Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "18262-6",
+              "display": "Low Density Lipoprotein Cholesterol"
+            }
+          ],
+          "text": "Low Density Lipoprotein Cholesterol"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 105.79,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-8a7b66e1-87ac-4882-9899-67539e2ffd06",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.145Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2571-8",
+              "display": "Triglycerides"
+            }
+          ],
+          "text": "Triglycerides"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 125.62,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-a69bdf46-44e2-4b95-b40b-4d7a8e9b9102",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.133Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2093-3",
+              "display": "Total Cholesterol"
+            }
+          ],
+          "text": "Total Cholesterol"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 194.6,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-80d24a49-1a5a-4400-b452-540f4bad0549",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.121Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "20565-8",
+              "display": "Carbon Dioxide"
+            }
+          ],
+          "text": "Carbon Dioxide"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 20.82,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-99d3b254-0dca-438b-be04-2a13f792eecd",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.108Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2069-3",
+              "display": "Chloride"
+            }
+          ],
+          "text": "Chloride"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 102.9,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-1bb05c7d-bc19-4703-80b3-7d574e0b1c6f",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.094Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "6298-4",
+              "display": "Potassium"
+            }
+          ],
+          "text": "Potassium"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 4.1,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-5ac30110-5b0d-4864-9525-8f3ad56d45be",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.081Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2947-0",
+              "display": "Sodium"
+            }
+          ],
+          "text": "Sodium"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 138.41,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-8ebcbe94-e2f2-4f86-a94a-4371565cfba2",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.067Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "49765-1",
+              "display": "Calcium"
+            }
+          ],
+          "text": "Calcium"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 9.22,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-33c5f6bc-badf-48c4-b13c-de16173ff940",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.055Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "38483-4",
+              "display": "Creatinine"
+            }
+          ],
+          "text": "Creatinine"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 0.49,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-3e5b8982-5858-44e6-8879-42cd2df2c4ec",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.033Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2339-0",
+              "display": "Glucose"
+            }
+          ],
+          "text": "Glucose"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 80.66,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-093d548e-c46c-4ea1-8f13-dbd3018858c6",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.021Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "9279-1",
+              "display": "Respiratory rate"
+            }
+          ],
+          "text": "Respiratory rate"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 14,
+          "unit": "/min",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-5a02edbb-d469-43ec-82ab-e7d755764a21",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:02.008Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 97,
+          "unit": "/min",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-ee006bcb-43c0-4f8a-a189-592b18cdb534",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.992Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood Pressure"
+            }
+          ],
+          "text": "Blood Pressure"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4",
+                  "display": "Diastolic Blood Pressure"
+                }
+              ],
+              "text": "Diastolic Blood Pressure"
+            },
+            "valueQuantity": {
+              "value": 74,
+              "unit": "mm[Hg]",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6",
+                  "display": "Systolic Blood Pressure"
+                }
+              ],
+              "text": "Systolic Blood Pressure"
+            },
+            "valueQuantity": {
+              "value": 125,
+              "unit": "mm[Hg]",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-502378a5-29dd-4937-bfad-11bceb484267",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.977Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "Body Mass Index"
+            }
+          ],
+          "text": "Body Mass Index"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 27.68,
+          "unit": "kg/m2",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg/m2"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-1d0d23c3-a2b0-4e0a-9543-29b911c25450",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.966Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7",
+              "display": "Body Weight"
+            }
+          ],
+          "text": "Body Weight"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 74.9,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923f-662a5376-058e-4a6c-a6b0-80379f52fd44",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.928Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8302-2",
+              "display": "Body Height"
+            }
+          ],
+          "text": "Body Height"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923e-719e379c-d9c4-435f-b20b-9f13c4caae42"
+        },
+        "effectiveDateTime": "2013-03-08T12:49:18-06:00",
+        "issued": "2013-03-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 164.5,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923e-5e810619-7c84-425f-baaf-1fc076e95c93",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.644Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+            }
+          ],
+          "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 5.42,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org",
+          "code": "%"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923e-28d09e3a-8ab4-4b70-b1b7-eca6ba4f8d82",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.625Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "survey",
+                "display": "survey"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "72166-2",
+              "display": "Tobacco smoking status NHIS"
+            }
+          ],
+          "text": "Tobacco smoking status NHIS"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "266919005",
+              "display": "Never smoker"
+            }
+          ],
+          "text": "Never smoker"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923e-3c4d284e-6bd7-4840-b691-a8b7f47fb24b",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.611Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "33914-3",
+              "display": "Estimated Glomerular Filtration Rate"
+            }
+          ],
+          "text": "Estimated Glomerular Filtration Rate"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 66.88,
+          "unit": "mL/min/{1.73_m2}",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL/min/{1.73_m2}"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923e-67935818-ff8d-4dda-b3c0-396902df0021",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.6Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "14959-1",
+              "display": "Microalbumin Creatinine Ratio"
+            }
+          ],
+          "text": "Microalbumin Creatinine Ratio"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 0.32,
+          "unit": "mg/g",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/g"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923e-4ec8079e-bbbd-4534-b54b-0f678da865f5",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.589Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2085-9",
+              "display": "High Density Lipoprotein Cholesterol"
+            }
+          ],
+          "text": "High Density Lipoprotein Cholesterol"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 62.64,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-a42f277e-b48b-4f24-88c9-0f198bd805bb",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.577Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "18262-6",
+              "display": "Low Density Lipoprotein Cholesterol"
+            }
+          ],
+          "text": "Low Density Lipoprotein Cholesterol"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 81.96,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-5afa5f49-918e-4a3b-8505-7c99f65f0d2b",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.564Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2571-8",
+              "display": "Triglycerides"
+            }
+          ],
+          "text": "Triglycerides"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 127.46,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-57038cf8-4d3b-4d84-8b37-bbfdb2d90048",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.551Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2093-3",
+              "display": "Total Cholesterol"
+            }
+          ],
+          "text": "Total Cholesterol"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 170.08,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-c077ec64-c77d-4b6b-bc7c-76129fca77b2",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.527Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "20565-8",
+              "display": "Carbon Dioxide"
+            }
+          ],
+          "text": "Carbon Dioxide"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 26.42,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-69eca9b7-26e0-44a2-bd27-37cb4b4f320c",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.51Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2069-3",
+              "display": "Chloride"
+            }
+          ],
+          "text": "Chloride"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 107.32,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-6f781e61-e337-4f3c-9f46-24ccaad069ce",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.491Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "6298-4",
+              "display": "Potassium"
+            }
+          ],
+          "text": "Potassium"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 4.93,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-8986e020-1870-4ec2-b48d-c0c4978d666e",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.478Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2947-0",
+              "display": "Sodium"
+            }
+          ],
+          "text": "Sodium"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 143.18,
+          "unit": "mmol/L",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-b4d8cb61-41f8-421b-969a-a9d6be0bb49b",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.467Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "49765-1",
+              "display": "Calcium"
+            }
+          ],
+          "text": "Calcium"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 9.42,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-163eef45-b43d-4d67-a82f-991d4d4cb8d8",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.455Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "38483-4",
+              "display": "Creatinine"
+            }
+          ],
+          "text": "Creatinine"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 0.59,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-322b0e61-1f73-4a73-84ea-b57ee78bc3fb",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.43Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2339-0",
+              "display": "Glucose"
+            }
+          ],
+          "text": "Glucose"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 96.77,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-964ca43b-01e0-485e-8795-a93a0cd15428",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.413Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "9279-1",
+              "display": "Respiratory rate"
+            }
+          ],
+          "text": "Respiratory rate"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 14,
+          "unit": "/min",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-a7d7f970-3cae-4911-a4f8-6b77eb8547aa",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.401Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 77,
+          "unit": "/min",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-c08c2a9d-7460-4b63-962a-4c4b9e644073",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.384Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood Pressure"
+            }
+          ],
+          "text": "Blood Pressure"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4",
+                  "display": "Diastolic Blood Pressure"
+                }
+              ],
+              "text": "Diastolic Blood Pressure"
+            },
+            "valueQuantity": {
+              "value": 81,
+              "unit": "mm[Hg]",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6",
+                  "display": "Systolic Blood Pressure"
+                }
+              ],
+              "text": "Systolic Blood Pressure"
+            },
+            "valueQuantity": {
+              "value": 120,
+              "unit": "mm[Hg]",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-43396abf-b95e-45f8-99f6-824f027deb83",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.374Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "Body Mass Index"
+            }
+          ],
+          "text": "Body Mass Index"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 27.68,
+          "unit": "kg/m2",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg/m2"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-4961fe0f-a6af-42d7-9796-6af5f613b55a",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.362Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7",
+              "display": "Body Weight"
+            }
+          ],
+          "text": "Body Weight"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 74.9,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "177dad3923d-246f46a0-462e-4b9b-9bb9-e77af4c3c6f8",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-02-25T20:14:01.284Z"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8302-2",
+              "display": "Body Height"
+            }
+          ],
+          "text": "Body Height"
+        },
+        "subject": {
+          "reference": "Patient/177dad39227-62c23a9e-ebb3-44d2-968a-e2c93d6b5873"
+        },
+        "encounter": {
+          "reference": "Encounter/177dad3923d-da367ef7-079f-4e58-9990-de541b5f0fd0"
+        },
+        "effectiveDateTime": "2013-02-08T12:49:18-06:00",
+        "issued": "2013-02-08T12:49:18.047-06:00",
+        "valueQuantity": {
+          "value": 164.5,
+          "unit": "cm",
+          "system": "http://unitsofmeasure.org",
+          "code": "cm"
+        }
+      }
+    },
+
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "1781e4bd9df-fb0ca828-0884-443b-bc41-d02cf28c0b76",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2021-03-10T22:39:50.858Z"
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Generated by <a href=\"https://github.com/synthetichealth/synthea\">Synthea</a>.Version identifier: master-branch-latest-4-g05d2a08\n .   Person seed: -1665132527892086391  Population seed: 1612550275997</div>"
+        },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName",
+            "valueString": "Aurora248 Sawayn19"
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/patient-birthPlace",
+            "valueAddress": {
+              "city": "Norfolk",
+              "state": "Massachusetts",
+              "country": "US"
+            }
+          },
+          {
+            "url": "http://synthetichealth.github.io/synthea/disability-adjusted-life-years",
+            "valueDecimal": 0
+          },
+          {
+            "url": "http://synthetichealth.github.io/synthea/quality-adjusted-life-years",
+            "valueDecimal": 48
+          }
+        ],
+        "identifier": [
+          {
+            "system": "https://github.com/synthetichealth/synthea",
+            "value": "90615aa9-008f-2a40-3d3e-b889d5073ea4"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical Record Number"
+                }
+              ],
+              "text": "Medical Record Number"
+            },
+            "system": "http://hospital.smarthealthit.org",
+            "value": "90615aa9-008f-2a40-3d3e-b889d5073ea4"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "SS",
+                  "display": "Social Security Number"
+                }
+              ],
+              "text": "Social Security Number"
+            },
+            "system": "http://hl7.org/fhir/sid/us-ssn",
+            "value": "999-64-9823"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "DL",
+                  "display": "Driver's License"
+                }
+              ],
+              "text": "Driver's License"
+            },
+            "system": "urn:oid:2.16.840.1.113883.4.3.25",
+            "value": "S99954487"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PPN",
+                  "display": "Passport Number"
+                }
+              ],
+              "text": "Passport Number"
+            },
+            "system": "http://standardhealthrecord.org/fhir/StructureDefinition/passportNumber",
+            "value": "X78744489X"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "family": "Pouros728",
+            "given": [
+              "Adam631"
+            ],
+            "prefix": [
+              "Mr."
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "555-341-7534",
+            "use": "home"
+          }
+        ],
+        "gender": "male",
+        "address": [
+          {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "latitude",
+                    "valueDecimal": 42.4609133066996
+                  },
+                  {
+                    "url": "longitude",
+                    "valueDecimal": -70.84851466108381
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/geolocation"
+              }
+            ],
+            "line": [
+              "356 Stark Gardens"
+            ],
+            "city": "Salem",
+            "state": "Massachusetts",
+            "postalCode": "01970",
+            "country": "US"
+          }
+        ],
+        "maritalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+              "code": "M",
+              "display": "M"
+            }
+          ],
+          "text": "M"
+        },
+        "multipleBirthBoolean": false,
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "system": "urn:ietf:bcp:47",
+                  "code": "en-US",
+                  "display": "English"
+                }
+              ],
+              "text": "English"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

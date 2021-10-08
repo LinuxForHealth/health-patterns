@@ -1,0 +1,98 @@
+{
+    "scenarioName": "********enrich_Terminology_Structured_Definition_CRUD********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+
+        {
+            "name": "getInitialStructureDefinitionList",
+            "url": "${term_prep}/structureDefinitions",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyNoExampleSD",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getInitialStructureDefinitionList.response.rawBody}",
+                 "string2": "https://www.exampleURI.org/FHIR/SD/exampleStructureDefinition"
+            },
+            "verify": { "result": "false" }
+        },
+        {
+            "name": "postNewStructureDefinition",
+            "url": "${term_prep}/structureDefinitions",
+            "operation": "POST",           
+                "request": { 
+                     "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/example_SD.json}" },              
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getNewStructureDefinition",
+            "url": "${term_prep}/structureDefinitions",
+            "operation": "GET",           
+                "request": {  },              
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyExampleSD",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getNewStructureDefinition.response.rawBody}",
+                 "string2": "https://www.exampleURI.org/FHIR/SD/exampleStructureDefinition"
+            },
+            "verify": { "result": "true" }
+        },
+        {
+            "name": "deleteNewStructureDefinition",
+            "url": "${term_prep}/structureDefinitions",
+            "operation": "DELETE",           
+                "request": { 
+                     "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/example_SD.json}" },              
+            "verify": {
+                "status": 200
+            }
+        },
+                {
+            "name": "getLastStructureDefinition",
+            "url": "${term_prep}/structureDefinitions",
+            "operation": "GET",           
+                "request": {  },              
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyNoExampleSD",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getLastStructureDefinition.response.rawBody}",
+                 "string2": "https://www.exampleURI.org/FHIR/SD/exampleStructureDefinition"
+            },
+            "verify": { "result": "false" }
+        },
+        {
+            "name": "deleteNonExistentStructureDefinition",
+            "url": "${term_prep}/structureDefinitions",
+            "operation": "DELETE",           
+                "request": { 
+                     "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/example_SD.json}" },              
+            "verify": {
+                "status": 400
+            }
+        }
+
+     ]
+}

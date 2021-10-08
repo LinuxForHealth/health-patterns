@@ -27,17 +27,17 @@ import categories.FHIRProxyIngestion;
 
 public class ManualCleanUp {
 	 @Test
-	 @Scenario("integration/flow/tests/oneLineTest.json")
+	 @Scenario("scenarios/oneLineTest.json")
 	    public void one_liner_test() throws Exception {
 	    }
 	 
 	 @Test
-	 @Scenario("integration/flow/tests/ingest_FHIR_Patient_DELETE.json")
+	 @Scenario("scenarios/ingest_FHIR_Patient_DELETE.json")
 	    public void patientDELETE() throws Exception {
 	 }	 
 	 
 	 @Test
-	 @Scenario("integration/flow/tests/create_Kafka_Topic.json")
+	 @Scenario("scenarios/create_Kafka_Topic.json")
 	    public void createKafkaTopic() throws Exception {
 	 } 
 	 

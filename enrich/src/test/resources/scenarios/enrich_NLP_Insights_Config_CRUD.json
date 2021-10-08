@@ -1,0 +1,132 @@
+{
+    "scenarioName": "********enrich_NLP_Insights_Config_CRUD********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+
+ 
+        {
+            "name": "createConfig${0}",
+            "url": "${nlp_insights}/config/definition",
+            "operation": "${0}",           
+                "request": {
+                "body" : "${1}"
+                },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getConfig${0}",
+            "url": "${nlp_insights}/config/${2}",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "name":"$MATCHES.STRING:${2}"}
+            }
+        },
+        {
+            "name": "getAllConfigs${0}",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody":"$CONTAINS.STRING:${2}"
+            }
+        },
+        {
+            "name": "setDefaultConfig${0}",
+            "url": "${nlp_insights}/config/setDefault?name=${2}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody":"$CONTAINS.STRING:${2}"
+            }
+        },        
+        {
+            "name": "getActiveConfig${0}",
+            "url": "${nlp_insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody":"$CONTAINS.STRING:${2}"
+            }
+        },
+        {
+            "name": "updateConfigWhileDefault${0}",
+            "url": "${nlp_insights}/config/definition",
+            "operation": "${0}",           
+                "request": {
+                "body" : "${1}"
+                },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "deleteConfigWhileDefault${0}",
+            "url": "${nlp_insights}/config/${2}",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 400
+            }
+        },
+        {
+            "name": "clearDefaultConfig${0}",
+            "url": "${nlp_insights}/config/clearDefault",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200
+             }
+        },
+        {
+            "name": "deleteConfig${0}",
+            "url": "${nlp_insights}/config/${2}",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getAllConfigsAgain",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "verifyConfigList${0}",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getAllConfigsAgain.response}",
+                 "string2": "${2}"
+            },
+            "verify": { "result": "false" }
+        },
+        {
+            "name": "deleteNonExistentConfig${0}",
+            "url": "${nlp_insights}/config/${2}",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 400
+            }
+        }                 
+     ],
+     "parameterized": {
+        "csvSource":[
+            "POST,${JSON.FILE:configs/NLP-POST-config.json},NLP-POST-config",
+            "PUT,${JSON.FILE:configs/NLP-PUT-config.json},NLP-PUT-config"
+        ]
+    }
+}

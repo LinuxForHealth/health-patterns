@@ -1,0 +1,7 @@
+{
+  "name": "NLP-POST-config",
+  "nlpServiceType": "quickumls",
+  "config": {
+    "endpoint": "https://configPOSTURL/match"
+  }
+}
