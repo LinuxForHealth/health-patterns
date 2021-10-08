@@ -63,7 +63,7 @@ jobs:
     # Build Enrichment Tests 
     - name: Build Enrichment Tests
       run: |
-         cd clinical-enrichment
+         cd enrich
          echo "*************************************" 
          echo "* Build the testcases               *"
          echo "*************************************"
