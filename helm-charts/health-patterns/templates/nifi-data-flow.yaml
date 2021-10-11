@@ -3,7 +3,7 @@
 {{- $namespace := .Release.Namespace -}}
 {{- $regName := index .Values "nifi-registry" "fullnameOverride" -}}
 {{- $top := . -}}
-{{- range $d := .Values.nifikop.dataflow }}
+{{- range $d := .Values.nifi2.dataflow }}
 {{- if $d.enabled -}}
 ---
 apiVersion: nifi.orange.com/v1alpha1
