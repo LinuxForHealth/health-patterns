@@ -32,8 +32,8 @@ The following services have been deployed:
 {{- if .Values.nifi.enabled }}
 - NiFi Server{{- if .Values.ingress.enabled }} ----------------- https://{{ .Values.nifi.ingress.hostname}}/nifi{{- end }}
 {{- end }}
-{{- if .Values.nifi_new.enabled }}
-- NiFi Server{{- if .Values.ingress.enabled }} ----------------- https://{{ .Values.nifi_new.ingress.hostname}}/nifi{{- end }}
+{{- if .Values.nifi2.enabled }}
+- NiFi Server{{- if .Values.ingress.enabled }} ----------------- https://{{ .Values.nifi2.ingress.hostname}}/nifi{{- end }}
 {{- end }}
 {{- if index .Values "nifi-registry" "enabled" }}
 - NiFi Registry{{- if index .Values "nifi-registry" "ingress" "enabled" }} --------------- https://{{ index .Values "nifi-registry" "ingress" "hostname"}}/nifi-registry{{- end }}
@@ -86,7 +86,7 @@ Inside the cluster you can access the services at the following locations:
 {{- if .Values.nifi.enabled }}
 - NiFi Server: {{ .Release.Name }}-nifi.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
 {{- end }}
-{{- if .Values.nifi_new.enabled }}
+{{- if .Values.nifi2.enabled }}
 - NiFi Server: headless-nifi.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
 {{- end }}
 {{- if index .Values "nifi-registry" "enabled" }}

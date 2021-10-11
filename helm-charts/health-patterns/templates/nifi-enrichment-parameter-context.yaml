@@ -1,0 +1,61 @@
+{{- if .Values.nifikop.enabled -}}
+{{- if .Values.nifi2.enabled -}}
+apiVersion: nifi.orange.com/v1alpha1
+kind: NifiParameterContext
+metadata:
+  name: enrichment-parameter-context
+  namespace: {{ .Release.namespace }}
+spec:
+  description: "Enrichment Parameter Context"
+  clusterRef:
+    name: nifi
+    namespace: {{ .Release.namespace }}
+  secretRefs:
+    - name: nifi-enrich-parameter-secret
+      namespace: {{ .Release.namespace }}
+  parameters:
+
+    - name: ADD_NLP_INSIGHTS_URL
+      value: http://{{ .Release.Name }}-nlp-insights:5000
+
+    - name: AddNLPInsights
+      value: addNLPInsights
+
+    - name: ASCVD_FROM_FHIR_URL
+      value: http://{{ .Release.Name }}-ascvd-from-fhir:5000
+
+    - name: DEID_CONFIG_NAME
+      value: deidConfigName
+
+    - name: DEID_PREP_URL
+      value: http://{{ .Release.Name }}-deid-prep:8080
+
+    - name: DEID_PUSH_TO_FHIR
+      value: deidPushToFhir
+
+    - name: DeidentifyData
+      value: deidentifyData
+
+    - name: ResolveTerminology
+      value: resolveTerminology
+
+    - name: RunASCVD
+      value: runASCVD
+
+    - name: TERM_SERVICES_PREP_URL
+      value: http://{{ .Release.Name }}-term-services-prep:8080
+
+    - name: enrich.in
+      value: patients.updated.out
+
+    - name: enrich.out
+      value: patients.enriched.out
+
+    - name: kafka.auth.user
+      value: token
+
+    - name: kafka.brokers
+      value: {{ .Release.Name }}-kafka:9092
+
+{{- end }}
+{{- end }}

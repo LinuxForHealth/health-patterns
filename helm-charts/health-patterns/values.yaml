@@ -107,6 +107,8 @@ fhir:
       enabled: *ingressEnabled
       class: *ingressClass
       hostname: *hostname
+  userPassword: integrati0n
+  adminPassword: integrati0n
 
 ## Configure these to allow bulk access from fhir server
 #  bulkExportConfig:
@@ -175,10 +177,11 @@ zookeeper_new:
 # ------------------------------------------------------------------------------
 # Nifi Configuration
 # ------------------------------------------------------------------------------
-
 nifikop:
+  disabled: true
   enabled: false
   namespace: replace-me
+  namespaces: replace-me
   image:
     tag: v0.6.3-release
   resources: 
@@ -188,10 +191,20 @@ nifikop:
     limits: 
       memory: 256Mi
       cpu: 250m
-  namespaces: replace-me
   rbacEnable: true
+  dataflow:
+    - name: health-patterns-dataflow
+      bucketId: c601a7b4-f047-461e-ac13-2f140f8fb9b2
+      flowId: 07fefa93-4207-4363-b46d-4e92a25d7bf6
+      flowVersion: 35
+      parameterContextRef: ingestion-parameter-context
+    - name: health-patterns-enrich-dataflow
+      bucketId: c601a7b4-f047-461e-ac13-2f140f8fb9b2
+      flowId: 1681a7e6-fdfe-4956-9ce1-6c9302f3b32f
+      flowVersion: 12
+      parameterContextRef: enrichment-parameter-context
 
-nifi_new:
+nifi2: # NifiKop based Nifi
   enabled: false
   fullnameOverride: alvearie-nifi
   image:
@@ -301,6 +314,7 @@ kafka:
 
     serviceMonitor:
       enabled: false
+  password: integrati0n
 
 # ------------------------------------------------------------------------------
 # De-Identification Service

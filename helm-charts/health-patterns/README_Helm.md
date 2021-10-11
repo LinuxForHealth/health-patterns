@@ -125,7 +125,7 @@ nifi:
 zookeeper_new:
   enabled: true
 
-nifi_new:
+nifi2:
   enabled: true
 
 nifikop:
@@ -139,7 +139,7 @@ nifikop:
 And finally, if you are deploying to a non-IBM cloud, you will need to change the storage class used by Nifi by updating the following parameter:
 
 ```
-nifi_new:
+nifi2:
   storageClassName - The storage class you wish to use for persisting Nifi.
 ```
 

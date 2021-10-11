@@ -93,7 +93,7 @@ dependencies:
     condition: nifikop.disabled, nifi.enabled
     repository: https://cetic.github.io/helm-charts
 
-# Old Nifi via NifiKop
+# New Nifi via NifiKop
   - name: zookeeper
     alias: zookeeper_new
     version: 7.4.5
