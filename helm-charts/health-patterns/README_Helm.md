@@ -106,8 +106,16 @@ In addition, using NifiKop requires a NifiKop controller to be deployed in the n
 To deploy a NifiKop controller to your namespace, run: 
 
 ```
-cd helm-charts/health-patterns
-helm install nifikop orange-incubator/nifikop -f nifikop.yaml --set namespace=<<NAMESPACE>> --set namespaces={"<<NAMESPACE>>"}
+helm install nifikop \
+    orange-incubator/nifikop \
+    --namespace=<<NAMESPACE>> \
+    --version 0.6.3 \
+    --set image.tag=v0.6.3-release \
+    --set resources.requests.memory=256Mi \
+    --set resources.requests.cpu=250m \
+    --set resources.limits.memory=256Mi \
+    --set resources.limits.cpu=250m \
+    --set namespaces={"<<NAMESPACE>>"}
 ```
 
 After deploying a NifiKop controller, you will also need to setup [OIDC](https://openid.net/connect/) to access the secured Nifi.  
@@ -142,6 +150,24 @@ nifi2:
 ```
 
 After updating these parameters, new deployments will use NifiKop and produce a secured Nifi environment.
+
+With the Nifikop-based deployment, the `VARIATION_YAML` files are no longer necessary.  Instead, the same configuration is controlled by two simple parameters in values.yaml:
+
+```
+ingestion:
+  enabled: &ingestionEnabled true
+
+enrichment:
+  enabled: &enrichmentEnabled true
+```
+
+If you wish to only deploy enrichment, simply set ingestion.enabled=false.  NOTE: This cannot be set via helm install command parameters via "--set" as the variables will not be de-referenced in the proper order to propagate to later uses of this parameter.  Instead, update the values.yaml with your preference.
+
+Finally:
+
+```
+helm install <<RELEASE_NAME>> .
+```
 
 
 ### Using the Chart

@@ -11,7 +11,7 @@ pattern: "Clinical Ingestion"
 nifi:
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.3
+      image: alvearie/nifi-setup:0.1.4
       imagePullPolicy: Always
       env:
       - name: "RELEASE_NAME"
