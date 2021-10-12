@@ -9,6 +9,7 @@ python /scripts/loadHealthPatternsFlows.py \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
   --flowName="Clinical Ingestion" \
+  --version=34
   --baseUrl=http://$HOSTNAME:8080/
 fi
 
@@ -17,6 +18,7 @@ python /scripts/loadHealthPatternsFlows.py \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
   --flowName="FHIR Bundle Enrichment" \
+  --version=11
   --baseUrl=http://$HOSTNAME:8080/ \
   --x=0.0 \
   --y=200.0

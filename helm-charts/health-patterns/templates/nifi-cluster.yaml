@@ -1,5 +1,5 @@
 {{- if .Values.nifikop.enabled -}}
-{{- if .Values.nifi_new.enabled -}}
+{{- if .Values.nifi2.enabled -}}
 apiVersion: nifi.orange.com/v1alpha1
 kind: NifiCluster
 metadata:
@@ -9,10 +9,10 @@ spec:
     headlessEnabled: true
   zkAddress: alvearie-zookeeper.{{ .Release.Namespace }}.svc.cluster.local:2181
   zkPath: "/nifi"
-  clusterImage: {{ .Values.nifi_new.image.repository }}:{{ .Values.nifi_new.image.tag }}
+  clusterImage: {{ .Values.nifi2.image.repository }}:{{ .Values.nifi2.image.tag }}
   oneNifiNodePerNode: false
   managedAdminUsers:
-{{- range $u := .Values.nifi_new.user }}
+{{- range $u := .Values.nifi2.user }}
   - identity: {{ $u.identity }}
     name: {{ $u.name }}
 {{- end }}
@@ -28,13 +28,13 @@ spec:
         nifi.security.identity.mapping.pattern.dn=CN=([^,]*)(?:, (?:O|OU)=.*)?
         nifi.security.identity.mapping.transform.dn=NONE
         nifi.security.identity.mapping.value.dn=$1
-        nifi.security.user.oidc.discovery.url={{ .Values.nifi_new.oidc.discovery.url }}
-        nifi.security.user.oidc.client.id={{ .Values.nifi_new.oidc.client.id }}
-        nifi.security.user.oidc.client.secret={{ .Values.nifi_new.oidc.client.secret }}
+        nifi.security.user.oidc.discovery.url={{ .Values.nifi2.oidc.discovery.url }}
+        nifi.security.user.oidc.client.id={{ .Values.nifi2.oidc.client.id }}
+        nifi.security.user.oidc.client.secret={{ .Values.nifi2.oidc.client.secret }}
         nifi.security.user.oidc.preferred.jwsalgorithm=RS256
         nifi.nar.library.autoload.directory=/opt/nifi/extensions
       webProxyHosts:
-        - {{ .Values.nifi_new.ingress.hostname }}
+        - {{ .Values.nifi2.ingress.hostname }}
   nodeConfigGroups:
     default_group:
       isNode: true
@@ -44,7 +44,7 @@ spec:
           pvcSpec:
             accessModes:
               - ReadWriteOnce
-            storageClassName: {{ .Values.nifi_new.storageClassName }}
+            storageClassName: {{ .Values.nifi2.storageClassName }}
             resources:
               requests:
                 storage: 10Gi
@@ -53,7 +53,7 @@ spec:
           pvcSpec:
             accessModes:
               - ReadWriteOnce
-            storageClassName: {{ .Values.nifi_new.storageClassName }}
+            storageClassName: {{ .Values.nifi2.storageClassName }}
             resources:
               requests:
                 storage: 10Gi
@@ -62,7 +62,7 @@ spec:
           pvcSpec:
             accessModes:
               - ReadWriteOnce
-            storageClassName: {{ .Values.nifi_new.storageClassName }}
+            storageClassName: {{ .Values.nifi2.storageClassName }}
             resources:
               requests:
                 storage: 10Gi
@@ -71,7 +71,7 @@ spec:
           pvcSpec:
             accessModes:
               - ReadWriteOnce
-            storageClassName: {{ .Values.nifi_new.storageClassName }}
+            storageClassName: {{ .Values.nifi2.storageClassName }}
             resources:
               requests:
                 storage: 10Gi
@@ -80,7 +80,7 @@ spec:
           pvcSpec:
             accessModes:
               - ReadWriteOnce
-            storageClassName: {{ .Values.nifi_new.storageClassName }}
+            storageClassName: {{ .Values.nifi2.storageClassName }}
             resources:
               requests:
                 storage: 10Gi
@@ -89,7 +89,7 @@ spec:
           pvcSpec:
             accessModes:
               - ReadWriteOnce
-            storageClassName: {{ .Values.nifi_new.storageClassName }}
+            storageClassName: {{ .Values.nifi2.storageClassName }}
             resources:
               requests:
                 storage: 10Gi
@@ -101,7 +101,7 @@ spec:
             resources:
               requests:
                 storage: 10Gi
-            storageClassName: {{ .Values.nifi_new.storageClassName }}
+            storageClassName: {{ .Values.nifi2.storageClassName }}
       serviceAccountName: "default"
       resourcesRequirements:
         limits:
@@ -117,7 +117,7 @@ spec:
     internalListeners:
       - type: "https"
         name: "https"
-        containerPort: {{ .Values.nifi_new.service.port}}
+        containerPort: {{ .Values.nifi2.service.port}}
       - type: "cluster"
         name: "cluster"
         containerPort: 6007

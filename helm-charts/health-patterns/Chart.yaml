@@ -95,14 +95,10 @@ dependencies:
 
 # New Nifi via NifiKop
   - name: zookeeper
-    alias: zookeeper_new
+    alias: zookeeper2
     version: 7.4.5
-    condition: nifikop.enabled, zookeeper_new.enabled
+    condition: nifikop.enabled, zookeeper2.enabled
     repository: https://charts.bitnami.com/bitnami
-  - name: nifikop
-    version: 0.6.3
-    condition: nifikop.enabled, nifi.enabled
-    repository: https://orange-kubernetes-charts-incubator.storage.googleapis.com
 
   - name: kafka
     version: 12.1.0

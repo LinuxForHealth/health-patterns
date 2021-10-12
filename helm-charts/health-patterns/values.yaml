@@ -36,7 +36,7 @@ ingress:
   hostname: &hostname replace-me
 
 ingestion:
-  enabled: &ingestionEnabled false
+  enabled: &ingestionEnabled true
 
 enrichment:
   enabled: &enrichmentEnabled true
@@ -50,6 +50,10 @@ oidc:
   client: 
     id: &oidc_client_id replace-me
     secret: &oidc_client_secret replace-me
+
+nifikop:
+  disabled: &nifikopDisabled true
+  enabled: &nifikopEnabled false
 
 ascvd:
   enabled: true
@@ -171,36 +175,21 @@ nifi-registry:
 # Zookeeper Configuration
 # ------------------------------------------------------------------------------
 zookeeper:
-  enabled: true
+  enabled: *nifikopDisabled
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
   fullnameOverride: alvearie-zookeeper
 
-zookeeper_new:
-  enabled: false
+zookeeper2:
+  enabled: *nifikopEnabled
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
   fullnameOverride: alvearie-zookeeper
 
 # ------------------------------------------------------------------------------
 # Nifi Configuration
 # ------------------------------------------------------------------------------
-nifikop:
-  disabled: true
-  enabled: false
-  namespace: replace-me
-  namespaces: replace-me
-  image:
-    tag: v0.6.3-release
-  resources: 
-    requests: 
-      memory: 256Mi
-      cpu: 250m
-    limits: 
-      memory: 256Mi
-      cpu: 250m
-  rbacEnable: true
 
 nifi2: # NifiKop based Nifi
-  enabled: false
+  enabled: *nifikopEnabled
   fullnameOverride: alvearie-nifi
   image:
     repository: apache/nifi
@@ -237,7 +226,7 @@ nifi2: # NifiKop based Nifi
 # ------------------------------------------------------------------------------
 nifi:
   fullnameOverride: alvearie-nifi
-  enabled: true
+  enabled: *nifikopDisabled
   ingress:
     enabled: false
     class: *ingressClass

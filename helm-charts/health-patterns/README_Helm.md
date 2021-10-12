@@ -97,7 +97,20 @@ For Clinical Enrichment, update:
 
 ### Securing Nifi (Work-in-Progress)
 
-By default, the deployment of Nifi relies on an unsecured, open configuration. However, if you choose, you can deploy a secured Nifi that will require [OIDC](https://openid.net/connect/) login to access.  
+By default, the deployment of Nifi relies on an unsecured, open configuration. However, if you choose, you can deploy a secured Nifi using NifiKop and specifying an OIDC provider.
+
+[NifiKop](https://orange-opensource.github.io/nifikop/), relies on a one-time setup for your cluster to install the Custom Resource Definitions properly.  See [Getting Started](https://orange-opensource.github.io/nifikop/docs/2_setup/1_getting_started) for instructions on how to setup your cluster.
+
+In addition, using NifiKop requires a NifiKop controller to be deployed in the namespace prior to deploying the Health Patterns Helm chart.  This allows the NifiKop custom resources to be managed correctly, and by deploying separately guarantees the controller remains active when custom resources are deleted, allowing proper clean-up.
+
+To deploy a NifiKop controller to your namespace, run: 
+
+```
+cd helm-charts/health-patterns
+helm install nifikop orange-incubator/nifikop -f nifikop.yaml --set namespace=<<NAMESPACE>> --set namespaces={"<<NAMESPACE>>"}
+```
+
+After deploying a NifiKop controller, you will also need to setup [OIDC](https://openid.net/connect/) to access the secured Nifi.  
 
 NOTE: You will need to register your OIDC callback (`https://<<HOST_NAME>>:443/nifi-api/access/oidc/callback`) with your OIDC service.  For IBM App ID, this is located under Manage Authentication->Authentication Settings->Add Web Redirect URLs.
 
@@ -122,7 +135,7 @@ zookeeper:
 nifi:
   enabled: false
 
-zookeeper_new:
+zookeeper2:
   enabled: true
 
 nifi2:
@@ -142,8 +155,6 @@ And finally, if you are deploying to a non-IBM cloud, you will need to change th
 nifi2:
   storageClassName - The storage class you wish to use for persisting Nifi.
 ```
-
-This setup will rely on [NifiKop](https://orange-opensource.github.io/nifikop/) to deploy Nifi securely.  NifiKop relies on a one-time setup for your cluster to install the Custom Resource Definitions properly.  See [Getting Started](https://orange-opensource.github.io/nifikop/docs/2_setup/1_getting_started) for instructions on how to setup your cluster.
 
 After updating these parameters, new deployments will use NifiKop and produce a secured Nifi environment.
 

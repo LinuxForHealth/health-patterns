@@ -1,0 +1,12 @@
+namespace: atc3
+namespaces: ["atc3"]
+image:
+  tag: v0.6.3-release
+resources: 
+  requests: 
+    memory: 256Mi
+    cpu: 250m
+  limits: 
+    memory: 256Mi
+    cpu: 250m
+rbacEnable: true
