@@ -114,7 +114,7 @@ After deploying a NifiKop controller, you will also need to setup [OIDC](https:/
 
 NOTE: You will need to register your OIDC callback (`https://<<HOST_NAME>>:443/nifi-api/access/oidc/callback`) with your OIDC service.  For IBM App ID, this is located under Manage Authentication->Authentication Settings->Add Web Redirect URLs.
 
-To install this chart with a secured Nifi, please update the following parameters in values.yaml:
+To install this chart with a secured Nifi, configure OIDC by updating the following parameters in values.yaml:
 
 ```
 oidc:
@@ -129,24 +129,9 @@ oidc:
 Also, in order to switch from the unsecured Nifi deployment to the secured deployment, the following parameters need to be set correctly:
 
 ```
-zookeeper:
-  enabled: false
-
-nifi:
-  enabled: false
-
-zookeeper2:
-  enabled: true
-
-nifi2:
-  enabled: true
-
 nifikop:
-  disabled: false
-  enabled: true
-  namespace: <<YOUR_NAMESPACE>>
-  namespaces: ["<<YOUR_NAMESPACE>>"]
-
+  disabled: &nifikopDisabled false
+  enabled: &nifikopEnabled true
 ```
 
 And finally, if you are deploying to a non-IBM cloud, you will need to change the storage class used by Nifi by updating the following parameter:
