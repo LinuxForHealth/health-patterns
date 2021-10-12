@@ -6,6 +6,7 @@ scripts/initialize-reporting-task.sh $HOSTNAME 8080
 
 if [ "$ADD_CLINICAL_INGESTION" = true ] ; then
 python /scripts/loadHealthPatternsFlows.py \
+  --baseUrl=http://$HOSTNAME:8080/ \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
   --flowName="Clinical Ingestion" \
@@ -15,6 +16,7 @@ fi
 
 if [ "$ADD_CLINICAL_ENRICHMENT" = true ] ; then
 python /scripts/loadHealthPatternsFlows.py \
+  --baseUrl=http://$HOSTNAME:8080/ \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
   --flowName="FHIR Bundle Enrichment" \
