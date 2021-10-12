@@ -1,0 +1,34 @@
+{{- if .Values.nifikop.enabled -}}
+{{- if .Values.nifi2.enabled -}}
+{{- $namespace := .Release.Namespace -}}
+{{- $regName := index .Values "nifi-registry" "fullnameOverride" -}}
+{{- $top := . -}}
+{{- range $d := .Values.nifi2.dataflow }}
+{{- if $d.enabled -}}
+apiVersion: nifi.orange.com/v1alpha1
+kind: NifiDataflow
+metadata:
+  name: {{ $d.name }}
+  namespace: {{ $namespace }}
+spec:
+  bucketId: {{ $d.bucketId }}
+  flowId: {{ $d.flowId }}
+  flowVersion: {{ $d.flowVersion }}
+  runOnce: false
+  skipInvalidControllerService: true
+  skipInvalidComponent: true
+  clusterRef:
+    name: nifi
+    namespace: {{ $namespace }}
+  registryClientRef:
+    name: default
+    namespace: {{ $namespace }}
+  parameterContextRef:
+    name: {{ $d.parameterContextRef }}
+    namespace: {{ $namespace }}
+  updateStrategy: drain
+---
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

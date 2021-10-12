@@ -95,6 +95,54 @@ For Clinical Enrichment, update:
 - the line `--releaseName=enrich` to include the correct Helm release name.
 - the line `bootstrapServers: "enrich-kafka:9092"` to include the correct Kafka broker, including the release name.
 
+### Securing Nifi (Work-in-Progress)
+
+By default, the deployment of Nifi relies on an unsecured, open configuration. However, if you choose, you can deploy a secured Nifi using NifiKop and specifying an OIDC provider.
+
+[NifiKop](https://orange-opensource.github.io/nifikop/), relies on a one-time setup for your cluster to install the Custom Resource Definitions properly.  See [Getting Started](https://orange-opensource.github.io/nifikop/docs/2_setup/1_getting_started) for instructions on how to setup your cluster.
+
+In addition, using NifiKop requires a NifiKop controller to be deployed in the namespace prior to deploying the Health Patterns Helm chart.  This allows the NifiKop custom resources to be managed correctly, and by deploying separately guarantees the controller remains active when custom resources are deleted, allowing proper clean-up.
+
+To deploy a NifiKop controller to your namespace, run: 
+
+```
+cd helm-charts/health-patterns
+helm install nifikop orange-incubator/nifikop -f nifikop.yaml --set namespace=<<NAMESPACE>> --set namespaces={"<<NAMESPACE>>"}
+```
+
+After deploying a NifiKop controller, you will also need to setup [OIDC](https://openid.net/connect/) to access the secured Nifi.  
+
+NOTE: You will need to register your OIDC callback (`https://<<HOST_NAME>>:443/nifi-api/access/oidc/callback`) with your OIDC service.  For IBM App ID, this is located under Manage Authentication->Authentication Settings->Add Web Redirect URLs.
+
+To install this chart with a secured Nifi, configure OIDC by updating the following parameters in values.yaml:
+
+```
+oidc:
+  users - a list of identity/name values representing the user(s) you want configured for access.  The identity must match the login identity from your OIDC endpoint, and the name should be lower-case and contain no spaces.
+  discovery:
+    url - The URL of your OIDC discovery service
+  client:
+    id - The client ID of your OIDC discovery service
+    secret - The client secret of your OIDC discovery service
+```
+
+Also, in order to switch from the unsecured Nifi deployment to the secured deployment, the following parameters need to be set correctly:
+
+```
+nifikop:
+  disabled: &nifikopDisabled false
+  enabled: &nifikopEnabled true
+```
+
+And finally, if you are deploying to a non-IBM cloud, you will need to change the storage class used by Nifi by updating the following parameter:
+
+```
+nifi2:
+  storageClassName - The storage class you wish to use for persisting Nifi.
+```
+
+After updating these parameters, new deployments will use NifiKop and produce a secured Nifi environment.
+
 
 ### Using the Chart
 

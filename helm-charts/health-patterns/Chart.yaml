@@ -82,14 +82,24 @@ dependencies:
     version: 0.1.0
     condition: ascvd.enabled
     repository: https://alvearie.github.io/health-analytics/charts
+
+# Old Nifi
   - name: zookeeper
     version: 6.0.0
-    condition: zookeeper.enabled
+    condition: nifikop.disabled, zookeeper.enabled
     repository: https://charts.bitnami.com/bitnami
   - name: nifi
     version: 0.6.0
-    condition: nifi.enabled
+    condition: nifikop.disabled, nifi.enabled
     repository: https://cetic.github.io/helm-charts
+
+# New Nifi via NifiKop
+  - name: zookeeper
+    alias: zookeeper2
+    version: 7.4.5
+    condition: nifikop.enabled, zookeeper2.enabled
+    repository: https://charts.bitnami.com/bitnami
+
   - name: kafka
     version: 12.1.0
     condition: kafka.enabled
