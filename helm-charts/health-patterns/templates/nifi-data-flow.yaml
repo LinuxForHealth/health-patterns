@@ -5,7 +5,6 @@
 {{- $top := . -}}
 {{- range $d := .Values.nifi2.dataflow }}
 {{- if $d.enabled -}}
----
 apiVersion: nifi.orange.com/v1alpha1
 kind: NifiDataflow
 metadata:
@@ -28,6 +27,7 @@ spec:
     name: {{ $d.parameterContextRef }}
     namespace: {{ $namespace }}
   updateStrategy: drain
+---
 {{- end }}
 {{- end }}
 {{- end }}
