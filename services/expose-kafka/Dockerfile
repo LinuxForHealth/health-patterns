@@ -1,6 +1,7 @@
 FROM python:3.8-slim-buster
 
 WORKDIR /app
+
 ENV FLASK_APP=exposekafka.py
 
 RUN pip3 install flask

@@ -55,8 +55,9 @@ jobs:
           VALIDATE_PYTHON_ISORT: true
           # VALIDATE_PYTHON_MYPY: true
           # VALIDATE_PYTHON_PYLINT: true
+          VALIDATE_DOCKERFILE: true
 
-          #DISABLE_ERRORS: true
+          DISABLE_ERRORS: true
 
 
           # ANSIBLE_LINTER_RULES: /action/lib/.automation/.ansible-lint.yml
