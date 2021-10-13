@@ -1,4 +1,10 @@
 # health-patterns
+
+![Pull Request](https://github.com/Alvearie/health-patterns/workflows/Lint%20Code%20Base/badge.svg?event=pull_request)
+
+![Super Linter](https://github.com/Alvearie/health-patterns/workflows/Lint%20Code%20Base/badge.svg)
+
+
 health-patterns is a collection of documentation and cloud agnostic reference implementations of the overall [Alvearie architecture](https://alvearie.io/architecture). They highlight how to combine various technologies into meaningful patterns for healthcare.
 
 To this point, there has been focus on 5 patterns for healthcare data:

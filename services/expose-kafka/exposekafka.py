@@ -71,6 +71,7 @@ def healthcheck():
     current_time_date = now.strftime("%Y-%m-%d %H:%M:%S")
     return generate_response(200, {"message": "Kafka tool service is running..." + current_time_date + "GMT"})
 
+
 @app.route("/", methods=['GET'])
 def listorconsumetopics():
     topic = ""
