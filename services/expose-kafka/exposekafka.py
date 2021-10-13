@@ -16,7 +16,7 @@ kafkapw = os.getenv("KAFKAPW")
 kafkabootstrap = os.getenv("KAFKABOOTSTRAP")
 
 # create the kafka topics before use
-initial_topics = os.getenv("INITTOPICS", "")  #empty list if missing
+initial_topics = os.getenv("INITTOPICS", "")  # empty list if missing
 numpartitions = os.getenv("INITTOPICNUMPARTITIONS", "1")
 if len(numpartitions) == 0:
     numpartitions = 1
