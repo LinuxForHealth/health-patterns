@@ -35,15 +35,15 @@ topiclist = init_topics.split()
 while True:
     try:
         KafkaConsumer(bootstrap_servers=kafkabootstrap,
-                                 sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
+                      sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
         break
-    except:
-        pass # Ignore error-just retry
+    except Exception:
+        pass  # Ignore error-just retry
 
 # kafka is now up and running
 
 initconsumer = KafkaConsumer(bootstrap_servers=kafkabootstrap,
-                         sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
+                             sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
 
 existing_topics = initconsumer.topics()
 
@@ -58,10 +58,10 @@ for new_topic in topiclist:
         new_topic_list.append(NewTopic(name=new_topic, num_partitions=numpartitions, replication_factor=replication))
 init_admin_client.create_topics(new_topics=new_topic_list, validate_only=False)
 
-existing_topics = initconsumer.topics() #reset the existing_topics since new ones may have been added
+existing_topics = initconsumer.topics()  # reset the existing_topics since new ones may have been added
 
 for atopic in existing_topics:
-    initconsumer.partitions_for_topic(atopic) # populate cache for each topic
+    initconsumer.partitions_for_topic(atopic)  # populate cache for each topic
 
 
 @app.route("/healthcheck", methods=['GET'])
