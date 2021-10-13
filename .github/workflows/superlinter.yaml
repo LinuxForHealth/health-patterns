@@ -1,0 +1,267 @@
+#################################
+#################################
+## Super Linter GitHub Actions ##
+#################################
+#################################
+name: Lint Code Base
+
+#
+# Documentation:
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+#
+
+#############################
+# Start the job on all push #
+#############################
+on:
+  pull_request:
+    branches: [main]
+
+###############
+# Set the Job #
+###############
+jobs:
+  build:
+    # Name the Job
+    name: Lint Code Base
+    # Set the agent to run on
+    runs-on: ubuntu-latest
+
+    ##################
+    # Load all steps #
+    ##################
+    steps:
+      ##########################
+      # Checkout the code base #
+      ##########################
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
+      ################################
+      # Run Linter against code base #
+      ################################
+      - name: Lint Code Base
+        uses: github/super-linter/slim@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.DLR_GITHUB_TOKEN }}
+
+          VALIDATE_PYTHON_BLACK: true
+          VALIDATE_PYTHON_FLAKE8: true
+          VALIDATE_PYTHON_ISORT: true
+          VALIDATE_PYTHON_MYPY: true
+          VALIDATE_PYTHON_PYLINT: true
+
+          DISABLE_ERRORS: true
+
+
+          # ANSIBLE_LINTER_RULES: /action/lib/.automation/.ansible-lint.yml
+          # ARM_LINTER_RULES: /action/lib/.automation/.arm-ttk.psd1
+          # ARM_TTK_PSD1: /usr/lib/microsoft/arm-ttk-master/arm-ttk/arm-ttk.psd1
+          # BUILD_DATE:
+          # BUILD_REVISION: fafdcd214e655d0fe37c471491e4dacf4be616e8
+          # BUILD_VERSION: fafdcd214e655d0fe37c471491e4dacf4be616e8
+          # CLOJURE_LINTER_RULES: /action/lib/.automation/.clj-kondo/config.edn
+          # CLOUDFORMATION_LINTER_RULES: /action/lib/.automation/.cfnlintrc.yml
+          # COFFEESCRIPT_LINTER_RULES: /action/lib/.automation/.coffee-lint.json
+          # CSS_LINTER_RULES: /action/lib/.automation/.stylelintrc.json
+          # DART_LINTER_RULES: /action/lib/.automation/analysis_options.yml
+          # DEFAULT_ANSIBLE_DIRECTORY: /tmp/lint/ansible
+          # DEFAULT_DISABLE_ERRORS: false
+          # DEFAULT_TEST_CASE_ANSIBLE_DIRECTORY: /tmp/lint/.automation/test/ansible
+          # DOCKERFILE_HADOLINT_LINTER_RULES: /action/lib/.automation/.hadolint.yaml
+          # DOCKERFILE_LINTER_RULES: /action/lib/.automation/.dockerfilelintrc
+          # EDITORCONFIG_LINTER_RULES: /action/lib/.automation/.ecrc
+          # ERRORS_FOUND_ANSIBLE: 0
+          # ERRORS_FOUND_ARM: 0
+          # ERRORS_FOUND_BASH: 0
+          # ERRORS_FOUND_BASH_EXEC: 0
+          # ERRORS_FOUND_CLANG_FORMAT: 0
+          # ERRORS_FOUND_CLOJURE: 0
+          # ERRORS_FOUND_CLOUDFORMATION: 0
+          # ERRORS_FOUND_COFFEESCRIPT: 0
+          # ERRORS_FOUND_CPP: 0
+          # ERRORS_FOUND_CSHARP: 0
+          # ERRORS_FOUND_CSS: 0
+          # ERRORS_FOUND_DART: 0
+          # ERRORS_FOUND_DOCKERFILE: 0
+          # ERRORS_FOUND_DOCKERFILE_HADOLINT: 0
+          # ERRORS_FOUND_EDITORCONFIG: 0
+          # ERRORS_FOUND_ENV: 0
+          # ERRORS_FOUND_GHERKIN: 0
+          # ERRORS_FOUND_GITHUB_ACTIONS: 0
+          # ERRORS_FOUND_GITLEAKS: 0
+          # ERRORS_FOUND_GO: 0
+          # ERRORS_FOUND_GOOGLE_JAVA_FORMAT: 0
+          # ERRORS_FOUND_GROOVY: 0
+          # ERRORS_FOUND_HTML: 0
+          # ERRORS_FOUND_JAVA: 0
+          # ERRORS_FOUND_JAVASCRIPT_ES: 0
+          # ERRORS_FOUND_JAVASCRIPT_STANDARD: 0
+          # ERRORS_FOUND_JSCPD: 0
+          # ERRORS_FOUND_JSON: 0
+          # ERRORS_FOUND_JSONC: 0
+          # ERRORS_FOUND_JSX: 0
+          # ERRORS_FOUND_KOTLIN: 0
+          # ERRORS_FOUND_KUBERNETES_KUBEVAL: 0
+          # ERRORS_FOUND_LATEX: 0
+          # ERRORS_FOUND_LUA: 0
+          # ERRORS_FOUND_MARKDOWN: 0
+          # ERRORS_FOUND_NATURAL_LANGUAGE: 0
+          # ERRORS_FOUND_OPENAPI: 0
+          # ERRORS_FOUND_PERL: 0
+          # ERRORS_FOUND_PHP_BUILTIN: 0
+          # ERRORS_FOUND_PHP_PHPCS: 0
+          # ERRORS_FOUND_PHP_PHPSTAN: 0
+          # ERRORS_FOUND_PHP_PSALM: 0
+          # ERRORS_FOUND_POWERSHELL: 0
+          # ERRORS_FOUND_PROTOBUF: 0
+          # ERRORS_FOUND_PYTHON_BLACK: 0
+          # ERRORS_FOUND_PYTHON_FLAKE8: 0
+          # ERRORS_FOUND_PYTHON_ISORT: 0
+          # ERRORS_FOUND_PYTHON_MYPY: 0
+          # ERRORS_FOUND_PYTHON_PYLINT: 0
+          # ERRORS_FOUND_R: 0
+          # ERRORS_FOUND_RAKU: 0
+          # ERRORS_FOUND_RUBY: 0
+          # ERRORS_FOUND_RUST_2015: 0
+          # ERRORS_FOUND_RUST_2018: 0
+          # ERRORS_FOUND_RUST_CLIPPY: 0
+          # ERRORS_FOUND_SHELL_SHFMT: 0
+          # ERRORS_FOUND_SNAKEMAKE_LINT: 0
+          # ERRORS_FOUND_SNAKEMAKE_SNAKEFMT: 0
+          # ERRORS_FOUND_SQL: 0
+          # ERRORS_FOUND_SQLFLUFF: 0
+          # ERRORS_FOUND_STATES: 0
+          # ERRORS_FOUND_TEKTON: 0
+          # ERRORS_FOUND_TERRAFORM_TERRASCAN: 0
+          # ERRORS_FOUND_TERRAFORM_TFLINT: 0
+          # ERRORS_FOUND_TERRAGRUNT: 0
+          # ERRORS_FOUND_TSX: 0
+          # ERRORS_FOUND_TYPESCRIPT_ES: 0
+          # ERRORS_FOUND_TYPESCRIPT_STANDARD: 0
+          # ERRORS_FOUND_XML: 0
+          # ERRORS_FOUND_YAML: 0
+          # ERROR_ON_MISSING_EXEC_BIT: false
+          # GHERKIN_LINTER_RULES: /action/lib/.automation/.gherkin-lintrc
+          # GITHUB_ACTIONS_LINTER_RULES: /action/lib/.automation/actionlint.yml
+          # GITLEAKS_LINTER_RULES: /action/lib/.automation/.gitleaks.toml
+          # GO_LINTER_RULES: /action/lib/.automation/.golangci.yml
+          # GROOVY_LINTER_RULES: /action/lib/.automation/.groovylintrc.json
+          # HOME: /root
+          # HOSTNAME: 8ab5b9290b15
+          # HTML_LINTER_RULES: /action/lib/.automation/.htmlhintrc
+          # JAVASCRIPT_ES_LINTER_RULES: /action/lib/.automation/.eslintrc.yml
+          # JAVASCRIPT_STANDARD_LINTER_RULES: --env browser --env es6 --env jest
+          # JAVA_LINTER_RULES: /action/lib/.automation/sun_checks.xml
+          # JSCPD_LINTER_RULES: /action/lib/.automation/.jscpd.json
+          # JSX_LINTER_RULES: /action/lib/.automation/.eslintrc.yml
+          # LATEX_LINTER_RULES: /action/lib/.automation/.chktexrc
+          # LOG_DEBUG: true
+          # LOG_ERROR: true
+          # LOG_NOTICE: true
+          # LOG_TEMP: /tmp/tmp.P5mgzfMlEs
+          # LOG_TRACE:
+          # LOG_VERBOSE: true
+          # LOG_WARN: true
+          # LUA_LINTER_RULES: /action/lib/.automation/.luacheckrc
+          # MARKDOWN_LINTER_RULES: /action/lib/.automation/.markdown-lint.yml
+          # NATURAL_LANGUAGE_LINTER_RULES: /action/lib/.automation/.textlintrc
+          # NC:
+          # OPENAPI_LINTER_RULES: /action/lib/.automation/.openapirc.yml
+          # PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/cache/dotnet/tools:/usr/share/dotnet:/node_modules/.bin
+          # PHP_BUILTIN_LINTER_RULES: /action/lib/.automation/php.ini
+          # PHP_PHPCS_LINTER_RULES: /action/lib/.automation/phpcs.xml
+          # PHP_PHPSTAN_LINTER_RULES: /action/lib/.automation/phpstan.neon
+          # PHP_PSALM_LINTER_RULES: /action/lib/.automation/psalm.xml
+          # POWERSHELL_LINTER_RULES: /action/lib/.automation/.powershell-psscriptanalyzer.psd1
+          # PROTOBUF_LINTER_RULES: /action/lib/.automation/.protolintrc.yml
+          # PWD: /
+                            # PYTHON_BLACK_LINTER_RULES: /action/lib/.automation/.python-black
+                            # PYTHON_FLAKE8_LINTER_RULES: /action/lib/.automation/.flake8
+                            # PYTHON_ISORT_LINTER_RULES: /action/lib/.automation/.isort.cfg
+                            # PYTHON_MYPY_LINTER_RULES: /action/lib/.automation/.mypy.ini
+                            # PYTHON_PYLINT_LINTER_RULES: /action/lib/.automation/.python-lint
+          # RUBY_LINTER_RULES: /action/lib/.automation/.ruby-lint.yml
+          # RUN_LOCAL: true
+          # R_LINTER_RULES: /action/lib/.automation/.lintr
+          # SHLVL: 0
+          # SNAKEMAKE_SNAKEFMT_LINTER_RULES: /action/lib/.automation/.snakefmt.toml
+          # SQL_LINTER_RULES: /action/lib/.automation/.sql-config.json
+          # TERRAFORM_TERRASCAN_LINTER_RULES: /action/lib/.automation/terrascan.toml
+          # TERRAFORM_TFLINT_LINTER_RULES: /action/lib/.automation/.tflint.hcl
+          # TEST_CASE_FOLDER: .automation/test
+          # TSX_LINTER_RULES: /action/lib/.automation/.eslintrc.yml
+          # TYPESCRIPT_ES_LINTER_RULES: /action/lib/.automation/.eslintrc.yml
+          # TYPESCRIPT_STANDARD_LINTER_RULES: --env browser --env es6 --env jest
+          # USE_FIND_ALGORITHM: true
+          # VALIDATE_ANSIBLE: true
+          # VALIDATE_ARM: true
+          # VALIDATE_BASH: true
+          # VALIDATE_BASH_EXEC: true
+          # VALIDATE_CLANG_FORMAT: true
+          # VALIDATE_CLOJURE: true
+          # VALIDATE_CLOUDFORMATION: true
+          # VALIDATE_COFFEESCRIPT: true
+          # VALIDATE_CPP: true
+          # VALIDATE_CSHARP: true
+          # VALIDATE_CSS: true
+          # VALIDATE_DART: true
+          # VALIDATE_DOCKERFILE: true
+          # VALIDATE_DOCKERFILE_HADOLINT: true
+          # VALIDATE_EDITORCONFIG: true
+          # VALIDATE_ENV: true
+          # VALIDATE_GHERKIN: true
+          # VALIDATE_GITHUB_ACTIONS: true
+          # VALIDATE_GITLEAKS: true
+          # VALIDATE_GO: true
+          # VALIDATE_GOOGLE_JAVA_FORMAT: true
+          # VALIDATE_GROOVY: true
+          # VALIDATE_HTML: true
+          # VALIDATE_JAVA: true
+          # VALIDATE_JAVASCRIPT_ES: true
+          # VALIDATE_JAVASCRIPT_STANDARD: true
+          # VALIDATE_JSCPD: true
+          # VALIDATE_JSON: true
+          # VALIDATE_JSONC: true
+          # VALIDATE_JSX: true
+          # VALIDATE_KOTLIN: true
+          # VALIDATE_KUBERNETES_KUBEVAL: true
+          # VALIDATE_LATEX: true
+          # VALIDATE_LUA: true
+          # VALIDATE_MARKDOWN: true
+          # VALIDATE_NATURAL_LANGUAGE: true
+          # VALIDATE_OPENAPI: true
+          # VALIDATE_PERL: true
+          # VALIDATE_PHP_BUILTIN: true
+          # VALIDATE_PHP_PHPCS: true
+          # VALIDATE_PHP_PHPSTAN: true
+          # VALIDATE_PHP_PSALM: true
+          # VALIDATE_POWERSHELL: true
+          # VALIDATE_PROTOBUF: true
+
+          # VALIDATE_R: true
+          # VALIDATE_RAKU: true
+          # VALIDATE_RUBY: true
+          # VALIDATE_RUST_2015: true
+          # VALIDATE_RUST_2018: true
+          # VALIDATE_RUST_CLIPPY: true
+          # VALIDATE_SHELL_SHFMT: true
+          # VALIDATE_SNAKEMAKE_LINT: true
+          # VALIDATE_SNAKEMAKE_SNAKEFMT: true
+          # VALIDATE_SQL: true
+          # VALIDATE_SQLFLUFF: true
+          # VALIDATE_STATES: true
+          # VALIDATE_TEKTON: true
+          # VALIDATE_TERRAFORM_TERRASCAN: true
+          # VALIDATE_TERRAFORM_TFLINT: true
+          # VALIDATE_TERRAGRUNT: true
+          # VALIDATE_TSX: true
+          # VALIDATE_TYPESCRIPT_ES: true
+          # VALIDATE_TYPESCRIPT_STANDARD: true
+          # VALIDATE_XML: true
+          # VALIDATE_YAML: true
