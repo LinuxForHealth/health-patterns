@@ -40,3 +40,6 @@ nb-configuration.xml
 # Local environment
 .env
 /.pydevproject
+
+# SuperLinter
+super-linter.log
