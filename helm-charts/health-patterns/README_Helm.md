@@ -106,6 +106,10 @@ In addition, using NifiKop requires a NifiKop controller to be deployed in the n
 To deploy a NifiKop controller to your namespace, run: 
 
 ```
+helm repo add orange-incubator https://orange-kubernetes-charts-incubator.storage.googleapis.com/
+
+helm repo update
+
 helm install nifikop \
     orange-incubator/nifikop \
     --namespace=<<NAMESPACE>> \

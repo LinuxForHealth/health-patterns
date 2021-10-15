@@ -14,7 +14,7 @@ spec:
   bucketId: {{ $d.bucketId }}
   flowId: {{ $d.flowId }}
   flowVersion: {{ $d.flowVersion }}
-  runOnce: false
+  runOnce: true
   skipInvalidControllerService: true
   skipInvalidComponent: true
   clusterRef:
