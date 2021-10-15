@@ -65,7 +65,7 @@ spec:
       value: patients.updated.out
 
     - name: enrich.out
-      value: patient.enriched.out
+      value: patients.enriched.out
 {{- end }}
 {{- end }}
 {{- end }}
