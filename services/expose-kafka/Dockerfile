@@ -4,7 +4,7 @@ WORKDIR /app
 
 ENV FLASK_APP=exposekafka.py
 
-RUN pip3 install flask
+run pip3 install flask
 RUN pip3 install flask-restful
 RUN pip3 install requests
 RUN pip3 install kafka-python
