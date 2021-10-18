@@ -19,7 +19,7 @@ spec:
       value: http://{{ .Release.Name }}-nlp-insights:5000
 
     - name: AddNLPInsights
-      value: addNLPInsights
+      value: "True"
 
     - name: ASCVD_FROM_FHIR_URL
       value: http://{{ .Release.Name }}-ascvd-from-fhir:5000
@@ -31,16 +31,16 @@ spec:
       value: http://{{ .Release.Name }}-deid-prep:8080
 
     - name: DEID_PUSH_TO_FHIR
-      value: deidPushToFhir
+      value: "True"
 
     - name: DeidentifyData
-      value: deidentifyData
+      value: "True"
 
     - name: ResolveTerminology
-      value: resolveTerminology
+      value: "True"
 
     - name: RunASCVD
-      value: runASCVD
+      value: "True"
 
     - name: TERM_SERVICES_PREP_URL
       value: http://{{ .Release.Name }}-term-services-prep:8080
