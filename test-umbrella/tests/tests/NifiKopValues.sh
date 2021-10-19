@@ -2,6 +2,9 @@
 
 # Prepare the values.yaml file for a deployment using NifiKop
 
+# Get to the deployment directory
+cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
+
 # oidic users
 sed -i -e "s/identity: \"replace-me@company.com\"/identity: \"roger.guderian@ibm.com\"/g" values.yaml
 sed -i -e "s/name: \"replace.me.no.spaces.or.caps\"/name: \"roger.guderian\"\n    - identity: \"atclark@us.ibm.com\"\n      name: \"adam.t.clark\"/g" values.yaml
