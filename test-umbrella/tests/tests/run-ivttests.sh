@@ -9,6 +9,7 @@ chmod +x ./tests/toolchain-envsetup.sh
 source ./tests/toolchain-envsetup.sh "ivt"
 
 # Setup for NifiKop Deployment
+cd /workspace/$TEST_NAMESPACE/health-patterns/test-umbrella/tests
 chmod +x ./tests/NifiKopValues.sh
 source ./tests/NifiKopValues.sh
 
