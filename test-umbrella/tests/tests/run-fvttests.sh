@@ -8,23 +8,34 @@
 chmod +x ./tests/toolchain-envsetup.sh
 source ./tests/toolchain-envsetup.sh "fvt"
 
+# Setup for NifiKop Deployment
+chmod +x ./tests/NifiKopValues.sh
+source ./tests/NifiKopValues.sh
+
 echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
+
+# increase the time to wait for the deploy to be ready (25 minutes)
+export deploywait=1500
 
 # Execute the desired deployment
 echo $TEST_NAMESPACE" : Deploy via helm3"
 if [ $CLUSTER_NAMESPACE = "clinical-enrich" ] 
 then
+   # disable the ingestion deploy for an enrich-only deployment
+   sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
+
    # deploy enrich
-   helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout 6m0s
+   helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout 6m0s
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
    # deploy ingestion
-   helm3 install $HELM_RELEASE . -f de-id-pattern-values.yaml -f clinical_ingestion.yaml --wait --timeout 6m0s
+   helm3 install $HELM_RELEASE . --wait --timeout 6m0s
+   
 fi
 
 echo "*************************************"
-echo "* Waiting for "$deploywait" seconds           *"
+echo "* Waiting for "$deploywait" seconds          *"
 echo "*************************************"
 date
 sleep $deploywait  
