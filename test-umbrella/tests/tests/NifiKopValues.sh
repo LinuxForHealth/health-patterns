@@ -19,4 +19,4 @@ sed -i -e "s/\&nifikopEnabled false/\&nifikopEnabled true/g" values.yaml
 
 # Deploy NifiKop
 echo "Deploy NifiKop"
-helm install nifikop orange-incubator/nifikop --namespace=$TEST_NAMESPACE --version 0.6.3 --set image.tag=v0.6.3-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"$TEST_NAMESPACE"}  --wait --timeout 10m0s
+helm3 install nifikop orange-incubator/nifikop --namespace=$TEST_NAMESPACE --version 0.6.3 --set image.tag=v0.6.3-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"$TEST_NAMESPACE"}  --wait --timeout 4m0s
