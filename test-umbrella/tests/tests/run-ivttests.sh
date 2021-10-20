@@ -127,4 +127,5 @@ echo "*************************************"
 echo "* Delete the Deployment             *"
 echo "*************************************"
 helm3 delete $HELM_RELEASE
+helm3 delete nifikop
 kubectl delete namespace $TEST_NAMESPACE
