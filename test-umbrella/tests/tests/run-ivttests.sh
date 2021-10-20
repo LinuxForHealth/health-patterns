@@ -23,6 +23,8 @@ export deploywait=1500
 echo $TEST_NAMESPACE" : Deploy via helm3"
 if [ $CLUSTER_NAMESPACE = "clinical-enrich" ] 
 then
+
+  helm3 install nifikop orange-incubator/nifikop --namespace=clinical-enrich-ivt --version 0.6.3 --set image.tag=v0.6.3-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"clinical-enrich-ivt"}  --wait --timeout 4m0s
   # disable the ingestion deploy for an enrich-only deployment
   sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
 
@@ -30,6 +32,7 @@ then
   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/enrich/src/test/resources/configs/NLP-IVT-values.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout 6m0s
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
+    helm3 install nifikop orange-incubator/nifikop --namespace=clinical-ingestion-ivt --version 0.6.3 --set image.tag=v0.6.3-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"clinical-ingestion-ivt"}  --wait --timeout 4m0s
    # deploy ingestion
    helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout 6m0s
 fi
