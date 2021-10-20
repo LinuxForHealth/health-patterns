@@ -24,7 +24,7 @@ echo $TEST_NAMESPACE" : Deploy via helm3"
 if [ $CLUSTER_NAMESPACE = "clinical-enrich" ] 
 then
    # disable the ingestion deploy for an enrich-only deployment
-   # sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
+   sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
 
    # deploy enrich
    helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout 6m0s
