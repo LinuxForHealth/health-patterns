@@ -30,6 +30,7 @@ then
    helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout 6m0s
 elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
 then
+   cat values.yaml 
    # deploy ingestion
    helm3 install $HELM_RELEASE . --wait --timeout 6m0s
    
