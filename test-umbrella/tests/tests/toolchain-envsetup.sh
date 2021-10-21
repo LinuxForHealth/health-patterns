@@ -28,7 +28,7 @@ if [ $CLUSTER_NAMESPACE = "tst-enrich" ]
 then
    export HELM_RELEASE=enrich
    export deploywait=240
-elif [ $CLUSTER_NAMESPACE = "tst-0ingest" ] 
+elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
    export HELM_RELEASE=ingestion
    export deploywait=360
