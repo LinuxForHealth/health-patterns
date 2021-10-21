@@ -21,14 +21,14 @@ export deploywait=1500
 
 # Execute the desired deployment
 echo $TEST_NAMESPACE" : Deploy via helm3"
-if [ $CLUSTER_NAMESPACE = $ENRICH_TEST ] 
+if [ $CLUSTER_NAMESPACE = "tst-enrich" ] 
 then
    # disable the ingestion deploy for an enrich-only deployment
    sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
 
    # deploy enrich
    helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout 6m0s
-elif [ $CLUSTER_NAMESPACE = $INGEST_TEST ] 
+elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
    # deploy ingestion
    helm3 install $HELM_RELEASE . --wait --timeout 6m0s 
@@ -46,7 +46,7 @@ echo "* A Look At Everything              *"
 echo "*************************************"
 kubectl get all
 
-if [ $CLUSTER_NAMESPACE = $ENRICH_TEST ]  
+if [ $CLUSTER_NAMESPACE = "tst-enrich" ]  
 then 
 
    echo "****************************************************" 
@@ -76,7 +76,7 @@ then
    cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt
    cat target/surefire-reports/categories.NLPEnrichmentFVTTests.txt
    
-elif [ $CLUSTER_NAMESPACE = $INGEST_TEST ] 
+elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
 
    echo "****************************************************" 
