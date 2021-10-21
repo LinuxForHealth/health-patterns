@@ -24,11 +24,11 @@ export TEST_NAMESPACE=$CLUSTER_NAMESPACE"-"$1
 export INGRESS_SUBDOMAIN=wh-health-patterns.dev.watson-health.ibm.com 
 
 # Set the deploymemt-specific variables/values
-if [ $CLUSTER_NAMESPACE = "clinical-enrich" ]
+if [ $CLUSTER_NAMESPACE = "enrich" ]
 then
    export HELM_RELEASE=enrich
    export deploywait=240
-elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
+elif [ $CLUSTER_NAMESPACE = "ingest" ] 
 then
    export HELM_RELEASE=ingestion
    export deploywait=360

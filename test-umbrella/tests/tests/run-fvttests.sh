@@ -21,22 +21,17 @@ export deploywait=1500
 
 # Execute the desired deployment
 echo $TEST_NAMESPACE" : Deploy via helm3"
-if [ $CLUSTER_NAMESPACE = "clinical-enrich" ] 
+if [ $CLUSTER_NAMESPACE = "enrich" ] 
 then
-
-   helm3 install nifikop orange-incubator/nifikop --namespace=clinical-enrich-fvt --version 0.6.3 --set image.tag=v0.6.3-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"clinical-enrich-fvt"}  --wait --timeout 4m0s 
-
    # disable the ingestion deploy for an enrich-only deployment
    sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
 
    # deploy enrich
    helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout 6m0s
-elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
+elif [ $CLUSTER_NAMESPACE = "ingest" ] 
 then
-   helm3 install nifikop orange-incubator/nifikop --namespace=clinical-ingestion-fvt --version 0.6.3 --set image.tag=v0.6.3-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"clinical-ingestion-fvt"}  --wait --timeout 4m0s
    # deploy ingestion
-   helm3 install $HELM_RELEASE . --wait --timeout 6m0s
-   
+   helm3 install $HELM_RELEASE . --wait --timeout 6m0s 
 fi
 
 echo "*************************************"
