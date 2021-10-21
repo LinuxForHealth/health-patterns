@@ -48,7 +48,7 @@ echo "*************************************"
 kubectl get all
 
 
-if [ $CLUSTER_NAMESPACE = "clinical-enrich" ]  
+if [ $CLUSTER_NAMESPACE = "enrich" ]  
 then
 
    echo "****************************************************" 
@@ -78,7 +78,7 @@ then
    cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt
    cat target/surefire-reports/categories.NLPEnrichmentTests.txt
 
-elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
+elif [ $CLUSTER_NAMESPACE = "ingest" ] 
 then
 
    echo "****************************************************" 

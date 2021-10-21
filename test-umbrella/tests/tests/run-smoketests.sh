@@ -36,7 +36,7 @@ echo "* A Look At Everything              *"
 echo "*************************************"
 kubectl get all
 
-if [ $CLUSTER_NAMESPACE = "clinical-enrich" ]  
+if [ $CLUSTER_NAMESPACE = "enrich" ]  
 then 
    echo "****************************************************" 
    echo "* Goto the testcase folder in the repo             *"
@@ -62,7 +62,7 @@ then
    cat target/surefire-reports/categories.BasicEnrichmentTests.txt
    cat target/surefire-reports/categories.EnrichmentConfigTests.txt
    cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt
-elif [ $CLUSTER_NAMESPACE = "clinical-ingestion" ] 
+elif [ $CLUSTER_NAMESPACE = "ingest" ] 
 then
    echo "****************************************************" 
    echo "* Goto the testcase folder in the repo             *"
