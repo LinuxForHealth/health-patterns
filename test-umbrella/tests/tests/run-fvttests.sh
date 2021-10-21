@@ -21,14 +21,14 @@ export deploywait=1500
 
 # Execute the desired deployment
 echo $TEST_NAMESPACE" : Deploy via helm3"
-if [ $CLUSTER_NAMESPACE = "enrich" ] 
+if [ $CLUSTER_NAMESPACE = $ENRICH_TEST ] 
 then
    # disable the ingestion deploy for an enrich-only deployment
    sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
 
    # deploy enrich
    helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout 6m0s
-elif [ $CLUSTER_NAMESPACE = "ingest" ] 
+elif [ $CLUSTER_NAMESPACE = $INGEST_TEST ] 
 then
    # deploy ingestion
    helm3 install $HELM_RELEASE . --wait --timeout 6m0s 
@@ -46,7 +46,7 @@ echo "* A Look At Everything              *"
 echo "*************************************"
 kubectl get all
 
-if [ $CLUSTER_NAMESPACE = "enrich" ]  
+if [ $CLUSTER_NAMESPACE = $ENRICH_TEST ]  
 then 
 
    echo "****************************************************" 
@@ -76,7 +76,7 @@ then
    cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt
    cat target/surefire-reports/categories.NLPEnrichmentFVTTests.txt
    
-elif [ $CLUSTER_NAMESPACE = "ingest" ] 
+elif [ $CLUSTER_NAMESPACE = $INGEST_TEST ] 
 then
 
    echo "****************************************************" 
@@ -123,4 +123,10 @@ echo "* Delete the Deployment             *"
 echo "*************************************"
 helm3 delete $HELM_RELEASE
 helm3 delete nifikop
+echo "*************************************"
+echo "* Waiting for 300 seconds          *"
+echo "*************************************"
+date
+sleep 300  
+date
 kubectl delete namespace $TEST_NAMESPACE
