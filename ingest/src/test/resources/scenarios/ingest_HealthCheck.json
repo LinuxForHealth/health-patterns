@@ -13,10 +13,6 @@
         {
             "id": "checkExposeKafkaHealth",
             "stepFiles": "${JSON.FILE:scenarios/utilities/checkExposeKafkaHealth.json}"
-        },
-                {
-            "id": "checkNIFIHealth",
-            "stepFiles": "${JSON.FILE:scenarios/utilities/checkNIFIHealth.json}"
         }        
     ]
 }
