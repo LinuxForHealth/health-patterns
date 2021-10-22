@@ -127,10 +127,23 @@ echo "*************************************"
 echo "* Delete the Deployment             *"
 echo "*************************************"
 helm3 delete $HELM_RELEASE
-helm3 delete nifikop
 echo "*************************************"
-echo "* Waiting for 300 seconds          *"
+echo "* Waiting for 120 seconds           *"
 echo "*************************************"
 date
-sleep 300
+sleep 120  
+date
+echo "*************************************"
+echo "* Delete NifiKop                    *"
+echo "*************************************"
+helm3 delete nifikop
+echo "*************************************"
+echo "* Waiting for 120 seconds           *"
+echo "*************************************"
+date
+sleep 120  
+date
+echo "*************************************"
+echo "* Delete Namespace                  *"
+echo "*************************************"
 kubectl delete namespace $TEST_NAMESPACE
