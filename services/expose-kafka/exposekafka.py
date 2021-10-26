@@ -43,14 +43,15 @@ while True:
         current_time = round(time.time() * 1000)
         # If the Kafka server isn't up for any reason, we'll print a message every minute until it comes up.
         if current_time - last_recorded_time > 60 * 1000:
-            print(f"Unable to connect Kafka server: {e}")
+            app.logger.exception(f"Unable to connect Kafka server: {e}")
+            app.logger.warn("Retrying connection to Kafka server...")
             last_recorded_time = current_time
         # Even though we only print a message every 60 seconds, we'll try to connect every 5 seconds
         # to minimize container startup time.
         time.sleep(5)
 
 # kafka is now up and running
-print("Connected to Kafka server")
+app.logger.info("Connected to Kafka server")
 
 initconsumer = KafkaConsumer(bootstrap_servers=kafkabootstrap,
                          sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
