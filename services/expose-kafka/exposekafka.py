@@ -9,6 +9,7 @@ from flask import jsonify
 
 from datetime import datetime
 import time
+import logging
 
 app = Flask(__name__)
 
@@ -33,6 +34,8 @@ else:
 init_topics = initial_topics.replace(",", " ")
 topiclist = init_topics.split()
 
+app.logger.setLevel(logging.INFO)
+app.logger.info("Attempting to connect to Kafka server")
 last_recorded_time = round(time.time() * 1000)
 while True:
     try:
