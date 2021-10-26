@@ -9,6 +9,7 @@ from fhir.resources.medicationstatement import MedicationStatement
 from fhir.resources.quantity import Quantity
 from fhir.resources.timing import Timing
 from ibm_cloud_sdk_core.authenticators.iam_authenticator import IAMAuthenticator
+from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 from ibm_whcs_sdk import annotator_for_clinical_data as acd
 
 from text_analytics.abstract_nlp_service import NLPService
@@ -44,8 +45,12 @@ class ACDService(NLPService):
             self.version = config_dict.get('version')
 
     def process(self, text):
+        if self.acd_key is None or len(self.acd_key) == 0:
+            authenticator = NoAuthAuthenticator()
+        else:
+            authenticator = IAMAuthenticator(apikey=self.acd_key)
         service = acd.AnnotatorForClinicalDataV1(
-            authenticator=IAMAuthenticator(apikey=self.acd_key),
+            authenticator=authenticator,
             version=self.version
         )
         service.set_service_url(self.acd_url)
