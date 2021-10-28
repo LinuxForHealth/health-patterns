@@ -166,6 +166,12 @@ nifi-registry:
   enabled: true
   # The fullname is overridden to some static name in order to automatically register the NiFi Registry with the NiFi deployment
   fullnameOverride: alvearie-nifi-registry
+  git:
+    branch: origin
+    username:
+    password:
+    # By default this registry loads the health-patterns NiFi flows
+    repository: https://github.ibm.com/integrationsquad/hackathonQ4.git
   ingress:
     enabled: false
     class: *ingressClass
@@ -355,6 +361,9 @@ term-services-prep:
 # ------------------------------------------------------------------------------
 expose-kafka:
   enabled: true
+  image:
+    repository: atclark/expose-kafka
+    tag: 0.0.1
   ingress:
     enabled: *ingressEnabled
     class: *ingressClass

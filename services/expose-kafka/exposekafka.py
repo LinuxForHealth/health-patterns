@@ -113,6 +113,7 @@ def produce():
     resolveterminology = request.headers.get("ResolveTerminology", "false")
     deidentifydata = request.headers.get("DeidentifyData", "false")
     runascvd = request.headers.get("RunASCVD", "false")
+    rungosh = request.headers.get("RunGoSH", "false")
     add_nlp_insights = request.headers.get("AddNLPInsights", "false")
     resourceid = request.headers.get("ResourceId", "")
 
@@ -120,6 +121,7 @@ def produce():
                 ("ResolveTerminology",bytes(resolveterminology, 'utf-8')),
                 ("DeidentifyData",bytes(deidentifydata, 'utf-8')),
                 ("RunASCVD",bytes(runascvd, 'utf-8')),
+                ("RunGoSH",bytes(rungosh, 'utf-8')),
                 ("AddNLPInsights",bytes(add_nlp_insights, 'utf-8'))
                ]
 
