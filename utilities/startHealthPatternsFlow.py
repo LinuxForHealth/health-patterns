@@ -250,7 +250,6 @@ def updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLP
             update_parameter(baseURL, contextId, "ResolveTerminology", resolveTerminology)
             update_parameter(baseURL, contextId, "DEID_CONFIG_NAME", deidConfigName)
             update_parameter(baseURL, contextId, "DEID_PUSH_TO_FHIR", deidPushToFhir)
-            update_parameter(baseURL, contextId, "GOSH_URL", "http://" + releaseName + "-gosh-service:5000")
 
         if "ASCVD Parameter Context" in context["component"]["name"]:
             if debug:
