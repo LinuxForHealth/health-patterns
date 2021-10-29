@@ -56,7 +56,7 @@ jobs:
         kubectl create namespace ${CLUSTER_NAMESPACE}
         ibmcloud cis instance-set 'Cloud Internet Services - Health Patterns'
         json='{"name" : "'${CLUSTER_NAMESPACE}'.wh-health-patterns.dev.watson-health.ibm.com", "fallback_pool" : "64c39c1c0638d539cae6d5ff593a0493", "default_pools" : ["64c39c1c0638d539cae6d5ff593a0493"], "ttl" : 1, "proxied" : true, "session_affinity" : "cookie"}'
-        ibmcloud cis glb-create 6ff29db14b24b78a36227f49e18f3177 --json ${json} 
+        ibmcloud cis glb-create 6ff29db14b24b78a36227f49e18f3177 --json '{"name" : "'${CLUSTER_NAMESPACE}'.wh-health-patterns.dev.watson-health.ibm.com", "fallback_pool" : "64c39c1c0638d539cae6d5ff593a0493", "default_pools" : ["64c39c1c0638d539cae6d5ff593a0493"], "ttl" : 1, "proxied" : true, "session_affinity" : "cookie"}' 
 
     # Setup and Install Chart 
     - name: Install Chart
