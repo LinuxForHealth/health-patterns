@@ -128,6 +128,7 @@ jobs:
            helm uninstall ingestion
            kubectl delete namespace ${CLUSTER_NAMESPACE}
            echo "start glb delete process...."
+           ibmcloud cis instance-set 'Cloud Internet Services - Health Patterns'
            ibmcloud cis glbs 6ff29db14b24b78a36227f49e18f3177 | grep ${CLUSTER_NAMESPACE}
            glbid=$(echo ibmcloud cis glbs 6ff29db14b24b78a36227f49e18f3177 | grep ${CLUSTER_NAMESPACE})
            echo "Command Output" '"$glbid"'"
