@@ -42,6 +42,7 @@ jobs:
         ibmcloud --version
         ibmcloud config --check-version=false
         ibmcloud plugin install -f kubernetes-service
+        ibmcloud plugin install -f cis
 
     # Authenticate with IBM Cloud CLI
     - name: Authenticate into IBM Cloud Integration Squad Kubernetes Cluster
