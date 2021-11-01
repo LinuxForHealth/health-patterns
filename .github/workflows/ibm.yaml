@@ -13,16 +13,16 @@ env:
   ACD_API_KEY: ${{ secrets.ACD_API_KEY }}
   DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}
   IBM_CLOUD_REGION: us-east
-  CLUSTER_NAMESPACE: github
-  FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir
-  FHIR_DEID_IP: github.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
-  NIFI_IP: github.wh-health-patterns.dev.watson-health.ibm.com/
-  DEID_IP: github.wh-health-patterns.dev.watson-health.ibm.com/deid
-  EXP_KAFKA_IP: github.wh-health-patterns.dev.watson-health.ibm.com/expose-kafka
-  ASCVD_FROM_FHIR_IP: github.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
-  TERM_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
-  DEID_PREP_IP: github.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
-  NLP_INSIGHTS_IP: github.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
+  CLUSTER_NAMESPACE: github-${{github.actor}}
+  FHIR_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/fhir
+  FHIR_DEID_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
+  NIFI_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/
+  DEID_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/deid
+  EXP_KAFKA_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/expose-kafka
+  ASCVD_FROM_FHIR_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
+  TERM_PREP_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
+  DEID_PREP_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
+  NLP_INSIGHTS_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
   
   
 
@@ -42,12 +42,19 @@ jobs:
         ibmcloud --version
         ibmcloud config --check-version=false
         ibmcloud plugin install -f kubernetes-service
+        ibmcloud plugin install -f cis
 
     # Authenticate with IBM Cloud CLI
     - name: Authenticate into IBM Cloud Integration Squad Kubernetes Cluster
       run: |
         ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g dev-env-wdc-kube
         ibmcloud ks cluster config --cluster health-patterns-1
+        
+    # Create the Namespace and Global Load Balancer 
+    - name: Create Namespace and GLB
+      run: |
+        kubectl create namespace ${CLUSTER_NAMESPACE}
+        ibmcloud cis glb-create 6ff29db14b24b78a36227f49e18f3177 --json '{"name" : "'${CLUSTER_NAMESPACE}'.wh-health-patterns.dev.watson-health.ibm.com", "fallback_pool" : "64c39c1c0638d539cae6d5ff593a0493", "default_pools" : ["64c39c1c0638d539cae6d5ff593a0493"], "ttl" : 1, "proxied" : true, "session_affinity" : "cookie"}' -i 'Cloud Internet Services - Health Patterns'
 
     # Setup and Install Chart 
     - name: Install Chart
@@ -56,7 +63,7 @@ jobs:
         kubectl config current-context
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
         helm dependency update helm-charts/health-patterns
-        sed -i -e "s/\&hostname replace-me/\&hostname github.wh-health-patterns.dev.watson-health.ibm.com/g" helm-charts/health-patterns/values.yaml
+        sed -i -e "s/\&hostname replace-me/\&hostname ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/g" helm-charts/health-patterns/values.yaml
         helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_API_KEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout 6m0s
         kubectl get all
 
@@ -114,7 +121,14 @@ jobs:
          mvn -e -DskipTests=false -Dtest=BasicIngestionInitTests test
          mvn -e -DskipTests=false -Dtest=BasicIngestionTests test
 
-    # Uninstall Chart
-    - name: Uninstall Chart
-      run: helm uninstall ingestion
+    # Uninstall Chart, Delete Namespace, delete GLB
+    - name: Clean Up Deployment, Namespace, and GLB
+      run: |
+           helm uninstall ingestion
+           kubectl delete namespace ${CLUSTER_NAMESPACE}
+           ibmcloud cis instance-set 'Cloud Internet Services - Health Patterns'
+           glbid=$(ibmcloud cis glbs 6ff29db14b24b78a36227f49e18f3177 | grep ${CLUSTER_NAMESPACE})
+           glbid=${glbid:0:32}
+           ibmcloud cis glb-delete 6ff29db14b24b78a36227f49e18f3177 $glbid -i "Cloud Internet Services - Health Patterns" 
+           
       if: ${{ always() }}
