@@ -56,7 +56,7 @@ jobs:
     - name: Create Namespace and GLB
       run: |
         kubectl create namespace ${CLUSTER_NAMESPACE}
-        ibmcloud cis glb-create ${DOMAIN_ID) --json '{"name" : "'${CLUSTER_NAMESPACE}'.wh-health-patterns.dev.watson-health.ibm.com", "fallback_pool" : "'${POOL_ID}'", "default_pools" : ["'{$POOL_ID}'"], "ttl" : 1, "proxied" : true, "session_affinity" : "cookie"}' -i 'Cloud Internet Services - Health Patterns'
+        ibmcloud cis glb-create ${DOMAIN_ID} --json '{"name" : "'${CLUSTER_NAMESPACE}'.wh-health-patterns.dev.watson-health.ibm.com", "fallback_pool" : "64c39c1c0638d539cae6d5ff593a0493", "default_pools" : ["64c39c1c0638d539cae6d5ff593a0493"], "ttl" : 1, "proxied" : true, "session_affinity" : "cookie"}' -i 'Cloud Internet Services - Health Patterns'
 
     # Setup and Install Chart 
     - name: Install Chart
