@@ -13,16 +13,19 @@ env:
   ACD_API_KEY: ${{ secrets.ACD_API_KEY }}
   DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}
   IBM_CLOUD_REGION: us-east
-  CLUSTER_NAMESPACE: github-${{github.actor}}
-  FHIR_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/fhir
-  FHIR_DEID_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
-  NIFI_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/
-  DEID_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/deid
-  EXP_KAFKA_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/expose-kafka
-  ASCVD_FROM_FHIR_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
-  TERM_PREP_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
-  DEID_PREP_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
-  NLP_INSIGHTS_IP: github-${{github.actor}}.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
+  CIS_INSTANCE: Cloud Internet Services - Health Patterns
+  DOMAIN_ID: 6ff29db14b24b78a36227f49e18f3177
+  POOL_ID: 64c39c1c0638d539cae6d5ff593a0493
+  CLUSTER_NAMESPACE: github-${{github.run_id}}
+  FHIR_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/fhir
+  FHIR_DEID_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
+  NIFI_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/
+  DEID_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/deid
+  EXP_KAFKA_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/expose-kafka
+  ASCVD_FROM_FHIR_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
+  TERM_PREP_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
+  DEID_PREP_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
+  NLP_INSIGHTS_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
   
   
 
@@ -54,7 +57,7 @@ jobs:
     - name: Create Namespace and GLB
       run: |
         kubectl create namespace ${CLUSTER_NAMESPACE}
-        ibmcloud cis glb-create 6ff29db14b24b78a36227f49e18f3177 --json '{"name" : "'${CLUSTER_NAMESPACE}'.wh-health-patterns.dev.watson-health.ibm.com", "fallback_pool" : "64c39c1c0638d539cae6d5ff593a0493", "default_pools" : ["64c39c1c0638d539cae6d5ff593a0493"], "ttl" : 1, "proxied" : true, "session_affinity" : "cookie"}' -i 'Cloud Internet Services - Health Patterns'
+        ibmcloud cis glb-create ${DOMAIN_ID} --json '{"name" : "'${CLUSTER_NAMESPACE}'.wh-health-patterns.dev.watson-health.ibm.com", "fallback_pool" : "'${POOL_ID}'", "default_pools" : ["'${POOL_ID}'"], "ttl" : 1, "proxied" : true, "session_affinity" : "cookie"}' -i "${CIS_INSTANCE}"
 
     # Setup and Install Chart 
     - name: Install Chart
@@ -126,9 +129,9 @@ jobs:
       run: |
            helm uninstall ingestion
            kubectl delete namespace ${CLUSTER_NAMESPACE}
-           ibmcloud cis instance-set 'Cloud Internet Services - Health Patterns'
+           ibmcloud cis instance-set "${CIS_INSTANCE}"
            glbid=$(ibmcloud cis glbs 6ff29db14b24b78a36227f49e18f3177 | grep ${CLUSTER_NAMESPACE})
            glbid=${glbid:0:32}
-           ibmcloud cis glb-delete 6ff29db14b24b78a36227f49e18f3177 $glbid -i "Cloud Internet Services - Health Patterns" 
+           ibmcloud cis glb-delete ${DOMAIN_ID} $glbid -i "${CIS_INSTANCE}"
            
       if: ${{ always() }}
