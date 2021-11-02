@@ -47,7 +47,7 @@ oidc:
       name: "replace.me.no.spaces.or.caps"
   discovery:
     url: &oidc_discovery_url "replace-me"
-  client: 
+  client:
     id: &oidc_client_id replace-me
     secret: &oidc_client_secret replace-me
 
@@ -198,7 +198,7 @@ nifi2: # NifiKop based Nifi
   oidc:
     discovery:
       url: *oidc_discovery_url
-    client: 
+    client:
       id: *oidc_client_id
       secret: *oidc_client_secret
   ingress:
@@ -264,11 +264,21 @@ nifi:
       volumeMounts:
       - name: alvearie-nars
         mountPath: /nars
+    data-quality:
+      image: alvearie/alvearie-dq:latest
+      command: ["sh", "-c", "cp -R /dq/* /data-quality"]
+      volumeMounts:
+      - name: dq-dir
+        mountPath: /data-quality
   extraVolumeMounts:
     - name: alvearie-nars
       mountPath: /opt/nifi/nifi-current/custom-nars
+    - name: dq-dir
+      mountPath: /data-quality
   extraVolumes:
     - name: alvearie-nars
+      emptyDir: {}
+    - name: dq-dir
       emptyDir: {}
   properties:
     customLibPath: ./custom-nars
