@@ -16,8 +16,8 @@ source ./tests/NifiKopValues.sh
 echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
-# increase the time to wait for the deploy to be ready (25 minutes)
-export deploywait=1500
+# increase the time to wait for the deploy to be ready (15 minutes)
+export deploywait=900
 
 # Execute the desired deployment
 echo $TEST_NAMESPACE" : Deploy via helm3"
@@ -123,20 +123,20 @@ echo "* Delete the Deployment             *"
 echo "*************************************"
 helm3 delete $HELM_RELEASE
 echo "*************************************"
-echo "* Waiting for 120 seconds           *"
+echo "* Waiting for 60  seconds           *"
 echo "*************************************"
 date
-sleep 120  
+sleep 60   
 date
 echo "*************************************"
 echo "* Delete NifiKop                    *"
 echo "*************************************"
 helm3 delete nifikop
 echo "*************************************"
-echo "* Waiting for 120 seconds           *"
+echo "* Waiting for 60  seconds           *"
 echo "*************************************"
 date
-sleep 120  
+sleep 60  
 date
 echo "*************************************"
 echo "* Delete Namespace                  *"
