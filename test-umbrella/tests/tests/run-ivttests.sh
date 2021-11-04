@@ -16,7 +16,7 @@ source ./tests/NifiKopValues.sh
 echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
-# increase the time to wait for the deploy to be ready (25 minutes)
+# increase the time to wait for the deploy to be ready (15 minutes)
 export deploywait=900
 
 # Execute the desired deployment
