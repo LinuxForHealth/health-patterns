@@ -43,8 +43,8 @@ enrichment:
 
 oidc:
   users: &oidc_users
-    - identity: "replace-me@company.com"
-      name: "replace.me.no.spaces.or.caps"
+    - identity: "alvearie@us.ibm.com"
+      name: "alvearie"
   discovery:
     url: &oidc_discovery_url "replace-me"
   client: 
