@@ -35,6 +35,26 @@ ingress:
   class: &ingressClass public-iks-k8s-nginx
   hostname: &hostname replace-me
 
+ingestion:
+  enabled: &ingestionEnabled true
+
+enrichment:
+  enabled: &enrichmentEnabled true
+
+oidc:
+  users: &oidc_users
+    - identity: "replace-me@company.com"
+      name: "replace.me.no.spaces.or.caps"
+  discovery:
+    url: &oidc_discovery_url "replace-me"
+  client: 
+    id: &oidc_client_id replace-me
+    secret: &oidc_client_secret replace-me
+
+nifikop:
+  disabled: &nifikopDisabled true
+  enabled: &nifikopEnabled false
+
 ascvd:
   enabled: true
 
@@ -58,15 +78,19 @@ nlp-insights:
     enabled: false
     class: *ingressClass
     hostname: *hostname
-
   nlpservice:
     quickumls:
+      enableconfig:
+      name:
       endpoint:
     acd:
+      enableconfig:
+      name:
       endpoint:
       apikey:
       flow:
-        
+    default:
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # ------------------------------------------------------------------------------
@@ -93,6 +117,8 @@ fhir:
       enabled: *ingressEnabled
       class: *ingressClass
       hostname: *hostname
+  userPassword: integrati0n
+  adminPassword: integrati0n
 
 ## Configure these to allow bulk access from fhir server
 #  bulkExportConfig:
@@ -149,18 +175,60 @@ nifi-registry:
 # Zookeeper Configuration
 # ------------------------------------------------------------------------------
 zookeeper:
-  enabled: true
+  enabled: *nifikopDisabled
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
   fullnameOverride: alvearie-zookeeper
-  persistence:
-    enabled: false
+
+zookeeper2:
+  enabled: *nifikopEnabled
+  # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
+  fullnameOverride: alvearie-zookeeper
+
+# ------------------------------------------------------------------------------
+# Nifi Configuration
+# ------------------------------------------------------------------------------
+
+nifi2: # NifiKop based Nifi
+  enabled: *nifikopEnabled
+  fullnameOverride: alvearie-nifi
+  image:
+    repository: apache/nifi
+    tag: 1.12.1
+  user: *oidc_users
+  oidc:
+    discovery:
+      url: *oidc_discovery_url
+    client: 
+      id: *oidc_client_id
+      secret: *oidc_client_secret
+  ingress:
+    class: *ingressClass
+    hostname: *hostname
+  service:
+    port: 8443
+  storageClassName: ibmc-vpc-block-metro-10iops-tier
+  dataflow:
+    - name: health-patterns-dataflow
+      enabled: *ingestionEnabled
+      bucketId: c601a7b4-f047-461e-ac13-2f140f8fb9b2
+      flowId: 07fefa93-4207-4363-b46d-4e92a25d7bf6
+      # flowVersion must be here. Using -1 doesn't work, and ommitting it causes NifiKop controller to fail/restart constantly
+      flowVersion: 35
+      parameterContextRef: ingestion-parameter-context
+    - name: health-patterns-enrich-dataflow
+      enabled: *enrichmentEnabled
+      bucketId: c601a7b4-f047-461e-ac13-2f140f8fb9b2
+      flowId: 1681a7e6-fdfe-4956-9ce1-6c9302f3b32f
+      # flowVersion must be here. Using -1 doesn't work, and ommitting it causes NifiKop controller to fail/restart constantly
+      flowVersion: 12
+      parameterContextRef: enrichment-parameter-context
 
 # ------------------------------------------------------------------------------
 # Nifi Configuration
 # ------------------------------------------------------------------------------
 nifi:
   fullnameOverride: alvearie-nifi
-  enabled: true
+  enabled: *nifikopDisabled
   ingress:
     enabled: false
     class: *ingressClass
@@ -245,6 +313,7 @@ kafka:
 
     serviceMonitor:
       enabled: false
+  password: integrati0n
 
 # ------------------------------------------------------------------------------
 # De-Identification Service

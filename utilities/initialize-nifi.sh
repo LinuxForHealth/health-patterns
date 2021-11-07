@@ -6,18 +6,20 @@ scripts/initialize-reporting-task.sh $HOSTNAME 8080
 
 if [ "$ADD_CLINICAL_INGESTION" = true ] ; then
 python /scripts/loadHealthPatternsFlows.py \
+  --baseUrl=http://$HOSTNAME:8080/ \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
   --flowName="Clinical Ingestion" \
-  --baseUrl=http://$HOSTNAME:8080/
+  --version=34
 fi
 
 if [ "$ADD_CLINICAL_ENRICHMENT" = true ] ; then
 python /scripts/loadHealthPatternsFlows.py \
+  --baseUrl=http://$HOSTNAME:8080/ \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
   --flowName="FHIR Bundle Enrichment" \
-  --baseUrl=http://$HOSTNAME:8080/ \
+  --version=11 \
   --x=0.0 \
   --y=200.0
 fi
@@ -26,6 +28,7 @@ python /scripts/startHealthPatternsFlow.py \
   --baseUrl=http://$HOSTNAME:8080/ \
   --fhir_pw=$FHIR_PW \
   --kafka_pw=$KAFKA_PW \
+  --addNLPInsights=$ADD_NLP_INSIGHTS \
   --runASCVD=$RUN_ASCVD \
   --deidentifyData=$DEIDENTIFY_DATA \
   --resolveTerminology=$RESOLVE_TERMINOLOGY \

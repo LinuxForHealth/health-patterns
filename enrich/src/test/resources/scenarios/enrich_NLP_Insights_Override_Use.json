@@ -1,0 +1,70 @@
+{
+    "scenarioName": "********enrich_NLP_Insights_Override_Use********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+
+        {
+            "name": "activateConfig${0}-${1}",
+            "url": "${nlp_insights}/config/setDefault?name=${1}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },        
+
+        {
+            "name": "addOverride${0}",
+            "url": "${nlp_insights}/config/resource/${3}/${4}",
+            "operation": "${0}",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody": "$CONTAINS.STRING:'${3}': '${4}'"
+            }
+        },
+        {  
+            "name": "discoverInsights",
+            "url": "${nlp_insights}/discoverInsights",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${2}" },            
+            "verify": {
+                "status": 200
+            }
+        }, 
+        {
+            "name": "verifyAnalyticType${0}-${1}",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.discoverInsights.response.body}",
+                 "string2": "${5}"
+            },
+            "verify": { "result": "true" }
+        },        
+        {
+            "name": "delete${3}Override${0}",
+            "url": "${nlp_insights}/config/resource/${3}",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        }                
+     ],
+     "parameterized": {
+        "csvSource":[
+        
+            "POST,acd,${JSON.FILE:Patients/diagnosticreportNLP.json},DiagnosticReport,default,QuickUMLS Unstructured",
+            "PUT,default,${JSON.FILE:Patients/diagnosticreportNLP.json},DiagnosticReport,acd,ACD Unstructured",
+            "POST,acd,${JSON.FILE:Patients/immunizationNLP.json},Immunization,default,QuickUMLS Structured",
+            "PUT,default,${JSON.FILE:Patients/immunizationNLP.json},Immunization,acd,ACD Structured",
+            "PUT,acd,${JSON.FILE:Patients/allergyintoleranceNLP.json},AllergyIntolerance,default,QuickUMLS Structured",
+            "POST,default,${JSON.FILE:Patients/allergyintoleranceNLP.json},AllergyIntolerance,acd,ACD Structured",
+            "POST,acd,${JSON.FILE:Patients/documentreferenceNLP.json},DocumentReference,default,QuickUMLS Unstructured",
+            "PUT,default,${JSON.FILE:Patients/documentreferenceNLP.json},DocumentReference,acd,ACD Unstructured"
+
+        ]
+    }
+}

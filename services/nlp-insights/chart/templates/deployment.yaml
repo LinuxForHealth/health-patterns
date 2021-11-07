@@ -27,11 +27,21 @@ spec:
             containerPort: {{ .Values.service.port }}
             protocol: TCP
         env:
+          - name: QUICKUMLS_ENABLE_CONFIG
+            value: {{ quote .Values.nlpservice.quickumls.enableconfig }}
+          - name: QUICKUMLS_NAME
+            value: {{ .Values.nlpservice.quickumls.name }}
           - name: QUICKUMLS_ENDPOINT
             value: {{ .Values.nlpservice.quickumls.endpoint }}
+          - name: ACD_ENABLE_CONFIG
+            value: {{ quote .Values.nlpservice.acd.enableconfig }}
+          - name: ACD_NAME
+            value: {{ .Values.nlpservice.acd.name }}
           - name: ACD_ENDPOINT
             value: {{ .Values.nlpservice.acd.endpoint }}
           - name: ACD_API_KEY
             value: {{ .Values.nlpservice.acd.apikey }}
           - name: ACD_FLOW
             value: {{ .Values.nlpservice.acd.flow }}
+          - name: NLP_SERVICE_DEFAULT
+            value: {{ .Values.nlpservice.default }}

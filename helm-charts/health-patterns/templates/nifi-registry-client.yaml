@@ -1,0 +1,15 @@
+{{- if .Values.nifikop.enabled -}}
+{{- if .Values.nifi2.enabled -}}
+apiVersion: nifi.orange.com/v1alpha1
+kind: NifiRegistryClient
+metadata:
+  name: default
+  namespace: {{ .Release.Namespace }}
+spec:
+  clusterRef:
+    name: nifi
+    namespace: {{ .Release.Namespace }}
+  description: Registry client managed by NiFiKop
+  uri: http://{{ index .Values "nifi-registry" "fullnameOverride" }}:80
+{{- end }}
+{{- end }}

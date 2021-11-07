@@ -24,5 +24,12 @@ spec:
                 name: alvearie-nifi
                 port: 
                   number: {{ $ingressPort }}
+          - path: /nifi-api
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: alvearie-nifi
+                port:
+                  number: {{ $ingressPort }}
 {{- end }}
 {{- end }}

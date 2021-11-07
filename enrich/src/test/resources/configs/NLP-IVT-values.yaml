@@ -1,0 +1,24 @@
+
+# Basic configuration for the NLP-Insights serivce for ingestion tests
+
+pattern: "NLP-Insights Configuration Overrides for IVT"
+
+nlp-insights:
+  enabled: true
+  ingress:
+     enabled: true
+
+  nlpservice:
+    quickumls:
+      enableconfig: true
+      name: default
+      endpoint: https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match
+
+    acd:
+      enableconfig: true
+      name: acd
+      endpoint: https://us-east.wh-acd.cloud.ibm.com/wh-acd/api
+      apikey:
+      flow: wh_acd.ibm_clinical_insights_v1.0_standard_flow
+
+    default: default

@@ -1,0 +1,66 @@
+{
+    "scenarioName": "********ingest_FHIR********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "ingestPatient",
+            "url": "${expose_kafka}?topic=${kafka.ingestion.topic}",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json",
+                "DeidentifyData": "false"},
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+               
+        {
+            "name": "waitForIngestion",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 15,
+            "verify": {
+            }
+        },
+        
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                }
+            }
+        },   
+
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }         
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738"        
+        ]
+    }
+}

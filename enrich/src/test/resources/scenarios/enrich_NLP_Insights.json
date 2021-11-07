@@ -1,0 +1,166 @@
+{
+    "scenarioName": "********enrich_NLP_Insights********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "getAllConfigs",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getCurrentConfig",
+            "url": "${nlp_insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getDefaultConfig",
+            "url": "${nlp_insights}/config/default",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "createConfigViaPOST",
+            "url": "${nlp_insights}/config/createViaPost",
+            "operation": "POST",           
+                "request": {
+                "body" : { "nlpService" : "ACD"} 
+                },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "createConfigViaPUT",
+            "url": "${nlp_insights}/config/createViaPut",
+            "operation": "PUT",           
+                "request": {
+                "body" : { "nlpService" : "ACD"} 
+                },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "activateConfigViaPUT",
+            "url": "${nlp_insights}/config?name=createViaPut",
+            "operation": "PUT",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },        
+        {
+            "name": "getCurrentConfig",
+            "url": "${nlp_insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "deletecreateViaPostConfig",
+            "url": "${nlp_insights}/config/createViaPost",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "deleteActvatedConfig",
+            "url": "${nlp_insights}/config/createViaPut",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },      
+        {
+            "name": "activateConfigViaPUT",
+            "url": "${nlp_insights}/config?name=createViaPut",
+            "operation": "PUT",           
+                "request": { },            
+            "verify": {
+                "status": 400
+            }
+        },       
+        {
+            "name": "createConfigABC",
+            "url": "${nlp_insights}/config/createABC",
+            "operation": "PUT",           
+                "request": {
+                "body" : { "nlpService" : "ABC"} 
+                },            
+            "verify": {
+                "status": 200
+            }
+        },       
+        {
+            "name": "activateConfigABC",
+            "url": "${nlp_insights}/config?name=createABC",
+            "operation": "PUT",           
+                "request": { },            
+            "verify": {
+                "status": 400
+            }
+        },     
+        {
+            "name": "deleteConfigABC",
+            "url": "${nlp_insights}/config/createABC",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+                {
+            "name": "deleteConfigABC",
+            "url": "${nlp_insights}/config/createABC",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+                "status": 500
+            }
+        },
+        {
+            "name": "getCurrentConfig",
+            "url": "${nlp_insights}/config",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "getAllConfigs",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "activateDefault",
+            "url": "${nlp_insights}/config?name=default",
+            "operation": "PUT",           
+                "request": { },            
+            "verify": {
+                "status": 200
+            }
+        }                 
+     ]
+}

@@ -1,0 +1,262 @@
+{
+    "scenarioName": "********enrich_DEID_prep_config_Use********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "postJustGivenName",
+            "url": "${deid_prep}/config/JustGivenName",
+            "operation": "POST",          
+            "request": {
+           		 "headers" : { "Content-Type": "application/json"}, 
+		         "body": "${JSON.FILE:configs/justGivenNameDEID.json}"
+     	    },            
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "postJustFamilyName",
+            "url": "${deid_prep}/config/JustFamilyName",
+            "operation": "POST",          
+            "request": {
+           		 "headers" : { "Content-Type": "application/json"}, 
+		         "body": "${JSON.FILE:configs/justFamilyNameDEID.json}"
+     	    },            
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "deidJustGivenName",
+            "url": "${deid_prep}/?configName=JustGivenName",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json}" },            
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "entry":[ {
+                        "resource": {
+                            "name": [{
+                              "family" : "$IS.NOTNULL",
+                              "given" : [ "$IS.NOTNULL" ]
+                            }],
+                           "birthDate" : "$IS.NOTNULL",
+                           "address" : [ {
+                               "line" : [ "$IS.NOTNULL" ],
+                               "city" : "$IS.NOTNULL",
+                               "state" : "$IS.NOTNULL",
+                               "postalCode" : "$IS.NOTNULL"
+                           } ]
+                        }
+                    } ]
+                }
+           }
+        },  
+        {
+            "name": "verifyDeIDFamilyName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Family Name",
+                 "deid": "${$.deidJustGivenName.response.body.entry[0].resource.name[0].family}",
+                 "pri":  "${$.deidJustGivenName.request.body.entry[0].resource.name[0].family}"
+            },
+            "verify": { "result": false }
+        },              
+        {
+            "name": "verifyDeIDGivenName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Given Name",
+                 "deid": "${$.deidJustGivenName.response.body.entry[0].resource.name[0].given}",
+                 "pri":  "${$.deidJustGivenName.request.body.entry[0].resource.name[0].given}"
+            },
+            "verify": {"result": true }
+        },             
+        {
+            "name": "verifyDeIDBirthDate",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Birth Date",
+                 "deid": "${$.deidJustGivenName.response.body.entry[0].resource.birthDate}",
+                 "pri":  "${$.deidJustGivenName.request.body.entry[0].resource.birthDate}"
+            },
+            "verify": { "result": false }
+        },              
+        {
+            "name": "verifyDeIDAddressLine",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Address Line",
+                 "deid": "${$.deidJustGivenName.response.body.entry[0].resource.address[0].line[0]}",
+                 "pri":  "${$.deidJustGivenName.request.body.entry[0].resource.address[0].line[0]}"
+            },
+            "verify": { "result": false }
+        },              
+        {
+            "name": "verifyDeIDCity",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "City",
+                 "deid": "${$.deidJustGivenName.response.body.entry[0].resource.address[0].city}",
+                 "pri":  "${$.deidJustGivenName.request.body.entry[0].resource.address[0].city}"
+            },
+            "verify": { "result": false }
+        },              
+        {
+            "name": "verifyDeIDPostalCode",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Postal Code",
+                 "deid": "${$.deidJustGivenName.response.body.entry[0].resource.address[0].postalCode}",
+                 "pri":  "${$.deidJustGivenName.request.body.entry[0].resource.address[0].postalCode}"
+            },
+            "verify": { "result": false }
+        },
+        {
+            "name": "deidJustFamilyName",
+            "url": "${deid_prep}/?configName=JustFamilyName",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json}" },            
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "entry":[ {
+                        "resource": {
+                            "name": [{
+                              "family" : "$IS.NOTNULL",
+                              "given" : [ "$IS.NOTNULL" ]
+                            }],
+                           "birthDate" : "$IS.NOTNULL",
+                           "address" : [ {
+                               "line" : [ "$IS.NOTNULL" ],
+                               "city" : "$IS.NOTNULL",
+                               "state" : "$IS.NOTNULL",
+                               "postalCode" : "$IS.NOTNULL"
+                           } ]
+                        }
+                    } ]
+                }
+           }
+        },  
+        {
+            "name": "verifyDeIDFamilyName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Family Name",
+                 "deid": "${$.deidJustFamilyName.response.body.entry[0].resource.name[0].family}",
+                 "pri":  "${$.deidJustFamilyName.request.body.entry[0].resource.name[0].family}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyDeIDGivenName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Given Name",
+                 "deid": "${$.deidJustFamilyName.response.body.entry[0].resource.name[0].given}",
+                 "pri":  "${$.deidJustFamilyName.request.body.entry[0].resource.name[0].given}"
+            },
+            "verify": {"result": false }
+        },             
+        {
+            "name": "verifyDeIDBirthDate",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Birth Date",
+                 "deid": "${$.deidJustFamilyName.response.body.entry[0].resource.birthDate}",
+                 "pri":  "${$.deidJustFamilyName.request.body.entry[0].resource.birthDate}"
+            },
+            "verify": { "result": false }
+        },              
+        {
+            "name": "verifyDeIDAddressLine",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Address Line",
+                 "deid": "${$.deidJustFamilyName.response.body.entry[0].resource.address[0].line[0]}",
+                 "pri":  "${$.deidJustFamilyName.request.body.entry[0].resource.address[0].line[0]}"
+            },
+            "verify": { "result": false }
+        },              
+        {
+            "name": "verifyDeIDCity",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "City",
+                 "deid": "${$.deidJustFamilyName.response.body.entry[0].resource.address[0].city}",
+                 "pri":  "${$.deidJustFamilyName.request.body.entry[0].resource.address[0].city}"
+            },
+            "verify": { "result": false }
+        },              
+        {
+            "name": "verifyDeIDPostalCode",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Postal Code",
+                 "deid": "${$.deidJustFamilyName.response.body.entry[0].resource.address[0].postalCode}",
+                 "pri":  "${$.deidJustFamilyName.request.body.entry[0].resource.address[0].postalCode}"
+            },
+            "verify": { "result": false }
+        },
+        {
+            "name": "deleteJustGivenName",
+            "url": "${deid_prep}/config/JustGivenName",
+            "operation": "DELETE",          
+            "request": { },
+            "verify": {
+                "status": 200
+             }
+        },
+        {
+            "name": "deidConfigDoesNotExist",
+            "url": "${deid_prep}/?configName=JustGivenName",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json}" },            
+            "verify": {
+                "status": 400
+                }
+        }, 
+               {
+            "name": "deidInvalidFhirData",
+            "url": "${deid_prep}/?configName=JustFamilyName",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${JSON.FILE:Patients/Salina386_Buckridge80_Invalid_Data.json}" },            
+            "verify": {
+                "status": 400
+            }
+        },         
+        {
+            "name": "deleteJustFamilyName",
+            "url": "${deid_prep}/config/JustFamilyName",
+            "operation": "DELETE",          
+            "request": { },
+            "verify": {
+                "status": 200
+             }
+        }
+        
+     ],
+     "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json}"
+        ]
+    }
+}

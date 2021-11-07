@@ -1,0 +1,4 @@
+{
+    "sdUri" : "http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex",
+    "vsUri" : "http://hl7.org/fhir/us/core/ValueSet/modifybirthsex" 
+}

@@ -1,0 +1,54 @@
+{
+    "scenarioName": "********enrich_ASCVD_Update********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        
+        {
+            "name": "getASCVDdataFromFHIR",
+            "url": "${ascvd_from_fhir}/fhir",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+             }
+      },
+      {
+            "name": "getNewASCVDDate",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "getLastOccurenceDate",
+            "request": {
+                 "string1": "${$.getASCVDdataFromFHIR.response.body}",
+                 "string2": ""
+            },
+            "verify": { "string2": "$IS.NOTNULL" }
+        },
+      {
+            "name": "getOldASCVDDate",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "getLastOccurenceDate",
+            "request": {
+                 "string1": "${$.getASCVDdataFromFHIR.request.body}",
+                 "string2": ""
+            },
+            "verify": { "string2": "$IS.NOTNULL" }
+        },
+      {
+            "name": "compareASCVDDates",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "stringNotEqual",
+            "request": {
+                 "string1": "${$.getOldASCVDDate.response.string2}",
+                 "string2": "${$.getNewASCVDDate.response.string2}"
+            },
+            "verify": { "result": "${1}" }
+        }
+        
+     ],
+     "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/ascvd_bundle_old_ascvd.json},true",
+            "${JSON.FILE:Patients/ascvd_bundle_old_ascvd_no_birthdate.json},false"
+        ]
+    }
+}

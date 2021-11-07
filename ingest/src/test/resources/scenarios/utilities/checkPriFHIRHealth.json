@@ -1,0 +1,12 @@
+[         
+        {
+            "name": "PriFHIRHealthCheck",
+            "url": "${pri_fhir_server}/$healthcheck",
+            "method": "GET",
+            "request": { },
+            "verify": {
+                "status": 200
+                }
+         }
+       
+   ]             

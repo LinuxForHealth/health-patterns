@@ -1,0 +1,27 @@
+{
+    "scenarioName": "********enrich_Terminology_Map_Enrich********",
+    "ignoreStepFailures": true,
+    "steps": [ 
+        
+        {
+            "name": "getMappings",
+            "url": "${term_prep}/mapping",
+            "operation": "GET",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}},            
+            "verify": {
+                "status": 200
+            }
+        },                    
+        {
+            "name": "enrichPatientWithoutSexAtBirth",
+            "url": "${term_prep}/",
+            "operation": "POST",           
+                "request": {
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+            }
+        }
+     ]
+}

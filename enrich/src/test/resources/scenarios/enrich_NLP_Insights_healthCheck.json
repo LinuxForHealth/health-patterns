@@ -1,0 +1,15 @@
+{
+    "scenarioName": "********enrich_NLP_Insights_healthCheck********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "healthCheck",
+            "url": "${nlp_insights}/all_configs",
+            "operation": "GET",           
+                "request": { },            
+            "verify": {
+                "status": 200
+                }
+        }
+     ]
+}

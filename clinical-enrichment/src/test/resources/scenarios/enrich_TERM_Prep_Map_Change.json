@@ -1,0 +1,39 @@
+{
+    "scenarioName": "********enrich_Terminology_Map_Change********",
+    "ignoreStepFailures": true,
+    "steps": [ 
+        
+        {
+            "name": "getMappings",
+            "url": "${term_prep}/mapping",
+            "operation": "GET",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}},            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "putModifiedUSCoreToCDM",
+            "url": "${term_prep}/mapping/uscore-to-cdm-cm.json",
+            "operation": "PUT",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/uscore-to-cdm-cm-modify.json}" },            
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "putModifiedUSCoreBirthSex",
+            "url": "${term_prep}/mapping/uscore-birthsex-vs.json",
+            "operation": "PUT",           
+                "request": {           		 
+                    "headers" : { "Content-Type": "application/json"}, 
+		             "body": "${JSON.FILE:configs/uscore-birthsex-vs-modify.json}" },            
+            "verify": {
+                "status": 200
+            }
+        } 
+     ]
+}

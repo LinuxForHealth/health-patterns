@@ -1,0 +1,71 @@
+{{- if .Values.nifikop.enabled -}}
+{{- if .Values.nifi2.enabled -}}
+{{- if .Values.ingestion.enabled -}}
+apiVersion: nifi.orange.com/v1alpha1
+kind: NifiParameterContext
+metadata:
+  name: ingestion-parameter-context
+  namespace: {{ .Release.namespace }}
+spec:
+  description: Ingestion Parameter Context
+  clusterRef:
+    name: nifi
+    namespace: {{ .Release.namespace }}
+  secretRefs:
+    - name: nifi-ingestion-parameter-secret
+      namespace: {{ .Release.namespace }}
+  parameters:
+    - name: FHIR_URL_PatientAccess
+      value: http://{{ .Release.Name }}-fhir/fhir-server/api/v4
+      description: FHIR api for patient access
+
+    - name: FHIR_URL_ProviderDirectory
+      value: http://{{ .Release.Name }}-fhir/fhir-server/api/v4
+      description: FHIR api for provider
+
+    - name: FHIR_User_PatientAccess
+      value: fhiruser
+      description : FHIR server user for Patient Access FHIR URL
+
+    - name: kafka.brokers
+      value: {{ .Release.Name }}-kafka:9092
+      description: Comma-delimited list of brokers for eventstream instance
+
+    - name: HL7_RESOURCE_GENERATOR_URL
+      value: http://{{ .Release.Name }}-hl7-resource-generator:8080/hl7/transformation
+
+    - name: kafka.topic.in
+      value: ingest.clinical.in
+      description: Filter for input topic for the environment specified
+
+    - name: FHIR_User_ProviderDirectory
+      value: fhiruser
+      description: FHIR server user for Provider Directory FHIR URL
+
+    - name: kafka.auth.user
+      value: token
+      description: CMSIOP Eventstream user id
+
+    - name: hri.oauth.url
+      value: https://us-east.appid.cloud.ibm.com/oauth/v4/1655fea1-6884-46f3-9ea1-399b97e17dc5
+
+    - name: maxResourcesInBundle
+      value: "20"
+      description: The maximum number of resources to add to a bundle for when autobundling is enabled.
+
+    - name: kafka.consumer.group
+      value: Clinical_Ingestion_Group
+      description: Consumer group used by the pipeline adapters in environment specified
+
+    - name: kafka.topic.failure
+      value: ingest.*_dev.error
+      description: Filter used for error topics
+
+    - name: enrich.in
+      value: patients.updated.out
+
+    - name: enrich.out
+      value: patients.enriched.out
+{{- end }}
+{{- end }}
+{{- end }}
