@@ -30,8 +30,9 @@ then
   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/enrich/src/test/resources/configs/NLP-IVT-values.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout 6m0s
 elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
+
    # deploy ingestion
-   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout 6m0s
+   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout 6m0s
 fi
 
 
@@ -128,7 +129,7 @@ echo "* Delete the Deployment             *"
 echo "*************************************"
 helm3 delete $HELM_RELEASE
 echo "*************************************"
-echo "* Waiting for 60 seconds            *"
+echo "* Waiting for 60  seconds           *"
 echo "*************************************"
 date
 sleep 60  
