@@ -113,8 +113,8 @@ helm repo update
 helm install nifikop \
     orange-incubator/nifikop \
     --namespace=<<NAMESPACE>> \
-    --version 0.6.3 \
-    --set image.tag=v0.6.3-release \
+    --version 0.7.1 \
+    --set image.tag=v0.7.1-release \
     --set resources.requests.memory=256Mi \
     --set resources.requests.cpu=250m \
     --set resources.limits.memory=256Mi \
