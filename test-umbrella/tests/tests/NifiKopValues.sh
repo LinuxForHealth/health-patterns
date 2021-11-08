@@ -6,8 +6,7 @@
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
 # oidic users
-sed -i -e "s/identity: \"replace-me@company.com\"/identity: \"roger.guderian@ibm.com\"/g" values.yaml
-sed -i -e "s/name: \"replace.me.no.spaces.or.caps\"/name: \"roger.guderian\"\n    - identity: \"atclark@us.ibm.com\"\n      name: \"adam.t.clark\"/g" values.yaml
+sed -i -e "s/name: \"alvearie\"/name: \"alvearie\"\n    - identity: \"roger.guderian@ibm.com\"\n      name: \"roger.guderian\"\n    - identity: \"atclark@us.ibm.com\"\n      name: \"adam.t.clark\"/g" values.yaml
 
 # oidc discovery URL
 sed -i -e "s/\&oidc_discovery_url \"replace-me\"/\&oidc_discovery_url \"https:\/\/us-east.appid.cloud.ibm.com\/oauth\/v4\/82343deb-31d3-4a15-9c30-469d12651b89\/.well-known\/openid-configuration\"/g" values.yaml
