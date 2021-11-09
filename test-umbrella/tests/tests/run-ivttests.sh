@@ -17,7 +17,7 @@ echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
 # increase the time to wait for the deploy to be ready (10 minutes)
-export deploywait=600
+# export deploywait=600  try using the "default" of 360 seconds or 6 minutes
 
 # Execute the desired deployment
 echo $TEST_NAMESPACE" : Deploy via helm3"
