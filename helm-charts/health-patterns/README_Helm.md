@@ -12,6 +12,8 @@ Alvearie Health Patterns is comprised of multiple components described in more d
 - Helm 3.0.0+
 - PV provisioner support in the underlying infrastructure.
 
+Note: If you don't have access to a kubernetes cluster, this pattern can also be [deployed to minikube](README_minikube.md).
+
 ## Installation
 
 ### Create a new namespace (Optional)
