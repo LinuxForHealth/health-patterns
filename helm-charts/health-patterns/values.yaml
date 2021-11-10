@@ -272,6 +272,9 @@ nifi:
       emptyDir: {}
   properties:
     customLibPath: ./custom-nars
+  logresources:
+    requests:
+      memory: 30Mi
 
 # ------------------------------------------------------------------------------
 # Kafka Configuration
