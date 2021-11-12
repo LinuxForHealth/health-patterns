@@ -47,7 +47,7 @@ oidc:
       name: "alvearie"
   discovery:
     url: &oidc_discovery_url "replace-me"
-  client: 
+  client:
     id: &oidc_client_id replace-me
     secret: &oidc_client_secret replace-me
 
@@ -110,6 +110,21 @@ fhir:
     enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
+    annotations: {
+      nginx.ingress.kubernetes.io/server-snippet: add_header Strict-Transport-Security "max-age=86400; includeSubDomains";,
+      # nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-FHIR-FORWARDED-URL "https://$host$request_uri"; proxy_set_header Authorization "Basic {{ print "fhiruser:" .Values.fhirUserPassword | b64enc }}"; ,
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS,
+      nginx.ingress.kubernetes.io/proxy-ssl-protocols: TLSv1.2 TLSv1.3,
+      nginx.ingress.kubernetes.io/proxy-ssl-verify: "true",
+      nginx.ingress.kubernetes.io/rewrite-target: /fhir-server/api/v4/$2,
+      nginx.ingress.kubernetes.io/use-regex: 'true'
+      }
+
+    rules:
+      - host: *hostname
+        paths:
+          - path: "/fhir(/|$)(.*)"
+            pathType: ImplementationSpecific
   proxy:
     name: fhir-proxy
     enabled: false
@@ -117,17 +132,34 @@ fhir:
       enabled: *ingressEnabled
       class: *ingressClass
       hostname: *hostname
-  userPassword: integrati0n
-  adminPassword: integrati0n
 
-## Configure these to allow bulk access from fhir server
-#  bulkExportConfig:
-#    cosBucketName: yourbucketnamehere
-#    cosLocation: yourcosregion
-#    cosEndpointInternal: yourbucketendpointhere
-#    cosApikey: yourcosapikey
-#    cosSrvinstid: yourcossrvinstid
-#    batchUserPw: youradminpw
+  fhirUserPassword: integrati0n
+  fhirAdminPassword: integrati0n
+
+  postgresql:
+    enabled: false
+
+  schemaMigration:
+    enabled: false
+
+  db:
+    type: derby
+    schema: app
+
+  replicaCount: 1
+
+  datasourcesTemplate: defaultDerbyDatasources
+
+  objectStorage:
+    enabled: false
+    location:
+    endpointUrl:
+    accessKey:
+    secretKey:
+    bulkDataBucketName:
+
+  exposeHttpEndpoint: true
+  exposeHttpPort: 80
 
 fhir-trigger:
   enabled: false
@@ -148,6 +180,21 @@ fhir-deid:
     enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
+    annotations: {
+      nginx.ingress.kubernetes.io/server-snippet: add_header Strict-Transport-Security "max-age=86400; includeSubDomains";,
+      # nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-FHIR-FORWARDED-URL "https://$host$request_uri"; proxy_set_header Authorization "Basic {{ print "fhiruser:" .Values.fhirUserPassword | b64enc }}";,
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS,
+      nginx.ingress.kubernetes.io/proxy-ssl-protocols: TLSv1.2 TLSv1.3,
+      nginx.ingress.kubernetes.io/proxy-ssl-verify: "true",
+      nginx.ingress.kubernetes.io/rewrite-target: /fhir-server/api/v4/$2,
+      nginx.ingress.kubernetes.io/use-regex: 'true'
+      }
+
+    rules:
+      - host: *hostname
+        paths:
+          - path: "/fhir-deid(/|$)(.*)"
+            pathType: ImplementationSpecific
   proxy:
     name: fhir-deid-proxy
     enabled: false
@@ -155,6 +202,34 @@ fhir-deid:
       enabled: *ingressEnabled
       class: *ingressClass
       hostname: *hostname
+
+  fhirUserPassword: integrati0n
+  fhirAdminPassword: integrati0n
+
+  postgresql:
+    enabled: false
+
+  schemaMigration:
+    enabled: false
+
+  db:
+    type: derby
+    schema: app
+
+  replicaCount: 1
+
+  datasourcesTemplate: defaultDerbyDatasources
+
+  objectStorage:
+    enabled: false
+    location:
+    endpointUrl:
+    accessKey:
+    secretKey:
+    bulkDataBucketName:
+
+  exposeHttpEndpoint: true
+  exposeHttpPort: 80
 
 fhir-deid-trigger:
   enabled: false
@@ -198,7 +273,7 @@ nifi2: # NifiKop based Nifi
   oidc:
     discovery:
       url: *oidc_discovery_url
-    client: 
+    client:
       id: *oidc_client_id
       secret: *oidc_client_secret
   ingress:

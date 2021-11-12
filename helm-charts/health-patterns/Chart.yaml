@@ -7,7 +7,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.8.1
+version: 0.8.2
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -36,10 +36,11 @@ maintainers:
     email: luisg@us.ibm.com
 
 dependencies:
-  - name: fhir
-    version: 0.4.0
+  - name: ibm-fhir-server
+    alias: fhir
+    version: 0.5.0
     condition: fhir.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://alvearie.io/alvearie-helm
   - name: term-services-prep
     version: 0.1.0
     condition: fhir.enabled
@@ -48,11 +49,11 @@ dependencies:
     version: 0.1.0
     condition: fhir-trigger.enabled
     repository: https://alvearie.github.io/health-patterns/charts
-  - name: fhir
-    version: 0.4.0
+  - name: ibm-fhir-server
+    version: 0.5.0
     condition: fhir-deid.enabled
     alias: fhir-deid
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://alvearie.io/alvearie-helm
   - name: fhir-trigger
     version: 0.1.0
     condition: fhir-deid-trigger.enabled
