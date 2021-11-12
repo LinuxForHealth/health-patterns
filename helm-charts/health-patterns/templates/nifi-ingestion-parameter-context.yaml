@@ -36,7 +36,11 @@ spec:
 
     - name: kafka.topic.in
       value: ingest.clinical.in
-      description: Filter for input topic for the environment specified
+      description: Topic ingestion to accept requests from
+
+    - name: kafka.topic.out
+      value: ingest.clinical.out
+      description: Topic ingestion to post output to
 
     - name: FHIR_User_ProviderDirectory
       value: fhiruser
