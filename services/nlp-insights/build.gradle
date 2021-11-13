@@ -1,175 +1,463 @@
 plugins {
-    id "ru.vyarus.use-python" version "2.3.0"
-    id "org.sonarqube" version "3.0"
-    id "com.palantir.docker" version "0.27.0"
-    id 'com.palantir.docker-run' version "0.27.0"
+  id "ru.vyarus.use-python" version "2.3.0"
+  id "com.palantir.docker" version "0.27.0"
+  id 'com.palantir.docker-run' version "0.27.0"
 }
+
 
 group = ''
 description = """NLP Insights"""
 
-sonarqube {
-    properties {
-        property "sonar.sources", pySrcDir
-        property "sonar.tests", pyTestDir
-        property "sonar.python.coverage.reportPaths", pyXmlCoveragePath
-        property "sonar.python.xunit.reportPath", pyTestReportPath
-    }
+
+ext {
+  buildVenv = "${buildDir}/venv"
+  rootPackage = "text_analytics"
 }
 
-// --------
-//Python Build Section
+
 python {
-    //Python dependencies start
-    pip 'ibm-whcs-sdk:1.9.0'
-    pip 'ibm-cloud-sdk-core:3.8.0'
-    pip 'fhir.resources:6.1.0'
-    pip 'deepdiff:5.5.0'
-    pip 'flask:2.0.1'
-    pip 'jsonpath-ng:1.5.3'
-    //Python dependencies end
-
-      envPath = 'build/venv'
-      pythonBinary = 'python3'
-    }
+  pip 'ibm-whcs-sdk:1.9.0'
+  pip 'ibm-cloud-sdk-core:3.8.0'
+  pip 'fhir.resources:6.1.0'
+  pip 'deepdiff:5.5.0'
+  pip 'flask:2.0.1'
+  pip 'jsonpath-ng:1.5.3'
 
 
-task textAnalyticsPySetupBuild(type: PythonTask) {
-    module = 'pip'
-    extraArgs = ['install', 'pytest==4.6.3', 'pytest-cov==2.7.1', 'twine==1.14.0', 'deepdiff==5.5.0', 'flake8==3.7.8', 'types-requests==2.25.9', 'wheel==0.36.2']
+  envPath = buildVenv
+  pythonBinary = 'python3'
 }
 
-task textAnalyticsPyGenerateReqs {
-    outputs.file(layout.buildDirectory.file('pinned.txt')).withPropertyName("pinned")
-    
-    doLast {
-        def pinned_text = new StringBuilder()
-        python.modules.each { module ->
-            pinned_text.append(module.replace(":", "==") + "\n")
-        }
-        outputs.files.singleFile.text = pinned_text.toString()
-        println("pinned.txt:\n" + outputs.files.singleFile.text.toString())
+
+task clean {
+  description 'delete build directory'
+  group 'Build Setup'
+  doLast {
+    exec {
+      commandLine 'rm', '-rf', project.buildDir
     }
+  }
 }
 
-task textAnalyticsPySetupBuildProperties {
-    inputs.property 'projectName', project.name
-    inputs.property 'projectVersion', project.version
-    inputs.property 'pySrcDir', pySrcDir
-    outputs.file(layout.buildDirectory.file('setup.properties')).withPropertyName("setup")
-    
-    doLast {
-        outputs.files.singleFile.text = """[default]
+
+task pipForBuild(type: PipInstallTask) {
+  description 'Installs required modules for building, linting, and running tests'
+  group 'Python'
+  pip('pytest:6.2.5',
+      'pytest-cov:2.7.1',
+      'deepdiff:5.5.0',
+      'flake8:3.7.8',
+      'types-requests:2.25.9',
+      /* https://docs.python.org/3/library/venv.html
+   Common installation tools such as setuptools and pip work as expected with virtual environments. 
+   In other words, when a virtual environment is active, they install Python packages into the virtual environment
+   without needing to be told to do so explicitly.
+   Explicitly trying to install wheel causes this task to always run, because wheel is already there,
+   but wasn't installed by the build process.
+   */
+      //'wheel:0.36.2',
+      'pytest-html:3.1.1',
+      'pylint:2.10.2',
+      'pylint-junit:0.3.2',
+      'flake8-formatter-junit-xml:0.0.6',
+      'mypy:0.910'
+      )
+}
+
+
+task generateReqs {
+  description 'creates pinned.txt file, the additional required modules to run the application'
+  outputs.file(layout.buildDirectory.file('pinned.txt')).withPropertyName("pinned")
+
+  doLast {
+    def pinned_text = new StringBuilder()
+    python.modules.each { module ->
+      pinned_text.append(module.replace(":", "==") + "\n")
+    }
+    outputs.files.singleFile.text = pinned_text.toString()
+  }
+}
+
+
+task setupBuildProperties {
+  description 'creates setup.properties, which is used by setup.py'
+  inputs.property 'projectName', project.name
+  inputs.property 'projectVersion', project.version
+  inputs.property 'pySrcDir', pySrcDir
+  outputs.file(layout.buildDirectory.file('setup.properties')).withPropertyName("setup")
+
+  doLast {
+    outputs.files.singleFile.text = """[default]
                                         |project_name=${inputs.properties['projectName']}
                                         |project_version=${inputs.properties['projectVersion']}
-                                        |project_srcDir=${inputs.properties['pySrcDir']}
+                                        |project_srcDir=${inputs.properties['pySrcDir']}/py
         """.stripMargin()
-        println("setup.properties:\n" + outputs.files.singleFile.text.toString())
-    }
-}
-
-task textAnalyticsPyBuildWheel(type: PythonTask) {
-    workDir = "${project.buildDir}"
-    command = "setup.py"
-    extraArgs = ['bdist_wheel', '-d', pyDistDir, '-k']
-}
-
-task textAnalyticsPyTestPrep(type: PythonTask) {
-    workDir = "${project.buildDir}"
-    command = '${buildDir}/setup.py'
-    extraArgs = ['develop']
-}
-
-task textAnalyticsPyCoverage(type: PythonTask) {
-    workDir = "${project.buildDir}"
-    module = 'pytest'
-    extraArgs = [pyTestDir, '--cov', pySrcDir, '--cov-report=xml:'+pyXmlCoveragePath, '--cov-report=html:'+pyHtmlCoveragePath, '--cov-report=term']
-}
-
-task textAnalyticsClean {
-    doLast {
-        exec {
-            commandLine 'rm', '-rf', 'build'
-        }
-    }
-}
-
-task textAnalyticsPyPublishArtifacts(type: PythonTask) {
-    doFirst {
-        def taasArtifactoryUsername = "${taasArtifactoryUsername}"
-        def taasArtifactoryPassword = "${taasArtifactoryPassword}"
-        module = 'twine'
-        extraArgs = ['upload', '--repository-url', whiPypiRepositoryUrl, '-u', taasArtifactoryUsername, '-p', taasArtifactoryPassword, pyDistDir+'/*.whl']
-    }
-}
-
-task textAnalyticsPyFlake8(type: PythonTask) {
-    workDir = "${project.buildDir}"
-    module = 'flake8'
-    extraArgs = [pySrcDir]
-}
-
-
-task copySource(type: Copy) {
-  from("src/main/py") {
-    include "**/*.py"
   }
-  into "${project.buildDir}/src/main/py"
 }
 
-task copyRootPy(type: Copy) {
-  from('.') {
-    include '*.py'
+
+task copySource {
+  description 'copies the source code into build directory'
+  def srcRoot = (new File("${rootDir}")).absoluteFile.toURI()
+  def destRoot = new File("${buildDir}")
+  def sourceTree = fileTree("${rootDir}/${pySrcDir}").include("**/*.py")
+  def dests = new HashMap<File, File>()
+
+  inputs.files(sourceTree.files)
+
+  sourceTree.files.each { sFile ->
+    def relPath = srcRoot.relativize(sFile.absoluteFile.toURI())
+
+    def destFile = new File(destRoot, relPath.toString())
+    dests.put(sFile, destFile)
+    outputs.file(destFile)
+
   }
-  into "${project.buildDir}"
+
+  doLast {
+    sourceTree.files.each { sourceFile ->
+      copy {
+        from sourceFile.absolutePath
+        into dests[sourceFile].parent
+      }
+
+    }
+  }
 }
 
-task build {
+
+task copyTestResources {
+  description 'copies the test source and resources to the build directory'
+  def srcRoot = (new File("${rootDir}")).absoluteFile.toURI()
+  def destRoot = new File("${buildDir}")
+  def sourceTree = fileTree("${rootDir}/${pyTestDir}").include([
+    "**/*.py",
+    "**/*.json",
+    "**/*.txt",
+    "**/*.xml"
+  ])
+  def dests = new HashMap<File, File>()
+
+  inputs.files(sourceTree.files)
+
+  sourceTree.files.each { sFile ->
+    def relPath = srcRoot.relativize(sFile.absoluteFile.toURI())
+
+    def destFile = new File(destRoot, relPath.toString())
+    dests.put(sFile, destFile)
+    outputs.file(destFile)
+
+  }
+
+  doLast {
+    sourceTree.files.each { sourceFile ->
+      copy {
+        from sourceFile.absolutePath
+        into dests[sourceFile].parent
+      }
+
+    }
+  }
+
+}
+
+
+task buildConfiguration {
+  description 'copies setup scripts and configuration to build directory'
+  inputs.file("${rootDir}/setup.py")
+  inputs.file("${rootDir}/setup.cfg")
+  outputs.file("${buildDir}/setup.py")
+  outputs.file("${buildDir}/setup.cfg")
+
+  doLast {
+    copy {
+      from "${rootDir}"
+      include "setup.py"
+      include "setup.cfg"
+      into "${buildDir}"
+    }
+  }
+}
+
+
+task build(type: PythonTask) {
+  description 'builds a python distribution from the source code'
+  dependsOn project.tasks.pipForBuild
+  dependsOn project.tasks.buildConfiguration
+  dependsOn project.tasks.generateReqs
+  dependsOn project.tasks.setupBuildProperties
   dependsOn project.tasks.copySource
-  dependsOn project.tasks.copyRootPy
+
+  inputs.files(project.tasks.copySource.outputs.files)
+  inputs.files(project.tasks.setupBuildProperties.outputs.files)
+  inputs.files(project.tasks.generateReqs.outputs.files)
+
+  outputs.file("${buildDir}/${pyDistDir}/${project.name.replace("-", "_")}-${version}-py3-none-any.whl")
+
+  doFirst {
+    file("${buildDir}/${pyDistDir}").mkdirs()
+  }
+  workDir = "${project.buildDir}"
+  command = "setup.py"
+  extraArgs = [
+    'bdist_wheel',
+    '-d',
+    pyDistDir,
+    '-k'
+  ]
 }
+
+
+task install(type: PythonTask) {
+  description 'finializes build by installing the wheel to the virtual env'
+  group 'development'
+  dependsOn project.tasks.build
+  inputs.file(project.tasks.build.outputs.files.singleFile)
+  outputs.file("${buildDir}/${project.name}_pip.log")
+
+  workDir = "${project.buildDir}"
+  module "pip"
+  extraArgs = [
+    "install",
+    "${project.tasks.build.outputs.files.singleFile.absolutePath}",
+    "--force-reinstall",
+    "--no-dependencies",
+    "--log",
+    "${buildDir}/${project.name}_pip.log"
+  ]
+}
+
+
+task reportsDir {
+  description 'creates the report directory'
+  outputs.dir("${buildDir}/${reportsDir}")
+  doLast {
+    mkdir "${buildDir}/${reportsDir}"
+  }
+}
+
+
+task pytest(type: PythonTask) {
+  description 'runs testcases'
+  group null
+  dependsOn project.tasks.pipForBuild
+  dependsOn project.tasks.install
+
+  inputs.files(project.tasks.copyTestResources.outputs.files)
+  inputs.files(project.tasks.copySource.outputs.files)
+  inputs.files(project.tasks.install.outputs.files.singleFile)
+
+  def pyTestXmlReportFile =  "${project.tasks.reportsDir.outputs.files.singleFile.name}/pytest-report.xml"
+  def pyTestHtmlReportFile = "${project.tasks.reportsDir.outputs.files.singleFile.name}/pytest-report.html"
+
+  outputs.file(pyTestXmlReportFile)
+  outputs.file(pyTestHtmlReportFile)
+
+
+  workDir = "${project.buildDir}"
+  module = 'pytest'
+  extraArgs = [
+    "${buildDir}/${pyTestDir}/py",
+    "--junitxml=${pyTestXmlReportFile}",
+    "--html=${pyTestHtmlReportFile}",
+    "--self-contained-html"
+  ]
+}
+
+
+task docTestSource(type: PythonTask) {
+  description 'tests documentation of source modules'
+  dependsOn project.tasks.pipForBuild
+  dependsOn project.tasks.install
+
+  inputs.files(project.tasks.copyTestResources.outputs.files)
+  inputs.files(project.tasks.copySource.outputs.files)
+  inputs.files(project.tasks.install.outputs.files.singleFile)
+
+  def pyDocTestXmlFile = "${project.tasks.reportsDir.outputs.files.singleFile.name}/doc-test.xml"
+  def pyDocTestHtmlFile = "${project.tasks.reportsDir.outputs.files.singleFile.name}/doc-test.html"
+
+  outputs.file(layout.buildDirectory.file(pyDocTestXmlFile))
+  outputs.file(layout.buildDirectory.file(pyDocTestHtmlFile))
+
+  workDir = "${project.buildDir}"
+  module = 'pytest'
+  extraArgs = [
+    "${pySrcDir}/py",
+    "--doctest-modules",
+    "--junitxml=${pyDocTestXmlFile}",
+    "--html=${pyDocTestHtmlFile}",
+    "--self-contained-html"
+  ]
+}
+
+
+task test {
+  description 'runs unit tests and places reports in reports directory'
+  group 'quality'
+  dependsOn project.tasks.pytest
+  dependsOn project.tasks.docTestSource
+}
+
+
+task flake8(type: Exec) {
+  description 'flake8 linter'
+  dependsOn project.tasks.pipForBuild
+  dependsOn project.tasks.install
+  dependsOn project.tasks.buildConfiguration
+
+  def flake8Xml = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/flake8.xml"
+  outputs.file(flake8Xml)
+
+  inputs.files(project.tasks.copySource.outputs.files)
+
+
+  standardOutput = new ByteArrayOutputStream()
+  ignoreExitValue=true
+  workingDir = "${project.buildDir}"
+  commandLine "${buildVenv}/bin/flake8", "${pySrcDir}/py", "--format=junit-xml", "--config=setup.cfg"
+  doLast {
+    outputs.files.singleFile.text = standardOutput.toString()
+  }
+}
+
+
+task pylint(type: Exec) {
+  description 'pylint linter'
+  dependsOn project.tasks.pipForBuild
+  dependsOn project.tasks.install
+  dependsOn project.tasks.buildConfiguration
+
+  def pylintXml = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/pylint.xml"
+  outputs.file(pylintXml)
+
+  inputs.files(project.tasks.copySource.outputs.files)
+
+  standardOutput = new ByteArrayOutputStream()
+  ignoreExitValue=true
+  workingDir = "${project.buildDir}"
+  commandLine "${buildVenv}/bin/pylint", "${pySrcDir}/py/${rootPackage}", "--output-format=pylint_junit.JUnitReporter", "--rcfile=setup.cfg"
+  doLast {
+    outputs.files.singleFile.text = standardOutput.toString()
+  }
+}
+
+
+task mypy(type: Exec) {
+  description 'mypy linter'
+  dependsOn project.tasks.pipForBuild
+  dependsOn project.tasks.install
+  dependsOn project.tasks.buildConfiguration
+
+  def myPyXml = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/mypy.xml"
+
+  outputs.file(myPyXml)
+  inputs.files(project.tasks.copySource.outputs.files)
+
+  standardOutput = new ByteArrayOutputStream()
+  ignoreExitValue=true
+  workingDir = "${project.buildDir}"
+  commandLine "${buildVenv}/bin/mypy",
+      "${pySrcDir}/py/${rootPackage}",
+      "--junit-xml=${myPyXml}",
+      "--config-file=${project.buildDir}/setup.cfg"
+}
+
+
+task lint {
+  description 'lint checks source code'
+  group 'quality'
+  dependsOn project.tasks.flake8
+  dependsOn project.tasks.pylint
+  dependsOn project.tasks.mypy
+}
+
+
+task checkSource {
+  description 'prints a summary of potential problems found during the build'
+  group 'quality'
+  dependsOn project.tasks.lint
+  dependsOn project.tasks.test
+
+  doLast {
+    groovy.xml.XmlSlurper slurper = new groovy.xml.XmlSlurper();
+
+    def xmlReports = (new File("${buildDir}/${reportsDir}")).
+        listFiles({ it.name.matches(".*[.]xml") } as FileFilter)
+
+    def warnings = new HashMap<String, List<String>>()
+    xmlReports.each {  reportFile ->
+      def root = slurper.parse(reportFile)
+      def warningList = new LinkedList<String>();
+      warnings.put(reportFile, warningList)
+
+      root."**".findAll({ it.name() == "failure"}).each { f ->
+        warningList.add("${f.text()}")
+      }
+    }
+
+    println("\nLINT AND TEST WARNINGS")
+    println("------------------------")
+    warnings.each { k, v ->
+      if (v.size() > 0) {
+        println("\n$k\n")
+        v.each { w ->
+          println("\t$w".replace("\n", "\n\t\t"))
+        }
+      }
+    }
+
+    println("SUMMARY")
+    warnings.each { k, v ->
+      def fname = String.format("%30.30s", k.name)
+      println("${fname} : ${v.size()} warnings")
+    }
+  }
+}
+
+
+task verifyDockerUser {
+  doLast {
+    if (!project.hasProperty("dockerUser") || dockerUser == null || dockerUser.trim().isEmpty()) {
+      throw new org.gradle.api.InvalidUserDataException("dockerUser has not been set")
+    }
+  }
+}
+
+
+project.tasks.dockerPrepare.dependsOn project.tasks.verifyDockerUser
+project.tasks.dockerPrepare.dependsOn project.tasks.test
+project.tasks.dockerRun.dependsOn project.tasks.docker
+
 
 docker {
-     dependsOn project.tasks.build
+  description 'builds the docker image, tagging with the  dockerUser and version properties'
 
-     copySpec.from("${project.buildDir}").into(".").include(
-     "setup.py", 
-     textAnalyticsPySetupBuildProperties.outputs.files.singleFile.name,
-     textAnalyticsPyGenerateReqs.outputs.files.singleFile.name,
-     "src/main/py/text_analytics/**")
-     
-     name dockerUser + "/nlp-insights:" + version
-     
-     dockerfile file('Dockerfile')
+  copySpec.from("${buildDir}").into(".").include(
+      "setup.py",
+      setupBuildProperties.outputs.files.singleFile.name,
+      generateReqs.outputs.files.singleFile.name,
+      "src/main/py/${rootPackage}/**")
+
+  name dockerUser + "/${project.name}:" + version
+  dockerfile file('Dockerfile')
 }
 
 dockerPush {}
 
 dockerRun {
-    name 'nlp-insights'
-    image dockerUser + '/nlp-insights:' + version
-    ports "${dockerLocalPort}:5000"
+  description 'start the docker container, using property dockerLocalPort as a port'
+  group 'docker'
+  name 'nlp-insights'
+  image dockerUser + '/nlp-insights:' + version
+  ports "${dockerLocalPort}:5000"
 }
 
-task test {}
-task coverage {}
-task uploadArchives {}
-task flake8 {}
-task clean {}
 
-dockerPrepare.dependsOn project.tasks.build
-project.tasks.textAnalyticsPyTestPrep.dependsOn project.tasks.textAnalyticsPySetupBuildProperties
-project.tasks.textAnalyticsPyCoverage.dependsOn project.tasks.textAnalyticsPySetupBuild
-project.tasks.textAnalyticsPyCoverage.dependsOn project.tasks.textAnalyticsPyTestPrep
-project.tasks.textAnalyticsPyPublishArtifacts.dependsOn project.tasks.textAnalyticsPySetupBuild
-project.tasks.textAnalyticsPyFlake8.dependsOn project.tasks.textAnalyticsPySetupBuild
+// make all tasks run after clean (except clean itself)
+tasks.each {
+  if (it != clean) {
+    it.mustRunAfter clean
+  }
+}
 
-project.tasks.build.dependsOn project.tasks.textAnalyticsPySetupBuild
-project.tasks.build.dependsOn project.tasks.textAnalyticsPySetupBuildProperties
-project.tasks.build.dependsOn project.tasks.textAnalyticsPyGenerateReqs
-project.tasks.build.finalizedBy project.tasks.textAnalyticsPyBuildWheel
-
-project.tasks.coverage.finalizedBy project.tasks.textAnalyticsPyCoverage
-project.tasks.clean.finalizedBy project.tasks.textAnalyticsClean
-project.tasks.uploadArchives.finalizedBy project.tasks.textAnalyticsPyPublishArtifacts
-project.tasks.flake8.finalizedBy project.tasks.textAnalyticsPyFlake8

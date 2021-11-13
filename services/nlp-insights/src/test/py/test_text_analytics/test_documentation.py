@@ -25,9 +25,8 @@ import text_analytics.fhir
 def load_tests(loader, tests, pattern):
     """Used by unittest to discover tests
 
-    This might not work with some custom test_text_analytics runners, and doesn't
-    apply any patterns to the tests or doc-tests that are
-    returned. It does work with the pydev test_text_analytics runner and the unittest CLI
+    Caution: pytest doesn't support the load_tests protocol
+    The gradle build has to do doctests differently
     """
     del loader, pattern  # not used
 

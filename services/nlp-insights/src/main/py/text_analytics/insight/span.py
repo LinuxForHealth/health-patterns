@@ -18,7 +18,7 @@ from typing import NamedTuple
 
 
 class Span(NamedTuple):
-    """ "
+    """
     A span is a selection of text of significance
 
     Typically a span is the source of an insight
