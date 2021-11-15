@@ -40,4 +40,4 @@ spec:
           - name: INITTOPICREPLICATION
             value: {{ .Values.inittopicreplication | quote }}
           - name: REQUEST_TIMEOUT
-            value: {{ .Values.requestTimeout }}
+            value: {{ .Values.requestTimeout | quote }}
