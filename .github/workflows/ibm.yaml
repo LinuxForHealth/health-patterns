@@ -128,11 +128,13 @@ jobs:
     - name: Clean Up Deployment
       run: helm uninstall ingestion
       continue-on-error: true
+      if: ${{ always() }}
       
    # Delete Namespace
     - name: Delete Namespace
       run:  kubectl delete namespace ${CLUSTER_NAMESPACE}
       continue-on-error: true
+      if: ${{ always() }}
                  
    # Delete GLB
     - name: Delete GLB
