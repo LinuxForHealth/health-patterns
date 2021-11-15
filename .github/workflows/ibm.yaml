@@ -124,14 +124,24 @@ jobs:
          mvn -e -DskipTests=false -Dtest=BasicIngestionInitTests test
          mvn -e -DskipTests=false -Dtest=BasicIngestionTests test
 
-    # Uninstall Chart, Delete Namespace, delete GLB
-    - name: Clean Up Deployment, Namespace, and GLB
+    # Uninstall Chart
+    - name: Clean Up Deployment
+      run: helm uninstall ingestion
+      continue-on-error: true
+      
+   # Delete Namespace
+    - name: Delete Namespace
+      run:  kubectl delete namespace ${CLUSTER_NAMESPACE}
+      continue-on-error: true
+                 
+   # Delete GLB
+    - name: Delete GLB
       run: |
-           helm uninstall ingestion
-           kubectl delete namespace ${CLUSTER_NAMESPACE}
            ibmcloud cis instance-set "${CIS_INSTANCE}"
            glbid=$(ibmcloud cis glbs 6ff29db14b24b78a36227f49e18f3177 | grep ${CLUSTER_NAMESPACE})
            glbid=${glbid:0:32}
            ibmcloud cis glb-delete ${DOMAIN_ID} $glbid -i "${CIS_INSTANCE}"
-           
+      continue-on-error: true
+                 
+      
       if: ${{ always() }}
