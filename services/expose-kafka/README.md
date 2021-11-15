@@ -22,6 +22,10 @@ on the topic, starting from the beginning
 
     (POST) https://\<expose-kafkabaseurl:port>?topic=\<topicname>&response_topic=<response_topic_name>
 
+- producing to a topic-place a message on a particular topic and waiting for a response or failure
+
+    (POST) https://\<expose-kafkabaseurl:port>?topic=\<topicname>&response_topic=<response_topic_name>&failure_topic=<failure_topic_name>
+
 - creating a new (empty) topic-create a new topic but it will be empty
 
     (PUT) https://\<expose-kafkabaseurl:port>?topic=\<topicname>
