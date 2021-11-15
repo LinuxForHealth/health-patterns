@@ -6,6 +6,7 @@ from flask import jsonify
 from datetime import datetime
 import os
 import time
+import uuid
 
 app = Flask(__name__)
 
@@ -113,8 +114,9 @@ def produce():
     runascvd = request.headers.get("RunASCVD", "false")
     add_nlp_insights = request.headers.get("AddNLPInsights", "false")
     resourceid = request.headers.get("ResourceId", "")
-    response_topic = request.args.get("response_topic", None)
-    run_async = response_topic is None
+    out_topic = request.args.get("response_topic", None)
+    failure_topic = request.args.get("failure_topic", None)
+    run_async = out_topic is None
 
     headers = [
                 ("ResolveTerminology",bytes(resolveterminology, 'utf-8')),
@@ -127,7 +129,7 @@ def produce():
         headers.append(("ResourceId", bytes(resourceid, 'utf-8')))
 
     if not run_async:
-        kafka_key = str(int(time.time() * 1000000))
+        kafka_key = str(uuid.uuid1())
         headers.append(("kafka_key", bytes(kafka_key, 'utf-8')))
 
     topic = ""
@@ -151,40 +153,66 @@ def produce():
                                        "data": post_data[0:25] + "... " + str(len(post_data)) + " chars"})
 
     # Wait for pipeline to respond
-    consumer = KafkaConsumer(
-        response_topic, 
+    out_consumer = KafkaConsumer(
+        out_topic, 
         bootstrap_servers = kafkabootstrap,
         sasl_mechanism = "PLAIN",
         sasl_plain_username = kafkauser,
         sasl_plain_password = kafkapw,
         consumer_timeout_ms = 2000
         )
-    consumer.topics()
-    consumer.seek_to_beginning()
+    out_consumer.topics()
+    out_consumer.seek_to_beginning()
+
+    failure_consumer = None
+    if failure_topic is not None:
+        failure_consumer = KafkaConsumer(
+            failure_topic, 
+            bootstrap_servers = kafkabootstrap,
+            sasl_mechanism = "PLAIN",
+            sasl_plain_username = kafkauser,
+            sasl_plain_password = kafkapw,
+            consumer_timeout_ms = 2000
+            )
+        failure_consumer.topics()
+        failure_consumer.seek_to_beginning()
 
     start_time = time.time()
     timeout = int(os.getenv("REQUEST_TIMEOUT", "30"))
 
     while time.time() < start_time + timeout:
-        for msg in consumer:
-            match = False
-            status_code = 200
-            for k,v in msg.headers:
-                if k == 'kafka_key':
-                    if v.decode("utf-8") == kafka_key:
-                        match = True
-                if k == 'invokehttp.status.code':
-                    status_code = v.decode("utf-8")
+        response = find_message(out_consumer, kafka_key)
+        if response is not None: 
+            return response
 
-            if match:
-                resp = jsonify(msg.value.decode("utf-8"))
-                resp.status_code = status_code
-                return resp
-
+        if failure_consumer is not None:
+            response = find_message(failure_consumer, kafka_key)
+            if response is not None: 
+                if response.status_code == 200:
+                    response.status_code = 400
+                return response
+        
     # Timeout
     return generate_response(408, {"topic": topic,
                                    "headers": str(headers),
                                    "data": post_data[0:25] + "... " + str(len(post_data)) + " chars"})
+
+def find_message(consumer, kafka_key):
+    for msg in consumer:
+        match = False
+        status_code = 200
+        for k,v in msg.headers:
+            if k == 'kafka_key':
+                if v.decode("utf-8") == kafka_key:
+                    match = True
+            if k == 'invokehttp.status.code':
+                status_code = v.decode("utf-8")
+
+        if match:
+            resp = jsonify(msg.value.decode("utf-8"))
+            resp.status_code = status_code
+            return resp
+    return None
 
 @app.route("/", methods=['PUT'])
 def create():
