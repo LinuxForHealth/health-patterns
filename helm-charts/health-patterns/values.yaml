@@ -437,7 +437,7 @@ expose-kafka:
     enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
-  inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in"
+  inittopics: "ingest.clinical.in,ingest.clinical.out,ingest.clinical.failure,enrich.clinical.in,enrich.clinical.out,enrich.clinical.failure,ingest.topic.in,ingest.topic.out,ingest.topic.failure,enrich.topic.in,enrich.topic.out,enrich.topic.failure"
   inittopicnumpartitions: 1
   inittopicreplication: 1
 

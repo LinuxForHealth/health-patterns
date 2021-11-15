@@ -45,11 +45,14 @@ spec:
     - name: TERM_SERVICES_PREP_URL
       value: http://{{ .Release.Name }}-term-services-prep:8080
 
-    - name: enrich.in
-      value: patients.updated.out
+    - name: enrich.topic.in
+      value: enrich.topic.in
 
-    - name: enrich.out
-      value: patients.enriched.out
+    - name: enrich.topic.out
+      value: enrich.topic.out
+
+    - name: enrich.topic.failure
+      value: enrich.topic.failure
 
     - name: kafka.auth.user
       value: token
