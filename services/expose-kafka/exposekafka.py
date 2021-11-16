@@ -4,11 +4,13 @@ from kafka.admin import KafkaAdminClient, NewTopic
 from flask import Flask, request
 from flask import jsonify
 from datetime import datetime
+import logging
 import os
 import time
 import uuid
 
 app = Flask(__name__)
+app.logger.setLevel(logging.INFO)
 
 kafkauser = os.getenv("KAFKAUSER")
 kafkapw = os.getenv("KAFKAPW")
@@ -31,13 +33,24 @@ else:
 init_topics = initial_topics.replace(",", " ")
 topiclist = init_topics.split()
 
+app.logger.info("Attempting to connect to Kafka server")
+last_recorded_time = round(time.time() * 1000)
+
 while True:
     try:
         KafkaConsumer(bootstrap_servers=kafkabootstrap,
                                  sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
         break
-    except:
-        pass # Ignore error-just retry
+    except Exception as e:
+        current_time = round(time.time() * 1000)
+        # If the Kafka server isn't up for any reason, we'll print a message every minute until it comes up.
+        if current_time - last_recorded_time > 10 * 1000:
+            app.logger.error(f"Unable to connect Kafka server: {e}")
+            app.logger.info("Retrying connection to Kafka server...")
+            last_recorded_time = current_time
+        # Even though we only print a message every 10 seconds, we'll try to connect every 5 seconds
+        # to minimize container startup time.
+        time.sleep(5)
 
 # kafka is now up and running
 
@@ -62,6 +75,8 @@ existing_topics = initconsumer.topics() #reset the existing_topics since new one
 for atopic in existing_topics:
     initconsumer.partitions_for_topic(atopic) # populate cache for each topic
 
+ready = open("ready","w")  # this file will notify the readiness probe
+app.logger.info("Kafka topics loaded-readiness probe ok")
 
 @app.route("/healthcheck", methods=['GET'])
 def healthcheck():
@@ -154,7 +169,7 @@ def produce():
 
     # Wait for pipeline to respond
     out_consumer = KafkaConsumer(
-        out_topic, 
+        out_topic,
         bootstrap_servers = kafkabootstrap,
         sasl_mechanism = "PLAIN",
         sasl_plain_username = kafkauser,
@@ -167,7 +182,7 @@ def produce():
     failure_consumer = None
     if failure_topic is not None:
         failure_consumer = KafkaConsumer(
-            failure_topic, 
+            failure_topic,
             bootstrap_servers = kafkabootstrap,
             sasl_mechanism = "PLAIN",
             sasl_plain_username = kafkauser,
@@ -182,16 +197,16 @@ def produce():
 
     while time.time() < start_time + timeout:
         response = find_message(out_consumer, kafka_key)
-        if response is not None: 
+        if response is not None:
             return response
 
         if failure_consumer is not None:
             response = find_message(failure_consumer, kafka_key)
-            if response is not None: 
+            if response is not None:
                 if response.status_code == 200:
                     response.status_code = 400
                 return response
-        
+
     # Timeout
     return generate_response(408, {"topic": topic,
                                    "headers": str(headers),
