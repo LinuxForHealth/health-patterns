@@ -1,0 +1,150 @@
+name: Deploy to IBM Cloud And Execute Enrichment Tests
+
+on:
+#  release:
+#    types: [created]
+  pull_request:
+    branches: [ main ]
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  GITHUB_SHA: ${{ github.sha }}
+  IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
+  ACD_API_KEY: ${{ secrets.ACD_API_KEY }}
+  DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}
+  IBM_CLOUD_REGION: us-east
+  CIS_INSTANCE: Cloud Internet Services - Health Patterns
+  DOMAIN_ID: 6ff29db14b24b78a36227f49e18f3177
+  POOL_ID: 64c39c1c0638d539cae6d5ff593a0493
+  CLUSTER_NAMESPACE: github-${{github.run_id}}
+  FHIR_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/fhir
+  FHIR_DEID_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
+  NIFI_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/
+  DEID_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/deid
+  EXP_KAFKA_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/expose-kafka
+  ASCVD_FROM_FHIR_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/ascvd-from-fhir
+  TERM_PREP_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
+  DEID_PREP_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
+  NLP_INSIGHTS_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
+  KAFKA_TOPIC_IN: "ingest.clinical.in"
+  
+  
+
+jobs:
+  deploy:
+    name: Deploy Health Patterns Chart to the IBM Cloud
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Download and Install IBM Cloud CLI
+    - name: Install IBM Cloud CLI
+      run: |
+        curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+        ibmcloud --version
+        ibmcloud config --check-version=false
+        ibmcloud plugin install -f kubernetes-service
+        ibmcloud plugin install -f cis
+
+    # Authenticate with IBM Cloud CLI
+    - name: Authenticate into IBM Cloud Integration Squad Kubernetes Cluster
+      run: |
+        ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g dev-env-wdc-kube
+        ibmcloud ks cluster config --cluster health-patterns-1
+        
+    # Create the Namespace and Global Load Balancer 
+    - name: Create Namespace and GLB
+      run: |
+        kubectl create namespace ${CLUSTER_NAMESPACE}
+        ibmcloud cis glb-create ${DOMAIN_ID} --json '{"name" : "'${CLUSTER_NAMESPACE}'.wh-health-patterns.dev.watson-health.ibm.com", "fallback_pool" : "'${POOL_ID}'", "default_pools" : ["'${POOL_ID}'"], "ttl" : 1, "proxied" : true, "session_affinity" : "cookie"}' -i "${CIS_INSTANCE}"
+
+    # Setup and Install Chart 
+    - name: Install Chart
+      run: |
+        pwd
+        kubectl config current-context
+        kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
+        helm dependency update helm-charts/health-patterns
+        sed -i -e "s/\&hostname replace-me/\&hostname ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/g" helm-charts/health-patterns/values.yaml
+        helm install ingestion helm-charts/health-patterns  -f helm-charts/health-patterns/clinical_ingestion.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_API_KEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout 6m0s
+        kubectl get all
+
+    # Build Enrichment Tests 
+    - name: Build Enrichment Tests
+      run: |
+         cd enrich
+         echo "*************************************" 
+         echo "* Build the testcases               *"
+         echo "*************************************"
+         mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.deid.prep=$DEID_PREP_IP -Dport.deid.prep=$DEID_PREP_PORT -Dip.term.prep=$TERM_PREP_IP -Dport.term.prep=$TERM_PREP_PORT -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dport.ascvd.from.fhir=$ASCVD_FROM_FHIR_PORT -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dport.nlp.insights=$NLP_INSIGHTS_PORT  -Dpw=$DEFAULT_PASSWORD
+         echo "*************************************" 
+         echo "* Properties File:                  *"
+         echo "*************************************"
+         cat src/test/resources/enrich-flow.properties
+         
+    # Execute Enrichment Tests 
+    - name: Execute Enrichment Tests
+      run: |
+         cd enrich
+         echo "*************************************"
+         echo "* Waiting for 2 minutes             *"
+         echo "*************************************"
+         date
+         sleep 120  
+         date
+         echo "*************************************" 
+         echo "* Execute the testcases             *"
+         echo "*************************************"
+         mvn -e -DskipTests=false -Dtest=EnrichmentInitTests test
+         mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
+         mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
+         mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
+      
+    # Build Ingestion Tests 
+    - name: Build Ingestion Tests
+      run: |
+         cd ingest
+         echo "*************************************" 
+         echo "* Build the testcases               *"
+         echo "*************************************"
+         mvn clean install -e -Dip.fhir=$FHIR_IP -Dport.fhir=$FHIR_PORT -Dip.fhir.deid=$FHIR_DEID_IP -Dport.fhir.deid=$FHIR_DEID_PORT -Dip.nifi=$NIFI_IP -Dport.nifi=$NIFI_PORT -Dip.nifi.api=$NIFI_API_IP -Dport.nifi.api=$NIFI_API_PORT -Dip.kafka=$KAFKA_IP -Dport.kafka=$KAFKA_PORT -Dip.deid=$DEID_IP -Dport.deid=$DEID_PORT -Dip.expkafka=$EXP_KAFKA_IP -Dport.expkafka=$EXP_KAFKA_PORT  -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD
+         echo "*************************************" 
+         echo "* Properties File:                  *"
+         echo "*************************************"
+         cat src/test/resources/clinical-ingestion-flow.properties
+         
+    # Execute Ingestion Tests 
+    - name: Execute Ingestion Tests
+      run: |
+         cd ingest
+         echo "*************************************" 
+         echo "* Execute the testcases             *"
+         echo "*************************************"
+         mvn -e -DskipTests=false -Dtest=BasicIngestionInitTests test
+         mvn -e -DskipTests=false -Dtest=BasicIngestionTests test
+
+    # Uninstall Chart
+    - name: Clean Up Deployment
+      run: helm uninstall ingestion
+      continue-on-error: true
+      if: ${{ always() }}
+      
+   # Delete Namespace
+    - name: Delete Namespace
+      run:  kubectl delete namespace ${CLUSTER_NAMESPACE}
+      continue-on-error: true
+      if: ${{ always() }}
+                 
+   # Delete GLB
+    - name: Delete GLB
+      run: |
+           ibmcloud cis instance-set "${CIS_INSTANCE}"
+           glbid=$(ibmcloud cis glbs 6ff29db14b24b78a36227f49e18f3177 | grep ${CLUSTER_NAMESPACE})
+           glbid=${glbid:0:32}
+           ibmcloud cis glb-delete ${DOMAIN_ID} $glbid -i "${CIS_INSTANCE}"
+      continue-on-error: true
+                 
+      
+      if: ${{ always() }}
