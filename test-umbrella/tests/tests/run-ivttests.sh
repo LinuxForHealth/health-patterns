@@ -123,28 +123,33 @@ echo "<testsuites>" > /workspace/test-umbrella/tests/ivttest.xml
 cat target/surefire-reports/*.xml >> /workspace/test-umbrella/tests/ivttest.xml
 echo "</testsuites>" >> /workspace/test-umbrella/tests/ivttest.xml
 
-# then clean up
-echo "*************************************"
-echo "* Delete the Deployment             *"
-echo "*************************************"
-helm3 delete $HELM_RELEASE
-echo "*************************************"
-echo "* Waiting for 30  seconds           *"
-echo "*************************************"
-date
-sleep 30  
-date
-echo "*************************************"
-echo "* Delete NifiKop                    *"
-echo "*************************************"
-helm3 delete nifikop
-echo "*************************************"
-echo "* Waiting for 30  seconds           *"
-echo "*************************************"
-date
-sleep 30 
-date
-echo "*************************************"
-echo "* Delete Namespace                  *"
-echo "*************************************"
-kubectl delete namespace $TEST_NAMESPACE
+# ENV_CLEAN_UP is set in the toolchain environment properties.  The default value is true, but it can be changed on toolchain start
+# if we need to keep the test environment available for debug
+if [ $ENV_CLEAN_UP = "true" ]  
+then
+	# then clean up
+	echo "*************************************"
+	echo "* Delete the Deployment             *"
+	echo "*************************************"
+	helm3 delete $HELM_RELEASE
+	echo "*************************************"
+	echo "* Waiting for 30  seconds           *"
+	echo "*************************************"
+	date
+	sleep 30  
+	date
+	echo "*************************************"
+	echo "* Delete NifiKop                    *"
+	echo "*************************************"
+	helm3 delete nifikop
+	echo "*************************************"
+	echo "* Waiting for 30  seconds           *"
+	echo "*************************************"
+	date
+	sleep 30 
+	date
+	echo "*************************************"
+	echo "* Delete Namespace                  *"
+	echo "*************************************"
+	kubectl delete namespace $TEST_NAMESPACE
+fi	

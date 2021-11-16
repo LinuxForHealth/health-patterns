@@ -100,10 +100,14 @@ echo "<testsuites>" > /workspace/test-umbrella/tests/smoketests.xml
 cat target/surefire-reports/*.xml >> /workspace/test-umbrella/tests/smoketests.xml
 echo "</testsuites>" >> /workspace/test-umbrella/tests/smoketests.xml
 
-# then clean up
-echo "*************************************"
-echo "* Delete the Deployment             *"
-echo "*************************************"
-helm3 delete $HELM_RELEASE
-kubectl delete namespace $TEST_NAMESPACE
-
+# ENV_CLEAN_UP is set in the toolchain environment properties.  The default value is true, but it can be changed on toolchain start
+# if we need to keep the test environment available for debug
+if [ $ENV_CLEAN_UP = "true" ]  
+then
+	# then clean up
+	echo "*************************************"
+	echo "* Delete the Deployment             *"
+	echo "*************************************"
+	helm3 delete $HELM_RELEASE
+	kubectl delete namespace $TEST_NAMESPACE
+fi
