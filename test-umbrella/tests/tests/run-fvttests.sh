@@ -145,5 +145,10 @@ then
 	echo "*************************************"
 	echo "* Delete Namespace                  *"
 	echo "*************************************"
-	kubectl delete namespace $TEST_NAMESPACE
-fi	
+	kubectl delete namespace $TEST_NAMESPACE	
+else
+    # save the test deployment
+	echo "*************************************************************"
+	echo "* Test deployment "$HELM_RELEASE" in "$TEST_NAMESPACE" saved            *"
+	echo "*************************************************************"
+fi

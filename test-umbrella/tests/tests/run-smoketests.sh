@@ -110,4 +110,9 @@ then
 	echo "*************************************"
 	helm3 delete $HELM_RELEASE
 	kubectl delete namespace $TEST_NAMESPACE
+else 
+    # save the test deployment
+	echo "*************************************************************"
+	echo "* Test deployment "$HELM_RELEASE" in "$TEST_NAMESPACE" saved            *"
+	echo "*************************************************************"
 fi
