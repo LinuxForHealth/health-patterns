@@ -145,7 +145,11 @@
             <replacement>
                 <token>@@port.nlp.insights@@</token>
                 <value>${port.nlp.insights}</value>
-            </replacement>                                             
+            </replacement> 
+            <replacement>
+                <token>@@kafka.topic.in@@</token>
+                <value>${kafka.topic.in}</value>
+            </replacement>                                            
         </replacements>
     </configuration>
     </plugin>
