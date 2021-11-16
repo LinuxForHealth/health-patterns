@@ -288,7 +288,7 @@ nifi2: # NifiKop based Nifi
       bucketId: c601a7b4-f047-461e-ac13-2f140f8fb9b2
       flowId: 07fefa93-4207-4363-b46d-4e92a25d7bf6
       # flowVersion must be here. Using -1 doesn't work, and ommitting it causes NifiKop controller to fail/restart constantly
-      flowVersion: 37
+      flowVersion: 38
       parameterContextRef: ingestion-parameter-context
     - name: health-patterns-enrich-dataflow
       enabled: *enrichmentEnabled
