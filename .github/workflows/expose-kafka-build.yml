@@ -5,6 +5,7 @@ on:
     paths:
     - '.github/workflows/expose-kafka*'
     - 'services/expose-kafka/**'
+    - 'scripts/expose-kafka*'
 
 jobs:
 #  build:
