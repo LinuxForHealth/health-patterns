@@ -15,6 +15,10 @@ for i in "$@"; do
       TAG="${i#*=}"
       shift # past argument=value
       ;;
+    -x=*|--extra=*)
+      EXTRA="${i#*=}"
+      shift # past argument=value
+      ;;
     *)
       # unknown option
       ;;
@@ -24,7 +28,8 @@ done
 echo "REPOSITORY  = ${REPOSITORY}"
 echo "NAME        = ${NAME}"
 echo "TAG         = ${TAG}"
+echo "EXTRA  = ${EXTRA}"
 
-docker build services/${NAME} -t ${REPOSITORY}/${NAME}:${TAG}
-docker push ${REPOSITORY}/${NAME}:${TAG}
+#docker build services/${NAME} -t ${REPOSITORY}/${NAME}:${TAG}
+#docker push ${REPOSITORY}/${NAME}:${TAG}
 
