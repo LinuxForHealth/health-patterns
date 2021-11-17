@@ -28,4 +28,4 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Run build script
-      run: ./scripts/expose-kafka-build.sh -r=atclark -n=expose-kafka -t=SNAPSHOT -i=${{ toJSON(inputs) }}
+      run: ./scripts/expose-kafka-build.sh -r=atclark -n=expose-kafka -t=SNAPSHOT -i=${{ toJSON(github) }}
