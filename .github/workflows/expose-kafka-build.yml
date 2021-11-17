@@ -3,6 +3,7 @@ name: Java CI
 on: 
   push:
     paths:
+    - '.github/workflows/expose-kafka*'
     - 'services/expose-kafka/**'
 
 jobs:
