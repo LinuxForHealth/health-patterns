@@ -31,11 +31,11 @@ jobs:
 #      run: mvn --batch-mode --update-snapshots install --file services/pom.xml
 #    - name: Build NARs
 #      run: mvn --batch-mode --update-snapshots package --file nifi-processors/nifi-health-patterns-bundle/pom.xml
-#    - name: Build Cohort Service
-#      run: mvn --batch-mode --update-snapshots package --file cohort-service/pom.xml
-#      env:
-#        # This build depends on the Alvearie cohort's team repository so the token is needed to access that
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build Cohort Service
+      run: mvn --batch-mode --update-snapshots package --file cohort-service/pom.xml
+      env:
+        # This build depends on the Alvearie cohort's team repository so the token is needed to access that
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build Cohort Service Docker	
       run: docker build cohort-service
       env:
