@@ -38,15 +38,7 @@ jobs:
 #        labels: ${{ steps.meta.outputs.labels }}
 
     - name: aTc script
-      run: ./scripts/expose-kafka-build.sh \
-	-r=atclark \
-	-n=expose-kafka \
-	-t=SNAPSHOT \
-	-v=${{steps.meta.outputs.version}} \
-	-a=${{steps.meta.outputs.tags}} \
-	-l=${{steps.meta.outputs.labels}} \
-	-j=${{steps.meta.outputs.json}} \
-	-b=${{steps.meta.outputs.bake-file}} 
+      run: ./scripts/expose-kafka-build.sh -r=atclark -n=expose-kafka -t=SNAPSHOT -v=${{steps.meta.outputs.version}} -a=${{steps.meta.outputs.tags}} -l=${{steps.meta.outputs.labels}} -j=${{steps.meta.outputs.json}} -b=${{steps.meta.outputs.bake-file}} 
 
 #    - name: Push Expose-Kafka Docker Container	
 #      run: docker push ${{github.actor}}/expose-kafka:SNAPSHOT
