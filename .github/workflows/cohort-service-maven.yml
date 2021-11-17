@@ -28,7 +28,7 @@ jobs:
         # This build depends on the Alvearie cohort's team repository so the token is needed to access that
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Run unit test with Surefire
-      run: mvn test
+      run: mvn test cohort-service/
     - name: Build Cohort Service Docker	
       run: docker build cohort-service -t atclark/cohort-service:SNAPSHOT
       env:
