@@ -37,7 +37,7 @@ jobs:
 #        # This build depends on the Alvearie cohort's team repository so the token is needed to access that
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build Cohort Service Docker	
-      run: docker build cohort-service/Dockerfile
+      run: docker build cohort-service
       env:
         # This build depends on the Alvearie cohort's team repository so the token is needed to access that
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
