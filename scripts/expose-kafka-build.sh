@@ -35,6 +35,10 @@ for i in "$@"; do
       BAKE-FILE="${i#*=}"
       shift # past argument=value
       ;;
+    -i=*|--inputs=*)
+      INPUTS="${i#*=}"
+      shift # past argument=value
+      ;;
     *)
       # unknown option
       ;;
@@ -50,6 +54,7 @@ echo "TAGS  = ${TAGS}"
 echo "LABELS  = ${LABELS}"
 echo "JSON  = ${JSON}"
 echo "BAKE-FILE  = ${BAKE-FILE}"
+echo "INPUTS  = ${INPUTS}"
 
 #docker build services/${NAME} -t ${REPOSITORY}/${NAME}:${TAG}
 #docker push ${REPOSITORY}/${NAME}:${TAG}
