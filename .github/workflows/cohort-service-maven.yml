@@ -24,6 +24,9 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
     - name: Build with Maven
       run: mvn --batch-mode --update-snapshots package --file cohort-service/pom.xml
+      env:
+        # This build depends on the Alvearie cohort's team repository so the token is needed to access that
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Run unit test with Surefire
       run: mvn test
     - name: Build Cohort Service Docker	
