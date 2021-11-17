@@ -1,5 +1,30 @@
 #!/bin/bash
 echo "Hello World"
-docker build services/expose-kafka -t atclark/expose-kafka:SNAPSHOT
-docker push atclark/expose-kafka:SNAPSHOT
+
+for i in "$@"; do
+  case $i in
+    -r=*|--repository=*)
+      REPOSITORY="${i#*=}"
+      shift # past argument=value
+      ;;
+    -n=*|--name=*)
+      NAME="${i#*=}"
+      shift # past argument=value
+      ;;
+    -t=*|--tag=*)
+      TAG="${i#*=}"
+      shift # past argument=value
+      ;;
+    *)
+      # unknown option
+      ;;
+  esac
+done
+
+echo "REPOSITORY  = ${REPOSITORY}"
+echo "NAME        = ${NAME}"
+echo "TAG         = ${TAG}"
+
+docker build services/${NAME} -t ${REPOSITORY}/${NAME}:${TAG}
+docker push ${REPOSITORY}/${NAME}:${TAG}
 
