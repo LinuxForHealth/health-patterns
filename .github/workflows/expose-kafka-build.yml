@@ -7,9 +7,9 @@ on:
     - 'services/expose-kafka/**'
 
 jobs:
-  build:
-    name: Build Expose-Kafka
-    runs-on: ubuntu-latest
+#  build:
+#    name: Build Expose-Kafka
+#    runs-on: ubuntu-latest
   build:
     name: Build and Push Expose-Kafka Docker Container 
     runs-on: ubuntu-latest
