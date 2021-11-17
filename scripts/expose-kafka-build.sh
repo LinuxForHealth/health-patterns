@@ -15,8 +15,24 @@ for i in "$@"; do
       TAG="${i#*=}"
       shift # past argument=value
       ;;
-    -x=*|--extra=*)
-      EXTRA="${i#*=}"
+    -v=*|--version=*)
+      VERSION="${i#*=}"
+      shift # past argument=value
+      ;;
+    -a=*|--tags=*)
+      TAGS="${i#*=}"
+      shift # past argument=value
+      ;;
+    -l=*|--labels=*)
+      LABELS="${i#*=}"
+      shift # past argument=value
+      ;;
+    -j=*|--json=*)
+      JSON="${i#*=}"
+      shift # past argument=value
+      ;;
+    -b=*|--bake-file=*)
+      BAKE-FILE="${i#*=}"
       shift # past argument=value
       ;;
     *)
@@ -25,10 +41,15 @@ for i in "$@"; do
   esac
 done
 
+
 echo "REPOSITORY  = ${REPOSITORY}"
 echo "NAME        = ${NAME}"
 echo "TAG         = ${TAG}"
-echo "EXTRA  = ${EXTRA}"
+echo "VERSION  = ${VERSION}"
+echo "TAGS  = ${TAGS}"
+echo "LABELS  = ${LABELS}"
+echo "JSON  = ${JSON}"
+echo "BAKE-FILE  = ${BAKE-FILE}"
 
 #docker build services/${NAME} -t ${REPOSITORY}/${NAME}:${TAG}
 #docker push ${REPOSITORY}/${NAME}:${TAG}
