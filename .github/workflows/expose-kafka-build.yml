@@ -10,13 +10,11 @@ jobs:
 #  build:
 #    name: Build Expose-Kafka
 #    runs-on: ubuntu-latest
-  build:
+  docker:
     name: Build and Push Expose-Kafka Docker Container 
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-#    - name: Build Expose-Kafka Docker container	
-#      run: docker build services/expose-kafka -t atclark/expose-kafka:SNAPSHOT
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
@@ -30,14 +28,16 @@ jobs:
         images: atclark/expose-kafka
 
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-      with:
-        context: services/expose-kafka
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+#    - name: Build and push Docker image
+#      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+#      with:
+#        context: services/expose-kafka
+#        push: true
+#        tags: ${{ steps.meta.outputs.tags }}
+#        labels: ${{ steps.meta.outputs.labels }}
 
+    - name: aTc script
+      run: ./scripts/expose-kafka-build.sh
 
 
 #    - name: Push Expose-Kafka Docker Container	
