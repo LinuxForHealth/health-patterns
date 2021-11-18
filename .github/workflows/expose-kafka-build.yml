@@ -28,7 +28,7 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Run build script
-      run: ./scripts/expose-kafka-build.sh -n=expose-kafka -r=${{ .DOCKER_HUB_USERNAME }} --debug
+      run: ./scripts/expose-kafka-build.sh -n=expose-kafka -r=${{ secrets.DOCKER_HUB_USERNAME }} --debug
       inputs:
         numOctocats:
          description: 'Number of Octocats'
