@@ -53,7 +53,7 @@ if [ -z "$TAG" ]; then
       TAG="${last_tag}_BUILD"
     fi
   else
-    # Commit + Pull Request 
+    # Commit + Pull Request
     [[ "$last_tag" =~ (.*[^0-9])([0-9]+)$ ]] && TAG="${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))"
   fi
 fi
@@ -93,7 +93,8 @@ fi
 sed -i '' 's/  tag:.*/  tag: '${TAG}'/' "services/${NAME}/chart/values.yaml"
 if [[ ${DEBUG}!="True" ]]
 then
-  if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PUSH' ]; then 
+  if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PUSH' ]; then
+    echo ''
     #git add services/${NAME}/chart/values.yaml
   fi
 fi
@@ -101,7 +102,7 @@ fi
 ###################################
 ## Re-package service helm chart ##
 ###################################
-helm_package_suffix=$(helm package services/${NAME}/chart -d docs/charts/ >&1 | sed 's/.*'${NAME}'//') 
+helm_package_suffix=$(helm package services/${NAME}/chart -d docs/charts/ >&1 | sed 's/.*'${NAME}'//')
 helm repo index docs/charts
 if [[ ${MODE} == 'DEV' ]]
 then
@@ -116,7 +117,3 @@ echo "${NAME}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and pa
 ##############################
 ## Update parent helm chart ##
 ##############################
-
-
-
-
