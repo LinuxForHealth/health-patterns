@@ -15,10 +15,6 @@ for i in "$@"; do
       TAG="${i#*=}"
       shift # past argument=value
       ;;
-    -i=*|--inputs=*)
-      INPUTS="${i#*=}"
-      shift # past argument=value
-      ;;
     *)
       # unknown option
       ;;
@@ -29,9 +25,8 @@ done
 echo "REPOSITORY  = ${REPOSITORY}"
 echo "NAME        = ${NAME}"
 echo "TAG         = ${TAG}"
-echo "INPUTS  = ${INPUTS}"
 
-last_ver = docker image ls atclark/expose-kafka --format "{{.Tag}}" | sort -r | head -1
+export last_ver = docker image ls atclark/expose-kafka --format "{{.Tag}}" | sort -r | head -1
 
 echo "last_ver  = ${last_ver}"
 
