@@ -46,7 +46,9 @@ echo "REPOSITORY Length  =${l}"
 if [ -z "$TAG" ]; then
   echo "No tag provided. Generating based on docker history..."
 
-  docker pull ${REPOSITORY}/${NAME} -a 
+  # FIXME - should be tagging images with "latest" so we can just pull that ONE to find the other tags (x.y.z) and update that
+  docker pull ${REPOSITORY}/${NAME} -a
+
   echo "docker image ls ${REPOSITORY}/${NAME} --format '{{.Tag}}'"
   echo "$(docker image ls ${REPOSITORY}/${NAME} --format '{{.Tag}}')"
   last_tag="$(docker image ls ${REPOSITORY}/${NAME} --format '{{.Tag}}' | sort -r | head -1)"
