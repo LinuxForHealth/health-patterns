@@ -28,6 +28,7 @@ from fhir.resources.condition import Condition
 from fhir.resources.diagnosticreport import DiagnosticReport
 from fhir.resources.documentreference import DocumentReference
 from fhir.resources.immunization import Immunization
+from fhir.resources.patient import Patient
 from fhir.resources.reference import Reference
 from fhir.resources.resource import Resource
 
@@ -35,6 +36,11 @@ from fhir.resources.resource import Resource
 def make_patient_reference() -> Reference:
     """Makes a patient reference"""
     return Reference.construct(reference="Patient/1234567890")
+
+
+def make_patient() -> Patient:
+    """Returns a patient resource"""
+    return Patient.parse_obj({"id": "1234567890", "name": [{"text": "Nick"}]})
 
 
 def make_diag_report(

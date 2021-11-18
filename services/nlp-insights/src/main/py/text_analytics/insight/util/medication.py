@@ -49,13 +49,13 @@ def parse_dosage_with_units(dosage_with_units: str) -> Optional[MedicationDosage
     MedicationDosage(dosage=2255.5, units='ml^3')
 
     """
-    m = re.search(_DOSE_AND_UNITS_PATTERN, dosage_with_units)
+    mch = re.search(_DOSE_AND_UNITS_PATTERN, dosage_with_units)
 
-    if not m:
+    if not mch:
         logger.warning("%s did not match the pattern of a dosage", dosage_with_units)
         return None
 
-    dose_str = m.group(1).replace(",", "")
+    dose_str = mch.group(1).replace(",", "")
     try:
         dose_amount = float(dose_str)
     except ValueError:
@@ -64,4 +64,4 @@ def parse_dosage_with_units(dosage_with_units: str) -> Optional[MedicationDosage
     except ArithmeticError:
         logger.exception("%s could not be converted to a float", dose_str)
 
-    return MedicationDosage(dosage=dose_amount, units=m.group(2))
+    return MedicationDosage(dosage=dose_amount, units=mch.group(2))

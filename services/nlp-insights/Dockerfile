@@ -14,7 +14,7 @@ COPY src/main/py src/main/py
 
 RUN pip3 install .
 
-ENV FLASK_APP /app/src/main/py/text_analytics/app.py
+ENV FLASK_APP text_analytics.app
 
 EXPOSE 5000
 

@@ -528,12 +528,12 @@ def create_insight_id_extension(
         Returns: The insight id extension
 
     Example:
-    >>> ext = create_insight_id_extension("insight-1", "urn:id:COM.IBM.WH.PA.CDP.CDE/1.0.0")
+    >>> ext = create_insight_id_extension("insight-1", "urn:id:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2")
     >>> print(ext.json(indent=2))
     {
       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
       "valueIdentifier": {
-        "system": "urn:id:COM.IBM.WH.PA.CDP.CDE/1.0.0",
+        "system": "urn:id:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2",
         "value": "insight-1"
       }
     }

@@ -28,6 +28,8 @@ from test_text_analytics.util.fhir import (
 from test_text_analytics.util.mock_service import (
     make_mock_acd_service_class,
     configure_acd,
+    make_mock_quick_umls_service_class,
+    configure_quick_umls,
 )
 from test_text_analytics.util.resources import UnitTestUsingExternalResource
 from text_analytics import app
@@ -135,6 +137,107 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
 
         with app.app.test_client() as service:
             configure_acd(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+
+class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
+    """Unit tests where a diagnostic report is posted for insights"""
+
+    def setUp(self) -> None:
+        # The application is defined globally in the module, so this is a potentially
+        # flawed way of reseting the state between test cases.
+        # It should work "well-enough" in most cases.
+        importlib.reload(app)
+        app.all_nlp_services["quickumls"] = make_mock_quick_umls_service_class(
+            self.resource_path + "/quickUmls/TestReportResponses.json"
+        )
+
+    def test_when_post_docref_then_condition_derived(self):
+        report = make_docref_report(
+            subject=make_patient_reference(),
+            attachments=[make_attachment(DOCREF_REPORT_TEXT_FOR_CONDITIONS)],
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", data=report.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_docref_bundle_then_condition_derived(self):
+        bundle = make_bundle(
+            [
+                make_docref_report(
+                    subject=make_patient_reference(),
+                    attachments=[make_attachment(DOCREF_REPORT_TEXT_FOR_CONDITIONS)],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_docref_bundle_then_medication_derived(self):
+        bundle = make_bundle(
+            [
+                make_docref_report(
+                    subject=make_patient_reference(),
+                    attachments=[make_attachment(DOCREF_REPORT_TEXT_FOR_MEDICATIONS)],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_docref_bundle_then_medication_and_condition_derived(self):
+        bundle = make_bundle(
+            [
+                make_docref_report(
+                    subject=make_patient_reference(),
+                    attachments=[
+                        make_attachment(
+                            DOCREF_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS
+                        )
+                    ],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
             insight_resp = service.post("/discoverInsights", data=bundle.json())
             self.assertEqual(200, insight_resp.status_code)
 

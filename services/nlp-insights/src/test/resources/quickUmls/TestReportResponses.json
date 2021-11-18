@@ -1,0 +1,621 @@
+{
+"Patient has pneumonia and shows signs of heart attack":[
+  {
+    "cui": "C0027051",
+    "end": 53,
+    "ngram": "heart attack",
+    "preferred": 1,
+    "semtypes": [
+      "T047"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [
+      "500448019",
+      "350357012",
+      "622062019",
+      "37436014",
+      "37437017",
+      "299703017",
+      "241792015",
+      "395860017",
+      "500449010",
+      "299700019",
+      "395861018",
+      "241791010",
+      "37443015",
+      "37440017",
+      "37441018",
+      "37438010",
+      "241790011",
+      "500450010",
+      "395863015",
+      "1784873012",
+      "37442013",
+      "37439019",
+      "500452019",
+      "1784872019",
+      "2747117014",
+      "751689013"
+    ],
+    "start": 41,
+    "term": "heart attack"
+  },
+  {
+    "cui": "C0032285",
+    "end": 21,
+    "ngram": "pneumonia",
+    "preferred": 1,
+    "semtypes": [
+      "T047"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [
+      "396219014",
+      "242293010",
+      "100271014",
+      "350049016",
+      "100272019",
+      "242308013",
+      "409863013",
+      "535895010",
+      "535901013",
+      "242302014",
+      "100274018",
+      "799307012",
+      "2760037018",
+      "621810017",
+      "2721096015",
+      "2741003011",
+      "666821014"
+    ],
+    "start": 12,
+    "term": "pneumonia"
+  },
+  {
+    "cui": "C3714636",
+    "end": 21,
+    "ngram": "pneumonia",
+    "preferred": 1,
+    "semtypes": [
+      "T047"
+    ],
+    "similarity": 0.875,
+    "snomed_ct": [
+      "314740018",
+      "100273012",
+      "590574014"
+    ],
+    "start": 12,
+    "term": "pneumonias"
+  },
+  {
+    "cui": "C0032285",
+    "end": 21,
+    "ngram": "pneumonia",
+    "preferred": 1,
+    "semtypes": [
+      "T047"
+    ],
+    "similarity": 0.875,
+    "snomed_ct": [
+      "396219014",
+      "242293010",
+      "100271014",
+      "350049016",
+      "100272019",
+      "242308013",
+      "409863013",
+      "535895010",
+      "535901013",
+      "242302014",
+      "100274018",
+      "799307012",
+      "2760037018",
+      "621810017",
+      "2721096015",
+      "2741003011",
+      "666821014"
+    ],
+    "start": 12,
+    "term": "pneumoniae"
+  },
+  {
+    "cui": "C1550655",
+    "end": 7,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T031"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "patient"
+  },
+  {
+    "cui": "C1578485",
+    "end": 7,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T170"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "patient"
+  },
+  {
+    "cui": "C1578486",
+    "end": 7,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T170"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "patient"
+  },
+  {
+    "cui": "C0311392",
+    "end": 37,
+    "ngram": "signs",
+    "preferred": 1,
+    "semtypes": [
+      "T033"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [
+      "120711012",
+      "120713010",
+      "120708011",
+      "120709015",
+      "120712017",
+      "120710013",
+      "221690011",
+      "253514015",
+      "368268013",
+      "253513014",
+      "221688010",
+      "636578019",
+      "812972017"
+    ],
+    "start": 32,
+    "term": "signs"
+  }
+],
+"Patient started taking beta blockers":
+[
+  {
+    "cui": "C0001645",
+    "end": 36,
+    "ngram": "beta blockers",
+    "preferred": 1,
+    "semtypes": [
+      "T121"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [
+      "55490011",
+      "55491010",
+      "3299303012",
+      "485461013",
+      "714657019",
+      "462279010",
+      "1211746018",
+      "55488010",
+      "55489019",
+      "3299819012",
+      "485462018",
+      "3520627012",
+      "3520702014",
+      "3520874018",
+      "1229191018",
+      "1192795014",
+      "1198551012",
+      "764632010",
+      "2741579018"
+    ],
+    "start": 23,
+    "term": "beta blockers"
+  },
+  {
+    "cui": "C0550625",
+    "end": 36,
+    "ngram": "beta blockers",
+    "preferred": 1,
+    "semtypes": [
+      "T201"
+    ],
+    "similarity": 0.7857142857142857,
+    "snomed_ct": [],
+    "start": 23,
+    "term": "beta blockers ur"
+  },
+  {
+    "cui": "C1550655",
+    "end": 7,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T031"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "patient"
+  },
+  {
+    "cui": "C1578485",
+    "end": 7,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T170"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "patient"
+  },
+  {
+    "cui": "C1578486",
+    "end": 7,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T170"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "patient"
+  }
+],
+"Patient has pneumonia and shows signs of heart attack. Patient started taking beta blockers.":
+[
+  {
+    "cui": "C0001645",
+    "end": 91,
+    "ngram": "beta blockers",
+    "preferred": 1,
+    "semtypes": [
+      "T121"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [
+      "55490011",
+      "55491010",
+      "3299303012",
+      "485461013",
+      "714657019",
+      "462279010",
+      "1211746018",
+      "55488010",
+      "55489019",
+      "3299819012",
+      "485462018",
+      "3520627012",
+      "3520702014",
+      "3520874018",
+      "1229191018",
+      "1192795014",
+      "1198551012",
+      "764632010",
+      "2741579018"
+    ],
+    "start": 78,
+    "term": "beta blockers"
+  },
+  {
+    "cui": "C0550625",
+    "end": 91,
+    "ngram": "beta blockers",
+    "preferred": 1,
+    "semtypes": [
+      "T201"
+    ],
+    "similarity": 0.7857142857142857,
+    "snomed_ct": [],
+    "start": 78,
+    "term": "beta blockers ur"
+  },
+  {
+    "cui": "C0027051",
+    "end": 53,
+    "ngram": "heart attack",
+    "preferred": 1,
+    "semtypes": [
+      "T047"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [
+      "500448019",
+      "350357012",
+      "622062019",
+      "37436014",
+      "37437017",
+      "299703017",
+      "241792015",
+      "395860017",
+      "500449010",
+      "299700019",
+      "395861018",
+      "241791010",
+      "37443015",
+      "37440017",
+      "37441018",
+      "37438010",
+      "241790011",
+      "500450010",
+      "395863015",
+      "1784873012",
+      "37442013",
+      "37439019",
+      "500452019",
+      "1784872019",
+      "2747117014",
+      "751689013"
+    ],
+    "start": 41,
+    "term": "heart attack"
+  },
+  {
+    "cui": "C0032285",
+    "end": 21,
+    "ngram": "pneumonia",
+    "preferred": 1,
+    "semtypes": [
+      "T047"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [
+      "396219014",
+      "242293010",
+      "100271014",
+      "350049016",
+      "100272019",
+      "242308013",
+      "409863013",
+      "535895010",
+      "535901013",
+      "242302014",
+      "100274018",
+      "799307012",
+      "2760037018",
+      "621810017",
+      "2721096015",
+      "2741003011",
+      "666821014"
+    ],
+    "start": 12,
+    "term": "pneumonia"
+  },
+  {
+    "cui": "C3714636",
+    "end": 21,
+    "ngram": "pneumonia",
+    "preferred": 1,
+    "semtypes": [
+      "T047"
+    ],
+    "similarity": 0.875,
+    "snomed_ct": [
+      "314740018",
+      "100273012",
+      "590574014"
+    ],
+    "start": 12,
+    "term": "pneumonias"
+  },
+  {
+    "cui": "C0032285",
+    "end": 21,
+    "ngram": "pneumonia",
+    "preferred": 1,
+    "semtypes": [
+      "T047"
+    ],
+    "similarity": 0.875,
+    "snomed_ct": [
+      "396219014",
+      "242293010",
+      "100271014",
+      "350049016",
+      "100272019",
+      "242308013",
+      "409863013",
+      "535895010",
+      "535901013",
+      "242302014",
+      "100274018",
+      "799307012",
+      "2760037018",
+      "621810017",
+      "2721096015",
+      "2741003011",
+      "666821014"
+    ],
+    "start": 12,
+    "term": "pneumoniae"
+  },
+  {
+    "cui": "C1550655",
+    "end": 7,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T031"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "patient"
+  },
+  {
+    "cui": "C1578485",
+    "end": 7,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T170"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "patient"
+  },
+  {
+    "cui": "C1578486",
+    "end": 7,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T170"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "patient"
+  },
+  {
+    "cui": "C1550655",
+    "end": 62,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T031"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 55,
+    "term": "patient"
+  },
+  {
+    "cui": "C1578485",
+    "end": 62,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T170"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 55,
+    "term": "patient"
+  },
+  {
+    "cui": "C1578486",
+    "end": 62,
+    "ngram": "Patient",
+    "preferred": 1,
+    "semtypes": [
+      "T170"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 55,
+    "term": "patient"
+  },
+  {
+    "cui": "C0311392",
+    "end": 37,
+    "ngram": "signs",
+    "preferred": 1,
+    "semtypes": [
+      "T033"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [
+      "120711012",
+      "120713010",
+      "120708011",
+      "120709015",
+      "120712017",
+      "120710013",
+      "221690011",
+      "253514015",
+      "368268013",
+      "253513014",
+      "221688010",
+      "636578019",
+      "812972017"
+    ],
+    "start": 32,
+    "term": "signs"
+  }
+],
+"prescribed aspirin 2mg twice daily" :
+[
+  {
+    "cui": "C0278329",
+    "end": 10,
+    "ngram": "prescribed",
+    "preferred": 1,
+    "semtypes": [
+      "T058"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [],
+    "start": 0,
+    "term": "prescribed"
+  },
+  {
+    "cui": "C0004057",
+    "end": 18,
+    "ngram": "aspirin",
+    "preferred": 1,
+    "semtypes": [
+      "T121",
+      "T109"
+    ],
+    "similarity": 1.0,
+    "snomed_ct": [
+      "1481549015",
+      "14146019",
+      "14145015",
+      "1492088010",
+      "462887015",
+      "462886012",
+      "464260011",
+      "467476013",
+      "3488876015",
+      "3499728015",
+      "1493773015",
+      "1188829013",
+      "715369010",
+      "1189665014",
+      "716809013",
+      "1492089019",
+      "1465968010",
+      "1485784011",
+      "1191865010",
+      "720245010",
+      "1204780013",
+      "484071013",
+      "759771018",
+      "820524017",
+      "1461636011",
+      "2734253012"
+    ],
+    "start": 11,
+    "term": "aspirin"
+  },
+  {
+    "cui": "C0163668",
+    "end": 18,
+    "ngram": "aspirin",
+    "preferred": 1,
+    "semtypes": [
+      "T130",
+      "T109"
+    ],
+    "similarity": 0.7142857142857143,
+    "snomed_ct": [],
+    "start": 11,
+    "term": "diaspirin"
+  }
+]
+}

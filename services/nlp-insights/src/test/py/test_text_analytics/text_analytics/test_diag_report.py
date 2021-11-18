@@ -28,6 +28,8 @@ from test_text_analytics.util.fhir import (
 from test_text_analytics.util.mock_service import (
     make_mock_acd_service_class,
     configure_acd,
+    make_mock_quick_umls_service_class,
+    configure_quick_umls,
 )
 from test_text_analytics.util.resources import UnitTestUsingExternalResource
 from text_analytics import app
@@ -181,6 +183,152 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
 
         with app.app.test_client() as service:
             configure_acd(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+
+class TestDiagReportUsingQuickUmls(UnitTestUsingExternalResource):
+    """Unit tests where a diagnostic report is posted to quickumls for insights"""
+
+    def setUp(self) -> None:
+        # The application is defined globally in the module, so this is a potentially
+        # flawed way of reseting the state between test cases.
+        # It should work "well-enough" in most cases.
+        importlib.reload(app)
+        app.all_nlp_services["quickumls"] = make_mock_quick_umls_service_class(
+            self.resource_path + "/quickUmls/TestReportResponses.json"
+        )
+
+    def test_when_post_diag_with_no_text_then_empty_bundle(self):
+        report = make_diag_report(subject=make_patient_reference())
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", json=report.dict())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            self.assertEqual(0, len(actual_bundle.entry))
+
+    def test_when_post_diag_bundle_with_no_text_then_empty_bundle(self):
+        bundle = make_bundle([make_diag_report(subject=make_patient_reference())])
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", json=bundle.dict())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            self.assertEqual(0, len(actual_bundle.entry))
+
+    def test_when_post_diag_then_condition_derived(self):
+        report = make_diag_report(
+            subject=make_patient_reference(),
+            attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_CONDITIONS)],
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", data=report.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_diag_bundle_then_condition_derived(self):
+        bundle = make_bundle(
+            [
+                make_diag_report(
+                    subject=make_patient_reference(),
+                    attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_CONDITIONS)],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_diag_bundle_then_medication_derived(self):
+        bundle = make_bundle(
+            [
+                make_diag_report(
+                    subject=make_patient_reference(),
+                    attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATIONS)],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_diag_bundle_then_medication_without_dosage_derived(self):
+        # Quick UMLS doesn't support dosage insights
+        bundle = make_bundle(
+            [
+                make_diag_report(
+                    subject=make_patient_reference(),
+                    attachments=[
+                        make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE)
+                    ],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_diag_bundle_then_medication_and_condition_derived(self):
+        bundle = make_bundle(
+            [
+                make_diag_report(
+                    subject=make_patient_reference(),
+                    attachments=[
+                        make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS)
+                    ],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
             insight_resp = service.post("/discoverInsights", data=bundle.json())
             self.assertEqual(200, insight_resp.status_code)
 

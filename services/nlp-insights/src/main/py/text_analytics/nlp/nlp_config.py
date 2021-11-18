@@ -18,9 +18,6 @@ from typing import Callable
 from typing import Optional
 
 from fhir.resources.extension import Extension
-from ibm_whcs_sdk.annotator_for_clinical_data import (
-    annotator_for_clinical_data_v1 as acd,
-)
 
 from text_analytics.fhir import fhir_object_utils
 

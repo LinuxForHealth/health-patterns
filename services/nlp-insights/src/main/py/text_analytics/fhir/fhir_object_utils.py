@@ -383,7 +383,7 @@ def add_insight_to_meta(
     ...                                     status='final')
 
     Create Insight ID extension:
-    >>> insight_id = create_insight_id_extension('insight-1', 'urn:id:COM.IBM.WH.PA.CDP.CDE/1.0.0')
+    >>> insight_id = create_insight_id_extension('insight-1', 'urn:id:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2')
 
     Create Insight detail Extension:
     >>> source = TextFragment(text_source=UnstructuredText(report, "path_to_text", report_text),
@@ -409,7 +409,7 @@ def add_insight_to_meta(
               {
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
-                  "system": "urn:id:COM.IBM.WH.PA.CDP.CDE/1.0.0",
+                  "system": "urn:id:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2",
                   "value": "insight-1"
                 }
               },

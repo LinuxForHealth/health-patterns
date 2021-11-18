@@ -247,8 +247,8 @@ task pytest(type: PythonTask) {
   inputs.files(project.tasks.copySource.outputs.files)
   inputs.files(project.tasks.install.outputs.files.singleFile)
 
-  def pyTestXmlReportFile =  "${project.tasks.reportsDir.outputs.files.singleFile.name}/pytest-report.xml"
-  def pyTestHtmlReportFile = "${project.tasks.reportsDir.outputs.files.singleFile.name}/pytest-report.html"
+  def pyTestXmlReportFile =  "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/pytest-report.xml"
+  def pyTestHtmlReportFile = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/pytest-report.html"
 
   outputs.file(pyTestXmlReportFile)
   outputs.file(pyTestHtmlReportFile)
@@ -274,8 +274,8 @@ task docTestSource(type: PythonTask) {
   inputs.files(project.tasks.copySource.outputs.files)
   inputs.files(project.tasks.install.outputs.files.singleFile)
 
-  def pyDocTestXmlFile = "${project.tasks.reportsDir.outputs.files.singleFile.name}/doc-test.xml"
-  def pyDocTestHtmlFile = "${project.tasks.reportsDir.outputs.files.singleFile.name}/doc-test.html"
+  def pyDocTestXmlFile = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/doc-test.xml"
+  def pyDocTestHtmlFile = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/doc-test.html"
 
   outputs.file(layout.buildDirectory.file(pyDocTestXmlFile))
   outputs.file(layout.buildDirectory.file(pyDocTestHtmlFile))
@@ -310,7 +310,7 @@ task flake8(type: Exec) {
   outputs.file(flake8Xml)
 
   inputs.files(project.tasks.copySource.outputs.files)
-
+  inputs.files(project.tasks.buildConfiguration.outputs.files)
 
   standardOutput = new ByteArrayOutputStream()
   ignoreExitValue=true
@@ -332,6 +332,7 @@ task pylint(type: Exec) {
   outputs.file(pylintXml)
 
   inputs.files(project.tasks.copySource.outputs.files)
+  inputs.files(project.tasks.buildConfiguration.outputs.files)
 
   standardOutput = new ByteArrayOutputStream()
   ignoreExitValue=true
@@ -353,6 +354,7 @@ task mypy(type: Exec) {
 
   outputs.file(myPyXml)
   inputs.files(project.tasks.copySource.outputs.files)
+  inputs.files(project.tasks.buildConfiguration.outputs.files)
 
   standardOutput = new ByteArrayOutputStream()
   ignoreExitValue=true
@@ -428,6 +430,7 @@ task verifyDockerUser {
 project.tasks.dockerPrepare.dependsOn project.tasks.verifyDockerUser
 project.tasks.dockerPrepare.dependsOn project.tasks.test
 project.tasks.dockerRun.dependsOn project.tasks.docker
+project.tasks.dockerPush.dependsOn project.tasks.docker
 
 
 docker {
@@ -442,6 +445,7 @@ docker {
   name dockerUser + "/${project.name}:" + version
   dockerfile file('Dockerfile')
 }
+
 
 dockerPush {}
 

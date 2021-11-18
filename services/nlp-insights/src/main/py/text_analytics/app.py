@@ -54,11 +54,16 @@ app = Flask(__name__)
 
 # Maps values seen in configs to NLP python classes
 all_nlp_services = {"acd": ACDService, "quickumls": QuickUMLSService}
-# NLP Service currently configured
-# FIXME: Using a global to track the current NLP service is dangerous. It does not scale correctly
-# when multiple processes or containers are used. It is not thread safe when multiple
-# requests to update the config are made in parallel.
-nlp_service = None
+
+
+# Using a global to track the current NLP service is dangerous. It does not scale correctly.
+# This is obvious when multiple processes or containers are used. It is also not thread safe when multiple
+# requests to update the config are made in parallel. Configurations do not persist beyond the life of the container.
+# Fixing this is a design issue, and a fix is not in plan at this time. The target audience is demo and starter code,
+# and until that changes we can't spend time fixing this.
+nlp_service = None  # NLP Service currently configured
+
+
 # Stores instances of configured NLP Services
 nlp_services_dict: Dict[str, NLPService] = {}
 # Stores resource to config overrides
@@ -105,7 +110,7 @@ def persist_config_helper(config_dict: Dict[str, Any]) -> str:
 
 def init_configs() -> None:
     """Create initial configs from deployment values, if any"""
-    global nlp_service
+    global nlp_service  # pylint: disable=global-statement
 
     logger.info("ACD enable config: %s", os.getenv("ACD_ENABLE_CONFIG"))
     logger.info("QuickUMLS enable config: %s", os.getenv("QUICKUMLS_ENABLE_CONFIG"))
@@ -211,6 +216,8 @@ def get_all_configs() -> Response:
 
 @app.route("/config", methods=["GET"])
 def get_current_config() -> Response:
+    """Returns the NLP instance that is currently set"""
+
     if nlp_service is None:
         raise BadRequest(description="No default nlp service is currently set")
     return Response(
@@ -221,7 +228,7 @@ def get_current_config() -> Response:
 @app.route("/config/setDefault", methods=["POST", "PUT"])
 def set_default_config() -> Response:
     """Set the default nlp instance"""
-    global nlp_service
+    global nlp_service  # pylint: disable=global-statement
     if request.args and request.args.get("name"):
         config_name = request.args.get("name")
 
@@ -245,7 +252,8 @@ def set_default_config() -> Response:
 @app.route("/config/clearDefault", methods=["POST", "PUT"])
 def clear_default_config() -> Response:
     """Clear the default nlp instance"""
-    global nlp_service
+    global nlp_service  # pylint: disable=global-statement
+
     nlp_service = None
     return Response(
         "Default config has been cleared", status=200, mimetype="application/plaintext"
@@ -380,7 +388,7 @@ def discover_insights() -> Response:
 
 
 def _get_nlp_service_for_resource(resource: Resource) -> NLPService:
-    global nlp_service
+    global nlp_service  # pylint: disable=global-statement
 
     if nlp_service is None:
         raise BadRequest(

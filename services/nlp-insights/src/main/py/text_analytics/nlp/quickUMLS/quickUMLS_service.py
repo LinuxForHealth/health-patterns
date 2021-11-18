@@ -40,6 +40,32 @@ class _ResultEntry(NamedTuple):
     nlp_output: NlpResponse
 
 
+def create_nlp_response(server_response_concepts: List[Dict[str, Any]]) -> NlpResponse:
+    """Converts a json response from the quickUmls server to an NlpResponse
+
+    The server's response is a list of concept objects, each of which must
+    have a UMLS cui and optionally other fields as well.
+    """
+    nlp_cuis = [
+        NlpCui(
+            cui=concept["cui"],
+            covered_text=concept["ngram"] if "ngram" in concept else "",
+            begin=concept["start"] if "start" in concept else 0,
+            end=concept["end"] if "end" in concept else 0,
+            preferred_name=concept["term"] if "term" in concept else "",
+            types=(
+                get_names_from_type_ids(concept["semtypes"])
+                if "semtypes" in concept
+                else set()
+            ),
+            snomed_ct=concept["snomed_ct"] if "snomed_ct" in concept else None,
+        )
+        for concept in server_response_concepts
+        if "cui" in concept
+    ]
+    return NlpResponse(nlp_cuis=nlp_cuis)
+
+
 class QuickUMLSService(NLPService):
     """
     The QuickUMLS Service is able to detect UMLS cuis in unstructured text.
@@ -67,24 +93,7 @@ class QuickUMLSService(NLPService):
                 f"failed with an error {resp.status_code} {resp.reason}"
             )
         concepts = json.loads(resp.text)
-        nlp_cuis = nlp_cuis = [
-            NlpCui(
-                cui=concept["cui"],
-                covered_text=concept["ngram"] if "ngram" in concept else "",
-                begin=concept["start"] if "start" in concept else 0,
-                end=concept["end"] if "end" in concept else 0,
-                preferred_name=concept["term"] if "term" in concept else "",
-                types=(
-                    get_names_from_type_ids(concept["semtypes"])
-                    if "semtypes" in concept
-                    else set()
-                ),
-                snomed_ct=concept["snomed_ct"] if "snomed_ct" in concept else None,
-            )
-            for concept in concepts
-            if "cui" in concept
-        ]
-        return NlpResponse(nlp_cuis=nlp_cuis)
+        return create_nlp_response(concepts)
 
     def derive_new_resources(
         self, notes: List[UnstructuredText]
