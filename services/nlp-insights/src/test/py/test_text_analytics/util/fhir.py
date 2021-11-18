@@ -14,12 +14,20 @@
 """Utilities for creating fhir resources for test"""
 
 import base64
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
+from fhir.resources.allergyintolerance import (
+    AllergyIntolerance,
+    AllergyIntoleranceReaction,
+)
 from fhir.resources.attachment import Attachment
 from fhir.resources.bundle import Bundle, BundleEntry, BundleEntryRequest
+from fhir.resources.codeableconcept import CodeableConcept
+from fhir.resources.coding import Coding
+from fhir.resources.condition import Condition
 from fhir.resources.diagnosticreport import DiagnosticReport
 from fhir.resources.documentreference import DocumentReference
+from fhir.resources.immunization import Immunization
 from fhir.resources.reference import Reference
 from fhir.resources.resource import Resource
 
@@ -52,6 +60,26 @@ def make_diag_report(
     return report
 
 
+def make_codeable_concept(
+    text: Optional[str], codings: Optional[List[Coding]] = None
+) -> CodeableConcept:
+    """Creates a codeable concept with the specified text"""
+    concept = CodeableConcept.construct()
+    if codings:
+        concept.coding = codings
+    if text:
+        concept.text = text
+
+    return concept
+
+
+def make_condition(
+    subject: Reference, code: CodeableConcept, rid: str = "12345"
+) -> Condition:
+    """Constructs a condition"""
+    return Condition.construct(id=rid, subject=subject, code=code)
+
+
 def make_docref_report(
     attachments: List[Attachment], subject: Reference = None
 ) -> DocumentReference:
@@ -81,6 +109,21 @@ def make_docref_report(
     return report
 
 
+def make_immunization(
+    patient: Reference, vaccine_code: CodeableConcept, rid="54321"
+) -> Immunization:
+    """Builds an Immunization"""
+    return Immunization.parse_obj(
+        {
+            "id": rid,
+            "status": "completed",
+            "occurrenceDateTime": "2017",
+            "patient": patient,
+            "vaccineCode": vaccine_code,
+        }
+    )
+
+
 def make_attachment(unencoded_text_data: str, content_type: str = "text/plain"):
     """Creates a FHIR attachment element"""
     dattachment: Dict[str, Any] = {}
@@ -91,6 +134,30 @@ def make_attachment(unencoded_text_data: str, content_type: str = "text/plain"):
     if content_type:
         dattachment["contentType"] = content_type
     return Attachment.parse_obj(dattachment)
+
+
+def make_allergy_intolerance(
+    patient: Reference,
+    code: Optional[CodeableConcept] = None,
+    reactions: Optional[List[AllergyIntoleranceReaction]] = None,
+    rid: str = "67890",
+) -> AllergyIntolerance:
+    """Builds an allergy intolerance"""
+    allergy = AllergyIntolerance.parse_obj({"patient": patient, "id": rid})
+
+    if code:
+        allergy.code = code
+    if reactions:
+        allergy.reaction = reactions
+
+    return allergy
+
+
+def make_allergy_reaction(
+    manifestations: List[CodeableConcept],
+) -> AllergyIntoleranceReaction:
+    """Builds an allergy intolerance reaction"""
+    return AllergyIntoleranceReaction.parse_obj({"manifestation": manifestations})
 
 
 def make_bundle(resources: List[Resource]) -> Bundle:

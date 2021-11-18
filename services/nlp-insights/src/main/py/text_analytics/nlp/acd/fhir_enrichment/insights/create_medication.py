@@ -42,7 +42,6 @@ from text_analytics.fhir.alvearie_ig import (
     create_confidence_extension,
     create_coding,
 )
-
 from text_analytics.fhir.fhir_object_utils import (
     add_insight_to_meta,
     append_derived_by_nlp_extension,
@@ -52,12 +51,12 @@ from text_analytics.insight import insight_constants
 from text_analytics.insight.insight_id import insight_id_maker
 from text_analytics.insight.span import Span
 from text_analytics.insight.text_fragment import TextFragment
+from text_analytics.insight.util.medication import parse_dosage_with_units
 from text_analytics.insight_source.unstructured_text import UnstructuredText
 from text_analytics.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
     get_attribute_sources,
     AttrSourceConcept,
 )
-
 from text_analytics.nlp.nlp_config import NlpConfig
 
 
@@ -216,19 +215,10 @@ def _create_minimum_medication_statement(
 
     Returns the new medication statement
     """
-    # annotation.drug is an optional list of type List[object]
-    # There's a lot of assumptions being made here based on the data that has
-    # been seen in examples.
-    #
-    # It could also be potentially problematic to assume the first entry is the
-    # one that is needed.
-    #
-    # So far, this approach has worked OK.
     acd_drug = _get_drug_from_annotation(annotation)
 
     codeable_concept = CodeableConcept.construct()
 
-    # Someday we may change this to use drugNormalizedName instead of drugSurfaceForm
     codeable_concept.text = acd_drug.get("drugSurfaceForm")
     codeable_concept.coding = []
 
@@ -246,12 +236,6 @@ def _get_drug_from_annotation(annotation: acd.MedicationAnnotation) -> dict:
 
     Return a dictionary
     """
-    # There's a lot of assumptions being made here based on the data that has
-    # been seen in examples. These are not backed by documentation:
-    # For example, annotation.drug is an optional list of type List[object]
-    #
-    # It could also be potentially problematic to assume the first entry is the
-    # one that is needed.
     try:
         return cast(dict, annotation.drug[0].get("name1")[0])
     except (TypeError, IndexError, AttributeError):
@@ -275,36 +259,16 @@ def _update_codings_and_administration_info(  # pylint: disable=too-many-branche
     if hasattr(annotation, "administration"):
         # Dosage
         dose_with_units = annotation.administration[0].get("dosageValue")
-        if dose_with_units is not None:
+        if dose_with_units:
             dose = Dosage.construct()
             dose_rate = DosageDoseAndRate.construct()
-            dose_amount = None
-            dose_units = None
-            if " " in dose_with_units:
-                # for now need parse, assuming units is after the first space
-                dose_info = dose_with_units.split(" ")
-                amount = dose_info[0].replace(",", "")  # Remove any commas, e.g. 1,000
-                try:
-                    dose_amount = float(amount)
-                except OverflowError:
-                    logger.exception("Enable to convert string to float: %s", amount)
-                if isinstance(dose_info[1], str):
-                    dose_units = dose_info[1]
-            else:
-                # if no space, assume only value
-                amount = dose_with_units.replace(
-                    ",", ""
-                )  # Remove any commas, e.g. 1,000
-                try:
-                    dose_amount = float(amount)
-                except OverflowError:
-                    logger.exception("Unable to convert string to float: %s", amount)
+            med_dosage = parse_dosage_with_units(dose_with_units)
 
-            if dose_amount is not None:
+            if med_dosage:
                 dose_quantity = Quantity.construct()
-                dose_quantity.value = dose_amount
-                if dose_units is not None:
-                    dose_quantity.unit = dose_units
+                dose_quantity.value = med_dosage.dosage
+                if med_dosage.units:
+                    dose_quantity.unit = med_dosage.units
                 dose_rate.doseQuantity = dose_quantity
                 dose.doseAndRate = [dose_rate]
 
@@ -372,11 +336,6 @@ def get_medication_confidences(
      Returns:
         collection of confidence extensions, or None if no confidence info was available
     """
-    # Medication has 5 types of confidence scores
-    # For alpha only pulling medication.usage scores
-    # Not using startedEvent scores, stoppedEvent scores, doseChangedEvent scores, adversetEvent scores
-    # Per documentation in InsightModelData, most structural components of the scores is optional,
-    # Handling that with exception handlers, since we expect those to be there based on experience
     confidence_list = []
 
     try:

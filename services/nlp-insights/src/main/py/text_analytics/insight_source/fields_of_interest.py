@@ -133,7 +133,7 @@ def _get_condition_concepts_to_analyze(
     args: condition - the condition resource
     returns: concepts to be analyzed
     """
-    if condition.code.text:
+    if condition.code and condition.code.text:
         return [
             CodeableConceptRef(
                 type=CodeableConceptRefType.CONDITION,

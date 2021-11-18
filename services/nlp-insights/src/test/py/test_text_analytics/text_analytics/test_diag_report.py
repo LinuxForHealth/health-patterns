@@ -44,6 +44,8 @@ DIAG_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS = (
     + "Patient has pneumonia and shows signs of heart attack. Patient started taking beta blockers."
 )
 
+DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE = "prescribed aspirin 2mg twice daily"
+
 
 class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
     """Unit tests where a diagnostic report is posted for insights"""
@@ -125,6 +127,30 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
                 make_diag_report(
                     subject=make_patient_reference(),
                     attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATIONS)],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_acd(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_diag_bundle_then_medication_with_dosage_derived(self):
+        bundle = make_bundle(
+            [
+                make_diag_report(
+                    subject=make_patient_reference(),
+                    attachments=[
+                        make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE)
+                    ],
                 )
             ]
         )

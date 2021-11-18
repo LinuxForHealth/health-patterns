@@ -1248,5 +1248,318 @@
       "correctedText": "Patient has pneumonia and shows signs of heart attack. Patient started taking beta blockers."
     }
   ]
+},
+"prescribed aspirin 2mg twice daily":
+{
+  "attributeValues": [
+    {
+      "begin": 11,
+      "end": 34,
+      "coveredText": "aspirin 2mg twice daily",
+      "negated": false,
+      "preferredName": "aspirin",
+      "values": [
+        {
+          "value": "2mg",
+          "frequency": "twice daily"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 5
+      },
+      "name": "PrescribedMedication",
+      "rxNormId": "1191",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1.0,
+            "consideringScore": 0.0,
+            "discussedScore": 0.0,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.0,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "concepts": [
+    {
+      "type": "umls.HealthCareActivity",
+      "begin": 0,
+      "end": 10,
+      "coveredText": "prescribed",
+      "negated": false,
+      "cui": "C0278329",
+      "preferredName": "Prescribed",
+      "semanticType": "hlca",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "vocabs": "MTH,CHV,LCH"
+    },
+    {
+      "type": "umls.OrganicChemical",
+      "uid": 3,
+      "begin": 11,
+      "end": 18,
+      "coveredText": "aspirin",
+      "negated": false,
+      "cui": "C0004057",
+      "preferredName": "aspirin",
+      "semanticType": "orch",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C287",
+      "snomedConceptId": "387458008,7947003",
+      "meshId": "M0001864",
+      "rxNormId": "1191",
+      "loincId": "LA26702-3",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_DCP,NCI_NCI-GLOSS,CHV,LCH,ATC,USP,NCI_CTRP,NCI_FDA,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,DRUGBANK,NCI_DTP,VANDF"
+    },
+    {
+      "type": "umls.PharmacologicSubstance",
+      "uid": 2,
+      "begin": 11,
+      "end": 18,
+      "coveredText": "aspirin",
+      "negated": false,
+      "cui": "C0004057",
+      "preferredName": "aspirin",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "INVALID"
+      },
+      "nciCode": "C287",
+      "snomedConceptId": "387458008,7947003",
+      "meshId": "M0001864",
+      "rxNormId": "1191",
+      "loincId": "LA26702-3",
+      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_DCP,NCI_NCI-GLOSS,CHV,LCH,ATC,USP,NCI_CTRP,NCI_FDA,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,DRUGBANK,NCI_DTP,VANDF"
+    },
+    {
+      "type": "ICMedication",
+      "begin": 11,
+      "end": 18,
+      "coveredText": "aspirin",
+      "negated": false,
+      "cui": "C0004057",
+      "preferredName": "aspirin",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "INVALID"
+      },
+      "nciCode": "C287",
+      "snomedConceptId": "387458008,7947003",
+      "meshId": "M0001864",
+      "rxNormId": "1191",
+      "loincId": "LA26702-3",
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    },
+    {
+      "type": "ICNormality",
+      "begin": 11,
+      "end": 18,
+      "coveredText": "aspirin",
+      "negated": false,
+      "cui": "C0004057",
+      "preferredName": "aspirin",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C287",
+      "snomedConceptId": "387458008,7947003",
+      "meshId": "M0001864",
+      "rxNormId": "1191",
+      "loincId": "LA26702-3",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    },
+    {
+      "type": "ICNormality",
+      "begin": 11,
+      "end": 18,
+      "coveredText": "aspirin",
+      "negated": false,
+      "cui": "C0004057",
+      "preferredName": "aspirin",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "ruleId": "343e6158-2c30-4726-be71-33a570b28703",
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ]
+    }
+  ],
+  "conceptValues": [
+    {
+      "type": "ConceptValue",
+      "begin": 11,
+      "end": 22,
+      "coveredText": "aspirin 2mg",
+      "negated": false,
+      "cui": "C0004057",
+      "dimension": "mass",
+      "preferredName": "aspirin",
+      "trigger": "equal to",
+      "value": "2",
+      "unit": "mg"
+    }
+  ],
+  "MedicationInd": [
+    {
+      "type": "aci.MedicationInd",
+      "uid": 5,
+      "begin": 11,
+      "end": 34,
+      "coveredText": "aspirin 2mg twice daily",
+      "negated": false,
+      "cui": "C0004057",
+      "drug": [
+        {
+          "coveredText": "aspirin",
+          "cui": "C0004057",
+          "complex": "false",
+          "end": 18,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "rxNormID": "1191",
+              "coveredText": "aspirin",
+              "cui": "C0004057",
+              "drugSurfaceForm": "aspirin",
+              "drugNormalizedName": "aspirin",
+              "end": 18,
+              "type": "aci.DrugName",
+              "begin": 11
+            }
+          ],
+          "begin": 11
+        }
+      ],
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 1.0,
+            "consideringScore": 0.0,
+            "discussedScore": 0.0,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.0,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      },
+      "administration": [
+        {
+          "dosageValue": "2mg",
+          "coveredText": "2mg twice daily",
+          "frequencyValue": "twice daily",
+          "end": 34,
+          "type": "aci.SubstanceAdministration",
+          "begin": 19
+        }
+      ]
+    }
+  ],
+  "spellCorrectedText": [
+    {
+      "correctedText": "prescribed aspirin 2mg twice daily"
+    }
+  ]
 }
 }
