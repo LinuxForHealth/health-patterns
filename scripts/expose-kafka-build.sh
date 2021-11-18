@@ -38,6 +38,11 @@ if [ -z "$REPOSITORY" ]; then
   fi
 fi
 
+l=$(echo ${REPOSITORY} | wc -c)
+echo "REPOSITORY  = ${REPOSITORY}"
+echo "REPOSITORY Length  =${l}"
+
+
 if [ -z "$TAG" ]; then
   echo "No tag provided. Generating based on docker history..."
   echo "$(docker image ls ${REPOSITORY}/${NAME} --format '{{.Tag}}')"
