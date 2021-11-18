@@ -27,7 +27,10 @@ echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
 # Execute the desired deployment
+echo "***************************************"
 echo $TEST_NAMESPACE" : Deploy via helm3"
+date
+echo "***************************************"
 if [ $CLUSTER_NAMESPACE = "tst-enrich" ] 
 then
    # disable the ingestion deploy for an enrich-only deployment
@@ -40,6 +43,10 @@ then
    # deploy ingestion
    helm3 install $HELM_RELEASE . --wait --timeout $HELM_WAIT 
 fi
+echo "***************************************"
+echo $TEST_NAMESPACE" : Deploy completed"
+date
+echo "***************************************"
 
 echo "*************************************"
 echo "* Waiting for "$DEPLOY_WAIT" seconds          *"
