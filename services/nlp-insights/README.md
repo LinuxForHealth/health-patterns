@@ -77,9 +77,9 @@ The dockerRun task will also perform the following dependent build tasks:
 * unit tests will run
     
 ### Other useful commands for locally working with containers:
-1. Stop a running nlp-insights container
+1. Stop a running nlp-insights container  
     `./gradlew dockerStop -PdockerUser=<your_user_id> -PdockerLocalPort=<port>`
-1. Remove a container from your local repo
+1. Remove a container from your local repo  
     `./gradlew dockerRemoveContainer -PdockerUser=<your_user_id> -PdockerLocalPort=<port>`
     
 ## Deploy the docker image to a kubernetes cluster
