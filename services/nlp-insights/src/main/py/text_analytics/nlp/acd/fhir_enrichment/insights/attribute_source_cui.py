@@ -21,7 +21,7 @@ Different flows may have different attributes of interest for an NLP request.
 The object for the source CUI could be a number of types with similar structure and information.
 In addition, the object may be stored within different properties of the container for different flows.
 
-An AttributeNameAndSourceMap determines which attributes to use and where to look for source CUI objects.
+An SourceCuiSearchMap determines which attributes to use and where to look for source CUI objects.
 
 """
 from collections import OrderedDict
@@ -31,7 +31,7 @@ import logging
 from typing import DefaultDict
 from typing import Dict, Type
 from typing import Generator
-from typing import List
+from typing import List, Set
 from typing import NamedTuple
 from typing import Optional
 from typing import Union
@@ -63,46 +63,52 @@ class AttrSourcePropName(Enum):
     MEDICATION_IND = "medication_ind"
 
 
-class AcdAttrSourceLoc(NamedTuple):
-    """Binds an attribute name/type to the fields to search for the source CUI(s)
+class AcdAttrCuiSourceLoc(NamedTuple):
+    """Binds an attribute name/type to the field(s) containing the source CUI(s)
 
     attr_name - attribute names with relevant associated concepts
-               may be None if umls types should be used to find concepts instead
-               of attributes.
+                May also be a collection of valid names
     source_prop_names: Properties in the container annotation to search for concepts
                        associated with the attribute name.
     concept_types: if not None, resulting concepts are filtered by this value.
     """
 
-    attr_name: Optional[str]
+    attr_name: Union[str, Set[str]]
     source_prop_names: List[AttrSourcePropName]
     concept_types: Optional[List[str]] = None
 
 
-# Instances of this type tell the engine which attribute to look at, and where
-# to look for the source CUI.
-# For example: Consider the dictionary entry:
-# MedicationStatement : [AcdAttrSourceLoc(attr_name="PrescribedMedication",
-#                                         source_prop_names=[AttrSourcePropName.MEDICATION_IND)]
-#
-# The above says that when processing NLP to create a medication statement, look at the
-# 'PrescribeMedication' annotations, and find the associated CUI object in the MedicationInd section
-# of the container.
-# The concept is identified by matching the uid of the attribute's concept with the uid of
-# the concept in the Medication_Ind section.
-#
-# In some cases an attribute may not be defined, in that case, the relevant concepts can be located
-# like this:
-# CodeableConceptRefType.VACCINE : [AcdAttrSourceLoc(
-#                                                 attr_name=None,
-#                                                 source_prop_names=[AttrSourcePropName.CONCEPTS],
-#                                                 concept_types=VACCINE_TYPES,
-#                                   )]
-# In the above case, there is no attribute name to match. All concepts with distinct cuis
-# in the specified section that match the provided types will be returned.
-#
-AttributeNameAndSourceMap = Dict[AnnotationContextType, List[AcdAttrSourceLoc]]
+class AcdConceptCuiFallBack(NamedTuple):
+    """For cases where ACD does not have attributes that help us find concepts, fall back to concepts
 
+    The concepts will be searched for source cuis that have the specified types.
+    Concepts will only be searched in the specified property
+    """
+
+    source_prop_names: List[AttrSourcePropName] = [AttrSourcePropName.CONCEPTS]
+    concept_types: Optional[List[str]] = None
+
+
+class AnnotationContext(NamedTuple):
+    """Definition of how to search for source cuis
+
+    Attributes matching attributes in the attribute_mapping will be
+    used to locate source cuis in the specified section of the response.
+
+    If no matching attributes are found, then concepts in the specified
+    concept list are searched, with matching concepts returned. The fallback is
+    intended to cover two cases.
+    1) There is no acd attribute that is created for concepts we want to detect or
+    2) ACD did not find an attribute, but were willing to accept less accuracy from
+       concepts. For example if we are enriching something and are really sure that
+       concepts for the context will be what we want.
+    """
+
+    attribute_mapping: Optional[List[AcdAttrCuiSourceLoc]]
+    concept_fallback: Optional[List[AcdConceptCuiFallBack]]
+
+
+SourceCuiSearchMap = Dict[AnnotationContextType, AnnotationContext]
 
 logger = logging.getLogger(__name__)
 
@@ -207,7 +213,7 @@ def _create_attribute_sources_no_attr(
 def get_attribute_sources(
     container: acd.ContainerAnnotation,
     context: AnnotationContextType,
-    ann_names_map: AttributeNameAndSourceMap,
+    cui_search_map: SourceCuiSearchMap,
 ) -> Generator[AttributeWithCuiSources, None, None]:
     """Generator to filter attributes by name of attribute
 
@@ -224,46 +230,49 @@ def get_attribute_sources(
         return
 
     attribute_values: List[acd.AttributeValueAnnotation] = container.attribute_values
-    annotation_locs: List[AcdAttrSourceLoc] = ann_names_map.get(context, [])
+    annotation_context = cui_search_map.get(context, None)
+    if not annotation_context:
+        return
+
+    # annotation_locs: List[AcdAttrCuiSourceLoc] = annotation_context.attribute_mapping
     attr_found: bool = False
 
-    for attr in attribute_values:
-        for loc in annotation_locs:
-            if loc.attr_name and attr.name == loc.attr_name:
-                logger.debug(
-                    "Found attribute %s for %s",
-                    loc.attr_name,
-                    attr.values if attr.values else "",
-                )
-                sources = _create_attribute_sources(
-                    attr, container, loc.source_prop_names, loc.concept_types
-                )
-                logger.debug(
-                    "Yielding attribute %s for examination of sources %s",
-                    attr.name,
-                    sources,
-                )
+    if annotation_context.attribute_mapping:
+        for attr in attribute_values:
+            for loc in annotation_context.attribute_mapping:
+                if (isinstance(loc.attr_name, str) and attr.name == loc.attr_name) or (
+                    isinstance(loc.attr_name, set) and (attr.name in loc.attr_name)
+                ):
+                    logger.debug(
+                        "Found attribute %s for %s",
+                        loc.attr_name,
+                        attr.values if attr.values else "",
+                    )
+                    sources = _create_attribute_sources(
+                        attr, container, loc.source_prop_names, loc.concept_types
+                    )
+                    logger.debug(
+                        "Yielding attribute %s for examination of sources %s",
+                        attr.name,
+                        sources,
+                    )
 
-                attr_found = True
-                yield sources
+                    attr_found = True
+                    yield sources
 
-    if not attr_found:
+    if not attr_found and annotation_context.concept_fallback:
         # Looked at all the matching attributes and didn't find any attributes that matched
         # So check if there are concepts that we should match
         # In the case where the CUI was created by an attribute, there is only one CUI that we need,
         # (each attribute is a unique idea). But here each CUI of a specific type is a unique idea...
         # So we need to output all the concepts with cuis.
-        for loc in annotation_locs:
-            if not loc.attr_name:  # filter by umls type only
-                concepts = _create_attribute_sources_no_attr(
-                    container, loc.source_prop_names, loc.concept_types
+        for fallback in annotation_context.concept_fallback:
+            concepts = _create_attribute_sources_no_attr(
+                container, fallback.source_prop_names, fallback.concept_types
+            )
+            for source_concept in concepts:
+                logger.debug(
+                    "Yielding source concept with no attribute %s",
+                    source_concept,
                 )
-                for source_concept in concepts:
-                    logger.debug(
-                        "Yielding source concept with no attribute %s", source_concept
-                    )
-                    yield source_concept
-
-                if concepts:
-                    # Never keep processing different locations for CUIs after a CUI is found
-                    break
+                yield source_concept

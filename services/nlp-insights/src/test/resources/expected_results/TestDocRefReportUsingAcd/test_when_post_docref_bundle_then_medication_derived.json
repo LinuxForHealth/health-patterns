@@ -1,0 +1,139 @@
+{
+  "entry": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "MedicationStatement"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/patterns/wh_acd.ibm_clinical_insights_v1.0_standard_flow/0.0.2",
+                    "value": "insight-1"
+                  }
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DocumentReference/12345"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "beta blockers"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 23
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 36
+                            },
+                            {
+                              "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Medication Taken Score"
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.999
+                                }
+                              ],
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
+                            },
+                            {
+                              "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Medication Considering Score"
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.0
+                                }
+                              ],
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
+                            },
+                            {
+                              "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Medication Discussed Score"
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.001
+                                }
+                              ],
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
+                            },
+                            {
+                              "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Medication Lab Measurement Score"
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.0
+                                }
+                              ],
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "code": "natural-language-processing",
+                  "display": "NLP",
+                  "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                }
+              ],
+              "text": "NLP"
+            }
+          }
+        ],
+        "medicationCodeableConcept": {
+          "coding": [],
+          "text": "beta blockers"
+        },
+        "status": "unknown",
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "MedicationStatement"
+      }
+    }
+  ],
+  "type": "transaction",
+  "resourceType": "Bundle"
+}

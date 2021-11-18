@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Defines a base testcase class that can use external resources in tests"""
+import inspect
 import os
 import unittest
 
@@ -24,4 +25,9 @@ class UnitTestUsingExternalResource(unittest.TestCase):
         self.resource_path = (
             os.path.dirname(os.path.abspath(__file__)) + "/../../../resources"
         )
-        self.max_diff = None
+
+    def expected_output_path(self) -> str:
+        for sf in inspect.stack():
+            if sf[3].startswith("test_"):
+                return f"{self.resource_path}/expected_results/{type(self).__name__}/{sf[3]}.json"
+        raise RuntimeError('Must be called from within a "test_" method')

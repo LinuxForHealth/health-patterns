@@ -1,0 +1,1252 @@
+{"Patient started taking beta blockers": {
+  "attributeValues": [
+    {
+      "begin": 23,
+      "end": 36,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "preferredName": "beta-adrenergic blocker",
+      "values": [
+        {
+          "value": "beta-adrenergic blocker"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 4
+      },
+      "name": "PrescribedMedication",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.018,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.014,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "concepts": [
+    {
+      "type": "umls.PharmacologicSubstance",
+      "uid": 2,
+      "begin": 23,
+      "end": 36,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "vocabs": "MTH,CHV,ATC,LNC,CSP,MSH,NCI,LCH_NW,AOD,USPMG,SNOMEDCT_US",
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.018,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.014,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "ICMedication",
+      "begin": 23,
+      "end": 36,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.018,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.014,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      },
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    },
+    {
+      "type": "ICNormality",
+      "begin": 23,
+      "end": 36,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    }
+  ],
+  "MedicationInd": [
+    {
+      "type": "aci.MedicationInd",
+      "uid": 4,
+      "begin": 23,
+      "end": 36,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "drug": [
+        {
+          "coveredText": "beta blockers",
+          "end": 36,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "drugSurfaceForm": "beta blockers",
+              "coveredText": "beta blockers",
+              "drugNormalizedName": "beta-adrenergic blocker",
+              "end": 36,
+              "type": "aci.DrugName",
+              "begin": 23
+            }
+          ],
+          "begin": 23,
+          "complex": "false"
+        }
+      ],
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.018,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.014,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      }
+    }
+  ],
+  "spellCorrectedText": [
+    {
+      "correctedText": "Patient started taking beta blockers"
+    }
+  ]
+},
+
+    "Patient has pneumonia and shows signs of heart attack": {
+        "attributeValues": [
+            {
+                "begin": 12,
+                "end": 21,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "preferredName": "pneumonia",
+                "values": [
+                    {
+                        "value": "pneumonia"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 5
+                },
+                "name": "Diagnosis",
+                "icd9Code": "486",
+                "icd10Code": "J18.9",
+                "snomedConceptId": "233604007",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.99,
+                            "patientReportedScore": 0.004,
+                            "discussedScore": 0.006
+                        },
+                        "suspectedScore": 0.018,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ccsCode": "122"
+            },
+            {
+                "begin": 41,
+                "end": 53,
+                "coveredText": "heart attack",
+                "negated": false,
+                "preferredName": "myocardial infarction",
+                "values": [
+                    {
+                        "value": "myocardial infarction"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 6
+                },
+                "name": "PotentialDiagnosis",
+                "icd9Code": "410.90",
+                "icd10Code": "I21.9",
+                "snomedConceptId": "22298006",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.978,
+                            "patientReportedScore": 0.004,
+                            "discussedScore": 0.018
+                        },
+                        "suspectedScore": 0.976,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ccsCode": "100",
+                "hccCode": "86"
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 2,
+                "begin": 12,
+                "end": 21,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "cui": "C0032285",
+                "preferredName": "Pneumonia",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "484.8",
+                "icd10Code": "J18.9",
+                "nciCode": "C3333",
+                "snomedConceptId": "233604007",
+                "meshId": "M0017064",
+                "loincId": "LP21407-9,LA7465-3,MTHU020831",
+                "vocabs": "LNC,NCI_NICHD,MTH,CSP,MSH,CST,HPO,OMIM,COSTAR,NCI_NCI-GLOSS,ICPC,LCH,CHV,NCI_FDA,MEDLINEPLUS,LCH_NW,NCI,AOD,SNOMEDCT_US,DXP,NCI_CPTAC",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.99,
+                            "patientReportedScore": 0.004,
+                            "discussedScore": 0.006
+                        },
+                        "suspectedScore": 0.018,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                }
+            },
+            {
+                "type": "umls.Finding",
+                "begin": 32,
+                "end": 37,
+                "coveredText": "signs",
+                "negated": false,
+                "cui": "C0311392",
+                "preferredName": "Physical findings",
+                "semanticType": "fndg",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "796.4",
+                "icd10Code": "R68.89",
+                "nciCode": "C53458",
+                "snomedConceptId": "72670004",
+                "loincId": "LP73100-7,MTHU001426",
+                "vocabs": "LNC,MTH,CHV,NCI,CST,SNOMEDCT_US"
+            },
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 3,
+                "begin": 41,
+                "end": 53,
+                "coveredText": "heart attack",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.978,
+                            "patientReportedScore": 0.004,
+                            "discussedScore": 0.018
+                        },
+                        "suspectedScore": 0.976,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                }
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 12,
+                "end": 21,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "cui": "C0032285",
+                "preferredName": "Pneumonia",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "484.8",
+                "icd10Code": "J18.9",
+                "nciCode": "C3333",
+                "snomedConceptId": "233604007",
+                "meshId": "M0017064",
+                "loincId": "LP21407-9,LA7465-3,MTHU020831",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.99,
+                            "patientReportedScore": 0.004,
+                            "discussedScore": 0.006
+                        },
+                        "suspectedScore": 0.018,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 41,
+                "end": 53,
+                "coveredText": "heart attack",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.978,
+                            "patientReportedScore": 0.004,
+                            "discussedScore": 0.018
+                        },
+                        "suspectedScore": 0.976,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 3
+                    }
+                ]
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 5,
+                "begin": 12,
+                "end": 21,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "cui": "C0032285",
+                "icd10Code": "J18.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "pneumonia",
+                "snomedConceptId": "233604007",
+                "ccsCode": "122",
+                "symptomDiseaseNormalizedName": "pneumonia",
+                "icd9Code": "486",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.99,
+                            "patientReportedScore": 0.004,
+                            "discussedScore": 0.006
+                        },
+                        "suspectedScore": 0.018,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                }
+            },
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 6,
+                "begin": 41,
+                "end": 53,
+                "coveredText": "heart attack",
+                "negated": false,
+                "cui": "C0027051",
+                "icd10Code": "I21.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "heart attack",
+                "snomedConceptId": "22298006",
+                "ccsCode": "100",
+                "symptomDiseaseNormalizedName": "myocardial infarction",
+                "icd9Code": "410.90",
+                "hccCode": "86",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.978,
+                            "patientReportedScore": 0.004,
+                            "discussedScore": 0.018
+                        },
+                        "suspectedScore": 0.976,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                }
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "Patient has pneumonia and shows signs of heart attack"
+            }
+        ]
+    },
+"Patient has pneumonia and shows signs of heart attack. Patient started taking beta blockers." :
+{
+  "attributeValues": [
+    {
+      "begin": 12,
+      "end": 21,
+      "coveredText": "pneumonia",
+      "negated": false,
+      "preferredName": "pneumonia",
+      "values": [
+        {
+          "value": "pneumonia"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 7
+      },
+      "name": "Diagnosis",
+      "icd9Code": "486",
+      "icd10Code": "J18.9",
+      "snomedConceptId": "233604007",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.989,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.007
+          },
+          "suspectedScore": 0.021,
+          "symptomScore": 0.003,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      },
+      "ccsCode": "122"
+    },
+    {
+      "begin": 41,
+      "end": 53,
+      "coveredText": "heart attack",
+      "negated": false,
+      "preferredName": "myocardial infarction",
+      "values": [
+        {
+          "value": "myocardial infarction"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 8
+      },
+      "name": "PotentialDiagnosis",
+      "icd9Code": "410.90",
+      "icd10Code": "I21.9",
+      "snomedConceptId": "22298006",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.977,
+            "patientReportedScore": 0.005,
+            "discussedScore": 0.017
+          },
+          "suspectedScore": 0.968,
+          "symptomScore": 0.003,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      },
+      "ccsCode": "100",
+      "hccCode": "86"
+    },
+    {
+      "begin": 78,
+      "end": 91,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "preferredName": "beta-adrenergic blocker",
+      "values": [
+        {
+          "value": "beta-adrenergic blocker"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 6
+      },
+      "name": "PrescribedMedication",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.402,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.401,
+              "consideringScore": 0.009,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "concepts": [
+    {
+      "type": "umls.DiseaseOrSyndrome",
+      "uid": 3,
+      "begin": 12,
+      "end": 21,
+      "coveredText": "pneumonia",
+      "negated": false,
+      "cui": "C0032285",
+      "preferredName": "Pneumonia",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "icd9Code": "484.8",
+      "icd10Code": "J18.9",
+      "nciCode": "C3333",
+      "snomedConceptId": "233604007",
+      "meshId": "M0017064",
+      "loincId": "LP21407-9,LA7465-3,MTHU020831",
+      "vocabs": "LNC,NCI_NICHD,MTH,CSP,MSH,CST,HPO,OMIM,COSTAR,NCI_NCI-GLOSS,ICPC,LCH,CHV,NCI_FDA,MEDLINEPLUS,LCH_NW,NCI,AOD,SNOMEDCT_US,DXP,NCI_CPTAC",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.989,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.007
+          },
+          "suspectedScore": 0.021,
+          "symptomScore": 0.003,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      }
+    },
+    {
+      "type": "umls.Finding",
+      "begin": 32,
+      "end": 37,
+      "coveredText": "signs",
+      "negated": false,
+      "cui": "C0311392",
+      "preferredName": "Physical findings",
+      "semanticType": "fndg",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "icd9Code": "796.4",
+      "icd10Code": "R68.89",
+      "nciCode": "C53458",
+      "snomedConceptId": "72670004",
+      "loincId": "LP73100-7,MTHU001426",
+      "vocabs": "LNC,MTH,CHV,NCI,CST,SNOMEDCT_US"
+    },
+    {
+      "type": "umls.DiseaseOrSyndrome",
+      "uid": 4,
+      "begin": 41,
+      "end": 53,
+      "coveredText": "heart attack",
+      "negated": false,
+      "cui": "C0027051",
+      "preferredName": "Myocardial Infarction",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "icd10Code": "I21.9",
+      "nciCode": "C27996",
+      "snomedConceptId": "22298006",
+      "meshId": "M0014340",
+      "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+      "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.977,
+            "patientReportedScore": 0.005,
+            "discussedScore": 0.017
+          },
+          "suspectedScore": 0.968,
+          "symptomScore": 0.003,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      }
+    },
+    {
+      "type": "umls.PharmacologicSubstance",
+      "uid": 2,
+      "begin": 78,
+      "end": 91,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "vocabs": "MTH,CHV,ATC,LNC,CSP,MSH,NCI,LCH_NW,AOD,USPMG,SNOMEDCT_US",
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.402,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.401,
+              "consideringScore": 0.009,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "ICDiagnosis",
+      "begin": 12,
+      "end": 21,
+      "coveredText": "pneumonia",
+      "negated": false,
+      "cui": "C0032285",
+      "preferredName": "Pneumonia",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "icd9Code": "484.8",
+      "icd10Code": "J18.9",
+      "nciCode": "C3333",
+      "snomedConceptId": "233604007",
+      "meshId": "M0017064",
+      "loincId": "LP21407-9,LA7465-3,MTHU020831",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.989,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.007
+          },
+          "suspectedScore": 0.021,
+          "symptomScore": 0.003,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      },
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ]
+    },
+    {
+      "type": "ICDiagnosis",
+      "begin": 41,
+      "end": 53,
+      "coveredText": "heart attack",
+      "negated": false,
+      "cui": "C0027051",
+      "preferredName": "Myocardial Infarction",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "icd10Code": "I21.9",
+      "nciCode": "C27996",
+      "snomedConceptId": "22298006",
+      "meshId": "M0014340",
+      "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.977,
+            "patientReportedScore": 0.005,
+            "discussedScore": 0.017
+          },
+          "suspectedScore": 0.968,
+          "symptomScore": 0.003,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      },
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "derivedFrom": [
+        {
+          "uid": 4
+        }
+      ]
+    },
+    {
+      "type": "ICMedication",
+      "begin": 78,
+      "end": 91,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.402,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.401,
+              "consideringScore": 0.009,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      },
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    },
+    {
+      "type": "ICNormality",
+      "begin": 78,
+      "end": 91,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    }
+  ],
+  "MedicationInd": [
+    {
+      "type": "aci.MedicationInd",
+      "uid": 6,
+      "begin": 78,
+      "end": 91,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "drug": [
+        {
+          "coveredText": "beta blockers",
+          "end": 91,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "drugSurfaceForm": "beta blockers",
+              "coveredText": "beta blockers",
+              "drugNormalizedName": "beta-adrenergic blocker",
+              "end": 91,
+              "type": "aci.DrugName",
+              "begin": 78
+            }
+          ],
+          "begin": 78,
+          "complex": "false"
+        }
+      ],
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.402,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.401,
+              "consideringScore": 0.009,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      }
+    }
+  ],
+  "SymptomDiseaseInd": [
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "uid": 7,
+      "begin": 12,
+      "end": 21,
+      "coveredText": "pneumonia",
+      "negated": false,
+      "cui": "C0032285",
+      "icd10Code": "J18.9",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "pneumonia",
+      "snomedConceptId": "233604007",
+      "ccsCode": "122",
+      "symptomDiseaseNormalizedName": "pneumonia",
+      "icd9Code": "486",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.989,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.007
+          },
+          "suspectedScore": 0.021,
+          "symptomScore": 0.003,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      }
+    },
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "uid": 8,
+      "begin": 41,
+      "end": 53,
+      "coveredText": "heart attack",
+      "negated": false,
+      "cui": "C0027051",
+      "icd10Code": "I21.9",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "heart attack",
+      "snomedConceptId": "22298006",
+      "ccsCode": "100",
+      "symptomDiseaseNormalizedName": "myocardial infarction",
+      "icd9Code": "410.90",
+      "hccCode": "86",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.977,
+            "patientReportedScore": 0.005,
+            "discussedScore": 0.017
+          },
+          "suspectedScore": 0.968,
+          "symptomScore": 0.003,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      }
+    }
+  ],
+  "spellCorrectedText": [
+    {
+      "correctedText": "Patient has pneumonia and shows signs of heart attack. Patient started taking beta blockers."
+    }
+  ]
+}
+}

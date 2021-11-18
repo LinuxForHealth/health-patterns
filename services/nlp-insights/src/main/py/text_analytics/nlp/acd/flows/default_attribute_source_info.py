@@ -16,57 +16,64 @@
    This flow is the default annotator flow for the insight cartridge
 """
 
-from typing import List
-
 from fhir.resources.condition import Condition
 from fhir.resources.medicationstatement import MedicationStatement
 
 from text_analytics.insight_source.fields_of_interest import CodeableConceptRefType
 from text_analytics.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
-    AcdAttrSourceLoc,
-    AttributeNameAndSourceMap,
+    SourceCuiSearchMap,
+    AnnotationContext,
+    AcdConceptCuiFallBack,
+    AcdAttrCuiSourceLoc,
     AttrSourcePropName,
 )
+from text_analytics.umls import semtype_lookup
 
-from text_analytics.umls.semtype_lookup import VACCINE_TYPES
+ANNOTATION_TYPE_ALLERGY = AnnotationContext(
+    attribute_mapping=[
+        AcdAttrCuiSourceLoc(
+            attr_name="Diagnosis",
+            source_prop_names=[AttrSourcePropName.SYMPTOM_DISEASE_IND],
+        ),
+        AcdAttrCuiSourceLoc(
+            attr_name="MedicationAllergy",
+            source_prop_names=[AttrSourcePropName.MEDICATION_IND],
+        ),
+    ],
+    concept_fallback=[
+        AcdConceptCuiFallBack(concept_types=semtype_lookup.ALLERGEN_TYPES),
+    ],
+)
 
-ANNOTATION_TYPE_ALLERGY = [
-    AcdAttrSourceLoc(
-        attr_name="Diagnosis",
-        source_prop_names=[AttrSourcePropName.SYMPTOM_DISEASE_IND],
-    ),
-    AcdAttrSourceLoc(
-        attr_name="MedicationAllergy",
-        source_prop_names=[AttrSourcePropName.MEDICATION_IND],
-    ),
-]
+ANNOTATION_TYPE_CONDITION = AnnotationContext(
+    attribute_mapping=[
+        AcdAttrCuiSourceLoc(
+            attr_name=set(["Diagnosis", "PotentialDiagnosis"]),
+            source_prop_names=[AttrSourcePropName.SYMPTOM_DISEASE_IND],
+        ),
+    ],
+    concept_fallback=None,
+)
 
-ANNOTATION_TYPE_CONDITION = [
-    AcdAttrSourceLoc(
-        attr_name="Diagnosis",
-        source_prop_names=[AttrSourcePropName.SYMPTOM_DISEASE_IND],
-    )
-]
+ANNOTATION_TYPE_IMMUNIZATION = AnnotationContext(
+    attribute_mapping=None,
+    concept_fallback=[
+        AcdConceptCuiFallBack(concept_types=semtype_lookup.VACCINE_TYPES)
+    ],
+)
+
+ANNOTATION_TYPE_MEDICATION = AnnotationContext(
+    attribute_mapping=[
+        AcdAttrCuiSourceLoc(
+            attr_name="PrescribedMedication",
+            source_prop_names=[AttrSourcePropName.MEDICATION_IND],
+        ),
+    ],
+    concept_fallback=None,
+)
 
 
-ANNOTATION_TYPE_IMMUNIZATION: List[AcdAttrSourceLoc] = [
-    # The default pipeline does not have an annotator for vaccines
-    # So fall back on matching Concepts by Type
-    AcdAttrSourceLoc(
-        attr_name=None,
-        source_prop_names=[AttrSourcePropName.CONCEPTS],
-        concept_types=VACCINE_TYPES,
-    )
-]
-
-ANNOTATION_TYPE_MEDICATION = [
-    AcdAttrSourceLoc(
-        attr_name="PrescribedMedication",
-        source_prop_names=[AttrSourcePropName.MEDICATION_IND],
-    )
-]
-
-RELEVANT_ANNOTATIONS_STANDARD_V1_0: AttributeNameAndSourceMap = {
+RELEVANT_ANNOTATIONS_STANDARD_V1_0: SourceCuiSearchMap = {
     Condition: ANNOTATION_TYPE_CONDITION,
     MedicationStatement: ANNOTATION_TYPE_MEDICATION,
     CodeableConceptRefType.ALLERGEN: ANNOTATION_TYPE_ALLERGY,

@@ -87,7 +87,8 @@ def create_med_statements_from_insights(
         acd_output, MedicationStatement, source_loc_map
     ):
         if cui_source.sources:
-            # first available source is the best one
+            # some attributes have the cui in multiple places, if so
+            # the first available source is the best one
             source: AttrSourceConcept = next(iter(cui_source.sources.values()))
 
             # only know how to handle the medication annotation at this time

@@ -25,12 +25,9 @@ from ibm_whcs_sdk.annotator_for_clinical_data import (
 from text_analytics.fhir import fhir_object_utils
 
 from text_analytics.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
-    AttributeNameAndSourceMap,
+    SourceCuiSearchMap,
 )
 
-from text_analytics.nlp.acd.flows.cdp_attribute_source_info import (
-    RELEVANT_ANNOTATIONS_CDP,
-)
 
 from text_analytics.nlp.acd.flows.default_attribute_source_info import (
     RELEVANT_ANNOTATIONS_STANDARD_V1_0,
@@ -44,7 +41,7 @@ class NlpConfig:
     nlp_system: str
     get_nlp_output_loc: Callable[[Any], Optional[str]]
     insight_id_start: int = 1
-    acd_attribute_source_map: Optional[AttributeNameAndSourceMap] = None
+    acd_attribute_source_map: Optional[SourceCuiSearchMap] = None
 
     def create_nlp_output_extension(self, nlp_output: Any) -> Optional[Extension]:
         """Creates an NLP output extension
@@ -58,7 +55,7 @@ class NlpConfig:
 
         return None
 
-    def get_valid_acd_attr_source_map(self) -> AttributeNameAndSourceMap:
+    def get_valid_acd_attr_source_map(self) -> SourceCuiSearchMap:
         """Returns the attribute source map
 
         This option is only useful for ACD flows
@@ -71,28 +68,14 @@ class NlpConfig:
         raise TypeError("The acd_attribute_source_map is None")
 
 
-def acd_get_nlp_output_loc(nlp_output: acd.ContainerAnnotation) -> str:
-    """Returns the location of ACD NLP output"""
-    del nlp_output
-    # TODO: save output to an external MinIO location.
-    # For now, just put in a dummy String
-    return "uri://path/acd-123.json"
-
-
-ACD_NLP_CONFIG_CDP_V1_0 = NlpConfig(
-    nlp_system="urn:id:COM.IBM.WH.PA.CDP.CDE/1.0.0",
-    get_nlp_output_loc=acd_get_nlp_output_loc,
-    acd_attribute_source_map=RELEVANT_ANNOTATIONS_CDP,
-)
-
-
 ACD_NLP_CONFIG_STANDARD_V1_0 = NlpConfig(
-    nlp_system="urn:id:COM.IBM.WH.PA.INTEGRATION/1.0.0",
-    get_nlp_output_loc=acd_get_nlp_output_loc,
+    nlp_system="urn:alvearie.io/patterns/wh_acd.ibm_clinical_insights_v1.0_standard_flow/0.0.2",
+    get_nlp_output_loc=lambda x: None,
     acd_attribute_source_map=RELEVANT_ANNOTATIONS_STANDARD_V1_0,
 )
 
 
 QUICK_UMLS_NLP_CONFIG = NlpConfig(
-    nlp_system="urn:id:COM.IBM.QUICKUMLS/1.0.0", get_nlp_output_loc=lambda x: None
+    nlp_system="urn:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2",
+    get_nlp_output_loc=lambda x: None,
 )

@@ -59,9 +59,6 @@ class _ResultEntry(NamedTuple):
 class ACDService(NLPService):
     """The ACD NLPService uses the IBM Annotated Clinical Data product to derive insights"""
 
-    PROCESS_TYPE_UNSTRUCTURED = "ACD Unstructured"
-    PROCESS_TYPE_STRUCTURED = "ACD Structured"
-
     def __init__(self, config: Dict[str, Any]) -> None:
         """Initializes the ACD service from a json configuration string"""
         super().__init__(config)

@@ -76,7 +76,8 @@ def create_conditions_from_insights(
 
     for cui_source in get_attribute_sources(acd_output, Condition, source_loc_map):
         if cui_source.sources:
-            # first available source is the best one
+            # some attributes have the cui in multiple places, if so
+            # the first available source is the best one
             source: AttrSourceConcept = next(iter(cui_source.sources.values()))
 
             if source and hasattr(source, "cui") and source.cui:
