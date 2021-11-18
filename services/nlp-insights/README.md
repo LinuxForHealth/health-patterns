@@ -53,25 +53,25 @@ These instructions assume that build properties are set via the command line, ho
 defaults for them by modifying `gradle.properties`.
 
 ## Running the service outside of a docker container
-1. Build and install nlp-insights to a virtual environment 
+1. Build and install nlp-insights to a virtual environment  
     `./gradlew install`
    
 1. Switch to the [virtual env](https://docs.python.org/3/library/venv.html) where nlp-insights is installed  
    `source ./build/venv/bin/activate`  
    
-1. Set the FLASK_APP environment variable to the installed package
+1. Set the FLASK_APP environment variable to the installed package  
     `export FLASK_APP=text_analytics.app`
     
 1. Start the service (5000 is the default port, however this value can be changed to suit your needs)  
    `python -m flask run --port=5000`
 
 ## Running the service locally as a docker container
-**Start the container**
+**Start the container**  
     `./gradlew dockerRun -PdockerUser=<your_user_id> -PdockerLocalPort=<port>`  
 
 The server is now running on the selected port.
-If you omit the dockerLocalPort property, 5000 is the default port
-The dockerRun task will may also perform the following dependent build tasks:  
+If you omit the dockerLocalPort property, 5000 is the default port.  
+The dockerRun task will also perform the following dependent build tasks:  
 * nlp-insights will be built and installed to the virtual environment
 * the docker image will be built
 * unit tests will run
@@ -183,5 +183,5 @@ Unit tests and Doc tests are part of the build process
 
 
 ## Static code checking
-The project uses a combination of flake8, pylint, and mypy to detect static code problems. The configuration is defined in `setup.cfg`. These checks can be run as a build task (this will also run unit tests)  
+The project uses a combination of flake8, pylint, and mypy to detect static code problems. The configuration is defined in `setup.cfg`. These checks can be run as a build task (this will also run unit tests).  
 `./gradlew checkSource`
