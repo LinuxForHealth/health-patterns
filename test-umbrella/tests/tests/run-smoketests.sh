@@ -35,10 +35,6 @@ then
    # deploy ingestion
    helm3 install $HELM_RELEASE . -f clinical_ingestion.yaml --wait --timeout $HELM_WAIT
 fi
-echo "***************************************"
-echo $TEST_NAMESPACE" : Deploy completed"
-date
-echo "***************************************"
 
 echo "*************************************"
 echo "* Waiting for "$DEPLOY_WAIT" seconds           *"

@@ -44,10 +44,6 @@ then
    # deploy ingestion
    helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout $HELM_WAIT
 fi
-echo "***************************************"
-echo $TEST_NAMESPACE" : Deploy completed"
-date
-echo "***************************************"
 
 
 echo "*************************************"
