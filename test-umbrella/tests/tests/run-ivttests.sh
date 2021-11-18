@@ -8,6 +8,8 @@
 # CLUSTER_NAMESPACE - base name to use when build the TEST_NAMEPSACE name
 # DEPLOY_WAIT - the time in seconds to wait for the deployment to be operational after the helm install completes
 # HELM_WAIT - the timeout time for the HELM command when using the --wait --timeout MmSs options (where M=minutes and S=seconds)
+# ENV_CLEAN_UP - flag to indicate to clean up the test environment at the end
+# INGRESS_SUBDOMAIN - ingress subdomain for the deployment
 
 # Setup the test environment
 chmod +x ./tests/toolchain-envsetup.sh
