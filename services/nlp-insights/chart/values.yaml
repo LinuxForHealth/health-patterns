@@ -8,6 +8,7 @@ image:
   repository: alvearie/nlp-insights
   pullPolicy: Always
   tag: 0.0.3
+  pullSecret:
 
 service:
   type: ClusterIP

@@ -18,6 +18,8 @@ spec:
       labels:
         {{- include "nlp-insights.selectorLabels" . | nindent 8 }}
     spec:
+      imagePullSecrets:
+      - name: {{ $.Values.image.pullSecret }}  
       containers:
       - name: nlp-insights
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
