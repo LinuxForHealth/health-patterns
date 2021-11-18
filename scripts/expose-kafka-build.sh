@@ -31,6 +31,10 @@ echo "NAME        = ${NAME}"
 echo "TAG         = ${TAG}"
 echo "INPUTS  = ${INPUTS}"
 
+last_ver = docker image ls atclark/expose-kafka --format "{{.Tag}}" | sort -r | head -1
+
+echo "last_ver  = ${last_ver}"
+
 #docker build services/${NAME} -t ${REPOSITORY}/${NAME}:${TAG}
 #docker push ${REPOSITORY}/${NAME}:${TAG}
 
