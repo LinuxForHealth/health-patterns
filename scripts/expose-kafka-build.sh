@@ -26,7 +26,7 @@ echo "REPOSITORY  = ${REPOSITORY}"
 echo "NAME        = ${NAME}"
 echo "TAG         = ${TAG}"
 
-export last_ver = docker image ls atclark/expose-kafka --format "{{.Tag}}" | sort -r | head -1
+last_ver=docker image ls atclark/expose-kafka --format "{{.Tag}}" | sort -r | head -1
 
 echo "last_ver  = ${last_ver}"
 
