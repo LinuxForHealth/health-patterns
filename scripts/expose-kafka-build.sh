@@ -63,7 +63,7 @@ if [ -z "$MODE" ]; then
   MODE='DEV'
 fi
 
-l=${REPOSITORY} | wc -c
+l=$(echo ${REPOSITORY} | wc -c)
 echo "REPOSITORY  = ${REPOSITORY}"
 echo "REPOSITORY Length  =${l}"
 echo "NAME        = ${NAME}"
