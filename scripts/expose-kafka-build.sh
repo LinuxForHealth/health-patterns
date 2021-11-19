@@ -1,13 +1,16 @@
 #!/bin/bash
 
+#########################
+## Gather input values ##
+#########################
 for i in "$@"; do
   case $i in
-    -r=*|--repository=*)
-      REPOSITORY="${i#*=}"
+    -o=*|--organization=*)
+      ORG="${i#*=}"
       shift # past argument=value
       ;;
-    -n=*|--name=*)
-      NAME="${i#*=}"
+    -r=*|--repository=*)
+      REPOSITORY="${i#*=}"
       shift # past argument=value
       ;;
     -t=*|--tag=*)
@@ -15,11 +18,9 @@ for i in "$@"; do
       shift # past argument=value
       ;;
     -m=*|--mode=*)
+      # DEV / PUSH / PR
       MODE="${i#*=}"
       shift # past argument=value
-      ;;
-    -d=*|--debug=*)
-      DEBUG=True
       ;;
     *)
       # unknown option
@@ -27,57 +28,67 @@ for i in "$@"; do
   esac
 done
 
-if [ -z "$REPOSITORY" ]; then
-  echo "No repository provided. Generating based on docker history..."
-  if [[ ${MODE} == 'PUSH' ]]
+
+######################
+## Set default mode ##
+######################
+if [ -z "$MODE" ]; then
+  MODE='DEV'
+fi
+
+
+###########################################################
+## Find Organization name (i.e. "alvearie" or "atclark") ##
+###########################################################
+if [ -z "$ORG" ]; then
+  printf "\n\nNo repository provided. Generating based on docker history..."
+  if [[ ${MODE} == 'PUSH' ]] || [[ ${MODE} == 'DEV' ]]
   then
-    REPOSITORY=$(docker image ls --format '{{.Repository}}' | grep ${NAME} | sort | uniq -i | sed '/alvearie/d')
-    REPOSITORY=${REPOSITORY%/${NAME}}
+    ORG=$(docker image ls --format '{{.Repository}}' | grep ${REPOSITORY} | sort | uniq -i | sed '/alvearie/d')
+    ORG=${ORG%/${REPOSITORY}}
   else
-    REPOSITORY="alvearie"
+    ORG="alvearie"
   fi
 fi
 
-l=$(echo ${REPOSITORY} | wc -c)
-echo "REPOSITORY  = ${REPOSITORY}"
-echo "REPOSITORY Length  =${l}"
+
+#####################################
+## Load current images from remote ##
+#####################################
+# FIXME - should be tagging images with "latest" so we can just pull that ONE to find the other tags (x.y.z) and update that
+docker pull ${ORG}/${REPOSITORY} -a -q
 
 
+##################################
+## Generate Tag to be used      ##
+## last_ver_BUILD or last_ver++ ##
+##################################
 if [ -z "$TAG" ]; then
-  echo "No tag provided. Generating based on docker history..."
+  printf "\n\nNo tag provided. Generating based on docker history..."
 
-  # FIXME - should be tagging images with "latest" so we can just pull that ONE to find the other tags (x.y.z) and update that
-  docker pull ${REPOSITORY}/${NAME} -a
-
-  echo "docker image ls ${REPOSITORY}/${NAME} --format '{{.Tag}}'"
-  echo "$(docker image ls ${REPOSITORY}/${NAME} --format '{{.Tag}}')"
-  last_tag="$(docker image ls ${REPOSITORY}/${NAME} --format '{{.Tag}}' | sort -r | head -1)"
-  echo "last_tag: ${last_tag}"
-  if [[ ${MODE} == 'PUSH' ]]
+  if [[ ${MODE} == 'DEV' ]]
   then
-    # COMMIT+PUSH / DEV Mode
+    last_tag="$(docker image ls ${ORG}/${REPOSITORY} --format '{{.Tag}}' | sort -r --version-sort | sed '/<none>/d' | head -1)"
+    printf "\nlast_tag: ${last_tag}"
+    # DEV Mode
     if [[ "$last_tag" == *_BUILD ]]
     then
-      echo "Re-using tag from last build: ${last_tag}"
+      printf "\nRe-using tag from last build: ${last_tag}"
       TAG="${last_tag}"
     else
       TAG="${last_tag}_BUILD"
     fi
   else
+    last_tag="$(docker image ls ${ORG}/${REPOSITORY} --format '{{.Tag}}' | sort -r --version-sort | sed '/<none>/d' | sed '/_BUILD/d' | head -1)"
+    printf "\nlast_tag: ${last_tag}"
     # Commit + Pull Request
     [[ "$last_tag" =~ (.*[^0-9])([0-9]+)$ ]] && TAG="${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))"
   fi
 fi
 
-if [ -z "$MODE" ]; then
-  MODE='DEV'
-fi
-
-l=$(echo ${REPOSITORY} | wc -c)
-echo "REPOSITORY  = ${REPOSITORY}"
-echo "REPOSITORY Length  =${l}"
-echo "NAME        = ${NAME}"
-echo "TAG         = ${TAG}"
+printf "\n\nORG        = ${ORG}"
+printf "\nREPOSITORY  = ${REPOSITORY}"
+printf "\nTAG         = ${TAG}"
 
 
 ###################
@@ -85,48 +96,120 @@ echo "TAG         = ${TAG}"
 ###################
 # Not Yet Implemented
 
+## 1 ##
 ########################
 ## Build Docker image ##
 ########################
-echo "Building ${REPOSITORY}/${NAME}:{$TAG}"
-docker build services/${NAME} -t ${REPOSITORY}/${NAME}:${TAG}
+printf "\n\nBuilding ${ORG}/${REPOSITORY}:{$TAG}"
+docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 
+## 2 ##
 #####################################
 ## Push Docker image to docker hub ##
 #####################################
-echo "Pushing ${REPOSITORY}/${NAME}:{$TAG}"
-if [[ ${DEBUG}!="True" ]]
-then
-  docker push ${REPOSITORY}/${NAME}:${TAG}
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  printf "\n\nPushing docker image to repostiory: ${ORG}/${REPOSITORY}:{$TAG}"
+  docker push -q ${ORG}/${REPOSITORY}:${TAG}
 fi
 
+
+## 3 ##
 ##########################################
 ## Update helm chart to use new version ##
 ##########################################
-sed -i '' 's/  tag:.*/  tag: '${TAG}'/' "services/${NAME}/chart/values.yaml"
-if [[ ${DEBUG}!="True" ]]
-then
-  if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PUSH' ]; then
-    echo ''
-    #git add services/${NAME}/chart/values.yaml
-  fi
+printf "\n\nUpdating values.yaml with new container image version"
+sed -i '' 's/  tag:.*/  tag: '${TAG}'/' "services/${REPOSITORY}/chart/values.yaml"
+
+## 4 ##
+###########################################
+## Add updated values.yaml to git commit ##
+###########################################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  file="services/${REPOSITORY}/chart/values.yaml"
+  git add ${file}
+  printf "\n\nAdded ${file} to Git commit"
 fi
 
+## 5 ##
+###########################################
+## Update helm chart to bump chart.yaml version ##
+###########################################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  currentServiceHelmVer="$(grep "version:" services/expose-kafka/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
+  [[ "$currentServiceHelmVer" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && newServiceHelmVer="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
+  printf "\n\nUpdating ${REPOSITORY} helm chart to new version: ${newServiceHelmVer}"
+  sed -i '' "s/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/" "services/${REPOSITORY}/chart/Chart.yaml"
+fi
+
+## 6 ##
+###########################################
+## Add updated chart.yaml to git commit ##
+###########################################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  file="services/${REPOSITORY}/chart/Chart.yaml"
+  git add ${file}
+  printf "\n\nAdded ${file} to Git commit"
+fi
+
+## 7 ##
 ###################################
 ## Re-package service helm chart ##
 ###################################
-helm_package_suffix=$(helm package services/${NAME}/chart -d docs/charts/ >&1 | sed 's/.*'${NAME}'//')
-helm repo index docs/charts
+helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ >&1 | sed 's/.*'${REPOSITORY}'//')
+
+## 7.5 ##
+###################################
+## Add tgz to Git ##
+###################################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  file="docs/charts/${REPOSITORY}${helm_package_suffix}"
+  git add ${file}
+  printf "\n\nAdded ${file} to Git commit"
+fi
+
+## 8 ##
+########################################################
+## Copy Helm tgz to health-patterns dependency folder ##
+########################################################
 if [[ ${MODE} == 'DEV' ]]
 then
   ### Since DEV mode, copy to health-patterns dependency folder
   mkdir -p helm-charts/health-patterns/charts/
-  rm helm-charts/health-patterns/${NAME}*.tgz
-  cp docs/charts/${NAME}${helm_package_suffix} helm-charts/health-patterns/charts/
+  rm helm-charts/health-patterns/${REPOSITORY}*.tgz
+  cp docs/charts/${REPOSITORY}${helm_package_suffix} helm-charts/health-patterns/charts/
 fi
-echo "${NAME}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns"
 
+## 9 ##
+##########################
+## Re-Index Helm Charts ##
+##########################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  helm repo index docs/charts
+  printf "\n\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns"
+fi
+
+## 9.5 ##
+###################################
+## Add index.yaml to Git ##
+###################################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  file="docs/charts/index.yaml"
+  git add ${file}
+  printf "\n\nAdded ${file} to Git commit"
+fi
+
+## 10 ##
+##########################
+## Update Health-Patterns chart.yaml to point at new service chart ##
+##########################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+file="helm-charts/health-patterns/Chart.yaml"
+  awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file} > ${file}
+  printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
+fi
 
 ##############################
 ## Update parent helm chart ##
 ##############################
+
+printf "\n\n"
