@@ -28,4 +28,4 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Run build script
-      run: ./scripts/expose-kafka-build.sh -n=expose-kafka -r=${{ secrets.DOCKER_HUB_USERNAME }} --m=PUSH
+      run: ./scripts/expose-kafka-build.sh -n=expose-kafka -r=${{ secrets.DOCKER_HUB_USERNAME }} --m=PUSH -u=${{ github.actor }} --d=${{ secrets.DOCKER_USER}}

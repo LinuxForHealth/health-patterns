@@ -25,6 +25,16 @@ for i in "$@"; do
       MODE="${i#*=}"
       shift # past argument=value
       ;;
+    -u=*|--user=*)
+      # DEV / PUSH / PR
+      GIT_USER="${i#*=}"
+      shift # past argument=value
+      ;;
+    -d=*|--docker_user=*)
+      # DEV / PUSH / PR
+      DOCKER_USER="${i#*=}"
+      shift # past argument=value
+      ;;
     *)
       # unknown option
       ;;
@@ -39,21 +49,29 @@ if [ -z "$MODE" ]; then
   MODE='DEV'
 fi
 
+printf "\nMode: ${MODE}\n"
 
 ###########################################################
 ## Find Organization name (i.e. "alvearie" or "atclark") ##
 ###########################################################
 if [ -z "$ORG" ]; then
   printf "\n\nNo repository provided. Generating based on docker history..."
-  if [[ ${MODE} == 'PUSH' ]] || [[ ${MODE} == 'DEV' ]]
+  if [[ ${MODE} == 'DEV' ]]
   then
     ORG=$(docker image ls --format '{{.Repository}}' | grep ${REPOSITORY} | sort | uniq -i | sed '/alvearie/d')
     ORG=${ORG%/${REPOSITORY}}
+  elif [[ ${MODE} == 'PUSH' ]]
+  then
+    if [[ -z "$DOCKER_USER" ]]
+    then
+      ORG="${GIT_USER}"
+    else
+      ORG="${DOCKER_USER}"
+    fi
   else
     ORG="alvearie"
   fi
 fi
-
 
 #####################################
 ## Load current images from remote ##
