@@ -7,7 +7,7 @@
 # Environment Variables passed in from the toolchain:
 # CLUSTER_NAMESPACE - base name to use when build the TEST_NAMEPSACE name
 # DEPLOY_WAIT - the time in seconds to wait for the deployment to be operational after the helm install completes
-# HELM_WAIT - the timeout time for the HELM command when using the --wait --timeout MmSs options (where M=minutes and S=seconds)
+# HELM_TIMEOUT - the timeout time for the HELM command when using the --wait --timeout MmSs options (where M=minutes and S=seconds)
 # ENV_CLEAN_UP - flag to indicate to clean up the test environment at the end
 # INGRESS_SUBDOMAIN - ingress subdomain for the deployment
 
@@ -29,11 +29,11 @@ echo "***************************************"
 if [ $CLUSTER_NAMESPACE = "tst-enrich" ] 
 then
    # deploy enrich
-   helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout $HELM_WAIT
+   helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout $HELM_TIMEOUT
 elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
    # deploy ingestion
-   helm3 install $HELM_RELEASE . -f clinical_ingestion.yaml --wait --timeout $HELM_WAIT
+   helm3 install $HELM_RELEASE . -f clinical_ingestion.yaml --wait --timeout $HELM_TIMEOUT
 fi
 
 echo "*************************************"

@@ -7,7 +7,7 @@
 # Environment Variables passed in from the toolchain:
 # CLUSTER_NAMESPACE - base name to use when build the TEST_NAMEPSACE name
 # DEPLOY_WAIT - the time in seconds to wait for the deployment to be operational after the helm install completes
-# HELM_WAIT - the timeout time for the HELM command when using the --wait --timeout MmSs options (where M=minutes and S=seconds)
+# HELM_TIMEOUT - the timeout time for the HELM command when using the --wait --timeout MmSs options (where M=minutes and S=seconds)
 # ENV_CLEAN_UP - flag to indicate to clean up the test environment at the end
 # INGRESS_SUBDOMAIN - ingress subdomain for the deployment
 
@@ -37,11 +37,11 @@ then
    sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
 
    # deploy enrich
-   helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout $HELM_WAIT
+   helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout $HELM_TIMEOUT
 elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
    # deploy ingestion
-   helm3 install $HELM_RELEASE . --wait --timeout $HELM_WAIT 
+   helm3 install $HELM_RELEASE . --wait --timeout $HELM_TIMEOUT 
 fi
 
 echo "*************************************"
