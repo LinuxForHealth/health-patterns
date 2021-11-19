@@ -50,45 +50,37 @@ if [ -z "$MODE" ]; then
 fi
 
 printf "\nMode: ${MODE}\n"
-printf "1"
+
+
 ###########################################################
 ## Find Organization name (i.e. "alvearie" or "atclark") ##
 ###########################################################
 if [ -z "$ORG" ]; then
-  printf "2"
   printf "\n\nNo repository provided. Generating based on docker history..."
-  printf "3"
   if [[ ${MODE} == 'DEV' ]]
   then
-    printf "4"
     ORG=$(docker image ls --format '{{.Repository}}' | grep ${REPOSITORY} | sort | uniq -i | sed '/alvearie/d')
-    printf "5"
     ORG=${ORG%/${REPOSITORY}}
-    printf "6"
   elif [[ ${MODE} == 'PUSH' ]]
   then
-    printf "7"
     if [[ -z "$DOCKER_USER" ]]
     then
-      printf "8"
       ORG="${GIT_USER}"
     else
       ORG="${DOCKER_USER}"
-      printf "9"
     fi
   else
     ORG="alvearie"
-    printf "10"
   fi
 fi
-printf "ORG: ${ORG}\n"
+printf "ORG: ${ORG:1}\n"
 printf "11\n"
 
 #####################################
 ## Load current images from remote ##
 #####################################
 # FIXME - should be tagging images with "latest" so we can just pull that ONE to find the other tags (x.y.z) and update that
-docker pull ${ORG}/${REPOSITORY} -a -q
+docker pull ${ORG}/${REPOSITORY} -a
 
 
 ##################################
