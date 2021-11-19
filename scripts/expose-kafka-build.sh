@@ -81,7 +81,8 @@ if [ -z "$ORG" ]; then
     printf "10"
   fi
 fi
-printf "11"
+printf "ORG: ${ORG}\n"
+printf "11\n"
 
 #####################################
 ## Load current images from remote ##
