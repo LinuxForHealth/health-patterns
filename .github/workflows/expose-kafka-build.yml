@@ -25,7 +25,7 @@ jobs:
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
+        username:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Run build script
-      run: ./scripts/expose-kafka-build.sh -n=expose-kafka -r=${{ secrets.DOCKER_USERNAME }} -m=PUSH -u=${{ github.actor }} -d=${{ secrets.DOCKER_USER}}
+      run: ./scripts/expose-kafka-build.sh -n=expose-kafka -r=${{ secrets.DOCKER_USERNAME }} -m=PUSH --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} --private-docker-user=${{ secrets.PRIVATE_DOCKER_HUB_USERNAME }} --private-docker-token=${{ secrets.PRIVATE_DOCKER_HUB_ACCESS_TOKEN }}

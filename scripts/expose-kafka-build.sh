@@ -25,14 +25,20 @@ for i in "$@"; do
       MODE="${i#*=}"
       shift # past argument=value
       ;;
-    -u=*|--user=*)
-      # DEV / PUSH / PR
-      GIT_USER="${i#*=}"
+    --docker-user=*)
+      DOCKER_USER="${i#*=}"
       shift # past argument=value
       ;;
-    -d=*|--docker_user=*)
-      # DEV / PUSH / PR
-      DOCKER_USER="${i#*=}"
+    --docker-token=*)
+      DOCKER_TOKEN="${i#*=}"
+      shift # past argument=value
+      ;;
+    --private-docker-user=*)
+      PRIVATE_DOCKER_USER="${i#*=}"
+      shift # past argument=value
+      ;;
+    --private-docker-token=*)
+      PRIVATE_DOCKER_TOKEN="${i#*=}"
       shift # past argument=value
       ;;
     *)
@@ -40,6 +46,12 @@ for i in "$@"; do
       ;;
   esac
 done
+
+
+echo "DOCKER_USER: ${DOCKER_USER}"
+echo "DOCKER_TOKEN: ${DOCKER_TOKEN}"
+echo "PRIVATE_DOCKER_USER: ${PRIVATE_DOCKER_USER}"
+echo "PRIVATE_DOCKER_TOKEN: ${PRIVATE_DOCKER_TOKEN}"
 
 
 ######################
@@ -50,6 +62,10 @@ if [ -z "$MODE" ]; then
 fi
 
 printf "\nMode: ${MODE}\n"
+
+
+
+docker login -u atclark -p xxyy
 
 
 ###########################################################
