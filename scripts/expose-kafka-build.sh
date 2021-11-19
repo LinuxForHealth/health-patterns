@@ -63,9 +63,15 @@ fi
 
 printf "\nMode: ${MODE}\n"
 
+if [ -z "$PRIVATE_DOCKER_USER" ]; then
+  USER=${DOCKER_USER}
+  TOKEN=${DOCKER_TOKEN}
+else
+  USER=${PRIVATE_DOCKER_USER}
+  TOKEN=${PRIVATE_DOCKER_TOKEN}
+fi
 
-
-docker login -u atclark -p xxyy
+docker login -u ${USER} -p ${TOKEN}
 
 
 ###########################################################
