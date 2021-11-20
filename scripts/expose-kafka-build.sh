@@ -161,7 +161,8 @@ fi
 ## Update helm chart to use new version ##
 ##########################################
 printf "\n\nUpdating values.yaml with new container image version"
-sed -i '' 's/  tag:.*/  tag: '${TAG}'/' "services/${REPOSITORY}/chart/values.yaml"
+sed -i '' "s/\(\s*tag: \).*/\1'${TAG}'/" "services/${REPOSITORY}/chart/values.yaml"
+
 
 ## 4 ##
 ###########################################
