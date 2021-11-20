@@ -70,7 +70,7 @@ echo "USER: ${USER:1}"
 echo "TOKEN: ${TOKEN:5}"
 
 echo "docker login -u ${USER} -p ${TOKEN}"
-docker login -u "${USER}" -p "${TOKEN}"
+docker login -u ${USER} -p ${TOKEN}
 
 
 ###########################################################
