@@ -69,9 +69,8 @@ fi
 echo "USER: ${USER:1}"
 echo "TOKEN: ${TOKEN:5}"
 
-echo "docker login -u ${USER} -p ${TOKEN}"
-docker login -u ${USER} -p ${TOKEN}
-
+echo "echo  ${TOKEN} | docker login --username ${USER} --password-stdin"
+echo  ${TOKEN} | docker login --username ${USER} --password-stdin
 
 ###########################################################
 ## Find Organization name (i.e. "alvearie" or "atclark") ##
