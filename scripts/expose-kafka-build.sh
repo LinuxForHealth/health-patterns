@@ -107,10 +107,11 @@ docker pull ${ORG}/${REPOSITORY} -a
 if [ -z "$TAG" ]; then
   printf "\n\nNo tag provided. Generating based on docker history..."
 
+  last_tag="$(grep "tag:" services/${REPOSITORY}/chart/values.yaml | sed -r 's/tag: (.*)/\1/')"
+  printf "\nlast_tag: ${last_tag}"
+
   if [[ ${MODE} == 'DEV' ]]
   then
-    last_tag="$(docker image ls ${ORG}/${REPOSITORY} --format '{{.Tag}}' | sort -r --version-sort | sed '/<none>/d' | head -1)"
-    printf "\nlast_tag: ${last_tag}"
     # DEV Mode
     if [[ "$last_tag" == *_BUILD ]]
     then
@@ -120,8 +121,6 @@ if [ -z "$TAG" ]; then
       TAG="${last_tag}_BUILD"
     fi
   else
-    last_tag="$(docker image ls ${ORG}/${REPOSITORY} --format '{{.Tag}}' | sort -r --version-sort | sed '/<none>/d' | sed '/_BUILD/d' | head -1)"
-    printf "\nlast_tag: ${last_tag}"
     # Commit + Pull Request
     [[ "$last_tag" =~ (.*[^0-9])([0-9]+)$ ]] && TAG="${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))"
   fi
