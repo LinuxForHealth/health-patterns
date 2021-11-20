@@ -106,8 +106,8 @@ fi
 if [ -z "$TAG" ]; then
   printf "\n\nNo tag provided. Generating based on docker history..."
 
-  last_tag="$(grep "tag:" services/${REPOSITORY}/chart/values.yaml | sed -r 's/tag: (.*)/\1/')"
-  printf "\nlast_tag: ${last_tag}"
+  last_tag="$(grep "tag:" services/${REPOSITORY}/chart/values.yaml | sed -r 's/\s*tag:\s*(.*)/\1/')"
+  printf "\nlast_tag: '${last_tag}'"
 
   if [[ ${MODE} == 'DEV' ]]
   then
