@@ -107,7 +107,7 @@ if [ -z "$TAG" ]; then
   printf "\n\nNo tag provided. Generating based on docker history..."
 
   last_tag="$(grep "tag:" services/${REPOSITORY}/chart/values.yaml | sed -r 's/\s*tag:\s*(.*)/\1/')"
-  printf "\nlast_tag: '${last_tag}'"
+  printf "\nlast_tag: ${last_tag}"
 
   if [[ ${MODE} == 'DEV' ]]
   then
@@ -144,7 +144,7 @@ printf "\nTAG         = ${TAG}"
 ## Build Docker image ##
 ########################
 printf "\n\nBuilding ${ORG}/${REPOSITORY}:${TAG}"
-docker build  services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
+docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 
 ## 2 ##
 #####################################
