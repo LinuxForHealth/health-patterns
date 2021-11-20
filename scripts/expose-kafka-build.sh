@@ -77,8 +77,7 @@ if [ -z "$ORG" ]; then
   printf "\n\nNo repository provided. Generating based on docker history..."
   if [[ ${MODE} == 'DEV' ]]
   then
-    ORG=$(docker image ls --format '{{.Repository}}' | grep ${REPOSITORY} | sort | uniq -i | sed '/alvearie/d')
-    ORG=${ORG%/${REPOSITORY}}
+    ORG=${USER}
   elif [[ ${MODE} == 'PUSH' ]]
   then
     if [[ -z "$DOCKER_USER" ]]
@@ -96,8 +95,8 @@ fi
 ## Load current images from remote ##
 #####################################
 # FIXME - should be tagging images with "latest" so we can just pull that ONE to find the other tags (x.y.z) and update that
-echo "docker pull ${ORG:1}/${REPOSITORY:1} -a"
-docker pull ${ORG}/${REPOSITORY} -a
+#echo "docker pull ${ORG:1}/${REPOSITORY:1} -a"
+#docker pull ${ORG}/${REPOSITORY} -a
 
 
 ##################################
