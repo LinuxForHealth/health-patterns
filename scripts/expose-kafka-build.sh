@@ -144,7 +144,7 @@ printf "\nTAG         = ${TAG}"
 ## Build Docker image ##
 ########################
 printf "\n\nBuilding ${ORG}/${REPOSITORY}:${TAG}"
-docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
+docker build  services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 
 ## 2 ##
 #####################################
