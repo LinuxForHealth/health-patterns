@@ -121,6 +121,9 @@ if [ -z "$TAG" ]; then
     fi
   else
     # Commit + Pull Request
+    if [[ "$last_tag" == *_BUILD ]]
+      last_tag=${last_tag%_BUILD}
+    fi
     [[ "$last_tag" =~ (.*[^0-9])([0-9]+)$ ]] && TAG="${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))"
   fi
 fi
