@@ -48,12 +48,6 @@ for i in "$@"; do
 done
 
 
-echo "DOCKER_USER: ${DOCKER_USER:1}"
-echo "DOCKER_TOKEN: ${DOCKER_TOKEN}"
-echo "PRIVATE_DOCKER_USER: ${PRIVATE_DOCKER_USER:1}"
-echo "PRIVATE_DOCKER_TOKEN: ${PRIVATE_DOCKER_TOKEN}"
-
-
 ######################
 ## Set default mode ##
 ######################
@@ -70,6 +64,11 @@ else
   USER=${PRIVATE_DOCKER_USER}
   TOKEN=${PRIVATE_DOCKER_TOKEN}
 fi
+
+
+echo "USER: ${USER:1}"
+echo "TOKEN: ${TOKEN:5}"
+
 
 docker login -u ${USER} -p ${TOKEN}
 
