@@ -65,11 +65,9 @@ else
   TOKEN=${PRIVATE_DOCKER_TOKEN}
 fi
 
-
-echo "USER: ${USER:1}"
-echo "TOKEN: ${TOKEN:5}"
-
-echo "echo  ${TOKEN} | docker login --username ${USER} --password-stdin"
+#####################
+## Login to Docker ##
+#####################
 echo  ${TOKEN} | docker login --username ${USER} --password-stdin
 
 ###########################################################
@@ -93,13 +91,12 @@ if [ -z "$ORG" ]; then
     ORG="alvearie"
   fi
 fi
-printf "ORG: ${ORG:1}\n"
-printf "11\n"
 
 #####################################
 ## Load current images from remote ##
 #####################################
 # FIXME - should be tagging images with "latest" so we can just pull that ONE to find the other tags (x.y.z) and update that
+echo "docker pull ${ORG:1}/${REPOSITORY:1} -a"
 docker pull ${ORG}/${REPOSITORY} -a
 
 
