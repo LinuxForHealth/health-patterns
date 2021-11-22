@@ -261,8 +261,11 @@ file="helm-charts/health-patterns/Chart.yaml"
   printf "\n\n\n"  
   
   awk '/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,"version: ${newServiceHelmVer}");a=1}1'  ${file} > ${file}
+  printf "\n\nNew Chart.yaml contents:\n"  
+  cat ${file}
+  printf "\n\n\n"  
   printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
-  git add ${file}
+#  git add ${file}
 fi
 
 
