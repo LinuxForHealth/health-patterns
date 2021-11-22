@@ -228,6 +228,24 @@ then
   cp docs/charts/${new_helm_package} helm-charts/health-patterns/charts/
 fi
 
+## 9 ##
+##########################
+## Re-Index Helm Charts ##
+##########################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  helm repo index docs/charts
+  printf "\n\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns"
+fi
+
+## 9.5 ##
+###################################
+## Add index.yaml to Git ##
+###################################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  file="docs/charts/index.yaml"
+  git add ${file}
+  printf "\n\nAdded ${file} to Git commit"
+fi
 
 ## 10 ##
 ##########################
@@ -235,13 +253,7 @@ fi
 ##########################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 file="helm-charts/health-patterns/Chart.yaml"
-#  awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file} > ${file}
-  printf "\n\nAWK'ing\n\n"
-  awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${currentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} 
-  printf "\n\nDone AWK'ing"
-  
   awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${currentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} > ${file}
-  
   printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
   git add ${file}
 fi
@@ -252,8 +264,6 @@ fi
 ################################
 git config user.name "${GITHUB_USER}"
 git commit -m 'Add build artifacts to git commit'
-git pull
-git merge -s recursive -X ours
 git push
 
 
