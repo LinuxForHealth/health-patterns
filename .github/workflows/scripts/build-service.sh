@@ -254,6 +254,9 @@ fi
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 file="helm-charts/health-patterns/Chart.yaml"
 #  awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file} > ${file}
+  printf "\n\nAWK'ing\n\n"
+  awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${curentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} 
+  printf "\n\nDone AWK'ing"
   
   awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${curentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} > ${file}
   
@@ -266,6 +269,7 @@ fi
 ## Commit/Push updates to Git ##
 ################################
 git config user.name "${GITHUB_USER}"
+git fetch
 git commit -m 'Add build artifacts to git commit'
 git push
 
