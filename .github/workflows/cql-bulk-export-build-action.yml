@@ -1,20 +1,24 @@
-name: Java CI
+name: CQL Bulk Export Continuous Integration
 
 on:
   push:
     paths:
     - '.github/workflows/cql-bulk-export*'
-    - '.github/workflows/scripts/build-service.sh'
     - 'services/cql-bulk-export/**'
 
 jobs:
-#  build:
-#    name: Build CQL Bulk Export
-#    runs-on: ubuntu-latest
   docker:
     name: Build all CQL Bulk Export artifacts
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Run build script
-      run: .github/workflows/scripts/build-service.sh -r=cql-bulk-export -m=PUSH --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} --private-docker-user=${{ secrets.PRIVATE_DOCKER_HUB_USERNAME }} --private-docker-token=${{ secrets.PRIVATE_DOCKER_HUB_ACCESS_TOKEN }} --github-user=${{ github.actor }}
+      run: |
+        .github/workflows/scripts/build-service.sh 
+          -r=cql-bulk-export 
+          -m=PUSH 
+          --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} 
+          --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} 
+          --private-docker-user=${{ secrets.PRIVATE_DOCKER_HUB_USERNAME }} 
+          --private-docker-token=${{ secrets.PRIVATE_DOCKER_HUB_ACCESS_TOKEN }} 
+          --github-user=${{ github.actor }}
