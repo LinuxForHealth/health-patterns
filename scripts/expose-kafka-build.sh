@@ -187,7 +187,6 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   currentServiceHelmVer="$(grep "version:" services/expose-kafka/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
   [[ "$currentServiceHelmVer" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && newServiceHelmVer="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
   sed -i "s/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/" "services/${REPOSITORY}/chart/Chart.yaml"
-
 fi
 
 ## 6 ##
@@ -206,7 +205,6 @@ printf "\n\nStep #7"
 ###################################
 ## Re-package service helm chart ##
 ###################################
-#printf "helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ >&1 | sed \"s/.*'${REPOSITORY}'//\")"
 helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ >&1 | sed "s/.*'${REPOSITORY}'//")
 printf "Helm Package Suffix: ${helm_package_suffix"
 
