@@ -228,24 +228,6 @@ then
   cp docs/charts/${new_helm_package} helm-charts/health-patterns/charts/
 fi
 
-## 9 ##
-##########################
-## Re-Index Helm Charts ##
-##########################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  helm repo index docs/charts
-  printf "\n\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns"
-fi
-
-## 9.5 ##
-###################################
-## Add index.yaml to Git ##
-###################################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  file="docs/charts/index.yaml"
-  git add ${file}
-  printf "\n\nAdded ${file} to Git commit"
-fi
 
 ## 10 ##
 ##########################

@@ -1,0 +1,17 @@
+name: Java CI
+
+on:
+  push:
+    paths:
+    - '.github/workflows/reindex-helm-build-action.yml'
+    - '.github/workflows/scripts/reindex-helm.sh'
+    - 'docs/charts/**'
+
+jobs:
+  reindex:
+    name: Reindex all Helm charts
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run build script
+      run: .github/workflows/scripts/reindex-helm.sh -m=PUSH --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} --private-docker-user=${{ secrets.PRIVATE_DOCKER_HUB_USERNAME }} --private-docker-token=${{ secrets.PRIVATE_DOCKER_HUB_ACCESS_TOKEN }} --github-user=${{ github.actor }}
