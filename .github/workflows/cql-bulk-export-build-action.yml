@@ -5,7 +5,7 @@ on:
     paths:
     - '.github/workflows/cql-bulk-export*'
     - '.github/workflows/scripts/cql-bulk-export*'
-    - 'services/expose-kafka/**'
+    - 'services/cql-bulk-export/**'
 
 jobs:
 #  build:
