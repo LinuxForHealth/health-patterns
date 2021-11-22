@@ -179,22 +179,19 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 5 ##
+printf "\n\nStep #5"
 ###########################################
 ## Update helm chart to bump chart.yaml version ##
 ###########################################
-printf "\n\nStep #5"
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  printf "\nHere"
   currentServiceHelmVer="$(grep "version:" services/expose-kafka/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
-  printf "\ncurrentServiceHelmVer: ${currentServiceHelmVer}"
   [[ "$currentServiceHelmVer" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && newServiceHelmVer="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
-  printf "\nnewServiceHelmVer: ${newServiceHelmVer}"
-  printf "\n\nUpdating ${REPOSITORY} helm chart to new version: ${newServiceHelmVer}"
   sed -i "s/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/" "services/${REPOSITORY}/chart/Chart.yaml"
 
 fi
 
 ## 6 ##
+printf "\n\nStep #6"
 ###########################################
 ## Add updated chart.yaml to git commit ##
 ###########################################
@@ -205,12 +202,14 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 7 ##
+printf "\n\nStep #7"
 ###################################
 ## Re-package service helm chart ##
 ###################################
 helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ >&1 | sed "s/.*'${REPOSITORY}'//")
 
 ## 7.5 ##
+printf "\n\nStep #7.5"
 ###################################
 ## Add tgz to Git ##
 ###################################
@@ -221,6 +220,7 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 8 ##
+printf "\n\nStep #8"
 ########################################################
 ## Copy Helm tgz to health-patterns dependency folder ##
 ########################################################
@@ -233,6 +233,7 @@ then
 fi
 
 ## 9 ##
+printf "\n\nStep #9"
 ##########################
 ## Re-Index Helm Charts ##
 ##########################
@@ -242,6 +243,7 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 9.5 ##
+printf "\n\nStep #9.5"
 ###################################
 ## Add index.yaml to Git ##
 ###################################
@@ -252,6 +254,7 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 10 ##
+printf "\n\nStep #10"
 ##########################
 ## Update Health-Patterns chart.yaml to point at new service chart ##
 ##########################
@@ -261,6 +264,8 @@ file="helm-charts/health-patterns/Chart.yaml"
   printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
 fi
 
+## 11##
+printf "\n\nStep #11"
 ##############################
 ## Update parent helm chart ##
 ##############################
