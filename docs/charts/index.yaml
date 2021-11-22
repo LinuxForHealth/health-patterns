@@ -41,13 +41,13 @@ entries:
     urls:
     - cohort-service-0.1.0.tgz
     version: 0.1.0
-  cql-bulkexport:
+  cql-bulk-export:
   - apiVersion: v2
     appVersion: 0.0.1
     created: "2021-11-22T17:19:34.184721632Z"
     description: A Helm Chart to deploy the CQL BulkExport service.
     digest: 9be0909dda5129cdfb34753482032df9dccf8b18eb2e620fbf8d69ef7626fc18
-    home: https://github.com/Alvearie/health-patterns/tree/main/services/cql-bulkexport
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/cql-bulk-export
     keywords:
     - ibm
     - alvearie
@@ -58,10 +58,10 @@ entries:
       name: David Ranum
     - email: atclark@us.ibm.com
       name: Adam T. Clark
-    name: cql-bulkexport
+    name: cql-bulk-export
     type: application
     urls:
-    - cql-bulkexport-0.1.0.tgz
+    - cql-bulk-export-0.1.0.tgz
     version: 0.1.0
   deid:
   - apiVersion: v2

@@ -442,9 +442,9 @@ expose-kafka:
   inittopicreplication: 1
 
 # ------------------------------------------------------------------------------
-# CQL-BulkExport Service
+# CQL-Bulk-Export Service
 # ------------------------------------------------------------------------------
-cql-bulkexport:
+cql-bulk-export:
   enabled: false
   ingress:
     enabled: false
