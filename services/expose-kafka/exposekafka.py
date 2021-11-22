@@ -9,8 +9,6 @@ import os
 import time
 import uuid
 
-# dummy change
-
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
 
