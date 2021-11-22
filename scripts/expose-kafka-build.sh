@@ -174,7 +174,7 @@ sed -i "s/\(\s*tag:\).*/\1 ${TAG}/" "services/${REPOSITORY}/chart/values.yaml"
 ###########################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="services/${REPOSITORY}/chart/values.yaml"
-  git add ${file}
+  # git add ${file}
   printf "\n\nAdded ${file} to Git commit"
 fi
 
@@ -194,7 +194,7 @@ fi
 ###########################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="services/${REPOSITORY}/chart/Chart.yaml"
-  git add ${file}
+  # git add ${file}
   printf "\n\nAdded ${file} to Git commit"
 fi
 
@@ -212,7 +212,7 @@ printf "\nNew Helm Package: ${new_helm_package}"
 ###################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="docs/charts/${new_helm_package}"
-  git add ${file}
+  # git add ${file}
   printf "\n\nAdded ${file} to Git commit"
 fi
 
@@ -243,7 +243,7 @@ fi
 ###################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="docs/charts/index.yaml"
-  git add ${file}
+  # git add ${file}
   printf "\n\nAdded ${file} to Git commit"
 fi
 
