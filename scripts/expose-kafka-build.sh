@@ -206,7 +206,9 @@ printf "\n\nStep #7"
 ###################################
 ## Re-package service helm chart ##
 ###################################
+printf "helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ >&1 | sed \"s/.*'${REPOSITORY}'//\")"
 helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ >&1 | sed "s/.*'${REPOSITORY}'//")
+printf "Helm Package Suffix: ${helm_package_suffix"
 
 ## 7.5 ##
 printf "\n\nStep #7.5"
