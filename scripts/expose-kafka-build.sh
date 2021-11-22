@@ -166,7 +166,6 @@ fi
 ## Update helm chart to use new version ##
 ##########################################
 printf "\n\nUpdating values.yaml with new container image version"
-echo "\nsed -i 's/\(\s*tag:\).*/\1 ${TAG}/' \"services/${REPOSITORY}/chart/values.yaml\""
 sed -i "s/\(\s*tag:\).*/\1 ${TAG}/" "services/${REPOSITORY}/chart/values.yaml"
 
 ## 4 ##
@@ -187,7 +186,7 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   currentServiceHelmVer="$(grep "version:" services/expose-kafka/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
   [[ "$currentServiceHelmVer" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && newServiceHelmVer="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
   printf "\n\nUpdating ${REPOSITORY} helm chart to new version: ${newServiceHelmVer}"
-  sed -i 's/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/' "services/${REPOSITORY}/chart/Chart.yaml"
+  sed -i "s/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/" "services/${REPOSITORY}/chart/Chart.yaml"
 fi
 
 ## 6 ##
@@ -204,7 +203,7 @@ fi
 ###################################
 ## Re-package service helm chart ##
 ###################################
-helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ >&1 | sed 's/.*'${REPOSITORY}'//')
+helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ >&1 | sed "s/.*'${REPOSITORY}'//")
 
 ## 7.5 ##
 ###################################
@@ -260,6 +259,13 @@ fi
 ##############################
 ## Update parent helm chart ##
 ##############################
+if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  file="helm-charts/health-patterns/Chart.yaml"
+  printf "awk \"/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\\"version: ${newServiceHelmVer}\\");a=1}1\"  ${file} > ${file}"
+  
+  awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file} > ${file}
+  printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
+fi
 
 
 ################################
