@@ -255,10 +255,10 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 file="helm-charts/health-patterns/Chart.yaml"
 #  awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file} > ${file}
   printf "\n\nAWK'ing\n\n"
-  awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${curentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} 
+  awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${currentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} 
   printf "\n\nDone AWK'ing"
   
-  awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${curentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} > ${file}
+  awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${currentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} > ${file}
   
   printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
   git add ${file}
@@ -269,8 +269,8 @@ fi
 ## Commit/Push updates to Git ##
 ################################
 git config user.name "${GITHUB_USER}"
-git pull -s recursive -X ours
 git commit -m 'Add build artifacts to git commit'
+git pull -s recursive -X ours
 git push
 
 
