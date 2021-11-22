@@ -269,7 +269,7 @@ fi
 ## Commit/Push updates to Git ##
 ################################
 git config user.name "${GITHUB_USER}"
-git fetch
+git pull
 git commit -m 'Add build artifacts to git commit'
 git push
 
