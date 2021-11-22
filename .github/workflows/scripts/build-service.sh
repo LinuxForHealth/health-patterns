@@ -270,6 +270,7 @@ fi
 ################################
 git config user.name "${GITHUB_USER}"
 git commit -m 'Add build artifacts to git commit'
+git pull
 git merge -s recursive -X ours
 git push
 
