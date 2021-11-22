@@ -4,13 +4,8 @@ on:
   push:
     paths:
     - '.github/workflows/expose-kafka*'
+    - '.github/workflows/scripts/expose-kafka*'
     - 'services/expose-kafka/**'
-    - 'scripts/expose-kafka*'
-    inputs:
-      environment:
-        description: 'Define env name'
-        required: true
-        default: 'prod'
 
 
 jobs:
@@ -18,7 +13,7 @@ jobs:
 #    name: Build Expose-Kafka
 #    runs-on: ubuntu-latest
   docker:
-    name: Build and Push Expose-Kafka Docker Container
+    name: Build all Expose-Kafka artifacts
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
