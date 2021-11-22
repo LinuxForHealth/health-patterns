@@ -183,7 +183,7 @@ fi
 ## Update helm chart to bump chart.yaml version ##
 ###########################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  currentServiceHelmVer="$(grep "version:" services/expose-kafka/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
+  currentServiceHelmVer="$(grep "version:" services/${REPOSITORY}/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
   [[ "$currentServiceHelmVer" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && newServiceHelmVer="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
   sed -i "s/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/" "services/${REPOSITORY}/chart/Chart.yaml"
 fi
