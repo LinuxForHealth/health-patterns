@@ -4,7 +4,7 @@ on:
   push:
     paths:
     - '.github/workflows/expose-kafka*'
-    - '.github/workflows/scripts/expose-kafka*'
+    - '.github/workflows/scripts/build-service.sh'
     - 'services/expose-kafka/**'
 
 

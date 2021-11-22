@@ -4,7 +4,7 @@ on:
   push:
     paths:
     - '.github/workflows/cql-bulk-export*'
-    - '.github/workflows/scripts/cql-bulk-export*'
+    - '.github/workflows/scripts/build-service.sh'
     - 'services/cql-bulk-export/**'
 
 jobs:
