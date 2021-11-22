@@ -25,6 +25,11 @@ for i in "$@"; do
       MODE="${i#*=}"
       shift # past argument=value
       ;;
+      
+    --github-user=*)
+      GITHUB_USER="${i#*=}"
+      shift # past argument=value
+      ;;
     --docker-user=*)
       DOCKER_USER="${i#*=}"
       shift # past argument=value
@@ -80,11 +85,11 @@ if [ -z "$ORG" ]; then
     ORG=${USER}
   elif [[ ${MODE} == 'PUSH' ]]
   then
-    if [[ -z "$DOCKER_USER" ]]
+    if [[ -z "$PRIVATE_DOCKER_USER" ]]
     then
-      ORG="${GIT_USER}"
-    else
       ORG="${DOCKER_USER}"
+    else
+      ORG="${PRIVATE_DOCKER_USER}"
     fi
   else
     ORG="alvearie"
@@ -260,6 +265,7 @@ fi
 ################################
 ## Commit/Push updates to Git ##
 ################################
+git config user.name "${GITHUB_USER}"
 git commit -m 'Add build artifacts to git commit'
 git push
 
