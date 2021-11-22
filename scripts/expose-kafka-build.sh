@@ -179,7 +179,6 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 5 ##
-printf "\n\nStep #5"
 ###########################################
 ## Update helm chart to bump chart.yaml version ##
 ###########################################
@@ -190,7 +189,6 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 6 ##
-printf "\n\nStep #6"
 ###########################################
 ## Add updated chart.yaml to git commit ##
 ###########################################
@@ -201,26 +199,24 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 7 ##
-printf "\n\nStep #7"
 ###################################
 ## Re-package service helm chart ##
 ###################################
 helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ | sed "s/.*${REPOSITORY}//")
-printf "Helm Package Suffix: ${helm_package_suffix}"
+new_helm_package=${REPOSITORY}${helm_package_suffix}
+printf "\nNew Helm Package: ${new_helm_package}"
 
 ## 7.5 ##
-printf "\n\nStep #7.5"
 ###################################
 ## Add tgz to Git ##
 ###################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  file="docs/charts/${REPOSITORY}${helm_package_suffix}"
+  file="docs/charts/${new_helm_package}"
   git add ${file}
   printf "\n\nAdded ${file} to Git commit"
 fi
 
 ## 8 ##
-printf "\n\nStep #8"
 ########################################################
 ## Copy Helm tgz to health-patterns dependency folder ##
 ########################################################
@@ -229,11 +225,10 @@ then
   ### Since DEV mode, copy to health-patterns dependency folder
   mkdir -p helm-charts/health-patterns/charts/
   rm helm-charts/health-patterns/${REPOSITORY}*.tgz
-  cp docs/charts/${REPOSITORY}${helm_package_suffix} helm-charts/health-patterns/charts/
+  cp docs/charts/${new_helm_package} helm-charts/health-patterns/charts/
 fi
 
 ## 9 ##
-printf "\n\nStep #9"
 ##########################
 ## Re-Index Helm Charts ##
 ##########################
@@ -243,7 +238,6 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 9.5 ##
-printf "\n\nStep #9.5"
 ###################################
 ## Add index.yaml to Git ##
 ###################################
@@ -254,7 +248,6 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 ## 10 ##
-printf "\n\nStep #10"
 ##########################
 ## Update Health-Patterns chart.yaml to point at new service chart ##
 ##########################
@@ -262,19 +255,7 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 file="helm-charts/health-patterns/Chart.yaml"
   awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file} > ${file}
   printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
-fi
-
-## 11##
-printf "\n\nStep #11"
-##############################
-## Update parent helm chart ##
-##############################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  file="helm-charts/health-patterns/Chart.yaml"
-  printf "awk \"/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\\"version: ${newServiceHelmVer}\\");a=1}1\"  ${file} > ${file}"
-  
-  awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file} > ${file}
-  printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
+  git add file
 fi
 
 
