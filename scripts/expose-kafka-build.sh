@@ -256,4 +256,12 @@ fi
 ## Update parent helm chart ##
 ##############################
 
+
+################################
+## Commit/Push updates to Git ##
+################################
+git commit -m 'Add build artifacts to git commit'
+git push
+
+
 printf "\n\n"
