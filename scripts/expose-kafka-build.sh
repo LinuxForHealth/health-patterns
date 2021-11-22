@@ -174,7 +174,7 @@ sed -i "s/\(\s*tag:\).*/\1 ${TAG}/" "services/${REPOSITORY}/chart/values.yaml"
 ###########################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="services/${REPOSITORY}/chart/values.yaml"
-  # git add ${file}
+  git add ${file}
   printf "\n\nAdded ${file} to Git commit"
 fi
 
@@ -194,7 +194,7 @@ fi
 ###########################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="services/${REPOSITORY}/chart/Chart.yaml"
-  # git add ${file}
+  git add ${file}
   printf "\n\nAdded ${file} to Git commit"
 fi
 
@@ -212,7 +212,7 @@ printf "\nNew Helm Package: ${new_helm_package}"
 ###################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="docs/charts/${new_helm_package}"
-  # git add ${file}
+  git add ${file}
   printf "\n\nAdded ${file} to Git commit"
 fi
 
@@ -243,7 +243,7 @@ fi
 ###################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="docs/charts/index.yaml"
-  # git add ${file}
+  git add ${file}
   printf "\n\nAdded ${file} to Git commit"
 fi
 
@@ -253,19 +253,9 @@ fi
 ##########################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 file="helm-charts/health-patterns/Chart.yaml"
-
-  printf "\n\n\nChart.yaml file: ${file}\n\n"  
-  printf "awk \"/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1\"  ${file}"
-  printf "\n\n\n"  
-  awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file}
-  printf "\n\n\n"  
-  
   awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file} > ${file}
-  printf "\n\nNew Chart.yaml contents:\n"  
-  cat ${file}
-  printf "\n\n\n"  
   printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
-#  git add ${file}
+  git add ${file}
 fi
 
 
