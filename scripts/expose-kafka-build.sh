@@ -255,12 +255,12 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 file="helm-charts/health-patterns/Chart.yaml"
 
   printf "\n\n\nChart.yaml file: ${file}\n\n"  
-  printf "awk '/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1'  ${file}"
+  printf "awk \"/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1\"  ${file}"
   printf "\n\n\n"  
-  awk '/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,"version: ${newServiceHelmVer}");a=1}1'  ${file}
+  awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file}
   printf "\n\n\n"  
   
-  awk '/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,"version: ${newServiceHelmVer}");a=1}1'  ${file} > ${file}
+  awk "/${REPOSITORY}/ && a!=1 {print;getline; sub(/version: ${currentServiceHelmVer}/,\"version: ${newServiceHelmVer}\");a=1}1"  ${file} > ${file}
   printf "\n\nNew Chart.yaml contents:\n"  
   cat ${file}
   printf "\n\n\n"  
