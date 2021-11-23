@@ -22,7 +22,7 @@ jobs:
     #  if: ${{ steps.one.outputs.files }}
       run: |
         echo "Changed Files:" \
-        echo "${{ steps.one }}" \
+        echo "${{join(steps.one.outputs.*, '\n')}} \
         echo "files:" \
         echo "${{ steps.one.outputs.files }}" \
         echo "action_fruit:" \
