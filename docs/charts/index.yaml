@@ -3,7 +3,7 @@ entries:
   cohort-service:
   - apiVersion: v2
     appVersion: 1.0.1
-    created: "2021-11-23T20:31:33.831336919Z"
+    created: "2021-11-23T20:36:07.338349655Z"
     description: A Helm Chart to deploy the Alvearie Health Patterns Cohort Service
       App.
     digest: 71c3383c1cc667bdf519c3f6576d8ba8a340229bc5bd9ec1120d65887fd40090
@@ -23,7 +23,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2021-11-23T20:31:33.830316813Z"
+    created: "2021-11-23T20:36:07.33754124Z"
     description: A Helm Chart to deploy the Alvearie Health Patterns Cohort Service
       App.
     digest: d2b554c8f4018cce30103fe79ceca2579f429162a82a972dc2fc6a5683bb9b39
@@ -44,7 +44,7 @@ entries:
   cql-bulk-export:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.833028828Z"
+    created: "2021-11-23T20:36:07.339023568Z"
     description: A Helm Chart to deploy the CQL BulkExport service.
     digest: 004079b0e20d122836a4ab84f04c25a3347766ae3d31c5401cd51e1c89f4fe2a
     home: https://github.com/Alvearie/health-patterns/tree/main/services/cql-bulk-export
@@ -66,7 +66,7 @@ entries:
   cql-bulkexport:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.834153135Z"
+    created: "2021-11-23T20:36:07.339760181Z"
     description: A Helm Chart to deploy the CQL BulkExport service.
     digest: 9be0909dda5129cdfb34753482032df9dccf8b18eb2e620fbf8d69ef7626fc18
     home: https://github.com/Alvearie/health-patterns/tree/main/services/cql-bulkexport
@@ -88,7 +88,7 @@ entries:
   deid:
   - apiVersion: v2
     appVersion: 1.0.1
-    created: "2021-11-23T20:31:33.83511914Z"
+    created: "2021-11-23T20:36:07.341044505Z"
     description: A Helm Chart to deploy the Alvearie De-Identification service.
     digest: 6b37a20c44af8225ae05455c32d2328e40c3fdff61fc67e2a878b01a0d9c8714
     home: https://github.com/Alvearie/de-identification
@@ -109,7 +109,7 @@ entries:
   deid-prep:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.835785744Z"
+    created: "2021-11-23T20:36:07.341486914Z"
     description: A Helm Chart to deploy the Deid Prep service.
     digest: 987611c66cca85b9cb38b4894396252b2b48e07bb7eb698b3388fb6decc84fa1
     home: https://github.com/Alvearie/health-patterns/tree/main/services/deid-prep
@@ -128,7 +128,27 @@ entries:
   expose-kafka:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.837977656Z"
+    created: "2021-11-23T20:36:07.343487551Z"
+    description: A Helm Chart to deploy the Expose Kafka service.
+    digest: 79a74e97e5a59823843e47c380ec4e020f388fbf7f719d7bd5ae92acde916da3
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
+    keywords:
+    - ibm
+    - alvearie
+    - kafka
+    maintainers:
+    - email: dlranum@us.ibm.com
+      name: David Ranum
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    name: expose-kafka
+    type: application
+    urls:
+    - expose-kafka-0.2.17.tgz
+    version: 0.2.17
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2021-11-23T20:36:07.343097744Z"
     description: A Helm Chart to deploy the Expose Kafka service.
     digest: dd75ae970e7519bf8e0a0c1c16fdfb5275e03e7dafc91313dbf8db01215709b9
     home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
@@ -148,7 +168,7 @@ entries:
     version: 0.2.16
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.837470853Z"
+    created: "2021-11-23T20:36:07.342731237Z"
     description: A Helm Chart to deploy the Expose Kafka service.
     digest: 49ceafbf0a4cfa5fdb1409b256c3abd1581d18e264c3e0acd90a84612a079428
     home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
@@ -168,7 +188,7 @@ entries:
     version: 0.2.15
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.83700825Z"
+    created: "2021-11-23T20:36:07.34234633Z"
     description: A Helm Chart to deploy the Expose Kafka service.
     digest: 63057a0857fa6ff1a5881e0f7ae17e74dbae8831851865e2e65486a98b9a027b
     home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
@@ -188,7 +208,7 @@ entries:
     version: 0.2.1
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.836493648Z"
+    created: "2021-11-23T20:36:07.341916122Z"
     description: A Helm Chart to deploy the Expose Kafka service.
     digest: 9aa6deff1069d2e38f98cde089bc2c9159421d6a015b12c49b1f76fcc5920b42
     home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
@@ -209,7 +229,7 @@ entries:
   fhir-trigger:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.838469358Z"
+    created: "2021-11-23T20:36:07.343917559Z"
     description: A Helm Chart to deploy the Alvearie FHIR Trigger service.
     digest: 00521794b170471b78e2267a8a2e8434d3d1c7f9c1ffcb0c8a1c2f34bb27f3a5
     home: https://github.com/Alvearie/health-patterns/tree/main/services/fhir-trigger
@@ -230,7 +250,7 @@ entries:
   nifi-registry:
   - apiVersion: v2
     appVersion: 0.9.0
-    created: "2021-11-23T20:31:33.839029862Z"
+    created: "2021-11-23T20:36:07.34446707Z"
     description: A Helm Chart to deploy a NiFi Registry.
     digest: dbc89354ae77fc6e7047ac39f7b44b596d097264f00c16fc5b1533ca81baf261
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/nifi-registry
@@ -251,7 +271,7 @@ entries:
   nlp-insights:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.839584165Z"
+    created: "2021-11-23T20:36:07.344969079Z"
     description: A Helm Chart to deploy the NLP Insights service.
     digest: 6f860eaf5a717339b2acbf12bf338d1410ae4cb0bd57034df3db5e922dfc6f3b
     home: https://github.com/Alvearie/health-patterns/tree/main/services/nlp-insights
@@ -271,7 +291,7 @@ entries:
   term-services-prep:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-11-23T20:31:33.840036867Z"
+    created: "2021-11-23T20:36:07.345347186Z"
     description: A Helm Chart to deploy the Terminology Services Prep service.
     digest: 3b7e1a094a5f4aa37f8bc48b509b95843a5a11408401dc5f1bc0addeb6fd0a73
     home: https://github.com/Alvearie/health-patterns/tree/main/services/term-services-prep
@@ -288,4 +308,4 @@ entries:
     urls:
     - term-services-prep-0.1.0.tgz
     version: 0.1.0
-generated: "2021-11-23T20:31:33.829540909Z"
+generated: "2021-11-23T20:36:07.336741725Z"
