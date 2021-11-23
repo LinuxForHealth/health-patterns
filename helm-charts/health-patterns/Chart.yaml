@@ -106,11 +106,11 @@ dependencies:
     condition: kafka.enabled
     repository: https://charts.bitnami.com/bitnami
   - name: expose-kafka
-    version: 0.2.0
+    version: 0.2.1
     condition: kafka.enabled
     repository: https://alvearie.github.io/health-patterns/charts
   - name: cql-bulk-export
-    version: 0.1.0
+    version: 0.1.1
     condition: cql-bulk-export.enabled
     repository: https://alvearie.github.io/health-patterns/charts
   - name: nlp-insights
