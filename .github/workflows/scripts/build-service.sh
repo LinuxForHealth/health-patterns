@@ -1,4 +1,4 @@
-#!/bin/bash -v
+#!/bin/bash
 
 # Exit script on any error
 set -e
@@ -217,7 +217,7 @@ fi
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="helm-charts/health-patterns/Chart.yaml"
   NEW_CHART=`awk '!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1; fflush()' old="version: .*" new="version: ${newServiceHelmVer}" $file`
-  printf "\n\nNEW_CHART:\n<<<${NEW_FILE}>>>\n\n"
+  printf "\n\nNEW_CHART:\n<<<${NEW_CHART}>>>\n\n"
   if [[ ! -z "$NEW_CHART" ]]
   then
     echo "$NEW_CHART" > $file
