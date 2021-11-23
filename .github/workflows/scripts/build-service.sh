@@ -216,6 +216,6 @@ fi
 ##########################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 file="helm-charts/health-patterns/Chart.yaml"
-  awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${currentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} > ${file}
+  awk '!f && s{sub(old,new);f=1}/'${REPOSITORY}'/{s=1}1' old="version: ${currentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} > ${file}
   printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
 fi
