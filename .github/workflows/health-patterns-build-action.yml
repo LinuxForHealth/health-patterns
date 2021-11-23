@@ -21,9 +21,9 @@ jobs:
     - name: two
     #  if: ${{ steps.one.outputs.files }}
       run: |
-        echo "Changed Files:\n" \
-        echo "${{join(steps.one.outputs.*, '\n')}}\n" \
-        echo "files:\n" \
-        echo "${{ steps.one.outputs.files }}\n" \
-        echo "action_fruit:\n" \
-        echo "${{ steps.one.outputs.action_fruit }}\n"
+        $(echo "Changed Files:\n") \
+        $(echo "${{join(steps.one.outputs.*, '\n')}}\n") \
+        $(echo "files:\n") \
+        $(echo "${{ steps.one.outputs.files }}\n") \
+        $(echo "action_fruit:\n") \
+        $(echo "${{ steps.one.outputs.action_fruit }}\n")
