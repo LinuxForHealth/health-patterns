@@ -4,11 +4,13 @@ on:
   push:
 
 jobs:
-  docker:
+  one:
     name: Build all Expose-Kafka artifacts
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Get changed files
       id: changes
       # Set outputs using the command.
@@ -16,3 +18,12 @@ jobs:
         echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
         echo "::set-output name=ts::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs)"
 
+  two:
+    runs-on: ubuntu-latest
+    # require the first job to have ran
+    needs: one
+    # only run there are changed files
+    if: ${{needs.changedfiles.outputs.ts}}
+    steps:
+      - name: echo changed files
+        run: echo ${{needs.changedfiles.outputs.ts}}
