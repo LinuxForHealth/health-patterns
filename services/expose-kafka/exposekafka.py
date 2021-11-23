@@ -9,7 +9,7 @@ import os
 import time
 import uuid
 
-# Add comment   
+# Add comment
 
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
@@ -58,7 +58,7 @@ while True:
 
 initconsumer = KafkaConsumer(bootstrap_servers=kafkabootstrap,
                          sasl_mechanism="PLAIN", sasl_plain_username=kafkauser, sasl_plain_password=kafkapw)
-  
+
 existing_topics = initconsumer.topics()
 
 init_admin_client = KafkaAdminClient(
