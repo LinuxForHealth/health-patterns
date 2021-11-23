@@ -12,7 +12,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: one
-      id: changes
+      id: one
       # Set outputs using the command.
       run: |
         echo "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})" \
@@ -21,9 +21,9 @@ jobs:
     - name: two
     #  if: ${{ steps.one.outputs.files }}
       run: |
-        echo "Changed Files:" \
-        echo "${{join(steps.one.outputs.*, '\n')}}" \
-        echo "files:" \
-        echo "${{ steps.one.outputs.files }}" \
-        echo "action_fruit:" \
-        echo "${{ steps.one.outputs.action_fruit }}"
+        echo "Changed Files:\n" \
+        echo "${{join(steps.one.outputs.*, '\n')}}\n" \
+        echo "files:\n" \
+        echo "${{ steps.one.outputs.files }}\n" \
+        echo "action_fruit:\n" \
+        echo "${{ steps.one.outputs.action_fruit }}\n"
