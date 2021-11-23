@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: alvearie/cql-bulk-export
   pullPolicy: Always
-  tag: 0.0.6
+  tag: 0.0.7
 service:
   type: ClusterIP
   port: 5000
