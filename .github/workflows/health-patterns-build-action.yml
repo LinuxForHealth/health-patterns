@@ -16,13 +16,15 @@ jobs:
       # Set outputs using the command.
       run: |
         echo "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
-        echo "::set-output name=all::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
+        echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
   two:
     runs-on: ubuntu-latest
     # require the first job to have ran
     needs: one
     # only run there are changed files
-    if: ${{needs.changedfiles.outputs.ts}}
+    if: ${{ steps.one.outputs.files }}
     steps:
       - name: echo changed files
-        run: echo ${{needs.changedfiles.outputs.ts}}
+        run: |
+          echo "Changed Files:\n\n" \
+          echo ${{ steps.one.outputs.files }}
