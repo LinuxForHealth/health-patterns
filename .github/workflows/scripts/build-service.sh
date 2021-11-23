@@ -221,7 +221,7 @@ file="helm-charts/health-patterns/Chart.yaml"
   printf "\n\nNEW_CHART: ${NEW_FILE}\n\n"
   if [[ ${NEW_CHART} ]]
   then
-    echo ${NEW_CHART} > ${file}
+    echo "$NEW_CHART" > ${file}
     printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
   fi
 fi
