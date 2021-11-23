@@ -1,0 +1,18 @@
+name: Expose Kafka Continuous Integration
+
+on:
+  push:
+
+jobs:
+  docker:
+    name: Build all Expose-Kafka artifacts
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get changed files
+      id: changes
+      # Set outputs using the command.
+      run: |
+        echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
+        echo "::set-output name=ts::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs)"
+
