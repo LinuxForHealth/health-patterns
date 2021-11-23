@@ -18,8 +18,9 @@ jobs:
 
     - name: Build Expose Kafka
       if: ${{contains( steps.filecheck.outputs.changed_files ,'expose-kafka')}}
-      run: echo "Running Expose Kafka build" \
-             .github/workflows/scripts/build-service.sh \
+      run: |
+           echo "Running Expose Kafka build"
+           .github/workflows/scripts/build-service.sh \
              -r=expose-kafka 
              -m=PUSH 
              --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} 
@@ -30,8 +31,9 @@ jobs:
 
     - name: Build CQL Bulk Export
       if: ${{contains( steps.filecheck.outputs.changed_files ,'cql-bulk-export')}}
-      run: echo "Running CQL Bulk Export build" \
-             .github/workflows/scripts/build-service.sh 
+      run: |
+           echo "Running CQL Bulk Export build"
+           .github/workflows/scripts/build-service.sh 
              -r=cql-bulk-export 
              -m=PUSH 
              --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} 
@@ -41,7 +43,8 @@ jobs:
              --github-user=${{ github.actor }}
 
     - name: Commit all changes and update Helm repo 
-      run: echo "Running CQL Bulk Export build" \
-             .github/workflows/scripts/build-health-patterns.sh 
+      run: |
+           echo "Running CQL Bulk Export build"
+           .github/workflows/scripts/build-health-patterns.sh 
              -m=PUSH 
              --github-user=${{ github.actor }}
