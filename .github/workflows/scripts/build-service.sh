@@ -168,16 +168,6 @@ fi
 printf "\n\nUpdating values.yaml with new container image version"
 sed -i "s/\(\s*tag:\).*/\1 ${TAG}/" "services/${REPOSITORY}/chart/values.yaml"
 
-## 4 ##
-###########################################
-## Add updated values.yaml to git commit ##
-###########################################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  file="services/${REPOSITORY}/chart/values.yaml"
-  git add ${file}
-  printf "\n\nAdded ${file} to Git commit"
-fi
-
 ## 5 ##
 ###########################################
 ## Update helm chart to bump chart.yaml version ##
@@ -188,15 +178,6 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   sed -i "s/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/" "services/${REPOSITORY}/chart/Chart.yaml"
 fi
 
-## 6 ##
-###########################################
-## Add updated chart.yaml to git commit ##
-###########################################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  file="services/${REPOSITORY}/chart/Chart.yaml"
-  git add ${file}
-  printf "\n\nAdded ${file} to Git commit"
-fi
 
 ## 7 ##
 ###################################
@@ -206,15 +187,6 @@ helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ 
 new_helm_package=${REPOSITORY}${helm_package_suffix}
 printf "\nNew Helm Package: ${new_helm_package}"
 
-## 7.5 ##
-###################################
-## Add tgz to Git ##
-###################################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  file="docs/charts/${new_helm_package}"
-  git add ${file}
-  printf "\n\nAdded ${file} to Git commit"
-fi
 
 ## 8 ##
 ########################################################
@@ -237,15 +209,6 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   printf "\n\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns"
 fi
 
-## 9.5 ##
-###################################
-## Add index.yaml to Git ##
-###################################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  file="docs/charts/index.yaml"
-  git add ${file}
-  printf "\n\nAdded ${file} to Git commit"
-fi
 
 ## 10 ##
 ##########################
@@ -255,16 +218,4 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 file="helm-charts/health-patterns/Chart.yaml"
   awk "!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1" old="version: ${currentServiceHelmVer}" new="version: ${newServiceHelmVer}" ${file} > ${file}
   printf "\n\nUpdated ${file} to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
-  git add ${file}
 fi
-
-
-################################
-## Commit/Push updates to Git ##
-################################
-git config user.name "${GITHUB_USER}"
-git commit -m 'Add build artifacts to git commit'
-git push
-
-
-printf "\n\n"
