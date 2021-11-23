@@ -11,23 +11,16 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
+
     - name: Get author name
       id: author
       run: echo "::set-output name=author::$(git show -s --format=%an)"
     - name: Print author name
       run: echo "${{ steps.author.outputs.author }}"
-    - name: one
-      id: one
-      # Set outputs using the command.
-      run: |
-        echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})" \
-        echo "::set-output name=action_fruit::strawberry"
-    - name: two
+
+    - name: Identify changed files
+      id: filecheck
+      run: echo "::set-output name=changed_files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
+    - name: Build Expose Kafka
     #  if: ${{ steps.one.outputs.files }}
-      run: |
-        echo "Changed Files:\n" \
-        echo "${{join(steps.one.outputs.*, '\n')}}\n" \
-        echo "files:\n" \
-        echo "${{ steps.one.outputs.files }}\n" \
-        echo "action_fruit:\n" \
-        echo "${{ steps.one.outputs.action_fruit }}\n"
+      run: echo "${{ steps.filecheck.outputs.changed_files }}"
