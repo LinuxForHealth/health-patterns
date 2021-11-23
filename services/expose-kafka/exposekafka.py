@@ -11,7 +11,6 @@ import uuid
 
 # Add comment
 # Add 2nd comment
-# Add 3rd comment
 
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
