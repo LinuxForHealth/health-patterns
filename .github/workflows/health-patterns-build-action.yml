@@ -15,10 +15,8 @@ jobs:
       id: changes
       # Set outputs using the command.
       run: |
-        echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
-        echo "::set-output name=ts::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs)"
-        echo "::set-output name=ts::$(git diff --name-only --diff-filter=ACMRT ${{ github.context.payload.before }} ${{ github.sha }} | grep .ts$ | xargs)"
-        git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
+        echo "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
+        echo "::set-output name=all::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
   two:
     runs-on: ubuntu-latest
     # require the first job to have ran
