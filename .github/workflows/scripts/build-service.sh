@@ -216,7 +216,7 @@ fi
 ##########################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   file="helm-charts/health-patterns/Chart.yaml"
-  NEW_CHART=`awk '!f && s{sub(old,new);f=1}/${REPOSITORY}/{s=1}1; fflush()' old="version: .*" new="version: ${newServiceHelmVer}" $file`
+  NEW_CHART=`awk '!f && s{sub(old,new);f=1}/'${REPOSITORY}'/{s=1}1; fflush()' old="version: .*" new="version: ${newServiceHelmVer}" $file`
   printf "\n\nNEW_CHART:\n<<<${NEW_CHART}>>>\n\n"
   if [[ ! -z "$NEW_CHART" ]]
   then
