@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: alvearie/expose-kafka
   pullPolicy: Always
-  tag: 0.0.13
+  tag: 0.0.14
 service:
   type: ClusterIP
   port: 5000
