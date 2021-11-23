@@ -4,27 +4,21 @@ on:
   push:
 
 jobs:
-  one:
+  jobOne:
     name: Build all Expose-Kafka artifacts
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Get changed files
+    - name: one
       id: changes
       # Set outputs using the command.
       run: |
         echo "$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
         echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
-  two:
-    runs-on: ubuntu-latest
-    # require the first job to have ran
-    needs: one
-    # only run there are changed files
-    if: ${{ steps.one.outputs.files }}
-    steps:
-      - name: echo changed files
-        run: |
-          echo "Changed Files:\n\n" \
-          echo ${{ steps.one.outputs.files }}
+    - name: two
+      if: ${{ steps.one.outputs.files }}
+      run: |
+        echo "Changed Files:\n\n" \
+        echo ${{ steps.one.outputs.files }}
