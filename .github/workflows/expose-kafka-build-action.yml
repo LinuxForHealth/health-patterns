@@ -6,6 +6,7 @@ on:
     - '.github/workflows/expose-kafka*'
     - 'services/expose-kafka/**'
 
+
 jobs:
   docker:
     name: Build all Expose-Kafka artifacts

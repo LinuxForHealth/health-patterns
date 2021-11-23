@@ -22,5 +22,8 @@ jobs:
       id: filecheck
       run: echo "::set-output name=changed_files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
     - name: Build Expose Kafka
-    #  if: ${{ steps.one.outputs.files }}
-      run: echo "${{ steps.filecheck.outputs.changed_files }}"
+      if: ${{contains( steps.filecheck.outputs.changed_files ,'expose-kafka')}}
+      run: echo "Running Expose Kafka build"
+    - name: Build CQL Bulk Export
+      if: ${{contains( steps.filecheck.outputs.changed_files ,'cql-bulk-export')}}
+      run: echo "Running CQL Bulk Export build"
