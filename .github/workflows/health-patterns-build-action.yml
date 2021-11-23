@@ -20,5 +20,5 @@ jobs:
     - name: two
     #  if: ${{ steps.one.outputs.files }}
       run: |
-        echo "Changed Files:\n\n" \
-        echo ${{ steps.one.outputs }}
+        echo "Changed Files:\\n\\n" \
+        echo ${{ steps.one }}
