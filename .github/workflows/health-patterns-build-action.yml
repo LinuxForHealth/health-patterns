@@ -19,7 +19,7 @@ jobs:
         changed_files="${changed_files//'%'/'%25'}"
         changed_files="${changed_files//$'\n'/'%0A'}"
         changed_files="${changed_files//$'\r'/'%0D'}"
-        echo "::set-output name=changed_files::$(changed_files)"
+        echo "::set-output name=changed_files::${changed_files}"
     - name: Log Changed Files
       run: echo "${{steps.filecheck.outputs.changed_files}}"
 
