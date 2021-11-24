@@ -31,6 +31,12 @@ import categories.FHIRProxyIngestion;
 @RunWith(ZeroCodeUnitRunner.class)
 
 public class Ingestion_Flow {
+	
+// Test categories that end with 'BLK' use the expose-kafka blocking-api 	
+	
+	
+	 // Basic ingestion tests
+	
 	 @Test
 	 @Category({BasicIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR_Errors.json")
@@ -67,6 +73,9 @@ public class Ingestion_Flow {
 	    public void ingest_FHIR_TERM_BLK() throws Exception {
 	    }
 	 
+	 
+	 // DEID and Terminology ingestion tests
+		
 	 @Test
 	 @Category({DeIDIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR_DEID.json")
@@ -91,6 +100,9 @@ public class Ingestion_Flow {
 	    public void ingest_FHIR_DEID_TERM_BLK() throws Exception {
 	    }
 	 
+	 
+	 // ASCVD ingestion tests
+		
 	 @Test
 	 @Category({ASCVDIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR_ASCVD.json")
@@ -115,12 +127,9 @@ public class Ingestion_Flow {
 	    public void ingest_FHIR_No_ASCVD_BLK() throws Exception {
 	    }
 	 
-	 @Test
-	 @Category({FHIRProxyIngestion.class})
-	 @Scenario("scenarios/ingest_FHIR_Proxy.json")
-	    public void ingest_FHIR_Proxy() throws Exception {
-	    }
 	 
+	 // NLP Insights ingestion tests
+		
 	 @Test
 	 @Category({NLPIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR_NLP_Insights.json")
@@ -144,4 +153,14 @@ public class Ingestion_Flow {
 	 @Scenario("scenarios/ingest_FHIR_NLP_Insights_Override_BLK.json")
 	    public void ingest_FHIR_NLP_Insights_Override_BLK() throws Exception {
 	    }
+	
+	 
+	 // FHIR Proxy health tests
+		
+	 @Test
+	 @Category({FHIRProxyIngestion.class})
+	 @Scenario("scenarios/ingest_FHIR_Proxy.json")
+	    public void ingest_FHIR_Proxy() throws Exception {
+	    }
+	 
 }
