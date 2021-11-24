@@ -116,7 +116,7 @@ then
    mvn  -e -DskipTests=false -Dtest=DeIDIngestionTests test
    mvn  -e -DskipTests=false -Dtest=DeIDIngestionBLKTests test
    mvn  -e -DskipTests=false -Dtest=ASCVDIngestionTests test
-   mvn  -e -DskipTests=false -Dtest=ASCVDIngestionblkTests test
+   mvn  -e -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
    mvn  -e -DskipTests=false -Dtest=NLPIngestionTests test
    mvn  -e -DskipTests=false -Dtest=NLPIngestionBLKTests test
 
