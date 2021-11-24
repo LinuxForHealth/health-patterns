@@ -18,9 +18,13 @@ import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import categories.BasicIngestion;
+import categories.BasicIngestionBLK;
 import categories.DeIDIngestion;
+import categories.DeIDIngestionBLK;
 import categories.ASCVDIngestion;
+import categories.ASCVDIngestionBLK;
 import categories.NLPIngestion;
+import categories.NLPIngestionBLK;
 import categories.FHIRProxyIngestion;
 
 @TargetEnv("clinical-ingestion-flow.properties")
@@ -34,9 +38,21 @@ public class Ingestion_Flow {
 	    }
 	 
 	 @Test
+	 @Category({BasicIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_Errors_BLK.json")
+	    public void ingest_FHIR_Errors_BLK() throws Exception {
+	    }
+	 
+	 @Test
 	 @Category({BasicIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR.json")
 	    public void ingest_FHIR() throws Exception {
+	    }
+	 
+	 @Test
+	 @Category({BasicIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_BLK.json")
+	    public void ingest_FHIR_BLK() throws Exception {
 	    }
 
 	 @Test
@@ -44,11 +60,23 @@ public class Ingestion_Flow {
 	 @Scenario("scenarios/ingest_FHIR_TERM.json")
 	    public void ingest_FHIR_TERM() throws Exception {
 	    }
+
+	 @Test
+	 @Category({BasicIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_TERM_BLK.json")
+	    public void ingest_FHIR_TERM_BLK() throws Exception {
+	    }
 	 
 	 @Test
 	 @Category({DeIDIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR_DEID.json")
 	    public void ingest_FHIR_DEID() throws Exception {
+	    }
+	 
+	 @Test
+	 @Category({DeIDIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_DEID_BLK.json")
+	    public void ingest_FHIR_DEID_BLK() throws Exception {
 	    }
 	
 	 @Test
@@ -57,7 +85,12 @@ public class Ingestion_Flow {
 	    public void ingest_FHIR_DEID_TERM() throws Exception {
 	    }
 	 
-
+	 @Test
+	 @Category({DeIDIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_DEID_TERM_BLK.json")
+	    public void ingest_FHIR_DEID_TERM_BLK() throws Exception {
+	    }
+	 
 	 @Test
 	 @Category({ASCVDIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR_ASCVD.json")
@@ -65,9 +98,21 @@ public class Ingestion_Flow {
 	    }
 	 
 	 @Test
+	 @Category({ASCVDIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_ASCVD_BLK.json")
+	    public void ingest_FHIR_ASCVD_BLK() throws Exception {
+	    }
+	 
+	 @Test
 	 @Category({ASCVDIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR_No_ASCVD.json")
 	    public void ingest_FHIR_No_ASCVD() throws Exception {
+	    }
+	 
+	 @Test
+	 @Category({ASCVDIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_No_ASCVD_BLK.json")
+	    public void ingest_FHIR_No_ASCVD_BLK() throws Exception {
 	    }
 	 
 	 @Test
@@ -81,10 +126,22 @@ public class Ingestion_Flow {
 	 @Scenario("scenarios/ingest_FHIR_NLP_Insights.json")
 	    public void ingest_FHIR_NLP_Insights() throws Exception {
 	    }
+	 	 
+	 @Test
+	 @Category({NLPIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_NLP_Insights_BLK.json")
+	    public void ingest_FHIR_NLP_Insights_BLK() throws Exception {
+	    }
 	 
 	 @Test
 	 @Category({NLPIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR_NLP_Insights_Override.json")
 	    public void ingest_FHIR_NLP_Insights_Override() throws Exception {
+	    }
+	 
+	 @Test
+	 @Category({NLPIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_NLP_Insights_Override_BLK.json")
+	    public void ingest_FHIR_NLP_Insights_Override_BLK() throws Exception {
 	    }
 }

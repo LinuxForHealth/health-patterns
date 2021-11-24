@@ -1,0 +1,71 @@
+{
+    "scenarioName": "********ingest_FHIR_Not_Enough_Data_For_ASCVD_BLK********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+         {
+            "name": "ingestPatientforASCVD",
+            "url": "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json",
+                "DeidentifyData": "false",
+                "RunASCVD" : "true"},
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                }
+            }
+        },   
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        },
+        {
+            "name": "getPatientRiskAssessment",
+            "url": "${pri_fhir_server}/RiskAssessment",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 0
+                }
+            }
+           
+		}            
+     ],
+     "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/ascvd_bundle_no_birthdate.json},Adam631,Pouros728"
+        ]
+    }
+}
