@@ -1,4 +1,4 @@
-name: Expose Kafka Continuous Integration
+name: Health Patterns Continuous Integration
 
 on: [push, pull_request]
 
