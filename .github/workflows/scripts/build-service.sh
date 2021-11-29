@@ -97,10 +97,10 @@ if [ -z "$ORG" ]; then
 fi
 
 
-##################################
-## Generate Tag to be used      ##
-## last_ver_BUILD or last_ver++ ##
-##################################
+#############################
+## Generate Tag to be used ##
+## last_ver or last_ver++  ##
+#############################
 if [ -z "$TAG" ]; then
   printf "\nNo tag provided. Generating based on docker history...\n"
 
@@ -114,18 +114,21 @@ if [ -z "$TAG" ]; then
 
   if [ ${MODE}=='DEV' ] || [ ${MODE}=='PUSH']; then
     # DEV or PUSH Mode
+    # Bump value if it matches the last official container tag
     if [[ $last_tag == $last_alvearie_tag ]]
     then
       printf "last_tag1:$last_tag\n"
       [[ "$last_tag" =~ (.*[^0-9])([0-9]+)$ ]] && TAG="${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))"
       printf "TAG1:$TAG\n"
     else
+      # Use the last tag (already bumped compared to official tag)
       TAG=`echo $last_tag | sed -e 's/^[[:space:]]*//'` 
     fi
   elif [[ ${MODE}=="PR" ]]
   then
     # Pull Request
-    TAG=$last_alvearie_tag
+    # Always use the last tag (will be bumped from the PUSH action)
+    TAG=$last_tag
   fi
 fi
 
@@ -139,14 +142,14 @@ printf "TAG         = ${TAG}\n"
 ###################
 # Not Yet Implemented
 
-## 1 ##
+
 ########################
 ## Build Docker image ##
 ########################
 printf "\nBuilding ${ORG}/${REPOSITORY}:${TAG}\n"
 docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 
-## 2 ##
+
 #####################################
 ## Push Docker image to docker hub ##
 #####################################
@@ -156,76 +159,80 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
 fi
 
 
-## 3 ##
 ##########################################
 ## Update helm chart to use new version ##
 ##########################################
-printf "\nUpdating values.yaml with new container image version\n"
-values_file=$(sed -e 's/\(\s*tag:\).*/\1 '${TAG}'/' services/${REPOSITORY}/chart/values.yaml)
-echo "$values_file" > services/${REPOSITORY}/chart/values.yaml
-printf "Updated.\n"
-
-## 5 ##
-###########################################
-## Update helm chart to bump chart.yaml version ##
-###########################################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  printf "\nUpdating chart.yaml with new service helm chart version\n"
-  currentServiceHelmVer="$(grep "version:" services/${REPOSITORY}/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
-  if [ ${MODE} == 'PUSH' ]; then
-    [[ "$currentServiceHelmVer" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && newServiceHelmVer="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
-  else
-    newServiceHelmVer= $currentServiceHelmVer
-  fi
-  printf "current chart version: ${currentServiceHelmVer}\n"
-  printf "new chart version: ${newServiceHelmVer}\n"
-  chart_file=$(sed -e 's/version: '${currentServiceHelmVer}'/version: '${newServiceHelmVer}'/' services/${REPOSITORY}/chart/Chart.yaml)
-  echo "$chart_file" > services/${REPOSITORY}/chart/Chart.yaml
+if [ ${TAG} != ${last_tag} ]; then 
+  printf "\nUpdating values.yaml with new container image version\n"
+  values_file=$(sed -e 's/\(\s*tag:\).*/\1 '${TAG}'/' services/${REPOSITORY}/chart/values.yaml)
+  echo "$values_file" > services/${REPOSITORY}/chart/values.yaml
   printf "Updated.\n"
 fi
 
 
-## 7 ##
-###################################
-## Re-package service helm chart ##
-###################################
-helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ | sed "s/.*${REPOSITORY}//")
-new_helm_package=${REPOSITORY}${helm_package_suffix}
-printf "New Helm Package: ${new_helm_package}\n"
-
-
-## 8 ##
-########################################################
-## Copy Helm tgz to health-patterns dependency folder ##
-########################################################
-if [[ ${MODE} == 'DEV' ]]
-then
-  ### Since DEV mode, copy to health-patterns dependency folder
-  mkdir -p helm-charts/health-patterns/charts/
-  rm helm-charts/health-patterns/${REPOSITORY}*.tgz
-  cp docs/charts/${new_helm_package} helm-charts/health-patterns/charts/
-fi
-
-## 9 ##
-##########################
-## Re-Index Helm Charts ##
-##########################
+###########################################
+## Update helm chart to bump chart.yaml version ##
+###########################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  helm repo index docs/charts
-  printf "\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns\n"
-fi
+  last_service_helm_ver="$(grep "version:" services/${REPOSITORY}/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
+  last_alvearie_service_helm_ver="$(wget -q https://raw.githubusercontent.com/Alvearie/health-patterns/main/services/${REPOSITORY}/chart/Chart.yaml -O - | grep "version:" | sed -r 's/version: (.*)/\1/')"
 
-
-## 10 ##
-##########################
-## Update Health-Patterns chart.yaml to point at new service chart ##
-##########################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  file="helm-charts/health-patterns/Chart.yaml"
-  NEW_CHART=`awk '!f && s{sub(old,new);f=1}/'${REPOSITORY}'/{s=1}1; fflush()' old="version: .*" new="version: ${newServiceHelmVer}" $file`
-  if [[ ! -z "$NEW_CHART" ]]
-  then
-    echo "$NEW_CHART" > $file
-    printf "\nUpdated $file to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}\n"
+  service_helm_ver=${last_service_helm_ver}
+  if [ ${MODE} == 'PUSH' ]; then
+    if [ ${last_service_helm_ver} == ${last_alvearie_service_helm_ver} ]; then
+      # if PUSH and chart version hasn't been bumped yet from the last PR value, bump it here
+      [[ "$last_service_helm_ver" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && service_helm_ver="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
+    fi
+  fi
+  if [ ${last_service_helm_ver} != ${service_helm_ver} ]; then
+    printf "\nUpdating chart.yaml with new service helm chart version\n"
+    printf "current chart version: ${last_service_helm_ver}\n"
+    printf "new chart version: ${service_helm_ver}\n"
+    chart_file=$(sed -e 's/version: '${last_service_helm_ver}'/version: '${service_helm_ver}'/' services/${REPOSITORY}/chart/Chart.yaml)
+    echo "$chart_file" > services/${REPOSITORY}/chart/Chart.yaml
+    printf "Updated.\n"
   fi
 fi
+
+
+if [ ${last_service_helm_ver} != ${service_helm_ver} ] || [ ${TAG} != ${last_tag} ]; then
+
+  ###################################
+  ## Re-package service helm chart ##
+  ###################################
+  helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ | sed "s/.*${REPOSITORY}//")
+  new_helm_package=${REPOSITORY}${helm_package_suffix}
+  printf "New Helm Package: ${new_helm_package}\n"
+
+  ########################################################
+  ## Copy Helm tgz to health-patterns dependency folder ##
+  ########################################################
+  if [[ ${MODE} == 'DEV' ]]
+  then
+    ### Since DEV mode, copy to health-patterns dependency folder
+    mkdir -p helm-charts/health-patterns/charts/
+    rm helm-charts/health-patterns/${REPOSITORY}*.tgz
+    cp docs/charts/${new_helm_package} helm-charts/health-patterns/charts/
+  fi
+
+  ##########################
+  ## Re-Index Helm Charts ##
+  ##########################
+  if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+    helm repo index docs/charts
+    printf "\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns\n"
+  fi
+
+  ##########################
+  ## Update Health-Patterns chart.yaml to point at new service chart ##
+  ##########################
+  if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+    file="helm-charts/health-patterns/Chart.yaml"
+    NEW_CHART=`awk '!f && s{sub(old,new);f=1}/'${REPOSITORY}'/{s=1}1; fflush()' old="version: .*" new="version: ${newServiceHelmVer}" $file`
+    if [[ ! -z "$NEW_CHART" ]]
+    then
+      echo "$NEW_CHART" > $file
+      printf "\nUpdated $file to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}\n"
+    fi
+  fi
+fi 
