@@ -79,7 +79,7 @@ echo  ${TOKEN} | docker login --username ${USER} --password-stdin
 ## Find Organization name (i.e. "alvearie" or "atclark") ##
 ###########################################################
 if [ -z "$ORG" ]; then
-  printf "\n\nNo repository provided. Generating based on docker history..."
+  printf "\nNo repository provided. Generating based on docker history...\n"
   if [[ ${MODE} == 'DEV' ]]
   then
     ORG=${USER}
@@ -96,47 +96,45 @@ if [ -z "$ORG" ]; then
   fi
 fi
 
-#####################################
-## Load current images from remote ##
-#####################################
-# FIXME - should be tagging images with "latest" so we can just pull that ONE to find the other tags (x.y.z) and update that
-#echo "docker pull ${ORG:1}/${REPOSITORY:1} -a"
-#docker pull ${ORG}/${REPOSITORY} -a
-
 
 ##################################
 ## Generate Tag to be used      ##
 ## last_ver_BUILD or last_ver++ ##
 ##################################
 if [ -z "$TAG" ]; then
-  printf "\n\nNo tag provided. Generating based on docker history..."
+  printf "\nNo tag provided. Generating based on docker history...\n"
 
   last_tag="$(grep "tag:" services/${REPOSITORY}/chart/values.yaml | sed -r 's/\s*tag:\s*(.*)/\1/')"
-  printf "\nlast_tag: ${last_tag}"
+  last_tag=`echo $last_tag | sed -e 's/^[[:space:]]*//'` 
 
-  if [[ ${MODE} == 'DEV' ]]
-  then
-    # DEV Mode
-    if [[ "$last_tag" == *_BUILD ]]
+  docker pull -a alvearie/${REPOSITORY}
+  docker image ls alvearie/${REPOSITORY}
+  last_alvearie_tag="$(docker image ls alvearie/${REPOSITORY} --format '{{.Tag}}' | sort -r --version-sort | sed '/<none>/d' | head -1)"
+  #last_alvearie_tag="$(grep "tag:" services/alvearie/chart/values.yaml | sed -r 's/\s*tag:\s*(.*)/\1/')"
+  last_alvearie_tag=`echo $last_alvearie_tag | sed -e 's/^[[:space:]]*//'` 
+  printf "last_tag: ${last_tag}\n"
+  printf "last_alvearie_tag: ${last_alvearie_tag}\n"
+
+  if [ ${MODE}=='DEV' ] || [ ${MODE}=='PUSH']; then
+    # DEV or PUSH Mode
+    if [[ $last_tag == $last_alvearie_tag ]]
     then
-      printf "\nRe-using tag from last build: ${last_tag}"
-      TAG="${last_tag}"
+      printf "last_tag1:$last_tag\n"
+      [[ "$last_tag" =~ (.*[^0-9])([0-9]+)$ ]] && TAG="${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))"
+      printf "TAG1:$TAG\n"
     else
-      TAG="${last_tag}_BUILD"
+      TAG=`echo $last_tag | sed -e 's/^[[:space:]]*//'` 
     fi
-  else
-    # Commit + Pull Request
-    if [[ "$last_tag" == *_BUILD ]]
-    then
-      last_tag=${last_tag%_BUILD}
-    fi
-    [[ "$last_tag" =~ (.*[^0-9])([0-9]+)$ ]] && TAG="${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))"
+  elif [[ ${MODE}=="PR" ]]
+  then
+    # Pull Request
+    TAG=$last_alvearie_tag
   fi
 fi
 
-printf "\n\nORG        = ${ORG}"
-printf "\nREPOSITORY  = ${REPOSITORY}"
-printf "\nTAG         = ${TAG}"
+printf "\nORG        = ${ORG}\n"
+printf "REPOSITORY  = ${REPOSITORY}\n"
+printf "TAG         = ${TAG}\n"
 
 
 ###################
@@ -148,7 +146,7 @@ printf "\nTAG         = ${TAG}"
 ########################
 ## Build Docker image ##
 ########################
-printf "\n\nBuilding ${ORG}/${REPOSITORY}:${TAG}"
+printf "\nBuilding ${ORG}/${REPOSITORY}:${TAG}\n"
 docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 
 ## 2 ##
@@ -156,7 +154,7 @@ docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 ## Push Docker image to docker hub ##
 #####################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  printf "\n\nPushing docker image to repostiory: ${ORG}/${REPOSITORY}:{$TAG}"
+  printf "\nPushing docker image to repostiory: ${ORG}/${REPOSITORY}:{$TAG}\n"
   docker push -q ${ORG}/${REPOSITORY}:${TAG}
 fi
 
@@ -165,17 +163,22 @@ fi
 ##########################################
 ## Update helm chart to use new version ##
 ##########################################
-printf "\n\nUpdating values.yaml with new container image version"
-sed -i "s/\(\s*tag:\).*/\1 ${TAG}/" "services/${REPOSITORY}/chart/values.yaml"
+printf "\nUpdating values.yaml with new container image version\n"
+sed -i '' 's/\(\s*tag:\).*/\1 ${TAG}/' "services/${REPOSITORY}/chart/values.yaml"
 
 ## 5 ##
 ###########################################
 ## Update helm chart to bump chart.yaml version ##
 ###########################################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  printf "\nUpdating chart.yaml with new service helm chart version\n"
   currentServiceHelmVer="$(grep "version:" services/${REPOSITORY}/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
-  [[ "$currentServiceHelmVer" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && newServiceHelmVer="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
-  sed -i "s/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/" "services/${REPOSITORY}/chart/Chart.yaml"
+  if [ ${MODE} == 'PUSH' ]; then
+    [[ "$currentServiceHelmVer" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && newServiceHelmVer="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
+  else
+    newServiceHelmVer= $currentServiceHelmVer
+  fi
+  sed -i '' 's/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/' "services/${REPOSITORY}/chart/Chart.yaml"
 fi
 
 
@@ -185,7 +188,7 @@ fi
 ###################################
 helm_package_suffix=$(helm package services/${REPOSITORY}/chart -d docs/charts/ | sed "s/.*${REPOSITORY}//")
 new_helm_package=${REPOSITORY}${helm_package_suffix}
-printf "\nNew Helm Package: ${new_helm_package}"
+printf "New Helm Package: ${new_helm_package}\n"
 
 
 ## 8 ##
@@ -206,7 +209,7 @@ fi
 ##########################
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   helm repo index docs/charts
-  printf "\n\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns"
+  printf "\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns\n"
 fi
 
 
@@ -220,6 +223,6 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   if [[ ! -z "$NEW_CHART" ]]
   then
     echo "$NEW_CHART" > $file
-    printf "\n\nUpdated $file to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}"
+    printf "\nUpdated $file to reflect new helm chart version (${newServiceHelmVer}) for ${REPOSITORY}\n"
   fi
 fi
