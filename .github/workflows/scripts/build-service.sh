@@ -21,7 +21,7 @@ for i in "$@"; do
       shift # past argument=value
       ;;
     -m=*|--mode=*)
-      # DEV / PUSH / PR
+      # DEV / push / pull_request
       MODE="${i#*=}"
       shift # past argument=value
       ;;
@@ -83,7 +83,7 @@ if [ -z "$ORG" ]; then
   if [[ ${MODE} == 'DEV' ]]
   then
     ORG=${USER}
-  elif [[ ${MODE} == 'PUSH' ]]
+  elif [[ ${MODE} == 'push' ]]
   then
     if [[ -z "$PRIVATE_DOCKER_USER" ]]
     then
@@ -117,7 +117,7 @@ if [ -z "$TAG" ]; then
   printf "last_tag: ${last_tag}\n"
   printf "last_alvearie_tag: ${last_alvearie_tag}\n"
 
-  if [ ${MODE}=='DEV' ] || [ ${MODE}=='PUSH']; then
+  if [ ${MODE}=='DEV' ] || [ ${MODE}=='push']; then
     # DEV or PUSH Mode
     # Bump value if it matches the last official container tag
     if [[ $last_tag == $last_alvearie_tag ]]
@@ -127,7 +127,7 @@ if [ -z "$TAG" ]; then
       # Use the last tag (already bumped compared to official tag)
       TAG=`echo $last_tag | sed -e 's/^[[:space:]]*//'` 
     fi
-  elif [[ ${MODE}=="PR" ]]
+  elif [[ ${MODE}=="pull_request" ]]
   then
     # Pull Request
     # Always use the last tag (will be bumped from the PUSH action)
@@ -156,7 +156,7 @@ docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 #####################################
 ## Push Docker image to docker hub ##
 #####################################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
   printf "\nPushing docker image to repostiory: ${ORG}/${REPOSITORY}:{$TAG}\n"
   docker push -q ${ORG}/${REPOSITORY}:${TAG}
 fi
@@ -176,7 +176,7 @@ fi
 ###########################################
 ## Update helm chart to bump chart.yaml version ##
 ###########################################
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
   last_service_helm_ver="$(grep "version:" services/${REPOSITORY}/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
   last_service_helm_ver=`echo $last_service_helm_ver | sed -e 's/^[[:space:]]*//'` 
  
@@ -191,9 +191,9 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   printf "current alvearie chart version: ${last_alvearie_service_helm_ver}\n"
 
   service_helm_ver=${last_service_helm_ver}
-  if [ ${MODE} == 'PUSH' ]; then
+  if [ ${MODE} == 'push' ]; then
     if [ ${last_service_helm_ver} == ${last_alvearie_service_helm_ver} ]; then
-      # if PUSH and chart version hasn't been bumped yet from the last PR value, bump it here
+      # if PUSH and chart version hasn't been bumped yet from the last pull_request value, bump it here
       [[ "$last_service_helm_ver" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && service_helm_ver="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
     fi
   fi
@@ -231,7 +231,7 @@ if [ ${last_service_helm_ver} != ${service_helm_ver} ] || [ ${TAG} != ${last_tag
   ##########################
   ## Re-Index Helm Charts ##
   ##########################
-  if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
     helm repo index docs/charts
     printf "\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns\n"
   fi
@@ -239,7 +239,7 @@ if [ ${last_service_helm_ver} != ${service_helm_ver} ] || [ ${TAG} != ${last_tag
   ##########################
   ## Update Health-Patterns chart.yaml to point at new service chart ##
   ##########################
-  if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+  if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
     file="helm-charts/health-patterns/Chart.yaml"
     NEW_CHART=`awk '!f && s{sub(old,new);f=1}/'${REPOSITORY}'/{s=1}1; fflush()' old="version: .*" new="version: ${service_helm_ver}" $file`
     if [[ ! -z "$NEW_CHART" ]]
