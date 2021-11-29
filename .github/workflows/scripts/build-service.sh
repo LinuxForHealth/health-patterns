@@ -164,7 +164,7 @@ fi
 ## Update helm chart to use new version ##
 ##########################################
 printf "\nUpdating values.yaml with new container image version\n"
-sed -i '' 's/\(\s*tag:\).*/\1 ${TAG}/' "services/${REPOSITORY}/chart/values.yaml"
+sed -i "" -e "s/\(\s*tag:\).*/\1 ${TAG}/" "services/${REPOSITORY}/chart/values.yaml"
 
 ## 5 ##
 ###########################################
@@ -178,7 +178,7 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   else
     newServiceHelmVer= $currentServiceHelmVer
   fi
-  sed -i '' 's/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/' "services/${REPOSITORY}/chart/Chart.yaml"
+  sed -i "" -e "s/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/" "services/${REPOSITORY}/chart/Chart.yaml"
 fi
 
 
