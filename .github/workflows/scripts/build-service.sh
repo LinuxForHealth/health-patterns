@@ -107,11 +107,8 @@ if [ -z "$TAG" ]; then
   last_tag="$(grep "tag:" services/${REPOSITORY}/chart/values.yaml | sed -r 's/\s*tag:\s*(.*)/\1/')"
   last_tag=`echo $last_tag | sed -e 's/^[[:space:]]*//'` 
 
-  docker pull -a alvearie/${REPOSITORY}
-  docker image ls alvearie/${REPOSITORY}
-  last_alvearie_tag="$(docker image ls alvearie/${REPOSITORY} --format '{{.Tag}}' | sort -r --version-sort | sed '/<none>/d' | head -1)"
-  #last_alvearie_tag="$(grep "tag:" services/alvearie/chart/values.yaml | sed -r 's/\s*tag:\s*(.*)/\1/')"
-  last_alvearie_tag=`echo $last_alvearie_tag | sed -e 's/^[[:space:]]*//'` 
+  last_alvearie_tag="$(wget -q https://registry.hub.docker.com/v1/repositories/alvearie/${REPOSITORY}/tags -O -  | sed -e 's/[][]//g' -e 's/"//g' -e 's/ //g' | tr '}' '\n'  | awk -F: '{print $3}'| sort -r --version-sort | sed '/<none>/d' | head -1)"
+ 
   printf "last_tag: ${last_tag}\n"
   printf "last_alvearie_tag: ${last_alvearie_tag}\n"
 
@@ -164,7 +161,9 @@ fi
 ## Update helm chart to use new version ##
 ##########################################
 printf "\nUpdating values.yaml with new container image version\n"
-sed -i "" -e "s/\(\s*tag:\).*/\1 ${TAG}/" "services/${REPOSITORY}/chart/values.yaml"
+values_file=$(sed -e 's/\(\s*tag:\).*/\1 '${TAG}'/' services/${REPOSITORY}/chart/values.yaml)
+echo "$values_file" > services/${REPOSITORY}/chart/values.yaml
+printf "Updated.\n"
 
 ## 5 ##
 ###########################################
@@ -178,7 +177,9 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   else
     newServiceHelmVer= $currentServiceHelmVer
   fi
-  sed -i "" -e "s/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/" "services/${REPOSITORY}/chart/Chart.yaml"
+  chart_file=$(sed -e 's/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/' services/${REPOSITORY}/chart/Chart.yaml)
+  echo "$chart_file" > services/${REPOSITORY}/chart/Chart.yaml
+  printf "Updated.\n"
 fi
 
 
