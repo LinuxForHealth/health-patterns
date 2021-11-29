@@ -177,6 +177,8 @@ if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
   else
     newServiceHelmVer= $currentServiceHelmVer
   fi
+  printf "current chart version: ${currentServiceHelmVer}\n"
+  printf "new chart version: ${newServiceHelmVer}\n"
   chart_file=$(sed -e 's/version: ${currentServiceHelmVer}/version: ${newServiceHelmVer}/' services/${REPOSITORY}/chart/Chart.yaml)
   echo "$chart_file" > services/${REPOSITORY}/chart/Chart.yaml
   printf "Updated.\n"
