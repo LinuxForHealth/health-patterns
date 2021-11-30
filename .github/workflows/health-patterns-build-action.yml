@@ -13,7 +13,7 @@ jobs:
         fetch-depth: 0
 
     - name: Identify Pull Request Changed Files
-      id: filecheck
+      id: pull_filecheck
       if: github.event_name == 'pull_request'
       run: |
         echo "pull_request sha: ${github.event.pull_request.head.sha}"
@@ -23,7 +23,7 @@ jobs:
         changed_files="${changed_files//$'\r'/'%0D'}"
         echo "::set-output name=changed_files::${changed_files}"
     - name: Identify Push Changed Files
-      id: filecheck
+      id: push_filecheck
       if: github.event_name == 'push'
       run: |
         echo "before: ${github.event.push.before}"
@@ -33,8 +33,9 @@ jobs:
         changed_files="${changed_files//$'\r'/'%0D'}"
         echo "::set-output name=changed_files::${changed_files}"
     - name: Log Changed Files
-      run: echo "${{steps.filecheck.outputs.changed_files}}"
-
+      run: |
+        echo "${{steps.push_filecheck.outputs.changed_files}}"
+        echo "${{steps.pull_filecheck.outputs.changed_files}}"
     - name: Build Expose Kafka
       if: ${{contains( steps.filecheck.outputs.changed_files ,'expose-kafka')}}
       run: |
