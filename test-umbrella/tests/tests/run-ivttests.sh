@@ -112,19 +112,27 @@ then
    echo "*************************************"
    mvn  -e -DskipTests=false -Dtest=FHIRProxyIngestionTests test
    mvn  -e -DskipTests=false -Dtest=BasicIngestionTests test
+   mvn  -e -DskipTests=false -Dtest=BasicIngestionBLKTests test
    mvn  -e -DskipTests=false -Dtest=DeIDIngestionTests test
+   mvn  -e -DskipTests=false -Dtest=DeIDIngestionBLKTests test
    mvn  -e -DskipTests=false -Dtest=ASCVDIngestionTests test
+   mvn  -e -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
    mvn  -e -DskipTests=false -Dtest=NLPIngestionTests test
+   mvn  -e -DskipTests=false -Dtest=NLPIngestionBLKTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
    cat target/surefire-reports/categories.BasicIngestionInitTests.txt
    cat target/surefire-reports/categories.FHIRProxyIngestionTests.txt
    cat target/surefire-reports/categories.BasicIngestionTests.txt
+   cat target/surefire-reports/categories.BasicIngestionBLKTests.txt
    cat target/surefire-reports/categories.DeIDIngestionTests.txt
+   cat target/surefire-reports/categories.DeIDIngestionBLKTests.txt
    cat target/surefire-reports/categories.ASCVDIngestionTests.txt
+   cat target/surefire-reports/categories.ASCVDIngestionBLKTests.txt
    cat target/surefire-reports/categories.NLPIngestionTests.txt
-   
+   cat target/surefire-reports/categories.NLPIngestionBLKTests.txt
+    
 fi   
 echo "*************************************" 
 echo "* Report Test Results to Insights   *"
