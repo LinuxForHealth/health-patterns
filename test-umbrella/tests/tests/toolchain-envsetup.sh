@@ -2,6 +2,14 @@
 
 # Common toolchain setup code for smoketests, fvttests, and ivttest scripts
 # Input is test type (smoke, fvt, or ivt)
+#
+# Environment Variables passed in from the toolchain:
+# GIT_BRANCH - alvearie repo branch for git clone operation of the alvearie repo
+# CLUSTER_NAMESPACE - base name to use when build the TEST_NAMEPSACE name
+# DEPLOY_WAIT - the time in seconds to wait for the deployment to be operational after the helm install completes
+# HELM_WAIT - the timeout time for the HELM command when using the --wait --timeout MmSs options (where M=minutes and S=seconds)
+# ENV_CLEAN_UP - flag to indicate to clean up the test environment at the end
+# INGRESS_SUBDOMAIN - ingress subdomain for the deployment
 
 echo "*************************************"
 echo "* Linux version                     *"
@@ -20,18 +28,13 @@ export DEFAULT_PASSWORD=integrati0n
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0
 export TEST_NAMESPACE=$CLUSTER_NAMESPACE"-"$1
 
-#This is for VPC cluster health-patterns-1
-export INGRESS_SUBDOMAIN=wh-health-patterns.dev.watson-health.ibm.com 
-
 # Set the deploymemt-specific variables/values
 if [ $CLUSTER_NAMESPACE = "tst-enrich" ]
 then
    export HELM_RELEASE=enrich
-   export deploywait=240
 elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
    export HELM_RELEASE=ingestion
-   export deploywait=360
 fi
 
 echo "*************************************"

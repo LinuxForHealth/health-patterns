@@ -4,6 +4,7 @@ from kafka.admin import KafkaAdminClient, NewTopic
 from flask import Flask, request
 from flask import jsonify
 from datetime import datetime
+import json
 import logging
 import os
 import time
@@ -226,7 +227,12 @@ def find_message(consumer, kafka_key):
                 status_code = v.decode("utf-8")
 
         if match:
-            resp = jsonify(msg.value.decode("utf-8"))
+            message_value = msg.value.decode("utf-8")
+            try:
+                message_value = json.loads(message_value)
+            except:
+                pass
+            resp = jsonify(message_value)
             resp.status_code = status_code
             return resp
     return None
