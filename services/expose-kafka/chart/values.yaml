@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: atclark/expose-kafka
+  repository: alvearie/expose-kafka
   pullPolicy: Always
-  tag: 0.0.5
+  tag: 0.0.6
 service:
   type: ClusterIP
   port: 5000
