@@ -35,10 +35,6 @@ fi
 printf "\nMode: ${MODE}\n"
 
 if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
-  # Re-Index Helm Charts ##
-  helm repo index docs/charts
-  printf "\n\n$Helm repo re-indexed"
-
   # Add all changed files to git
   git add -A
 

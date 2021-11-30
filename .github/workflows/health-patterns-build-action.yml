@@ -24,7 +24,6 @@ jobs:
         echo "::set-output name=changed_files::${changed_files}"
     - name: Log Changed Files
       run: echo "${{steps.filecheck.outputs.changed_files}}"
-
     - name: Build Expose Kafka
       if: ${{contains( steps.filecheck.outputs.changed_files ,'expose-kafka')}}
       run: |
