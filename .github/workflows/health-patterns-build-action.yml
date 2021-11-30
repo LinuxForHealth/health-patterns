@@ -12,30 +12,23 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Identify Pull Request Changed Files
-      id: pull_filecheck
-      if: github.event_name == 'pull_request'
+    - name: Identify changed files
+      id: filecheck
       run: |
-        echo "pull_request sha: ${github.event.pull_request.head.sha}"
-        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.pull_request.head.sha }})
-        changed_files="${changed_files//'%'/'%25'}"
-        changed_files="${changed_files//$'\n'/'%0A'}"
-        changed_files="${changed_files//$'\r'/'%0D'}"
-        echo "::set-output name=changed_files::${changed_files}"
-    - name: Identify Push Changed Files
-      id: push_filecheck
-      if: github.event_name == 'push'
-      run: |
-        echo "before: ${github.event.push.before}"
-        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.push.before }})
+        if [github.event_name == 'pull_request']; then 
+          echo "pull_request sha: ${github.event.pull_request.head.sha}"
+          changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.pull_request.head.sha }})
+        elif [github.event_name == 'push']; then
+          echo "before: ${github.event.push.before}"
+          changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.push.before }})
+        fi
         changed_files="${changed_files//'%'/'%25'}"
         changed_files="${changed_files//$'\n'/'%0A'}"
         changed_files="${changed_files//$'\r'/'%0D'}"
         echo "::set-output name=changed_files::${changed_files}"
     - name: Log Changed Files
-      run: |
-        echo "${{steps.push_filecheck.outputs.changed_files}}"
-        echo "${{steps.pull_filecheck.outputs.changed_files}}"
+      run: echo "${{steps.filecheck.outputs.changed_files}}"
+
     - name: Build Expose Kafka
       if: ${{contains( steps.filecheck.outputs.changed_files ,'expose-kafka')}}
       run: |
