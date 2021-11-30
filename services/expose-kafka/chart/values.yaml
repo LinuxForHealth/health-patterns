@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: alvearie/expose-kafka
+  repository: atclark/expose-kafka
   pullPolicy: Always
   tag: 0.0.6
 service:
