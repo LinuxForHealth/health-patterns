@@ -71,65 +71,33 @@
                                 <value>${ip.fhir}</value>
                             </replacement>
                             <replacement>
-                                <token>@@port.fhir@@</token>
-                                <value>${port.fhir}</value>
-                            </replacement>
-                            <replacement>
                                 <token>@@ip.fhir.proxy@@</token>
                                 <value>${ip.fhir.proxy}</value>
-                            </replacement>
-                            <replacement>
-                                <token>@@port.fhir.proxy@@</token>
-                                <value>${port.fhir.proxy}</value>
                             </replacement>
                             <replacement>
                                 <token>@@ip.fhir.deid@@</token>
                                 <value>${ip.fhir.deid}</value>
                             </replacement>
                             <replacement>
-                                <token>@@port.fhir.deid@@</token>
-                                <value>${port.fhir.deid}</value>
-                            </replacement>
-                            <replacement>
                                 <token>@@ip.fhir.deid.proxy@@</token>
                                 <value>${ip.fhir.deid.proxy}</value>
-                            </replacement>
-                            <replacement>
-                                <token>@@port.fhir.deid.proxy@@</token>
-                                <value>${port.fhir.deid.proxy}</value>
-                            </replacement>                             
+                            </replacement>                            
                             <replacement>
                                 <token>@@ip.deid.prep@@</token>
                                 <value>${ip.deid.prep}</value>
                             </replacement>
-                            <replacement>
-                                <token>@@port.deid.prep@@</token>
-                                <value>${port.deid.prep}</value>
-                            </replacement>
                              <replacement>
                                 <token>@@ip.term.prep@@</token>
                                 <value>${ip.term.prep}</value>
-                            </replacement>
-                            <replacement>
-                                <token>@@port.term.prep@@</token>
-                                <value>${port.term.prep}</value>
                             </replacement>  
                              <replacement>
                                 <token>@@ip.ascvd.from.fhir@@</token>
                                 <value>${ip.ascvd.from.fhir}</value>
                             </replacement>
                             <replacement>
-                                <token>@@port.ascvd.from.fhir@@</token>
-                                <value>${port.ascvd.from.fhir}</value>
-                            </replacement> 
-                            <replacement>
                                 <token>@@ip.nlp.insights@@</token>
                                 <value>${ip.nlp.insights}</value>
-                            </replacement>
-                            <replacement>
-                                <token>@@port.nlp.insights@@</token>
-                                <value>${port.nlp.insights}</value>
-                            </replacement>                                                                           
+                            </replacement>                                                                          
                         </replacements>
                     </configuration>
     </plugin>
