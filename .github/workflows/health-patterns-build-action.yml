@@ -16,8 +16,8 @@ jobs:
       id: filecheck
       run: |
         echo "github: ${{ toJSON(github) }}"
-        echo "event sha: ${{github.base_ref}}"
-        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.base_ref }})
+        echo "event sha: ${{github.event.before}}"
+        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.before }})
         changed_files="${changed_files//'%'/'%25'}"
         changed_files="${changed_files//$'\n'/'%0A'}"
         changed_files="${changed_files//$'\r'/'%0D'}"
