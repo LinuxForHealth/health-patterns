@@ -162,6 +162,19 @@ if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
 fi
 
 
+######################################
+## Update helm chart to use new org ##
+######################################
+last_org="$(grep "repository:" services/${REPOSITORY}/chart/values.yaml | sed -r 's/\s*repository:\s*(.*)/\1/' | sed -r 's/(.*)\/'${REPOSITORY}'/\1/')"
+last_org=`echo $last_org | sed -e 's/^[[:space:]]*//'` 
+printf "last_org: ${last_org}\n"
+if [ ${ORG} != ${last_org} ]; then 
+  printf "\nUpdating values.yaml with new container image org\n"
+  values_file=$(sed -e 's/\(\s*repository:\).*/\1 '${ORG}'\/'${REPOSITORY}'/' services/${REPOSITORY}/chart/values.yaml)
+  echo "$values_file" > services/${REPOSITORY}/chart/values.yaml
+  printf "Updated.\n"
+fi
+
 ##########################################
 ## Update helm chart to use new version ##
 ##########################################
@@ -208,7 +221,7 @@ if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
 fi
 
 
-if [ ${last_service_helm_ver} != ${service_helm_ver} ] || [ ${TAG} != ${last_tag} ]; then
+if [ ${last_service_helm_ver} != ${service_helm_ver} ] || [ ${TAG} != ${last_tag} ] || [ ${ORG} != ${last_org} ]; then
 
   ###################################
   ## Re-package service helm chart ##
@@ -223,8 +236,12 @@ if [ ${last_service_helm_ver} != ${service_helm_ver} ] || [ ${TAG} != ${last_tag
   if [[ ${MODE} == 'DEV' ]]
   then
     ### Since DEV mode, copy to health-patterns dependency folder
+    ls helm-charts/health-patterns/charts
     mkdir -p helm-charts/health-patterns/charts/
-    rm helm-charts/health-patterns/${REPOSITORY}*.tgz
+    ls helm-charts/health-patterns/charts
+	if [ -z "${REPOSITORY}" ]; then
+      rm helm-charts/health-patterns/charts/${REPOSITORY}*.tgz
+    fi
     cp docs/charts/${new_helm_package} helm-charts/health-patterns/charts/
   fi
 
