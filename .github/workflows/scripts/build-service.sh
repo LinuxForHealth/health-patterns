@@ -62,18 +62,14 @@ fi
 
 printf "\nMode: ${MODE}\n"
 
-if [ -z "$PRIVATE_DOCKER_USER" ]; then
-  USER=${DOCKER_USER}
-  TOKEN=${DOCKER_TOKEN}
-else
-  USER=${PRIVATE_DOCKER_USER}
-  TOKEN=${PRIVATE_DOCKER_TOKEN}
-fi
-
 #####################
 ## Login to Docker ##
 #####################
-echo  ${TOKEN} | docker login --username ${USER} --password-stdin
+if [ -z "$PRIVATE_DOCKER_USER" ]; then
+  echo  ${DOCKER_TOKEN} | docker login --username ${DOCKER_USER} --password-stdin
+else
+  echo  ${PRIVATE_DOCKER_TOKEN} | docker login --username ${PRIVATE_DOCKER_USER} --password-stdin
+fi
 
 ###########################################################
 ## Find Organization name (i.e. "alvearie" or "atclark") ##
@@ -82,16 +78,14 @@ if [ -z "$ORG" ]; then
   printf "\nNo repository provided. Generating based on docker history...\n"
   if [[ ${MODE} == 'DEV' ]]
   then
-    ORG=${USER}
-  elif [[ ${MODE} == 'push' ]]
-  then
     if [[ -z "$PRIVATE_DOCKER_USER" ]]
     then
-      ORG="${DOCKER_USER}"
+      ORG="${GITHUB_USER}"
     else
       ORG="${PRIVATE_DOCKER_USER}"
     fi
-  else
+  elif [[ ${MODE} == 'push' ]]
+  then
     ORG="alvearie"
   fi
 fi
@@ -116,22 +110,13 @@ if [ -z "$TAG" ]; then
  
   printf "last_tag: ${last_tag}\n"
   printf "last_alvearie_tag: ${last_alvearie_tag}\n"
-
-  if [ ${MODE}=='DEV' ] || [ ${MODE}=='push']; then
-    # DEV or PUSH Mode
-    # Bump value if it matches the last official container tag
-    if [[ $last_tag == $last_alvearie_tag ]]
-    then
-      [[ "$last_tag" =~ (.*[^0-9])([0-9]+)$ ]] && TAG="${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))"
-    else
-      # Use the last tag (already bumped compared to official tag)
-      TAG=`echo $last_tag | sed -e 's/^[[:space:]]*//'` 
-    fi
-  elif [[ ${MODE}=="pull_request" ]]
+  # Bump value if it matches the last official container tag
+  if [[ $last_tag == $last_alvearie_tag ]]
   then
-    # Pull Request
-    # Always use the last tag (will be bumped from the PUSH action)
-    TAG=$last_tag
+    [[ "$last_tag" =~ (.*[^0-9])([0-9]+)$ ]] && TAG="${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))"
+  else
+    # Use the last tag (already bumped compared to official tag)
+    TAG=`echo $last_tag | sed -e 's/^[[:space:]]*//'` 
   fi
 fi
 
@@ -156,7 +141,7 @@ docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 #####################################
 ## Push Docker image to docker hub ##
 #####################################
-if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
+if [ ${MODE} == 'push' ]; then
   printf "\nPushing docker image to repostiory: ${ORG}/${REPOSITORY}:{$TAG}\n"
   docker push -q ${ORG}/${REPOSITORY}:${TAG}
 fi
@@ -189,7 +174,7 @@ fi
 ###########################################
 ## Update helm chart to bump chart.yaml version ##
 ###########################################
-if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
+if [ ${MODE} == 'push' ]; then
   last_service_helm_ver="$(grep "version:" services/${REPOSITORY}/chart/Chart.yaml | sed -r 's/version: (.*)/\1/')"
   last_service_helm_ver=`echo $last_service_helm_ver | sed -e 's/^[[:space:]]*//'` 
  
@@ -204,11 +189,9 @@ if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
   printf "current alvearie chart version: ${last_alvearie_service_helm_ver}\n"
 
   service_helm_ver=${last_service_helm_ver}
-  if [ ${MODE} == 'push' ]; then
-    if [ ${last_service_helm_ver} == ${last_alvearie_service_helm_ver} ]; then
-      # if PUSH and chart version hasn't been bumped yet from the last pull_request value, bump it here
-      [[ "$last_service_helm_ver" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && service_helm_ver="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
-    fi
+  if [ ${last_service_helm_ver} == ${last_alvearie_service_helm_ver} ]; then
+    # if PUSH and chart version hasn't been bumped yet from the last pull_request value, bump it here
+    [[ "$last_service_helm_ver" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && service_helm_ver="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.$((${BASH_REMATCH[3]} + 1))"
   fi
   printf "new chart version: ${service_helm_ver}\n"
   if [ "${last_service_helm_ver}" != "${service_helm_ver}" ]; then
@@ -248,7 +231,7 @@ if [ ${last_service_helm_ver} != ${service_helm_ver} ] || [ ${TAG} != ${last_tag
   ##########################
   ## Re-Index Helm Charts ##
   ##########################
-  if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
+  if [ ${MODE} == 'push' ]; then
     helm repo index docs/charts
     printf "\n${REPOSITORY}${helm_package_suffix} Helm Chart packaged, repo re-indexed, and packaged chart copied to Health Patterns\n"
   fi
@@ -256,7 +239,7 @@ if [ ${last_service_helm_ver} != ${service_helm_ver} ] || [ ${TAG} != ${last_tag
   ##########################
   ## Update Health-Patterns chart.yaml to point at new service chart ##
   ##########################
-  if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
+  if [ ${MODE} == 'push' ]; then
     file="helm-charts/health-patterns/Chart.yaml"
     NEW_CHART=`awk '!f && s{sub(old,new);f=1}/'${REPOSITORY}'/{s=1}1; fflush()' old="version: .*" new="version: ${service_helm_ver}" $file`
     if [[ ! -z "$NEW_CHART" ]]

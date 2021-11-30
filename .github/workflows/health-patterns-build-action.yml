@@ -1,6 +1,6 @@
 name: Health Patterns Continuous Integration
 
-on: [push, pull_request]
+on: push
 
 jobs:
   job:
