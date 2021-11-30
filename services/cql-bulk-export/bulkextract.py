@@ -19,6 +19,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import uuid
 
+
 status_dict = {}
 
 cohort_endpoint = os.getenv("COHORT_ENDPOINT")
