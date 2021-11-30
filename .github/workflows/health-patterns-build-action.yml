@@ -14,16 +14,15 @@ jobs:
     - name: Identify changed files
       id: filecheck
       run: |
-        echo "github: ${{ toJSON(github) }}"
-        echo "event sha: ${{github.event.before}}"
-        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.before }})
+        git remote add original https://github.com/Alvearie/health-patterns.git
+        git fetch original
+        changed_files=$(git diff-tree --no-commit-id --name-only -r  HEAD original/main)
         changed_files="${changed_files//'%'/'%25'}"
         changed_files="${changed_files//$'\n'/'%0A'}"
         changed_files="${changed_files//$'\r'/'%0D'}"
         echo "::set-output name=changed_files::${changed_files}"
     - name: Log Changed Files
       run: echo "${{steps.filecheck.outputs.changed_files}}"
-
     - name: Build Expose Kafka
       if: ${{contains( steps.filecheck.outputs.changed_files ,'expose-kafka')}}
       run: |
