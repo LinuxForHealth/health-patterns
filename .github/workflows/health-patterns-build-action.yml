@@ -15,10 +15,10 @@ jobs:
     - name: Identify changed files
       id: filecheck
       run: |
-        if [${{github.event_name}} == 'pull_request']; then 
+        if ['${{github.event_name}}' == 'pull_request']; then 
           echo "pull_request sha: ${{github.event.pull_request.head.sha}}"
           changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.pull_request.head.sha }})
-        elif [${{github.event_name}} == 'push']; then
+        elif ['${{github.event_name}}' == 'push']; then
           echo "before: ${{github.event.push.before}}"
           changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.push.before }})
         fi
