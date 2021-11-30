@@ -40,6 +40,6 @@ if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
 
   # Commit/Push updates to Git
   git config user.name "${GITHUB_USER}"
-  git commit -m 'Add build artifacts to git commit'
+  git commit --signoff -m 'Add build artifacts to git commit'
   git push
 fi
