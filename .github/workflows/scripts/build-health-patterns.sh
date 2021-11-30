@@ -34,7 +34,7 @@ fi
 
 printf "\nMode: ${MODE}\n"
 
-if [ ${MODE} == 'PUSH' ] || [ ${MODE} == 'PR' ]; then
+if [ ${MODE} == 'push' ] || [ ${MODE} == 'pull_request' ]; then
   # Add all changed files to git
   git add -A
 
