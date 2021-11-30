@@ -14,6 +14,7 @@ jobs:
     - name: Identify changed files
       id: filecheck
       run: |
+        echo "github: ${{ toJSON(github) }}"
         git remote add original https://github.com/Alvearie/health-patterns.git
         git fetch original
         changed_files=$(git diff-tree --no-commit-id --name-only -r  HEAD original/main)
