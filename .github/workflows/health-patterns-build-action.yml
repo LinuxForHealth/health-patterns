@@ -14,8 +14,18 @@ jobs:
 
     - name: Identify changed files
       id: filecheck
+      if: github.event_name == 'pull_request'
       run: |
-        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
+        echo "pull_request sha: ${github.event.pull_request.head.sha}"
+        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.pull_request.head.sha }})
+        changed_files="${changed_files//'%'/'%25'}"
+        changed_files="${changed_files//$'\n'/'%0A'}"
+        changed_files="${changed_files//$'\r'/'%0D'}"
+        echo "::set-output name=changed_files::${changed_files}"
+      if: github.event_name == 'push'
+      run: |
+        echo "before: ${github.event.push.before}"
+        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.push.before }})
         changed_files="${changed_files//'%'/'%25'}"
         changed_files="${changed_files//$'\n'/'%0A'}"
         changed_files="${changed_files//$'\r'/'%0D'}"
