@@ -43,8 +43,8 @@ enrichment:
 
 oidc:
   users: &oidc_users
-    - identity: "replace-me@company.com"
-      name: "replace.me.no.spaces.or.caps"
+    - identity: "alvearie@us.ibm.com"
+      name: "alvearie"
   discovery:
     url: &oidc_discovery_url "replace-me"
   client:
@@ -110,6 +110,21 @@ fhir:
     enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
+    annotations: {
+      nginx.ingress.kubernetes.io/server-snippet: add_header Strict-Transport-Security "max-age=86400; includeSubDomains";,
+      # nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-FHIR-FORWARDED-URL "https://$host$request_uri"; proxy_set_header Authorization "Basic {{ print "fhiruser:" .Values.fhirUserPassword | b64enc }}"; ,
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS,
+      nginx.ingress.kubernetes.io/proxy-ssl-protocols: TLSv1.2 TLSv1.3,
+      nginx.ingress.kubernetes.io/proxy-ssl-verify: "true",
+      nginx.ingress.kubernetes.io/rewrite-target: /fhir-server/api/v4/$2,
+      nginx.ingress.kubernetes.io/use-regex: 'true'
+      }
+
+    rules:
+      - host: *hostname
+        paths:
+          - path: "/fhir(/|$)(.*)"
+            pathType: ImplementationSpecific
   proxy:
     name: fhir-proxy
     enabled: false
@@ -117,17 +132,34 @@ fhir:
       enabled: *ingressEnabled
       class: *ingressClass
       hostname: *hostname
-  userPassword: integrati0n
-  adminPassword: integrati0n
 
-## Configure these to allow bulk access from fhir server
-#  bulkExportConfig:
-#    cosBucketName: yourbucketnamehere
-#    cosLocation: yourcosregion
-#    cosEndpointInternal: yourbucketendpointhere
-#    cosApikey: yourcosapikey
-#    cosSrvinstid: yourcossrvinstid
-#    batchUserPw: youradminpw
+  fhirUserPassword: integrati0n
+  fhirAdminPassword: integrati0n
+
+  postgresql:
+    enabled: false
+
+  schemaMigration:
+    enabled: false
+
+  db:
+    type: derby
+    schema: app
+
+  replicaCount: 1
+
+  datasourcesTemplate: defaultDerbyDatasources
+
+  objectStorage:
+    enabled: false
+    location:
+    endpointUrl:
+    accessKey:
+    secretKey:
+    bulkDataBucketName:
+
+  exposeHttpEndpoint: true
+  exposeHttpPort: 80
 
 fhir-trigger:
   enabled: false
@@ -148,6 +180,21 @@ fhir-deid:
     enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
+    annotations: {
+      nginx.ingress.kubernetes.io/server-snippet: add_header Strict-Transport-Security "max-age=86400; includeSubDomains";,
+      # nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-FHIR-FORWARDED-URL "https://$host$request_uri"; proxy_set_header Authorization "Basic {{ print "fhiruser:" .Values.fhirUserPassword | b64enc }}";,
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS,
+      nginx.ingress.kubernetes.io/proxy-ssl-protocols: TLSv1.2 TLSv1.3,
+      nginx.ingress.kubernetes.io/proxy-ssl-verify: "true",
+      nginx.ingress.kubernetes.io/rewrite-target: /fhir-server/api/v4/$2,
+      nginx.ingress.kubernetes.io/use-regex: 'true'
+      }
+
+    rules:
+      - host: *hostname
+        paths:
+          - path: "/fhir-deid(/|$)(.*)"
+            pathType: ImplementationSpecific
   proxy:
     name: fhir-deid-proxy
     enabled: false
@@ -155,6 +202,34 @@ fhir-deid:
       enabled: *ingressEnabled
       class: *ingressClass
       hostname: *hostname
+
+  fhirUserPassword: integrati0n
+  fhirAdminPassword: integrati0n
+
+  postgresql:
+    enabled: false
+
+  schemaMigration:
+    enabled: false
+
+  db:
+    type: derby
+    schema: app
+
+  replicaCount: 1
+
+  datasourcesTemplate: defaultDerbyDatasources
+
+  objectStorage:
+    enabled: false
+    location:
+    endpointUrl:
+    accessKey:
+    secretKey:
+    bulkDataBucketName:
+
+  exposeHttpEndpoint: true
+  exposeHttpPort: 80
 
 fhir-deid-trigger:
   enabled: false
@@ -213,14 +288,14 @@ nifi2: # NifiKop based Nifi
       bucketId: c601a7b4-f047-461e-ac13-2f140f8fb9b2
       flowId: 07fefa93-4207-4363-b46d-4e92a25d7bf6
       # flowVersion must be here. Using -1 doesn't work, and ommitting it causes NifiKop controller to fail/restart constantly
-      flowVersion: 35
+      flowVersion: 38
       parameterContextRef: ingestion-parameter-context
     - name: health-patterns-enrich-dataflow
       enabled: *enrichmentEnabled
       bucketId: c601a7b4-f047-461e-ac13-2f140f8fb9b2
       flowId: 1681a7e6-fdfe-4956-9ce1-6c9302f3b32f
       # flowVersion must be here. Using -1 doesn't work, and ommitting it causes NifiKop controller to fail/restart constantly
-      flowVersion: 12
+      flowVersion: 13
       parameterContextRef: enrichment-parameter-context
 
 # ------------------------------------------------------------------------------
@@ -282,6 +357,9 @@ nifi:
       emptyDir: {}
   properties:
     customLibPath: ./custom-nars
+  logresources:
+    requests:
+      memory: 30Mi
 
 # ------------------------------------------------------------------------------
 # Kafka Configuration
@@ -369,7 +447,7 @@ expose-kafka:
     enabled: *ingressEnabled
     class: *ingressClass
     hostname: *hostname
-  inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in"
+  inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in,ingest.topic.in,ingest.topic.out,ingest.topic.failure,enrich.topic.in,enrich.topic.out,enrich.topic.failure"
   inittopicnumpartitions: 1
   inittopicreplication: 1
 

@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: alvearie/expose-kafka
   pullPolicy: Always
-  tag: 0.0.3
+  tag: 0.0.5
 service:
   type: ClusterIP
   port: 5000
@@ -19,6 +19,7 @@ inittopics:
 inittopicnumpartitions:
 inittopicreplication:
 # bootstrap:
+requestTimeout: 30
 
 ingress:
   enabled: false

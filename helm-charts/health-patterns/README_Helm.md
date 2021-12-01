@@ -12,6 +12,8 @@ Alvearie Health Patterns is comprised of multiple components described in more d
 - Helm 3.0.0+
 - PV provisioner support in the underlying infrastructure.
 
+Note: If you don't have access to a kubernetes cluster, this pattern can also be [deployed to minikube](README_minikube.md).
+
 ## Installation
 
 ### Create a new namespace (Optional)
@@ -84,7 +86,7 @@ helm install <<RELEASE_NAME>> alvearie/health-patterns \
     -f <<VARIATION_YAML>>
 ```
 
-**NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter. 
+**NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter.
 
 **NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion` and `enrich`, you are required to update the corresponding values.yaml file to correspond to the correct release name.  
 
@@ -103,7 +105,11 @@ By default, the deployment of Nifi relies on an unsecured, open configuration. H
 
 In addition, using NifiKop requires a NifiKop controller to be deployed in the namespace prior to deploying the Health Patterns Helm chart.  This allows the NifiKop custom resources to be managed correctly, and by deploying separately guarantees the controller remains active when custom resources are deleted, allowing proper clean-up.
 
-To deploy a NifiKop controller to your namespace, run: 
+#### Important Note about namespaces
+
+The length of a namespace name must be less than or equal to **20 characters**.  Using a name that is longer than 20 characters will result in a failure to deploy the Nifi pod due to a certificate issue (the error will be visible in the NifiKop log).
+
+To deploy a NifiKop controller to your namespace, run:
 
 ```
 helm repo add orange-incubator https://orange-kubernetes-charts-incubator.storage.googleapis.com/
@@ -113,8 +119,8 @@ helm repo update
 helm install nifikop \
     orange-incubator/nifikop \
     --namespace=<<NAMESPACE>> \
-    --version 0.6.3 \
-    --set image.tag=v0.6.3-release \
+    --version 0.7.1 \
+    --set image.tag=v0.7.1-release \
     --set resources.requests.memory=256Mi \
     --set resources.requests.cpu=250m \
     --set resources.limits.memory=256Mi \

@@ -71,81 +71,45 @@
                 <value>${ip.fhir}</value>
             </replacement>
             <replacement>
-				<token>@@port.fhir@@</token>
-                <value>${port.fhir}</value>
-            </replacement>
-            <replacement>
 				<token>@@ip.fhir.proxy@@</token>
                 <value>${ip.fhir.proxy}</value>
-            </replacement>
-            <replacement>
-				<token>@@port.fhir.proxy@@</token>
-                <value>${port.fhir.proxy}</value>
             </replacement>
             <replacement>
 				<token>@@ip.fhir.deid@@</token>
                 <value>${ip.fhir.deid}</value>
             </replacement>
             <replacement>
-				<token>@@port.fhir.deid@@</token>
-                <value>${port.fhir.deid}</value>
-            </replacement>
-            <replacement>
 				<token>@@ip.fhir.deid.proxy@@</token>
                 <value>${ip.fhir.deid.proxy}</value>
-            </replacement>
-            <replacement>
-				<token>@@port.fhir.deid.proxy@@</token>
-                <value>${port.fhir.deid.proxy}</value>
-            </replacement>                             
+            </replacement>                            
             <replacement>
 				<token>@@ip.deid@@</token>
                 <value>${ip.deid}</value>
-            </replacement>
-            <replacement>
-                <token>@@port.deid@@</token>
-                <value>${port.deid}</value>
-            </replacement>                           
+            </replacement>                         
             <replacement>
                 <token>@@ip.nifi@@</token>
                 <value>${ip.nifi}</value>
-            </replacement>
-            <replacement>
-                <token>@@port.nifi@@</token>
-                <value>${port.nifi}</value>
             </replacement>
             <replacement>
                 <token>@@ip.nifi.api@@</token>
                 <value>${ip.nifi.api}</value>
             </replacement>
             <replacement>
-                <token>@@port.nifi.api@@</token>
-                <value>${port.nifi.api}</value>
-            </replacement>
-            <replacement>
                 <token>@@ip.kafka@@</token>
                 <value>${ip.kafka}</value>
             </replacement>
             <replacement>
-                <token>@@port.kafka@@</token>
-                <value>${port.kafka}</value>
-            </replacement>
-            <replacement>
                 <token>@@ip.expkafka@@</token>
                 <value>${ip.expkafka}</value>
-            </replacement>
-            <replacement>
-                <token>@@port.expkafka@@</token>
-                <value>${port.expkafka}</value>
             </replacement>  
             <replacement>
                 <token>@@ip.nlp.insights@@</token>
                 <value>${ip.nlp.insights}</value>
-            </replacement>
+            </replacement> 
             <replacement>
-                <token>@@port.nlp.insights@@</token>
-                <value>${port.nlp.insights}</value>
-            </replacement>                                             
+                <token>@@kafka.topic.in@@</token>
+                <value>${kafka.topic.in}</value>
+            </replacement>                                            
         </replacements>
     </configuration>
     </plugin>

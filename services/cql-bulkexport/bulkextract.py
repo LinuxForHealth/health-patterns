@@ -115,6 +115,9 @@ def cql_bulk_processing(cql, job_id):
 
             info = dict(response.headers)
             jobstatusURL = info["Content-Location"]  # need to call this until 200 (or error)
+            parts = jobstatusURL.split("fhir-server/api/v4") # need to use internal fhir url
+            jobstatusURL = fhir_endpoint + parts[1]
+
             statusresp = requests.get(jobstatusURL, auth=(fhiruser, fhirpw), verify=False)
             respStatusCode = statusresp.status_code
             while respStatusCode == 202:
