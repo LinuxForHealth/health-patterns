@@ -155,7 +155,7 @@ init_configs()
 def get_config(config_name: str) -> Response:
     """Gets and returns the given config details"""
     try:
-        with open(configDir + f"/{config_name}", "r", encoding="uft-8") as json_file:
+        with open(configDir + f"/{config_name}", "r", encoding="utf-8") as json_file:
             json_string = json_file.read()
         c_dict = json.loads(json_string)
         if c_dict["nlpServiceType"] == "acd":
@@ -206,12 +206,8 @@ def delete_config(config_name: str) -> Response:
 def get_all_configs() -> Response:
     """Get and return all configs by name"""
     configs = list(nlp_services_dict.keys())
-    if not configs:
-        output = "No configs found"
-    else:
-        output = "\n".join(configs)
     logger.info("Config list displayed")
-    return Response(output, status=200)
+    return Response(json.dumps(configs), status=200, mimetype="application/json")
 
 
 @app.route("/config", methods=["GET"])
@@ -220,9 +216,7 @@ def get_current_config() -> Response:
 
     if nlp_service is None:
         raise BadRequest(description="No default nlp service is currently set")
-    return Response(
-        nlp_service.config_name, status=200, mimetype="application/plaintext"
-    )
+    return Response(nlp_service.config_name, status=200, mimetype="text/plain")
 
 
 @app.route("/config/setDefault", methods=["POST", "PUT"])
@@ -240,7 +234,7 @@ def set_default_config() -> Response:
         return Response(
             "Default config set to: " + config_name,
             status=200,
-            mimetype="application/plaintext",
+            mimetype="text/plain",
         )
 
     logger.warning("Did not provide query parameter 'name' to set default config")
@@ -256,7 +250,7 @@ def clear_default_config() -> Response:
 
     nlp_service = None
     return Response(
-        "Default config has been cleared", status=200, mimetype="application/plaintext"
+        "Default config has been cleared", status=200, mimetype="text/plain"
     )
 
 
@@ -264,7 +258,9 @@ def clear_default_config() -> Response:
 def get_current_override_configs() -> Response:
     """Get and return all override definitions"""
     return Response(
-        str(override_resource_config), status=200, mimetype="application/plaintext"
+        json.dumps(override_resource_config),
+        status=200,
+        mimetype="application/json",
     )
 
 
@@ -276,7 +272,7 @@ def get_current_override_config(resource_name: str) -> Response:
     return Response(
         override_resource_config[resource_name],
         status=200,
-        mimetype="application/plaintext",
+        mimetype="text/plain",
     )
 
 
@@ -288,9 +284,7 @@ def setup_override_config(resource_name: str, config_name: str) -> Response:
 
     override_resource_config[resource_name] = config_name
 
-    return Response(
-        str(override_resource_config), status=200, mimetype="application/plaintext"
-    )
+    return Response(str(override_resource_config), status=200, mimetype="text/plain")
 
 
 @app.route("/config/resource/<resource_name>", methods=["DELETE"])
@@ -326,8 +320,9 @@ def _derive_bundle_entries(resource: Resource) -> List[BundleEntryDfn]:
     result: List[BundleEntryDfn] = []
 
     if isinstance(resource, Bundle):
-        for entry in resource.entry:
-            result.extend(_derive_bundle_entries(entry.resource))
+        if resource.entry:
+            for entry in resource.entry:
+                result.extend(_derive_bundle_entries(entry.resource))
     else:
         nlp = _get_nlp_service_for_resource(resource)
         text_for_new_resources: List[UnstructuredText] = get_unstructured_text(resource)

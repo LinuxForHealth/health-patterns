@@ -15,23 +15,27 @@
 import json
 from typing import Dict, Any, Type, List, Union
 
+from fhir.resources.resource import Resource
 from flask.testing import FlaskClient
 from ibm_whcs_sdk.annotator_for_clinical_data import (
     annotator_for_clinical_data_v1 as acd,
 )
 
 from text_analytics.nlp.acd import acd_service
-from text_analytics.nlp.nlp_reponse import NlpResponse
+from text_analytics.nlp.nlp_response import NlpResponse
 from text_analytics.nlp.quickUMLS import quickUMLS_service
 
+ACD_CONFIG_DEF_NAME = "acdconfig1"
+QUICK_UMLS_CONFIG_DEF_NAME = "quickconfig1"
 
-def configure_acd(service: FlaskClient) -> None:
+
+def configure_acd(service: FlaskClient, is_default: bool = True) -> str:
     """Configures nlp-insights flask service to use ACD"""
 
     rsp = service.post(
         "/config/definition",
         json={
-            "name": "acdconfig1",
+            "name": ACD_CONFIG_DEF_NAME,
             "nlpServiceType": "acd",
             "config": {
                 "apikey": "**invalid**",
@@ -46,20 +50,19 @@ def configure_acd(service: FlaskClient) -> None:
             f"Failed to register config code = {rsp.status_code} {rsp.data}"
         )
 
-    rsp = service.post("/config/setDefault?name=acdconfig1")
-    if rsp.status_code != 200:
-        raise RuntimeError(
-            f"Failed to set default config code = {rsp.status_code} {rsp.data}"
-        )
+    if is_default:
+        set_default_nlp(service, ACD_CONFIG_DEF_NAME)
+
+    return ACD_CONFIG_DEF_NAME
 
 
-def configure_quick_umls(service: FlaskClient) -> None:
+def configure_quick_umls(service: FlaskClient, is_default: bool = True) -> str:
     """Configures nlp-insights flask service to use QuickUmls"""
 
     rsp = service.post(
         "/config/definition",
         json={
-            "name": "quickconfig1",
+            "name": QUICK_UMLS_CONFIG_DEF_NAME,
             "nlpServiceType": "quickumls",
             "config": {"endpoint": "https://invalid.ibm.com/match"},
         },
@@ -70,7 +73,26 @@ def configure_quick_umls(service: FlaskClient) -> None:
             f"Failed to register config code = {rsp.status_code} {rsp.data}"
         )
 
-    rsp = service.post("/config/setDefault?name=quickconfig1")
+    if is_default:
+        set_default_nlp(service, QUICK_UMLS_CONFIG_DEF_NAME)
+
+    return QUICK_UMLS_CONFIG_DEF_NAME
+
+
+def set_default_nlp(service: FlaskClient, config_name: str) -> None:
+    """Sets the default config"""
+    rsp = service.post(f"/config/setDefault?name={config_name}")
+    if rsp.status_code != 200:
+        raise RuntimeError(
+            f"Failed to set default config code = {rsp.status_code} {rsp.data}"
+        )
+
+
+def configure_resource_nlp_override(
+    service: FlaskClient, resource_type: Type[Resource], config_name: str
+) -> None:
+    """Uses specfied NLP for the specified resource types"""
+    rsp = service.post(f"/config/resource/{resource_type.__name__}/{config_name}")
     if rsp.status_code != 200:
         raise RuntimeError(
             f"Failed to set default config code = {rsp.status_code} {rsp.data}"

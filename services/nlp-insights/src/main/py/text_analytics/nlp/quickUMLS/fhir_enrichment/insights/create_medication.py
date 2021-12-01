@@ -29,7 +29,7 @@ from text_analytics.insight.span import Span
 from text_analytics.insight.text_fragment import TextFragment
 from text_analytics.insight_source.unstructured_text import UnstructuredText
 from text_analytics.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
-from text_analytics.nlp.nlp_reponse import NlpResponse, NlpCui
+from text_analytics.nlp.nlp_response import NlpResponse, NlpCui
 from text_analytics.umls.semtype_lookup import resource_relevant_to_any_type_names
 
 

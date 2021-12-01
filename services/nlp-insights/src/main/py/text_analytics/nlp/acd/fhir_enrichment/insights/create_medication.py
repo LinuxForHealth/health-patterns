@@ -17,7 +17,6 @@ from collections import namedtuple
 import logging
 from typing import Any
 from typing import Dict
-from typing import Iterable
 from typing import List
 from typing import Optional
 from typing import cast
@@ -57,7 +56,7 @@ from text_analytics.nlp.acd.fhir_enrichment.insights.attribute_source_cui import
     get_attribute_sources,
     AttrSourceConcept,
 )
-from text_analytics.nlp.nlp_config import NlpConfig
+from text_analytics.nlp.nlp_config import AcdNlpConfig
 
 
 logger = logging.getLogger(__name__)
@@ -66,7 +65,7 @@ logger = logging.getLogger(__name__)
 def create_med_statements_from_insights(
     text_source: UnstructuredText,
     acd_output: acd.ContainerAnnotation,
-    nlp_config: NlpConfig,
+    nlp_config: AcdNlpConfig,
 ) -> Optional[List[MedicationStatement]]:
     """Creates medication statements, given acd data from the text source
 
@@ -77,7 +76,7 @@ def create_med_statements_from_insights(
 
     Returns medication statements derived from NLP, or None if there are no such statements
     """
-    source_loc_map = nlp_config.get_valid_acd_attr_source_map()
+    source_loc_map = nlp_config.acd_attribute_source_map
 
     TrackerEntry = namedtuple("TrackerEntry", ["fhir_resource", "id_maker"])
     med_statement_tracker = {}  # key is UMLS ID, value is TrackerEntry
@@ -135,30 +134,6 @@ def create_med_statements_from_insights(
     return med_statements
 
 
-def _get_annotation_for_attribute(
-    attr: acd.AttributeValueAnnotation,
-    acd_annotations: Iterable[acd.MedicationAnnotation],
-) -> acd.MedicationAnnotation:
-    """Finds the annotation associated with the ACD attribute.
-
-    The "associated" annotation is the one with the uid indicated by the attribute.
-    This will be the "source" for the attribute (eg the annotation used to create the attribute).
-
-     Args:
-        attr - the ACD attribute value
-        acd_annotations - the list of acd annotations to search
-
-     Returns:
-        The annotation that was used to create the attribute.
-    """
-    concept = attr.concept
-    uid = concept.uid
-    for acd_annotation in acd_annotations:
-        if acd_annotation.uid == uid:
-            return acd_annotation
-    return None
-
-
 def _add_insight_to_medication_statement(  # pylint: disable=too-many-arguments
     text_source: UnstructuredText,
     med_statement: MedicationStatement,
@@ -166,7 +141,7 @@ def _add_insight_to_medication_statement(  # pylint: disable=too-many-arguments
     med_ind: acd.MedicationAnnotation,
     acd_output: acd.ContainerAnnotation,
     insight_id_string: str,
-    nlp_config: NlpConfig,
+    nlp_config: AcdNlpConfig,
 ) -> None:
     """Adds insight data to the medication statement"""
 

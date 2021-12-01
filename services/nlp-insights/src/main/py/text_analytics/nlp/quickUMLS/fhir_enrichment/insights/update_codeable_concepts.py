@@ -30,7 +30,7 @@ from text_analytics.insight_source.fields_of_interest import (
     CodeableConceptRefType,
 )
 from text_analytics.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
-from text_analytics.nlp.nlp_reponse import NlpResponse, NlpCui
+from text_analytics.nlp.nlp_response import NlpResponse, NlpCui
 from text_analytics.umls.semtype_lookup import ref_type_relevant_to_any_type_names
 
 

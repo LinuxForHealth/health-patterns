@@ -16,7 +16,6 @@ Process ACD output and derive conditions
 """
 
 from collections import namedtuple
-from typing import Iterable
 from typing import List
 from typing import Optional
 
@@ -52,13 +51,13 @@ from text_analytics.nlp.acd.fhir_enrichment.insights.attribute_source_cui import
     get_attribute_sources,
     AttrSourceConcept,
 )
-from text_analytics.nlp.nlp_config import NlpConfig
+from text_analytics.nlp.nlp_config import AcdNlpConfig
 
 
 def create_conditions_from_insights(
     text_source: UnstructuredText,
     acd_output: ContainerAnnotation,
-    nlp_config: NlpConfig,
+    nlp_config: AcdNlpConfig,
 ) -> Optional[List[Condition]]:
     """For the provided source and ACD output, create FHIR condition resources
 
@@ -69,7 +68,7 @@ def create_conditions_from_insights(
 
     Returns conditions derived by NLP, or None if there are no conditions
     """
-    source_loc_map = nlp_config.get_valid_acd_attr_source_map()
+    source_loc_map = nlp_config.acd_attribute_source_map
 
     TrackerEntry = namedtuple("TrackerEntry", ["fhir_resource", "id_maker"])
     condition_tracker = {}  # key is UMLS ID, value is TrackerEntry
@@ -113,29 +112,6 @@ def create_conditions_from_insights(
     return conditions
 
 
-def _get_concept_for_attribute(
-    attr: acd.AttributeValueAnnotation, concepts: Iterable[acd.Concept]
-) -> Optional[acd.Concept]:
-    """Finds the concept associated with the ACD attribute
-
-    The "associated" concept is the one with the uid indicated by the attribute.
-    This will be the "source" for the attribute (eg the annotation used to create the attribute).
-
-     Args:
-        attr - the ACD attribute value
-        acd_annotations - the list of acd concepts to search
-
-     Returns:
-        The concept that was used to create the attribute."""
-    concept = attr.concept
-    uid = concept.uid
-    for concept in concepts:
-        if concept.uid == uid:
-            return concept
-
-    return None
-
-
 def _add_insight_to_condition(  # pylint: disable=too-many-arguments;
     text_source: UnstructuredText,
     condition: Condition,
@@ -143,7 +119,7 @@ def _add_insight_to_condition(  # pylint: disable=too-many-arguments;
     cui_source: AttrSourceConcept,
     acd_output: acd.ContainerAnnotation,
     insight_id_string: str,
-    nlp_config: NlpConfig,
+    nlp_config: AcdNlpConfig,
 ) -> None:
     """Adds data from the insight to the condition"""
     insight_id_ext = create_insight_id_extension(

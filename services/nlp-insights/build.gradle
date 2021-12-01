@@ -115,6 +115,7 @@ task copySource {
   }
 
   doLast {
+    delete "${buildDir}/${pySrcDir}"
     sourceTree.files.each { sourceFile ->
       copy {
         from sourceFile.absolutePath
@@ -150,6 +151,7 @@ task copyTestResources {
   }
 
   doLast {
+    delete "${buildDir}/${pyTestDir}"
     sourceTree.files.each { sourceFile ->
       copy {
         from sourceFile.absolutePath

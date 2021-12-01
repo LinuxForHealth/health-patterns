@@ -34,7 +34,7 @@ from text_analytics.nlp.acd.fhir_enrichment.insights.attribute_source_cui import
     AttrSourceConcept,
 )
 
-from text_analytics.nlp.nlp_config import NlpConfig
+from text_analytics.nlp.nlp_config import AcdNlpConfig
 
 
 logger = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ def _add_codeable_concept_insight(
     fhir_resource: Resource,
     insight: AcdConceptRef,
     id_maker: Generator[str, None, None],
-    nlp_config: NlpConfig,
+    nlp_config: AcdNlpConfig,
 ) -> int:
     """Updates a codeable concept and resource meta with ACD insights.
 
@@ -71,7 +71,7 @@ def _add_codeable_concept_insight(
     Returns: the number of codings added to the codeable concept.
     """
     concept_ref = insight.adjusted_concept.concept_ref
-    source_loc_map = nlp_config.get_valid_acd_attr_source_map()
+    source_loc_map = nlp_config.acd_attribute_source_map
 
     total_num_codes_added: int = 0
 
@@ -108,7 +108,7 @@ def _add_codeable_concept_insight(
 def update_codeable_concepts_and_meta_with_insights(
     fhir_resource: Resource,
     concept_insights: List[AcdConceptRef],
-    nlp_config: NlpConfig,
+    nlp_config: AcdNlpConfig,
 ) -> int:
     """Updates the resource with derived insights
 

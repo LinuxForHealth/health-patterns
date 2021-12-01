@@ -16,7 +16,7 @@ from text_analytics.insight_source.concept_text_adjustment import AdjustedConcep
 from text_analytics.insight_source.unstructured_text import UnstructuredText
 from text_analytics.nlp.abstract_nlp_service import NLPService, NLPServiceError
 from text_analytics.nlp.nlp_config import QUICK_UMLS_NLP_CONFIG
-from text_analytics.nlp.nlp_reponse import NlpResponse, NlpCui
+from text_analytics.nlp.nlp_response import NlpResponse, NlpCui
 from text_analytics.nlp.quickUMLS.fhir_enrichment.insights.create_condition import (
     create_conditions_from_insights,
 )
