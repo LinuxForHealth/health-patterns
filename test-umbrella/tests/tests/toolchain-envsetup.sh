@@ -75,77 +75,66 @@ cat values.yaml | grep $TEST_NAMESPACE.$INGRESS_SUBDOMAIN
 # setup all the env vars for input to maven
 # FHIR Using INGRESS
 export FHIR_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir
-export FHIR_PORT=
 echo "*************************************"
-echo FHIR server: $FHIR_IP$FHIR_PORT
+echo FHIR server: $FHIR_IP
 echo "*************************************"
 
 # FHIR PROXY Using INGRESS
 export FHIR_PROXY_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir-proxy
-export FHIR__PROXY_PORT=
 echo "*************************************"
-echo FHIR Proxy server: $FHIR_PROXY_IP$FHIR_PROXY_PORT
+echo FHIR Proxy server: $FHIR_PROXY_IP
 echo "*************************************"
 
 # FHIR DEID - using INGRESS
 export FHIR_DEID_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir-deid
-export FHIR_DEID_PORT=
 echo "*************************************"
-echo FHIR DEID server: $FHIR_DEID_IP$FHIR_DEID_PORT
+echo FHIR DEID server: $FHIR_DEID_IP
 echo "*************************************"
 
 # FHIR DEID PROXY- using INGRESS
 export FHIR_DEID_PROXY_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/fhir-deid-proxy
-export FHIR_DEID_PROXY_PORT=
 echo "*************************************"
-echo FHIR DEID PROXY server: $FHIR_DEID_PROXY_IP$FHIR_DEID_PROXY_PORT
+echo FHIR DEID PROXY server: $FHIR_DEID_PROXY_IP
 echo "*************************************"
 
 # DEID - using INGRESS
 export DEID_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/deid
-export DEID_PORT=
 echo "*************************************"
-echo DEID server: $DEID_IP$DEID_PORT
+echo DEID server: $DEID_IP
 echo "*************************************"
 
 # NIFI - using INGRESS
 export NIFI_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/
-export NIFI_PORT=
 echo "*************************************"
-echo NIFI server: $NIFI_IP$NIFI_PORT
+echo NIFI server: $NIFI_IP
 echo "*************************************"
 
 # EXPOSE KAFKA Service using INGRESS
 export EXP_KAFKA_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/expose-kafka
-export EXP_KAFKA_PORT=
 echo "*************************************"
-echo EXPOSE KAFKA Service: $EXP_KAFKA_IP$EXP_KAFKA_PORTT
+echo EXPOSE KAFKA Service: $EXP_KAFKA_IP
 echo "*************************************"
 
 # DEID Prep - using INGRESS
 export DEID_PREP_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/deid-prep
-export DEID_PREP_PORT=
 echo "*************************************"
-echo DEID-PREP server: $DEID_PREP_IP$DEID_PREP_PORT
+echo DEID-PREP server: $DEID_PREP_IP
 echo "*************************************"
 
 # TERM Services Prep - using INGRESS
 export TERM_PREP_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/term-services-prep
-export TERM_PREP_PORT=
 echo "*************************************"
-echo TERM-SERVICES-PREP server: $TERM_PREP_IP$TERM_PREP_PORT
+echo TERM-SERVICES-PREP server: $TERM_PREP_IP
 echo "*************************************"
 
 # ASCVD From FHIR Service - using INGRESS
 export ASCVD_FROM_FHIR_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/ascvd-from-fhir
-export ASCVD_FROM_FHIR_PORT=
 echo "*************************************"
-echo ASCVD-FROM-FHIR server: $ASCVD_FROM_FHIR_IP$ASCVD_FROM_FHIR_PORT
+echo ASCVD-FROM-FHIR server: $ASCVD_FROM_FHIR_IP
 echo "*************************************"
 
 # NLP Insights Service - using INGRESS
 export NLP_INSIGHTS_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/nlp-insights
-export NLP_INSIGHTS_PORT=
 echo "*************************************"
-echo NLP Insights server: $NLP_INSIGHTS_IP$NLP_INSIGHTS_PORT
+echo NLP Insights server: $NLP_INSIGHTS_IP
 echo "*************************************"
