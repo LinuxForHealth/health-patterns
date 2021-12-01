@@ -10,7 +10,7 @@
                 "request": {
                     "body":  "${0}" },            
             "verify": {
-                "status": 200,
+                "status": 400,
                 "body": {
                     "resourceType": "Bundle",
                     "entry[0].resource.extension[4].url":"$CONTAINS.STRING:${4}",
