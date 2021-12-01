@@ -110,9 +110,9 @@ cat target/surefire-reports/*.xml >> /workspace/test-umbrella/tests/smoketests.x
 echo "</testsuites>" >> /workspace/test-umbrella/tests/smoketests.xml
 
 # Looking for test failures. If any are found, then save the environment for debug 
-TEST_FAILURE=$(cat target/surefire-reports/*.txt | grep FAILURE)
+TEST_FAILURE=$(cat target/surefire-reports/*.txt | grep FAILURE!)
 echo $TEST_FAILURE
-if ["$TEST_FAILURE" == *"FAILURE"* ]
+if ["$TEST_FAILURE" = *"FAILURE!"* ]
 then
    echo "********************************************************************"
    echo "*  Test Failures detected.  Saving the test environment for debug. *"
