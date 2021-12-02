@@ -141,7 +141,23 @@ echo "<testsuites>" > /workspace/test-umbrella/tests/ivttest.xml
 cat target/surefire-reports/*.xml >> /workspace/test-umbrella/tests/ivttest.xml
 echo "</testsuites>" >> /workspace/test-umbrella/tests/ivttest.xml
 
+# Looking for test failures. If any are found, then save the environment for debug 
+TEST_FAILURE=$(cat target/surefire-reports/*.txt | grep FAILURE!)
+echo $TEST_FAILURE
+if [[ $TEST_FAILURE == *"FAILURE!"* ]]
+then
+   echo "********************************************************************"
+   echo "*  Test Failures detected.  Saving the test environment for debug. *"
+   echo "********************************************************************"
+   export ENV_CLEAN_UP="false"
+else
+   echo "*********************************"
+   echo "*  No Test Failures detected.   *"
+   echo "*********************************"  
+fi
+
 # ENV_CLEAN_UP is set in the toolchain environment properties.  The default value is true, but it can be changed on toolchain start
+# It can can be set to false if test errors are detected
 # if we need to keep the test environment available for debug
 if [ $ENV_CLEAN_UP = "true" ]  
 then
