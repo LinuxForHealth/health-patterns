@@ -149,7 +149,7 @@ then
    echo "********************************************************************"
    echo "*  Test Failures detected.  Saving the test environment for debug. *"
    echo "********************************************************************"
-   ENV_CLEAN_UP = "false"
+   export ENV_CLEAN_UP="false"
 else
    echo "*********************************"
    echo "*  No Test Failures detected.   *"
