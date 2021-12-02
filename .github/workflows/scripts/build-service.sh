@@ -108,12 +108,14 @@ if [ -z "$ORG" ]; then
   then
     if [[ -z "$PRIVATE_DOCKER_USER" ]]
     then
-      ORG="${GITHUB_USER}"
+      USER="${GITHUB_USER}"
     else
-      ORG="${PRIVATE_DOCKER_USER}"
+      USER="${PRIVATE_DOCKER_USER}"
     fi
+    ORG=${USER}
   elif [[ ${MODE} == 'push' ]]
   then
+    USER=${DOCKER_USER}  
     ORG="alvearie"
   fi
 fi
@@ -177,7 +179,7 @@ if [ ${MODE} == 'push' ]; then
   printf "\nPushing docker image to repostiory: ${ORG}/${REPOSITORY}:{$TAG}\n"
 
   # Login to Docker
-  echo  ${DOCKER_TOKEN} | docker login --username ${ORG} --password-stdin
+  echo  ${DOCKER_TOKEN} | docker login --username ${USER} --password-stdin
   
   docker push -q ${ORG}/${REPOSITORY}:${TAG}
 fi
