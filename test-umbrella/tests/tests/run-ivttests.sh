@@ -157,5 +157,5 @@ else
 fi
 
 # Clean up and shutdown the test environment
-chmod +x ./tests/testCleanUp.sh
-source ./tests/testCleanUp.sh
+chmod +x /workspace/test-umbrella/tests/tests/testCleanUp.sh
+source /workspace/test-umbrella/tests/tests/testCleanUp.sh
