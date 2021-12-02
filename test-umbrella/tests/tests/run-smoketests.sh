@@ -15,8 +15,13 @@
 chmod +x ./tests/toolchain-envsetup.sh
 source ./tests/toolchain-envsetup.sh "smoke"
 
-# Set the expose-kafka service input topic for unsecured Nifi
-export KAFKA_TOPIC_IN="ingest.clinical.in"
+# Setup for NifiKop Deployment
+cd /workspace/$TEST_NAMESPACE/health-patterns/test-umbrella/tests
+chmod +x ./tests/NifiKopValues.sh
+source ./tests/NifiKopValues.sh
+
+# Use kafka input topic used in sercure Nifi
+export KAFKA_TOPIC_IN="ingest.topic.in"
 
 echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
@@ -95,11 +100,13 @@ then
    echo "* Execute the testcases             *"
    echo "*************************************"
    mvn -e -DskipTests=false -Dtest=BasicIngestionTests test 
+   mvn -e -DskipTests=false -Dtest=BasicIngestionBLKTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
    cat target/surefire-reports/categories.BasicIngestionInitTests.txt
    cat target/surefire-reports/categories.BasicIngestionTests.txt
+   cat target/surefire-reports/categories.BasicIngestionBLKTests.txt
 fi
 
 echo "*************************************" 
@@ -124,20 +131,6 @@ else
    echo "*********************************"  
 fi
 
-# ENV_CLEAN_UP is set in the toolchain environment properties.  The default value is true, but it can be changed on toolchain start
-# It can can be set to false if test errors are detected
-# if we need to keep the test environment available for debug
-if [ $ENV_CLEAN_UP = "true" ]  
-then
-	# then clean up
-	echo "*************************************"
-	echo "* Delete the Deployment             *"
-	echo "*************************************"
-	helm3 delete $HELM_RELEASE
-	kubectl delete namespace $TEST_NAMESPACE
-else 
-    # save the test deployment
-	echo "*************************************************************"
-	echo "* Test deployment "$HELM_RELEASE" in "$TEST_NAMESPACE" saved            *"
-	echo "*************************************************************"
-fi
+# Clean up and shutdown the test environment
+chmod +x ./tests/testCleanUp.sh
+source ./tests/testCleanUp.sh
