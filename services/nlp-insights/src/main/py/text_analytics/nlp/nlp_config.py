@@ -60,12 +60,12 @@ class AcdNlpConfig(NlpConfig):
 
 
 ACD_NLP_CONFIG_STANDARD_V1_0 = AcdNlpConfig(
-    nlp_system="urn:alvearie.io/patterns/wh_acd.ibm_clinical_insights_v1.0_standard_flow/0.0.2",
+    nlp_system="urn:alvearie.io/health_patterns/services/nlp_insights/acd",
     get_nlp_output_loc=lambda x: None,
 )
 
 
 QUICK_UMLS_NLP_CONFIG = NlpConfig(
-    nlp_system="urn:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2",
+    nlp_system="urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
     get_nlp_output_loc=lambda x: None,
 )

@@ -13,7 +13,7 @@
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
-                    "system": "urn:alvearie.io/patterns/wh_acd.ibm_clinical_insights_v1.0_standard_flow/0.0.2",
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
                     "value": "insight-1"
                   }
                 },
@@ -169,7 +169,7 @@
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
-                    "system": "urn:alvearie.io/patterns/wh_acd.ibm_clinical_insights_v1.0_standard_flow/0.0.2",
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
                     "value": "insight-1"
                   }
                 },

@@ -13,7 +13,7 @@
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
-                    "system": "urn:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2",
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
                     "value": "insight-1"
                   }
                 },
@@ -202,7 +202,7 @@
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
-                    "system": "urn:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2",
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
                     "value": "insight-1"
                   }
                 },
@@ -247,7 +247,7 @@
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
-                    "system": "urn:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2",
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
                     "value": "insight-2"
                   }
                 },
@@ -400,7 +400,7 @@
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
-                    "system": "urn:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2",
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
                     "value": "insight-1"
                   }
                 },
@@ -497,7 +497,7 @@
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
-                    "system": "urn:alvearie.io/patterns/QuickUMLS_v1.4.0/0.0.2",
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
                     "value": "insight-1"
                   }
                 },
