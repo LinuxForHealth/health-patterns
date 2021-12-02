@@ -29,6 +29,15 @@ from text_analytics.nlp.acd.fhir_enrichment.insights.attribute_source_cui import
 )
 from text_analytics.umls import semtype_lookup
 
+# There's an assumption here that this allergy mapping is used
+# in a context that is known to be allergy. For example enriching an
+# allergy intolerance coding.
+# With this assumption, we can assume diagnosis is for an allergy, or if
+# no attribute is found the concepts can be searched for correct types.
+# This doesn't work in general unstructured text, because then we might
+# see a non-allergy diagnosis or CUIs that are not for the patient.
+#
+# This can also be used for an allergy manifestation context.
 ANNOTATION_TYPE_ALLERGY = AnnotationContext(
     attribute_mapping=[
         AcdAttrCuiSourceLoc(
@@ -45,6 +54,9 @@ ANNOTATION_TYPE_ALLERGY = AnnotationContext(
     ],
 )
 
+# This condition mapping is currently believed to work in both a condition
+# context (enriching a condition's coding), and also for constructing
+# conditions from unstructured text.
 ANNOTATION_TYPE_CONDITION = AnnotationContext(
     attribute_mapping=[
         AcdAttrCuiSourceLoc(
@@ -55,6 +67,13 @@ ANNOTATION_TYPE_CONDITION = AnnotationContext(
     concept_fallback=None,
 )
 
+
+# This mapping assumes an immunization context (such as enriching an Immunization
+# resources's coding).
+# Because of that assumption, we can assume any concepts that look related to immunization
+# are codings we are interested in.
+#
+# We are not aware of an attribute for immunization.
 ANNOTATION_TYPE_IMMUNIZATION = AnnotationContext(
     attribute_mapping=None,
     concept_fallback=[
@@ -62,6 +81,9 @@ ANNOTATION_TYPE_IMMUNIZATION = AnnotationContext(
     ],
 )
 
+
+# This mapping for medication is intended to be used for constructing
+# medication objects from unstructured text.
 ANNOTATION_TYPE_MEDICATION = AnnotationContext(
     attribute_mapping=[
         AcdAttrCuiSourceLoc(
@@ -73,6 +95,25 @@ ANNOTATION_TYPE_MEDICATION = AnnotationContext(
 )
 
 
+# There are two root types used as keys for this map
+# Fhir Resource & Codeable concept reference type.
+# For a concept reference type, we can use a mapping that assumes the text has a specific context,
+# such as when we enrich an allergy intolerance or immunization coding.
+#
+# For a FHIR resource, this is the resource we want to create from unstructured text.
+# We can't assume the text is only about that resource, or even says anything about that
+# kind of resource.
+#
+# We can be a lot more liberal in what we consider matching attributes and concepts when we
+# are aware of the context of the text.
+#
+# This is why it is possible that we could have a different mapping for creating Conditions vs
+# enriching condition codings. Even though today we reuse the same rules for both, this could change in
+# the future as our understanding of ACD evolves.
+#
+# It's also why in the actual rules we can get away with assuming 'Diagnosis' is talking about an
+# allergy diagnosis when enriching an AllergyIntolerance coding...but we could not use that same rule
+# if we were to someday try and create an allergy intolerance resource from a diagnostic report.
 RELEVANT_ANNOTATIONS_STANDARD_V1_0: SourceCuiSearchMap = {
     Condition: ANNOTATION_TYPE_CONDITION,
     MedicationStatement: ANNOTATION_TYPE_MEDICATION,
