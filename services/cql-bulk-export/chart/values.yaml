@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: ewill0/cql-bulk-export
+  repository: alvearie/cql-bulk-export
   pullPolicy: Always
   tag: 0.0.4
 service:

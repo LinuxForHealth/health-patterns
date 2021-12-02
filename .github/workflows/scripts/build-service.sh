@@ -114,7 +114,7 @@ if [ -z "$ORG" ]; then
     fi
   elif [[ ${MODE} == 'push' ]]
   then
-    ORG=${DOCKER_USER}  #"alvearie"
+    ORG="alvearie"
   fi
 fi
 
