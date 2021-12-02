@@ -1,0 +1,173 @@
+{
+  "entry": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/patterns/wh_acd.ibm_clinical_insights_v1.0_standard_flow/0.0.2",
+                    "value": "insight-1"
+                  }
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DocumentReference/12345"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "skin cancer"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 8
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 19
+                            },
+                            {
+                              "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Explicit Score"
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.925
+                                }
+                              ],
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
+                            },
+                            {
+                              "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Patient Reported Score"
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.017
+                                }
+                              ],
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
+                            },
+                            {
+                              "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Discussed Score"
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.058
+                                }
+                              ],
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
+                            },
+                            {
+                              "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Family History Score"
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.122
+                                }
+                              ],
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
+                            },
+                            {
+                              "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Suspected Score"
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.988
+                                }
+                              ],
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "code": "natural-language-processing",
+                  "display": "NLP",
+                  "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                }
+              ],
+              "text": "NLP"
+            }
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C0007114",
+              "display": "malignant neoplasm of skin",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            },
+            {
+              "code": "372130007",
+              "system": "http://snomed.info/sct"
+            },
+            {
+              "code": "173.99",
+              "system": "http://terminology.hl7.org/CodeSystem/icd9"
+            },
+            {
+              "code": "C44.9",
+              "system": "https://terminology.hl7.org/CodeSystem/icd10"
+            },
+            {
+              "code": "C44.90",
+              "system": "https://terminology.hl7.org/CodeSystem/icd10"
+            }
+          ],
+          "text": "malignant neoplasm of skin"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    }
+  ],
+  "type": "transaction",
+  "resourceType": "Bundle"
+}

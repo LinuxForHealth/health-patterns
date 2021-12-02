@@ -39,6 +39,13 @@ DOCREF_REPORT_TEXT_FOR_CONDITIONS = (
     "Patient has pneumonia and shows signs of heart attack"
 )
 
+# More of an accuracy thing in general, but there will be an attribute
+# that points at different sources. We want the one with the high suspected
+# score, not the one with a high family history score
+DOCREF_REPORT_TEXT_FOR_CONDITION_SUSPECTED_AND_FAM_HISTORY = (
+    "suspect skin cancer because the patient's brother has skin cancer"
+)
+
 DOCREF_REPORT_TEXT_FOR_MEDICATIONS = "Patient started taking beta blockers"
 
 DOCREF_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS = (
@@ -129,6 +136,42 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
                     attachments=[
                         make_attachment(
                             DOCREF_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS
+                        )
+                    ],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_acd(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_docref_bundle_with_different_confidences_then_condition_derived_with_correct_confidence(
+        self,
+    ):
+        """The text for this one has a diagnosis that pertains to the patient, and a family history
+        disease. We should end up with scores and covered text that is what we want.
+
+        More accuracy than function, but the response is fixed and we need to be picking the
+        right values.
+
+        This really shows why we want to go through the attribute instead of just cuis.
+        """
+        bundle = make_bundle(
+            [
+                make_docref_report(
+                    subject=make_patient_reference(),
+                    attachments=[
+                        make_attachment(
+                            DOCREF_REPORT_TEXT_FOR_CONDITION_SUSPECTED_AND_FAM_HISTORY
                         )
                     ],
                 )

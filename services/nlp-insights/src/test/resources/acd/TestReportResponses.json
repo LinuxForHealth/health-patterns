@@ -1,4 +1,271 @@
-{"Patient started taking beta blockers": {
+{
+"suspect skin cancer because the patient's brother has skin cancer":
+{
+  "attributeValues": [
+    {
+      "begin": 8,
+      "end": 19,
+      "coveredText": "skin cancer",
+      "negated": false,
+      "preferredName": "malignant neoplasm of skin",
+      "values": [
+        {
+          "value": "malignant neoplasm of skin"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 5
+      },
+      "name": "PotentialDiagnosis",
+      "icd9Code": "173.99",
+      "icd10Code": "C44.9,C44.90",
+      "snomedConceptId": "372130007",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.925,
+            "patientReportedScore": 0.017,
+            "discussedScore": 0.058
+          },
+          "suspectedScore": 0.988,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.122
+        }
+      },
+      "ccsCode": "23"
+    }
+  ],
+  "concepts": [
+    {
+      "type": "umls.NeoplasticProcess",
+      "uid": 2,
+      "begin": 8,
+      "end": 19,
+      "coveredText": "skin cancer",
+      "negated": false,
+      "cui": "C0007114",
+      "preferredName": "Malignant neoplasm of skin",
+      "semanticType": "neop",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "icd9Code": "173.9,173.8",
+      "icd10Code": "C44.9,C44.90",
+      "nciCode": "C2920",
+      "snomedConceptId": "372130007",
+      "meshId": "M0333435",
+      "loincId": "LA10543-9",
+      "vocabs": "MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_NCI-GLOSS,ICPC,CHV,CCS,NCI_CTRP,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,NCI_CPTAC",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.925,
+            "patientReportedScore": 0.017,
+            "discussedScore": 0.058
+          },
+          "suspectedScore": 0.988,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.122
+        }
+      }
+    },
+    {
+      "type": "umls.NeoplasticProcess",
+      "uid": 3,
+      "begin": 53,
+      "end": 64,
+      "coveredText": "skin cancer",
+      "negated": false,
+      "cui": "C0007114",
+      "preferredName": "Malignant neoplasm of skin",
+      "semanticType": "neop",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "icd9Code": "173.9,173.8",
+      "icd10Code": "C44.9,C44.90",
+      "nciCode": "C2920",
+      "snomedConceptId": "372130007",
+      "meshId": "M0333435",
+      "loincId": "LA10543-9",
+      "vocabs": "MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_NCI-GLOSS,ICPC,CHV,CCS,NCI_CTRP,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,NCI_CPTAC",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1.0,
+            "patientReportedScore": 0.0,
+            "discussedScore": 0.0
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.997
+        }
+      }
+    },
+    {
+      "type": "ICDiagnosis",
+      "begin": 8,
+      "end": 19,
+      "coveredText": "skin cancer",
+      "negated": false,
+      "cui": "C0007114",
+      "preferredName": "Malignant neoplasm of skin",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "icd9Code": "173.9,173.8",
+      "icd10Code": "C44.9,C44.90",
+      "nciCode": "C2920",
+      "snomedConceptId": "372130007",
+      "meshId": "M0333435",
+      "loincId": "LA10543-9",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.925,
+            "patientReportedScore": 0.017,
+            "discussedScore": 0.058
+          },
+          "suspectedScore": 0.988,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.122
+        }
+      },
+      "ruleId": "33e6be29-a746-40f1-a012-952410bade6f",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    },
+    {
+      "type": "ICDiagnosis",
+      "begin": 53,
+      "end": 64,
+      "coveredText": "skin cancer",
+      "negated": false,
+      "cui": "C0007114",
+      "preferredName": "Malignant neoplasm of skin",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "icd9Code": "173.9,173.8",
+      "icd10Code": "C44.9,C44.90",
+      "nciCode": "C2920",
+      "snomedConceptId": "372130007",
+      "meshId": "M0333435",
+      "loincId": "LA10543-9",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1.0,
+            "patientReportedScore": 0.0,
+            "discussedScore": 0.0
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.997
+        }
+      },
+      "ruleId": "33e6be29-a746-40f1-a012-952410bade6f",
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ]
+    }
+  ],
+  "SymptomDiseaseInd": [
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "uid": 5,
+      "begin": 8,
+      "end": 19,
+      "coveredText": "skin cancer",
+      "negated": false,
+      "cui": "C0007114",
+      "icd10Code": "C44.9,C44.90",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "skin cancer",
+      "snomedConceptId": "372130007",
+      "ccsCode": "23",
+      "symptomDiseaseNormalizedName": "malignant neoplasm of skin",
+      "icd9Code": "173.99",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.925,
+            "patientReportedScore": 0.017,
+            "discussedScore": 0.058
+          },
+          "suspectedScore": 0.988,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.122
+        }
+      }
+    },
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "begin": 53,
+      "end": 64,
+      "coveredText": "skin cancer",
+      "negated": false,
+      "cui": "C0007114",
+      "icd10Code": "C44.9,C44.90",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "skin cancer",
+      "snomedConceptId": "372130007",
+      "ccsCode": "23",
+      "symptomDiseaseNormalizedName": "malignant neoplasm of skin",
+      "icd9Code": "173.99",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1.0,
+            "patientReportedScore": 0.0,
+            "discussedScore": 0.0
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.997
+        }
+      }
+    }
+  ],
+  "spellCorrectedText": [
+    {
+      "correctedText": "suspect skin cancer because the patients brother has skin cancer"
+    }
+  ]
+},
+
+"Patient started taking beta blockers": {
   "attributeValues": [
     {
       "begin": 23,
