@@ -33,6 +33,9 @@ date
 echo "***************************************"
 if [ $CLUSTER_NAMESPACE = "tst-enrich" ] 
 then
+   # disable the ingestion deploy for an enrich-only deployment
+   sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
+
    # deploy enrich
    helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout $HELM_TIMEOUT
 elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
