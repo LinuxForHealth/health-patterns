@@ -139,5 +139,6 @@ spec:
       volumeMounts:
       - name: extensions
         mountPath: /nars
+    - name: data-quality
 {{- end }}
 {{- end }}

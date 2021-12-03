@@ -1,0 +1,125 @@
+{
+  "dataQualityChecks": [
+    {
+      "data": {
+        "name": "PatientBundleChecks",
+        "description": "FHIR patient resource data",
+        "type": "SimpleDataStruct",
+        "simpleDataStruct": {
+          "source": "Patient",
+          "columns": [
+            {
+              "name": "id",
+              "mapValue": "Patient.id",
+              "mapType": "FHIR_PATH"
+            },
+            {
+              "name": "family_name",
+              "mapValue": "Patient.name.family",
+              "mapType": "FHIR_PATH"
+            },
+            {
+              "name": "country",
+              "mapValue": "Patient.address.country",
+              "mapType": "FHIR_PATH"
+            }
+          ]
+        },
+        "cache": "false"
+      },
+      "qualityChecks": [
+        {
+          "name": "Patient Family Name Not Null Check",
+          "description": "Verify if patient family name is not empty",
+          "type": "isComplete",
+          "level": "Warning",
+          "clause": "family_name",
+          "active": "true"
+        },
+        {
+          "name": "Patient Id is Unique",
+          "description": "Verify if patient identifier is unique",
+          "type": "isUnique",
+          "level": "Error",
+          "clause": "id",
+          "active": "true"
+        },
+        {
+          "name": "Patient Count Check",
+          "description": "Verify if patient count is 3",
+          "type": "hasSize",
+          "level": "Error",
+          "clause": "2",
+          "active": "true"
+        },
+        {
+          "name": "Valid Country Check",
+          "description": "Verify if country is valid value",
+          "type": "isContainedIn",
+          "level": "Error",
+          "clause": "country",
+          "args": {
+            "allowedValues": ["US","IE","UK"]
+          },
+          "active": "true"
+        }
+      ],
+      "active": "true"
+    },
+    {
+      "data": {
+        "name": "CustomBundleCheck",
+        "description": "FHIR complex resource data",
+        "type": "ComplexDataStruct",
+        "complexDataStruct": {
+          "leftSource": "Patient",
+          "leftSourceColumns": [
+            {
+              "name": "patient_id",
+              "mapValue": "Patient.id",
+              "mapType": "FHIR_PATH"
+            },
+            {
+              "name": "patient_gender",
+              "mapValue": "Patient.gender",
+              "mapType": "FHIR_PATH"
+            }
+          ],
+          "rightSource": "Encounter",
+          "rightSourceColumns": [
+            {
+              "name": "encounter_sub_ref_id",
+              "mapValue": "Encounter.subject.reference.replace(\\'urn:uuid:\\',\\'\\')",
+              "mapType": "FHIR_PATH"
+            },
+            {
+              "name": "encounter_reason_code",
+              "mapValue": "Encounter.reasonCode[0].coding[0].code",
+              "mapType": "FHIR_PATH"
+            }
+          ],
+          "joinType": "INNER JOIN",
+          "joinCondition": "patient_id == encounter_sub_ref_id"
+        },
+        "cache": "true"
+      },
+      "qualityChecks": [
+        {
+          "name": "Pregnancy Gender Check",
+          "description": "Verify if pregnant patient is not male gender",
+          "type": "notSatisfies",
+          "level": "Error",
+          "clause": "patient_gender = 'male' AND nvl(encounter_reason_code,'') = '72892002'",
+          "active": "true",
+          "args": {
+            "constraintName": "Pregnancy Gender Check"
+          }
+        }
+      ],
+      "active": "true"
+    }
+  ],
+  "defaultConfig": {
+    "cache": "false"
+  }
+}

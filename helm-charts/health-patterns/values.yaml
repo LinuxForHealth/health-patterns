@@ -339,11 +339,21 @@ nifi:
       volumeMounts:
       - name: alvearie-nars
         mountPath: /nars
+    data-quality:
+      image: alvearie/alvearie-dq:latest
+      command: ["sh", "-c", "cp -R /dq/* /data-quality"]
+      volumeMounts:
+      - name: dq-dir
+        mountPath: /data-quality
   extraVolumeMounts:
     - name: alvearie-nars
       mountPath: /opt/nifi/nifi-current/custom-nars
+    - name: dq-dir
+      mountPath: /data-quality
   extraVolumes:
     - name: alvearie-nars
+      emptyDir: {}
+    - name: dq-dir
       emptyDir: {}
   properties:
     customLibPath: ./custom-nars
@@ -442,9 +452,9 @@ expose-kafka:
   inittopicreplication: 1
 
 # ------------------------------------------------------------------------------
-# CQL-Bulk-Export Service
+# CQL-BulkExport Service
 # ------------------------------------------------------------------------------
-cql-bulk-export:
+cql-bulkexport:
   enabled: false
   ingress:
     enabled: false
