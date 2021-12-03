@@ -254,15 +254,11 @@ if [ ${last_service_helm_ver} != ${service_helm_ver} ] || [ ${TAG} != ${last_tag
   ########################################################
   ## Copy Helm tgz to health-patterns dependency folder ##
   ########################################################
-  if [[ ${MODE} == 'DEV' ]]
-  then
-    ### Since DEV mode, copy to health-patterns dependency folder
-    mkdir -p helm-charts/health-patterns/charts/
-	if [ -z "${SERVICE_NAME}" ]; then
-      rm helm-charts/health-patterns/charts/${SERVICE_NAME}*.tgz
-    fi
-    cp docs/charts/${new_helm_package} helm-charts/health-patterns/charts/
+  mkdir -p helm-charts/health-patterns/charts/
+  if [ -z "${SERVICE_NAME}" ]; then
+    rm helm-charts/health-patterns/charts/${SERVICE_NAME}*.tgz
   fi
+  cp docs/charts/${new_helm_package} helm-charts/health-patterns/charts/
 
   ##########################
   ## Re-Index Helm Charts ##
