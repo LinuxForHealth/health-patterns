@@ -71,10 +71,10 @@ then
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn -DskipTests=false --log-file ./EnrichmentInitTests.log -Dtest=EnrichmentInitTests test
-   mvn -DskipTests=false --log-file ./BasicEnrichmentTests.log -Dtest=BasicEnrichmentTests test
+   mvn -DskipTests=false --log-file ./EnrichmentInitTests.log   -Dtest=EnrichmentInitTests test
+   mvn -DskipTests=false --log-file ./BasicEnrichmentTests.log  -Dtest=BasicEnrichmentTests test
    mvn -DskipTests=false --log-file ./EnrichmentConfigTests.log -Dtest=EnrichmentConfigTests test
-   mvn -DskipTests=false --log-file ./ASCVDEnrichmentTests.log -Dtest=ASCVDEnrichmentTests test
+   mvn -DskipTests=false --log-file ./ASCVDEnrichmentTests.log  -Dtest=ASCVDEnrichmentTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -102,7 +102,7 @@ then
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test 
+   mvn --log-file ./BasicIngestionTests.log    -DskipTests=false -Dtest=BasicIngestionTests test 
    mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
 
    # JUNIT execution reports available in the below folder
@@ -119,20 +119,6 @@ echo "<testsuites>" > /workspace/test-umbrella/tests/smoketests.xml
 cat target/surefire-reports/*.xml >> /workspace/test-umbrella/tests/smoketests.xml
 echo "</testsuites>" >> /workspace/test-umbrella/tests/smoketests.xml
 
-# Looking for test failures. If any are found, then save the environment for debug 
-TEST_FAILURE=$(cat target/surefire-reports/*.txt | grep FAILURE!)
-echo $TEST_FAILURE
-if [[ $TEST_FAILURE == *"FAILURE!"* ]]
-then
-   echo "********************************************************************"
-   echo "*  Test Failures detected.  Saving the test environment for debug. *"
-   echo "********************************************************************"
-   export ENV_CLEAN_UP="false"
-else
-   echo "*********************************"
-   echo "*  No Test Failures detected.   *"
-   echo "*********************************"  
-fi
 
 # Clean up and shutdown the test environment
 chmod +x /workspace/test-umbrella/tests/tests/testCleanUp.sh

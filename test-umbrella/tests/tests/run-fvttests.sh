@@ -67,16 +67,16 @@ then
    echo "*************************************" 
    echo "* Build the testcases               *"
    echo "*************************************"
-   mvn clean install -e -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD
+   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dtest=EnrichmentInitTests test
-   mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
-   mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
-   mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
-   mvn -e -DskipTests=false -Dtest=NLPEnrichmentFVTTests test
+   mvn --log-file ./EnrichmentInitTests.log   -DskipTests=false -Dtest=EnrichmentInitTests test
+   mvn --log-file ./BasicEnrichmentTests.log  -DskipTests=false -Dtest=BasicEnrichmentTests test
+   mvn --log-file ./EnrichmentConfigTests.log -DskipTests=false -Dtest=EnrichmentConfigTests test
+   mvn --log-file ./ASCVDEnrichmentTests.log  -DskipTests=false -Dtest=ASCVDEnrichmentTests test
+   mvn --log-file ./NLPEnrichmentFVTTests.log -DskipTests=false -Dtest=NLPEnrichmentFVTTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -97,22 +97,22 @@ then
    echo "*************************************" 
    echo "* Build the testcases               *"
    echo "*************************************"
-   mvn clean install -e -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD
+   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD
 
    echo "*************************************" 
    echo "* Execute the initialize testcases  *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dtest=BasicIngestionInitTests test
+   mvn --log-file ./BasicIngestionInitTests.log -DskipTests=false -Dtest=BasicIngestionInitTests test
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn  -e  -DskipTests=false -Dtest=BasicIngestionTests test
-   mvn  -e  -DskipTests=false -Dtest=BasicIngestionBLKTests test
-   mvn  -e  -DskipTests=false -Dtest=DeIDIngestionTests test
-   mvn  -e  -DskipTests=false -Dtest=DeIDIngestionBLKTests test
-   mvn  -e  -DskipTests=false -Dtest=ASCVDIngestionTests test
-   mvn  -e  -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
+   mvn  --log-file ./BasicIngestionTests.log     -DskipTests=false -Dtest=BasicIngestionTests test
+   mvn  --log-file ./BasicIngestionBLKTests.log  -DskipTests=false -Dtest=BasicIngestionBLKTests test
+   mvn  --log-file ./DeIDIngestionTests.log      -DskipTests=false -Dtest=DeIDIngestionTests test
+   mvn  --log-file ./DeIDIngestionBLKTests.log   -DskipTests=false -Dtest=DeIDIngestionBLKTests test
+   mvn  --log-file ./ASCVDIngestionTests.log     -DskipTests=false -Dtest=ASCVDIngestionTests test
+   mvn  --log-file ./ASCVDIngestionBLKTests.log  -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -133,20 +133,6 @@ echo "<testsuites>" > /workspace/test-umbrella/tests/fvttest.xml
 cat target/surefire-reports/*.xml >> /workspace/test-umbrella/tests/fvttest.xml
 echo "</testsuites>" >> /workspace/test-umbrella/tests/fvttest.xml
 
-# Looking for test failures. If any are found, then save the environment for debug 
-TEST_FAILURE=$(cat target/surefire-reports/*.txt | grep FAILURE!)
-echo $TEST_FAILURE
-if [[ $TEST_FAILURE == *"FAILURE!"* ]]
-then
-   echo "********************************************************************"
-   echo "*  Test Failures detected.  Saving the test environment for debug. *"
-   echo "********************************************************************"
-   export ENV_CLEAN_UP="false"
-else
-   echo "*********************************"
-   echo "*  No Test Failures detected.   *"
-   echo "*********************************"  
-fi
 
 # Clean up and shutdown the test environment
 chmod +x /workspace/test-umbrella/tests/tests/testCleanUp.sh
