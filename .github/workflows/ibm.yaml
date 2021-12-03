@@ -101,6 +101,9 @@ jobs:
          mvn --log-file ./BasicEnrichmentTests.log  -DskipTests=false -Dtest=BasicEnrichmentTests test
          mvn --log-file ./EnrichmentConfigTests.log -DskipTests=false -Dtest=EnrichmentConfigTests test
          mvn --log-file ./ASCVDEnrichmentTests.log  -DskipTests=false -Dtest=ASCVDEnrichmentTests test
+         echo "*************************************" 
+         echo "* Test Execution Summary            *"
+         echo "*************************************"
          ls -lrt target/surefire-reports
          cat target/surefire-reports/*.txt
       
@@ -126,6 +129,9 @@ jobs:
          echo "*************************************"
          mvn  --log-file ./BasicIngestionInitTests.log -DskipTests=false -Dtest=BasicIngestionInitTests test
          mvn  --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test
+         echo "*************************************" 
+         echo "* Test Execution Summary            *"
+         echo "*************************************"
          ls -lrt target/surefire-reports
          cat target/surefire-reports/*.txt
 
