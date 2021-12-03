@@ -66,15 +66,15 @@ then
    echo "*************************************" 
    echo "* Build the testcases               *"
    echo "*************************************"
-   mvn clean install -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD -Dloglevel=ERROR
+   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD 
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn -DskipTests=false -Dloglevel=ERROR -Dtest=EnrichmentInitTests test
-   mvn -DskipTests=false -Dloglevel=ERROR -Dtest=BasicEnrichmentTests test
-   mvn -DskipTests=false -Dloglevel=ERROR -Dtest=EnrichmentConfigTests test
-   mvn -DskipTests=false -Dloglevel=ERROR -Dtest=ASCVDEnrichmentTests test
+   mvn -DskipTests=false --log-file ./EnrichmentInitTests.log -Dtest=EnrichmentInitTests test
+   mvn -DskipTests=false --log-file ./BasicEnrichmentTests.log -Dtest=BasicEnrichmentTests test
+   mvn -DskipTests=false --log-file ./EnrichmentConfigTests.log -Dtest=EnrichmentConfigTests test
+   mvn -DskipTests=false --log-file ./ASCVDEnrichmentTests.log -Dtest=ASCVDEnrichmentTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -92,18 +92,18 @@ then
    echo "*************************************" 
    echo "* Build the testcases               *"
    echo "*************************************"
-   mvn clean install -e -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD 
+   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD 
 
    echo "*************************************" 
    echo "* Execute Initialize testcases      *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dloglevel=ERROR -Dtest=BasicIngestionInitTests test
+   mvn --log-file ./BasicIngestionInitTests.log -DskipTests=false -Dtest=BasicIngestionInitTests test
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dloglevel=ERROR -Dtest=BasicIngestionTests test 
-   mvn -e -DskipTests=false -Dloglevel=ERROR -Dtest=BasicIngestionBLKTests test
+   mvn --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test 
+   mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
