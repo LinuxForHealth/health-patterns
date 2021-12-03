@@ -21,7 +21,7 @@ helm repo update
 Install the helm chart using:
 
 ```bash
-helm install <<RELEASE_NAME>> health-patterns/cql-bulkexport
+helm install <<RELEASE_NAME>> health-patterns/cql-bulk-export
 ```
 
 You can augment this install with the following configuration parameters:

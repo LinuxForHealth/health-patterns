@@ -1,4 +1,4 @@
-# cql-bulkexport
+# cql-bulk-export
 
 A deployable service that will create a bulk export of patient
 data from a list of patient ids returned by a cql library for use
@@ -22,7 +22,7 @@ bulk data configured.
 
 - listing cql libraries that are available from the cohort service
 
-    (GET)  https://\<cql-bulkexporturl>/cql_libraries
+    (GET)  https://<cql-bulk-exporturl>/cql_libraries
 
 - begin a process to do the following
 
@@ -30,14 +30,14 @@ bulk data configured.
   - bulk export the data for those patients to a COS bucket temporarily
   - create a single COS bucket result for that data removing the temp artifacts
 
-    (GET)  https://\<cql-bulkexporturl>?cql=\<cqlname>
+    (GET)  https://<cql-bulk-exporturl>?cql=\<cqlname>
 
   - returns a job id that is used to check status
 
 - check status of job (returns working or done)
 
-    (GET)  https://\<cql-bulkexporturl>/status?id=\<jobid>
+    (GET)  https://<cql-bulk-exporturl>/status?id=\<jobid>
 
 - general health of service-a simple sanity check on the service
 
-    (GET)  https://\<cql-bulkexporturl>/healthcheck
+    (GET)  https://<cql-bulk-exporturl>/healthcheck
