@@ -50,7 +50,7 @@
           "type": "hasSize",
           "level": "Error",
           "clause": "2",
-          "active": "false"
+          "active": "true"
         },
         {
           "name": "Valid Country Check",
