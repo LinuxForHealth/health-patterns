@@ -36,8 +36,13 @@ from fhir.resources.resource import Resource
 
 from text_analytics.insight_source.fields_of_interest import CodeableConceptRefType
 
+# UMLS Type ID such as T116 or T020
+UmlsTypeId = str
 
-_type_id_to_type_name = {
+# UMLS Type Name such as umls.Activity
+UmlsTypeName = str
+
+_type_id_to_type_name: Dict[UmlsTypeId, UmlsTypeName] = {
     "T116": "umls.AminoAcidPeptideOrProtein",
     "T020": "umls.AcquiredAbnormality",
     "T052": "umls.Activity",
@@ -168,8 +173,7 @@ _type_id_to_type_name = {
 }
 
 
-CONDITION_TYPES = [
-    "ICDiagnosis",
+CONDITION_TYPES: List[UmlsTypeName] = [
     "umls.DiseaseOrSyndrome",
     "umls.PathologicFunction",
     "umls.SignOrSymptom",
@@ -179,7 +183,7 @@ CONDITION_TYPES = [
 ]
 
 
-MEDICATION_TYPES = [
+MEDICATION_TYPES: List[UmlsTypeName] = [
     "umls.Antibiotic",
     "umls.ClinicalDrug",
     "umls.PharmacologicSubstance",
@@ -187,23 +191,23 @@ MEDICATION_TYPES = [
 ]
 
 
-VACCINE_TYPES = ["ICMedication", "umls.ImmunologicFactor"]
+VACCINE_TYPES: List[UmlsTypeName] = ["umls.ImmunologicFactor"]
 
 
-ALLERGEN_TYPES = [
+ALLERGEN_TYPES: List[UmlsTypeName] = [
     "umls.DiseaseOrSyndrome",
     "umls.PathologicFunction",
     "umls.SignOrSymptom",
 ]
 
 
-_resource_type_to_type_names: Dict[str, List[str]] = {
+_resource_type_to_type_names: Dict[str, List[UmlsTypeName]] = {
     Condition.__name__: CONDITION_TYPES,
     MedicationStatement.__name__: MEDICATION_TYPES,
 }
 
 
-_concept_type_to_type_names: Dict[CodeableConceptRefType, List[str]] = {
+_concept_type_to_type_names: Dict[CodeableConceptRefType, List[UmlsTypeName]] = {
     CodeableConceptRefType.ALLERGEN: ALLERGEN_TYPES,
     CodeableConceptRefType.CONDITION: CONDITION_TYPES,
     CodeableConceptRefType.MANIFESTATION: [],
@@ -215,7 +219,7 @@ ExtendsResource = TypeVar("ExtendsResource", bound=Resource)
 
 
 def resource_relevant_to_any_type_names(
-    resource_clazz: Type[ExtendsResource], type_names: Iterable[str]
+    resource_clazz: Type[ExtendsResource], type_names: Iterable[UmlsTypeName]
 ) -> bool:
     """Determine if any of the type names are relevant to the given resource class
 
@@ -237,7 +241,7 @@ def resource_relevant_to_any_type_names(
 
 
 def ref_type_relevant_to_any_type_names(
-    ref_type: CodeableConceptRefType, type_names: Iterable[str]
+    ref_type: CodeableConceptRefType, type_names: Iterable[UmlsTypeName]
 ) -> bool:
     """Determine if any of the type names are relevant for the given concept type
 
@@ -258,7 +262,7 @@ def ref_type_relevant_to_any_type_names(
     return False
 
 
-def get_names_from_type_ids(ids: Iterable[str]) -> Set[str]:
+def get_names_from_type_ids(ids: Iterable[UmlsTypeId]) -> Set[UmlsTypeName]:
     """
     For a list of UMLS semantic network type ids, return more readable names
 

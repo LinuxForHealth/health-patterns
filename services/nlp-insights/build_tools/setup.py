@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+from _ast import Or
 import configparser
 import os
 import platform
@@ -15,7 +16,13 @@ class GradleDistribution(Distribution, object):
     def __init__(self, attrs):
         config = configparser.ConfigParser()
         configDir = os.path.dirname(os.path.realpath(__file__))
+
         self.PINNED_TXT = configDir + "/pinned.txt"
+        if not os.path.exists(self.PINNED_TXT) or not os.path.exists(
+            configDir + "/setup.properties"
+        ):
+            raise Exception("Files created by ./gradlew build are missing")
+
         config.read(configDir + "/setup.properties")
         attrs["name"] = config["default"]["project_name"]
         attrs["version"] = config["default"]["project_version"]

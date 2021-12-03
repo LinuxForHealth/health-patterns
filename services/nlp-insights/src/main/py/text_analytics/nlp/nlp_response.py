@@ -19,6 +19,7 @@ from typing import List
 from typing import NamedTuple
 from typing import Optional
 from typing import Set
+from text_analytics.umls.semtype_lookup import UmlsTypeName
 
 
 class NlpCui(NamedTuple):
@@ -29,7 +30,7 @@ class NlpCui(NamedTuple):
     begin: int
     end: int
     preferred_name: str
-    types: Set[str]
+    types: Set[UmlsTypeName]
     snomed_ct: Optional[Set[str]]
     negated: bool = False
 
