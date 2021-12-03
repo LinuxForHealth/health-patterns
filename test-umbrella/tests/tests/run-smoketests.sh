@@ -66,15 +66,15 @@ then
    echo "*************************************" 
    echo "* Build the testcases               *"
    echo "*************************************"
-   mvn clean install -e -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD -Dloglevel=ERROR
+   mvn clean install -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD -Dloglevel=ERROR
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dloglevel=ERROR -Dtest=EnrichmentInitTests test
-   mvn -e -DskipTests=false -Dloglevel=ERROR -Dtest=BasicEnrichmentTests test
-   mvn -e -DskipTests=false -Dloglevel=ERROR -Dtest=EnrichmentConfigTests test
-   mvn -e -DskipTests=false -Dloglevel=ERROR -Dtest=ASCVDEnrichmentTests test
+   mvn -DskipTests=false -Dloglevel=ERROR -Dtest=EnrichmentInitTests test
+   mvn -DskipTests=false -Dloglevel=ERROR -Dtest=BasicEnrichmentTests test
+   mvn -DskipTests=false -Dloglevel=ERROR -Dtest=EnrichmentConfigTests test
+   mvn -DskipTests=false -Dloglevel=ERROR -Dtest=ASCVDEnrichmentTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
