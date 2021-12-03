@@ -102,7 +102,7 @@ jobs:
          mvn --log-file ./EnrichmentConfigTests.log -DskipTests=false -Dtest=EnrichmentConfigTests test
          mvn --log-file ./ASCVDEnrichmentTests.log  -DskipTests=false -Dtest=ASCVDEnrichmentTests test
          pwd
-         ls -lrt
+         ls -lrt target
       
     # Build Ingestion Tests 
     - name: Build Ingestion Tests
@@ -127,7 +127,7 @@ jobs:
          mvn  --log-file ./BasicIngestionInitTests.log -DskipTests=false -Dtest=BasicIngestionInitTests test
          mvn  --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test
          pwd
-         ls -lrt
+         ls -lrt target
 
     # Uninstall Chart
     - name: Clean Up Deployment
