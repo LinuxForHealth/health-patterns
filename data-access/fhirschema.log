@@ -1,0 +1,8 @@
+2021-12-03 14:37:18.042 00000001 WARNING   com.ibm.fhir.schema.app.Main Only the APP schema is supported for Apache Derby; ignoring the passed schema name 'FHIRDATA' and using APP.
+2021-12-03 14:37:18.116 00000001    INFO .common.JdbcConnectionProvider Opening connection to database: jdbc:derby:fhir/derby/fhirDB
+2021-12-03 14:37:18.454 00000001    INFO m.fhir.schema.app.LeaseManager Requesting update lease for schema 'APP' [attempt 1]
+2021-12-03 14:37:18.519 00000001    INFO   com.ibm.fhir.schema.app.Main Already at latest version; skipping update for: 'APP'
+2021-12-03 14:37:18.520 00000001    INFO m.fhir.schema.app.LeaseManager Canceling lease for schema 'APP'
+2021-12-03 14:37:18.531 00000001    INFO m.fhir.schema.app.LeaseManager Lease canceled for schema 'APP'
+2021-12-03 14:37:18.533 00000001    INFO   com.ibm.fhir.schema.app.Main Processing took:   0.744 s
+2021-12-03 14:37:18.534 00000001    INFO   com.ibm.fhir.schema.app.Main SCHEMA CHANGE: OK

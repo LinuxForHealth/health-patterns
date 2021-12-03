@@ -94,3 +94,15 @@ What if the end user has access to multiple different patient records? The Keycl
 * FHIR Terminology Service - The IBM FHIR Server can either act as a terminology server or integrate with external terminology services (or both). The main benefit to this from a data access perspective is that it allows for advanced searching like:
   * get all the patients that have an active Condition with a diagnosis code in some particular value set; or
   * get all the encounters for which a clinical observation was made with a code under this particular branch of SNOMED CT
+
+---
+
+### Notes for upgrading the sample db schema
+1. grab the latest fhir-persistence-schema cli jar
+```sh
+mvn dependency:copy -Dartifact=com.ibm.fhir:fhir-persistence-schema:LATEST:jar:cli -DoutputDirectory=.
+```
+2. run it against the sample db
+```sh
+java -jar fhir-persistence-schema-4.10.2-cli.jar --db-type derby --prop db.database=fhir/derby/fhirDB --update-schema-fhir
+```

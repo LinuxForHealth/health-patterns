@@ -3,32 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ibm.fhir</groupId>
-	<artifactId>fhir-ibmcloud</artifactId>
+	<artifactId>data-access</artifactId>
 	<version>99-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
-		<fhir.version>4.9.0</fhir.version>
+		<fhir.version>4.10.2</fhir.version>
 	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>fhir-smart</artifactId>
-			<version>${fhir.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>fhir-ig-us-core</artifactId>
-			<version>${fhir.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-	</dependencies>
 
 	<build>
 		<plugins>
@@ -38,12 +19,24 @@
 					<version>3.1.1</version>
 					<executions>
 						<execution>
-							<id>copy-dependencies</id>
+							<id>add-jars-to-userlib</id>
 							<phase>package</phase>
 							<goals>
-								<goal>copy-dependencies</goal>
+								<goal>copy</goal>
 							</goals>
 							<configuration>
+								<artifactItems>
+									<artifactItem>
+										<groupId>com.ibm.fhir</groupId>
+										<artifactId>fhir-smart</artifactId>
+										<version>${fhir.version}</version>
+									</artifactItem>
+									<artifactItem>
+										<groupId>com.ibm.fhir</groupId>
+										<artifactId>fhir-ig-us-core</artifactId>
+										<version>${fhir.version}</version>
+									</artifactItem>
+								</artifactItems>
 								<outputDirectory>fhir/userlib</outputDirectory>
 							</configuration>
 						</execution>
