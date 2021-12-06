@@ -183,8 +183,8 @@ jobs:
     # Delay for 30 seconds
     - name: Delay for 30 seconds
       run: sleep 30
- #     continue-on-error: true
- #     if: ${{ always() }}
+#     continue-on-error: true
+#     if: ${{ always() }}
 
     # Uninstall nifikop Chart
     - name: Clean Up NifiKop Deployment
