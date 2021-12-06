@@ -159,7 +159,7 @@ jobs:
          echo "*************************************"
          mvn  --log-file ./BasicIngestionInitTests.log -DskipTests=false -Dtest=BasicIngestionInitTests test
          mvn  --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test
-         mvn  --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
+         # mvn  --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
          echo "*************************************" 
          echo "* Test Execution Summary            *"
          echo "*************************************"
