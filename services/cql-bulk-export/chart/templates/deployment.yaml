@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cql-bulkexport.fullname" . }}
+  name: {{ include "cql-bulk-export.fullname" . }}
   labels:
-    {{- include "cql-bulkexport.labels" . | nindent 4 }}
+    {{- include "cql-bulk-export.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "cql-bulkexport.selectorLabels" . | nindent 6 }}
+      {{- include "cql-bulk-export.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -16,10 +16,10 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "cql-bulkexport.selectorLabels" . | nindent 8 }}
+        {{- include "cql-bulk-export.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - name: cql-bulkexport
+      - name: cql-bulk-export
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
