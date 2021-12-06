@@ -1,5 +1,5 @@
 apiVersion: v2
-name: cql-bulkexport
+name: cql-bulk-export
 description: A Helm Chart to deploy the CQL BulkExport service.
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -28,7 +28,7 @@ keywords:
   - fhir
   - cohorting
 
-home: https://github.com/Alvearie/health-patterns/tree/main/services/cql-bulkexport
+home: https://github.com/Alvearie/health-patterns/tree/main/services/cql-bulk-export
 
 maintainers:
   - name: David Ranum
