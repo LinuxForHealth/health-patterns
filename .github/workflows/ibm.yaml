@@ -195,7 +195,7 @@ jobs:
     # Delay for 30 seconds, again
     - name: Another Delay for 30 seconds
       run: sleep 30
-#      continue-on-error: true
+#       continue-on-error: true
 #      if: ${{ always() }}
     
     # Delete Namespace
