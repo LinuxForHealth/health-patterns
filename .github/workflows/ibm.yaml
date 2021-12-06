@@ -163,8 +163,8 @@ jobs:
          echo "***************************************************"
          echo "* Execute the BasicIngestionInitTests             *"
          mvn  --log-file ./BasicIngestionInitTest.log -DskipTests=false -Dtest=BasicIngestionInitTests test
-         echo "* Execute the BasicIngestionTests                 *"
-         mvn  -DskipTests=false -Dtest=BasicIngestionTests test
+         # echo "* Execute the BasicIngestionTests                 *"
+         # mvn  -DskipTests=false -Dtest=BasicIngestionTests test
          echo "* Execute the BasicIngestionBLKTests              *"
          mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
          echo "***************************************************" 
