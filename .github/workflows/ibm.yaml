@@ -124,16 +124,20 @@ jobs:
          date
          sleep 120  
          date
-         echo "*************************************" 
-         echo "* Execute the testcases             *"
-         echo "*************************************"
+         echo "***********************************************" 
+         echo "* Execute the testcases                       *"
+         echo "***********************************************"
+         echo "* Execute the EnrichmentInitTests             *"
          mvn --log-file ./EnrichmentInitTests.log   -DskipTests=false -Dtest=EnrichmentInitTests test
+         echo "* Execute the BasicEnrichmentTests            *"
          mvn --log-file ./BasicEnrichmentTests.log  -DskipTests=false -Dtest=BasicEnrichmentTests test
+         echo "* Execute the EnrichmentConfigTests           *"
          mvn --log-file ./EnrichmentConfigTests.log -DskipTests=false -Dtest=EnrichmentConfigTests test
+         echo "* Execute the ASCVDEnrichmentTests            *"
          mvn --log-file ./ASCVDEnrichmentTests.log  -DskipTests=false -Dtest=ASCVDEnrichmentTests test
-         echo "*************************************" 
-         echo "* Test Execution Summary            *"
-         echo "*************************************"
+         echo "***********************************************" 
+         echo "* Test Execution Summary                      *"
+         echo "***********************************************"
          ls -lrt target/surefire-reports
          cat target/surefire-reports/*.txt
       
@@ -154,15 +158,18 @@ jobs:
     - name: Execute Ingestion Tests
       run: |
          cd ingest
-         echo "*************************************" 
-         echo "* Execute the testcases             *"
-         echo "*************************************"
-         mvn  --log-file ./BasicIngestionInitTests.log -DskipTests=false -Dtest=BasicIngestionInitTests test
-         mvn  --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test
-         # mvn  --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
-         echo "*************************************" 
-         echo "* Test Execution Summary            *"
-         echo "*************************************"
+         echo "***************************************************" 
+         echo "* Execute the testcases                           *"
+         echo "***************************************************"
+         echo "* Execute the BasicIngestionInitTests             *"
+         mvn -DskipTests=false -Dtest=BasicIngestionInitTests test
+         echo "* Execute the BasicIngestionTests                 *"
+         mvn -DskipTests=false -Dtest=BasicIngestionTests test
+         echo "* Execute the BasicIngestionBLKTests              *"
+         mvn -DskipTests=false -Dtest=BasicIngestionBLKTests test
+         echo "***************************************************" 
+         echo "* Test Execution Summary                          *"
+         echo "***************************************************"
          ls -lrt target/surefire-reports
          cat target/surefire-reports/*.txt
 
