@@ -16,7 +16,7 @@ env:
   CIS_INSTANCE: Cloud Internet Services - Health Patterns
   DOMAIN_ID: 6ff29db14b24b78a36227f49e18f3177
   POOL_ID: 64c39c1c0638d539cae6d5ff593a0493
-  CLUSTER_NAMESPACE: github-${{github.run_id}}
+  CLUSTER_NAMESPACE: git${{github.run_id}}
   FHIR_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/fhir
   FHIR_DEID_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/fhir-deid
   NIFI_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/
