@@ -87,7 +87,7 @@ jobs:
         echo "Deploy NifiKop"
         helm repo add orange-incubator https://orange-kubernetes-charts-incubator.storage.googleapis.com/
         helm repo update 
-        helm install nifikop orange-incubator/nifikop --namespace=$TEST_NAMESPACE --version 0.7.1 --set image.tag=v0.7.1-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"$TEST_NAMESPACE"}  --wait --timeout $HELM_TIMEOUT
+        helm install nifikop orange-incubator/nifikop --namespace=${CLUSTER_NAMESPACE} --version 0.7.1 --set image.tag=v0.7.1-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"$TEST_NAMESPACE"}  --wait --timeout $HELM_TIMEOUT
 
 
     # Setup and Install Ingestion Chart 
@@ -165,7 +165,7 @@ jobs:
          echo "* Execute the BasicIngestionInitTests             *"
          mvn  --log-file ./BasicIngestionInitTest.log -DskipTests=false -Dtest=BasicIngestionInitTests test
          echo "* Execute the BasicIngestionTests                 *"
-         mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionTests test
+         mvn --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test
          echo "* Execute the BasicIngestionBLKTests              *"
          mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
          echo "***************************************************" 
@@ -177,32 +177,32 @@ jobs:
     # Uninstall Ingestion Chart
     - name: Clean Up Ingestion Deployment
       run: helm uninstall ingestion
-#      continue-on-error: true
-#      if: ${{ always() }}
+      continue-on-error: true
+      if: ${{ always() }}
 
     # Delay for 30 seconds
     - name: Delay for 30 seconds
       run: sleep 30
-#     continue-on-error: true
-#     if: ${{ always() }}
+      continue-on-error: true
+      if: ${{ always() }}
 
     # Uninstall nifikop Chart
     - name: Clean Up NifiKop Deployment
       run: helm uninstall nifikop
- #     continue-on-error: true
- #     if: ${{ always() }}
+      continue-on-error: true
+      if: ${{ always() }}
    
     # Delay for 30 seconds, again
     - name: Another Delay for 30 seconds
       run: sleep 30
-#       continue-on-error: true
-#      if: ${{ always() }}
+      continue-on-error: true
+      if: ${{ always() }}
     
     # Delete Namespace
     - name: Delete Namespace
       run:  kubectl delete namespace ${CLUSTER_NAMESPACE}
-#      continue-on-error: true
-#      if: ${{ always() }}
+      continue-on-error: true
+      if: ${{ always() }}
                  
     # Delete GLB
     - name: Delete GLB
@@ -211,5 +211,5 @@ jobs:
            glbid=$(ibmcloud cis glbs 6ff29db14b24b78a36227f49e18f3177 | grep ${CLUSTER_NAMESPACE})
            glbid=${glbid:0:32}
            ibmcloud cis glb-delete ${DOMAIN_ID} $glbid -i "${CIS_INSTANCE}"
-#      continue-on-error: true
-#      if: ${{ always() }}
+      continue-on-error: true
+      if: ${{ always() }}
