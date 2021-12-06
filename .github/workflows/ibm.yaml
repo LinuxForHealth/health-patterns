@@ -163,19 +163,37 @@ jobs:
          ls -lrt target/surefire-reports
          cat target/surefire-reports/*.txt
 
-    # Uninstall Chart
-    - name: Clean Up Deployment
+    # Uninstall Ingestion Chart
+    - name: Clean Up Ingestion Deployment
       run: helm uninstall ingestion
       continue-on-error: true
       if: ${{ always() }}
-      
-   # Delete Namespace
+
+    # Delay for 30 seconds
+    - name: Delay for 30 seconds
+      run: sleep 30
+      continue-on-error: true
+      if: ${{ always() }}
+
+    # Uninstall nifikop Chart
+    - name: Clean Up NifiKop Deployment
+      run: helm uninstall nifikop
+      continue-on-error: true
+      if: ${{ always() }}
+   
+    # Delay for 30 seconds, again
+    - name: Another Delay for 30 seconds
+      run: sleep 30
+      continue-on-error: true
+      if: ${{ always() }}
+    
+    # Delete Namespace
     - name: Delete Namespace
       run:  kubectl delete namespace ${CLUSTER_NAMESPACE}
       continue-on-error: true
       if: ${{ always() }}
                  
-   # Delete GLB
+    # Delete GLB
     - name: Delete GLB
       run: |
            ibmcloud cis instance-set "${CIS_INSTANCE}"
