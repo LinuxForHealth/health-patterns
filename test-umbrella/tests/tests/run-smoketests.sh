@@ -15,8 +15,13 @@
 chmod +x ./tests/toolchain-envsetup.sh
 source ./tests/toolchain-envsetup.sh "smoke"
 
-# Set the expose-kafka service input topic for unsecured Nifi
-export KAFKA_TOPIC_IN="ingest.clinical.in"
+# Setup for NifiKop Deployment
+cd /workspace/$TEST_NAMESPACE/health-patterns/test-umbrella/tests
+chmod +x ./tests/NifiKopValues.sh
+source ./tests/NifiKopValues.sh
+
+# Use kafka input topic used in sercure Nifi
+export KAFKA_TOPIC_IN="ingest.topic.in"
 
 echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
@@ -28,12 +33,15 @@ date
 echo "***************************************"
 if [ $CLUSTER_NAMESPACE = "tst-enrich" ] 
 then
+   # disable the ingestion deploy for an enrich-only deployment
+   sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
+
    # deploy enrich
-   helm3 install $HELM_RELEASE . -f clinical_enrichment.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout $HELM_TIMEOUT
+   helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout $HELM_TIMEOUT
 elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
    # deploy ingestion
-   helm3 install $HELM_RELEASE . -f clinical_ingestion.yaml --wait --timeout $HELM_TIMEOUT
+   helm3 install $HELM_RELEASE . --wait --timeout $HELM_TIMEOUT
 fi
 
 echo "*************************************"
@@ -58,15 +66,15 @@ then
    echo "*************************************" 
    echo "* Build the testcases               *"
    echo "*************************************"
-   mvn clean install -e -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD
+   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD 
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dtest=EnrichmentInitTests test
-   mvn -e -DskipTests=false -Dtest=BasicEnrichmentTests test
-   mvn -e -DskipTests=false -Dtest=EnrichmentConfigTests test
-   mvn -e -DskipTests=false -Dtest=ASCVDEnrichmentTests test
+   mvn -DskipTests=false --log-file ./EnrichmentInitTests.log   -Dtest=EnrichmentInitTests test
+   mvn -DskipTests=false --log-file ./BasicEnrichmentTests.log  -Dtest=BasicEnrichmentTests test
+   mvn -DskipTests=false --log-file ./EnrichmentConfigTests.log -Dtest=EnrichmentConfigTests test
+   mvn -DskipTests=false --log-file ./ASCVDEnrichmentTests.log  -Dtest=ASCVDEnrichmentTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -84,22 +92,24 @@ then
    echo "*************************************" 
    echo "* Build the testcases               *"
    echo "*************************************"
-   mvn clean install -e -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD
+   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD 
 
    echo "*************************************" 
    echo "* Execute Initialize testcases      *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dtest=BasicIngestionInitTests test
+   mvn --log-file ./BasicIngestionInitTests.log -DskipTests=false -Dtest=BasicIngestionInitTests test
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn -e -DskipTests=false -Dtest=BasicIngestionTests test 
+   mvn --log-file ./BasicIngestionTests.log    -DskipTests=false -Dtest=BasicIngestionTests test 
+   mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
    cat target/surefire-reports/categories.BasicIngestionInitTests.txt
    cat target/surefire-reports/categories.BasicIngestionTests.txt
+   cat target/surefire-reports/categories.BasicIngestionBLKTests.txt
 fi
 
 echo "*************************************" 
@@ -109,35 +119,7 @@ echo "<testsuites>" > /workspace/test-umbrella/tests/smoketests.xml
 cat target/surefire-reports/*.xml >> /workspace/test-umbrella/tests/smoketests.xml
 echo "</testsuites>" >> /workspace/test-umbrella/tests/smoketests.xml
 
-# Looking for test failures. If any are found, then save the environment for debug 
-TEST_FAILURE=$(cat target/surefire-reports/*.txt | grep FAILURE!)
-echo $TEST_FAILURE
-if [[ $TEST_FAILURE == *"FAILURE!"* ]]
-then
-   echo "********************************************************************"
-   echo "*  Test Failures detected.  Saving the test environment for debug. *"
-   echo "********************************************************************"
-   export ENV_CLEAN_UP="false"
-else
-   echo "*********************************"
-   echo "*  No Test Failures detected.   *"
-   echo "*********************************"  
-fi
 
-# ENV_CLEAN_UP is set in the toolchain environment properties.  The default value is true, but it can be changed on toolchain start
-# It can can be set to false if test errors are detected
-# if we need to keep the test environment available for debug
-if [ $ENV_CLEAN_UP = "true" ]  
-then
-	# then clean up
-	echo "*************************************"
-	echo "* Delete the Deployment             *"
-	echo "*************************************"
-	helm3 delete $HELM_RELEASE
-	kubectl delete namespace $TEST_NAMESPACE
-else 
-    # save the test deployment
-	echo "*************************************************************"
-	echo "* Test deployment "$HELM_RELEASE" in "$TEST_NAMESPACE" saved            *"
-	echo "*************************************************************"
-fi
+# Clean up and shutdown the test environment
+chmod +x /workspace/test-umbrella/tests/tests/testCleanUp.sh
+source /workspace/test-umbrella/tests/tests/testCleanUp.sh
