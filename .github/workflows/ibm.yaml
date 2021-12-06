@@ -164,7 +164,7 @@ jobs:
          echo "* Execute the BasicIngestionInitTests             *"
          mvn  --log-file ./BasicIngestionInitTest.log -DskipTests=false -Dtest=BasicIngestionInitTests test
          echo "* Execute the BasicIngestionTests                 *"
-         mvn --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test
+         mvn  -DskipTests=false -Dtest=BasicIngestionTests test
          echo "* Execute the BasicIngestionBLKTests              *"
          mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
          echo "***************************************************" 
@@ -172,6 +172,8 @@ jobs:
          echo "***************************************************"
          ls -lrt target/surefire-reports
          cat target/surefire-reports/*.txt
+         continue-on-error: true
+         if: ${{ always() }}
 
     # Uninstall Ingestion Chart
     - name: Clean Up Ingestion Deployment
