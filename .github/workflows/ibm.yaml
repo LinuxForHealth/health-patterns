@@ -26,7 +26,7 @@ env:
   TERM_PREP_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/term-services-prep
   DEID_PREP_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/deid-prep
   NLP_INSIGHTS_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
-  KAFKA_TOPIC_IN: "ingest.clinical.in"
+  KAFKA_TOPIC_IN: "ingest.topic.in"
   HELM_TIMEOUT: "10m0s"
   
   
@@ -162,11 +162,11 @@ jobs:
          echo "* Execute the testcases                           *"
          echo "***************************************************"
          echo "* Execute the BasicIngestionInitTests             *"
-         mvn -DskipTests=false -Dtest=BasicIngestionInitTests test
+         mvn  --log-file ./BasicIngestionInitTest.log -DskipTests=false -Dtest=BasicIngestionInitTests test
          echo "* Execute the BasicIngestionTests                 *"
-         mvn -DskipTests=false -Dtest=BasicIngestionTests test
+         mvn --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test
          echo "* Execute the BasicIngestionBLKTests              *"
-         mvn -DskipTests=false -Dtest=BasicIngestionBLKTests test
+         mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
          echo "***************************************************" 
          echo "* Test Execution Summary                          *"
          echo "***************************************************"
