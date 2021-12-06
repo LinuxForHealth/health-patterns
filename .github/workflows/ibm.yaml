@@ -64,6 +64,9 @@ jobs:
     # Setup and Install NifiKop 
     - name: Install NifiKop
       run: |
+        kubectl config current-context
+        kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
+
         cd helm-charts/health-patterns
 
         # oidic users
