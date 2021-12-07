@@ -10,6 +10,7 @@
 # HELM_WAIT - the timeout time for the HELM command when using the --wait --timeout MmSs options (where M=minutes and S=seconds)
 # ENV_CLEAN_UP - flag to indicate to clean up the test environment at the end
 # INGRESS_SUBDOMAIN - ingress subdomain for the deployment
+# LOGLEVEL - test execution logging level (logback-test) ERROR, WARNING, or INFO
 
 echo "*************************************"
 echo "* Linux version                     *"

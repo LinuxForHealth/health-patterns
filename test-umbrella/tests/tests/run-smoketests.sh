@@ -10,6 +10,7 @@
 # HELM_TIMEOUT - the timeout time for the HELM command when using the --wait --timeout MmSs options (where M=minutes and S=seconds)
 # ENV_CLEAN_UP - flag to indicate to clean up the test environment at the end
 # INGRESS_SUBDOMAIN - ingress subdomain for the deployment
+# LOGLEVEL - test execution logging level (logback-test) ERROR, WARNING, or INFO
 
 # Setup the test environment
 chmod +x ./tests/toolchain-envsetup.sh
@@ -66,7 +67,7 @@ then
    echo "*************************************" 
    echo "* Build the testcases               *"
    echo "*************************************"
-   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD 
+   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD -Dloglevel=$LOGLEVEL
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
@@ -92,7 +93,7 @@ then
    echo "*************************************" 
    echo "* Build the testcases               *"
    echo "*************************************"
-   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD 
+   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD -Dloglevel=$LOGLEVEL
 
    echo "*************************************" 
    echo "* Execute Initialize testcases      *"
