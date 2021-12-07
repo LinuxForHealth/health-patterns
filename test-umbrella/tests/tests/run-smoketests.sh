@@ -72,10 +72,10 @@ then
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn -DskipTests=false --log-file ./EnrichmentInitTests.log   -Dtest=EnrichmentInitTests test
-   mvn -DskipTests=false --log-file ./BasicEnrichmentTests.log  -Dtest=BasicEnrichmentTests test
-   mvn -DskipTests=false --log-file ./EnrichmentConfigTests.log -Dtest=EnrichmentConfigTests test
-   mvn -DskipTests=false --log-file ./ASCVDEnrichmentTests.log  -Dtest=ASCVDEnrichmentTests test
+   mvn -DskipTests=false -Dtest=EnrichmentInitTests test
+   mvn -DskipTests=false -Dtest=BasicEnrichmentTests test
+   mvn -DskipTests=false -Dtest=EnrichmentConfigTests test
+   mvn -DskipTests=false -Dtest=ASCVDEnrichmentTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -98,13 +98,13 @@ then
    echo "*************************************" 
    echo "* Execute Initialize testcases      *"
    echo "*************************************"
-   mvn --log-file ./BasicIngestionInitTests.log -DskipTests=false -Dtest=BasicIngestionInitTests test
+   mvn -DskipTests=false -Dtest=BasicIngestionInitTests test
 
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn --log-file ./BasicIngestionTests.log    -DskipTests=false -Dtest=BasicIngestionTests test 
-   mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
+   mvn -DskipTests=false -Dtest=BasicIngestionTests test 
+   mvn -DskipTests=false -Dtest=BasicIngestionBLKTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports

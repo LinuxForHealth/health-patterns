@@ -76,11 +76,11 @@ then
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn  --log-file ./EnrichmentInitTests.log  -DskipTests=false -Dtest=EnrichmentInitTests test
-   mvn  --log-file ./BasicEnrichmentTests.log -DskipTests=false -Dtest=BasicEnrichmentTests test
-   mvn  --log-file ./EnrichmentConfigTest.log -DskipTests=false -Dtest=EnrichmentConfigTests test
-   mvn  --log-file ./ASCVDEnrichmentTests.log -DskipTests=false -Dtest=ASCVDEnrichmentTests test
-   mvn  --log-file ./NLPEnrichmentTests.log   -DskipTests=false -Dtest=NLPEnrichmentTests test
+   mvn -DskipTests=false -Dtest=EnrichmentInitTests test
+   mvn -DskipTests=false -Dtest=BasicEnrichmentTests test
+   mvn -DskipTests=false -Dtest=EnrichmentConfigTests test
+   mvn -DskipTests=false -Dtest=ASCVDEnrichmentTests test
+   mvn -DskipTests=false -Dtest=NLPEnrichmentTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -111,15 +111,15 @@ then
    echo "*************************************" 
    echo "* Execute the testcases             *"
    echo "*************************************"
-   mvn  --log-file ./FHIRProxyIngestionTests.log -DskipTests=false -Dtest=FHIRProxyIngestionTests test
-   mvn  --log-file ./BasicIngestionTests.log     -DskipTests=false -Dtest=BasicIngestionTests test
-   mvn  --log-file ./BasicIngestionBLKTests.log  -DskipTests=false -Dtest=BasicIngestionBLKTests test
-   mvn  --log-file ./DeIDIngestionTests.log      -DskipTests=false -Dtest=DeIDIngestionTests test
-   mvn  --log-file ./DeIDIngestionBLKTests.log   -DskipTests=false -Dtest=DeIDIngestionBLKTests test
-   mvn  --log-file ./ASCVDIngestionTests.log     -DskipTests=false -Dtest=ASCVDIngestionTests test
-   mvn  --log-file ./ASCVDIngestionBLKTests.log  -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
-   mvn  --log-file ./NLPIngestionTests.log       -DskipTests=false -Dtest=NLPIngestionTests test
-   mvn  --log-file ./NLPIngestionBLKTests.log    -DskipTests=false -Dtest=NLPIngestionBLKTests test
+   mvn -DskipTests=false -Dtest=FHIRProxyIngestionTests test
+   mvn -DskipTests=false -Dtest=BasicIngestionTests test
+   mvn -DskipTests=false -Dtest=BasicIngestionBLKTests test
+   mvn -DskipTests=false -Dtest=DeIDIngestionTests test
+   mvn -DskipTests=false -Dtest=DeIDIngestionBLKTests test
+   mvn -DskipTests=false -Dtest=ASCVDIngestionTests test
+   mvn -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
+   mvn -DskipTests=false -Dtest=NLPIngestionTests test
+   mvn -DskipTests=false -Dtest=NLPIngestionBLKTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
