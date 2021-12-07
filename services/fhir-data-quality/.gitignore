@@ -1,9 +1,0 @@
-.idea/
-.bsp/
-bin/
-target/
-.DS_Store
-*.log
-logs/
-.run/
-spark-warehouse/

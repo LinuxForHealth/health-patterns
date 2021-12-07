@@ -129,7 +129,6 @@ def produce():
     deidentifydata = request.headers.get("DeidentifyData", "false")
     runascvd = request.headers.get("RunASCVD", "false")
     add_nlp_insights = request.headers.get("AddNLPInsights", "false")
-    run_fhir_data_quality = request.headers.get("RunFHIRDataQuality", "false")
     resourceid = request.headers.get("ResourceId", "")
     out_topic = request.args.get("response_topic", None)
     failure_topic = request.args.get("failure_topic", None)
@@ -139,8 +138,7 @@ def produce():
                 ("ResolveTerminology",bytes(resolveterminology, 'utf-8')),
                 ("DeidentifyData",bytes(deidentifydata, 'utf-8')),
                 ("RunASCVD",bytes(runascvd, 'utf-8')),
-                ("AddNLPInsights",bytes(add_nlp_insights, 'utf-8')),
-                ("RunFHIRDataQuality",bytes(run_fhir_data_quality, 'utf-8'))
+                ("AddNLPInsights",bytes(add_nlp_insights, 'utf-8'))
                ]
 
     if len(resourceid) > 0:
