@@ -28,6 +28,7 @@ env:
   NLP_INSIGHTS_IP: ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/nlp-insights
   KAFKA_TOPIC_IN: "ingest.topic.in"
   HELM_TIMEOUT: "10m0s"
+  LOGLEVEL: "ERROR"
   
   
 
@@ -109,7 +110,7 @@ jobs:
          echo "*************************************" 
          echo "* Build the testcases               *"
          echo "*************************************"
-         mvn clean install --log-file ./mvn.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD
+         mvn clean install --log-file ./mvn.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD -Dloglevel=$LOGLEVEL
          echo "*************************************" 
          echo "* Properties File:                  *"
          echo "*************************************"
@@ -129,13 +130,13 @@ jobs:
          echo "* Execute the testcases                       *"
          echo "***********************************************"
          echo "* Execute the EnrichmentInitTests             *"
-         mvn --log-file ./EnrichmentInitTests.log   -DskipTests=false -Dtest=EnrichmentInitTests test
+         mvn -DskipTests=false -Dtest=EnrichmentInitTests test
          echo "* Execute the BasicEnrichmentTests            *"
-         mvn --log-file ./BasicEnrichmentTests.log  -DskipTests=false -Dtest=BasicEnrichmentTests test
+         mvn -DskipTests=false -Dtest=BasicEnrichmentTests test
          echo "* Execute the EnrichmentConfigTests           *"
-         mvn --log-file ./EnrichmentConfigTests.log -DskipTests=false -Dtest=EnrichmentConfigTests test
+         mvn -DskipTests=false -Dtest=EnrichmentConfigTests test
          echo "* Execute the ASCVDEnrichmentTests            *"
-         mvn --log-file ./ASCVDEnrichmentTests.log  -DskipTests=false -Dtest=ASCVDEnrichmentTests test
+         mvn -DskipTests=false -Dtest=ASCVDEnrichmentTests test
          echo "***********************************************" 
          echo "* Test Execution Summary                      *"
          echo "***********************************************"
@@ -149,7 +150,7 @@ jobs:
          echo "*************************************" 
          echo "* Build the testcases               *"
          echo "*************************************"
-         mvn clean install --log-file ./mvn.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD
+         mvn clean install --log-file ./mvn.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD -Dloglevel=$LOGLEVEL
          echo "*************************************" 
          echo "* Properties File:                  *"
          echo "*************************************"
@@ -163,11 +164,11 @@ jobs:
          echo "* Execute the testcases                           *"
          echo "***************************************************"
          echo "* Execute the BasicIngestionInitTests             *"
-         mvn  --log-file ./BasicIngestionInitTest.log -DskipTests=false -Dtest=BasicIngestionInitTests test
+         mvn -DskipTests=false -Dtest=BasicIngestionInitTests test
          echo "* Execute the BasicIngestionTests                 *"
-         mvn --log-file ./BasicIngestionTests.log -DskipTests=false -Dtest=BasicIngestionTests test
+         mvn -DskipTests=false -Dtest=BasicIngestionTests test
          echo "* Execute the BasicIngestionBLKTests              *"
-         mvn --log-file ./BasicIngestionBLKTests.log -DskipTests=false -Dtest=BasicIngestionBLKTests test
+         mvn -DskipTests=false -Dtest=BasicIngestionBLKTests test
          echo "***************************************************" 
          echo "* Test Execution Summary                          *"
          echo "***************************************************"

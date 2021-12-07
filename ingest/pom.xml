@@ -60,6 +60,7 @@
        <configuration>
          <includes> 
             <include>src/test/resources/clinical-ingestion-flow.properties</include>
+            <include>src/test/resources/logback-test.xml</include>
          </includes>
          <replacements>
 			<replacement>
@@ -109,6 +110,10 @@
             <replacement>
                 <token>@@kafka.topic.in@@</token>
                 <value>${kafka.topic.in}</value>
+            </replacement> 
+            <replacement>
+                <token>@@loglevel@@</token>
+                <value>${loglevel}</value>
             </replacement>                                            
         </replacements>
     </configuration>
