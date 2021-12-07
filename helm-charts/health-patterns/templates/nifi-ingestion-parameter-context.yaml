@@ -70,6 +70,13 @@ spec:
 
     - name: enrich.topic.failure
       value: enrich.topic.failure
+
+    - name: RunFHIRDataQuality
+      value: "{{- index .Values "fhir-data-quality" "enabled" -}}"
+
+    - name: RUN_FHIR_DATA_QUALITY_URL
+      value: http://{{ .Release.Name }}-fhir-data-quality:5000
+
 {{- end }}
 {{- end }}
 {{- end }}
