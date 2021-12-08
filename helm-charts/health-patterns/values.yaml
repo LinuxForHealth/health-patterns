@@ -250,7 +250,7 @@ nifi-registry:
 # FHIR Data Quality Configuration
 # ------------------------------------------------------------------------------
 fhir-data-quality:
-  enabled: true
+  enabled: false
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
