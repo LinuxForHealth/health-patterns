@@ -1,0 +1,23 @@
+Welcome to
+
+       d8888 888                                    d8b
+      d88888 888                                    Y8P
+     d88P888 888
+    d88P 888 888 888  888  .d88b.   8888b.  888d888 888  .d88b.
+   d88P  888 888 888  888 d8P  Y8b     "88b 888P"   888 d8P  Y8b
+  d88P   888 888 Y88  88P 88888888 .d888888 888     888 88888888
+ d8888888888 888  Y8bd8P  Y8b.     888  888 888     888 Y8b.
+d88P     888 888   Y88P    "Y8888  "Y888888 888     888  "Y8888
+
+The FHIR Data Quality (Deequ) service has been successfully deployed. 
+
+It can be accessed from within your cluster at the following location:
+
+  {{ include "fhir-data-quality.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
+
+{{- if .Values.ingress.enabled }}
+
+It can also be accessed via ingress at this location:
+
+https://{{ .Values.ingress.hostname }}/{{ .Chart.Name }}
+{{- end }}
