@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ibm.fhir</groupId>
+	<artifactId>fhir-ibmcloud</artifactId>
+	<version>99-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<fhir.version>4.10.1</fhir.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>fhir-operation-cqf</artifactId>
+			<version>${fhir.version}</version>
+			<classifier>shaded</classifier>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>fhir-operation-cpg</artifactId>
+			<version>${fhir.version}</version>
+			<classifier>shaded</classifier>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>3.1.2</version>
+					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<includeArtifactIds>fhir-operation-cpg,fhir-operation-cqf</includeArtifactIds>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+		</plugins>
+	</build>
+</project>
