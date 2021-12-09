@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "cert-secret-generator.fullname" . }}
+spec:
+  template:
+    metadata:
+      name: cert-secret-generator
+    spec:
+      serviceAccountName: {{ include "cert-secret-generator.fullname" . }}-sa
+      containers:
+      - name: cert-secret-generator
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: PASSWORD
+            value: {{ .Values.password }}
+      restartPolicy: Never
