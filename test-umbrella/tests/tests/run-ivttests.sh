@@ -43,7 +43,7 @@ elif [ $CLUSTER_NAMESPACE = "tst-ingest" ]
 then
 
    # deploy ingestion
-   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout $HELM_TIMEOUT
+   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout $HELM_TIMEOUT --set fhir-data-quality.enabled=true
 fi
 
 
@@ -120,6 +120,7 @@ then
    mvn -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
    mvn -DskipTests=false -Dtest=NLPIngestionTests test
    mvn -DskipTests=false -Dtest=NLPIngestionBLKTests test
+   mvn -DskipTests=false -Dtest=FHIRDataQualityBLKTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -133,6 +134,7 @@ then
    cat target/surefire-reports/categories.ASCVDIngestionBLKTests.txt
    cat target/surefire-reports/categories.NLPIngestionTests.txt
    cat target/surefire-reports/categories.NLPIngestionBLKTests.txt
+   cat target/surefire-reports/categories.FHIRDataQualityBLKTest.txt   
     
 fi   
 echo "*************************************" 

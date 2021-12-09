@@ -21,6 +21,7 @@ import categories.BasicIngestion;
 import categories.BasicIngestionBLK;
 import categories.DeIDIngestion;
 import categories.DeIDIngestionBLK;
+import categories.FHIRDataQualityBLK;
 import categories.ASCVDIngestion;
 import categories.ASCVDIngestionBLK;
 import categories.NLPIngestion;
@@ -161,6 +162,13 @@ public class Ingestion_Flow {
 	 @Category({FHIRProxyIngestion.class})
 	 @Scenario("scenarios/ingest_FHIR_Proxy.json")
 	    public void ingest_FHIR_Proxy() throws Exception {
+	    }
+	 
+	 //  FHIR Data Quality Tests
+	 @Test
+	 @Category({FHIRDataQualityBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_Data_Quality_BLK.json")
+	    public void ingest_FHIR_Data_Quality_BLK() throws Exception {
 	    }
 	 
 }
