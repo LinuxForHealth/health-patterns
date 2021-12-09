@@ -4,7 +4,7 @@
 #set -e
 
 
-PASSWORD=integrati0n
+PASSWORD=replace-me
 
 #########################
 ## Gather input values ##
