@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Defines an NLP service concrete class for working with ACD
-"""
+Defines how to derive insights using ACD (IBM Watson Annotator for Clinical Data) for NLP functions
 
-import json
+The formal documentation for the ACD service can be found at: https://cloud.ibm.com/apidocs/wh-acd
+
+"""
 import logging
 from typing import Dict, Any
 from typing import List
@@ -57,7 +58,7 @@ class _ResultEntry(NamedTuple):
 
 
 class ACDService(NLPService):
-    """The ACD NLPService uses the IBM Annotated Clinical Data product to derive insights"""
+    """The ACD NLPService uses ACD to derive insights"""
 
     def __init__(self, config: Dict[str, Any]) -> None:
         """Initializes the ACD service from a json configuration string"""
@@ -81,8 +82,6 @@ class ACDService(NLPService):
             service.set_service_url(self.acd_url)
             logger.info("Calling ACD-%s with text %s", self.config_name, text)
             resp = service.analyze_with_flow(self.acd_flow, text)
-            if logging.DEBUG >= logger.level and resp is not None:
-                logger.debug("ACD Response: %s ", json.dumps(resp.to_dict(), indent=2))
             return resp
         except ibm_cloud_sdk_core.api_exception.ApiException as ex:
             raise NLPServiceError(
@@ -100,8 +99,8 @@ class ACDService(NLPService):
     ) -> List[BundleEntryDfn]:
 
         nlp_responses = [_ResultEntry(note, self._run_nlp(note.text)) for note in notes]
-
         new_resources: List[Resource] = []
+
         for response in nlp_responses:
             conditions = create_conditions_from_insights(
                 response.text_source, response.nlp_output, self.nlp_config
@@ -112,7 +111,6 @@ class ACDService(NLPService):
             medications = create_med_statements_from_insights(
                 response.text_source, response.nlp_output, self.nlp_config
             )
-
             if medications:
                 new_resources.extend(medications)
 

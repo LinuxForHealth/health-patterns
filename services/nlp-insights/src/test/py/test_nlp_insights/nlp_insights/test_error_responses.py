@@ -15,6 +15,7 @@
 # pylint: disable=missing-function-docstring
 import importlib
 
+from nlp_insights import app
 from test_nlp_insights.util.fhir import (
     make_condition,
     make_codeable_concept,
@@ -27,11 +28,10 @@ from test_nlp_insights.util.mock_service import (
     make_mock_quick_umls_service_class,
 )
 from test_nlp_insights.util.resources import UnitTestUsingExternalResource
-from nlp_insights import app
 
 
 class TestErrorResponses(UnitTestUsingExternalResource):
-    """Unit tests where a bundle has multiple resources"""
+    """Unit tests where errors occur"""
 
     def setUp(self) -> None:
         # The application is defined globally in the module, so this is a potentially

@@ -22,8 +22,9 @@ from ibm_whcs_sdk.annotator_for_clinical_data import (
 )
 
 from nlp_insights.nlp.acd import acd_service
-from nlp_insights.nlp.nlp_response import NlpResponse
 from nlp_insights.nlp.quickUMLS import quickUMLS_service
+from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse
+
 
 ACD_CONFIG_DEF_NAME = "acdconfig1"
 QUICK_UMLS_CONFIG_DEF_NAME = "quickconfig1"
@@ -166,7 +167,7 @@ class MockQuickUmlsService(quickUMLS_service.QuickUMLSService):
             mapping_file_path
         )
 
-    def _run_nlp(self, text: str) -> NlpResponse:
+    def _run_nlp(self, text: str) -> QuickUmlsResponse:
         json_obj = self.response_map[text]
         return quickUMLS_service.create_nlp_response(json_obj)
 

@@ -12,7 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Functions to append codings that appear in an ACD style CUI"""
+"""Functions to append codings
+
+These are specific to ACD in that a single code value may be a csv list which
+must be split.
+"""
 
 import logging
 from typing import Optional
@@ -24,7 +28,8 @@ from ibm_whcs_sdk.annotator_for_clinical_data import (
 )
 
 from nlp_insights.fhir import fhir_object_utils
-from nlp_insights.insight import insight_constants
+from nlp_insights.fhir.code_system import hl7
+
 from nlp_insights.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
     AttrSourceConcept,
 )
@@ -128,11 +133,9 @@ def append_codings(
         append = _append_coding_entries
 
     if hasattr(concept, "cui") and concept.cui is not None:
-        # For CUIs, we do not handle comma-delimited values (have not seen that we ever have more than one value)
-        # We use the preferred name from UMLS for the display text
         codes_added += append(
             codeable_concept,
-            insight_constants.UMLS_URL,
+            hl7.UMLS_URL,
             concept.cui,
             get_concept_display_text(concept),
         )
@@ -140,34 +143,22 @@ def append_codings(
     if hasattr(concept, "snomed_concept_id") and concept.snomed_concept_id:
         codes_added += append(
             codeable_concept,
-            insight_constants.SNOMED_URL,
+            hl7.SNOMED_URL,
             concept.snomed_concept_id,
         )
 
     if hasattr(concept, "nci_code") and concept.nci_code:
-        codes_added += append(
-            codeable_concept, insight_constants.NCI_URL, concept.nci_code
-        )
+        codes_added += append(codeable_concept, hl7.NCI_URL, concept.nci_code)
     if hasattr(concept, "loinc_id") and concept.loinc_id:
-        codes_added += append(
-            codeable_concept, insight_constants.LOINC_URL, concept.loinc_id
-        )
+        codes_added += append(codeable_concept, hl7.LOINC_URL, concept.loinc_id)
     if hasattr(concept, "mesh_id") and concept.mesh_id:
-        codes_added += append(
-            codeable_concept, insight_constants.MESH_URL, concept.mesh_id
-        )
+        codes_added += append(codeable_concept, hl7.MESH_URL, concept.mesh_id)
     if hasattr(concept, "icd9_code") and concept.icd9_code:
-        codes_added += append(
-            codeable_concept, insight_constants.ICD9_URL, concept.icd9_code
-        )
+        codes_added += append(codeable_concept, hl7.ICD9_URL, concept.icd9_code)
     if hasattr(concept, "icd10_code") and concept.icd10_code:
-        codes_added += append(
-            codeable_concept, insight_constants.ICD10_URL, concept.icd10_code
-        )
+        codes_added += append(codeable_concept, hl7.ICD10_URL, concept.icd10_code)
 
     if hasattr(concept, "rx_norm_id") and concept.rx_norm_id:
-        codes_added += append(
-            codeable_concept, insight_constants.RXNORM_URL, concept.rx_norm_id
-        )
+        codes_added += append(codeable_concept, hl7.RXNORM_URL, concept.rx_norm_id)
 
     return codes_added

@@ -76,7 +76,7 @@ def compare_actual_to_expected(
     if not os.path.exists(expected_path) and create_expected_if_missing:
         os.makedirs(os.path.dirname(expected_path), exist_ok=True)
         with open(expected_path, "w", encoding="utf-8") as f:
-            logger.warning("Writting file %s", expected_path)
+            logger.warning("Writing file %s", expected_path)
             f.write(actual_resource.json(indent=2))
 
     expected_resource = type(actual_resource).parse_file(expected_path)

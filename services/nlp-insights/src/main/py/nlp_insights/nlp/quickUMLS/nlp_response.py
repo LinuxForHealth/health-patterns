@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Module for defining data types to represent simple NLP concepts
+Module for defining data types to represent QuickUmls concepts
 """
 
 from typing import List
@@ -22,8 +22,8 @@ from typing import Set
 from nlp_insights.umls.semtype_lookup import UmlsTypeName
 
 
-class NlpCui(NamedTuple):
-    """Models concepts returned by a very simple NLP capable of cui detection"""
+class QuickUmlsConcept(NamedTuple):
+    """Models a concept returned by QuickUmls"""
 
     cui: str
     covered_text: str
@@ -35,7 +35,7 @@ class NlpCui(NamedTuple):
     negated: bool = False
 
 
-class NlpResponse(NamedTuple):
-    """Models a response from a very simple NLP engine"""
+class QuickUmlsResponse(NamedTuple):
+    """Models a response from QuickUmls"""
 
-    nlp_cuis: List[NlpCui]
+    concepts: List[QuickUmlsConcept]

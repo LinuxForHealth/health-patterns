@@ -14,7 +14,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-9b617ed0a00592cb90c2b94dec09f3f03724f72a966c7cc79c27c28e-1"
                   }
                 },
                 {
@@ -24,6 +24,10 @@
                       "valueReference": {
                         "reference": "DiagnosticReport/12345"
                       }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
                     },
                     {
                       "extension": [

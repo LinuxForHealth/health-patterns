@@ -17,8 +17,12 @@ Defines methods for adjusting the text of a concept prior to NLP.
 The goal of adjustment is to provide context words so that NLP can better understand the
 text associated with the concept.
 
-For example if a concept is for a vaccine, appendint "Vaccine" to the text helps NLP
+For example if a concept is for a vaccine, appending "Vaccine" to the text helps NLP
 understand that the text refers to a vaccine and not the disease.
+
+This logic depends greatly on what the input resources have for their coding text. We found
+that for the examples we looked at, this logic helped. For other use cases, this logic
+may be excessive or incomplete.
 """
 from typing import Callable
 from typing import Dict

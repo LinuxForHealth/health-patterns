@@ -1,152 +1,611 @@
 {
-"suspect skin cancer because the patient's brother has skin cancer":
+"The patient had a heart attack in 2015 and started taking beta blockers. He had another heart attack in 2021 and had to start taking beta blockers again." :
 {
   "attributeValues": [
     {
-      "begin": 8,
-      "end": 19,
-      "coveredText": "skin cancer",
+      "begin": 18,
+      "end": 30,
+      "coveredText": "heart attack",
       "negated": false,
-      "preferredName": "malignant neoplasm of skin",
+      "preferredName": "myocardial infarction",
       "values": [
         {
-          "value": "malignant neoplasm of skin"
+          "value": "myocardial infarction"
         }
       ],
       "source": "Clinical Insights - Attributes",
       "sourceVersion": "v1.0",
       "concept": {
-        "uid": 5
+        "uid": 9
       },
-      "name": "PotentialDiagnosis",
-      "icd9Code": "173.99",
-      "icd10Code": "C44.9,C44.90",
-      "snomedConceptId": "372130007",
+      "name": "Diagnosis",
+      "icd9Code": "410.90",
+      "icd10Code": "I21.9",
+      "snomedConceptId": "22298006",
       "disambiguationData": {
         "validity": "VALID"
       },
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.925,
-            "patientReportedScore": 0.017,
-            "discussedScore": 0.058
+            "explicitScore": 0.992,
+            "patientReportedScore": 0.006,
+            "discussedScore": 0.001
           },
-          "suspectedScore": 0.988,
-          "symptomScore": 0.0,
-          "traumaScore": 0.0,
-          "familyHistoryScore": 0.122
+          "suspectedScore": 0.018,
+          "symptomScore": 0.007,
+          "traumaScore": 0.001,
+          "familyHistoryScore": 0.001
         }
       },
-      "ccsCode": "23"
-    }
-  ],
-  "concepts": [
-    {
-      "type": "umls.NeoplasticProcess",
-      "uid": 2,
-      "begin": 8,
-      "end": 19,
-      "coveredText": "skin cancer",
-      "negated": false,
-      "cui": "C0007114",
-      "preferredName": "Malignant neoplasm of skin",
-      "semanticType": "neop",
-      "source": "umls",
-      "sourceVersion": "2020AA",
-      "disambiguationData": {
-        "validity": "NO_DECISION"
-      },
-      "icd9Code": "173.9,173.8",
-      "icd10Code": "C44.9,C44.90",
-      "nciCode": "C2920",
-      "snomedConceptId": "372130007",
-      "meshId": "M0333435",
-      "loincId": "LA10543-9",
-      "vocabs": "MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_NCI-GLOSS,ICPC,CHV,CCS,NCI_CTRP,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,NCI_CPTAC",
-      "insightModelData": {
-        "diagnosis": {
-          "usage": {
-            "explicitScore": 0.925,
-            "patientReportedScore": 0.017,
-            "discussedScore": 0.058
+      "ccsCode": "100",
+      "hccCode": "86",
+      "temporal": [
+        {
+          "begin": 34,
+          "end": 38,
+          "coveredText": "2015",
+          "temporalType": {
+            "dateScore": 0.999,
+            "relativeScore": 0.0
           },
-          "suspectedScore": 0.988,
-          "symptomScore": 0.0,
-          "traumaScore": 0.0,
-          "familyHistoryScore": 0.122
+          "relationTypes": {
+            "overlapsScore": 0.999,
+            "durationScore": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "begin": 58,
+      "end": 71,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "preferredName": "beta-adrenergic blocker",
+      "values": [
+        {
+          "value": "beta-adrenergic blocker"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 7
+      },
+      "name": "PrescribedMedication",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.999,
+            "usage": {
+              "explicitScore": 0.999,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.034,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.032,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
         }
       }
     },
     {
-      "type": "umls.NeoplasticProcess",
-      "uid": 3,
-      "begin": 53,
-      "end": 64,
-      "coveredText": "skin cancer",
+      "begin": 88,
+      "end": 100,
+      "coveredText": "heart attack",
       "negated": false,
-      "cui": "C0007114",
-      "preferredName": "Malignant neoplasm of skin",
-      "semanticType": "neop",
+      "preferredName": "myocardial infarction",
+      "values": [
+        {
+          "value": "myocardial infarction"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 10
+      },
+      "name": "Diagnosis",
+      "icd9Code": "410.90",
+      "icd10Code": "I21.9",
+      "snomedConceptId": "22298006",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.968,
+            "patientReportedScore": 0.01,
+            "discussedScore": 0.022
+          },
+          "suspectedScore": 0.023,
+          "symptomScore": 0.004,
+          "traumaScore": 0.007,
+          "familyHistoryScore": 0.001
+        }
+      },
+      "ccsCode": "100",
+      "hccCode": "86",
+      "temporal": [
+        {
+          "begin": 104,
+          "end": 108,
+          "coveredText": "2021",
+          "temporalType": {
+            "dateScore": 1.0,
+            "relativeScore": 0.0
+          },
+          "relationTypes": {
+            "overlapsScore": 0.999,
+            "durationScore": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "begin": 133,
+      "end": 146,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "preferredName": "beta-adrenergic blocker",
+      "values": [
+        {
+          "value": "beta-adrenergic blocker"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 8
+      },
+      "name": "PrescribedMedication",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.999,
+            "usage": {
+              "explicitScore": 0.999,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.009,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.008,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "concepts": [
+    {
+      "type": "umls.DiseaseOrSyndrome",
+      "uid": 4,
+      "begin": 18,
+      "end": 30,
+      "coveredText": "heart attack",
+      "negated": false,
+      "cui": "C0027051",
+      "preferredName": "Myocardial Infarction",
+      "semanticType": "dsyn",
       "source": "umls",
       "sourceVersion": "2020AA",
       "disambiguationData": {
         "validity": "NO_DECISION"
       },
-      "icd9Code": "173.9,173.8",
-      "icd10Code": "C44.9,C44.90",
-      "nciCode": "C2920",
-      "snomedConceptId": "372130007",
-      "meshId": "M0333435",
-      "loincId": "LA10543-9",
-      "vocabs": "MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_NCI-GLOSS,ICPC,CHV,CCS,NCI_CTRP,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,NCI_CPTAC",
+      "icd10Code": "I21.9",
+      "nciCode": "C27996",
+      "snomedConceptId": "22298006",
+      "meshId": "M0014340",
+      "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+      "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 1.0,
-            "patientReportedScore": 0.0,
-            "discussedScore": 0.0
+            "explicitScore": 0.992,
+            "patientReportedScore": 0.006,
+            "discussedScore": 0.001
           },
-          "suspectedScore": 0.002,
-          "symptomScore": 0.0,
-          "traumaScore": 0.0,
-          "familyHistoryScore": 0.997
+          "suspectedScore": 0.018,
+          "symptomScore": 0.007,
+          "traumaScore": 0.001,
+          "familyHistoryScore": 0.001
+        }
+      },
+      "temporal": [
+        {
+          "begin": 34,
+          "end": 38,
+          "coveredText": "2015",
+          "temporalType": {
+            "dateScore": 0.999,
+            "relativeScore": 0.0
+          },
+          "relationTypes": {
+            "overlapsScore": 0.999,
+            "durationScore": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "type": "umls.PharmacologicSubstance",
+      "uid": 2,
+      "begin": 58,
+      "end": 71,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "vocabs": "MTH,CHV,ATC,LNC,CSP,MSH,NCI,LCH_NW,AOD,USPMG,SNOMEDCT_US",
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.999,
+            "usage": {
+              "explicitScore": 0.999,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.034,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.032,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "umls.DiseaseOrSyndrome",
+      "uid": 5,
+      "begin": 88,
+      "end": 100,
+      "coveredText": "heart attack",
+      "negated": false,
+      "cui": "C0027051",
+      "preferredName": "Myocardial Infarction",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "icd10Code": "I21.9",
+      "nciCode": "C27996",
+      "snomedConceptId": "22298006",
+      "meshId": "M0014340",
+      "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+      "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.968,
+            "patientReportedScore": 0.01,
+            "discussedScore": 0.022
+          },
+          "suspectedScore": 0.023,
+          "symptomScore": 0.004,
+          "traumaScore": 0.007,
+          "familyHistoryScore": 0.001
+        }
+      },
+      "temporal": [
+        {
+          "begin": 104,
+          "end": 108,
+          "coveredText": "2021",
+          "temporalType": {
+            "dateScore": 1.0,
+            "relativeScore": 0.0
+          },
+          "relationTypes": {
+            "overlapsScore": 0.999,
+            "durationScore": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "type": "umls.PharmacologicSubstance",
+      "uid": 3,
+      "begin": 133,
+      "end": 146,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "semanticType": "phsu",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "vocabs": "MTH,CHV,ATC,LNC,CSP,MSH,NCI,LCH_NW,AOD,USPMG,SNOMEDCT_US",
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.999,
+            "usage": {
+              "explicitScore": 0.999,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.009,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.008,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
         }
       }
     },
     {
       "type": "ICDiagnosis",
-      "begin": 8,
-      "end": 19,
-      "coveredText": "skin cancer",
+      "begin": 18,
+      "end": 30,
+      "coveredText": "heart attack",
       "negated": false,
-      "cui": "C0007114",
-      "preferredName": "Malignant neoplasm of skin",
+      "cui": "C0027051",
+      "preferredName": "Myocardial Infarction",
       "source": "Clinical Insights - Derived Concepts",
       "sourceVersion": "v1.0",
       "disambiguationData": {
         "validity": "VALID"
       },
-      "icd9Code": "173.9,173.8",
-      "icd10Code": "C44.9,C44.90",
-      "nciCode": "C2920",
-      "snomedConceptId": "372130007",
-      "meshId": "M0333435",
-      "loincId": "LA10543-9",
+      "icd10Code": "I21.9",
+      "nciCode": "C27996",
+      "snomedConceptId": "22298006",
+      "meshId": "M0014340",
+      "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.925,
-            "patientReportedScore": 0.017,
-            "discussedScore": 0.058
+            "explicitScore": 0.992,
+            "patientReportedScore": 0.006,
+            "discussedScore": 0.001
           },
-          "suspectedScore": 0.988,
-          "symptomScore": 0.0,
-          "traumaScore": 0.0,
-          "familyHistoryScore": 0.122
+          "suspectedScore": 0.018,
+          "symptomScore": 0.007,
+          "traumaScore": 0.001,
+          "familyHistoryScore": 0.001
         }
       },
-      "ruleId": "33e6be29-a746-40f1-a012-952410bade6f",
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "derivedFrom": [
+        {
+          "uid": 4
+        }
+      ],
+      "temporal": [
+        {
+          "begin": 34,
+          "end": 38,
+          "coveredText": "2015",
+          "temporalType": {
+            "dateScore": 0.999,
+            "relativeScore": 0.0
+          },
+          "relationTypes": {
+            "overlapsScore": 0.999,
+            "durationScore": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "type": "ICMedication",
+      "begin": 58,
+      "end": 71,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.999,
+            "usage": {
+              "explicitScore": 0.999,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.034,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.032,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      },
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    },
+    {
+      "type": "ICNormality",
+      "begin": 58,
+      "end": 71,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
       "derivedFrom": [
         {
           "uid": 2
@@ -155,37 +614,142 @@
     },
     {
       "type": "ICDiagnosis",
-      "begin": 53,
-      "end": 64,
-      "coveredText": "skin cancer",
+      "begin": 88,
+      "end": 100,
+      "coveredText": "heart attack",
       "negated": false,
-      "cui": "C0007114",
-      "preferredName": "Malignant neoplasm of skin",
+      "cui": "C0027051",
+      "preferredName": "Myocardial Infarction",
       "source": "Clinical Insights - Derived Concepts",
       "sourceVersion": "v1.0",
       "disambiguationData": {
         "validity": "VALID"
       },
-      "icd9Code": "173.9,173.8",
-      "icd10Code": "C44.9,C44.90",
-      "nciCode": "C2920",
-      "snomedConceptId": "372130007",
-      "meshId": "M0333435",
-      "loincId": "LA10543-9",
+      "icd10Code": "I21.9",
+      "nciCode": "C27996",
+      "snomedConceptId": "22298006",
+      "meshId": "M0014340",
+      "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 1.0,
-            "patientReportedScore": 0.0,
-            "discussedScore": 0.0
+            "explicitScore": 0.968,
+            "patientReportedScore": 0.01,
+            "discussedScore": 0.022
           },
-          "suspectedScore": 0.002,
-          "symptomScore": 0.0,
-          "traumaScore": 0.0,
-          "familyHistoryScore": 0.997
+          "suspectedScore": 0.023,
+          "symptomScore": 0.004,
+          "traumaScore": 0.007,
+          "familyHistoryScore": 0.001
         }
       },
-      "ruleId": "33e6be29-a746-40f1-a012-952410bade6f",
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "derivedFrom": [
+        {
+          "uid": 5
+        }
+      ],
+      "temporal": [
+        {
+          "begin": 104,
+          "end": 108,
+          "coveredText": "2021",
+          "temporalType": {
+            "dateScore": 1.0,
+            "relativeScore": 0.0
+          },
+          "relationTypes": {
+            "overlapsScore": 0.999,
+            "durationScore": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "type": "ICMedication",
+      "begin": 133,
+      "end": 146,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.999,
+            "usage": {
+              "explicitScore": 0.999,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.009,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.008,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      },
+      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ]
+    },
+    {
+      "type": "ICNormality",
+      "begin": 133,
+      "end": 146,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "cui": "C0001645",
+      "preferredName": "Adrenergic beta-Antagonists",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "nciCode": "C29576",
+      "snomedConceptId": "33252009,373254001",
+      "meshId": "M0000495",
+      "loincId": "MTHU003324,LP18062-7",
+      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
       "derivedFrom": [
         {
           "uid": 3
@@ -193,79 +757,656 @@
       ]
     }
   ],
+  "MedicationInd": [
+    {
+      "type": "aci.MedicationInd",
+      "uid": 7,
+      "begin": 58,
+      "end": 71,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "drug": [
+        {
+          "coveredText": "beta blockers",
+          "end": 71,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "drugSurfaceForm": "beta blockers",
+              "coveredText": "beta blockers",
+              "drugNormalizedName": "beta-adrenergic blocker",
+              "end": 71,
+              "type": "aci.DrugName",
+              "begin": 58
+            }
+          ],
+          "begin": 58,
+          "complex": "false"
+        }
+      ],
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.999,
+            "usage": {
+              "explicitScore": 0.999,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.034,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.032,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      }
+    },
+    {
+      "type": "aci.MedicationInd",
+      "uid": 8,
+      "begin": 133,
+      "end": 146,
+      "coveredText": "beta blockers",
+      "negated": false,
+      "drug": [
+        {
+          "coveredText": "beta blockers",
+          "end": 146,
+          "type": "aci.Ind_Drug",
+          "name1": [
+            {
+              "drugSurfaceForm": "beta blockers",
+              "coveredText": "beta blockers",
+              "drugNormalizedName": "beta-adrenergic blocker",
+              "end": 146,
+              "type": "aci.DrugName",
+              "begin": 133
+            }
+          ],
+          "begin": 133,
+          "complex": "false"
+        }
+      ],
+      "insightModelData": {
+        "medication": {
+          "usage": {
+            "takenScore": 0.999,
+            "consideringScore": 0.0,
+            "discussedScore": 0.001,
+            "labMeasurementScore": 0.0
+          },
+          "startedEvent": {
+            "score": 0.999,
+            "usage": {
+              "explicitScore": 0.999,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.009,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.008,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "stoppedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "doseChangedEvent": {
+            "score": 0.0,
+            "usage": {
+              "explicitScore": 0.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          }
+        }
+      },
+      "disambiguationData": {
+        "validity": "VALID",
+        "comment": "marked VALID by clinical insight models."
+      }
+    }
+  ],
   "SymptomDiseaseInd": [
     {
       "type": "aci.SymptomDiseaseInd",
-      "uid": 5,
-      "begin": 8,
-      "end": 19,
-      "coveredText": "skin cancer",
+      "uid": 9,
+      "begin": 18,
+      "end": 30,
+      "coveredText": "heart attack",
       "negated": false,
-      "cui": "C0007114",
-      "icd10Code": "C44.9,C44.90",
+      "cui": "C0027051",
+      "icd10Code": "I21.9",
       "modality": "positive",
-      "symptomDiseaseSurfaceForm": "skin cancer",
-      "snomedConceptId": "372130007",
-      "ccsCode": "23",
-      "symptomDiseaseNormalizedName": "malignant neoplasm of skin",
-      "icd9Code": "173.99",
+      "symptomDiseaseSurfaceForm": "heart attack",
+      "snomedConceptId": "22298006",
+      "ccsCode": "100",
+      "symptomDiseaseNormalizedName": "myocardial infarction",
+      "icd9Code": "410.90",
+      "hccCode": "86",
       "disambiguationData": {
         "validity": "VALID"
       },
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.925,
-            "patientReportedScore": 0.017,
-            "discussedScore": 0.058
+            "explicitScore": 0.992,
+            "patientReportedScore": 0.006,
+            "discussedScore": 0.001
           },
-          "suspectedScore": 0.988,
-          "symptomScore": 0.0,
+          "suspectedScore": 0.018,
+          "symptomScore": 0.007,
+          "traumaScore": 0.001,
+          "familyHistoryScore": 0.001
+        }
+      },
+      "temporal": [
+        {
+          "begin": 34,
+          "end": 38,
+          "coveredText": "2015",
+          "temporalType": {
+            "dateScore": 0.999,
+            "relativeScore": 0.0
+          },
+          "relationTypes": {
+            "overlapsScore": 0.999,
+            "durationScore": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "uid": 10,
+      "begin": 88,
+      "end": 100,
+      "coveredText": "heart attack",
+      "negated": false,
+      "cui": "C0027051",
+      "icd10Code": "I21.9",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "heart attack",
+      "snomedConceptId": "22298006",
+      "ccsCode": "100",
+      "symptomDiseaseNormalizedName": "myocardial infarction",
+      "icd9Code": "410.90",
+      "hccCode": "86",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.968,
+            "patientReportedScore": 0.01,
+            "discussedScore": 0.022
+          },
+          "suspectedScore": 0.023,
+          "symptomScore": 0.004,
+          "traumaScore": 0.007,
+          "familyHistoryScore": 0.001
+        }
+      },
+      "temporal": [
+        {
+          "begin": 104,
+          "end": 108,
+          "coveredText": "2021",
+          "temporalType": {
+            "dateScore": 1.0,
+            "relativeScore": 0.0
+          },
+          "relationTypes": {
+            "overlapsScore": 0.999,
+            "durationScore": 0.0
+          }
+        }
+      ]
+    }
+  ],
+  "spellCorrectedText": [
+    {
+      "correctedText": "The patient had a heart attack in 2015 and started taking beta blockers. He had another heart attack in 2021 and had to start taking beta blockers again."
+    }
+  ],
+  "temporalSpans": [
+    {
+      "begin": 34,
+      "end": 38,
+      "coveredText": "2015",
+      "temporalType": {
+        "dateScore": 0.999,
+        "relativeScore": 0.0
+      }
+    },
+    {
+      "begin": 104,
+      "end": 108,
+      "coveredText": "2021",
+      "temporalType": {
+        "dateScore": 1.0,
+        "relativeScore": 0.0
+      }
+    }
+  ]
+},
+
+"Patient has pneumonia and has also been diagnosed with a heart attack." :
+{
+  "attributeValues": [
+    {
+      "begin": 12,
+      "end": 21,
+      "coveredText": "pneumonia",
+      "negated": false,
+      "preferredName": "pneumonia",
+      "values": [
+        {
+          "value": "pneumonia"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 6
+      },
+      "name": "Diagnosis",
+      "icd9Code": "486",
+      "icd10Code": "J18.9",
+      "snomedConceptId": "233604007",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.985,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.011
+          },
+          "suspectedScore": 0.011,
+          "symptomScore": 0.002,
           "traumaScore": 0.0,
-          "familyHistoryScore": 0.122
+          "familyHistoryScore": 0.0
+        }
+      },
+      "ccsCode": "122"
+    },
+    {
+      "begin": 57,
+      "end": 69,
+      "coveredText": "heart attack",
+      "negated": false,
+      "preferredName": "myocardial infarction",
+      "values": [
+        {
+          "value": "myocardial infarction"
+        }
+      ],
+      "source": "Clinical Insights - Attributes",
+      "sourceVersion": "v1.0",
+      "concept": {
+        "uid": 7
+      },
+      "name": "Diagnosis",
+      "icd9Code": "410.90",
+      "icd10Code": "I21.9",
+      "snomedConceptId": "22298006",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.977,
+            "patientReportedScore": 0.007,
+            "discussedScore": 0.016
+          },
+          "suspectedScore": 0.053,
+          "symptomScore": 0.008,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.001
+        }
+      },
+      "ccsCode": "100",
+      "hccCode": "86"
+    }
+  ],
+  "concepts": [
+    {
+      "type": "umls.DiseaseOrSyndrome",
+      "uid": 3,
+      "begin": 12,
+      "end": 21,
+      "coveredText": "pneumonia",
+      "negated": false,
+      "cui": "C0032285",
+      "preferredName": "Pneumonia",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "icd9Code": "484.8",
+      "icd10Code": "J18.9",
+      "nciCode": "C3333",
+      "snomedConceptId": "233604007",
+      "meshId": "M0017064",
+      "loincId": "LP21407-9,LA7465-3,MTHU020831",
+      "vocabs": "LNC,NCI_NICHD,MTH,CSP,MSH,CST,HPO,OMIM,COSTAR,NCI_NCI-GLOSS,ICPC,LCH,CHV,NCI_FDA,MEDLINEPLUS,LCH_NW,NCI,AOD,SNOMEDCT_US,DXP,NCI_CPTAC",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.985,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.011
+          },
+          "suspectedScore": 0.011,
+          "symptomScore": 0.002,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      }
+    },
+    {
+      "type": "umls.DiagnosticProcedure",
+      "uid": 2,
+      "begin": 40,
+      "end": 49,
+      "coveredText": "diagnosed",
+      "negated": false,
+      "cui": "C0011900",
+      "preferredName": "Diagnosis",
+      "semanticType": "diap",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "INVALID"
+      },
+      "nciCode": "C15220",
+      "snomedConceptId": "439401001",
+      "meshId": "M0006168",
+      "loincId": "MTHU008876",
+      "vocabs": "LNC,NCI_NICHD,MTH,CSP,MSH,HL7V3.0,NCI_NCI-GLOSS,LCH,CHV,NCI_CDISC,CCS,LCH_NW,NCI,AOD,MCM,SNOMEDCT_US"
+    },
+    {
+      "type": "umls.DiseaseOrSyndrome",
+      "uid": 4,
+      "begin": 57,
+      "end": 69,
+      "coveredText": "heart attack",
+      "negated": false,
+      "cui": "C0027051",
+      "preferredName": "Myocardial Infarction",
+      "semanticType": "dsyn",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "icd10Code": "I21.9",
+      "nciCode": "C27996",
+      "snomedConceptId": "22298006",
+      "meshId": "M0014340",
+      "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+      "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.977,
+            "patientReportedScore": 0.007,
+            "discussedScore": 0.016
+          },
+          "suspectedScore": 0.053,
+          "symptomScore": 0.008,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.001
+        }
+      }
+    },
+    {
+      "type": "ICDiagnosis",
+      "begin": 12,
+      "end": 21,
+      "coveredText": "pneumonia",
+      "negated": false,
+      "cui": "C0032285",
+      "preferredName": "Pneumonia",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "icd9Code": "484.8",
+      "icd10Code": "J18.9",
+      "nciCode": "C3333",
+      "snomedConceptId": "233604007",
+      "meshId": "M0017064",
+      "loincId": "LP21407-9,LA7465-3,MTHU020831",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.985,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.011
+          },
+          "suspectedScore": 0.011,
+          "symptomScore": 0.002,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
+        }
+      },
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ]
+    },
+    {
+      "type": "ICProcedure",
+      "begin": 40,
+      "end": 49,
+      "coveredText": "diagnosed",
+      "negated": false,
+      "cui": "C0011900",
+      "preferredName": "Diagnosis",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "INVALID"
+      },
+      "nciCode": "C15220",
+      "snomedConceptId": "439401001",
+      "meshId": "M0006168",
+      "loincId": "MTHU008876",
+      "ruleId": "344230c0-2da2-44df-8f45-ad64b99641f2",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    },
+    {
+      "type": "ICNormality",
+      "begin": 40,
+      "end": 49,
+      "coveredText": "diagnosed",
+      "negated": false,
+      "cui": "C0011900",
+      "preferredName": "Diagnosis",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "INVALID"
+      },
+      "nciCode": "C15220",
+      "snomedConceptId": "439401001",
+      "meshId": "M0006168",
+      "loincId": "MTHU008876",
+      "ruleId": "70e2e076-3b8c-4491-8d0f-89bc89edecc7",
+      "derivedFrom": [
+        {
+          "uid": 2
+        }
+      ]
+    },
+    {
+      "type": "ICDiagnosis",
+      "begin": 57,
+      "end": 69,
+      "coveredText": "heart attack",
+      "negated": false,
+      "cui": "C0027051",
+      "preferredName": "Myocardial Infarction",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "icd10Code": "I21.9",
+      "nciCode": "C27996",
+      "snomedConceptId": "22298006",
+      "meshId": "M0014340",
+      "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.977,
+            "patientReportedScore": 0.007,
+            "discussedScore": 0.016
+          },
+          "suspectedScore": 0.053,
+          "symptomScore": 0.008,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.001
+        }
+      },
+      "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "derivedFrom": [
+        {
+          "uid": 4
+        }
+      ]
+    }
+  ],
+  "SymptomDiseaseInd": [
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "uid": 6,
+      "begin": 12,
+      "end": 21,
+      "coveredText": "pneumonia",
+      "negated": false,
+      "cui": "C0032285",
+      "icd10Code": "J18.9",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "pneumonia",
+      "snomedConceptId": "233604007",
+      "ccsCode": "122",
+      "symptomDiseaseNormalizedName": "pneumonia",
+      "icd9Code": "486",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.985,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.011
+          },
+          "suspectedScore": 0.011,
+          "symptomScore": 0.002,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.0
         }
       }
     },
     {
       "type": "aci.SymptomDiseaseInd",
-      "begin": 53,
-      "end": 64,
-      "coveredText": "skin cancer",
+      "uid": 7,
+      "begin": 57,
+      "end": 69,
+      "coveredText": "heart attack",
       "negated": false,
-      "cui": "C0007114",
-      "icd10Code": "C44.9,C44.90",
+      "cui": "C0027051",
+      "icd10Code": "I21.9",
       "modality": "positive",
-      "symptomDiseaseSurfaceForm": "skin cancer",
-      "snomedConceptId": "372130007",
-      "ccsCode": "23",
-      "symptomDiseaseNormalizedName": "malignant neoplasm of skin",
-      "icd9Code": "173.99",
+      "symptomDiseaseSurfaceForm": "heart attack",
+      "snomedConceptId": "22298006",
+      "ccsCode": "100",
+      "symptomDiseaseNormalizedName": "myocardial infarction",
+      "icd9Code": "410.90",
+      "hccCode": "86",
       "disambiguationData": {
         "validity": "VALID"
       },
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 1.0,
-            "patientReportedScore": 0.0,
-            "discussedScore": 0.0
+            "explicitScore": 0.977,
+            "patientReportedScore": 0.007,
+            "discussedScore": 0.016
           },
-          "suspectedScore": 0.002,
-          "symptomScore": 0.0,
+          "suspectedScore": 0.053,
+          "symptomScore": 0.008,
           "traumaScore": 0.0,
-          "familyHistoryScore": 0.997
+          "familyHistoryScore": 0.001
         }
       }
     }
   ],
   "spellCorrectedText": [
     {
-      "correctedText": "suspect skin cancer because the patients brother has skin cancer"
+      "correctedText": "Patient has pneumonia and has also been diagnosed with a heart attack."
     }
   ]
 },
-
-"Patient started taking beta blockers": {
+"Patient started taking beta blockers" :
+{
   "attributeValues": [
     {
       "begin": 23,
@@ -303,6 +1444,15 @@
               "discussedScore": 0.0
             }
           },
+          "adverseEvent": {
+            "score": 0.018,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.014,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
           "stoppedEvent": {
             "score": 0.0,
             "usage": {
@@ -315,15 +1465,6 @@
             "score": 0.0,
             "usage": {
               "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "adverseEvent": {
-            "score": 0.018,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.014,
               "consideringScore": 0.0,
               "discussedScore": 0.0
             }
@@ -369,6 +1510,15 @@
               "discussedScore": 0.0
             }
           },
+          "adverseEvent": {
+            "score": 0.018,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.014,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
           "stoppedEvent": {
             "score": 0.0,
             "usage": {
@@ -381,15 +1531,6 @@
             "score": 0.0,
             "usage": {
               "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "adverseEvent": {
-            "score": 0.018,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.014,
               "consideringScore": 0.0,
               "discussedScore": 0.0
             }
@@ -430,6 +1571,15 @@
               "discussedScore": 0.0
             }
           },
+          "adverseEvent": {
+            "score": 0.018,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.014,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
           "stoppedEvent": {
             "score": 0.0,
             "usage": {
@@ -442,15 +1592,6 @@
             "score": 0.0,
             "usage": {
               "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "adverseEvent": {
-            "score": 0.018,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.014,
               "consideringScore": 0.0,
               "discussedScore": 0.0
             }
@@ -532,6 +1673,15 @@
               "discussedScore": 0.0
             }
           },
+          "adverseEvent": {
+            "score": 0.018,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.014,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
           "stoppedEvent": {
             "score": 0.0,
             "usage": {
@@ -544,15 +1694,6 @@
             "score": 0.0,
             "usage": {
               "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "adverseEvent": {
-            "score": 0.018,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.014,
               "consideringScore": 0.0,
               "discussedScore": 0.0
             }
@@ -571,332 +1712,7 @@
     }
   ]
 },
-
-    "Patient has pneumonia and shows signs of heart attack": {
-        "attributeValues": [
-            {
-                "begin": 12,
-                "end": 21,
-                "coveredText": "pneumonia",
-                "negated": false,
-                "preferredName": "pneumonia",
-                "values": [
-                    {
-                        "value": "pneumonia"
-                    }
-                ],
-                "source": "Clinical Insights - Attributes",
-                "sourceVersion": "v1.0",
-                "concept": {
-                    "uid": 5
-                },
-                "name": "Diagnosis",
-                "icd9Code": "486",
-                "icd10Code": "J18.9",
-                "snomedConceptId": "233604007",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "insightModelData": {
-                    "diagnosis": {
-                        "usage": {
-                            "explicitScore": 0.99,
-                            "patientReportedScore": 0.004,
-                            "discussedScore": 0.006
-                        },
-                        "suspectedScore": 0.018,
-                        "symptomScore": 0.003,
-                        "traumaScore": 0.0,
-                        "familyHistoryScore": 0.0
-                    }
-                },
-                "ccsCode": "122"
-            },
-            {
-                "begin": 41,
-                "end": 53,
-                "coveredText": "heart attack",
-                "negated": false,
-                "preferredName": "myocardial infarction",
-                "values": [
-                    {
-                        "value": "myocardial infarction"
-                    }
-                ],
-                "source": "Clinical Insights - Attributes",
-                "sourceVersion": "v1.0",
-                "concept": {
-                    "uid": 6
-                },
-                "name": "PotentialDiagnosis",
-                "icd9Code": "410.90",
-                "icd10Code": "I21.9",
-                "snomedConceptId": "22298006",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "insightModelData": {
-                    "diagnosis": {
-                        "usage": {
-                            "explicitScore": 0.978,
-                            "patientReportedScore": 0.004,
-                            "discussedScore": 0.018
-                        },
-                        "suspectedScore": 0.976,
-                        "symptomScore": 0.003,
-                        "traumaScore": 0.0,
-                        "familyHistoryScore": 0.0
-                    }
-                },
-                "ccsCode": "100",
-                "hccCode": "86"
-            }
-        ],
-        "concepts": [
-            {
-                "type": "umls.DiseaseOrSyndrome",
-                "uid": 2,
-                "begin": 12,
-                "end": 21,
-                "coveredText": "pneumonia",
-                "negated": false,
-                "cui": "C0032285",
-                "preferredName": "Pneumonia",
-                "semanticType": "dsyn",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "icd9Code": "484.8",
-                "icd10Code": "J18.9",
-                "nciCode": "C3333",
-                "snomedConceptId": "233604007",
-                "meshId": "M0017064",
-                "loincId": "LP21407-9,LA7465-3,MTHU020831",
-                "vocabs": "LNC,NCI_NICHD,MTH,CSP,MSH,CST,HPO,OMIM,COSTAR,NCI_NCI-GLOSS,ICPC,LCH,CHV,NCI_FDA,MEDLINEPLUS,LCH_NW,NCI,AOD,SNOMEDCT_US,DXP,NCI_CPTAC",
-                "insightModelData": {
-                    "diagnosis": {
-                        "usage": {
-                            "explicitScore": 0.99,
-                            "patientReportedScore": 0.004,
-                            "discussedScore": 0.006
-                        },
-                        "suspectedScore": 0.018,
-                        "symptomScore": 0.003,
-                        "traumaScore": 0.0,
-                        "familyHistoryScore": 0.0
-                    }
-                }
-            },
-            {
-                "type": "umls.Finding",
-                "begin": 32,
-                "end": 37,
-                "coveredText": "signs",
-                "negated": false,
-                "cui": "C0311392",
-                "preferredName": "Physical findings",
-                "semanticType": "fndg",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "icd9Code": "796.4",
-                "icd10Code": "R68.89",
-                "nciCode": "C53458",
-                "snomedConceptId": "72670004",
-                "loincId": "LP73100-7,MTHU001426",
-                "vocabs": "LNC,MTH,CHV,NCI,CST,SNOMEDCT_US"
-            },
-            {
-                "type": "umls.DiseaseOrSyndrome",
-                "uid": 3,
-                "begin": 41,
-                "end": 53,
-                "coveredText": "heart attack",
-                "negated": false,
-                "cui": "C0027051",
-                "preferredName": "Myocardial Infarction",
-                "semanticType": "dsyn",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "icd10Code": "I21.9",
-                "nciCode": "C27996",
-                "snomedConceptId": "22298006",
-                "meshId": "M0014340",
-                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
-                "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
-                "insightModelData": {
-                    "diagnosis": {
-                        "usage": {
-                            "explicitScore": 0.978,
-                            "patientReportedScore": 0.004,
-                            "discussedScore": 0.018
-                        },
-                        "suspectedScore": 0.976,
-                        "symptomScore": 0.003,
-                        "traumaScore": 0.0,
-                        "familyHistoryScore": 0.0
-                    }
-                }
-            },
-            {
-                "type": "ICDiagnosis",
-                "begin": 12,
-                "end": 21,
-                "coveredText": "pneumonia",
-                "negated": false,
-                "cui": "C0032285",
-                "preferredName": "Pneumonia",
-                "source": "Clinical Insights - Derived Concepts",
-                "sourceVersion": "v1.0",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "icd9Code": "484.8",
-                "icd10Code": "J18.9",
-                "nciCode": "C3333",
-                "snomedConceptId": "233604007",
-                "meshId": "M0017064",
-                "loincId": "LP21407-9,LA7465-3,MTHU020831",
-                "insightModelData": {
-                    "diagnosis": {
-                        "usage": {
-                            "explicitScore": 0.99,
-                            "patientReportedScore": 0.004,
-                            "discussedScore": 0.006
-                        },
-                        "suspectedScore": 0.018,
-                        "symptomScore": 0.003,
-                        "traumaScore": 0.0,
-                        "familyHistoryScore": 0.0
-                    }
-                },
-                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
-                "derivedFrom": [
-                    {
-                        "uid": 2
-                    }
-                ]
-            },
-            {
-                "type": "ICDiagnosis",
-                "begin": 41,
-                "end": 53,
-                "coveredText": "heart attack",
-                "negated": false,
-                "cui": "C0027051",
-                "preferredName": "Myocardial Infarction",
-                "source": "Clinical Insights - Derived Concepts",
-                "sourceVersion": "v1.0",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "icd10Code": "I21.9",
-                "nciCode": "C27996",
-                "snomedConceptId": "22298006",
-                "meshId": "M0014340",
-                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
-                "insightModelData": {
-                    "diagnosis": {
-                        "usage": {
-                            "explicitScore": 0.978,
-                            "patientReportedScore": 0.004,
-                            "discussedScore": 0.018
-                        },
-                        "suspectedScore": 0.976,
-                        "symptomScore": 0.003,
-                        "traumaScore": 0.0,
-                        "familyHistoryScore": 0.0
-                    }
-                },
-                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
-                "derivedFrom": [
-                    {
-                        "uid": 3
-                    }
-                ]
-            }
-        ],
-        "SymptomDiseaseInd": [
-            {
-                "type": "aci.SymptomDiseaseInd",
-                "uid": 5,
-                "begin": 12,
-                "end": 21,
-                "coveredText": "pneumonia",
-                "negated": false,
-                "cui": "C0032285",
-                "icd10Code": "J18.9",
-                "modality": "positive",
-                "symptomDiseaseSurfaceForm": "pneumonia",
-                "snomedConceptId": "233604007",
-                "ccsCode": "122",
-                "symptomDiseaseNormalizedName": "pneumonia",
-                "icd9Code": "486",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "insightModelData": {
-                    "diagnosis": {
-                        "usage": {
-                            "explicitScore": 0.99,
-                            "patientReportedScore": 0.004,
-                            "discussedScore": 0.006
-                        },
-                        "suspectedScore": 0.018,
-                        "symptomScore": 0.003,
-                        "traumaScore": 0.0,
-                        "familyHistoryScore": 0.0
-                    }
-                }
-            },
-            {
-                "type": "aci.SymptomDiseaseInd",
-                "uid": 6,
-                "begin": 41,
-                "end": 53,
-                "coveredText": "heart attack",
-                "negated": false,
-                "cui": "C0027051",
-                "icd10Code": "I21.9",
-                "modality": "positive",
-                "symptomDiseaseSurfaceForm": "heart attack",
-                "snomedConceptId": "22298006",
-                "ccsCode": "100",
-                "symptomDiseaseNormalizedName": "myocardial infarction",
-                "icd9Code": "410.90",
-                "hccCode": "86",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "insightModelData": {
-                    "diagnosis": {
-                        "usage": {
-                            "explicitScore": 0.978,
-                            "patientReportedScore": 0.004,
-                            "discussedScore": 0.018
-                        },
-                        "suspectedScore": 0.976,
-                        "symptomScore": 0.003,
-                        "traumaScore": 0.0,
-                        "familyHistoryScore": 0.0
-                    }
-                }
-            }
-        ],
-        "spellCorrectedText": [
-            {
-                "correctedText": "Patient has pneumonia and shows signs of heart attack"
-            }
-        ]
-    },
-"Patient has pneumonia and shows signs of heart attack. Patient started taking beta blockers." :
+"Patient has pneumonia and has also been diagnosed with a heart attack. Patient started taking beta blockers." :
 {
   "attributeValues": [
     {
@@ -913,7 +1729,7 @@
       "source": "Clinical Insights - Attributes",
       "sourceVersion": "v1.0",
       "concept": {
-        "uid": 7
+        "uid": 8
       },
       "name": "Diagnosis",
       "icd9Code": "486",
@@ -925,12 +1741,12 @@
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.989,
-            "patientReportedScore": 0.004,
-            "discussedScore": 0.007
+            "explicitScore": 0.988,
+            "patientReportedScore": 0.003,
+            "discussedScore": 0.008
           },
-          "suspectedScore": 0.021,
-          "symptomScore": 0.003,
+          "suspectedScore": 0.01,
+          "symptomScore": 0.002,
           "traumaScore": 0.0,
           "familyHistoryScore": 0.0
         }
@@ -938,8 +1754,8 @@
       "ccsCode": "122"
     },
     {
-      "begin": 41,
-      "end": 53,
+      "begin": 57,
+      "end": 69,
       "coveredText": "heart attack",
       "negated": false,
       "preferredName": "myocardial infarction",
@@ -951,9 +1767,9 @@
       "source": "Clinical Insights - Attributes",
       "sourceVersion": "v1.0",
       "concept": {
-        "uid": 8
+        "uid": 9
       },
-      "name": "PotentialDiagnosis",
+      "name": "Diagnosis",
       "icd9Code": "410.90",
       "icd10Code": "I21.9",
       "snomedConceptId": "22298006",
@@ -963,22 +1779,22 @@
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.977,
-            "patientReportedScore": 0.005,
-            "discussedScore": 0.017
+            "explicitScore": 0.983,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.013
           },
-          "suspectedScore": 0.968,
-          "symptomScore": 0.003,
+          "suspectedScore": 0.028,
+          "symptomScore": 0.009,
           "traumaScore": 0.0,
-          "familyHistoryScore": 0.0
+          "familyHistoryScore": 0.001
         }
       },
       "ccsCode": "100",
       "hccCode": "86"
     },
     {
-      "begin": 78,
-      "end": 91,
+      "begin": 94,
+      "end": 107,
       "coveredText": "beta blockers",
       "negated": false,
       "preferredName": "beta-adrenergic blocker",
@@ -990,7 +1806,7 @@
       "source": "Clinical Insights - Attributes",
       "sourceVersion": "v1.0",
       "concept": {
-        "uid": 6
+        "uid": 7
       },
       "name": "PrescribedMedication",
       "disambiguationData": {
@@ -1004,6 +1820,23 @@
             "discussedScore": 0.001,
             "labMeasurementScore": 0.0
           },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.13,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.122,
+              "consideringScore": 0.003,
+              "discussedScore": 0.0
+            }
+          },
           "stoppedEvent": {
             "score": 0.0,
             "usage": {
@@ -1012,27 +1845,10 @@
               "discussedScore": 0.0
             }
           },
-          "adverseEvent": {
-            "score": 0.402,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.401,
-              "consideringScore": 0.009,
-              "discussedScore": 0.0
-            }
-          },
           "doseChangedEvent": {
             "score": 0.0,
             "usage": {
               "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "startedEvent": {
-            "score": 1.0,
-            "usage": {
-              "explicitScore": 1.0,
               "consideringScore": 0.0,
               "discussedScore": 0.0
             }
@@ -1044,7 +1860,7 @@
   "concepts": [
     {
       "type": "umls.DiseaseOrSyndrome",
-      "uid": 3,
+      "uid": 4,
       "begin": 12,
       "end": 21,
       "coveredText": "pneumonia",
@@ -1067,43 +1883,43 @@
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.989,
-            "patientReportedScore": 0.004,
-            "discussedScore": 0.007
+            "explicitScore": 0.988,
+            "patientReportedScore": 0.003,
+            "discussedScore": 0.008
           },
-          "suspectedScore": 0.021,
-          "symptomScore": 0.003,
+          "suspectedScore": 0.01,
+          "symptomScore": 0.002,
           "traumaScore": 0.0,
           "familyHistoryScore": 0.0
         }
       }
     },
     {
-      "type": "umls.Finding",
-      "begin": 32,
-      "end": 37,
-      "coveredText": "signs",
+      "type": "umls.DiagnosticProcedure",
+      "uid": 3,
+      "begin": 40,
+      "end": 49,
+      "coveredText": "diagnosed",
       "negated": false,
-      "cui": "C0311392",
-      "preferredName": "Physical findings",
-      "semanticType": "fndg",
+      "cui": "C0011900",
+      "preferredName": "Diagnosis",
+      "semanticType": "diap",
       "source": "umls",
       "sourceVersion": "2020AA",
       "disambiguationData": {
-        "validity": "NO_DECISION"
+        "validity": "INVALID"
       },
-      "icd9Code": "796.4",
-      "icd10Code": "R68.89",
-      "nciCode": "C53458",
-      "snomedConceptId": "72670004",
-      "loincId": "LP73100-7,MTHU001426",
-      "vocabs": "LNC,MTH,CHV,NCI,CST,SNOMEDCT_US"
+      "nciCode": "C15220",
+      "snomedConceptId": "439401001",
+      "meshId": "M0006168",
+      "loincId": "MTHU008876",
+      "vocabs": "LNC,NCI_NICHD,MTH,CSP,MSH,HL7V3.0,NCI_NCI-GLOSS,LCH,CHV,NCI_CDISC,CCS,LCH_NW,NCI,AOD,MCM,SNOMEDCT_US"
     },
     {
       "type": "umls.DiseaseOrSyndrome",
-      "uid": 4,
-      "begin": 41,
-      "end": 53,
+      "uid": 5,
+      "begin": 57,
+      "end": 69,
       "coveredText": "heart attack",
       "negated": false,
       "cui": "C0027051",
@@ -1123,22 +1939,22 @@
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.977,
-            "patientReportedScore": 0.005,
-            "discussedScore": 0.017
+            "explicitScore": 0.983,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.013
           },
-          "suspectedScore": 0.968,
-          "symptomScore": 0.003,
+          "suspectedScore": 0.028,
+          "symptomScore": 0.009,
           "traumaScore": 0.0,
-          "familyHistoryScore": 0.0
+          "familyHistoryScore": 0.001
         }
       }
     },
     {
       "type": "umls.PharmacologicSubstance",
       "uid": 2,
-      "begin": 78,
-      "end": 91,
+      "begin": 94,
+      "end": 107,
       "coveredText": "beta blockers",
       "negated": false,
       "cui": "C0001645",
@@ -1162,6 +1978,23 @@
             "discussedScore": 0.001,
             "labMeasurementScore": 0.0
           },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.13,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.122,
+              "consideringScore": 0.003,
+              "discussedScore": 0.0
+            }
+          },
           "stoppedEvent": {
             "score": 0.0,
             "usage": {
@@ -1170,27 +2003,10 @@
               "discussedScore": 0.0
             }
           },
-          "adverseEvent": {
-            "score": 0.402,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.401,
-              "consideringScore": 0.009,
-              "discussedScore": 0.0
-            }
-          },
           "doseChangedEvent": {
             "score": 0.0,
             "usage": {
               "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "startedEvent": {
-            "score": 1.0,
-            "usage": {
-              "explicitScore": 1.0,
               "consideringScore": 0.0,
               "discussedScore": 0.0
             }
@@ -1220,17 +2036,65 @@
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.989,
-            "patientReportedScore": 0.004,
-            "discussedScore": 0.007
+            "explicitScore": 0.988,
+            "patientReportedScore": 0.003,
+            "discussedScore": 0.008
           },
-          "suspectedScore": 0.021,
-          "symptomScore": 0.003,
+          "suspectedScore": 0.01,
+          "symptomScore": 0.002,
           "traumaScore": 0.0,
           "familyHistoryScore": 0.0
         }
       },
       "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+      "derivedFrom": [
+        {
+          "uid": 4
+        }
+      ]
+    },
+    {
+      "type": "ICProcedure",
+      "begin": 40,
+      "end": 49,
+      "coveredText": "diagnosed",
+      "negated": false,
+      "cui": "C0011900",
+      "preferredName": "Diagnosis",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "INVALID"
+      },
+      "nciCode": "C15220",
+      "snomedConceptId": "439401001",
+      "meshId": "M0006168",
+      "loincId": "MTHU008876",
+      "ruleId": "344230c0-2da2-44df-8f45-ad64b99641f2",
+      "derivedFrom": [
+        {
+          "uid": 3
+        }
+      ]
+    },
+    {
+      "type": "ICNormality",
+      "begin": 40,
+      "end": 49,
+      "coveredText": "diagnosed",
+      "negated": false,
+      "cui": "C0011900",
+      "preferredName": "Diagnosis",
+      "source": "Clinical Insights - Derived Concepts",
+      "sourceVersion": "v1.0",
+      "disambiguationData": {
+        "validity": "INVALID"
+      },
+      "nciCode": "C15220",
+      "snomedConceptId": "439401001",
+      "meshId": "M0006168",
+      "loincId": "MTHU008876",
+      "ruleId": "70e2e076-3b8c-4491-8d0f-89bc89edecc7",
       "derivedFrom": [
         {
           "uid": 3
@@ -1239,8 +2103,8 @@
     },
     {
       "type": "ICDiagnosis",
-      "begin": 41,
-      "end": 53,
+      "begin": 57,
+      "end": 69,
       "coveredText": "heart attack",
       "negated": false,
       "cui": "C0027051",
@@ -1258,27 +2122,27 @@
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.977,
-            "patientReportedScore": 0.005,
-            "discussedScore": 0.017
+            "explicitScore": 0.983,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.013
           },
-          "suspectedScore": 0.968,
-          "symptomScore": 0.003,
+          "suspectedScore": 0.028,
+          "symptomScore": 0.009,
           "traumaScore": 0.0,
-          "familyHistoryScore": 0.0
+          "familyHistoryScore": 0.001
         }
       },
       "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
       "derivedFrom": [
         {
-          "uid": 4
+          "uid": 5
         }
       ]
     },
     {
       "type": "ICMedication",
-      "begin": 78,
-      "end": 91,
+      "begin": 94,
+      "end": 107,
       "coveredText": "beta blockers",
       "negated": false,
       "cui": "C0001645",
@@ -1300,6 +2164,23 @@
             "discussedScore": 0.001,
             "labMeasurementScore": 0.0
           },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.13,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.122,
+              "consideringScore": 0.003,
+              "discussedScore": 0.0
+            }
+          },
           "stoppedEvent": {
             "score": 0.0,
             "usage": {
@@ -1308,27 +2189,10 @@
               "discussedScore": 0.0
             }
           },
-          "adverseEvent": {
-            "score": 0.402,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.401,
-              "consideringScore": 0.009,
-              "discussedScore": 0.0
-            }
-          },
           "doseChangedEvent": {
             "score": 0.0,
             "usage": {
               "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "startedEvent": {
-            "score": 1.0,
-            "usage": {
-              "explicitScore": 1.0,
               "consideringScore": 0.0,
               "discussedScore": 0.0
             }
@@ -1344,8 +2208,8 @@
     },
     {
       "type": "ICNormality",
-      "begin": 78,
-      "end": 91,
+      "begin": 94,
+      "end": 107,
       "coveredText": "beta blockers",
       "negated": false,
       "cui": "C0001645",
@@ -1370,27 +2234,27 @@
   "MedicationInd": [
     {
       "type": "aci.MedicationInd",
-      "uid": 6,
-      "begin": 78,
-      "end": 91,
+      "uid": 7,
+      "begin": 94,
+      "end": 107,
       "coveredText": "beta blockers",
       "negated": false,
       "drug": [
         {
           "coveredText": "beta blockers",
-          "end": 91,
+          "end": 107,
           "type": "aci.Ind_Drug",
           "name1": [
             {
               "drugSurfaceForm": "beta blockers",
               "coveredText": "beta blockers",
               "drugNormalizedName": "beta-adrenergic blocker",
-              "end": 91,
+              "end": 107,
               "type": "aci.DrugName",
-              "begin": 78
+              "begin": 94
             }
           ],
-          "begin": 78,
+          "begin": 94,
           "complex": "false"
         }
       ],
@@ -1402,6 +2266,23 @@
             "discussedScore": 0.001,
             "labMeasurementScore": 0.0
           },
+          "startedEvent": {
+            "score": 1.0,
+            "usage": {
+              "explicitScore": 1.0,
+              "consideringScore": 0.0,
+              "discussedScore": 0.0
+            }
+          },
+          "adverseEvent": {
+            "score": 0.13,
+            "allergyScore": 0.0,
+            "usage": {
+              "explicitScore": 0.122,
+              "consideringScore": 0.003,
+              "discussedScore": 0.0
+            }
+          },
           "stoppedEvent": {
             "score": 0.0,
             "usage": {
@@ -1410,27 +2291,10 @@
               "discussedScore": 0.0
             }
           },
-          "adverseEvent": {
-            "score": 0.402,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.401,
-              "consideringScore": 0.009,
-              "discussedScore": 0.0
-            }
-          },
           "doseChangedEvent": {
             "score": 0.0,
             "usage": {
               "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "startedEvent": {
-            "score": 1.0,
-            "usage": {
-              "explicitScore": 1.0,
               "consideringScore": 0.0,
               "discussedScore": 0.0
             }
@@ -1446,7 +2310,7 @@
   "SymptomDiseaseInd": [
     {
       "type": "aci.SymptomDiseaseInd",
-      "uid": 7,
+      "uid": 8,
       "begin": 12,
       "end": 21,
       "coveredText": "pneumonia",
@@ -1465,12 +2329,12 @@
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.989,
-            "patientReportedScore": 0.004,
-            "discussedScore": 0.007
+            "explicitScore": 0.988,
+            "patientReportedScore": 0.003,
+            "discussedScore": 0.008
           },
-          "suspectedScore": 0.021,
-          "symptomScore": 0.003,
+          "suspectedScore": 0.01,
+          "symptomScore": 0.002,
           "traumaScore": 0.0,
           "familyHistoryScore": 0.0
         }
@@ -1478,9 +2342,9 @@
     },
     {
       "type": "aci.SymptomDiseaseInd",
-      "uid": 8,
-      "begin": 41,
-      "end": 53,
+      "uid": 9,
+      "begin": 57,
+      "end": 69,
       "coveredText": "heart attack",
       "negated": false,
       "cui": "C0027051",
@@ -1498,37 +2362,36 @@
       "insightModelData": {
         "diagnosis": {
           "usage": {
-            "explicitScore": 0.977,
-            "patientReportedScore": 0.005,
-            "discussedScore": 0.017
+            "explicitScore": 0.983,
+            "patientReportedScore": 0.004,
+            "discussedScore": 0.013
           },
-          "suspectedScore": 0.968,
-          "symptomScore": 0.003,
+          "suspectedScore": 0.028,
+          "symptomScore": 0.009,
           "traumaScore": 0.0,
-          "familyHistoryScore": 0.0
+          "familyHistoryScore": 0.001
         }
       }
     }
   ],
   "spellCorrectedText": [
     {
-      "correctedText": "Patient has pneumonia and shows signs of heart attack. Patient started taking beta blockers."
+      "correctedText": "Patient has pneumonia and has also been diagnosed with a heart attack. Patient started taking beta blockers."
     }
   ]
 },
-"prescribed aspirin 2mg twice daily":
+"suspect skin cancer because the patient's brother has skin cancer" :
 {
   "attributeValues": [
     {
-      "begin": 11,
-      "end": 34,
-      "coveredText": "aspirin 2mg twice daily",
+      "begin": 8,
+      "end": 19,
+      "coveredText": "skin cancer",
       "negated": false,
-      "preferredName": "aspirin",
+      "preferredName": "malignant neoplasm of skin",
       "values": [
         {
-          "value": "2mg",
-          "frequency": "twice daily"
+          "value": "malignant neoplasm of skin"
         }
       ],
       "source": "Clinical Insights - Attributes",
@@ -1536,136 +2399,135 @@
       "concept": {
         "uid": 5
       },
-      "name": "PrescribedMedication",
-      "rxNormId": "1191",
+      "name": "PotentialDiagnosis",
+      "icd9Code": "173.99",
+      "icd10Code": "C44.9,C44.90",
+      "snomedConceptId": "372130007",
       "disambiguationData": {
         "validity": "VALID"
       },
       "insightModelData": {
-        "medication": {
+        "diagnosis": {
           "usage": {
-            "takenScore": 1.0,
-            "consideringScore": 0.0,
-            "discussedScore": 0.0,
-            "labMeasurementScore": 0.0
+            "explicitScore": 0.925,
+            "patientReportedScore": 0.017,
+            "discussedScore": 0.058
           },
-          "startedEvent": {
-            "score": 0.0,
-            "usage": {
-              "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "adverseEvent": {
-            "score": 0.0,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "stoppedEvent": {
-            "score": 0.0,
-            "usage": {
-              "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "doseChangedEvent": {
-            "score": 0.0,
-            "usage": {
-              "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          }
+          "suspectedScore": 0.988,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.122
         }
-      }
+      },
+      "ccsCode": "23"
     }
   ],
   "concepts": [
     {
-      "type": "umls.HealthCareActivity",
-      "begin": 0,
-      "end": 10,
-      "coveredText": "prescribed",
-      "negated": false,
-      "cui": "C0278329",
-      "preferredName": "Prescribed",
-      "semanticType": "hlca",
-      "source": "umls",
-      "sourceVersion": "2020AA",
-      "disambiguationData": {
-        "validity": "NO_DECISION"
-      },
-      "vocabs": "MTH,CHV,LCH"
-    },
-    {
-      "type": "umls.OrganicChemical",
-      "uid": 3,
-      "begin": 11,
-      "end": 18,
-      "coveredText": "aspirin",
-      "negated": false,
-      "cui": "C0004057",
-      "preferredName": "aspirin",
-      "semanticType": "orch",
-      "source": "umls",
-      "sourceVersion": "2020AA",
-      "disambiguationData": {
-        "validity": "NO_DECISION"
-      },
-      "nciCode": "C287",
-      "snomedConceptId": "387458008,7947003",
-      "meshId": "M0001864",
-      "rxNormId": "1191",
-      "loincId": "LA26702-3",
-      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_DCP,NCI_NCI-GLOSS,CHV,LCH,ATC,USP,NCI_CTRP,NCI_FDA,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,DRUGBANK,NCI_DTP,VANDF"
-    },
-    {
-      "type": "umls.PharmacologicSubstance",
+      "type": "umls.NeoplasticProcess",
       "uid": 2,
-      "begin": 11,
-      "end": 18,
-      "coveredText": "aspirin",
+      "begin": 8,
+      "end": 19,
+      "coveredText": "skin cancer",
       "negated": false,
-      "cui": "C0004057",
-      "preferredName": "aspirin",
-      "semanticType": "phsu",
+      "cui": "C0007114",
+      "preferredName": "Malignant neoplasm of skin",
+      "semanticType": "neop",
       "source": "umls",
       "sourceVersion": "2020AA",
       "disambiguationData": {
-        "validity": "INVALID"
+        "validity": "NO_DECISION"
       },
-      "nciCode": "C287",
-      "snomedConceptId": "387458008,7947003",
-      "meshId": "M0001864",
-      "rxNormId": "1191",
-      "loincId": "LA26702-3",
-      "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_DCP,NCI_NCI-GLOSS,CHV,LCH,ATC,USP,NCI_CTRP,NCI_FDA,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,DRUGBANK,NCI_DTP,VANDF"
+      "icd9Code": "173.9,173.8",
+      "icd10Code": "C44.9,C44.90",
+      "nciCode": "C2920",
+      "snomedConceptId": "372130007",
+      "meshId": "M0333435",
+      "loincId": "LA10543-9",
+      "vocabs": "MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_NCI-GLOSS,ICPC,CHV,CCS,NCI_CTRP,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,NCI_CPTAC",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.925,
+            "patientReportedScore": 0.017,
+            "discussedScore": 0.058
+          },
+          "suspectedScore": 0.988,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.122
+        }
+      }
     },
     {
-      "type": "ICMedication",
-      "begin": 11,
-      "end": 18,
-      "coveredText": "aspirin",
+      "type": "umls.NeoplasticProcess",
+      "uid": 3,
+      "begin": 54,
+      "end": 65,
+      "coveredText": "skin cancer",
       "negated": false,
-      "cui": "C0004057",
-      "preferredName": "aspirin",
+      "cui": "C0007114",
+      "preferredName": "Malignant neoplasm of skin",
+      "semanticType": "neop",
+      "source": "umls",
+      "sourceVersion": "2020AA",
+      "disambiguationData": {
+        "validity": "NO_DECISION"
+      },
+      "icd9Code": "173.9,173.8",
+      "icd10Code": "C44.9,C44.90",
+      "nciCode": "C2920",
+      "snomedConceptId": "372130007",
+      "meshId": "M0333435",
+      "loincId": "LA10543-9",
+      "vocabs": "MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_NCI-GLOSS,ICPC,CHV,CCS,NCI_CTRP,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,NCI_CPTAC",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1.0,
+            "patientReportedScore": 0.0,
+            "discussedScore": 0.0
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.997
+        }
+      }
+    },
+    {
+      "type": "ICDiagnosis",
+      "begin": 8,
+      "end": 19,
+      "coveredText": "skin cancer",
+      "negated": false,
+      "cui": "C0007114",
+      "preferredName": "Malignant neoplasm of skin",
       "source": "Clinical Insights - Derived Concepts",
       "sourceVersion": "v1.0",
       "disambiguationData": {
-        "validity": "INVALID"
+        "validity": "VALID"
       },
-      "nciCode": "C287",
-      "snomedConceptId": "387458008,7947003",
-      "meshId": "M0001864",
-      "rxNormId": "1191",
-      "loincId": "LA26702-3",
-      "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+      "icd9Code": "173.9,173.8",
+      "icd10Code": "C44.9,C44.90",
+      "nciCode": "C2920",
+      "snomedConceptId": "372130007",
+      "meshId": "M0333435",
+      "loincId": "LA10543-9",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.925,
+            "patientReportedScore": 0.017,
+            "discussedScore": 0.058
+          },
+          "suspectedScore": 0.988,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.122
+        }
+      },
+      "ruleId": "33e6be29-a746-40f1-a012-952410bade6f",
       "derivedFrom": [
         {
           "uid": 2
@@ -1673,44 +2535,38 @@
       ]
     },
     {
-      "type": "ICNormality",
-      "begin": 11,
-      "end": 18,
-      "coveredText": "aspirin",
+      "type": "ICDiagnosis",
+      "begin": 54,
+      "end": 65,
+      "coveredText": "skin cancer",
       "negated": false,
-      "cui": "C0004057",
-      "preferredName": "aspirin",
+      "cui": "C0007114",
+      "preferredName": "Malignant neoplasm of skin",
       "source": "Clinical Insights - Derived Concepts",
       "sourceVersion": "v1.0",
       "disambiguationData": {
-        "validity": "NO_DECISION"
+        "validity": "VALID"
       },
-      "nciCode": "C287",
-      "snomedConceptId": "387458008,7947003",
-      "meshId": "M0001864",
-      "rxNormId": "1191",
-      "loincId": "LA26702-3",
-      "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
-      "derivedFrom": [
-        {
-          "uid": 2
+      "icd9Code": "173.9,173.8",
+      "icd10Code": "C44.9,C44.90",
+      "nciCode": "C2920",
+      "snomedConceptId": "372130007",
+      "meshId": "M0333435",
+      "loincId": "LA10543-9",
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1.0,
+            "patientReportedScore": 0.0,
+            "discussedScore": 0.0
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.997
         }
-      ]
-    },
-    {
-      "type": "ICNormality",
-      "begin": 11,
-      "end": 18,
-      "coveredText": "aspirin",
-      "negated": false,
-      "cui": "C0004057",
-      "preferredName": "aspirin",
-      "source": "Clinical Insights - Derived Concepts",
-      "sourceVersion": "v1.0",
-      "disambiguationData": {
-        "validity": "NO_DECISION"
       },
-      "ruleId": "343e6158-2c30-4726-be71-33a570b28703",
+      "ruleId": "33e6be29-a746-40f1-a012-952410bade6f",
       "derivedFrom": [
         {
           "uid": 3
@@ -1718,115 +2574,76 @@
       ]
     }
   ],
-  "conceptValues": [
+  "SymptomDiseaseInd": [
     {
-      "type": "ConceptValue",
-      "begin": 11,
-      "end": 22,
-      "coveredText": "aspirin 2mg",
-      "negated": false,
-      "cui": "C0004057",
-      "dimension": "mass",
-      "preferredName": "aspirin",
-      "trigger": "equal to",
-      "value": "2",
-      "unit": "mg"
-    }
-  ],
-  "MedicationInd": [
-    {
-      "type": "aci.MedicationInd",
+      "type": "aci.SymptomDiseaseInd",
       "uid": 5,
-      "begin": 11,
-      "end": 34,
-      "coveredText": "aspirin 2mg twice daily",
+      "begin": 8,
+      "end": 19,
+      "coveredText": "skin cancer",
       "negated": false,
-      "cui": "C0004057",
-      "drug": [
-        {
-          "coveredText": "aspirin",
-          "cui": "C0004057",
-          "complex": "false",
-          "end": 18,
-          "type": "aci.Ind_Drug",
-          "name1": [
-            {
-              "rxNormID": "1191",
-              "coveredText": "aspirin",
-              "cui": "C0004057",
-              "drugSurfaceForm": "aspirin",
-              "drugNormalizedName": "aspirin",
-              "end": 18,
-              "type": "aci.DrugName",
-              "begin": 11
-            }
-          ],
-          "begin": 11
-        }
-      ],
-      "insightModelData": {
-        "medication": {
-          "usage": {
-            "takenScore": 1.0,
-            "consideringScore": 0.0,
-            "discussedScore": 0.0,
-            "labMeasurementScore": 0.0
-          },
-          "startedEvent": {
-            "score": 0.0,
-            "usage": {
-              "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "adverseEvent": {
-            "score": 0.0,
-            "allergyScore": 0.0,
-            "usage": {
-              "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "stoppedEvent": {
-            "score": 0.0,
-            "usage": {
-              "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          },
-          "doseChangedEvent": {
-            "score": 0.0,
-            "usage": {
-              "explicitScore": 0.0,
-              "consideringScore": 0.0,
-              "discussedScore": 0.0
-            }
-          }
-        }
-      },
+      "cui": "C0007114",
+      "icd10Code": "C44.9,C44.90",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "skin cancer",
+      "snomedConceptId": "372130007",
+      "ccsCode": "23",
+      "symptomDiseaseNormalizedName": "malignant neoplasm of skin",
+      "icd9Code": "173.99",
       "disambiguationData": {
-        "validity": "VALID",
-        "comment": "marked VALID by clinical insight models."
+        "validity": "VALID"
       },
-      "administration": [
-        {
-          "dosageValue": "2mg",
-          "coveredText": "2mg twice daily",
-          "frequencyValue": "twice daily",
-          "end": 34,
-          "type": "aci.SubstanceAdministration",
-          "begin": 19
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 0.925,
+            "patientReportedScore": 0.017,
+            "discussedScore": 0.058
+          },
+          "suspectedScore": 0.988,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.122
         }
-      ]
+      }
+    },
+    {
+      "type": "aci.SymptomDiseaseInd",
+      "begin": 54,
+      "end": 65,
+      "coveredText": "skin cancer",
+      "negated": false,
+      "cui": "C0007114",
+      "icd10Code": "C44.9,C44.90",
+      "modality": "positive",
+      "symptomDiseaseSurfaceForm": "skin cancer",
+      "snomedConceptId": "372130007",
+      "ccsCode": "23",
+      "symptomDiseaseNormalizedName": "malignant neoplasm of skin",
+      "icd9Code": "173.99",
+      "disambiguationData": {
+        "validity": "VALID"
+      },
+      "insightModelData": {
+        "diagnosis": {
+          "usage": {
+            "explicitScore": 1.0,
+            "patientReportedScore": 0.0,
+            "discussedScore": 0.0
+          },
+          "suspectedScore": 0.002,
+          "symptomScore": 0.0,
+          "traumaScore": 0.0,
+          "familyHistoryScore": 0.997
+        }
+      }
     }
   ],
   "spellCorrectedText": [
     {
-      "correctedText": "prescribed aspirin 2mg twice daily"
+      "correctedText": "suspect skin cancer because the patient's brother has skin cancer"
     }
   ]
 }
+
 }

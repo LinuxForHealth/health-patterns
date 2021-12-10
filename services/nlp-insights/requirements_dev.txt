@@ -12,29 +12,10 @@
 
 ### Production Dependencies
 ibm-whcs-sdk==1.9.0
-ibm-cloud-sdk-core==3.8.0
 fhir.resources==6.1.0
-deepdiff==5.5.0
 flask==2.0.1
-jsonpath-ng==1.5.3
-pytest==6.2.5
-pytest-cov==2.7.1
-deepdiff==5.5.0
-flake8==3.7.8
-types-requests==2.25.9
-pytest-html==3.1.1
-pylint==2.10.2
-pylint-junit==0.3.2
-flake8-formatter-junit-xml==0.0.6
-mypy==0.910
 
 ### Development Dependencies
-ibm-whcs-sdk==1.9.0
-ibm-cloud-sdk-core==3.8.0
-fhir.resources==6.1.0
-deepdiff==5.5.0
-flask==2.0.1
-jsonpath-ng==1.5.3
 pytest==6.2.5
 pytest-cov==2.7.1
 deepdiff==5.5.0

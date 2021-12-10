@@ -14,7 +14,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "insight-1"
+                    "value": "nlp-insight-85eb3b3aafb1431018cd8279545d0d8970695795776edce74cfe92d8-1"
                   }
                 },
                 {
@@ -24,6 +24,10 @@
                       "valueReference": {
                         "reference": "DiagnosticReport/12345"
                       }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
                     },
                     {
                       "extension": [
@@ -44,64 +48,47 @@
                             {
                               "extension": [
                                 {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Explicit Score"
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/method",
+                                  "valueCodeableConcept": {
+                                    "coding": [
+                                      {
+                                        "code": "Diagnosis_Explicit_Score",
+                                        "system": "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method"
+                                      }
+                                    ]
+                                  }
                                 },
                                 {
                                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.989
+                                  "valueDecimal": 0.988
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                                  "valueString": "Explicit Score"
                                 }
                               ],
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
                             },
                             {
                               "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/method",
+                                  "valueCodeableConcept": {
+                                    "coding": [
+                                      {
+                                        "code": "Diagnosis_Patient_Reported_Score",
+                                        "system": "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.003
+                                },
                                 {
                                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
                                   "valueString": "Patient Reported Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.004
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Discussed Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.007
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Family History Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.0
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Suspected Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.021
                                 }
                               ],
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
@@ -148,11 +135,11 @@
             },
             {
               "code": "486",
-              "system": "http://terminology.hl7.org/CodeSystem/icd9"
+              "system": "http://hl7.org/fhir/sid/icd-9-cm"
             },
             {
               "code": "J18.9",
-              "system": "https://terminology.hl7.org/CodeSystem/icd10"
+              "system": "http://hl7.org/fhir/sid/icd-10-cm"
             }
           ],
           "text": "pneumonia"
@@ -177,7 +164,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "insight-1"
+                    "value": "nlp-insight-81c462da919469b8f1a03253800baa8252dff5af66417c9886383e21-1"
                   }
                 },
                 {
@@ -189,6 +176,10 @@
                       }
                     },
                     {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
                       "extension": [
                         {
                           "extension": [
@@ -198,73 +189,56 @@
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                              "valueInteger": 41
+                              "valueInteger": 57
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                              "valueInteger": 53
+                              "valueInteger": 69
                             },
                             {
                               "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/method",
+                                  "valueCodeableConcept": {
+                                    "coding": [
+                                      {
+                                        "code": "Diagnosis_Explicit_Score",
+                                        "system": "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.983
+                                },
                                 {
                                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
                                   "valueString": "Explicit Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.977
                                 }
                               ],
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
                             },
                             {
                               "extension": [
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/method",
+                                  "valueCodeableConcept": {
+                                    "coding": [
+                                      {
+                                        "code": "Diagnosis_Patient_Reported_Score",
+                                        "system": "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
+                                  "valueDecimal": 0.004
+                                },
                                 {
                                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
                                   "valueString": "Patient Reported Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.005
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Discussed Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.017
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Family History Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.0
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Suspected Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.968
                                 }
                               ],
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
@@ -311,11 +285,11 @@
             },
             {
               "code": "410.90",
-              "system": "http://terminology.hl7.org/CodeSystem/icd9"
+              "system": "http://hl7.org/fhir/sid/icd-9-cm"
             },
             {
               "code": "I21.9",
-              "system": "https://terminology.hl7.org/CodeSystem/icd10"
+              "system": "http://hl7.org/fhir/sid/icd-10-cm"
             }
           ],
           "text": "myocardial infarction"
@@ -340,7 +314,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "insight-1"
+                    "value": "nlp-insight-e6b01dea1688212a13421c56463c75c482d583f10737db04d9adfc4a-1"
                   }
                 },
                 {
@@ -352,6 +326,10 @@
                       }
                     },
                     {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
                       "extension": [
                         {
                           "extension": [
@@ -361,60 +339,32 @@
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                              "valueInteger": 78
+                              "valueInteger": 94
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                              "valueInteger": 91
+                              "valueInteger": 107
                             },
                             {
                               "extension": [
                                 {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Medication Taken Score"
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/method",
+                                  "valueCodeableConcept": {
+                                    "coding": [
+                                      {
+                                        "code": "Medication_Taken_Score",
+                                        "system": "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method"
+                                      }
+                                    ]
+                                  }
                                 },
                                 {
                                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
                                   "valueDecimal": 0.999
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Medication Considering Score"
                                 },
                                 {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.0
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
                                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Medication Discussed Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.001
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Medication Lab Measurement Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.0
+                                  "valueString": "Medication Taken Score"
                                 }
                               ],
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"

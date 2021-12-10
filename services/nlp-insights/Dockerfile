@@ -14,7 +14,7 @@ COPY src/main/py src/main/py
 
 RUN pip3 install .
 
-ENV FLASK_APP text_analytics.app
+ENV FLASK_APP nlp_insights.app
 
 EXPOSE 5000
 

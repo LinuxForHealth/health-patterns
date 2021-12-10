@@ -22,36 +22,20 @@ from typing import Optional
 from typing import cast
 
 from fhir.resources.codeableconcept import CodeableConcept
-from fhir.resources.dosage import Dosage, DosageDoseAndRate
-from fhir.resources.extension import Extension
 from fhir.resources.medicationstatement import MedicationStatement
-from fhir.resources.quantity import Quantity
 from fhir.resources.reference import Reference
-from fhir.resources.timing import Timing
 from ibm_whcs_sdk.annotator_for_clinical_data import (
     annotator_for_clinical_data_v1 as acd,
 )
-from ibm_whcs_sdk.annotator_for_clinical_data.annotator_for_clinical_data_v1 import (
-    InsightModelData,
-)
 
-from nlp_insights.fhir.alvearie_ig import (
-    create_derived_from_unstructured_insight_detail_extension,
-    create_insight_id_extension,
-    create_confidence_extension,
-    create_coding,
-)
-from nlp_insights.fhir.fhir_object_utils import (
-    add_insight_to_meta,
-    append_derived_by_nlp_extension,
-    append_coding,
-)
-from nlp_insights.insight import insight_constants
-from nlp_insights.insight.insight_id import insight_id_maker
+from nlp_insights.fhir import alvearie_ext
+from nlp_insights.fhir import fhir_object_utils
+from nlp_insights.fhir.code_system import hl7
+from nlp_insights.insight import insight_id
 from nlp_insights.insight.span import Span
 from nlp_insights.insight.text_fragment import TextFragment
-from nlp_insights.insight.util.medication import parse_dosage_with_units
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
+from nlp_insights.nlp.acd.fhir_enrichment.insights import confidence
 from nlp_insights.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
     get_attribute_sources,
     AttrSourceConcept,
@@ -102,7 +86,12 @@ def create_med_statements_from_insights(
                     fhir_resource=_create_minimum_medication_statement(
                         text_source.source_resource.subject, med_ind
                     ),
-                    id_maker=insight_id_maker(start=nlp_config.insight_id_start),
+                    id_maker=insight_id.insight_id_maker_derive_resource(
+                        source=text_source,
+                        cui=source.cui,
+                        derived=MedicationStatement,
+                        start=nlp_config.insight_id_start,
+                    ),
                 )
 
             med_statement, id_maker = med_statement_tracker[med_ind.cui]
@@ -129,7 +118,7 @@ def create_med_statements_from_insights(
         trackedStmt.fhir_resource for trackedStmt in med_statement_tracker.values()
     ]
     for med_statement in med_statements:
-        append_derived_by_nlp_extension(med_statement)
+        fhir_object_utils.append_derived_by_nlp_category_extension(med_statement)
 
     return med_statements
 
@@ -145,7 +134,7 @@ def _add_insight_to_medication_statement(  # pylint: disable=too-many-arguments
 ) -> None:
     """Adds insight data to the medication statement"""
 
-    insight_id_ext = create_insight_id_extension(
+    insight_id_ext = alvearie_ext.create_insight_id_extension(
         insight_id_string, nlp_config.nlp_system
     )
 
@@ -154,24 +143,27 @@ def _add_insight_to_medication_statement(  # pylint: disable=too-many-arguments
         text_span=Span(begin=attr.begin, end=attr.end, covered_text=attr.covered_text),
     )
 
-    if attr.insight_model_data:
-        confidences = get_medication_confidences(attr.insight_model_data)
-    else:
-        confidences = None
+    confidences = confidence.get_derived_medication_confidences(attr.insight_model_data)
 
     nlp_output_ext = nlp_config.create_nlp_output_extension(acd_output)
 
     unstructured_insight_detail = (
-        create_derived_from_unstructured_insight_detail_extension(
+        alvearie_ext.create_derived_from_unstructured_insight_detail_extension(
             source=source,
             confidences=confidences,
             evaluated_output_ext=nlp_output_ext,
         )
     )
 
-    add_insight_to_meta(med_statement, insight_id_ext, unstructured_insight_detail)
+    fhir_object_utils.add_insight_to_meta(
+        med_statement, insight_id_ext, unstructured_insight_detail
+    )
 
-    _update_codings_and_administration_info(med_statement, med_ind)
+    _update_codings(med_statement, med_ind)
+
+    # ACD does seem to have the capability to give us the information we need for dosage and frequency
+    # in administration section. We will make use of that information here if we decide to add that
+    # information to the returned FHIR resource.
 
 
 def _create_minimum_medication_statement(
@@ -221,7 +213,7 @@ def _get_drug_from_annotation(annotation: acd.MedicationAnnotation) -> dict:
         return {}
 
 
-def _update_codings_and_administration_info(  # pylint: disable=too-many-branches, too-many-locals, too-many-statements
+def _update_codings(  # pylint: disable=too-many-branches, too-many-locals, too-many-statements
     med_statement: MedicationStatement, annotation: acd.MedicationAnnotation
 ) -> None:
     """
@@ -230,49 +222,6 @@ def _update_codings_and_administration_info(  # pylint: disable=too-many-branche
     acd_drug = _get_drug_from_annotation(annotation)
 
     _add_codings_drug(acd_drug, med_statement.medicationCodeableConcept)
-
-    if hasattr(annotation, "administration"):
-        # Dosage
-        dose_with_units = annotation.administration[0].get("dosageValue")
-        if dose_with_units:
-            dose = Dosage.construct()
-            dose_rate = DosageDoseAndRate.construct()
-            med_dosage = parse_dosage_with_units(dose_with_units)
-
-            if med_dosage:
-                dose_quantity = Quantity.construct()
-                dose_quantity.value = med_dosage.dosage
-                if med_dosage.units:
-                    dose_quantity.unit = med_dosage.units
-                dose_rate.doseQuantity = dose_quantity
-                dose.doseAndRate = [dose_rate]
-
-            if med_statement.dosage is None:
-                med_statement.dosage = []
-            med_statement.dosage.append(dose)
-
-            # medication timing
-            frequency = annotation.administration[0].get("frequencyValue")
-            if frequency is not None:
-                code = None
-                display = None
-
-                if frequency in ["Q AM", "Q AM.", "AM"]:
-                    code = "AM"
-                    display = "AM"
-                elif frequency in ["Q PM", "Q PM.", "PM"]:
-                    code = "PM"
-                    display = "PM"
-
-                if code is not None and display is not None:
-                    timing = Timing.construct()
-                    timing_codeable_concept = CodeableConcept.construct()
-                    timing_codeable_concept.coding = [
-                        create_coding(insight_constants.TIMING_URL, code, display)
-                    ]
-                    timing_codeable_concept.text = frequency
-                    timing.code = timing_codeable_concept
-                    dose.timing = timing
 
 
 def _add_codings_drug(
@@ -287,70 +236,13 @@ def _add_codings_drug(
     """
     if acd_drug.get("cui") is not None:
         # For CUIs, we do not handle comma-delimited values (have not seen that we ever have more than one value)
-        append_coding(
+        fhir_object_utils.append_coding(
             codeable_concept,
-            insight_constants.UMLS_URL,
+            hl7.UMLS_URL,
             acd_drug["cui"],
             acd_drug.get("drugSurfaceForm"),
         )
 
     if "rxNormID" in acd_drug:
         for code_id in acd_drug["rxNormID"].split(","):
-            append_coding(codeable_concept, insight_constants.RXNORM_URL, code_id)
-
-
-def get_medication_confidences(
-    insight_model_data: InsightModelData,
-) -> Optional[List[Extension]]:
-    """Returns a list of confidence extensions
-
-    The list is suitable to be added to the insight span extensions array.
-     Args:
-        insight_model_data - model data for the insight
-
-     Returns:
-        collection of confidence extensions, or None if no confidence info was available
-    """
-    confidence_list = []
-
-    try:
-        confidence_list.append(
-            create_confidence_extension(
-                insight_constants.CONFIDENCE_SCORE_MEDICATION_TAKEN,
-                insight_model_data.medication.usage.taken_score,
-            )
-        )
-    except AttributeError:
-        pass
-
-    try:
-        confidence_list.append(
-            create_confidence_extension(
-                insight_constants.CONFIDENCE_SCORE_MEDICATION_CONSIDERING,
-                insight_model_data.medication.usage.considering_score,
-            )
-        )
-    except AttributeError:
-        pass
-
-    try:
-        confidence_list.append(
-            create_confidence_extension(
-                insight_constants.CONFIDENCE_SCORE_MEDICATION_DISCUSSED,
-                insight_model_data.medication.usage.discussed_score,
-            )
-        )
-    except AttributeError:
-        pass
-
-    try:
-        confidence_list.append(
-            create_confidence_extension(
-                insight_constants.CONFIDENCE_SCORE_MEDICATION_MEASUREMENT,
-                insight_model_data.medication.usage.lab_measurement_score,
-            )
-        )
-    except AttributeError:
-        pass
-
-    return confidence_list if confidence_list else None
+            fhir_object_utils.append_coding(codeable_concept, hl7.RXNORM_URL, code_id)

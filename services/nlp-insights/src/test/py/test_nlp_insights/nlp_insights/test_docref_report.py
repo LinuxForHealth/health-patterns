@@ -15,9 +15,10 @@
 # pylint: disable=missing-function-docstring
 import importlib
 
-
 from fhir.resources.bundle import Bundle
 
+from nlp_insights import app
+from test_nlp_insights.util import unstructured_text
 from test_nlp_insights.util.compare import compare_actual_to_expected
 from test_nlp_insights.util.fhir import (
     make_docref_report,
@@ -32,26 +33,6 @@ from test_nlp_insights.util.mock_service import (
     configure_quick_umls,
 )
 from test_nlp_insights.util.resources import UnitTestUsingExternalResource
-from nlp_insights import app
-
-
-DOCREF_REPORT_TEXT_FOR_CONDITIONS = (
-    "Patient has pneumonia and shows signs of heart attack"
-)
-
-# More of an accuracy thing in general, but there will be an attribute
-# that points at different sources. We want the one with the high suspected
-# score, not the one with a high family history score
-DOCREF_REPORT_TEXT_FOR_CONDITION_SUSPECTED_AND_FAM_HISTORY = (
-    "suspect skin cancer because the patient's brother has skin cancer"
-)
-
-DOCREF_REPORT_TEXT_FOR_MEDICATIONS = "Patient started taking beta blockers"
-
-DOCREF_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS = (
-    ""
-    + "Patient has pneumonia and shows signs of heart attack. Patient started taking beta blockers."
-)
 
 
 class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
@@ -69,7 +50,7 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
     def test_when_post_docref_then_condition_derived(self):
         report = make_docref_report(
             subject=make_patient_reference(),
-            attachments=[make_attachment(DOCREF_REPORT_TEXT_FOR_CONDITIONS)],
+            attachments=[make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)],
         )
 
         with app.app.test_client() as service:
@@ -89,7 +70,9 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
             [
                 make_docref_report(
                     subject=make_patient_reference(),
-                    attachments=[make_attachment(DOCREF_REPORT_TEXT_FOR_CONDITIONS)],
+                    attachments=[
+                        make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)
+                    ],
                 )
             ]
         )
@@ -111,7 +94,9 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
             [
                 make_docref_report(
                     subject=make_patient_reference(),
-                    attachments=[make_attachment(DOCREF_REPORT_TEXT_FOR_MEDICATIONS)],
+                    attachments=[
+                        make_attachment(unstructured_text.TEXT_FOR_MEDICATION)
+                    ],
                 )
             ]
         )
@@ -135,7 +120,7 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            DOCREF_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
                         )
                     ],
                 )
@@ -154,11 +139,38 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
             )
             self.assertFalse(cmp, cmp.pretty())
 
-    def test_when_post_docref_bundle_with_different_confidences_then_condition_derived_with_correct_confidence(
+    def test_when_post_docref_bundle_with_no_subject_then_nothing_derived(self):
+        bundle = make_bundle(
+            [
+                make_docref_report(
+                    subject=None,
+                    attachments=[
+                        make_attachment(
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                        )
+                    ],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_acd(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_docref_bundle_with_suspect_and_family_history_then_no_conditions(
         self,
     ):
         """The text for this one has a diagnosis that pertains to the patient, and a family history
-        disease. We should end up with scores and covered text that is what we want.
+        disease. We should filter these out of the ACD results since these don't reflect known
+        conditions of the patient.
 
         More accuracy than function, but the response is fixed and we need to be picking the
         right values.
@@ -171,7 +183,7 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            DOCREF_REPORT_TEXT_FOR_CONDITION_SUSPECTED_AND_FAM_HISTORY
+                            unstructured_text.TEXT_FOR_CONDITION_SUSPECTED_AND_FAM_HISTORY
                         )
                     ],
                 )
@@ -206,7 +218,7 @@ class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
     def test_when_post_docref_then_condition_derived(self):
         report = make_docref_report(
             subject=make_patient_reference(),
-            attachments=[make_attachment(DOCREF_REPORT_TEXT_FOR_CONDITIONS)],
+            attachments=[make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)],
         )
 
         with app.app.test_client() as service:
@@ -226,7 +238,9 @@ class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
             [
                 make_docref_report(
                     subject=make_patient_reference(),
-                    attachments=[make_attachment(DOCREF_REPORT_TEXT_FOR_CONDITIONS)],
+                    attachments=[
+                        make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)
+                    ],
                 )
             ]
         )
@@ -248,7 +262,9 @@ class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
             [
                 make_docref_report(
                     subject=make_patient_reference(),
-                    attachments=[make_attachment(DOCREF_REPORT_TEXT_FOR_MEDICATIONS)],
+                    attachments=[
+                        make_attachment(unstructured_text.TEXT_FOR_MEDICATION)
+                    ],
                 )
             ]
         )
@@ -272,7 +288,33 @@ class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            DOCREF_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                        )
+                    ],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_post_docref_bundle_with_no_subject_then_nothing_derived(self):
+        bundle = make_bundle(
+            [
+                make_docref_report(
+                    subject=None,
+                    attachments=[
+                        make_attachment(
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
                         )
                     ],
                 )

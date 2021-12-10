@@ -145,7 +145,6 @@ def make_attachment(unencoded_text_data: str, content_type: str = "text/plain"):
 def make_allergy_intolerance(
     patient: Reference,
     code: Optional[CodeableConcept] = None,
-    reactions: Optional[List[AllergyIntoleranceReaction]] = None,
     rid: str = "67890",
 ) -> AllergyIntolerance:
     """Builds an allergy intolerance"""
@@ -153,17 +152,8 @@ def make_allergy_intolerance(
 
     if code:
         allergy.code = code
-    if reactions:
-        allergy.reaction = reactions
 
     return allergy
-
-
-def make_allergy_reaction(
-    manifestations: List[CodeableConcept],
-) -> AllergyIntoleranceReaction:
-    """Builds an allergy intolerance reaction"""
-    return AllergyIntoleranceReaction.parse_obj({"manifestation": manifestations})
 
 
 def make_bundle(resources: List[Resource]) -> Bundle:

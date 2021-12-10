@@ -14,7 +14,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "insight-1"
+                    "value": "nlp-insight-cf174c82247256cf292d6a49bdd8eb7f6e512cfd22673888cbe97ea1-1"
                   }
                 },
                 {
@@ -24,6 +24,10 @@
                       "valueReference": {
                         "reference": "DocumentReference/12345"
                       }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "content[0].attachment.data"
                     },
                     {
                       "extension": [
@@ -44,51 +48,23 @@
                             {
                               "extension": [
                                 {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Medication Taken Score"
+                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/method",
+                                  "valueCodeableConcept": {
+                                    "coding": [
+                                      {
+                                        "code": "Medication_Taken_Score",
+                                        "system": "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method"
+                                      }
+                                    ]
+                                  }
                                 },
                                 {
                                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
                                   "valueDecimal": 0.999
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Medication Considering Score"
                                 },
                                 {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.0
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
                                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Medication Discussed Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.001
-                                }
-                              ],
-                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
-                            },
-                            {
-                              "extension": [
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                                  "valueString": "Medication Lab Measurement Score"
-                                },
-                                {
-                                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
-                                  "valueDecimal": 0.0
+                                  "valueString": "Medication Taken Score"
                                 }
                               ],
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"

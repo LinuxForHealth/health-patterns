@@ -67,7 +67,7 @@ def _get_diagnostic_report_text(
         return [
             UnstructuredText(
                 source_resource=report,
-                fhir_path=f"DiagnosticReport.presentedForm[{ix}].data",
+                fhir_path=f"presentedForm[{ix}].data",
                 text=_decode_text(attachment.data),
             )
             for ix, attachment in enumerate(report.presentedForm)
@@ -83,17 +83,18 @@ def _get_document_reference_data(
     """Returns the (decoded) attached document(s) and path of the document text.
 
     The method ignores the content type field of the attachment and assumed plain text.
+    The document reference must have a subject, as a subject is required for all derived resources.
 
     Args:
        doc_ref - the report to retrieve presented form text from
     Returns:
        path and decoded text from the document, or empty if there is no text
     """
-    if doc_ref.content:
+    if doc_ref.content and doc_ref.subject:
         return [
             UnstructuredText(
                 source_resource=doc_ref,
-                fhir_path=f"DocumentReference.content[{ix}].attachment.data",
+                fhir_path=f"content[{ix}].attachment.data",
                 text=_decode_text(content.attachment.data),
             )
             for ix, content in enumerate(doc_ref.content)

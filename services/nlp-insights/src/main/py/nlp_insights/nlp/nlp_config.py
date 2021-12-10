@@ -20,7 +20,7 @@ from typing import Optional
 
 from fhir.resources.extension import Extension
 
-from nlp_insights.fhir import fhir_object_utils
+from nlp_insights.fhir import alvearie_ext
 from nlp_insights.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
     SourceCuiSearchMap,
 )
@@ -45,7 +45,7 @@ class NlpConfig:
         """
         nlp_output_url = self.get_nlp_output_loc(nlp_output)
         if nlp_output_url:
-            return fhir_object_utils.create_nlp_output_extension(nlp_output_url)
+            return alvearie_ext.create_nlp_output_extension(nlp_output_url)
 
         return None
 

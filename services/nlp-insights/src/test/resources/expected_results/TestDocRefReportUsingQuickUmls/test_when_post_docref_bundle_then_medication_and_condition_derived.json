@@ -14,7 +14,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-86de4d163a8006295f34d228493b4fe4eeb457df11616b82ef7beb07-1"
                   }
                 },
                 {
@@ -26,6 +26,10 @@
                       }
                     },
                     {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "content[0].attachment.data"
+                    },
+                    {
                       "extension": [
                         {
                           "extension": [
@@ -35,11 +39,11 @@
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                              "valueInteger": 41
+                              "valueInteger": 57
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                              "valueInteger": 53
+                              "valueInteger": 69
                             }
                           ],
                           "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
@@ -203,7 +207,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-f329839c48e65cd6dde7016832950e69bb96a125c87c97804f20ac2f-1"
                   }
                 },
                 {
@@ -213,6 +217,10 @@
                       "valueReference": {
                         "reference": "DocumentReference/12345"
                       }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "content[0].attachment.data"
                     },
                     {
                       "extension": [
@@ -248,7 +256,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-2"
+                    "value": "nlp-insight-f329839c48e65cd6dde7016832950e69bb96a125c87c97804f20ac2f-2"
                   }
                 },
                 {
@@ -258,6 +266,10 @@
                       "valueReference": {
                         "reference": "DocumentReference/12345"
                       }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "content[0].attachment.data"
                     },
                     {
                       "extension": [
@@ -401,7 +413,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-1f102c943e319b5f45905f0f2ae242d99d86169dade3ca5eb5d2ae39-1"
                   }
                 },
                 {
@@ -411,6 +423,10 @@
                       "valueReference": {
                         "reference": "DocumentReference/12345"
                       }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "content[0].attachment.data"
                     },
                     {
                       "extension": [
@@ -498,7 +514,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-91033a728dca48c4865aa57f8c637cfb4624893207ac79bee87ba107-1"
                   }
                 },
                 {
@@ -510,6 +526,10 @@
                       }
                     },
                     {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "content[0].attachment.data"
+                    },
+                    {
                       "extension": [
                         {
                           "extension": [
@@ -519,11 +539,11 @@
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                              "valueInteger": 78
+                              "valueInteger": 94
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                              "valueInteger": 91
+                              "valueInteger": 107
                             }
                           ],
                           "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"

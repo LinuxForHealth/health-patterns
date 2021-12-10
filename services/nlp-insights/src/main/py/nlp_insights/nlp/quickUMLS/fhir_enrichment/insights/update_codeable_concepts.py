@@ -22,45 +22,45 @@ from typing import Set
 from fhir.resources.resource import Resource
 
 from nlp_insights.fhir import fhir_object_utils
-from nlp_insights.insight.insight_constants import UMLS_URL, SNOMED_URL
-from nlp_insights.insight.insight_id import insight_id_maker
+from nlp_insights.fhir.code_system import hl7
+from nlp_insights.insight import insight_id
 from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptRef
 from nlp_insights.insight_source.fields_of_interest import (
     CodeableConceptRef,
     CodeableConceptRefType,
 )
 from nlp_insights.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
-from nlp_insights.nlp.nlp_response import NlpResponse, NlpCui
+from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse, QuickUmlsConcept
 from nlp_insights.umls.semtype_lookup import ref_type_relevant_to_any_type_names
 
 
 class NlpConceptRef(NamedTuple):
-    """Binding between ref to a codeable concept and QuickUmls Insight"""
+    """Binding between ref to a codeable concept and QuickUmls response"""
 
     adjusted_concept: AdjustedConceptRef
-    nlp_response: NlpResponse
+    nlp_response: QuickUmlsResponse
 
 
-def _relevant_nlp_cuis(
-    ref_type: CodeableConceptRefType, response: NlpResponse
-) -> Generator[NlpCui, None, None]:
-    """filter SimpleNlpCui objects to those that are relevant to the code reference"""
-    for nlp_cui in response.nlp_cuis:
-        if ref_type_relevant_to_any_type_names(ref_type, nlp_cui.types):
-            yield nlp_cui
+def _relevant_concepts(
+    ref_type: CodeableConceptRefType, response: QuickUmlsResponse
+) -> Generator[QuickUmlsConcept, None, None]:
+    """filter response to those concepts that are relevant to the code reference"""
+    for concept in response.concepts:
+        if ref_type_relevant_to_any_type_names(ref_type, concept.types):
+            yield concept
 
 
 def _append_codes_from_nlp_cui(
-    concept_ref: CodeableConceptRef,
-    nlp_cui: NlpCui,
+    fhir_concept_ref: CodeableConceptRef,
+    nlp_concept: QuickUmlsConcept,
     existing_codes_by_system: DefaultDict[str, Set[str]],
 ) -> int:
     """Appends the code(s) from the nlp_cui to the coding in the concept ref
 
     Codes are only appended if they do not already exist in the list.
 
-    Args: concept_ref - reference to the coding list to update
-          nlp_cui - code returned by nlp to append
+    Args: fhir_concept_ref - reference to the coding list to update
+          nlp_concept - code returned by nlp to append
                     This includes a UMLS cui, and possibly one or more
                     associated codes.
           existing_codes_by_system - mapping of code systems to existing codes,
@@ -69,22 +69,22 @@ def _append_codes_from_nlp_cui(
     Returns: The number of codes added
     """
     codes_added = 0
-    if nlp_cui.cui not in existing_codes_by_system[UMLS_URL]:
-        existing_codes_by_system[UMLS_URL].add(nlp_cui.cui)
+    if nlp_concept.cui not in existing_codes_by_system[hl7.UMLS_URL]:
+        existing_codes_by_system[hl7.UMLS_URL].add(nlp_concept.cui)
         fhir_object_utils.append_derived_by_nlp_coding(
-            concept_ref.code_ref,
-            UMLS_URL,
-            nlp_cui.cui,
-            nlp_cui.preferred_name,
+            fhir_concept_ref.code_ref,
+            hl7.UMLS_URL,
+            nlp_concept.cui,
+            nlp_concept.preferred_name,
         )
         codes_added += 1
 
-    if nlp_cui.snomed_ct:
-        for snomed_code in nlp_cui.snomed_ct:
-            if snomed_code not in existing_codes_by_system[SNOMED_URL]:
-                existing_codes_by_system[SNOMED_URL].add(nlp_cui.cui)
+    if nlp_concept.snomed_ct:
+        for snomed_code in nlp_concept.snomed_ct:
+            if snomed_code not in existing_codes_by_system[hl7.SNOMED_URL]:
+                existing_codes_by_system[hl7.SNOMED_URL].add(nlp_concept.cui)
                 fhir_object_utils.append_derived_by_nlp_coding(
-                    concept_ref.code_ref, SNOMED_URL, snomed_code
+                    fhir_concept_ref.code_ref, hl7.SNOMED_URL, snomed_code
                 )
                 codes_added += 1
 
@@ -122,7 +122,7 @@ def _add_codeable_concept_insight(
     existing_codes_by_system = fhir_object_utils.get_existing_codes_by_system(
         concept_ref.code_ref.coding
     )
-    for nlp_cui in _relevant_nlp_cuis(concept_ref.type, nlp_concept_ref.nlp_response):
+    for nlp_cui in _relevant_concepts(concept_ref.type, nlp_concept_ref.nlp_response):
         codes_added += _append_codes_from_nlp_cui(
             concept_ref, nlp_cui, existing_codes_by_system
         )
@@ -161,11 +161,14 @@ def update_codeable_concepts_and_meta_with_insights(
     Returns: total number of derived codings added to the resource, across all provided
              codeable concepts.
     """
-    id_maker = insight_id_maker(start=nlp_config.insight_id_start)
-
     num_codes_added: int = 0
 
     for concept_insight in concept_insights:
+        id_maker = insight_id.insight_id_maker_update_concept(
+            concept=concept_insight.adjusted_concept.concept_ref,
+            resource=fhir_resource,
+            start=nlp_config.insight_id_start,
+        )
         num_codes_added += _add_codeable_concept_insight(
             fhir_resource, concept_insight, id_maker, nlp_config
         )

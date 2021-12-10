@@ -19,7 +19,8 @@ from fhir.resources.bundle import Bundle
 from fhir.resources.diagnosticreport import DiagnosticReport
 from fhir.resources.immunization import Immunization
 
-from test_nlp_insights.nlp_insights import test_diag_report
+from nlp_insights import app
+from test_nlp_insights.util import unstructured_text
 from test_nlp_insights.util.compare import compare_actual_to_expected
 from test_nlp_insights.util.fhir import (
     make_diag_report,
@@ -38,7 +39,6 @@ from test_nlp_insights.util.mock_service import (
     configure_resource_nlp_override,
 )
 from test_nlp_insights.util.resources import UnitTestUsingExternalResource
-from nlp_insights import app
 
 
 class TestMultiResourceBundleWithOverride(UnitTestUsingExternalResource):
@@ -69,7 +69,7 @@ class TestMultiResourceBundleWithOverride(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            test_diag_report.DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
                         )
                     ],
                 ),
@@ -104,7 +104,7 @@ class TestMultiResourceBundleWithOverride(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            test_diag_report.DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
                         )
                     ],
                 ),
@@ -139,7 +139,7 @@ class TestMultiResourceBundleWithOverride(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            test_diag_report.DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
                         )
                     ],
                 ),
@@ -174,7 +174,7 @@ class TestMultiResourceBundleWithOverride(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            test_diag_report.DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
                         )
                     ],
                 ),

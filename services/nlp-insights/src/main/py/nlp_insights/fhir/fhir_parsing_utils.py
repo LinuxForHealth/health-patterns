@@ -72,7 +72,7 @@ def parse_fhir_resource_from_payload(doc: bytes) -> Resource:
 
     else:
         resource_type = (
-            obj["resourceType"] if "resourceType" in obj else "<not specified> "
+            obj["resourceType"] if "resourceType" in obj else "<not specified>"
         )
         raise BadRequest(
             description=f"The resource type {resource_type} is not supported"

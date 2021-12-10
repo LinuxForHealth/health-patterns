@@ -14,7 +14,6 @@ Existing codes and text are used to derive additional codes for these resource e
 
 * Allergy Intolerance
     * AllergyIntolerance.code
-    * AllergyIntolerance.reaction[].manifestation[]
 
 * Immunization
     * Immunization.vaccineCode
@@ -60,7 +59,7 @@ defaults for them by modifying `gradle.properties`.
    `source ./build/venv/bin/activate`  
    
 1. Set the FLASK_APP environment variable to the installed package  
-    `export FLASK_APP=text_analytics.app`
+    `export FLASK_APP=nlp_insights.app`
     
 1. Start the service (5000 is the default port, however this value can be changed to suit your needs)  
    `python -m flask run --port=5000`

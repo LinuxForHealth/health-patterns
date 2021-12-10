@@ -24,7 +24,7 @@ from ibm_whcs_sdk.annotator_for_clinical_data import (
 )
 
 from nlp_insights.fhir import fhir_object_utils
-from nlp_insights.insight.insight_id import insight_id_maker
+from nlp_insights.insight import insight_id
 from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptRef
 from nlp_insights.nlp.acd.fhir_enrichment.insights.append_codings import (
     append_codings,
@@ -127,11 +127,14 @@ def update_codeable_concepts_and_meta_with_insights(
     Returns: total number of derived codings added to the resource, across all provided
              codeable concepts.
     """
-    id_maker = insight_id_maker(start=nlp_config.insight_id_start)
-
     num_codes_added: int = 0
 
     for concept_insight in concept_insights:
+        id_maker = insight_id.insight_id_maker_update_concept(
+            concept=concept_insight.adjusted_concept.concept_ref,
+            resource=fhir_resource,
+            start=nlp_config.insight_id_start,
+        )
         num_codes_added += _add_codeable_concept_insight(
             fhir_resource, concept_insight, id_maker, nlp_config
         )

@@ -210,7 +210,6 @@ _resource_type_to_type_names: Dict[str, List[UmlsTypeName]] = {
 _concept_type_to_type_names: Dict[CodeableConceptRefType, List[UmlsTypeName]] = {
     CodeableConceptRefType.ALLERGEN: ALLERGEN_TYPES,
     CodeableConceptRefType.CONDITION: CONDITION_TYPES,
-    CodeableConceptRefType.MANIFESTATION: [],
     CodeableConceptRefType.VACCINE: VACCINE_TYPES,
 }
 

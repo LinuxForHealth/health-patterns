@@ -14,7 +14,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-81c462da919469b8f1a03253800baa8252dff5af66417c9886383e21-1"
                   }
                 },
                 {
@@ -26,6 +26,10 @@
                       }
                     },
                     {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
                       "extension": [
                         {
                           "extension": [
@@ -35,11 +39,11 @@
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                              "valueInteger": 41
+                              "valueInteger": 57
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                              "valueInteger": 53
+                              "valueInteger": 69
                             }
                           ],
                           "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
@@ -203,7 +207,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-85eb3b3aafb1431018cd8279545d0d8970695795776edce74cfe92d8-1"
                   }
                 },
                 {
@@ -213,6 +217,10 @@
                       "valueReference": {
                         "reference": "DiagnosticReport/12345"
                       }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
                     },
                     {
                       "extension": [
@@ -248,7 +256,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-2"
+                    "value": "nlp-insight-85eb3b3aafb1431018cd8279545d0d8970695795776edce74cfe92d8-2"
                   }
                 },
                 {
@@ -258,6 +266,10 @@
                       "valueReference": {
                         "reference": "DiagnosticReport/12345"
                       }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
                     },
                     {
                       "extension": [
@@ -401,7 +413,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-857ca7d059dde235da70b390137badaf193ca5c6997da08e70c642c5-1"
                   }
                 },
                 {
@@ -411,6 +423,10 @@
                       "valueReference": {
                         "reference": "DiagnosticReport/12345"
                       }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
                     },
                     {
                       "extension": [

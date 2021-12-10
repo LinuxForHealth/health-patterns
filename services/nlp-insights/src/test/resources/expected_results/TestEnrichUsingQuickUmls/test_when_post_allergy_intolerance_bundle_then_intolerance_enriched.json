@@ -12,17 +12,21 @@
             {
               "extension": [
                 {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "code.coding"
+                },
+                {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-09fb730fe5141cb7d740583f796248fdf12fabc4cbdc3d8073de9614-1"
                   }
                 },
                 {
                   "extension": [
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "AllergyIntolerance.code"
+                      "valueString": "code.text"
                     }
                   ],
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
@@ -1144,20 +1148,6 @@
         "patient": {
           "reference": "Patient/1234567890"
         },
-        "reaction": [
-          {
-            "manifestation": [
-              {
-                "coding": [],
-                "text": "Muscle Pain"
-              },
-              {
-                "coding": [],
-                "text": "hair loss"
-              }
-            ]
-          }
-        ],
         "resourceType": "AllergyIntolerance"
       }
     }

@@ -15,9 +15,10 @@
 # pylint: disable=missing-function-docstring
 import importlib
 
-
 from fhir.resources.bundle import Bundle
 
+from nlp_insights import app
+from test_nlp_insights.util import unstructured_text
 from test_nlp_insights.util.compare import compare_actual_to_expected
 from test_nlp_insights.util.fhir import (
     make_diag_report,
@@ -32,21 +33,6 @@ from test_nlp_insights.util.mock_service import (
     configure_quick_umls,
 )
 from test_nlp_insights.util.resources import UnitTestUsingExternalResource
-from nlp_insights import app
-
-
-DIAG_REPORT_TEXT_FOR_CONDITIONS = (
-    "Patient has pneumonia and shows signs of heart attack"
-)
-
-DIAG_REPORT_TEXT_FOR_MEDICATIONS = "Patient started taking beta blockers"
-
-DIAG_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS = (
-    ""
-    + "Patient has pneumonia and shows signs of heart attack. Patient started taking beta blockers."
-)
-
-DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE = "prescribed aspirin 2mg twice daily"
 
 
 class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
@@ -86,7 +72,7 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
     def test_when_post_diag_then_condition_derived(self):
         report = make_diag_report(
             subject=make_patient_reference(),
-            attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_CONDITIONS)],
+            attachments=[make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)],
         )
 
         with app.app.test_client() as service:
@@ -106,7 +92,9 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
             [
                 make_diag_report(
                     subject=make_patient_reference(),
-                    attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_CONDITIONS)],
+                    attachments=[
+                        make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)
+                    ],
                 )
             ]
         )
@@ -128,30 +116,8 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
             [
                 make_diag_report(
                     subject=make_patient_reference(),
-                    attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATIONS)],
-                )
-            ]
-        )
-
-        with app.app.test_client() as service:
-            configure_acd(service)
-            insight_resp = service.post("/discoverInsights", data=bundle.json())
-            self.assertEqual(200, insight_resp.status_code)
-
-            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
-            cmp = compare_actual_to_expected(
-                expected_path=self.expected_output_path(),
-                actual_resource=actual_bundle,
-            )
-            self.assertFalse(cmp, cmp.pretty())
-
-    def test_when_post_diag_bundle_then_medication_with_dosage_derived(self):
-        bundle = make_bundle(
-            [
-                make_diag_report(
-                    subject=make_patient_reference(),
                     attachments=[
-                        make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE)
+                        make_attachment(unstructured_text.TEXT_FOR_MEDICATION)
                     ],
                 )
             ]
@@ -175,7 +141,9 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
                 make_diag_report(
                     subject=make_patient_reference(),
                     attachments=[
-                        make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS)
+                        make_attachment(
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                        )
                     ],
                 )
             ]
@@ -231,7 +199,7 @@ class TestDiagReportUsingQuickUmls(UnitTestUsingExternalResource):
     def test_when_post_diag_then_condition_derived(self):
         report = make_diag_report(
             subject=make_patient_reference(),
-            attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_CONDITIONS)],
+            attachments=[make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)],
         )
 
         with app.app.test_client() as service:
@@ -251,7 +219,9 @@ class TestDiagReportUsingQuickUmls(UnitTestUsingExternalResource):
             [
                 make_diag_report(
                     subject=make_patient_reference(),
-                    attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_CONDITIONS)],
+                    attachments=[
+                        make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)
+                    ],
                 )
             ]
         )
@@ -273,31 +243,8 @@ class TestDiagReportUsingQuickUmls(UnitTestUsingExternalResource):
             [
                 make_diag_report(
                     subject=make_patient_reference(),
-                    attachments=[make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATIONS)],
-                )
-            ]
-        )
-
-        with app.app.test_client() as service:
-            configure_quick_umls(service)
-            insight_resp = service.post("/discoverInsights", data=bundle.json())
-            self.assertEqual(200, insight_resp.status_code)
-
-            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
-            cmp = compare_actual_to_expected(
-                expected_path=self.expected_output_path(),
-                actual_resource=actual_bundle,
-            )
-            self.assertFalse(cmp, cmp.pretty())
-
-    def test_when_post_diag_bundle_then_medication_without_dosage_derived(self):
-        # Quick UMLS doesn't support dosage insights
-        bundle = make_bundle(
-            [
-                make_diag_report(
-                    subject=make_patient_reference(),
                     attachments=[
-                        make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATION_WITH_DOSAGE)
+                        make_attachment(unstructured_text.TEXT_FOR_MEDICATION)
                     ],
                 )
             ]
@@ -321,7 +268,9 @@ class TestDiagReportUsingQuickUmls(UnitTestUsingExternalResource):
                 make_diag_report(
                     subject=make_patient_reference(),
                     attachments=[
-                        make_attachment(DIAG_REPORT_TEXT_FOR_MEDICATIONS_AND_CONDITIONS)
+                        make_attachment(
+                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                        )
                     ],
                 )
             ]

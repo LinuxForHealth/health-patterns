@@ -12,17 +12,21 @@
             {
               "extension": [
                 {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "code.coding"
+                },
+                {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "insight-1"
+                    "value": "nlp-insight-c83fc2d1a9a1cf30c844b11132cf3cd39203d57b55baf91a3edda5f6-1"
                   }
                 },
                 {
                   "extension": [
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "Condition.code"
+                      "valueString": "code.text"
                     }
                   ],
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"

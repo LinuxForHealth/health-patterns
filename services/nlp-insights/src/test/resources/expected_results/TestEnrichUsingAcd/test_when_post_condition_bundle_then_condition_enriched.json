@@ -12,17 +12,21 @@
             {
               "extension": [
                 {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "code.coding"
+                },
+                {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "insight-1"
+                    "value": "nlp-insight-c83fc2d1a9a1cf30c844b11132cf3cd39203d57b55baf91a3edda5f6-1"
                   }
                 },
                 {
                   "extension": [
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "Condition.code"
+                      "valueString": "code.text"
                     }
                   ],
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
@@ -90,7 +94,7 @@
                 }
               ],
               "code": "410.90",
-              "system": "http://terminology.hl7.org/CodeSystem/icd9"
+              "system": "http://hl7.org/fhir/sid/icd-9-cm"
             },
             {
               "extension": [
@@ -109,7 +113,7 @@
                 }
               ],
               "code": "I21.9",
-              "system": "https://terminology.hl7.org/CodeSystem/icd10"
+              "system": "http://hl7.org/fhir/sid/icd-10-cm"
             }
           ],
           "text": "Heart Attack"

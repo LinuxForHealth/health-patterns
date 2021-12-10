@@ -11,14 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Utilities for creating FHIR extensions that are specific to the Alvearie IG
+"""Utilities for creating a subset of FHIR extensions defined by Alvearie
 
-   Methods in this module should create alvearie extensions or related elements,
-   they should not modify resources.
-
+   See: https://alvearie.io/alvearie-fhir-ig/artifacts.html for more information
+   about the types of extensions that Alvearie defines.
 """
 
 
+import base64  # noqa: F401 pylint: disable=unused-import
 import json  # noqa: F401 pylint: disable=unused-import
 from typing import List
 from typing import Optional
@@ -32,7 +32,6 @@ from fhir.resources.diagnosticreport import (  # noqa: F401 pylint: disable=unus
 from fhir.resources.documentreference import (  # noqa: F401 pylint: disable=unused-import
     DocumentReference,
 )
-from fhir.resources.element import Element
 from fhir.resources.extension import Extension
 from fhir.resources.identifier import Identifier
 from fhir.resources.medicationstatement import (  # noqa: F401 pylint: disable=unused-import
@@ -41,10 +40,8 @@ from fhir.resources.medicationstatement import (  # noqa: F401 pylint: disable=u
 from fhir.resources.reference import Reference
 from fhir.resources.resource import Resource
 
-from nlp_insights.insight import (
-    insight_constants,
-)  # noqa: F401 pylint: disable=unused-import
-
+from nlp_insights.fhir import alvearie_ext_url
+from nlp_insights.fhir.code_system import category
 from nlp_insights.insight.span import Span
 from nlp_insights.insight.text_fragment import TextFragment
 from nlp_insights.insight_source.unstructured_text import (  # noqa: F401 pylint: disable=unused-import
@@ -52,83 +49,30 @@ from nlp_insights.insight_source.unstructured_text import (  # noqa: F401 pylint
 )
 
 
-def create_coding(
-    system: str, code: str, display: str = None, derived_by_nlp: bool = False
-) -> Element:
-    """Creates an instance of a FHIR coding data type
+def create_path_extension(path: str) -> Extension:
+    """Creates an extension for an insights path to a FHIR element
 
-    Args:
-         system         - the url of the coding system
-         code           - the code
-         display        - the display text, if any
-         derived_by_nlp - If true, a derived by NLP category extension will be added
+    This is defined by the IG at:
+    https://alvearie.io/alvearie-fhir-ig/StructureDefinition-path.html
 
-    Returns: coding element
-
-    Examples:
-
-
-     Code without display text:
-     >>> code = create_coding("http://hl7.org/fhir/ValueSet/timing-abbreviation", "BID")
-     >>> print(code.json(indent=2))
-     {
-       "code": "BID",
-       "system": "http://hl7.org/fhir/ValueSet/timing-abbreviation"
-     }
-
-
-     Code with display text:
-     >>> code = create_coding("http://hl7.org/fhir/ValueSet/timing-abbreviation","WK","weekly")
-     >>> print(code.json(indent=2))
-     {
-       "code": "WK",
-       "display": "weekly",
-       "system": "http://hl7.org/fhir/ValueSet/timing-abbreviation"
-     }
-
-
-     Code derived by NLP:
-     >>> code = create_coding("http://hl7.org/fhir/ValueSet/timing-abbreviation",
-     ...                      "WK",
-     ...                      derived_by_nlp=True)
-     >>> print(code.json(indent=2))
-     {
-       "extension": [
-         {
-           "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-           "valueCodeableConcept": {
-             "coding": [
-               {
-                 "code": "natural-language-processing",
-                 "display": "NLP",
-                 "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
-               }
-             ],
-             "text": "NLP"
-           }
-         }
-       ],
-       "code": "WK",
-       "system": "http://hl7.org/fhir/ValueSet/timing-abbreviation"
-     }
+    Example:
+    >>> ext = create_path_extension("code.text")
+    >>> print(ext.json(indent=2))
+    {
+      "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+      "valueString": "code.text"
+    }
     """
-    coding_element = Coding.construct()
-    coding_element.system = system
-    coding_element.code = code
-
-    if display:
-        coding_element.display = display
-
-    if derived_by_nlp:
-        coding_element.extension = [create_derived_by_nlp_extension()]
-
-    return coding_element
+    path_ext = Extension.construct()
+    path_ext.url = alvearie_ext_url.INSIGHT_PATH_URL
+    path_ext.valueString = path
+    return path_ext
 
 
 def create_reference_path_extension(path: str) -> Extension:
     """Creates an extension for an insight's reference path
 
-    This is the location within the FHIR resource that
+    This is the location within the reference FHIR resource that
     caused the insight to be created.
 
     It is defined in the IG at:
@@ -143,7 +87,7 @@ def create_reference_path_extension(path: str) -> Extension:
     }
     """
     reference_ext = Extension.construct()
-    reference_ext.url = insight_constants.INSIGHT_REFERENCE_PATH_URL
+    reference_ext.url = alvearie_ext_url.INSIGHT_REFERENCE_PATH_URL
     reference_ext.valueString = path
     return reference_ext
 
@@ -163,12 +107,16 @@ def create_reference_to_resource_extension(resource: Resource) -> Extension:
         the "based-on" extension
 
     Example:
-    >>> visit_code = CodeableConcept.construct(text='Mental status Narrative')
-    >>> d = DiagnosticReport.construct(id='12345',
-    ...                                code=visit_code,
-    ...                                text='crazy',
-    ...                                status='final')
-    >>> ext = create_reference_to_resource_extension(d)
+    >>> visit_code = CodeableConcept.construct(text='Chief complaint Narrative - Reported')
+    >>> report_text = 'Suspect that patient may be diabetic'
+    >>> report_attachment = Attachment.construct(contentType="text/plain",
+    ...                                          data=base64.b64encode(report_text.encode("utf-8")))
+    >>> report = DiagnosticReport.construct(id='12345',
+    ...                                     status='final',
+    ...                                     code=visit_code,
+    ...                                     presentedForm=[report_attachment])
+
+    >>> ext = create_reference_to_resource_extension(report)
     >>> print(ext.json(indent=2))
     {
       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
@@ -182,57 +130,122 @@ def create_reference_to_resource_extension(resource: Resource) -> Extension:
     reference.reference = resource.resource_type + "/" + reference_id
 
     based_on_extension = Extension.construct()
-    based_on_extension.url = insight_constants.INSIGHT_BASED_ON_URL
+    based_on_extension.url = alvearie_ext_url.INSIGHT_BASED_ON_URL
     based_on_extension.valueReference = reference
     return based_on_extension
 
 
-def create_confidence_extension(name: str, value: str) -> Extension:
+def create_scoring_method_extension(system: str, code: str) -> Extension:
+    """Creates a FHIR extension for a scoring method.
+
+    The scoring method extension is documented in the IG at:
+    https://alvearie.io/alvearie-fhir-ig/StructureDefinition-method.html
+
+    Params:
+        system - code system for the method code
+        code   - code for the method used to determine the confidence
+
+    Example:
+    >>> print(create_scoring_method_extension(
+    ...     "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method",
+    ...     "Diagnosis_Explicit_Score"
+    ... ).json(indent=2))
+    {
+      "url": "http://ibm.com/fhir/cdm/StructureDefinition/method",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "Diagnosis_Explicit_Score",
+            "system": "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method"
+          }
+        ]
+      }
+    }
+    """
+    method_ext = Extension.construct()
+    method_ext.url = alvearie_ext_url.INSIGHT_CONFIDENCE_SCORING_METHOD_URL
+
+    method_coding = Coding.construct()
+    method_coding.system = system
+    method_coding.code = code
+
+    method_value = CodeableConcept.construct()
+    method_value.coding = [method_coding]
+
+    method_ext.valueCodeableConcept = method_value
+    return method_ext
+
+
+def create_confidence_extension(
+    method: Extension, score: float, description: Optional[str] = None
+) -> Extension:
     """Creates a FHIR extension element for insight confidence
 
     The insight-confidence extension is defined in the IG at:
     https://alvearie.io/alvearie-fhir-ig/StructureDefinition-insight-confidence.html
 
+    Params:
+        method - method extension describing how the score was computed
+        score  - the confidence score value
+
     Example:
-    >>> print(create_confidence_extension('insight', 1.0).json(indent=2))
+    >>> method = create_scoring_method_extension(
+    ...     "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method",
+    ...     "Diagnosis_Explicit_Score"
+    ... )
+    >>> print(create_confidence_extension(method, 1.0, 'explicitly stated diagnosis').json(indent=2))
     {
       "extension": [
         {
-          "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-          "valueString": "insight"
+          "url": "http://ibm.com/fhir/cdm/StructureDefinition/method",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "code": "Diagnosis_Explicit_Score",
+                "system": "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method"
+              }
+            ]
+          }
         },
         {
           "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
           "valueDecimal": 1.0
+        },
+        {
+          "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+          "valueString": "explicitly stated diagnosis"
         }
       ],
       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
     }
     """
     confidence = Extension.construct()
-    confidence.url = insight_constants.INSIGHT_CONFIDENCE_URL
-
-    confidence_name = Extension.construct()
-    confidence_name.url = insight_constants.INSIGHT_CONFIDENCE_NAME_URL
-    confidence_name.valueString = name
+    confidence.url = alvearie_ext_url.INSIGHT_CONFIDENCE_URL
 
     confidence_score = Extension.construct()
-    confidence_score.url = insight_constants.INSIGHT_CONFIDENCE_SCORE_URL
-    confidence_score.valueDecimal = value
+    confidence_score.url = alvearie_ext_url.INSIGHT_CONFIDENCE_SCORE_URL
+    confidence_score.valueDecimal = score
 
-    confidence.extension = [confidence_name]
+    confidence.extension = [method]
     confidence.extension.append(confidence_score)
+
+    if description:
+        confidence_description = Extension.construct()
+        confidence_description.url = alvearie_ext_url.INSIGHT_CONFIDENCE_DESCRIPTION_URL
+        confidence_description.valueString = description
+        confidence.extension.append(confidence_description)
+
     return confidence
 
 
-def create_derived_by_nlp_extension() -> Extension:
+def create_derived_by_nlp_category_extension() -> Extension:
     """Creates a category extension indicating the element is derived from NLP
 
     See the IG Documentation for the structure of the category:
     https://alvearie.io/alvearie-fhir-ig/StructureDefinition-category.html
 
     Example:
-    >>> print(create_derived_by_nlp_extension().json(indent=2))
+    >>> print(create_derived_by_nlp_category_extension().json(indent=2))
     {
       "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
       "valueCodeableConcept": {
@@ -248,15 +261,16 @@ def create_derived_by_nlp_extension() -> Extension:
     }
     """
     classification_ext = Extension.construct()
-    classification_ext.url = insight_constants.INSIGHT_CATEGORY_URL
-    classification_coding = create_coding(
-        insight_constants.CLASSIFICATION_DERIVED_SYSTEM,
-        insight_constants.CLASSIFICATION_DERIVED_CODE,
-        insight_constants.CLASSIFICATION_DERIVED_DISPLAY,
-    )
+    classification_ext.url = alvearie_ext_url.INSIGHT_CATEGORY_URL
+
+    classification_coding = Coding.construct()
+    classification_coding.system = category.INSIGHT_CATEGORY_CODE_SYSTEM
+    classification_coding.code = category.CATEGORY_DERIVED_CODE
+    classification_coding.display = category.CATEGORY_DERIVED_DISPLAY
+
     classification_value = CodeableConcept.construct()
     classification_value.coding = [classification_coding]
-    classification_value.text = insight_constants.CLASSIFICATION_DERIVED_DISPLAY
+    classification_value.text = category.CATEGORY_DERIVED_DISPLAY
     classification_ext.valueCodeableConcept = classification_value
     return classification_ext
 
@@ -284,65 +298,68 @@ def create_nlp_output_extension(output_url: str) -> Extension:
     attachment.url = output_url
 
     nlp_output_ext = Extension.construct()
-    nlp_output_ext.url = insight_constants.INSIGHT_NLP_OUTPUT_URL
+    nlp_output_ext.url = alvearie_ext_url.INSIGHT_NLP_OUTPUT_URL
     nlp_output_ext.valueAttachment = attachment
 
     return nlp_output_ext
 
 
 def create_derived_from_concept_insight_detail_extension(
-    reference_path_ext: Extension,
+    reference_ext: Optional[Extension] = None,
+    reference_path_ext: Optional[Extension] = None,
     evaluated_output_ext: Optional[Extension] = None,
-) -> Extension:
+) -> Optional[Extension]:
     """Creates an insight detail extension that includes NLP extensions
 
     This is used to indicate that a resource has been enhanced with
     additional codings/insights, by running NLP over existing concepts
     in the resource.
 
+    In that case, we don't record the scores and have no source resource
+    that the insight was derived from.
+
     The insight detail extension is described in the IG by:
     https://alvearie.io/alvearie-fhir-ig/StructureDefinition-insight-detail.html
 
     Args:
-        reference_path_ext  - path to derived from source
+        reference_ext - reference object extension (expect this to be self, if provided)
+        reference_path_ext - path to the text used to enrich the concept
         evaluated_output_ext - optional additional insight data from NLP
 
     Returns:
-        the extension
+        the extension or None if the extension is empty
 
     Example:
     >>> nlp_extensions = (
     ...                   Extension.construct(
     ...                    url='http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output')
     ...                  )
-    >>> reference_path_ext = create_reference_path_extension('AllergyIntolerance.code')
-    >>> ext = create_derived_from_concept_insight_detail_extension(reference_path_ext, nlp_extensions)
+    >>> ext = create_derived_from_concept_insight_detail_extension(evaluated_output_ext=nlp_extensions)
     >>> print(ext.json(indent=2))
     {
       "extension": [
         {
           "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output"
-        },
-        {
-          "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-          "valueString": "AllergyIntolerance.code"
         }
       ],
       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
     }
     """
     insight_detail = Extension.construct()
-    insight_detail.url = insight_constants.INSIGHT_DETAIL_URL
+    insight_detail.url = alvearie_ext_url.INSIGHT_DETAIL_URL
     if insight_detail.extension is None:
         insight_detail.extension = []
 
-    if evaluated_output_ext:
-        insight_detail.extension.append(evaluated_output_ext)
+    if reference_ext:
+        insight_detail.extension.append(reference_ext)
 
     if reference_path_ext:
         insight_detail.extension.append(reference_path_ext)
 
-    return insight_detail
+    if evaluated_output_ext:
+        insight_detail.extension.append(evaluated_output_ext)
+
+    return insight_detail if insight_detail.extension else None
 
 
 def create_derived_from_unstructured_insight_detail_extension(
@@ -365,18 +382,22 @@ def create_derived_from_unstructured_insight_detail_extension(
                         (contains the raw data structure returned from NLP)
 
     Example:
-    >>> visit_code = CodeableConcept.construct(text='Mental status Narrative')
-    >>> report_text = 'crazy, no other way to describe'
+    >>> visit_code = CodeableConcept.construct(text='Chief complaint Narrative - Reported')
+    >>> report_text = 'Suspect that patient may be diabetic'
+    >>> report_attachment = Attachment.construct(contentType="text/plain",
+    ...                                          data=base64.b64encode(report_text.encode("utf-8")))
     >>> report = DiagnosticReport.construct(id='12345',
+    ...                                     status='final',
     ...                                     code=visit_code,
-    ...                                     text=report_text)
-    >>> source = TextFragment(text_source=UnstructuredText(report, "path_to_text", report_text),
-    ...                       text_span=Span(begin=0,end=5,covered_text='crazy'))
-    >>> confidences = [ create_confidence_extension('Suspected Score', .99) ]
-    >>> nlp_extension = (
-    ...                  Extension.construct(
-    ...                   url='http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output')
-    ...                 )
+    ...                                     presentedForm=[report_attachment])
+    >>> source = TextFragment(text_source=UnstructuredText(report, "presentedForm[0].data", report_text),
+    ...                       text_span=Span(begin=28,end=36,covered_text='diabetic'))
+    >>> method = create_scoring_method_extension(
+    ...     "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method",
+    ...     "Diagnosis_Explicit_Score"
+    ... )
+    >>> confidences = [ create_confidence_extension(method, .99, 'Suspected Score') ]
+    >>> nlp_extension = create_nlp_output_extension('http://nlp-output-stored-here')
     >>> extension = create_derived_from_unstructured_insight_detail_extension(source,
     ...                                                                       confidences,
     ...                                                                       nlp_extension)
@@ -384,7 +405,10 @@ def create_derived_from_unstructured_insight_detail_extension(
     {
       "extension": [
         {
-          "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output"
+          "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+          "valueAttachment": {
+            "url": "http://nlp-output-stored-here"
+          }
         },
         {
           "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
@@ -393,30 +417,45 @@ def create_derived_from_unstructured_insight_detail_extension(
           }
         },
         {
+          "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+          "valueString": "presentedForm[0].data"
+        },
+        {
           "extension": [
             {
               "extension": [
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
-                  "valueString": "crazy"
+                  "valueString": "diabetic"
                 },
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                  "valueInteger": 0
+                  "valueInteger": 28
                 },
                 {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                  "valueInteger": 5
+                  "valueInteger": 36
                 },
                 {
                   "extension": [
                     {
-                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
-                      "valueString": "Suspected Score"
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/method",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "Diagnosis_Explicit_Score",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/1.0/acd-confidence-method"
+                          }
+                        ]
+                      }
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/score",
                       "valueDecimal": 0.99
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/description",
+                      "valueString": "Suspected Score"
                     }
                   ],
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-confidence"
@@ -442,18 +481,23 @@ def create_derived_from_unstructured_insight_detail_extension(
 
     # Unstructured results extension
     insight_results = Extension.construct()
-    insight_results.url = insight_constants.INSIGHT_RESULT_URL
+    insight_results.url = alvearie_ext_url.INSIGHT_RESULT_URL
     insight_results.extension = [insight_span_ext]
 
     # Create reference to unstructured report
     report_reference_ext = create_reference_to_resource_extension(
         source.text_source.source_resource
     )
+    report_reference_path_ext = create_reference_path_extension(
+        source.text_source.fhir_path
+    )
 
     insight_detail = Extension.construct()
-    insight_detail.url = insight_constants.INSIGHT_DETAIL_URL
+    insight_detail.url = alvearie_ext_url.INSIGHT_DETAIL_URL
     insight_detail.extension = [evaluated_output_ext] if evaluated_output_ext else []
-    insight_detail.extension.extend([report_reference_ext, insight_results])
+    insight_detail.extension.extend(
+        [report_reference_ext, report_reference_path_ext, insight_results]
+    )
 
     return insight_detail
 
@@ -493,19 +537,19 @@ def create_insight_span_extension(span: Span) -> Extension:
      }
     """
     offset_begin_ext = Extension.construct()
-    offset_begin_ext.url = insight_constants.INSIGHT_SPAN_OFFSET_BEGIN_URL
+    offset_begin_ext.url = alvearie_ext_url.INSIGHT_SPAN_OFFSET_BEGIN_URL
     offset_begin_ext.valueInteger = span.begin
 
     offset_end_ext = Extension.construct()
-    offset_end_ext.url = insight_constants.INSIGHT_SPAN_OFFSET_END_URL
+    offset_end_ext.url = alvearie_ext_url.INSIGHT_SPAN_OFFSET_END_URL
     offset_end_ext.valueInteger = span.end
 
     covered_text_ext = Extension.construct()
-    covered_text_ext.url = insight_constants.INSIGHT_SPAN_COVERED_TEXT_URL
+    covered_text_ext.url = alvearie_ext_url.INSIGHT_SPAN_COVERED_TEXT_URL
     covered_text_ext.valueString = span.covered_text
 
     insight_span_ext = Extension.construct()
-    insight_span_ext.url = insight_constants.INSIGHT_SPAN_URL
+    insight_span_ext.url = alvearie_ext_url.INSIGHT_SPAN_URL
     insight_span_ext.extension = [covered_text_ext]
     insight_span_ext.extension.append(offset_begin_ext)
     insight_span_ext.extension.append(offset_end_ext)
@@ -539,7 +583,7 @@ def create_insight_id_extension(
     }
     """
     insight_id_ext = Extension.construct()
-    insight_id_ext.url = insight_constants.INSIGHT_ID_URL
+    insight_id_ext.url = alvearie_ext_url.INSIGHT_ID_URL
 
     insight_id = Identifier.construct()
     insight_id.system = insight_system

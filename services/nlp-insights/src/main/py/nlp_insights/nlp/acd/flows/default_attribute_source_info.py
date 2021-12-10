@@ -38,7 +38,6 @@ from nlp_insights.umls import semtype_lookup
 # This doesn't work in general unstructured text, because then we might
 # see a non-allergy diagnosis or CUIs that are not for the patient.
 #
-# This can also be used for an allergy manifestation context.
 ANNOTATION_TYPE_ALLERGY = AnnotationContext(
     attribute_mapping=[
         AcdAttrCuiSourceLoc(
@@ -56,21 +55,37 @@ ANNOTATION_TYPE_ALLERGY = AnnotationContext(
 )
 
 # ACD has an extra concept type to look for in results in addition to base
-# UMLS types. If we use concept types in addition to base umls type names,
-# we should use this list
+# UMLS types.
 ACD_CONDITION_UMLS_TYPES = semtype_lookup.CONDITION_TYPES + ["ICDiagnosis"]
 
+
+# Annotations to look at when deriving conditions
+# We don't want "PotentialDiagnosis" attributes, since those are only
+# suspected and not something the patient is believed to have
+# We do want "PatientReported".
+ANNOTATION_TYPE_CONDITION_DERIVED = AnnotationContext(
+    attribute_mapping=[
+        AcdAttrCuiSourceLoc(
+            attr_name=set(["Diagnosis", "PatientReportedCondition"]),
+            source_prop_names=[AttrSourcePropName.SYMPTOM_DISEASE_IND],
+        ),
+    ],
+    concept_fallback=None,
+)
+
+
 # This condition mapping is currently believed to work in both a condition
-# context (enriching a condition's coding), and also for constructing
-# conditions from unstructured text.
-ANNOTATION_TYPE_CONDITION = AnnotationContext(
+# context (enriching a condition's coding)
+# Here we can be a lot more liberal about what attribute and concepts we
+# consider
+ANNOTATION_TYPE_CONDITION_ENRICH = AnnotationContext(
     attribute_mapping=[
         AcdAttrCuiSourceLoc(
             attr_name=set(["Diagnosis", "PotentialDiagnosis"]),
             source_prop_names=[AttrSourcePropName.SYMPTOM_DISEASE_IND],
         ),
     ],
-    concept_fallback=None,
+    concept_fallback=[AcdConceptCuiFallBack(concept_types=ACD_CONDITION_UMLS_TYPES)],
 )
 
 
@@ -84,7 +99,8 @@ ACD_IMMUNIZATION_TYPES = semtype_lookup.VACCINE_TYPES + ["ICMedication"]
 # Because of that assumption, we can assume any concepts that look related to immunization
 # are codings we are interested in.
 #
-# We are not aware of an attribute for immunization.
+# We are not aware of an attribute for immunization, and so we only specify concepts to
+# look for.
 ANNOTATION_TYPE_IMMUNIZATION = AnnotationContext(
     attribute_mapping=None,
     concept_fallback=[AcdConceptCuiFallBack(concept_types=ACD_IMMUNIZATION_TYPES)],
@@ -116,18 +132,16 @@ ANNOTATION_TYPE_MEDICATION = AnnotationContext(
 # We can be a lot more liberal in what we consider matching attributes and concepts when we
 # are aware of the context of the text.
 #
-# This is why it is possible that we could have a different mapping for creating Conditions vs
-# enriching condition codings. Even though today we reuse the same rules for both, this could change in
-# the future as our understanding of ACD evolves.
+# This is why it is possible that we have different mapping for creating Conditions vs
+# enriching condition codings.
 #
 # It's also why in the actual rules we can get away with assuming 'Diagnosis' is talking about an
 # allergy diagnosis when enriching an AllergyIntolerance coding...but we could not use that same rule
 # if we were to someday try and create an allergy intolerance resource from a diagnostic report.
 RELEVANT_ANNOTATIONS_STANDARD_V1_0: SourceCuiSearchMap = {
-    Condition: ANNOTATION_TYPE_CONDITION,
+    Condition: ANNOTATION_TYPE_CONDITION_DERIVED,
     MedicationStatement: ANNOTATION_TYPE_MEDICATION,
     CodeableConceptRefType.ALLERGEN: ANNOTATION_TYPE_ALLERGY,
-    CodeableConceptRefType.MANIFESTATION: ANNOTATION_TYPE_ALLERGY,
-    CodeableConceptRefType.CONDITION: ANNOTATION_TYPE_CONDITION,
+    CodeableConceptRefType.CONDITION: ANNOTATION_TYPE_CONDITION_ENRICH,
     CodeableConceptRefType.VACCINE: ANNOTATION_TYPE_IMMUNIZATION,
 }

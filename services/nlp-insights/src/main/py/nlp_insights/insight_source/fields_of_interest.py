@@ -32,7 +32,6 @@ from typing import Optional
 from typing import Type
 
 from fhir.resources.allergyintolerance import AllergyIntolerance
-from fhir.resources.allergyintolerance import AllergyIntoleranceReaction
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.condition import Condition
 from fhir.resources.immunization import Immunization
@@ -43,7 +42,6 @@ class CodeableConceptRefType(Enum):
     """Type assignments for CodeableConceptTest"""
 
     ALLERGEN = "ALLERGEN"
-    MANIFESTATION = "MANIFESTATION"
     CONDITION = "CONDITION"
     VACCINE = "VACCINE"
 
@@ -64,33 +62,6 @@ class CodeableConceptRef(NamedTuple):
     fhir_path: str
 
 
-def _get_concepts_from_allergy_reaction(
-    reaction: AllergyIntoleranceReaction, path: str
-) -> Iterable[CodeableConceptRef]:
-    """Determines concepts from an allergy intolerance reaction
-
-    Args:
-        reaction - the reaction within the FHIR resource
-        path - path to the reaction element in the FHIR resource
-
-    Returns: concepts with text to be analyzed by NLP
-    """
-    fields_of_interest = []
-    if reaction.manifestation:
-        for manif_counter, manif in enumerate(reaction.manifestation):
-            if manif.text:
-                fhir_path = f"{path}.manifestation[{manif_counter}]"
-                fields_of_interest.append(
-                    CodeableConceptRef(
-                        type=CodeableConceptRefType.MANIFESTATION,
-                        code_ref=manif,
-                        fhir_path=fhir_path,
-                    )
-                )
-
-    return fields_of_interest
-
-
 def _get_allergy_intolerance_concepts_to_analyze(
     allergy_intolerance: AllergyIntolerance,
 ) -> Iterable[CodeableConceptRef]:
@@ -103,24 +74,14 @@ def _get_allergy_intolerance_concepts_to_analyze(
     """
     fields_of_interest = []
 
-    #    AllergyIntolerance.code.text
     if allergy_intolerance.code.text:
         fields_of_interest.append(
             CodeableConceptRef(
                 type=CodeableConceptRefType.ALLERGEN,
                 code_ref=allergy_intolerance.code,
-                fhir_path="AllergyIntolerance.code",
+                fhir_path="code",
             )
         )
-
-    #  AllergyIntolerance.reaction[]
-    if allergy_intolerance.reaction:
-        for reaction_counter, reaction in enumerate(allergy_intolerance.reaction):
-            fields_of_interest.extend(
-                _get_concepts_from_allergy_reaction(
-                    reaction, f"AllergyIntolerance.reaction[{reaction_counter}]"
-                )
-            )
 
     return fields_of_interest
 
@@ -138,7 +99,7 @@ def _get_condition_concepts_to_analyze(
             CodeableConceptRef(
                 type=CodeableConceptRefType.CONDITION,
                 code_ref=condition.code,
-                fhir_path="Condition.code",
+                fhir_path="code",
             )
         ]
 
@@ -158,7 +119,7 @@ def _get_immunization_concepts_to_analyze(
             CodeableConceptRef(
                 type=CodeableConceptRefType.VACCINE,
                 code_ref=immunization.vaccineCode,
-                fhir_path="Immunization.vaccineCode",
+                fhir_path="vaccineCode",
             )
         ]
 

@@ -12,17 +12,21 @@
             {
               "extension": [
                 {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "vaccineCode.coding"
+                },
+                {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "insight-1"
+                    "value": "nlp-insight-5f4c629a7d711e332b2a8bb2c872b1924bec235e9f107a9d9daa97c2-1"
                   }
                 },
                 {
                   "extension": [
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "Immunization.vaccineCode"
+                      "valueString": "vaccineCode.text"
                     }
                   ],
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
@@ -114,7 +118,7 @@
                 }
               ],
               "code": "M0272463",
-              "system": "http://www.nlm.nih.gov/mesh/meshhome.html"
+              "system": "http://terminology.hl7.org/CodeSystem/MSH"
             }
           ],
           "text": "DTaP"

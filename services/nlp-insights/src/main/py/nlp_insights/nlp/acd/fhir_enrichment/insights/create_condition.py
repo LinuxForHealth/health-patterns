@@ -21,28 +21,17 @@ from typing import Optional
 
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.condition import Condition
-from fhir.resources.extension import Extension
 from ibm_whcs_sdk.annotator_for_clinical_data import (
     annotator_for_clinical_data_v1 as acd,
 )
 from ibm_whcs_sdk.annotator_for_clinical_data import ContainerAnnotation
-from ibm_whcs_sdk.annotator_for_clinical_data.annotator_for_clinical_data_v1 import (
-    InsightModelData,
-)
-from nlp_insights.fhir.alvearie_ig import (
-    create_derived_from_unstructured_insight_detail_extension,
-    create_insight_id_extension,
-    create_confidence_extension,
-)
-from nlp_insights.fhir.fhir_object_utils import (
-    add_insight_to_meta,
-    append_derived_by_nlp_extension,
-)
-from nlp_insights.insight import insight_constants
-from nlp_insights.insight.insight_id import insight_id_maker
+from nlp_insights.fhir import alvearie_ext
+from nlp_insights.fhir import fhir_object_utils
+from nlp_insights.insight import insight_id
 from nlp_insights.insight.span import Span
 from nlp_insights.insight.text_fragment import TextFragment
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
+from nlp_insights.nlp.acd.fhir_enrichment.insights import confidence
 from nlp_insights.nlp.acd.fhir_enrichment.insights.append_codings import (
     append_codings,
     get_concept_display_text,
@@ -86,7 +75,12 @@ def create_conditions_from_insights(
                         fhir_resource=Condition.construct(
                             subject=text_source.source_resource.subject
                         ),
-                        id_maker=insight_id_maker(start=nlp_config.insight_id_start),
+                        id_maker=insight_id.insight_id_maker_derive_resource(
+                            source=text_source,
+                            cui=source.cui,
+                            derived=Condition,
+                            start=nlp_config.insight_id_start,
+                        ),
                     )
 
                 condition, id_maker = condition_tracker[source.cui]
@@ -107,7 +101,7 @@ def create_conditions_from_insights(
     conditions = [entry.fhir_resource for entry in condition_tracker.values()]
 
     for condition in conditions:
-        append_derived_by_nlp_extension(condition)
+        fhir_object_utils.append_derived_by_nlp_category_extension(condition)
 
     return conditions
 
@@ -122,7 +116,7 @@ def _add_insight_to_condition(  # pylint: disable=too-many-arguments;
     nlp_config: AcdNlpConfig,
 ) -> None:
     """Adds data from the insight to the condition"""
-    insight_id_ext = create_insight_id_extension(
+    insight_id_ext = alvearie_ext.create_insight_id_extension(
         insight_id_string, nlp_config.nlp_system
     )
 
@@ -131,23 +125,21 @@ def _add_insight_to_condition(  # pylint: disable=too-many-arguments;
         text_span=Span(begin=attr.begin, end=attr.end, covered_text=attr.covered_text),
     )
 
-    confidences = (
-        get_diagnosis_confidences(attr.insight_model_data)
-        if attr.insight_model_data
-        else None
-    )
+    confidences = confidence.get_derived_condition_confidences(attr.insight_model_data)
 
     nlp_output_ext = nlp_config.create_nlp_output_extension(acd_output)
 
     unstructured_insight_detail = (
-        create_derived_from_unstructured_insight_detail_extension(
+        alvearie_ext.create_derived_from_unstructured_insight_detail_extension(
             source=source,
             confidences=confidences,
             evaluated_output_ext=nlp_output_ext,
         )
     )
 
-    add_insight_to_meta(condition, insight_id_ext, unstructured_insight_detail)
+    fhir_object_utils.add_insight_to_meta(
+        condition, insight_id_ext, unstructured_insight_detail
+    )
 
     _add_insight_codings_to_condition(condition, cui_source)
 
@@ -168,69 +160,3 @@ def _add_insight_codings_to_condition(
         codeable_concept.coding = []
 
     append_codings(concept, condition.code, add_nlp_extension=False)
-
-
-def get_diagnosis_confidences(
-    insight_model_data: InsightModelData,
-) -> Optional[List[Extension]]:
-    """Returns confidences for a diagnosis
-
-    Args: insight_model_data - model data from the attribute's concept
-    Returns: a list of extensions, or none if confidences could not be computed.
-    """
-    if not insight_model_data:
-        return None
-
-    confidence_list = []
-
-    try:
-        confidence_list.append(
-            create_confidence_extension(
-                insight_constants.CONFIDENCE_SCORE_EXPLICIT,
-                insight_model_data.diagnosis.usage.explicit_score,
-            )
-        )
-    except AttributeError:
-        pass
-
-    try:
-        confidence_list.append(
-            create_confidence_extension(
-                insight_constants.CONFIDENCE_SCORE_PATIENT_REPORTED,
-                insight_model_data.diagnosis.usage.patient_reported_score,
-            )
-        )
-    except AttributeError:
-        pass
-
-    try:
-        confidence_list.append(
-            create_confidence_extension(
-                insight_constants.CONFIDENCE_SCORE_DISCUSSED,
-                insight_model_data.diagnosis.usage.discussed_score,
-            )
-        )
-    except AttributeError:
-        pass
-
-    try:
-        confidence_list.append(
-            create_confidence_extension(
-                insight_constants.CONFIDENCE_SCORE_FAMILY_HISTORY,
-                insight_model_data.diagnosis.family_history_score,
-            )
-        )
-    except AttributeError:
-        pass
-
-    try:
-        confidence_list.append(
-            create_confidence_extension(
-                insight_constants.CONFIDENCE_SCORE_SUSPECTED,
-                insight_model_data.diagnosis.suspected_score,
-            )
-        )
-    except AttributeError:
-        pass
-
-    return confidence_list if confidence_list else None

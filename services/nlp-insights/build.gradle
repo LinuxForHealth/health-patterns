@@ -11,17 +11,38 @@ description = """NLP Insights"""
 
 ext {
   buildVenv = "${buildDir}/venv"
-  rootPackage = "text_analytics"
-}
+  rootPackage = "nlp_insights"
+  
+  production_pkgs = [
+    'ibm-whcs-sdk:1.9.0',
+    'fhir.resources:6.1.0',
+    'flask:2.0.1']
+
+  dev_pkgs = [
+    'pytest:6.2.5',
+    'pytest-cov:2.7.1',
+    'deepdiff:5.5.0',
+    'flake8:3.7.8',
+    'types-requests:2.25.9',
+    /* https://docs.python.org/3/library/venv.html
+    Common installation tools such as setuptools and pip work as expected with virtual environments.
+    In other words, when a virtual environment is active, they install Python packages into the virtual environment
+    without needing to be told to do so explicitly.
+    Explicitly trying to install wheel causes this task to always run, because wheel is already there,
+    but wasn't installed by the build process.
+    */
+    //'wheel:0.36.2',
+    'pytest-html:3.1.1',
+    'pylint:2.10.2',
+    'pylint-junit:0.3.2',
+    'flake8-formatter-junit-xml:0.0.6',
+    'mypy:0.910']
+  }
+
 
 
 python {
-  pip 'ibm-whcs-sdk:1.9.0'
-  pip 'ibm-cloud-sdk-core:3.8.0'
-  pip 'fhir.resources:6.1.0'
-  pip 'deepdiff:5.5.0'
-  pip 'flask:2.0.1'
-  pip 'jsonpath-ng:1.5.3'
+  pip production_pkgs
 
 
   envPath = buildVenv
@@ -44,25 +65,7 @@ task pipForBuild(type: PipInstallTask) {
   finalizedBy "createRequirementsTextForDev"
   description 'Installs required modules for building, linting, and running tests'
   group 'Python'
-  pip('pytest:6.2.5',
-      'pytest-cov:2.7.1',
-      'deepdiff:5.5.0',
-      'flake8:3.7.8',
-      'types-requests:2.25.9',
-      /* https://docs.python.org/3/library/venv.html
-   Common installation tools such as setuptools and pip work as expected with virtual environments. 
-   In other words, when a virtual environment is active, they install Python packages into the virtual environment
-   without needing to be told to do so explicitly.
-   Explicitly trying to install wheel causes this task to always run, because wheel is already there,
-   but wasn't installed by the build process.
-   */
-      //'wheel:0.36.2',
-      'pytest-html:3.1.1',
-      'pylint:2.10.2',
-      'pylint-junit:0.3.2',
-      'flake8-formatter-junit-xml:0.0.6',
-      'mypy:0.910'
-      )
+  pip(dev_pkgs)
 }
 
 
@@ -71,8 +74,8 @@ task createRequirementsTextForDev {
   // developers need a way to install the required dependencies into their own virtual environment
   // this file can be checked in, it will not be removed on a clean
   
-  inputs.property("prod_modules", python.modules)
-  inputs.property("dev_modules", project.tasks.pipForBuild.modules)
+  inputs.property("prod_modules", production_pkgs)
+  inputs.property("dev_modules", dev_pkgs)
   outputs.file(layout.projectDirectory.file('requirements_dev.txt'))
   
   doLast{
@@ -90,12 +93,12 @@ task createRequirementsTextForDev {
     pinned_text.append("### DO NOT CHANGE THIS FILE\n")
     
     pinned_text.append("\n### Production Dependencies\n")
-    python.modules.each { module ->
+    production_pkgs.each { module ->
       pinned_text.append(module.replace(":", "==") + "\n")
     }
     
     pinned_text.append("\n### Development Dependencies\n")
-    project.tasks.pipForBuild.modules.each {
+    dev_pkgs.each {
       module -> pinned_text.append(module.replace(":", "==") + "\n")
     }
     
@@ -108,10 +111,11 @@ task createRequirementsTextForDev {
 task generateReqs {
   description 'creates pinned.txt file, the additional required modules to run the application'
   outputs.file(layout.buildDirectory.file('pinned.txt')).withPropertyName("pinned")
-
+  inputs.property "prod_deps", production_pkgs.join(",")
+  
   doLast {
     def pinned_text = new StringBuilder()
-    python.modules.each { module ->
+    production_pkgs.each { module ->
       pinned_text.append(module.replace(":", "==") + "\n")
     }
     outputs.files.singleFile.text = pinned_text.toString()
@@ -124,6 +128,7 @@ task setupBuildProperties {
   inputs.property 'projectName', project.name
   inputs.property 'projectVersion', project.version
   inputs.property 'pySrcDir', pySrcDir
+  inputs.property 'rootPackage', project.rootPackage
   outputs.file(layout.buildDirectory.file('setup.properties')).withPropertyName("setup")
 
   doLast {
@@ -242,6 +247,11 @@ task build(type: PythonTask) {
   outputs.file("${buildDir}/${pyDistDir}/${project.name.replace("-", "_")}-${version}-py3-none-any.whl")
 
   doFirst {
+    // need to make sure any deleted files in the source don't stick around
+    // in the build lib for the wheel, the wheel build artificats aren't
+    // needed outside of the build process, and just create confusion anyway
+    delete "${buildDir}/build"
+    delete "${buildDir}/${pyDistDir}"
     file("${buildDir}/${pyDistDir}").mkdirs()
   }
   workDir = "${project.buildDir}"
@@ -252,6 +262,9 @@ task build(type: PythonTask) {
     pyDistDir,
     '-k'
   ]
+  doLast {
+    delete "${buildDir}/build"
+  }
 }
 
 
@@ -293,6 +306,7 @@ task pytest(type: PythonTask) {
   inputs.files(project.tasks.copyTestResources.outputs.files)
   inputs.files(project.tasks.copySource.outputs.files)
   inputs.files(project.tasks.install.outputs.files.singleFile)
+  inputs.files(project.tasks.buildConfiguration.outputs.files)
 
   def pyTestXmlReportFile =  "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/pytest-report.xml"
   def pyTestHtmlReportFile = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/pytest-report.html"

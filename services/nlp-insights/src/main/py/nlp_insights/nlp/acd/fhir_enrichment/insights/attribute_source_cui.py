@@ -96,8 +96,9 @@ class AnnotationContext(NamedTuple):
     used to locate source cuis in the specified section of the response.
 
     If no matching attributes are found, then concepts in the specified
-    concept list are searched, with matching concepts returned. The fallback is
-    intended to cover two cases.
+    concept fallback list are searched, with matching concepts returned.
+
+    The fallback is intended to be used in two cases.
     1) There is no acd attribute that is created for concepts we want to detect or
     2) ACD did not find an attribute, but were willing to accept less accuracy from
        concepts. For example if we are enriching something and are really sure that

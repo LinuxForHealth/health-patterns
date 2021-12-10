@@ -16,7 +16,6 @@ from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptR
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
 from nlp_insights.nlp.abstract_nlp_service import NLPService, NLPServiceError
 from nlp_insights.nlp.nlp_config import QUICK_UMLS_NLP_CONFIG
-from nlp_insights.nlp.nlp_response import NlpResponse, NlpCui
 from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights.create_condition import (
     create_conditions_from_insights,
 )
@@ -27,6 +26,7 @@ from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights.update_codeable_concept
     update_codeable_concepts_and_meta_with_insights,
     NlpConceptRef,
 )
+from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse, QuickUmlsConcept
 from nlp_insights.umls.semtype_lookup import get_names_from_type_ids
 
 
@@ -37,17 +37,19 @@ class _ResultEntry(NamedTuple):
     """Tracks nlp input and output"""
 
     text_source: UnstructuredText
-    nlp_output: NlpResponse
+    nlp_output: QuickUmlsResponse
 
 
-def create_nlp_response(server_response_concepts: List[Dict[str, Any]]) -> NlpResponse:
-    """Converts a json response from the quickUmls server to an NlpResponse
+def create_nlp_response(
+    server_response_concepts: List[Dict[str, Any]]
+) -> QuickUmlsResponse:
+    """Converts a json response from the quickUmls server to an object
 
     The server's response is a list of concept objects, each of which must
     have a UMLS cui and optionally other fields as well.
     """
-    nlp_cuis = [
-        NlpCui(
+    concepts = [
+        QuickUmlsConcept(
             cui=concept["cui"],
             covered_text=concept["ngram"] if "ngram" in concept else "",
             begin=concept["start"] if "start" in concept else 0,
@@ -63,7 +65,7 @@ def create_nlp_response(server_response_concepts: List[Dict[str, Any]]) -> NlpRe
         for concept in server_response_concepts
         if "cui" in concept
     ]
-    return NlpResponse(nlp_cuis=nlp_cuis)
+    return QuickUmlsResponse(concepts=concepts)
 
 
 class QuickUMLSService(NLPService):
@@ -76,9 +78,7 @@ class QuickUMLSService(NLPService):
         self.quick_umls_url = config["config"]["endpoint"]
         self.nlp_config = QUICK_UMLS_NLP_CONFIG
 
-    def _run_nlp(self, text: str) -> NlpResponse:
-        logger.info("Calling QUICKUMLS-%s with text %s", self.config_name, text)
-
+    def _run_nlp(self, text: str) -> QuickUmlsResponse:
         request_body = {"text": text}
         try:
             resp = requests.post(self.quick_umls_url, json=request_body)
