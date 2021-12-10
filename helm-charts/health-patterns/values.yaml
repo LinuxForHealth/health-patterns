@@ -52,8 +52,8 @@ oidc:
     secret: &oidc_client_secret replace-me
 
 nifikop:
-  disabled: &nifikopDisabled true
-  enabled: &nifikopEnabled false
+  disabled: &nifikopDisabled false
+  enabled: &nifikopEnabled true
 
 ascvd:
   enabled: true
@@ -293,6 +293,7 @@ nifi2: # NifiKop based Nifi
     class: *ingressClass
     hostname: *hostname
   service:
+    protocol: https
     port: 8443
   storageClassName: ibmc-vpc-block-metro-10iops-tier
   dataflow:
