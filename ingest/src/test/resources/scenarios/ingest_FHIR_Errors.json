@@ -40,7 +40,9 @@
             "url":"${expose_kafka}?topic=${kafka.ingestion.topic}",
             "operation": "POST",           
                 "request": {
-                "headers" : { "Content-Type": "application/json","DeidentifyData": "false" },
+                "headers" : { "Content-Type": "application/json",
+                              "DeidentifyData": "false",
+                              "RunFHIRDataQuality": "false" },
                     "body":  "${3}" },            
             "verify": {
                 "status": 200

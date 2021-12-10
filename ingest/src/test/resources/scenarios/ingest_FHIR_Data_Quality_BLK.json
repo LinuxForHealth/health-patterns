@@ -1,30 +1,21 @@
 {
-    "scenarioName": "********ingest_FHIR********",
+    "scenarioName": "********ingest_FHIR_Data_Quality_BLK********",
     "ignoreStepFailures": false,
     "steps": [ 
         {
             "name": "ingestPatient",
-            "url": "${expose_kafka}?topic=${kafka.ingestion.topic}",
+            "url": "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
             "operation": "POST",           
                 "request": {
-                "headers" : { "Content-Type": "application/json",
-                "DeidentifyData": "false",
-                "RunFHIRDataQuality": "false"},
+                "headers" : { 
+                    "Content-Type": "application/json",
+                    "DeidentifyData": "false",
+                    "RunFHIRDataQuality": "${3}"},
                     "body":  "${0}" },            
             "verify": {
-                "status": 200
-                }
-        },
-               
-        {
-            "name": "waitForIngestion",
-            "url": "utilities.ZerocodeUtilities",
-            "method": "secondsDelay",
-            "request": 15,
-            "verify": {
+               "status": 200
             }
         },
-        
         {
             "name": "verifyPatientIngestion",
             "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
@@ -35,11 +26,13 @@
                 "status": 200,
                 "body": {
                     "resourceType": "Bundle",
-                    "total" : 1 
+                    "total" : 1,
+                    "entry[0]": {
+                        "fullUrl": "$CONTAINS.STRING:${$.ingestPatient.response.body.entry[0].resource.id}"
+                     } 
                 }
             }
         },   
-
         {
             "name": "deletePatientOnPhiFHIR",
             "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
@@ -61,7 +54,10 @@
     ],
     "parameterized": {
         "csvSource":[
-            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738"        
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738,true",
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738,false",
+            "${JSON.FILE:Patients/Salina386_Buckridge80.json},Salina386,Buckridge80,true",
+            "${JSON.FILE:Patients/Salina386_Buckridge80.json},Salina386,Buckridge80,false"       
         ]
     }
 }

@@ -9,7 +9,8 @@
                 "request": {
                 "headers" : { "Content-Type": "application/json", 
                                "ResolveTerminology": "${3}",
-                               "DeidentifyData": "true" },
+                               "DeidentifyData": "true",
+                               "RunFHIRDataQuality": "false" },
                     "body":  "${0}" },            
             "verify": {
                 "status": 200,

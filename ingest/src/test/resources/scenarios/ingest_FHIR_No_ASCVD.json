@@ -8,8 +8,9 @@
             "operation": "POST",           
                 "request": {
                 "headers" : { "Content-Type": "application/json",
-                "DeidentifyData": "false",
-                "RunASCVD" : "true"},
+                     "DeidentifyData": "false",
+                     "RunASCVD" : "true",
+                     "RunFHIRDataQuality": "false"},
                     "body":  "${0}" },            
             "verify": {
                 "status": 200
