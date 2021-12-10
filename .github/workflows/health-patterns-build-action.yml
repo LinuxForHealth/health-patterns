@@ -42,6 +42,16 @@ jobs:
              -m=${{github.event_name}} \
              --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
              --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+             
+    - name: Build FHIR Trigger
+      if: ${{contains( steps.filecheck.outputs.changed_files ,'services/fhir-trigger')}}
+      run: |
+           echo "Running FHIR Trigger build"
+           .github/workflows/scripts/build-service.sh \
+             -s=fhir-trigger \
+             -m=${{github.event_name}} \
+             --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
+             --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Commit all changes and update Helm repo 
       if: ${{steps.filecheck.outputs.changed_files}}
