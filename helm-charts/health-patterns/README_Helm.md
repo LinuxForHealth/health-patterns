@@ -16,7 +16,7 @@ Alvearie Health Patterns is comprised of multiple components described in more d
 
 ## Installation
 
-### Create a new namespace (Optional)
+## Create a new namespace (Optional)
 
 It is recommended, though not required, that you create a namespace before installing the chart in order to prevent the various artifacts that will be installed by it from mixing from the rest of the artifacts in your Kubernetes cluster, in an effort to make it easier to manage them.
 
@@ -27,7 +27,7 @@ kubectl config set-context --current --namespace=alvearie
 **NOTE:** The length of a namespace name must be less than or equal to **20 characters**.  Using a name that is longer than 20 characters will result in a failure to deploy the Nifi pod due to a certificate issue (the error will be visible in the NifiKop log).
 
 
-### Checkout the Code
+## Checkout the Code
 
 Alternatively, you can clone this Git repository deploy the chart from the source:
 
@@ -37,7 +37,7 @@ cd health-patterns/helm-charts/health-patterns
 helm dependency update
 ```
 
-### Configure Nifikop
+## Configure Nifikop
 
 This chart relies on [NifiKop](https://orange-opensource.github.io/nifikop/) to deploy Apache Nifi.  This relies on a one-time setup for your cluster to install the Custom Resource Definitions properly.  See [Getting Started](https://orange-opensource.github.io/nifikop/docs/2_setup/1_getting_started) for instructions on how to setup your cluster.
 
@@ -80,9 +80,7 @@ oidc:
 
 **NOTE:** You will also need to register your OIDC callback (`https://<<HOST_NAME>>:443/nifi-api/access/oidc/callback`) with your OIDC service.  For IBM App ID, this is located under Manage Authentication->Authentication Settings->Add Web Redirect URLs.
 
-## Required parameters
-
-### Ingress parameters
+## Ingress parameters
 
 We recommend exposing the services in this chart via ingress.  This provides the most robust and secure approach.  If you choose to expose services via port-forwarding, load-balancer, or other options, please be careful to ensure proper security.
 
@@ -95,7 +93,7 @@ ingress:
 
 This value should be updated in the values file you use to deploy your pipeline.
 
-### Storage class
+## Storage class
 And finally, if you are deploying to a non-IBM cloud, you will need to change the storage class used by Nifi by updating the following parameter:
 
 ```
@@ -104,7 +102,7 @@ nifi2:
 ```
 
 
-### Ingestion vs Enrichment
+## Ingestion vs Enrichment
 
 There are two variations of the health-patterns Helm chart currently supported:
 - Clinical Ingestion - This variation will deploy an entire pipeline ready to normalize, validate, enrich, and persist FHIR data to a FHIR server.  This variation typically involves a RELEASE_NAME of `ingestion` and requires `ingestion.enabled` and `enrichment.enabled` to be set to `true`.
@@ -113,14 +111,14 @@ There are two variations of the health-patterns Helm chart currently supported:
 **NOTE:** These parameters cannot be set via helm install command parameters via "--set" as the variables will not be de-referenced in the proper order to propagate to later uses of this parameter.  Instead, update the values.yaml with your preference.
 
 
-### Deploy
+# Deploy
 
 Finally, to deploy this chart, run:
 
 `helm install <<RELEASE_NAME>> .`
 
 
-### Alternative deployment instructions (insecure)
+## Alternative deployment instructions (insecure)
 
 The instructions listed above are the recommended steps for deploying Health Patterns Ingestion/Enrichment flows.  However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service.  If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Ingestion or Enrichment.  
 
@@ -134,8 +132,8 @@ To deploy:
 
 ```
 nifikop:
-  disabled: &nifikopDisabled **true**
-  enabled: &nifikopEnabled **false**
+  disabled: &nifikopDisabled true
+  enabled: &nifikopEnabled false
 ```
 
 3) When deploying the helm chart, you will need to supply the variation.yaml (ingestion/enrichment) indicating which you wish to deploy:
@@ -156,12 +154,12 @@ For Clinical Enrichment, update:
 
 
 
-### Using the Chart
+## Using the Chart
 
 After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](../../README.md).
 
 
-### Optional: Deploy a FHIR UI
+## Optional: Deploy a FHIR UI
 
 Follow the instructions for deploying the [Alvearie Patient Browser App](https://github.com/Alvearie/patient-browser/tree/master/chart#installation) if you need a FHIR UI.
 
