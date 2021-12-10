@@ -33,7 +33,9 @@
             "url":"${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
             "operation": "POST",           
                 "request": {
-                "headers" : { "Content-Type": "application/json","DeidentifyData": "false" },
+                "headers" : { "Content-Type": "application/json",
+                              "DeidentifyData": "false",
+                              "RunFHIRDataQuality": "false" },
                     "body":  "${3}" },            
             "verify": {
                 "status": 200

@@ -9,7 +9,8 @@
                 "request": {
                 "headers" : { "Content-Type": "application/json", 
                                "AddNLPInsights": "${3}",
-                               "DeidentifyData": "false" },
+                               "DeidentifyData": "false",
+                               "RunFHIRDataQuality": "false" },
                     "body":  "${0}" },            
             "verify": {
                 "status": 200
