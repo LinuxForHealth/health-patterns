@@ -134,7 +134,7 @@ then
    cat target/surefire-reports/categories.ASCVDIngestionBLKTests.txt
    cat target/surefire-reports/categories.NLPIngestionTests.txt
    cat target/surefire-reports/categories.NLPIngestionBLKTests.txt
-   cat target/surefire-reports/categories.FHIRDataQualityBLKTest.txt   
+   cat target/surefire-reports/categories.FHIRDataQualityBLKTests.txt   
     
 fi   
 echo "*************************************" 
