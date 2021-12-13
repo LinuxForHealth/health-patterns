@@ -6,6 +6,7 @@
 ## This utility will
 ##   Build a service from source
 ##   Generate a docker container
+##   Push the docker container to the proper registry
 ##   Update helm charts referencing the docker container
 ##   Rebuild the helm package
 ##   Reindex the helm repository
@@ -33,6 +34,8 @@
 ##     --docker-token: (Optional) The docker token for docker-user used to authenticate to docker hub.  Required for mode=push. Should be a token capable of pushing to "alvearie" org in docker hub.
 ##
 ##     --private-docker-user: (Optional) The user name for your docker hub account.  Allows different usernames between github and docker.  Either github-user or private-docker-user is required.
+##
+##     --private-docker-token: (Required for private docker push) The docker token for your private docker hub account.
 ##################################################################################
 
 
@@ -71,15 +74,19 @@ for i in "$@"; do
       shift # past argument=value
       ;;
     --docker-user=*)
-      DOCKER_USER="${i#*=}"
+      ALVEARIE_DOCKER_USER="${i#*=}"
       shift # past argument=value
       ;;
     --docker-token=*)
-      DOCKER_TOKEN="${i#*=}"
+      ALVEARIE_DOCKER_TOKEN="${i#*=}"
       shift # past argument=value
       ;;
     --private-docker-user=*)
       PRIVATE_DOCKER_USER="${i#*=}"
+      shift # past argument=value
+      ;;
+    --private-docker-token=*)
+      PRIVATE_DOCKER_TOKEN="${i#*=}"
       shift # past argument=value
       ;;
     *)
@@ -108,14 +115,16 @@ if [ -z "$ORG" ]; then
   then
     if [[ -z "$PRIVATE_DOCKER_USER" ]]
     then
-      USER="${GITHUB_USER}"
+      DOCKER_USER="${GITHUB_USER}"
     else
-      USER="${PRIVATE_DOCKER_USER}"
+      DOCKER_USER="${PRIVATE_DOCKER_USER}"
     fi
-    ORG=${USER}
+    ORG=${DOCKER_USER}
+    DOCKER_TOKEN=${PRIVATE_DOCKER_TOKEN}
   elif [[ ${MODE} == 'push' ]]
   then
-    USER=${DOCKER_USER}  
+    DOCKER_USER=${ALVEARIE_DOCKER_USER}
+    DOCKER_TOKEN = ${ALVEARIE_DOCKER_TOKEN}
     ORG="alvearie"
   fi
 fi
@@ -175,14 +184,13 @@ docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 #####################################
 ## Push Docker image to docker hub ##
 #####################################
-if [ ${MODE} == 'push' ]; then
-  printf "\nPushing docker image to repostiory: ${ORG}/${REPOSITORY}:{$TAG}\n"
 
-  # Login to Docker
-  echo  ${DOCKER_TOKEN} | docker login --username ${USER} --password-stdin
+printf "\nPushing docker image to repository: ${ORG}/${REPOSITORY}:${TAG}\n"
+
+# Login to Docker
+echo  ${DOCKER_TOKEN} | docker login --username ${DOCKER_USER} --password-stdin
   
-  docker push -q ${ORG}/${REPOSITORY}:${TAG}
-fi
+docker push -q ${ORG}/${REPOSITORY}:${TAG}
 
 
 ######################################
