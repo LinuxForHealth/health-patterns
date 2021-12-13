@@ -38,7 +38,7 @@ then
   sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
 
   # deploy enrich
-  helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/enrich/src/test/resources/configs/NLP-IVT-values.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set expose-kafka.requestTimeout=60 --wait --timeout $HELM_TIMEOUT
+  helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/enrich/src/test/resources/configs/NLP-IVT-values.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set fhir-data-quality.requestTimeout=60 --wait --timeout $HELM_TIMEOUT
 elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
 
