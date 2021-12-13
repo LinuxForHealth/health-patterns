@@ -43,7 +43,7 @@ elif [ $CLUSTER_NAMESPACE = "tst-ingest" ]
 then
 
    # deploy ingestion
-   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout $HELM_TIMEOUT --set fhir-data-quality.enabled=true --set fhir-data-quality.requestTimeout=60
+   helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout $HELM_TIMEOUT --set fhir-data-quality.enabled=true --set fhir-data-quality.requestTimeout=60 --set expose-kafka.requestTimeout=60
 fi
 
 
