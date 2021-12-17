@@ -157,41 +157,6 @@ After running the command above, you will see notes that give you information ab
 **IMPORTANT NOTE** The release name for the enrichment pipeline must be **enrich** (see [Advanced topics](#advanced-topics) for additional information)
 
 
-#### Alternative deployment instructions (insecure)
-
-The instructions listed above are the recommended steps for deploying Health Patterns Enrichment flow. However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service. If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Enrichment.
-
-**NOTE:** Given the significant differences between the Nifikop-based deployment and this, it is not feasible to maintain both approaches targeting current Nifi dataflows. Therefore, using the insecure deployment will result in a snapshot of these flows current as of November 2021, but not updated since.
-
-First, setup deployment parameters:
-
-1) Update your ingress parameters as noted [here](#ingress-parameters).
-
-2) Update values.yaml with the following changes:
-
-```
-nifikop:
-  disabled: &nifikopDisabled true
-  enabled: &nifikopEnabled false
-```
-
-NOTE: Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `enrich`, you are required to update the clinical_enrichment.yaml file to correspond to the correct release name and bootstrapServers.
-
-```
-nifi:
-  extraContainers:
-    - name: post-start-setup
-      env:
-      - name: "RELEASE_NAME"
-        value: "enrich"
-
-fhir:
-  notifications:
-    kafka:
-      bootstrapServers: "enrich-kafka:9092"
-```
-
-
 Finally, to deploy run:
 
 `helm install enrich. -f clinical_enrichment.yaml`
@@ -289,27 +254,46 @@ Note that if the enrichment pattern is being used as part of the ingestion patte
 converted to FHIR (by ingestion) before it is allowed to run through the enrichment pipeline.
 Other data types (such as DICOM image data) are being considered but are currently not supported.
 
-#### Alternate configuration for Helm Chart
+
+#### Alternative deployment instructions (insecure)
+
+The instructions listed above are the recommended steps for deploying Health Patterns Enrichment flow. However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service. If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Enrichment.
+
+**NOTE:** Given the significant differences between the Nifikop-based deployment and this, it is not feasible to maintain both approaches targeting current Nifi dataflows. Therefore, using the insecure deployment will result in a snapshot of these flows current as of November 2021, but not updated since.
+
+First, setup deployment parameters:
+
+1) Update your ingress parameters as noted [here](#ingress-parameters).
+
+2) Update values.yaml with the following changes:
+
+```
+nifikop:
+  disabled: &nifikopDisabled true
+  enabled: &nifikopEnabled false
+```
+
+**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `enrich`, you are required to update the clinical_enrichment.yaml file to correspond to the correct release name and bootstrapServers.
+
+```
+nifi:
+  extraContainers:
+    - name: post-start-setup
+      env:
+      - name: "RELEASE_NAME"
+        value: "enrich"
+
+fhir:
+  notifications:
+    kafka:
+      bootstrapServers: "enrich-kafka:9092"
+```
+
+
+#### Advanced configuration for Helm Chart
 
 When deploying this chart, there are many configuration parameters specified in the values.yaml file.  These can all be overridden based on individual preferences.  To do so, you can create a secondary YAML file containing your changes and specify it to the `helm install` command to override default configuration.
 
-```
-helm install <<RELEASE_NAME>> . \
-    -f value_overrides.yaml \
-    -f clinical_enrichment.yaml
-```
+`helm install enrich . -f value_overrides.yaml`
 
 **NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter.
-
-**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `enrich`, you are required to update the corresponding values.yaml file to have the correct release name.  
-
-For enrichment, update the `RELEASE_NAME` environment variable in the `clinical_enrichment.yaml` file.  The value should be changed from _enrich_ to whatever release name you choose.
-
-```
-env:
-- name: "RELEASE_NAME"
-  value: "enrich"
-```
-
-In that same file, update the line
-- `bootstrapServers: "enrich-kafka:9092"` to include the correct Kafka broker, replacing _enrich_ with the correct release name.

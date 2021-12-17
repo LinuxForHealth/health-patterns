@@ -130,6 +130,36 @@ After running the command above, you will see notes that give you information ab
 **IMPORTANT NOTE** The release name for the ingestion pipeline must be **ingestion** (see [Advanced topics](#advanced-topics) for additional information)
 
 
+3) When deploying the helm chart, you will need to supply the variation.yaml (ingestion/enrichment) indicating which you wish to deploy:
+
+`helm install ingestion . -f clinical_ingestion.yaml`
+or
+`helm install enrich . -f clinical_enrichment.yaml`
+
+
+#### Uninstall/delete
+
+To uninstall/delete the <<RELEASE_NAME>> deployment, use:
+
+```
+helm delete <<RELEASE_NAME>>
+```
+
+Deletion of charts doesn't cascade to deleting associated `PersistedVolume`s and `PersistedVolumeClaims`s.
+To delete them:
+
+```bash
+kubectl delete pvc -l release=ingestion
+kubectl delete pv -l release=ingestion
+```
+
+## Using the pattern
+
+After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](../../README.md).
+
+## Advanced topics
+
+
 #### Alternative deployment instructions (insecure)
 
 The instructions listed above are the recommended steps for deploying Health Patterns Ingestion/Enrichment flows.  However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service.  If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Ingestion or Enrichment.  
@@ -176,34 +206,6 @@ fhir:
     kafka:
       bootstrapServers: "enrich-kafka:9092"
 ```
-
-
-3) When deploying the helm chart, you will need to supply the variation.yaml (ingestion/enrichment) indicating which you wish to deploy:
-
-`helm install ingestion . -f clinical_ingestion.yaml`
-or
-`helm install enrich . -f clinical_enrichment.yaml`
-
-
-#### Uninstall/delete
-
-To uninstall/delete the <<RELEASE_NAME>> deployment, use:
-
-```
-helm delete <<RELEASE_NAME>>
-```
-
-Deletion of charts doesn't cascade to deleting associated `PersistedVolume`s and `PersistedVolumeClaims`s.
-To delete them:
-
-```bash
-kubectl delete pvc -l release=ingestion
-kubectl delete pv -l release=ingestion
-```
-
-## Using the pattern
-
-After running the previous `helm install` command, you should get a set of instructions on how to access the various components of the chart and using the [Alvearie Clinical Ingestion pattern](../../README.md).
 
 
 ### Optional: Deploy a FHIR UI

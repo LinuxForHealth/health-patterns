@@ -156,35 +156,6 @@ After running the command above, you will see notes that give you information ab
 **IMPORTANT NOTE** The release name for the ingestion pipeline must be **ingestion** (see [Advanced topics](#advanced-topics) for additional information)
 
 
-#### Alternative deployment instructions (insecure)
-
-The instructions listed above are the recommended steps for deploying Health Patterns Ingestion flow. However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service. If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Ingestion.
-
-**NOTE:** Given the significant differences between the Nifikop-based deployment and this, it is not feasible to maintain both approaches targeting current Nifi dataflows. Therefore, using the insecure deployment will result in a snapshot of these flows current as of November 2021, but not updated since.
-
-First, setup deployment parameters:
-
-1) Update your ingress parameters as noted [here](#ingress-parameters).
-
-2) Update values.yaml with the following changes:
-
-```
-nifikop:
-  disabled: &nifikopDisabled true
-  enabled: &nifikopEnabled false
-```
-
-**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion`, you are required to update the clinical_ingestion.yaml file to correspond to the correct release name.
-
-```
-nifi:
-  extraContainers:
-    - name: post-start-setup
-      env:
-      - name: "RELEASE_NAME"
-        value: "ingest"
-```
-
 Finally, to deploy run:
 
 `helm install ingestion . -f clinical_ingestion.yaml`
@@ -243,6 +214,37 @@ By default, the Ingestion pattern will also deploy the Enrichment pipeline.  It 
 
 ## Advanced topics
 
+
+#### Alternative deployment instructions (insecure)
+
+The instructions listed above are the recommended steps for deploying Health Patterns Ingestion flow. However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service. If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Ingestion.
+
+**NOTE:** Given the significant differences between the Nifikop-based deployment and this, it is not feasible to maintain both approaches targeting current Nifi dataflows. Therefore, using the insecure deployment will result in a snapshot of these flows current as of November 2021, but not updated since.
+
+First, setup deployment parameters:
+
+1) Update your ingress parameters as noted [here](#ingress-parameters).
+
+2) Update values.yaml with the following changes:
+
+```
+nifikop:
+  disabled: &nifikopDisabled true
+  enabled: &nifikopEnabled false
+```
+
+**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion`, you are required to update the clinical_ingestion.yaml file to correspond to the correct release name.
+
+```
+nifi:
+  extraContainers:
+    - name: post-start-setup
+      env:
+      - name: "RELEASE_NAME"
+        value: "ingest"
+```
+
+
 #### FHIR Server configuration
 This pattern relies on a FHIR server for data persistence and retrieval.  It provides a basic configuration for the server but there are a number of advanced options that can be added or modified (for example, which backend database is used-Derby, DB2, PostgreSQL, etc.).  We suggest you consult the [FHIR documentation](https://github.com/ibm/fhir) for those options.
 
@@ -270,27 +272,15 @@ and
 --set fhir-deid.proxy.enabled=true
 ```
 
-#### Alternate configuration for Helm Chart
+
+
+#### Advanced configuration for Helm Chart
 
 When deploying this chart, there are many configuration parameters specified in the values.yaml file.  These can all be overridden based on individual preferences.  To do so, you can create a secondary YAML file containing your changes and specify it to the `helm install` command to override default configuration.
 
-```
-helm install <<RELEASE_NAME>> . \
-    -f value_overrides.yaml \
-    -f clinical_ingestion.yaml
-```
+`helm install ingestion . -f value_overrides.yaml`
 
 **NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter.
-
-**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion`, you are required to update the corresponding yaml file to have to the correct release name.  
-
-For ingestion, update the `RELEASE_NAME` environment variable in the `clinical_ingestion.yaml` file.  The value _ingestion_ should be changed to whatever release name you choose.
-
-```
-env:
-- name: "RELEASE_NAME"
-  value: "ingestion"
-```
 
 #### Kafka topics for the pipeline
 
