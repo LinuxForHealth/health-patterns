@@ -37,8 +37,6 @@ spec:
         nifi.security.user.oidc.client.id={{ .Values.nifi2.oidc.client.id }}
         nifi.security.user.oidc.client.secret={{ .Values.nifi2.oidc.client.secret }}
         nifi.security.user.oidc.preferred.jwsalgorithm=RS256
-{{ else }}
-        nifi.security.user.login.identity.provider=single-user-provider
 {{- end }}
       webProxyHosts:
         - {{ .Values.nifi2.ingress.hostname }}
