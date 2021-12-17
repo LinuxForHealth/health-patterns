@@ -156,11 +156,6 @@ After running the command above, you will see notes that give you information ab
 **IMPORTANT NOTE** The release name for the ingestion pipeline must be **ingestion** (see [Advanced topics](#advanced-topics) for additional information)
 
 
-Finally, to deploy run:
-
-`helm install ingestion . -f clinical_ingestion.yaml`
-
-
 #### Uninstall/delete
 
 To uninstall/delete the deployment, use:
@@ -232,6 +227,11 @@ nifikop:
   disabled: &nifikopDisabled true
   enabled: &nifikopEnabled false
 ```
+
+Finally, to deploy run:
+
+`helm install ingestion . -f clinical_ingestion.yaml`
+
 
 **NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion`, you are required to update the clinical_ingestion.yaml file to correspond to the correct release name.
 

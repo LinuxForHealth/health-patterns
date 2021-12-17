@@ -157,11 +157,6 @@ After running the command above, you will see notes that give you information ab
 **IMPORTANT NOTE** The release name for the enrichment pipeline must be **enrich** (see [Advanced topics](#advanced-topics) for additional information)
 
 
-Finally, to deploy run:
-
-`helm install enrich. -f clinical_enrichment.yaml`
-
-
 #### Uninstall/delete
 
 To uninstall/delete the deployment, use:
@@ -234,27 +229,6 @@ If you would like to turn off that save to FHIR action, you can change the value
 
 ## Advanced topics
 
-#### Synthetic data via Synthea
-
-  If you don't have data, you can create some synthetic clinical data to push. Synthetic patient data can be generated using the Synthea Patient Generator.  Download Synthea and run the following command (for more information on Synthea visit their [Github page](https://github.com/synthetichealth/synthea)):
-
-  `java -jar synthea-with-dependencies.jar -p 10`
-
-  This command will have created FHIR bundles for 10 patients with their clinical history and their corresponding medical providers.
-
-#### Kafka topics for the pipeline
-
-To submit data to the Enrichment pipeline, it needs to be posted to the configured Kafka topic. The Kafka topic to target depends on the pipeline you are running and the Nifi configuration. For example, in the Enrichment pattern the topic is called `patients.updated.out` as was used above.  This can be found and/or updated in the Nifi parameter context `enrichment parameter context` under the parameter `enrich.in`.
-
-The FHIR response with the requested modifications will be placed on a topic called `patient.enriched.out`, again found in the `enrichment parameter context` under the parameter `enrich.out`.
-
-#### Other data formats
-Currently, the enrichment pattern is designed to operate only on data in FHIR format.
-Note that if the enrichment pattern is being used as part of the ingestion pattern, then HL7 data will be
-converted to FHIR (by ingestion) before it is allowed to run through the enrichment pipeline.
-Other data types (such as DICOM image data) are being considered but are currently not supported.
-
-
 #### Alternative deployment instructions (insecure)
 
 The instructions listed above are the recommended steps for deploying Health Patterns Enrichment flow. However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service. If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Enrichment.
@@ -288,6 +262,32 @@ fhir:
     kafka:
       bootstrapServers: "enrich-kafka:9092"
 ```
+
+
+Finally, to deploy run:
+
+`helm install enrich. -f clinical_enrichment.yaml`
+
+
+#### Synthetic data via Synthea
+
+  If you don't have data, you can create some synthetic clinical data to push. Synthetic patient data can be generated using the Synthea Patient Generator.  Download Synthea and run the following command (for more information on Synthea visit their [Github page](https://github.com/synthetichealth/synthea)):
+
+  `java -jar synthea-with-dependencies.jar -p 10`
+
+  This command will have created FHIR bundles for 10 patients with their clinical history and their corresponding medical providers.
+
+#### Kafka topics for the pipeline
+
+To submit data to the Enrichment pipeline, it needs to be posted to the configured Kafka topic. The Kafka topic to target depends on the pipeline you are running and the Nifi configuration. For example, in the Enrichment pattern the topic is called `patients.updated.out` as was used above.  This can be found and/or updated in the Nifi parameter context `enrichment parameter context` under the parameter `enrich.in`.
+
+The FHIR response with the requested modifications will be placed on a topic called `patient.enriched.out`, again found in the `enrichment parameter context` under the parameter `enrich.out`.
+
+#### Other data formats
+Currently, the enrichment pattern is designed to operate only on data in FHIR format.
+Note that if the enrichment pattern is being used as part of the ingestion pattern, then HL7 data will be
+converted to FHIR (by ingestion) before it is allowed to run through the enrichment pipeline.
+Other data types (such as DICOM image data) are being considered but are currently not supported.
 
 
 #### Advanced configuration for Helm Chart

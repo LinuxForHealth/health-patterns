@@ -122,19 +122,12 @@ nifi2:
 The following Helm command will deploy the ingestion pattern.  The entire pipeline will be ready to normalize, validate, enrich, and finally persist FHIR data to a FHIR server.
 
 ```
-helm install ingestion .
+helm install <<RELEASE_NAME>> .
 ```
 
 After running the command above, you will see notes that give you information about the deployment, in particular, where the important services (e.g. FHIR, Nifi, expose-kafka) have been deployed.
 
 **IMPORTANT NOTE** The release name for the ingestion pipeline must be **ingestion** (see [Advanced topics](#advanced-topics) for additional information)
-
-
-3) When deploying the helm chart, you will need to supply the variation.yaml (ingestion/enrichment) indicating which you wish to deploy:
-
-`helm install ingestion . -f clinical_ingestion.yaml`
-or
-`helm install enrich . -f clinical_enrichment.yaml`
 
 
 #### Uninstall/delete
@@ -206,6 +199,12 @@ fhir:
     kafka:
       bootstrapServers: "enrich-kafka:9092"
 ```
+
+3) When deploying the helm chart, you will need to supply the variation.yaml (ingestion/enrichment) indicating which you wish to deploy:
+
+`helm install ingestion . -f clinical_ingestion.yaml`
+or
+`helm install enrich . -f clinical_enrichment.yaml`
 
 
 ### Optional: Deploy a FHIR UI
