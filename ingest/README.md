@@ -31,12 +31,16 @@ Within the [NiFi](https://github.com/apache/nifi) canvas, the Ingestion health p
 ## How to deploy
 
 #### Prerequisites
+
 These instructions assume that you have the following resources, tools, and configurations:
 
 - Kubernetes cluster 1.10+
 - Helm 3.0.0+
 - Access to ```kubectl```, the Kubernetes command line tool
 - PV provisioner support in the underlying infrastructure
+
+**Note:** If you don't have access to a kubernetes cluster, this pattern can also be [deployed to minikube](../helm-charts/health-patterns/README_minikube.md).
+
 
 #### Check out the code
 
@@ -57,6 +61,51 @@ kubectl create namespace alvearie
 kubectl config set-context --current --namespace=alvearie
 ```
 
+**NOTE:** The length of a namespace name must be less than or equal to **20 characters**.  Using a name that is longer than 20 characters will result in a failure to deploy the Nifi pod due to a certificate issue (the error will be visible in the NifiKop log).
+
+### Configure Nifikop
+
+This chart relies on [NifiKop](https://orange-opensource.github.io/nifikop/) to deploy Apache Nifi.  This relies on a one-time setup for your cluster to install the Custom Resource Definitions properly.  See [Getting Started](https://orange-opensource.github.io/nifikop/docs/2_setup/1_getting_started) for instructions on how to setup your cluster.
+
+In addition, using NifiKop requires a NifiKop controller to be deployed in the namespace prior to deploying the Health Patterns Helm chart.  This allows the NifiKop custom resources to be managed correctly, and by deploying separately guarantees the controller remains active when custom resources are deleted, allowing proper clean-up.
+
+To deploy a NifiKop controller to your namespace, run:
+
+```
+helm repo add orange-incubator https://orange-kubernetes-charts-incubator.storage.googleapis.com/
+
+helm repo update
+
+helm install nifikop \
+    orange-incubator/nifikop \
+    --namespace=alvearie \
+    --version 0.7.1 \
+    --set image.tag=v0.7.1-release \
+    --set resources.requests.memory=256Mi \
+    --set resources.requests.cpu=250m \
+    --set resources.limits.memory=256Mi \
+    --set resources.limits.cpu=250m \
+    --set namespaces={"alvearie"}
+```
+
+### User Authentication - OpenID Connect
+
+Nifikop configures a secure Nifi instance which relies on [OIDC](https://openid.net/connect/) to authenticate user access.  This requires you to separately setup an OIDC service and supply the correct configuration information to this Helm chart.  For example, [App Id](https://www.ibm.com/cloud/app-id) is available for IBM Cloud instances.
+
+Once configured, update the values.yaml to populate the following parameters.
+
+```
+oidc:
+  users - a list of identity/name values representing the user(s) you want configured for access.  The identity must match the login identity from your OIDC endpoint, and the name should be lower-case and contain no spaces.
+  discovery:
+    url - The URL of your OIDC discovery service
+  client:
+    id - The client ID of your OIDC discovery service
+    secret - The client secret of your OIDC discovery service
+```
+
+**NOTE:** You will also need to register your OIDC callback (`https://<<external-hostname>>:443/nifi-api/access/oidc/callback`) with your OIDC service.  For IBM App ID, this is located under Manage Authentication->Authentication Settings->Add Web Redirect URLs.
+
 #### Ingress parameters
 
 We recommend exposing the services in this chart via ingress.  This provides the most robust and secure approach.  If you choose to expose services via port-forwarding, load-balancer, or other options, please be careful to ensure proper security.
@@ -68,7 +117,7 @@ Ingress requires a specific ingress class to be used.  Different cloud providers
 
 You will also need to provide a hostname for your ingress.  What this is and how it gets created will be unique to your cloud infrastructure.  
 
-Once you know these values, use both of them to update the `ingress` section of the file ```helm-charts/health-patterns/values.yaml```  as shown below.  Note that the ingress class currently defaults to `public-iks-k8s-nginx` so if that is your choice, no update to the ingress class is needed.  However, the ingress hostname **MUST** be updated.
+Once you know these values, use both of them to update the `ingress` section of the file ```helm-charts/health-patterns/values.yaml```  as shown below. Note that the ingress class currently defaults to `public-iks-k8s-nginx` so if that is your choice, no update to the ingress class is needed.  However, the ingress hostname **MUST** be updated.
 
 ```
 ingress:
@@ -87,22 +136,41 @@ ingress:
 ```
 
 
+### Storage class
+And finally, if you are deploying to a non-IBM cloud, you will need to change the storage class used by Nifi by updating the following parameter:
+
+```
+nifi2:
+  storageClassName - The storage class you wish to use for persisting Nifi.
+```
+
 #### Deployment
 The following Helm command will deploy the ingestion pattern.  The entire pipeline will be ready to normalize, validate, enrich, and finally persist FHIR data to a FHIR server.
+
 ```
-helm install ingestion .  -f clinical_ingestion.yaml
+helm install ingestion .
 ```
+
 After running the command above, you will see notes that give you information about the deployment, in particular, where the important services (e.g. FHIR, Nifi, expose-kafka) have been deployed.
 
 **IMPORTANT NOTE** The release name for the ingestion pipeline must be **ingestion** (see [Advanced topics](#advanced-topics) for additional information)
 
+
 #### Uninstall/delete
 
 To uninstall/delete the deployment, use:
+
 ```
 helm delete ingestion
 ```
 
+Deletion of charts doesn't cascade to deleting associated `PersistedVolume`s and `PersistedVolumeClaims`s.
+To delete them:
+
+```bash
+kubectl delete pvc -l release=ingestion
+kubectl delete pv -l release=ingestion
+```
 
 ## Using the pattern
 
@@ -141,6 +209,41 @@ By default, the Ingestion pattern will also deploy the Enrichment pipeline.  It 
 
 ## Advanced topics
 
+
+#### Alternative deployment instructions (insecure)
+
+The instructions listed above are the recommended steps for deploying Health Patterns Ingestion flow. However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service. If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Ingestion.
+
+**NOTE:** Given the significant differences between the Nifikop-based deployment and this, it is not feasible to maintain both approaches targeting current Nifi dataflows. Therefore, using the insecure deployment will result in a snapshot of these flows current as of November 2021, but not updated since.
+
+First, setup deployment parameters:
+
+1) Update your ingress parameters as noted [here](#ingress-parameters).
+
+2) Update values.yaml with the following changes:
+
+```
+nifikop:
+  disabled: &nifikopDisabled true
+  enabled: &nifikopEnabled false
+```
+
+**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion`, you are required to update the clinical_ingestion.yaml file to correspond to the correct release name.
+
+```
+nifi:
+  extraContainers:
+    - name: post-start-setup
+      env:
+      - name: "RELEASE_NAME"
+        value: "ingest"
+```
+
+Finally, to deploy run:
+
+`helm install ingestion . -f clinical_ingestion.yaml`
+
+
 #### FHIR Server configuration
 This pattern relies on a FHIR server for data persistence and retrieval.  It provides a basic configuration for the server but there are a number of advanced options that can be added or modified (for example, which backend database is used-Derby, DB2, PostgreSQL, etc.).  We suggest you consult the [FHIR documentation](https://github.com/ibm/fhir) for those options.
 
@@ -152,7 +255,7 @@ This pattern relies on a FHIR server for data persistence and retrieval.  It pro
 
   This command will have created FHIR bundles for 10 patients with their clinical history and their corresponding medical providers.
 
-### Deploy a FHIR UI
+### Optional: Deploy a FHIR UI
 
 Follow the instructions for deploying the [Alvearie Patient Browser App](https://github.com/Alvearie/patient-browser/tree/master/chart#installation) if you need a FHIR UI.
 
@@ -168,27 +271,15 @@ and
 --set fhir-deid.proxy.enabled=true
 ```
 
-#### Alternate configuration for Helm Chart
+
+
+#### Advanced configuration for Helm Chart
 
 When deploying this chart, there are many configuration parameters specified in the values.yaml file.  These can all be overridden based on individual preferences.  To do so, you can create a secondary YAML file containing your changes and specify it to the `helm install` command to override default configuration.
 
-```
-helm install <<RELEASE_NAME>> . \
-    -f value_overrides.yaml \
-    -f clinical_ingestion.yaml
-```
+`helm install ingestion . -f value_overrides.yaml`
 
 **NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter.
-
-**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion`, you are required to update the corresponding yaml file to have to the correct release name.  
-
-For ingestion, update the `RELEASE_NAME` environment variable in the `clinical_ingestion.yaml` file.  The value _ingestion_ should be changed to whatever release name you choose.
-
-```
-env:
-- name: "RELEASE_NAME"
-  value: "ingestion"
-```
 
 #### Kafka topics for the pipeline
 

@@ -12,10 +12,12 @@ spec:
   zkPath: "/nifi"
   clusterImage: {{ .Values.nifi2.image.repository }}:{{ .Values.nifi2.image.tag }}
   oneNifiNodePerNode: false
+{{- if .Values.nifi2.user }}
   managedAdminUsers:
 {{- range $u := .Values.nifi2.user }}
   - identity: {{ $u.identity }}
     name: {{ $u.name }}
+{{- end }}
 {{- end }}
   propagateLabels: true
   nifiClusterTaskSpec:
@@ -23,17 +25,19 @@ spec:
   readOnlyConfig:
     # NifiProperties configuration that will be applied to the node.
     nifiProperties:
-      # Additionnals nifi.properties configuration that will override the one produced based
+      # Additional nifi.properties configuration that will override the one produced based
       # on template and configurations.
       overrideConfigs: |
         nifi.security.identity.mapping.pattern.dn=CN=([^,]*)(?:, (?:O|OU)=.*)?
         nifi.security.identity.mapping.transform.dn=NONE
         nifi.security.identity.mapping.value.dn=$1
+        nifi.nar.library.autoload.directory=/opt/nifi/extensions
+{{- if .Values.nifi2.oidc }}
         nifi.security.user.oidc.discovery.url={{ .Values.nifi2.oidc.discovery.url }}
         nifi.security.user.oidc.client.id={{ .Values.nifi2.oidc.client.id }}
         nifi.security.user.oidc.client.secret={{ .Values.nifi2.oidc.client.secret }}
         nifi.security.user.oidc.preferred.jwsalgorithm=RS256
-        nifi.nar.library.autoload.directory=/opt/nifi/extensions
+{{- end }}
       webProxyHosts:
         - {{ .Values.nifi2.ingress.hostname }}
   nodeConfigGroups:
@@ -116,18 +120,20 @@ spec:
       nodeConfigGroup: "default_group"
   listenersConfig:
     internalListeners:
-      - type: "https"
-        name: "https"
-        containerPort: {{ .Values.nifi2.service.port}}
+      - type: "{{ .Values.nifi2.service.protocol }}"
+        name: "{{ .Values.nifi2.service.protocol }}"
+        containerPort: {{ .Values.nifi2.service.port }}
       - type: "cluster"
         name: "cluster"
         containerPort: 6007
       - type: "s2s"
         name: "s2s"
         containerPort: 10000
+{{- if eq $.Values.nifi2.service.protocol "https" }}
     sslSecrets:
       tlsSecretName: {{ .Release.Namespace }}-nifikop
       create: true
+{{- end }}
   initContainers:
     # This init container will install the custom NiFi Processors (packed in the proper NAR format).
     # The NARs will be copied to a shared volume, and the customLibPath will be set to the location
