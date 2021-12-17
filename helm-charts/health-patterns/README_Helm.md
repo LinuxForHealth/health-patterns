@@ -10,22 +10,11 @@ Alvearie Health Patterns is comprised of multiple components described in more d
 
 - Kubernetes cluster 1.10+
 - Helm 3.0.0+
-- PV provisioner support in the underlying infrastructure.
+- PV provisioner support in the underlying infrastructure
 
 **Note:** If you don't have access to a kubernetes cluster, this pattern can also be [deployed to minikube](README_minikube.md).
 
 ## Installation
-
-### Create a new namespace (Optional)
-
-It is recommended, though not required, that you create a namespace before installing the chart in order to prevent the various artifacts that will be installed by it from mixing from the rest of the artifacts in your Kubernetes cluster, in an effort to make it easier to manage them.
-
-```bash
-kubectl create namespace alvearie
-kubectl config set-context --current --namespace=alvearie
-```
-**NOTE:** The length of a namespace name must be less than or equal to **20 characters**.  Using a name that is longer than 20 characters will result in a failure to deploy the Nifi pod due to a certificate issue (the error will be visible in the NifiKop log).
-
 
 ### Checkout the Code
 
@@ -36,6 +25,20 @@ git clone https://github.com/Alvearie/health-patterns.git
 cd health-patterns/helm-charts/health-patterns
 helm dependency update
 ```
+
+Note: by changing the directory as shown above, you will be in the right place for future file access.
+
+### Create a new namespace (Optional)
+
+Please note that although this is step is optional, it is highly recommended that you create a new namespace in your Kubernetes cluster before installing the pattern.  This will help prevent the various artifacts it will install from mixing with other artifacts that might already be present in your Kubernetes cluster.  To create a new namespace called ```alvearie``` and make it your default for future commands:
+
+```bash
+kubectl create namespace alvearie
+kubectl config set-context --current --namespace=alvearie
+```
+
+**NOTE:** The length of a namespace name must be less than or equal to **20 characters**.  Using a name that is longer than 20 characters will result in a failure to deploy the Nifi pod due to a certificate issue (the error will be visible in the NifiKop log).
+
 
 ### Configure Nifikop
 
@@ -80,18 +83,35 @@ oidc:
 
 **NOTE:** You will also need to register your OIDC callback (`https://<<HOST_NAME>>:443/nifi-api/access/oidc/callback`) with your OIDC service.  For IBM App ID, this is located under Manage Authentication->Authentication Settings->Add Web Redirect URLs.
 
-### Ingress parameters
+#### Ingress parameters
 
 We recommend exposing the services in this chart via ingress.  This provides the most robust and secure approach.  If you choose to expose services via port-forwarding, load-balancer, or other options, please be careful to ensure proper security.
 
-In order to deploy via ingress, you will need to identify:
+Ingress requires a specific ingress class to be used.  Different cloud providers rely on different ingress classes, so choose the one that matches your cloud provider.  For example, some possible choices might be:
+  - IBM: public-iks-k8s-nginx
+  - Azure: addon-http-application-routing
+  - AWS: nginx
+
+You will also need to provide a hostname for your ingress.  What this is and how it gets created will be unique to your cloud infrastructure.  
+
+Once you know these values, use both of them to update the `ingress` section of the file ```helm-charts/health-patterns/values.yaml```  as shown below. Note that the ingress class currently defaults to `public-iks-k8s-nginx` so if that is your choice, no update to the ingress class is needed.  However, the ingress hostname **MUST** be updated.
 
 ```
 ingress:
-  hostname - Defined by the ingress controller and cloud infrastructure. This is unique to the cloud environment you are using.
+  enabled: &ingressEnabled true
+  class: &ingressClass public-iks-k8s-nginx
+  hostname: &hostname <<external-hostname>>
 ```
 
-This value should be updated in the values file you use to deploy your pipeline.
+For example, to deploy in the IBM Cloud environment, we would add
+
+```
+ingress:
+  enabled: &ingressEnabled true
+  class: &ingressClass public-iks-k8s-nginx
+  hostname: &hostname <<your-ibm-hostname>>
+```
+
 
 ### Storage class
 And finally, if you are deploying to a non-IBM cloud, you will need to change the storage class used by Nifi by updating the following parameter:
@@ -101,21 +121,14 @@ nifi2:
   storageClassName - The storage class you wish to use for persisting Nifi.
 ```
 
+#### Deployment
+The following Helm command will deploy the ingestion pattern.  The entire pipeline will be ready to normalize, validate, enrich, and finally persist FHIR data to a FHIR server.
+```
+helm install ingestion .
+```
+After running the command above, you will see notes that give you information about the deployment, in particular, where the important services (e.g. FHIR, Nifi, expose-kafka) have been deployed.
 
-### Ingestion vs Enrichment
-
-There are two variations of the health-patterns Helm chart currently supported:
-- Clinical Ingestion - This variation will deploy an entire pipeline ready to normalize, validate, enrich, and persist FHIR data to a FHIR server.  This variation typically involves a RELEASE_NAME of `ingestion` and requires `ingestion.enabled` and `enrichment.enabled` to be set to `true`.
-- Clinical Enrichment - This variation will deploy a data enrichment pipeline aimed at consuming FHIR data and returning an updated FHIR response with the requested modifications. This variation typically involves a RELEASE_NAME of `enrich` and is enabled by setting the Helm value of `enrichment.enabled` to `true`.
-
-**NOTE:** These parameters cannot be set via helm install command parameters via "--set" as the variables will not be de-referenced in the proper order to propagate to later uses of this parameter.  Instead, update the values.yaml with your preference.
-
-
-## Deploy
-
-Finally, to deploy this chart, run:
-
-`helm install <<RELEASE_NAME>> .`
+**IMPORTANT NOTE** The release name for the ingestion pipeline must be **ingestion** (see [Advanced topics](#advanced-topics) for additional information)
 
 
 ### Alternative deployment instructions (insecure)
