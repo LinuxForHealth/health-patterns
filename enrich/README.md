@@ -79,14 +79,14 @@ helm repo update
 
 helm install nifikop \
     orange-incubator/nifikop \
-    --namespace=<<NAMESPACE>> \
+    --namespace=alvearie \
     --version 0.7.1 \
     --set image.tag=v0.7.1-release \
     --set resources.requests.memory=256Mi \
     --set resources.requests.cpu=250m \
     --set resources.limits.memory=256Mi \
     --set resources.limits.cpu=250m \
-    --set namespaces={"<<NAMESPACE>>"}
+    --set namespaces={"alvearie"}
 ```
 
 ### User Authentication - OpenID Connect
@@ -105,7 +105,7 @@ oidc:
     secret - The client secret of your OIDC discovery service
 ```
 
-**NOTE:** You will also need to register your OIDC callback (`https://<<HOST_NAME>>:443/nifi-api/access/oidc/callback`) with your OIDC service.  For IBM App ID, this is located under Manage Authentication->Authentication Settings->Add Web Redirect URLs.
+**NOTE:** You will also need to register your OIDC callback (`https://<<external-hostname>>:443/nifi-api/access/oidc/callback`) with your OIDC service.  For IBM App ID, this is located under Manage Authentication->Authentication Settings->Add Web Redirect URLs.
 
 #### Ingress parameters
 
@@ -147,6 +147,7 @@ nifi2:
 
 #### Deployment
 The following Helm command will deploy the enrichment pattern.  The enrichment pipeline will be ready to accept FHIR data and run it through a series of steps producing a possibly updated FHIR bundle with resources that have been added or modified by the enrichment process.
+
 ```
 helm install enrich .
 ```
@@ -160,9 +161,9 @@ After running the command above, you will see notes that give you information ab
 
 The instructions listed above are the recommended steps for deploying Health Patterns Enrichment flow. However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service. If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Enrichment.
 
-NOTE: Given the significant differences between the Nifikop-based deployment and this, it is not feasible to maintain both approaches targeting current Nifi dataflows. Therefore, using the insecure deployment will result in a snapshot of these flows current as of November 2021, but not updated since.
+**NOTE:** Given the significant differences between the Nifikop-based deployment and this, it is not feasible to maintain both approaches targeting current Nifi dataflows. Therefore, using the insecure deployment will result in a snapshot of these flows current as of November 2021, but not updated since.
 
-First setup deployment parameters:
+First, setup deployment parameters:
 
 1) Update your ingress parameters as noted [here](#ingress-parameters).
 
@@ -199,8 +200,17 @@ Finally, to deploy run:
 #### Uninstall/delete
 
 To uninstall/delete the deployment, use:
+
 ```
 helm delete enrich
+```
+
+Deletion of charts doesn't cascade to deleting associated `PersistedVolume`s and `PersistedVolumeClaims`s.
+To delete them:
+
+```bash
+kubectl delete pvc -l release=enrich
+kubectl delete pv -l release=enrich
 ```
 
 ## Using the pattern
@@ -225,7 +235,7 @@ curl -X POST https://<<external-hostname>>/expose-kafka?topic=patients.updated.o
    --header "DeidentifyData: false" \
    --header "RunASCVD: true" \
    --header "AddNLPInsights: true" \
-   --data-binary  @<<pathtofile/testpatient.json
+   --data-binary  @/pathtofile/testpatient.json
 ```
 
 Note that there are four headers in the above request describing which enrichment steps should or should not be performed.  
