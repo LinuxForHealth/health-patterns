@@ -168,13 +168,28 @@ First setup deployment parameters:
 
 2) Update values.yaml with the following changes:
 
+```
 nifikop:
   disabled: &nifikopDisabled true
   enabled: &nifikopEnabled false
+```
 
-NOTE: Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of ingestion, you are required to update the values.yaml file to correspond to the correct release name.
+NOTE: Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `enrich`, you are required to update the clinical_enrichment.yaml file to correspond to the correct release name and bootstrapServers.
 
-`--releaseName=enrich`
+```
+nifi:
+  extraContainers:
+    - name: post-start-setup
+      env:
+      - name: "RELEASE_NAME"
+        value: "enrich"
+
+fhir:
+  notifications:
+    kafka:
+      bootstrapServers: "enrich-kafka:9092"
+```
+
 
 Finally, to deploy run:
 

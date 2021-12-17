@@ -168,13 +168,22 @@ First setup deployment parameters:
 
 2) Update values.yaml with the following changes:
 
+```
 nifikop:
   disabled: &nifikopDisabled true
   enabled: &nifikopEnabled false
+```
 
-NOTE: Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of ingestion, you are required to update the values.yaml file to correspond to the correct release name.
+NOTE: Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion`, you are required to update the clinical_ingestion.yaml file to correspond to the correct release name.
 
-`--releaseName=ingest`
+```
+nifi:
+  extraContainers:
+    - name: post-start-setup
+      env:
+      - name: "RELEASE_NAME"
+        value: "ingest"
+```
 
 Finally, to deploy run:
 
