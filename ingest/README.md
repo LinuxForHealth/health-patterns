@@ -228,11 +228,6 @@ nifikop:
   enabled: &nifikopEnabled false
 ```
 
-Finally, to deploy run:
-
-`helm install ingestion . -f clinical_ingestion.yaml`
-
-
 **NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion`, you are required to update the clinical_ingestion.yaml file to correspond to the correct release name.
 
 ```
@@ -243,6 +238,10 @@ nifi:
       - name: "RELEASE_NAME"
         value: "ingest"
 ```
+
+Finally, to deploy run:
+
+`helm install ingestion . -f clinical_ingestion.yaml`
 
 
 #### FHIR Server configuration
