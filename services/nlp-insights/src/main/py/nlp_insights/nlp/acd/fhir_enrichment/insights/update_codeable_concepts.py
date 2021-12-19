@@ -13,27 +13,23 @@
 # limitations under the License.
 """Functions to update codeable concepts with derived codings"""
 
+import json
 import logging
-from typing import Generator
 from typing import List
 from typing import NamedTuple
 
-from fhir.resources.resource import Resource
+from fhir.resources.coding import Coding
 from ibm_whcs_sdk.annotator_for_clinical_data import (
     annotator_for_clinical_data_v1 as acd,
 )
 
-from nlp_insights.fhir import fhir_object_utils
-from nlp_insights.insight import insight_id
+from nlp_insights.insight import id_util
+from nlp_insights.insight.builder.enrich_resource_builder import (
+    EnrichedResourceInsightBuilder,
+)
 from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptRef
-from nlp_insights.nlp.acd.fhir_enrichment.insights.append_codings import (
-    append_codings,
-)
-from nlp_insights.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
-    get_attribute_sources,
-    AttrSourceConcept,
-)
-
+from nlp_insights.nlp.acd.fhir_enrichment.insights import attribute
+from nlp_insights.nlp.acd.fhir_enrichment.insights import create_codings
 from nlp_insights.nlp.nlp_config import AcdNlpConfig
 
 
@@ -47,66 +43,27 @@ class AcdConceptRef(NamedTuple):
     acd_response: acd.ContainerAnnotation
 
 
-def _add_codeable_concept_insight(
-    fhir_resource: Resource,
+def derive_codings(
     insight: AcdConceptRef,
-    id_maker: Generator[str, None, None],
     nlp_config: AcdNlpConfig,
-) -> int:
-    """Updates a codeable concept and resource meta with ACD insights.
+) -> List[Coding]:
+    """Derives codings for the insight"""
+    derived_codes: List[Coding] = []
+    attrs = attribute.get_attribute_sources(
+        insight.acd_response,
+        insight.adjusted_concept.concept_ref.type,
+        nlp_config.acd_attribute_source_map,
+    )
 
-    The codeable concept referenced by the insight is updated with codings that were
-    derived from the text.
+    for attr in attrs:
+        derived_codes.extend(
+            create_codings.derive_codings_from_acd_concept(attr.best_source.source)
+        )
 
-    The meta extension for the supplied resource is updated with the insight id and
-    reference path.
-
-    Args:
-        fhir_resource - the resource to update the meta with the new insight
-        insight - binding between the concept text that was analyzed by ACD-NLP and the
-                  ACD response for that analysis.
-        id_maker - generator for producing ids for insights
-        nlp_config - nlp configuration
-
-    Returns: the number of codings added to the codeable concept.
-    """
-    concept_ref = insight.adjusted_concept.concept_ref
-    source_loc_map = nlp_config.acd_attribute_source_map
-
-    total_num_codes_added: int = 0
-
-    for cui_source in get_attribute_sources(
-        insight.acd_response, concept_ref.type, source_loc_map
-    ):
-
-        if cui_source.sources:
-            # First available source is the best one
-            source: AttrSourceConcept = next(iter(cui_source.sources.values()))
-            logger.debug("Appending codings from %s", source)
-
-            num_codes_appended: int = append_codings(
-                source, concept_ref.code_ref, add_nlp_extension=True
-            )
-
-            if num_codes_appended > 0:
-                logger.debug(
-                    "Adding new insight to meta because %s codes were appended",
-                    num_codes_appended,
-                )
-                total_num_codes_added += num_codes_appended
-                fhir_object_utils.append_insight_with_path_expr_to_resource_meta(
-                    fhir_resource=fhir_resource,
-                    insight_id=next(id_maker),
-                    system=nlp_config.nlp_system,
-                    fhir_path=insight.adjusted_concept.concept_ref.fhir_path,
-                    nlp_output_uri=nlp_config.get_nlp_output_loc(insight.acd_response),
-                )
-
-    return total_num_codes_added
+    return derived_codes
 
 
 def update_codeable_concepts_and_meta_with_insights(
-    fhir_resource: Resource,
     concept_insights: List[AcdConceptRef],
     nlp_config: AcdNlpConfig,
 ) -> int:
@@ -127,16 +84,17 @@ def update_codeable_concepts_and_meta_with_insights(
     Returns: total number of derived codings added to the resource, across all provided
              codeable concepts.
     """
-    num_codes_added: int = 0
-
     for concept_insight in concept_insights:
-        id_maker = insight_id.insight_id_maker_update_concept(
-            concept=concept_insight.adjusted_concept.concept_ref,
-            resource=fhir_resource,
-            start=nlp_config.insight_id_start,
-        )
-        num_codes_added += _add_codeable_concept_insight(
-            fhir_resource, concept_insight, id_maker, nlp_config
+        builder = EnrichedResourceInsightBuilder(
+            enriched_concept=concept_insight.adjusted_concept.concept_ref,
+            insight_id_value=id_util.make_hash(
+                concept_insight.adjusted_concept.concept_ref
+            ),
+            insight_id_system=nlp_config.nlp_system,
+            nlp_response_json=json.dumps(concept_insight.acd_response.to_dict()),
         )
 
-    return num_codes_added
+        builder.add_derived_codings(derive_codings(concept_insight, nlp_config))
+        builder.append_insight_to_resource_meta()
+
+    return builder.num_summary_extensions_added

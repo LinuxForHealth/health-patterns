@@ -12,9 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Methods for comparing expected vs actual test results"""
-
+import base64
+import difflib
+import json
+from json.decoder import JSONDecodeError
 import logging
 import os
+from typing import Any
 
 import deepdiff
 from fhir.resources.resource import Resource
@@ -23,18 +27,60 @@ from fhir.resources.resource import Resource
 logger = logging.getLogger(__name__)
 
 
+def pjson(j: str) -> str:
+    try:
+        jobj = json.loads(j)
+        s = json.dumps(jobj, indent=2)
+    except JSONDecodeError:
+        s = j
+
+    return s
+
+
+def pdiff(a: Any, b: Any) -> str:
+    if not a or not b:
+        return ""
+
+    if isinstance(a, bytes):
+        a_str = pjson(base64.b64decode(a).decode("utf-8"))
+    else:
+        a_str = ""
+    if isinstance(b, bytes):
+        b_str = pjson(base64.b64decode(b).decode("utf-8"))
+    else:
+        b_str = ""
+
+    if a_str and b_str:
+        return "\n\tJSON_DIFF=" + "".join(
+            difflib.ndiff(
+                a_str.splitlines(keepends=True), b_str.splitlines(keepends=True)
+            )
+        )
+    else:
+        return ""
+
+
 class ResourceDifferences:
     """Wraps differences for easier debug"""
 
-    def __init__(self, expected: Resource, actual: Resource) -> None:
+    def __init__(
+        self, expected: Resource, actual: Resource, exclude_types={bytes}
+    ) -> None:
         """Determines the differences between an expected resource and a test case actual
 
         args:
           expected - the expected resource
           actual   - the actual resource from the testcase
+          exclude_types - data types to ignore differences in
+                          The default is bytes because some resources contain serialized json byte strings,
+                          because json does not have order, these strings are not consistent
         """
         self.diff = deepdiff.DeepDiff(
-            expected.dict(), actual.dict(), view="tree", verbose_level=0
+            expected.dict(),
+            actual.dict(),
+            view="tree",
+            verbose_level=0,
+            exclude_types=exclude_types,
         )
 
     def __bool__(self) -> bool:
@@ -50,7 +96,7 @@ class ResourceDifferences:
         """Pretty prints differences"""
         try:
             change_strings = [
-                f"{ctype} at path {cv.path()} \n\tEXPECTED={cv.t1}\n\tACTUAL  ={cv.t2}"
+                f"{ctype} at path {cv.path()} \n\tEXPECTED={cv.t1}\n\tACTUAL  ={cv.t2}{pdiff(cv.t1, cv.t2)}"
                 for ctype, clist in self.diff.items()
                 for cv in clist
             ]

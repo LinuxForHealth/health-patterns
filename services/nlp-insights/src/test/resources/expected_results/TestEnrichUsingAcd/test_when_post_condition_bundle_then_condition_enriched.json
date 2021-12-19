@@ -12,21 +12,34 @@
             {
               "extension": [
                 {
-                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
-                  "valueString": "code.coding"
-                },
-                {
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "nlp-insight-c83fc2d1a9a1cf30c844b11132cf3cd39203d57b55baf91a3edda5f6-1"
+                    "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
                   }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition.code.coding"
                 },
                 {
                   "extension": [
                     {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "Condition/12345"
+                      }
+                    },
+                    {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "code.text"
+                      "valueString": "Condition.code.text"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "eyJhdHRyaWJ1dGVWYWx1ZXMiOiBbeyJiZWdpbiI6IDAsICJlbmQiOiAxMiwgImNvdmVyZWRUZXh0IjogIkhlYXJ0IEF0dGFjayIsICJuZWdhdGVkIjogZmFsc2UsICJwcmVmZXJyZWROYW1lIjogIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsICJ2YWx1ZXMiOiBbeyJ2YWx1ZSI6ICJteW9jYXJkaWFsIGluZmFyY3Rpb24ifV0sICJzb3VyY2UiOiAiQ2xpbmljYWwgSW5zaWdodHMgLSBBdHRyaWJ1dGVzIiwgInNvdXJjZVZlcnNpb24iOiAidjEuMCIsICJjb25jZXB0IjogeyJ1aWQiOiA0fSwgIm5hbWUiOiAiRGlhZ25vc2lzIiwgImljZDlDb2RlIjogIjQxMC45MCIsICJpY2QxMENvZGUiOiAiSTIxLjkiLCAic25vbWVkQ29uY2VwdElkIjogIjIyMjk4MDA2IiwgImRpc2FtYmlndWF0aW9uRGF0YSI6IHsidmFsaWRpdHkiOiAiVkFMSUQifSwgImluc2lnaHRNb2RlbERhdGEiOiB7ImRpYWdub3NpcyI6IHsidXNhZ2UiOiB7ImV4cGxpY2l0U2NvcmUiOiAwLjg4NCwgInBhdGllbnRSZXBvcnRlZFNjb3JlIjogMC4wMDMsICJkaXNjdXNzZWRTY29yZSI6IDAuMTEzfSwgInN1c3BlY3RlZFNjb3JlIjogMC4wOSwgInN5bXB0b21TY29yZSI6IDAuMDAyLCAidHJhdW1hU2NvcmUiOiAwLjAsICJmYW1pbHlIaXN0b3J5U2NvcmUiOiAwLjAwMX19LCAiY2NzQ29kZSI6ICIxMDAiLCAiaGNjQ29kZSI6ICI4NiJ9XSwgImNvbmNlcHRzIjogW3sidHlwZSI6ICJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIiwgInVpZCI6IDIsICJiZWdpbiI6IDAsICJlbmQiOiAxMiwgImNvdmVyZWRUZXh0IjogIkhlYXJ0IEF0dGFjayIsICJuZWdhdGVkIjogZmFsc2UsICJjdWkiOiAiQzAwMjcwNTEiLCAicHJlZmVycmVkTmFtZSI6ICJNeW9jYXJkaWFsIEluZmFyY3Rpb24iLCAic2VtYW50aWNUeXBlIjogImRzeW4iLCAic291cmNlIjogInVtbHMiLCAic291cmNlVmVyc2lvbiI6ICIyMDIwQUEiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJOT19ERUNJU0lPTiJ9LCAiaWNkMTBDb2RlIjogIkkyMS45IiwgIm5jaUNvZGUiOiAiQzI3OTk2IiwgInNub21lZENvbmNlcHRJZCI6ICIyMjI5ODAwNiIsICJtZXNoSWQiOiAiTTAwMTQzNDAiLCAibG9pbmNJZCI6ICJNVEhVMDM1NTUxLExBMTQyNzQtNyxMUDk4ODg0LTcsTEExNjI4Ni05IiwgInZvY2FicyI6ICJOQ0lfTklDSEQsTVRILExOQyxDU1AsTVNILENTVCxIUE8sT01JTSxOQ0lfQ1RDQUUsQ09TVEFSLEFJUixDSFYsTkNJX0ZEQSxNRURMSU5FUExVUyxOQ0ksTENIX05XLEFPRCxTTk9NRURDVF9VUyxEWFAiLCAiaW5zaWdodE1vZGVsRGF0YSI6IHsiZGlhZ25vc2lzIjogeyJ1c2FnZSI6IHsiZXhwbGljaXRTY29yZSI6IDAuODg0LCAicGF0aWVudFJlcG9ydGVkU2NvcmUiOiAwLjAwMywgImRpc2N1c3NlZFNjb3JlIjogMC4xMTN9LCAic3VzcGVjdGVkU2NvcmUiOiAwLjA5LCAic3ltcHRvbVNjb3JlIjogMC4wMDIsICJ0cmF1bWFTY29yZSI6IDAuMCwgImZhbWlseUhpc3RvcnlTY29yZSI6IDAuMDAxfX19LCB7InR5cGUiOiAiSUNEaWFnbm9zaXMiLCAiYmVnaW4iOiAwLCAiZW5kIjogMTIsICJjb3ZlcmVkVGV4dCI6ICJIZWFydCBBdHRhY2siLCAibmVnYXRlZCI6IGZhbHNlLCAiY3VpIjogIkMwMDI3MDUxIiwgInByZWZlcnJlZE5hbWUiOiAiTXlvY2FyZGlhbCBJbmZhcmN0aW9uIiwgInNvdXJjZSI6ICJDbGluaWNhbCBJbnNpZ2h0cyAtIERlcml2ZWQgQ29uY2VwdHMiLCAic291cmNlVmVyc2lvbiI6ICJ2MS4wIiwgImRpc2FtYmlndWF0aW9uRGF0YSI6IHsidmFsaWRpdHkiOiAiVkFMSUQifSwgImljZDEwQ29kZSI6ICJJMjEuOSIsICJuY2lDb2RlIjogIkMyNzk5NiIsICJzbm9tZWRDb25jZXB0SWQiOiAiMjIyOTgwMDYiLCAibWVzaElkIjogIk0wMDE0MzQwIiwgImxvaW5jSWQiOiAiTVRIVTAzNTU1MSxMQTE0Mjc0LTcsTFA5ODg4NC03LExBMTYyODYtOSIsICJpbnNpZ2h0TW9kZWxEYXRhIjogeyJkaWFnbm9zaXMiOiB7InVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC44ODQsICJwYXRpZW50UmVwb3J0ZWRTY29yZSI6IDAuMDAzLCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjExM30sICJzdXNwZWN0ZWRTY29yZSI6IDAuMDksICJzeW1wdG9tU2NvcmUiOiAwLjAwMiwgInRyYXVtYVNjb3JlIjogMC4wLCAiZmFtaWx5SGlzdG9yeVNjb3JlIjogMC4wMDF9fSwgInJ1bGVJZCI6ICI2OThmMmIxOS0yN2I2LTRkYWItOTE1MC03ZDdlZjNiMDNhNWMiLCAiZGVyaXZlZEZyb20iOiBbeyJ1aWQiOiAyfV19XSwgIlN5bXB0b21EaXNlYXNlSW5kIjogW3sidHlwZSI6ICJhY2kuU3ltcHRvbURpc2Vhc2VJbmQiLCAidWlkIjogNCwgImJlZ2luIjogMCwgImVuZCI6IDEyLCAiY292ZXJlZFRleHQiOiAiSGVhcnQgQXR0YWNrIiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDAyNzA1MSIsICJpY2QxMENvZGUiOiAiSTIxLjkiLCAibW9kYWxpdHkiOiAicG9zaXRpdmUiLCAic3ltcHRvbURpc2Vhc2VTdXJmYWNlRm9ybSI6ICJIZWFydCBBdHRhY2siLCAic25vbWVkQ29uY2VwdElkIjogIjIyMjk4MDA2IiwgImNjc0NvZGUiOiAiMTAwIiwgInN5bXB0b21EaXNlYXNlTm9ybWFsaXplZE5hbWUiOiAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgImljZDlDb2RlIjogIjQxMC45MCIsICJoY2NDb2RlIjogIjg2IiwgImRpc2FtYmlndWF0aW9uRGF0YSI6IHsidmFsaWRpdHkiOiAiVkFMSUQifSwgImluc2lnaHRNb2RlbERhdGEiOiB7ImRpYWdub3NpcyI6IHsidXNhZ2UiOiB7ImV4cGxpY2l0U2NvcmUiOiAwLjg4NCwgInBhdGllbnRSZXBvcnRlZFNjb3JlIjogMC4wMDMsICJkaXNjdXNzZWRTY29yZSI6IDAuMTEzfSwgInN1c3BlY3RlZFNjb3JlIjogMC4wOSwgInN5bXB0b21TY29yZSI6IDAuMDAyLCAidHJhdW1hU2NvcmUiOiAwLjAsICJmYW1pbHlIaXN0b3J5U2NvcmUiOiAwLjAwMX19fV0sICJzcGVsbENvcnJlY3RlZFRleHQiOiBbeyJjb3JyZWN0ZWRUZXh0IjogIkhlYXJ0IEF0dGFjayJ9XX0="
+                      }
                     }
                   ],
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
@@ -41,17 +54,29 @@
             {
               "extension": [
                 {
-                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-                  "valueCodeableConcept": {
-                    "coding": [
-                      {
-                        "code": "natural-language-processing",
-                        "display": "NLP",
-                        "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
                       }
-                    ],
-                    "text": "NLP"
-                  }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
                 }
               ],
               "code": "C0027051",
@@ -61,17 +86,29 @@
             {
               "extension": [
                 {
-                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-                  "valueCodeableConcept": {
-                    "coding": [
-                      {
-                        "code": "natural-language-processing",
-                        "display": "NLP",
-                        "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
                       }
-                    ],
-                    "text": "NLP"
-                  }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
                 }
               ],
               "code": "22298006",
@@ -80,17 +117,29 @@
             {
               "extension": [
                 {
-                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-                  "valueCodeableConcept": {
-                    "coding": [
-                      {
-                        "code": "natural-language-processing",
-                        "display": "NLP",
-                        "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
                       }
-                    ],
-                    "text": "NLP"
-                  }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
                 }
               ],
               "code": "410.90",
@@ -99,17 +148,29 @@
             {
               "extension": [
                 {
-                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-                  "valueCodeableConcept": {
-                    "coding": [
-                      {
-                        "code": "natural-language-processing",
-                        "display": "NLP",
-                        "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
                       }
-                    ],
-                    "text": "NLP"
-                  }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
                 }
               ],
               "code": "I21.9",

@@ -13,29 +13,34 @@
 # limitations under the License.
 """Derive condition from NLP output"""
 
-from collections import namedtuple
+import json
+from typing import Dict
 from typing import List
+from typing import NamedTuple
 from typing import Optional
 
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.condition import Condition
 
-from nlp_insights.fhir import alvearie_ext
 from nlp_insights.fhir import create_coding
 from nlp_insights.fhir import fhir_object_utils
 from nlp_insights.fhir.code_system import hl7
-from nlp_insights.insight import insight_id
+from nlp_insights.insight import id_util
+from nlp_insights.insight.builder.derived_resource_builder import (
+    DerivedResourceInsightBuilder,
+)
 from nlp_insights.insight.span import Span
-from nlp_insights.insight.text_fragment import TextFragment
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
 from nlp_insights.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
-from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse, QuickUmlsConcept
+from nlp_insights.nlp.quickUMLS.nlp_response import (
+    QuickUmlsResponse,
+    QuickUmlsConcept,
+    QuickUmlsEncoder,
+)
 from nlp_insights.umls.semtype_lookup import resource_relevant_to_any_type_names
 
 
-def _add_insight_codings_to_condition(
-    condition: Condition, concept: QuickUmlsConcept
-) -> None:
+def _add_codings_to_condition(condition: Condition, concept: QuickUmlsConcept) -> None:
     """Adds information from the insight's concept to a condition
 
     Because the entire condition is assumed to be derived from NLP of
@@ -57,59 +62,21 @@ def _add_insight_codings_to_condition(
     )
 
     if concept.cui not in existing_codes_by_system[hl7.UMLS_URL]:
-        coding = create_coding.create_coding(
-            hl7.UMLS_URL, concept.cui, derived_by_nlp=False
-        )
+        coding = create_coding.create_coding(hl7.UMLS_URL, concept.cui)
         condition.code.coding.append(coding)
         existing_codes_by_system[hl7.UMLS_URL].add(concept.cui)
 
-    if concept.snomed_ct:
-        for snomed_code in concept.snomed_ct:
-            if snomed_code not in existing_codes_by_system[hl7.SNOMED_URL]:
-                coding = create_coding.create_coding(
-                    hl7.SNOMED_URL, snomed_code, derived_by_nlp=False
-                )
-                condition.code.coding.append(coding)
-                existing_codes_by_system[hl7.SNOMED_URL].add(snomed_code)
+
+class TrackerEntry(NamedTuple):
+    """For a given CUI, this binds the resource being derived to the
+    insight containing the evidence.
+    """
+
+    resource: Condition
+    insight_builder: DerivedResourceInsightBuilder
 
 
-def _add_insight_to_condition(
-    text_source: UnstructuredText,
-    condition: Condition,
-    concept: QuickUmlsConcept,
-    insight_identifier: str,
-    nlp_config: NlpConfig,
-) -> None:
-    """Adds data from the insight to the condition"""
-    insight_id_ext = alvearie_ext.create_insight_id_extension(
-        insight_identifier, nlp_config.nlp_system
-    )
-
-    source = TextFragment(
-        text_source=text_source,
-        text_span=Span(
-            begin=concept.begin, end=concept.end, covered_text=concept.covered_text
-        ),
-    )
-
-    nlp_output_ext = nlp_config.create_nlp_output_extension(concept)
-
-    unstructured_insight_detail = (
-        alvearie_ext.create_derived_from_unstructured_insight_detail_extension(
-            source=source,
-            confidences=None,
-            evaluated_output_ext=nlp_output_ext,
-        )
-    )
-
-    fhir_object_utils.add_insight_to_meta(
-        condition, insight_id_ext, unstructured_insight_detail
-    )
-
-    _add_insight_codings_to_condition(condition, concept)
-
-
-def create_conditions_from_insights(
+def create_conditions(
     text_source: UnstructuredText,
     nlp_response: QuickUmlsResponse,
     nlp_config: NlpConfig = QUICK_UMLS_NLP_CONFIG,
@@ -124,40 +91,51 @@ def create_conditions_from_insights(
 
     Returns conditions derived by NLP, or None if there are no conditions
     """
-    TrackerEntry = namedtuple("TrackerEntry", ["fhir_resource", "id_maker"])
-    condition_tracker = {}  # key is UMLS ID, value is TrackerEntry
+    # The key is the insight id value, which is a hash of the source of the
+    # insight combined with the cui causing the new resource to be
+    # created, plus the new resource type.
+    # This creates a globally unique id value that will be the same
+    # for multiple occurrences of the same derived concept.
+    condition_tracker: Dict[str, TrackerEntry] = {}
 
     for concept in nlp_response.concepts:
         if resource_relevant_to_any_type_names(Condition, concept.types):
-            if concept.cui not in condition_tracker:
-                condition_tracker[concept.cui] = TrackerEntry(
-                    fhir_resource=Condition.construct(
-                        subject=text_source.source_resource.subject
-                    ),
-                    id_maker=insight_id.insight_id_maker_derive_resource(
-                        source=text_source,
-                        cui=concept.cui,
-                        derived=Condition,
-                        start=nlp_config.insight_id_start,
-                    ),
+            key = id_util.make_hash(text_source, concept.cui, Condition)
+            if key not in condition_tracker:
+                condition = Condition.construct(
+                    subject=text_source.source_resource.subject
                 )
 
-            condition, id_maker = condition_tracker[concept.cui]
+                insight_builder = DerivedResourceInsightBuilder(
+                    resource_type=Condition,
+                    text_source=text_source,
+                    insight_id_value=key,
+                    insight_id_system=nlp_config.nlp_system,
+                    nlp_response_json=json.dumps(nlp_response, cls=QuickUmlsEncoder),
+                )
 
-            _add_insight_to_condition(
-                text_source,
-                condition,
-                concept,
-                next(id_maker),
-                nlp_config,
+                condition_tracker[key] = TrackerEntry(
+                    resource=condition, insight_builder=insight_builder
+                )
+
+            condition, insight_builder = condition_tracker[key]
+
+            _add_codings_to_condition(condition, concept)
+
+            insight_builder.add_span(
+                Span(
+                    begin=concept.begin,
+                    end=concept.end,
+                    covered_text=concept.covered_text,
+                ),
+                confidences=[],
             )
 
     if not condition_tracker:
         return None
 
-    conditions = [entry.fhir_resource for entry in condition_tracker.values()]
+    for condition, insight in condition_tracker.values():
+        insight.append_insight_to_resource_meta(condition)
+        insight.append_insight_summary_to_resource(condition)
 
-    for condition in conditions:
-        fhir_object_utils.append_derived_by_nlp_category_extension(condition)
-
-    return conditions
+    return [entry.resource for entry in condition_tracker.values()]

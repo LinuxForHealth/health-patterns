@@ -25,19 +25,18 @@
 """
 from typing import Optional, List
 
-from fhir.resources.extension import Extension
 from ibm_whcs_sdk.annotator_for_clinical_data.annotator_for_clinical_data_v1 import (
     InsightModelData,
 )
 
-from nlp_insights.fhir import alvearie_ext
 from nlp_insights.fhir.code_system import acd_scoring_method
+from nlp_insights.fhir.insight_builder import InsightConfidenceBuilder, ConfidenceMethod
 
 
-def get_diagnosis_usage_explicit_ext(
+def get_diagnosis_usage_explicit(
     insight_model_data: InsightModelData,
-) -> Optional[Extension]:
-    """Returns the diagnosis usage explicit confidence extension, if there is one.
+) -> Optional[InsightConfidenceBuilder]:
+    """Returns a builder for the diagnosis usage explicit confidence extension, if there is one.
 
     This score is likely to be high for statements such as:
     * The patient was diagnosed with diabetes
@@ -51,20 +50,20 @@ def get_diagnosis_usage_explicit_ext(
     except AttributeError:
         return None
 
-    return alvearie_ext.create_confidence_extension(
-        alvearie_ext.create_scoring_method_extension(
+    return InsightConfidenceBuilder(
+        ConfidenceMethod(
             acd_scoring_method.SCORING_METHOD_ACD_CODE_SYSTEM,
             acd_scoring_method.DIAGNOSIS_EXPLICIT_SCORE,
         ),
         explicit_score,
-        description="Explicit Score",
+        "Explicit Score",
     )
 
 
-def get_diagnosis_usage_patient_reported_ext(
+def get_diagnosis_usage_patient_reported(
     insight_model_data: InsightModelData,
-) -> Optional[Extension]:
-    """Returns the diagnosis usage patient reported confidence extension, if there is one.
+) -> Optional[InsightConfidenceBuilder]:
+    """Returns a builder for the diagnosis usage patient reported confidence extension.
 
     This score is likely to be high for statements such as:
     * The patient reports that she has diabetes
@@ -80,43 +79,43 @@ def get_diagnosis_usage_patient_reported_ext(
     except AttributeError:
         return None
 
-    return alvearie_ext.create_confidence_extension(
-        alvearie_ext.create_scoring_method_extension(
+    return InsightConfidenceBuilder(
+        ConfidenceMethod(
             acd_scoring_method.SCORING_METHOD_ACD_CODE_SYSTEM,
             acd_scoring_method.DIAGNOSIS_PATIENT_REPORTED_SCORE,
         ),
         patient_reported_score,
-        description="Patient Reported Score",
+        "Patient Reported Score",
     )
 
 
 def get_derived_condition_confidences(
     insight_model_data: InsightModelData,
-) -> Optional[List[Extension]]:
+) -> List[InsightConfidenceBuilder]:
     """Returns confidences for a derived condition
 
     Args: insight_model_data - model data from the attribute's concept
-    Returns: a list of extensions, or none if confidences could not be computed.
+    Returns: a list of builders, or empty list if confidences could not be computed.
     """
     if not insight_model_data:
-        return None
+        return []
 
     confidence_list = []
-    conf = get_diagnosis_usage_explicit_ext(insight_model_data)
+    conf = get_diagnosis_usage_explicit(insight_model_data)
     if conf:
         confidence_list.append(conf)
 
-    conf = get_diagnosis_usage_patient_reported_ext(insight_model_data)
+    conf = get_diagnosis_usage_patient_reported(insight_model_data)
     if conf:
         confidence_list.append(conf)
 
-    return confidence_list if confidence_list else None
+    return confidence_list
 
 
 def get_medication_taken_confidence(
     insight_model_data: InsightModelData,
-) -> Optional[Extension]:
-    """Returns the medication take confidence, if the confidence exists
+) -> Optional[InsightConfidenceBuilder]:
+    """Returns a builder for the medication take confidence, if the confidence exists
 
     This score is likely to be high for statements such as:
     * The patient is taking aspirin
@@ -128,30 +127,30 @@ def get_medication_taken_confidence(
     except AttributeError:
         return None
 
-    return alvearie_ext.create_confidence_extension(
-        alvearie_ext.create_scoring_method_extension(
+    return InsightConfidenceBuilder(
+        ConfidenceMethod(
             acd_scoring_method.SCORING_METHOD_ACD_CODE_SYSTEM,
             acd_scoring_method.MEDICATION_TAKEN_SCORE,
         ),
         taken_score,
-        description="Medication Taken Score",
+        "Medication Taken Score",
     )
 
 
 def get_derived_medication_confidences(
     insight_model_data: InsightModelData,
-) -> Optional[List[Extension]]:
+) -> List[InsightConfidenceBuilder]:
     """Returns confidences for a derived medication
 
     Args: insight_model_data - model data from the attribute's concept
-    Returns: a list of extensions, or none if confidences could not be computed.
+    Returns: a list of confidence builders, or none if confidences could not be computed.
     """
     if not insight_model_data:
-        return None
+        return []
 
     confidence_list = []
     conf = get_medication_taken_confidence(insight_model_data)
     if conf:
         confidence_list.append(conf)
 
-    return confidence_list if confidence_list else None
+    return confidence_list

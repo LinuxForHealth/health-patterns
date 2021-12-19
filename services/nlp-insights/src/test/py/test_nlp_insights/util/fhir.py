@@ -18,7 +18,6 @@ from typing import List, Dict, Any, Optional
 
 from fhir.resources.allergyintolerance import (
     AllergyIntolerance,
-    AllergyIntoleranceReaction,
 )
 from fhir.resources.attachment import Attachment
 from fhir.resources.bundle import Bundle, BundleEntry, BundleEntryRequest
@@ -27,7 +26,6 @@ from fhir.resources.coding import Coding
 from fhir.resources.condition import Condition
 from fhir.resources.diagnosticreport import DiagnosticReport
 from fhir.resources.documentreference import DocumentReference
-from fhir.resources.immunization import Immunization
 from fhir.resources.patient import Patient
 from fhir.resources.reference import Reference
 from fhir.resources.resource import Resource
@@ -113,21 +111,6 @@ def make_docref_report(
         report.subject = subject
 
     return report
-
-
-def make_immunization(
-    patient: Reference, vaccine_code: CodeableConcept, rid="54321"
-) -> Immunization:
-    """Builds an Immunization"""
-    return Immunization.parse_obj(
-        {
-            "id": rid,
-            "status": "completed",
-            "occurrenceDateTime": "2017",
-            "patient": patient,
-            "vaccineCode": vaccine_code,
-        }
-    )
 
 
 def make_attachment(unencoded_text_data: str, content_type: str = "text/plain"):

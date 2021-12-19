@@ -50,7 +50,9 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
     def test_when_post_docref_then_condition_derived(self):
         report = make_docref_report(
             subject=make_patient_reference(),
-            attachments=[make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)],
+            attachments=[
+                make_attachment(unstructured_text.TEXT_FOR_MULTIPLE_CONDITIONS)
+            ],
         )
 
         with app.app.test_client() as service:
@@ -71,7 +73,7 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
                 make_docref_report(
                     subject=make_patient_reference(),
                     attachments=[
-                        make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)
+                        make_attachment(unstructured_text.TEXT_FOR_MULTIPLE_CONDITIONS)
                     ],
                 )
             ]
@@ -120,7 +122,7 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 )
@@ -146,7 +148,7 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
                     subject=None,
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 )
@@ -218,7 +220,9 @@ class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
     def test_when_post_docref_then_condition_derived(self):
         report = make_docref_report(
             subject=make_patient_reference(),
-            attachments=[make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)],
+            attachments=[
+                make_attachment(unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION)
+            ],
         )
 
         with app.app.test_client() as service:
@@ -239,7 +243,7 @@ class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
                 make_docref_report(
                     subject=make_patient_reference(),
                     attachments=[
-                        make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)
+                        make_attachment(unstructured_text.TEXT_FOR_MULTIPLE_CONDITIONS)
                     ],
                 )
             ]
@@ -288,7 +292,7 @@ class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 )
@@ -314,7 +318,7 @@ class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
                     subject=None,
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 )

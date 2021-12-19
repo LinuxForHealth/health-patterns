@@ -41,11 +41,14 @@ INSIGHT_CONFIDENCE_SCORING_METHOD_URL = (
 INSIGHT_RESULT_ID_URL = "http://ibm.com/fhir/cdm/insight/result-insight-id"
 INSIGHT_CATEGORY_URL = "http://ibm.com/fhir/cdm/StructureDefinition/category"
 INSIGHT_URL = "http://ibm.com/fhir/cdm/StructureDefinition/insight"
-INSIGHT_BASED_ON_URL = "http://ibm.com/fhir/cdm/StructureDefinition/reference"
+INSIGHT_REFERENCE_URL = "http://ibm.com/fhir/cdm/StructureDefinition/reference"
 INSIGHT_DETAIL_URL = "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
 INSIGHT_ID_URL = "http://ibm.com/fhir/cdm/StructureDefinition/insight-id"
-INSIGHT_NLP_OUTPUT_URL = "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output"
+INSIGHT_EVALUATED_OUTPUT_URL = (
+    "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output"
+)
 INSIGHT_PATH_URL = "http://ibm.com/fhir/cdm/StructureDefinition/path"
 INSIGHT_REFERENCE_PATH_URL = (
     "http://ibm.com/fhir/cdm/StructureDefinition/reference-path"
 )
+INSIGHT_SUMMARY_URL = "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"

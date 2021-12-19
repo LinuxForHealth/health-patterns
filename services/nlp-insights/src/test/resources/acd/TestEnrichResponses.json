@@ -1,4 +1,181 @@
 {
+    "Allergy to peanut": {
+        "attributeValues": [
+            {
+                "begin": 0,
+                "end": 17,
+                "coveredText": "Allergy to peanut",
+                "negated": false,
+                "preferredName": "allergy to peanut",
+                "values": [
+                    {
+                        "value": "allergy to peanut"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 4
+                },
+                "name": "Diagnosis",
+                "icd9Code": "995.3",
+                "icd10Code": "Z91.010,Z91.0",
+                "snomedConceptId": "91935009",
+                "sectionNormalizedName": "Allergies",
+                "sectionSurfaceForm": "Allergy",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.899,
+                            "patientReportedScore": 0.015,
+                            "discussedScore": 0.086
+                        },
+                        "suspectedScore": 0.118,
+                        "symptomScore": 0.005,
+                        "traumaScore": 0.003,
+                        "familyHistoryScore": 0.004
+                    }
+                },
+                "ccsCode": "253"
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 2,
+                "begin": 0,
+                "end": 17,
+                "coveredText": "Allergy to peanut",
+                "negated": false,
+                "cui": "C0559470",
+                "preferredName": "Allergy to peanuts",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "995.3",
+                "icd10Code": "Z91.0,Z91.010",
+                "snomedConceptId": "91935009",
+                "meshId": "M0351836",
+                "vocabs": "MTH,CHV,MSH,MEDLINEPLUS,SNOMEDCT_US",
+                "sectionNormalizedName": "Allergies",
+                "sectionSurfaceForm": "Allergy",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.899,
+                            "patientReportedScore": 0.015,
+                            "discussedScore": 0.086
+                        },
+                        "suspectedScore": 0.118,
+                        "symptomScore": 0.005,
+                        "traumaScore": 0.003,
+                        "familyHistoryScore": 0.004
+                    }
+                }
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 0,
+                "end": 17,
+                "coveredText": "Allergy to peanut",
+                "negated": false,
+                "cui": "C0559470",
+                "preferredName": "Allergy to peanuts",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "995.3",
+                "icd10Code": "Z91.0,Z91.010",
+                "snomedConceptId": "91935009",
+                "meshId": "M0351836",
+                "sectionNormalizedName": "Allergies",
+                "sectionSurfaceForm": "Allergy",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.899,
+                            "patientReportedScore": 0.015,
+                            "discussedScore": 0.086
+                        },
+                        "suspectedScore": 0.118,
+                        "symptomScore": 0.005,
+                        "traumaScore": 0.003,
+                        "familyHistoryScore": 0.004
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 4,
+                "begin": 0,
+                "end": 17,
+                "coveredText": "Allergy to peanut",
+                "negated": false,
+                "cui": "C0559470",
+                "icd10Code": "Z91.010,Z91.0",
+                "sectionNormalizedName": "Allergies",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "Allergy to peanut",
+                "snomedConceptId": "91935009",
+                "ccsCode": "253",
+                "symptomDiseaseNormalizedName": "allergy to peanut",
+                "sectionSurfaceForm": "Allergy",
+                "icd9Code": "995.3",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.899,
+                            "patientReportedScore": 0.015,
+                            "discussedScore": 0.086
+                        },
+                        "suspectedScore": 0.118,
+                        "symptomScore": 0.005,
+                        "traumaScore": 0.003,
+                        "familyHistoryScore": 0.004
+                    }
+                }
+            }
+        ],
+        "sections": [
+            {
+                "begin": 0,
+                "end": 17,
+                "type": "aci.Section",
+                "trigger": {
+                    "begin": 0,
+                    "coveredText": "Allergy",
+                    "end": 7,
+                    "sectionNormalizedName": "Allergies",
+                    "source": "internal",
+                    "type": "aci.SectionTrigger"
+                }
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "Allergy to peanut"
+            }
+        ]
+    },
     "idonotknowthis": {
         "spellCorrectedText": [
             {

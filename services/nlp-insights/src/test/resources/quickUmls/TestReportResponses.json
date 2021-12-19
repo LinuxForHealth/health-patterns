@@ -1,103 +1,9 @@
 {
-    "The patient had a heart attack in 2015 and started taking beta blockers. He had another heart attack in 2021 and had to start taking beta blockers again.": [
-        {
-            "cui": "C0001645",
-            "end": 71,
-            "ngram": "beta blockers",
-            "preferred": 1,
-            "semtypes": [
-                "T121"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "55490011",
-                "55491010",
-                "3299303012",
-                "485461013",
-                "714657019",
-                "462279010",
-                "1211746018",
-                "55488010",
-                "55489019",
-                "3299819012",
-                "485462018",
-                "3520627012",
-                "3520702014",
-                "3520874018",
-                "1229191018",
-                "1192795014",
-                "1198551012",
-                "764632010",
-                "2741579018"
-            ],
-            "start": 58,
-            "term": "beta blockers"
-        },
-        {
-            "cui": "C0550625",
-            "end": 71,
-            "ngram": "beta blockers",
-            "preferred": 1,
-            "semtypes": [
-                "T201"
-            ],
-            "similarity": 0.7857142857142857,
-            "snomed_ct": [
-            ],
-            "start": 58,
-            "term": "beta blockers ur"
-        },
-        {
-            "cui": "C0001645",
-            "end": 146,
-            "ngram": "beta blockers",
-            "preferred": 1,
-            "semtypes": [
-                "T121"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "55490011",
-                "55491010",
-                "3299303012",
-                "485461013",
-                "714657019",
-                "462279010",
-                "1211746018",
-                "55488010",
-                "55489019",
-                "3299819012",
-                "485462018",
-                "3520627012",
-                "3520702014",
-                "3520874018",
-                "1229191018",
-                "1192795014",
-                "1198551012",
-                "764632010",
-                "2741579018"
-            ],
-            "start": 133,
-            "term": "beta blockers"
-        },
-        {
-            "cui": "C0550625",
-            "end": 146,
-            "ngram": "beta blockers",
-            "preferred": 1,
-            "semtypes": [
-                "T201"
-            ],
-            "similarity": 0.7857142857142857,
-            "snomed_ct": [
-            ],
-            "start": 133,
-            "term": "beta blockers ur"
-        },
+    "The patient had a myocardial infarction in 2015 and was prescribed Losartan. His prescription was changed to Irbesartan in 2019. He had a second heart attack in 2021, and is now taking Losartan again.": [
         {
             "cui": "C0027051",
-            "end": 30,
-            "ngram": "heart attack",
+            "end": 39,
+            "ngram": "myocardial infarction",
             "preferred": 1,
             "semtypes": [
                 "T047"
@@ -132,11 +38,852 @@
                 "751689013"
             ],
             "start": 18,
-            "term": "heart attack"
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 18,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C2926063",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C3810814",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T060"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "myocardial infarction"
         },
         {
             "cui": "C0027051",
-            "end": 100,
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.95,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 18,
+            "term": "myocardial infarctions"
+        },
+        {
+            "cui": "C0155668",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 18,
+            "term": "old myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 18,
+            "term": "ecg myocardial infarction"
+        },
+        {
+            "cui": "C0489577",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "myocardial infarction age"
+        },
+        {
+            "cui": "C3640911",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "new myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 18,
+            "term": "myocardial infarction (mi)"
+        },
+        {
+            "cui": "C0155668",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 18,
+            "term": "past myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 18,
+            "term": "ecg: myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 18,
+            "term": "myocardial infarction, (mi)"
+        },
+        {
+            "cui": "C0155626",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "241795018",
+                "395858019",
+                "299702010",
+                "94884017",
+                "94885016",
+                "299721019",
+                "1231678011",
+                "299699015",
+                "395862013",
+                "241793013",
+                "241794019",
+                "395857012",
+                "299705012",
+                "795634013",
+                "578838018"
+            ],
+            "start": 18,
+            "term": "acute myocardial infarction"
+        },
+        {
+            "cui": "C3541950",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "acute myocardial infarction"
+        },
+        {
+            "cui": "C0155626",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "241795018",
+                "395858019",
+                "299702010",
+                "94884017",
+                "94885016",
+                "299721019",
+                "1231678011",
+                "299699015",
+                "395862013",
+                "241793013",
+                "241794019",
+                "395857012",
+                "299705012",
+                "795634013",
+                "578838018"
+            ],
+            "start": 18,
+            "term": "myocardial infarction acute"
+        },
+        {
+            "cui": "C3829910",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "had a myocardial infarction"
+        },
+        {
+            "cui": "C0746727",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "septal myocardial infarction"
+        },
+        {
+            "cui": "C2348362",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "septal myocardial infarction"
+        },
+        {
+            "cui": "C0155668",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 18,
+            "term": "healed myocardial infarction"
+        },
+        {
+            "cui": "C0340324",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+                "299698011",
+                "350376014",
+                "350377017",
+                "622083013"
+            ],
+            "start": 18,
+            "term": "silent myocardial infarction"
+        },
+        {
+            "cui": "C3898652",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "type 5 myocardial infarction"
+        },
+        {
+            "cui": "C3898656",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "type 3 myocardial infarction"
+        },
+        {
+            "cui": "C3898657",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "type 2 myocardial infarction"
+        },
+        {
+            "cui": "C3898658",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "type 1 myocardial infarction"
+        },
+        {
+            "cui": "C2825159",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "date of myocardial infarction"
+        },
+        {
+            "cui": "C3845502",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "myocardial infarction, stroke"
+        },
+        {
+            "cui": "C3898653",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "type 4c myocardial infarction"
+        },
+        {
+            "cui": "C3898654",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "type 4b myocardial infarction"
+        },
+        {
+            "cui": "C3898655",
+            "end": 39,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "type 4a myocardial infarction"
+        },
+        {
+            "cui": "C0033080",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T058"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "743028018",
+                "388540018",
+                "27211010",
+                "27212015",
+                "27213013",
+                "388541019",
+                "652693016"
+            ],
+            "start": 81,
+            "term": "prescription"
+        },
+        {
+            "cui": "C1521941",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 81,
+            "term": "prescription"
+        },
+        {
+            "cui": "C0033080",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T058"
+            ],
+            "similarity": 0.9090909090909091,
+            "snomed_ct": [
+                "743028018",
+                "388540018",
+                "27211010",
+                "27212015",
+                "27213013",
+                "388541019",
+                "652693016"
+            ],
+            "start": 81,
+            "term": "prescriptions"
+        },
+        {
+            "cui": "C2741652",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 0.9090909090909091,
+            "snomed_ct": [
+            ],
+            "start": 81,
+            "term": "prescriptions"
+        },
+        {
+            "cui": "C0033080",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T058"
+            ],
+            "similarity": 0.8333333333333334,
+            "snomed_ct": [
+                "743028018",
+                "388540018",
+                "27211010",
+                "27212015",
+                "27213013",
+                "388541019",
+                "652693016"
+            ],
+            "start": 81,
+            "term": "prescription's"
+        },
+        {
+            "cui": "C2350519",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.8333333333333334,
+            "snomed_ct": [
+            ],
+            "start": 81,
+            "term": "e-prescription"
+        },
+        {
+            "cui": "C4042904",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.8333333333333334,
+            "snomed_ct": [
+            ],
+            "start": 81,
+            "term": "deprescription"
+        },
+        {
+            "cui": "C0013231",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T121"
+            ],
+            "similarity": 0.7692307692307693,
+            "snomed_ct": [
+                "133229013",
+                "133228017",
+                "467464013",
+                "467465014",
+                "1191854017",
+                "720232011",
+                "1204814017",
+                "821431014"
+            ],
+            "start": 81,
+            "term": "nonprescription"
+        },
+        {
+            "cui": "C0033080",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T058"
+            ],
+            "similarity": 0.7692307692307693,
+            "snomed_ct": [
+                "743028018",
+                "388540018",
+                "27211010",
+                "27212015",
+                "27213013",
+                "388541019",
+                "652693016"
+            ],
+            "start": 81,
+            "term": "of prescription"
+        },
+        {
+            "cui": "C2350519",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.7692307692307693,
+            "snomed_ct": [
+            ],
+            "start": 81,
+            "term": "e-prescriptions"
+        },
+        {
+            "cui": "C4042904",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.7692307692307693,
+            "snomed_ct": [
+            ],
+            "start": 81,
+            "term": "deprescriptions"
+        },
+        {
+            "cui": "C0678257",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.7272727272727273,
+            "snomed_ct": [
+            ],
+            "start": 81,
+            "term": "description"
+        },
+        {
+            "cui": "C0849650",
+            "end": 93,
+            "ngram": "prescription",
+            "preferred": 1,
+            "semtypes": [
+                "T061"
+            ],
+            "similarity": 0.7142857142857143,
+            "snomed_ct": [
+            ],
+            "start": 81,
+            "term": "eye prescription"
+        },
+        {
+            "cui": "C0027051",
+            "end": 157,
             "ngram": "heart attack",
             "preferred": 1,
             "semtypes": [
@@ -171,8 +918,88 @@
                 "2747117014",
                 "751689013"
             ],
-            "start": 88,
+            "start": 145,
             "term": "heart attack"
+        },
+        {
+            "cui": "C0278329",
+            "end": 66,
+            "ngram": "prescribed",
+            "preferred": 1,
+            "semtypes": [
+                "T058"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 56,
+            "term": "prescribed"
+        },
+        {
+            "cui": "C0288171",
+            "end": 119,
+            "ngram": "Irbesartan",
+            "preferred": 1,
+            "semtypes": [
+                "T109",
+                "T121"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "1480991015",
+                "173119015",
+                "3490780015",
+                "3482442012",
+                "1185393011",
+                "602411018",
+                "1461055010"
+            ],
+            "start": 109,
+            "term": "irbesartan"
+        },
+        {
+            "cui": "C0126174",
+            "end": 75,
+            "ngram": "Losartan",
+            "preferred": 1,
+            "semtypes": [
+                "T109",
+                "T121"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "1212034011",
+                "159413015",
+                "3488999015",
+                "3499885011",
+                "1205454017",
+                "840645014",
+                "1198867013"
+            ],
+            "start": 67,
+            "term": "losartan"
+        },
+        {
+            "cui": "C0126174",
+            "end": 193,
+            "ngram": "Losartan",
+            "preferred": 1,
+            "semtypes": [
+                "T109",
+                "T121"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "1212034011",
+                "159413015",
+                "3488999015",
+                "3499885011",
+                "1205454017",
+                "840645014",
+                "1198867013"
+            ],
+            "start": 185,
+            "term": "losartan"
         },
         {
             "cui": "C1550655",
@@ -217,25 +1044,82 @@
             "term": "patient"
         },
         {
-            "cui": "C1552850",
-            "end": 125,
-            "ngram": "start",
+            "cui": "C0019602",
+            "end": 80,
+            "ngram": "His",
             "preferred": 1,
             "semtypes": [
-                "T170"
+                "T116",
+                "T123",
+                "T121"
             ],
             "similarity": 1.0,
             "snomed_ct": [
+                "100114019",
+                "2671571013",
+                "455849016",
+                "708819017",
+                "799192017"
             ],
-            "start": 120,
-            "term": "start"
+            "start": 77,
+            "term": "his"
+        },
+        {
+            "cui": "C0523697",
+            "end": 80,
+            "ngram": "His",
+            "preferred": 1,
+            "semtypes": [
+                "T059"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "168712019",
+                "168713012",
+                "565525015"
+            ],
+            "start": 77,
+            "term": "his"
+        },
+        {
+            "cui": "C4319952",
+            "end": 105,
+            "ngram": "changed",
+            "preferred": 1,
+            "semtypes": [
+                "T061"
+            ],
+            "similarity": 0.8,
+            "snomed_ct": [
+            ],
+            "start": 98,
+            "term": "change"
+        },
+        {
+            "cui": "C0442739",
+            "end": 105,
+            "ngram": "changed",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.7142857142857143,
+            "snomed_ct": [
+                "387931011",
+                "387932016",
+                "652140018",
+                "1495230014",
+                "2476025017"
+            ],
+            "start": 98,
+            "term": "unchanged"
         }
     ],
-    "Patient has pneumonia and has also been diagnosed with a heart attack.": [
+    "Patient reports that they recently had pneumonia and is now having chest pain. The patient was diagnosed with a myocardial infarction.": [
         {
             "cui": "C0027051",
-            "end": 69,
-            "ngram": "heart attack",
+            "end": 133,
+            "ngram": "myocardial infarction",
             "preferred": 1,
             "semtypes": [
                 "T047"
@@ -269,8 +1153,1742 @@
                 "2747117014",
                 "751689013"
             ],
-            "start": 57,
-            "term": "heart attack"
+            "start": 112,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 112,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C2926063",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C3810814",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T060"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.95,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 112,
+            "term": "myocardial infarctions"
+        },
+        {
+            "cui": "C0155668",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 112,
+            "term": "old myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 112,
+            "term": "ecg myocardial infarction"
+        },
+        {
+            "cui": "C0489577",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "myocardial infarction age"
+        },
+        {
+            "cui": "C3640911",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "new myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 112,
+            "term": "myocardial infarction (mi)"
+        },
+        {
+            "cui": "C0155668",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 112,
+            "term": "past myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 112,
+            "term": "ecg: myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 112,
+            "term": "myocardial infarction, (mi)"
+        },
+        {
+            "cui": "C0155626",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "241795018",
+                "395858019",
+                "299702010",
+                "94884017",
+                "94885016",
+                "299721019",
+                "1231678011",
+                "299699015",
+                "395862013",
+                "241793013",
+                "241794019",
+                "395857012",
+                "299705012",
+                "795634013",
+                "578838018"
+            ],
+            "start": 112,
+            "term": "acute myocardial infarction"
+        },
+        {
+            "cui": "C3541950",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "acute myocardial infarction"
+        },
+        {
+            "cui": "C0155626",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "241795018",
+                "395858019",
+                "299702010",
+                "94884017",
+                "94885016",
+                "299721019",
+                "1231678011",
+                "299699015",
+                "395862013",
+                "241793013",
+                "241794019",
+                "395857012",
+                "299705012",
+                "795634013",
+                "578838018"
+            ],
+            "start": 112,
+            "term": "myocardial infarction acute"
+        },
+        {
+            "cui": "C3829910",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "had a myocardial infarction"
+        },
+        {
+            "cui": "C0746727",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "septal myocardial infarction"
+        },
+        {
+            "cui": "C2348362",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "septal myocardial infarction"
+        },
+        {
+            "cui": "C0155668",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 112,
+            "term": "healed myocardial infarction"
+        },
+        {
+            "cui": "C0340324",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+                "299698011",
+                "350376014",
+                "350377017",
+                "622083013"
+            ],
+            "start": 112,
+            "term": "silent myocardial infarction"
+        },
+        {
+            "cui": "C3898652",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "type 5 myocardial infarction"
+        },
+        {
+            "cui": "C3898656",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "type 3 myocardial infarction"
+        },
+        {
+            "cui": "C3898657",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "type 2 myocardial infarction"
+        },
+        {
+            "cui": "C3898658",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "type 1 myocardial infarction"
+        },
+        {
+            "cui": "C2825159",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "date of myocardial infarction"
+        },
+        {
+            "cui": "C3845502",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "myocardial infarction, stroke"
+        },
+        {
+            "cui": "C3898653",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "type 4c myocardial infarction"
+        },
+        {
+            "cui": "C3898654",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "type 4b myocardial infarction"
+        },
+        {
+            "cui": "C3898655",
+            "end": 133,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 112,
+            "term": "type 4a myocardial infarction"
+        },
+        {
+            "cui": "C0747307",
+            "end": 15,
+            "ngram": "Patient reports",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "patient reports"
+        },
+        {
+            "cui": "C0008031",
+            "end": 77,
+            "ngram": "chest pain",
+            "preferred": 1,
+            "semtypes": [
+                "T184"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "220792017",
+                "517775017",
+                "49966017",
+                "49967014",
+                "252451018",
+                "220804016",
+                "517789010",
+                "317422012",
+                "539049012",
+                "247036016",
+                "317439014",
+                "539061016",
+                "247047011",
+                "317424013",
+                "406061010",
+                "592663019",
+                "592647010",
+                "663713015",
+                "2755949019",
+                "760797018",
+                "2740555013",
+                "543069013",
+                "2608409011",
+                "2735446012",
+                "2608421010",
+                "2730269014",
+                "2610006017"
+            ],
+            "start": 67,
+            "term": "chest pain"
+        },
+        {
+            "cui": "C2926613",
+            "end": 77,
+            "ngram": "chest pain",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 67,
+            "term": "chest pain"
+        },
+        {
+            "cui": "C0008031",
+            "end": 77,
+            "ngram": "chest pain",
+            "preferred": 1,
+            "semtypes": [
+                "T184"
+            ],
+            "similarity": 0.8888888888888888,
+            "snomed_ct": [
+                "220792017",
+                "517775017",
+                "49966017",
+                "49967014",
+                "252451018",
+                "220804016",
+                "517789010",
+                "317422012",
+                "539049012",
+                "247036016",
+                "317439014",
+                "539061016",
+                "247047011",
+                "317424013",
+                "406061010",
+                "592663019",
+                "592647010",
+                "663713015",
+                "2755949019",
+                "760797018",
+                "2740555013",
+                "543069013",
+                "2608409011",
+                "2735446012",
+                "2608421010",
+                "2730269014",
+                "2610006017"
+            ],
+            "start": 67,
+            "term": "chest pains"
+        },
+        {
+            "cui": "C0032285",
+            "end": 48,
+            "ngram": "pneumonia",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "396219014",
+                "242293010",
+                "100271014",
+                "350049016",
+                "100272019",
+                "242308013",
+                "409863013",
+                "535895010",
+                "535901013",
+                "242302014",
+                "100274018",
+                "799307012",
+                "2760037018",
+                "621810017",
+                "2721096015",
+                "2741003011",
+                "666821014"
+            ],
+            "start": 39,
+            "term": "pneumonia"
+        },
+        {
+            "cui": "C3714636",
+            "end": 48,
+            "ngram": "pneumonia",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.875,
+            "snomed_ct": [
+                "314740018",
+                "100273012",
+                "590574014"
+            ],
+            "start": 39,
+            "term": "pneumonias"
+        },
+        {
+            "cui": "C0032285",
+            "end": 48,
+            "ngram": "pneumonia",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.875,
+            "snomed_ct": [
+                "396219014",
+                "242293010",
+                "100271014",
+                "350049016",
+                "100272019",
+                "242308013",
+                "409863013",
+                "535895010",
+                "535901013",
+                "242302014",
+                "100274018",
+                "799307012",
+                "2760037018",
+                "621810017",
+                "2721096015",
+                "2741003011",
+                "666821014"
+            ],
+            "start": 39,
+            "term": "pneumoniae"
+        },
+        {
+            "cui": "C0011900",
+            "end": 104,
+            "ngram": "diagnosed",
+            "preferred": 1,
+            "semtypes": [
+                "T060"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "2792162019",
+                "2788417017"
+            ],
+            "start": 95,
+            "term": "diagnosed"
+        },
+        {
+            "cui": "C1408353",
+            "end": 104,
+            "ngram": "diagnosed",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.7777777777777778,
+            "snomed_ct": [
+            ],
+            "start": 95,
+            "term": "undiagnosed"
+        },
+        {
+            "cui": "C1550655",
+            "end": 90,
+            "ngram": "patient",
+            "preferred": 1,
+            "semtypes": [
+                "T031"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 83,
+            "term": "patient"
+        },
+        {
+            "cui": "C1578485",
+            "end": 90,
+            "ngram": "patient",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 83,
+            "term": "patient"
+        },
+        {
+            "cui": "C1578486",
+            "end": 90,
+            "ngram": "patient",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 83,
+            "term": "patient"
+        },
+        {
+            "cui": "C0522772",
+            "end": 66,
+            "ngram": "having",
+            "preferred": 1,
+            "semtypes": [
+                "T061"
+            ],
+            "similarity": 0.8,
+            "snomed_ct": [
+                "50077011",
+                "760871018",
+                "208058019",
+                "733436019"
+            ],
+            "start": 60,
+            "term": "shaving"
+        },
+        {
+            "cui": "C1548746",
+            "end": 66,
+            "ngram": "having",
+            "preferred": 1,
+            "semtypes": [
+                "T059"
+            ],
+            "similarity": 0.8,
+            "snomed_ct": [
+            ],
+            "start": 60,
+            "term": "shaving"
+        }
+    ],
+    "Patient is taking Cisplatin.": [
+        {
+            "cui": "C0008838",
+            "end": 27,
+            "ngram": "Cisplatin",
+            "preferred": 1,
+            "semtypes": [
+                "T121",
+                "T197"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "1481418010",
+                "94905017",
+                "94912014",
+                "94907013",
+                "1491996017",
+                "2672703012",
+                "445344013",
+                "94911019",
+                "1492000018",
+                "94910018",
+                "1231682013",
+                "94909011",
+                "1491998016",
+                "94908015",
+                "1491999012",
+                "94906016",
+                "1491997014",
+                "1203769017",
+                "1231681018",
+                "445345014",
+                "2672702019",
+                "3523784011",
+                "3523783017",
+                "795647015",
+                "1461496018",
+                "699448010"
+            ],
+            "start": 18,
+            "term": "cisplatin"
+        },
+        {
+            "cui": "C0671450",
+            "end": 27,
+            "ngram": "Cisplatin",
+            "preferred": 1,
+            "semtypes": [
+                "T061"
+            ],
+            "similarity": 0.7,
+            "snomed_ct": [
+            ],
+            "start": 18,
+            "term": "me cisplatin"
+        },
+        {
+            "cui": "C1550655",
+            "end": 7,
+            "ngram": "Patient",
+            "preferred": 1,
+            "semtypes": [
+                "T031"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "patient"
+        },
+        {
+            "cui": "C1578485",
+            "end": 7,
+            "ngram": "Patient",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "patient"
+        },
+        {
+            "cui": "C1578486",
+            "end": 7,
+            "ngram": "Patient",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "patient"
+        }
+    ],
+    "Patient had pneumonia a month ago and has now been diagnosed with a myocardial infarction. Prescribed Acebutolol.": [
+        {
+            "cui": "C0027051",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 68,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 68,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C2926063",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C3810814",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T060"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.95,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 68,
+            "term": "myocardial infarctions"
+        },
+        {
+            "cui": "C0155668",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 68,
+            "term": "old myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 68,
+            "term": "ecg myocardial infarction"
+        },
+        {
+            "cui": "C0489577",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "myocardial infarction age"
+        },
+        {
+            "cui": "C3640911",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "new myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 68,
+            "term": "myocardial infarction (mi)"
+        },
+        {
+            "cui": "C0155668",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 68,
+            "term": "past myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 68,
+            "term": "ecg: myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 68,
+            "term": "myocardial infarction, (mi)"
+        },
+        {
+            "cui": "C0155626",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "241795018",
+                "395858019",
+                "299702010",
+                "94884017",
+                "94885016",
+                "299721019",
+                "1231678011",
+                "299699015",
+                "395862013",
+                "241793013",
+                "241794019",
+                "395857012",
+                "299705012",
+                "795634013",
+                "578838018"
+            ],
+            "start": 68,
+            "term": "acute myocardial infarction"
+        },
+        {
+            "cui": "C3541950",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "acute myocardial infarction"
+        },
+        {
+            "cui": "C0155626",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "241795018",
+                "395858019",
+                "299702010",
+                "94884017",
+                "94885016",
+                "299721019",
+                "1231678011",
+                "299699015",
+                "395862013",
+                "241793013",
+                "241794019",
+                "395857012",
+                "299705012",
+                "795634013",
+                "578838018"
+            ],
+            "start": 68,
+            "term": "myocardial infarction acute"
+        },
+        {
+            "cui": "C3829910",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "had a myocardial infarction"
+        },
+        {
+            "cui": "C0746727",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "septal myocardial infarction"
+        },
+        {
+            "cui": "C2348362",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "septal myocardial infarction"
+        },
+        {
+            "cui": "C0155668",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 68,
+            "term": "healed myocardial infarction"
+        },
+        {
+            "cui": "C0340324",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+                "299698011",
+                "350376014",
+                "350377017",
+                "622083013"
+            ],
+            "start": 68,
+            "term": "silent myocardial infarction"
+        },
+        {
+            "cui": "C3898652",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "type 5 myocardial infarction"
+        },
+        {
+            "cui": "C3898656",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "type 3 myocardial infarction"
+        },
+        {
+            "cui": "C3898657",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "type 2 myocardial infarction"
+        },
+        {
+            "cui": "C3898658",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "type 1 myocardial infarction"
+        },
+        {
+            "cui": "C2825159",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "date of myocardial infarction"
+        },
+        {
+            "cui": "C3845502",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "myocardial infarction, stroke"
+        },
+        {
+            "cui": "C3898653",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "type 4c myocardial infarction"
+        },
+        {
+            "cui": "C3898654",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "type 4b myocardial infarction"
+        },
+        {
+            "cui": "C3898655",
+            "end": 89,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 68,
+            "term": "type 4a myocardial infarction"
+        },
+        {
+            "cui": "C0278329",
+            "end": 101,
+            "ngram": "Prescribed",
+            "preferred": 1,
+            "semtypes": [
+                "T058"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 91,
+            "term": "prescribed"
+        },
+        {
+            "cui": "C0000946",
+            "end": 112,
+            "ngram": "Acebutolol",
+            "preferred": 1,
+            "semtypes": [
+                "T109",
+                "T121"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "113097017",
+                "1211335018",
+                "3497183012",
+                "3488310011",
+                "2536528012",
+                "1485701018",
+                "1465881019",
+                "1204270010",
+                "807884019",
+                "1198110019"
+            ],
+            "start": 102,
+            "term": "acebutolol"
+        },
+        {
+            "cui": "C1448320",
+            "end": 112,
+            "ngram": "Acebutolol",
+            "preferred": 1,
+            "semtypes": [
+                "T109",
+                "T121"
+            ],
+            "similarity": 0.7272727272727273,
+            "snomed_ct": [
+            ],
+            "start": 102,
+            "term": "apoacebutolol"
         },
         {
             "cui": "C0032285",
@@ -353,7 +2971,7 @@
         },
         {
             "cui": "C0011900",
-            "end": 49,
+            "end": 60,
             "ngram": "diagnosed",
             "preferred": 1,
             "semtypes": [
@@ -364,12 +2982,12 @@
                 "2792162019",
                 "2788417017"
             ],
-            "start": 40,
+            "start": 51,
             "term": "diagnosed"
         },
         {
             "cui": "C1408353",
-            "end": 49,
+            "end": 60,
             "ngram": "diagnosed",
             "preferred": 1,
             "semtypes": [
@@ -378,338 +2996,7 @@
             "similarity": 0.7777777777777778,
             "snomed_ct": [
             ],
-            "start": 40,
-            "term": "undiagnosed"
-        },
-        {
-            "cui": "C1550655",
-            "end": 7,
-            "ngram": "Patient",
-            "preferred": 1,
-            "semtypes": [
-                "T031"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "patient"
-        },
-        {
-            "cui": "C1578485",
-            "end": 7,
-            "ngram": "Patient",
-            "preferred": 1,
-            "semtypes": [
-                "T170"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "patient"
-        },
-        {
-            "cui": "C1578486",
-            "end": 7,
-            "ngram": "Patient",
-            "preferred": 1,
-            "semtypes": [
-                "T170"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "patient"
-        }
-    ],
-    "Patient started taking beta blockers": [
-        {
-            "cui": "C0001645",
-            "end": 36,
-            "ngram": "beta blockers",
-            "preferred": 1,
-            "semtypes": [
-                "T121"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "55490011",
-                "55491010",
-                "3299303012",
-                "485461013",
-                "714657019",
-                "462279010",
-                "1211746018",
-                "55488010",
-                "55489019",
-                "3299819012",
-                "485462018",
-                "3520627012",
-                "3520702014",
-                "3520874018",
-                "1229191018",
-                "1192795014",
-                "1198551012",
-                "764632010",
-                "2741579018"
-            ],
-            "start": 23,
-            "term": "beta blockers"
-        },
-        {
-            "cui": "C0550625",
-            "end": 36,
-            "ngram": "beta blockers",
-            "preferred": 1,
-            "semtypes": [
-                "T201"
-            ],
-            "similarity": 0.7857142857142857,
-            "snomed_ct": [
-            ],
-            "start": 23,
-            "term": "beta blockers ur"
-        },
-        {
-            "cui": "C1550655",
-            "end": 7,
-            "ngram": "Patient",
-            "preferred": 1,
-            "semtypes": [
-                "T031"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "patient"
-        },
-        {
-            "cui": "C1578485",
-            "end": 7,
-            "ngram": "Patient",
-            "preferred": 1,
-            "semtypes": [
-                "T170"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "patient"
-        },
-        {
-            "cui": "C1578486",
-            "end": 7,
-            "ngram": "Patient",
-            "preferred": 1,
-            "semtypes": [
-                "T170"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "patient"
-        }
-    ],
-    "Patient has pneumonia and has also been diagnosed with a heart attack. Patient started taking beta blockers.": [
-        {
-            "cui": "C0001645",
-            "end": 107,
-            "ngram": "beta blockers",
-            "preferred": 1,
-            "semtypes": [
-                "T121"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "55490011",
-                "55491010",
-                "3299303012",
-                "485461013",
-                "714657019",
-                "462279010",
-                "1211746018",
-                "55488010",
-                "55489019",
-                "3299819012",
-                "485462018",
-                "3520627012",
-                "3520702014",
-                "3520874018",
-                "1229191018",
-                "1192795014",
-                "1198551012",
-                "764632010",
-                "2741579018"
-            ],
-            "start": 94,
-            "term": "beta blockers"
-        },
-        {
-            "cui": "C0550625",
-            "end": 107,
-            "ngram": "beta blockers",
-            "preferred": 1,
-            "semtypes": [
-                "T201"
-            ],
-            "similarity": 0.7857142857142857,
-            "snomed_ct": [
-            ],
-            "start": 94,
-            "term": "beta blockers ur"
-        },
-        {
-            "cui": "C0027051",
-            "end": 69,
-            "ngram": "heart attack",
-            "preferred": 1,
-            "semtypes": [
-                "T047"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "500448019",
-                "350357012",
-                "622062019",
-                "37436014",
-                "37437017",
-                "299703017",
-                "241792015",
-                "395860017",
-                "500449010",
-                "299700019",
-                "395861018",
-                "241791010",
-                "37443015",
-                "37440017",
-                "37441018",
-                "37438010",
-                "241790011",
-                "500450010",
-                "395863015",
-                "1784873012",
-                "37442013",
-                "37439019",
-                "500452019",
-                "1784872019",
-                "2747117014",
-                "751689013"
-            ],
-            "start": 57,
-            "term": "heart attack"
-        },
-        {
-            "cui": "C0032285",
-            "end": 21,
-            "ngram": "pneumonia",
-            "preferred": 1,
-            "semtypes": [
-                "T047"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "396219014",
-                "242293010",
-                "100271014",
-                "350049016",
-                "100272019",
-                "242308013",
-                "409863013",
-                "535895010",
-                "535901013",
-                "242302014",
-                "100274018",
-                "799307012",
-                "2760037018",
-                "621810017",
-                "2721096015",
-                "2741003011",
-                "666821014"
-            ],
-            "start": 12,
-            "term": "pneumonia"
-        },
-        {
-            "cui": "C3714636",
-            "end": 21,
-            "ngram": "pneumonia",
-            "preferred": 1,
-            "semtypes": [
-                "T047"
-            ],
-            "similarity": 0.875,
-            "snomed_ct": [
-                "314740018",
-                "100273012",
-                "590574014"
-            ],
-            "start": 12,
-            "term": "pneumonias"
-        },
-        {
-            "cui": "C0032285",
-            "end": 21,
-            "ngram": "pneumonia",
-            "preferred": 1,
-            "semtypes": [
-                "T047"
-            ],
-            "similarity": 0.875,
-            "snomed_ct": [
-                "396219014",
-                "242293010",
-                "100271014",
-                "350049016",
-                "100272019",
-                "242308013",
-                "409863013",
-                "535895010",
-                "535901013",
-                "242302014",
-                "100274018",
-                "799307012",
-                "2760037018",
-                "621810017",
-                "2721096015",
-                "2741003011",
-                "666821014"
-            ],
-            "start": 12,
-            "term": "pneumoniae"
-        },
-        {
-            "cui": "C0011900",
-            "end": 49,
-            "ngram": "diagnosed",
-            "preferred": 1,
-            "semtypes": [
-                "T060"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "2792162019",
-                "2788417017"
-            ],
-            "start": 40,
-            "term": "diagnosed"
-        },
-        {
-            "cui": "C1408353",
-            "end": 49,
-            "ngram": "diagnosed",
-            "preferred": 1,
-            "semtypes": [
-                "T033"
-            ],
-            "similarity": 0.7777777777777778,
-            "snomed_ct": [
-            ],
-            "start": 40,
+            "start": 51,
             "term": "undiagnosed"
         },
         {
@@ -755,23 +3042,9 @@
             "term": "patient"
         },
         {
-            "cui": "C1550655",
-            "end": 78,
-            "ngram": "Patient",
-            "preferred": 1,
-            "semtypes": [
-                "T031"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 71,
-            "term": "patient"
-        },
-        {
-            "cui": "C1578485",
-            "end": 78,
-            "ngram": "Patient",
+            "cui": "C1561542",
+            "end": 29,
+            "ngram": "month",
             "preferred": 1,
             "semtypes": [
                 "T170"
@@ -779,22 +3052,8 @@
             "similarity": 1.0,
             "snomed_ct": [
             ],
-            "start": 71,
-            "term": "patient"
-        },
-        {
-            "cui": "C1578486",
-            "end": 78,
-            "ngram": "Patient",
-            "preferred": 1,
-            "semtypes": [
-                "T170"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 71,
-            "term": "patient"
+            "start": 24,
+            "term": "month"
         }
     ],
     "suspect skin cancer because the patient's brother has skin cancer": [

@@ -26,7 +26,7 @@ from typing import Union
 from fhir.resources.diagnosticreport import DiagnosticReport
 from fhir.resources.documentreference import DocumentReference
 from fhir.resources.resource import Resource
-
+from nlp_insights.fhir.path import FhirPath
 
 # Data type that represents FHIR resources with unstructured notes
 UnstructuredFhirResource = Union[DiagnosticReport, DocumentReference]
@@ -36,7 +36,7 @@ class UnstructuredText(NamedTuple):
     """Models text data that can be used to derive new FHIR resources"""
 
     source_resource: UnstructuredFhirResource
-    fhir_path: str
+    text_path: FhirPath
     text: str
 
 
@@ -67,7 +67,7 @@ def _get_diagnostic_report_text(
         return [
             UnstructuredText(
                 source_resource=report,
-                fhir_path=f"presentedForm[{ix}].data",
+                text_path=FhirPath(f"presentedForm[{ix}].data"),
                 text=_decode_text(attachment.data),
             )
             for ix, attachment in enumerate(report.presentedForm)
@@ -94,7 +94,7 @@ def _get_document_reference_data(
         return [
             UnstructuredText(
                 source_resource=doc_ref,
-                fhir_path=f"content[{ix}].attachment.data",
+                text_path=FhirPath(f"content[{ix}].attachment.data"),
                 text=_decode_text(content.attachment.data),
             )
             for ix, content in enumerate(doc_ref.content)

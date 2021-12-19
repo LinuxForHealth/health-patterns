@@ -17,19 +17,15 @@ Functions for creating codings
 
 
 from fhir.resources.coding import Coding
-from nlp_insights.fhir import alvearie_ext
 
 
-def create_coding(
-    system: str, code: str, display: str = None, derived_by_nlp: bool = False
-) -> Coding:
+def create_coding(system: str, code: str, display: str = None) -> Coding:
     """Creates an instance of a FHIR coding data type
 
     Args:
          system         - the url of the coding system
          code           - the code
          display        - the display text, if any
-         derived_by_nlp - If true, a derived by NLP category extension will be added
 
     Returns: coding element
 
@@ -54,31 +50,6 @@ def create_coding(
        "system": "http://hl7.org/fhir/ValueSet/timing-abbreviation"
      }
 
-
-     Code derived by NLP:
-     >>> code = create_coding("http://hl7.org/fhir/ValueSet/timing-abbreviation",
-     ...                      "WK",
-     ...                      derived_by_nlp=True)
-     >>> print(code.json(indent=2))
-     {
-       "extension": [
-         {
-           "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-           "valueCodeableConcept": {
-             "coding": [
-               {
-                 "code": "natural-language-processing",
-                 "display": "NLP",
-                 "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
-               }
-             ],
-             "text": "NLP"
-           }
-         }
-       ],
-       "code": "WK",
-       "system": "http://hl7.org/fhir/ValueSet/timing-abbreviation"
-     }
     """
     coding = Coding.construct()
     coding.system = system
@@ -86,8 +57,5 @@ def create_coding(
 
     if display:
         coding.display = display
-
-    if derived_by_nlp:
-        coding.extension = [alvearie_ext.create_derived_by_nlp_category_extension()]
 
     return coding

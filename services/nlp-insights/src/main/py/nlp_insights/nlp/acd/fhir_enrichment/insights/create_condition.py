@@ -14,36 +14,37 @@
 """"
 Process ACD output and derive conditions
 """
-
-from collections import namedtuple
+import json
+from typing import Dict
 from typing import List
+from typing import NamedTuple
 from typing import Optional
 
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.condition import Condition
-from ibm_whcs_sdk.annotator_for_clinical_data import (
-    annotator_for_clinical_data_v1 as acd,
-)
 from ibm_whcs_sdk.annotator_for_clinical_data import ContainerAnnotation
-from nlp_insights.fhir import alvearie_ext
 from nlp_insights.fhir import fhir_object_utils
-from nlp_insights.insight import insight_id
-from nlp_insights.insight.span import Span
-from nlp_insights.insight.text_fragment import TextFragment
+from nlp_insights.insight import id_util
+from nlp_insights.insight.builder.derived_resource_builder import (
+    DerivedResourceInsightBuilder,
+)
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
+from nlp_insights.nlp.acd.fhir_enrichment.insights import attribute
 from nlp_insights.nlp.acd.fhir_enrichment.insights import confidence
-from nlp_insights.nlp.acd.fhir_enrichment.insights.append_codings import (
-    append_codings,
-    get_concept_display_text,
-)
-from nlp_insights.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
-    get_attribute_sources,
-    AttrSourceConcept,
-)
+from nlp_insights.nlp.acd.fhir_enrichment.insights import create_codings
 from nlp_insights.nlp.nlp_config import AcdNlpConfig
 
 
-def create_conditions_from_insights(
+class TrackerEntry(NamedTuple):
+    """For a given CUI, this binds the resource being derived to the
+    insight containing the evidence.
+    """
+
+    resource: Condition
+    insight_builder: DerivedResourceInsightBuilder
+
+
+def create_conditions(
     text_source: UnstructuredText,
     acd_output: ContainerAnnotation,
     nlp_config: AcdNlpConfig,
@@ -59,93 +60,67 @@ def create_conditions_from_insights(
     """
     source_loc_map = nlp_config.acd_attribute_source_map
 
-    TrackerEntry = namedtuple("TrackerEntry", ["fhir_resource", "id_maker"])
-    condition_tracker = {}  # key is UMLS ID, value is TrackerEntry
+    # Tracks the conditions that have been created for a cui
+    # If ACD produces multiple insights for the same CUI, we want to reuse the
+    # same insight (with an additional span).
+    # The key is the insight id value, which is a hash of the source of the
+    # insight combined with the cui causing the new resource to be
+    # created, plus the new resource type.
+    # This creates a globally unique id value that will be the same
+    # for multiple occurrences of the same derived concept.
+    condition_tracker: Dict[str, TrackerEntry] = {}
 
-    for cui_source in get_attribute_sources(acd_output, Condition, source_loc_map):
-        if cui_source.sources:
-            # some attributes have the cui in multiple places, if so
-            # the first available source is the best one
-            source: AttrSourceConcept = next(iter(cui_source.sources.values()))
-
-            if source and hasattr(source, "cui") and source.cui:
-
-                if source.cui not in condition_tracker:
-                    condition_tracker[source.cui] = TrackerEntry(
-                        fhir_resource=Condition.construct(
-                            subject=text_source.source_resource.subject
-                        ),
-                        id_maker=insight_id.insight_id_maker_derive_resource(
-                            source=text_source,
-                            cui=source.cui,
-                            derived=Condition,
-                            start=nlp_config.insight_id_start,
-                        ),
-                    )
-
-                condition, id_maker = condition_tracker[source.cui]
-
-                _add_insight_to_condition(
-                    text_source,
-                    condition,
-                    cui_source.attr,
-                    source,
-                    acd_output,
-                    next(id_maker),
-                    nlp_config,
+    for attr in attribute.get_attribute_sources(acd_output, Condition, source_loc_map):
+        if hasattr(attr.best_source.source, "cui") and attr.best_source.source.cui:
+            key = id_util.make_hash(text_source, attr.best_source.source.cui, Condition)
+            if key not in condition_tracker:
+                # Create a new condition + insight and store in the tracker
+                condition = Condition.construct(
+                    subject=text_source.source_resource.subject
                 )
+                insight_builder = DerivedResourceInsightBuilder(
+                    resource_type=Condition,
+                    text_source=text_source,
+                    insight_id_value=key,
+                    insight_id_system=nlp_config.nlp_system,
+                    nlp_response_json=json.dumps(acd_output.to_dict()),
+                )
+                condition_tracker[key] = TrackerEntry(
+                    resource=condition, insight_builder=insight_builder
+                )
+
+            # Retrieve condition and insight from tracker,
+            condition, insight_builder = condition_tracker[key]
+
+            # Update codings
+            # This is most likely a no-op for any attributes after the first one
+            # that causes the condition to be created. (CUI is the same).
+            # Still, we should let ACD decide whether the codes are the same or not
+            # between two attributes and not assume.
+            _add_insight_codings_to_condition(condition, attr.best_source.source)
+
+            # Update insight with new span and confidence information
+            span = attr.get_attribute_span()
+            if span:
+                confidences = []
+                if attr.attr.insight_model_data:
+                    confidences = confidence.get_derived_condition_confidences(
+                        attr.attr.insight_model_data
+                    )
+                insight_builder.add_span(span=span, confidences=confidences)
 
     if not condition_tracker:
         return None
 
-    conditions = [entry.fhir_resource for entry in condition_tracker.values()]
+    for condition, insight in condition_tracker.values():
+        insight.append_insight_to_resource_meta(condition)
+        insight.append_insight_summary_to_resource(condition)
 
-    for condition in conditions:
-        fhir_object_utils.append_derived_by_nlp_category_extension(condition)
-
-    return conditions
-
-
-def _add_insight_to_condition(  # pylint: disable=too-many-arguments;
-    text_source: UnstructuredText,
-    condition: Condition,
-    attr: acd.AttributeValueAnnotation,
-    cui_source: AttrSourceConcept,
-    acd_output: acd.ContainerAnnotation,
-    insight_id_string: str,
-    nlp_config: AcdNlpConfig,
-) -> None:
-    """Adds data from the insight to the condition"""
-    insight_id_ext = alvearie_ext.create_insight_id_extension(
-        insight_id_string, nlp_config.nlp_system
-    )
-
-    source = TextFragment(
-        text_source=text_source,
-        text_span=Span(begin=attr.begin, end=attr.end, covered_text=attr.covered_text),
-    )
-
-    confidences = confidence.get_derived_condition_confidences(attr.insight_model_data)
-
-    nlp_output_ext = nlp_config.create_nlp_output_extension(acd_output)
-
-    unstructured_insight_detail = (
-        alvearie_ext.create_derived_from_unstructured_insight_detail_extension(
-            source=source,
-            confidences=confidences,
-            evaluated_output_ext=nlp_output_ext,
-        )
-    )
-
-    fhir_object_utils.add_insight_to_meta(
-        condition, insight_id_ext, unstructured_insight_detail
-    )
-
-    _add_insight_codings_to_condition(condition, cui_source)
+    return [entry.resource for entry in condition_tracker.values()]
 
 
 def _add_insight_codings_to_condition(
-    condition: Condition, concept: AttrSourceConcept
+    condition: Condition, concept: attribute.AttrSourceConcept
 ) -> None:
     """Adds information from the insight's concept to a condition
 
@@ -155,8 +130,12 @@ def _add_insight_codings_to_condition(
     """
     if condition.code is None:
         codeable_concept = CodeableConcept.construct()
-        codeable_concept.text = get_concept_display_text(concept)
+        codeable_concept.text = create_codings.get_concept_display_text(concept)
+        codeable_concept.coding = create_codings.derive_codings_from_acd_concept(
+            concept
+        )
         condition.code = codeable_concept
-        codeable_concept.coding = []
-
-    append_codings(concept, condition.code, add_nlp_extension=False)
+    else:
+        derived_codes = create_codings.derive_codings_from_acd_concept(concept)
+        for dcode in derived_codes:
+            fhir_object_utils.append_coding_obj(condition.code, dcode)

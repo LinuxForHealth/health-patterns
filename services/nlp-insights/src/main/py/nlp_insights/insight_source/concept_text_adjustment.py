@@ -17,8 +17,8 @@ Defines methods for adjusting the text of a concept prior to NLP.
 The goal of adjustment is to provide context words so that NLP can better understand the
 text associated with the concept.
 
-For example if a concept is for a vaccine, appending "Vaccine" to the text helps NLP
-understand that the text refers to a vaccine and not the disease.
+For example if a concept is for an allergy intolerance, appending "allergy" to the text helps NLP
+understand that the text refers to an allergy and not a substance or medication
 
 This logic depends greatly on what the input resources have for their coding text. We found
 that for the examples we looked at, this logic helped. For other use cases, this logic
@@ -41,30 +41,6 @@ class AdjustedConceptRef(NamedTuple):
     adjusted_text: str
 
 
-def adjust_vaccine_text(text: str) -> str:
-    """Adjusts a text string that is known to be a vaccine
-
-    Args:
-        text - the text to adjust
-    Returns:
-        the adjusted text
-
-    Examples:
-    >>> adjust_vaccine_text('DTaP')
-    'DTaP vaccine'
-    >>> adjust_vaccine_text('DTaP, unspecified formulation')
-    'DTaP vaccine, unspecified formulation'
-    """
-    # Add "vaccine" to the text so NLP will get codes for the vaccine, not the disease
-    # If there is a comma in the text, "vaccine" is added before the comma.
-    comma_location = text.find(",")
-    if comma_location == -1:
-        adjusted_text = text + " vaccine"
-    else:
-        adjusted_text = text[:comma_location] + " vaccine" + text[comma_location:]
-    return adjusted_text
-
-
 def adjust_allergy_text(text: str) -> str:
     """Adjusts a text string that is known to be an allergy
 
@@ -84,7 +60,6 @@ def adjust_allergy_text(text: str) -> str:
 
 DEFAULT_CONCEPT_TEXT_ADJUSTERS: Dict[CodeableConceptRefType, Callable[[str], str]] = {
     CodeableConceptRefType.ALLERGEN: adjust_allergy_text,
-    CodeableConceptRefType.VACCINE: adjust_vaccine_text,
 }
 
 

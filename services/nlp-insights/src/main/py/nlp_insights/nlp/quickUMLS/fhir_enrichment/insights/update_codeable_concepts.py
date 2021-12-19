@@ -13,24 +13,27 @@
 # limitations under the License.
 """Update codeable concepts with codings derived from NLP"""
 
-from typing import DefaultDict
+import json
 from typing import Generator
 from typing import List
 from typing import NamedTuple
-from typing import Set
-
-from fhir.resources.resource import Resource
-
-from nlp_insights.fhir import fhir_object_utils
+from fhir.resources.coding import Coding
+from nlp_insights.fhir import create_coding
 from nlp_insights.fhir.code_system import hl7
-from nlp_insights.insight import insight_id
+from nlp_insights.insight import id_util
+from nlp_insights.insight.builder.enrich_resource_builder import (
+    EnrichedResourceInsightBuilder,
+)
 from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptRef
 from nlp_insights.insight_source.fields_of_interest import (
-    CodeableConceptRef,
     CodeableConceptRefType,
 )
 from nlp_insights.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
-from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse, QuickUmlsConcept
+from nlp_insights.nlp.quickUMLS.nlp_response import (
+    QuickUmlsResponse,
+    QuickUmlsConcept,
+    QuickUmlsEncoder,
+)
 from nlp_insights.umls.semtype_lookup import ref_type_relevant_to_any_type_names
 
 
@@ -50,97 +53,18 @@ def _relevant_concepts(
             yield concept
 
 
-def _append_codes_from_nlp_cui(
-    fhir_concept_ref: CodeableConceptRef,
-    nlp_concept: QuickUmlsConcept,
-    existing_codes_by_system: DefaultDict[str, Set[str]],
-) -> int:
-    """Appends the code(s) from the nlp_cui to the coding in the concept ref
-
-    Codes are only appended if they do not already exist in the list.
-
-    Args: fhir_concept_ref - reference to the coding list to update
-          nlp_concept - code returned by nlp to append
-                    This includes a UMLS cui, and possibly one or more
-                    associated codes.
-          existing_codes_by_system - mapping of code systems to existing codes,
-                                     this mapping is updated as codes are added.
-
-    Returns: The number of codes added
-    """
-    codes_added = 0
-    if nlp_concept.cui not in existing_codes_by_system[hl7.UMLS_URL]:
-        existing_codes_by_system[hl7.UMLS_URL].add(nlp_concept.cui)
-        fhir_object_utils.append_derived_by_nlp_coding(
-            fhir_concept_ref.code_ref,
-            hl7.UMLS_URL,
-            nlp_concept.cui,
-            nlp_concept.preferred_name,
+def _derive_codings(nlp_concept: QuickUmlsConcept) -> List[Coding]:
+    """Derives codings from QuickUMLs NLP response"""
+    return [
+        create_coding.create_coding(
+            system=hl7.UMLS_URL,
+            code=nlp_concept.cui,
+            display=nlp_concept.preferred_name,
         )
-        codes_added += 1
-
-    if nlp_concept.snomed_ct:
-        for snomed_code in nlp_concept.snomed_ct:
-            if snomed_code not in existing_codes_by_system[hl7.SNOMED_URL]:
-                existing_codes_by_system[hl7.SNOMED_URL].add(nlp_concept.cui)
-                fhir_object_utils.append_derived_by_nlp_coding(
-                    fhir_concept_ref.code_ref, hl7.SNOMED_URL, snomed_code
-                )
-                codes_added += 1
-
-    return codes_added
-
-
-def _add_codeable_concept_insight(
-    fhir_resource: Resource,
-    nlp_concept_ref: NlpConceptRef,
-    id_maker: Generator[str, None, None],
-    nlp_config: NlpConfig,
-) -> int:
-    """Updates a codeable concept and resource meta with insights.
-
-    The codeable concept referenced by the insight is updated with codings that were
-    derived from the text.
-
-    The meta extension for the supplied resource is updated with the insight id and
-    reference path.
-
-    Args:
-        fhir_resource - the resource to update the meta with the new insight
-        insight - binding between the concept text that was analyzed by ACD-NLP and the
-                  NLP response for that analysis.
-        id_maker - generator for producing ids for insights
-
-    Returns: the number of codings added to the codeable concept.
-    """
-    codes_added = 0
-    concept_ref: CodeableConceptRef = nlp_concept_ref.adjusted_concept.concept_ref
-
-    if concept_ref.code_ref.coding is None:
-        concept_ref.code_ref.coding = []
-
-    existing_codes_by_system = fhir_object_utils.get_existing_codes_by_system(
-        concept_ref.code_ref.coding
-    )
-    for nlp_cui in _relevant_concepts(concept_ref.type, nlp_concept_ref.nlp_response):
-        codes_added += _append_codes_from_nlp_cui(
-            concept_ref, nlp_cui, existing_codes_by_system
-        )
-
-    if codes_added:
-        fhir_object_utils.append_insight_with_path_expr_to_resource_meta(
-            fhir_resource=fhir_resource,
-            insight_id=next(id_maker),
-            system=nlp_config.nlp_system,
-            fhir_path=nlp_concept_ref.adjusted_concept.concept_ref.fhir_path,
-            nlp_output_uri=nlp_config.get_nlp_output_loc(nlp_concept_ref.nlp_response),
-        )
-
-    return codes_added
+    ]
 
 
 def update_codeable_concepts_and_meta_with_insights(
-    fhir_resource: Resource,
     concept_insights: List[NlpConceptRef],
     nlp_config: NlpConfig = QUICK_UMLS_NLP_CONFIG,
 ) -> int:
@@ -161,16 +85,28 @@ def update_codeable_concepts_and_meta_with_insights(
     Returns: total number of derived codings added to the resource, across all provided
              codeable concepts.
     """
-    num_codes_added: int = 0
-
     for concept_insight in concept_insights:
-        id_maker = insight_id.insight_id_maker_update_concept(
-            concept=concept_insight.adjusted_concept.concept_ref,
-            resource=fhir_resource,
-            start=nlp_config.insight_id_start,
-        )
-        num_codes_added += _add_codeable_concept_insight(
-            fhir_resource, concept_insight, id_maker, nlp_config
+        builder = EnrichedResourceInsightBuilder(
+            enriched_concept=concept_insight.adjusted_concept.concept_ref,
+            insight_id_value=id_util.make_hash(
+                concept_insight.adjusted_concept.concept_ref
+            ),
+            insight_id_system=nlp_config.nlp_system,
+            nlp_response_json=json.dumps(
+                concept_insight.nlp_response, cls=QuickUmlsEncoder
+            ),
         )
 
-    return num_codes_added
+        derived_codes = [
+            coding
+            for concept in _relevant_concepts(
+                concept_insight.adjusted_concept.concept_ref.type,
+                concept_insight.nlp_response,
+            )
+            for coding in _derive_codings(concept)
+        ]
+
+        builder.add_derived_codings(derived_codes)
+        builder.append_insight_to_resource_meta()
+
+    return builder.num_summary_extensions_added

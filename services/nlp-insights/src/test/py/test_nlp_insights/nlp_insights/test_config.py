@@ -15,9 +15,10 @@
 # pylint: disable=missing-function-docstring
 import importlib
 
+from fhir.resources.allergyintolerance import AllergyIntolerance
 from fhir.resources.diagnosticreport import DiagnosticReport
-from fhir.resources.immunization import Immunization
 
+from nlp_insights import app
 from test_nlp_insights.util.mock_service import (
     make_mock_acd_service_class,
     configure_acd,
@@ -27,7 +28,6 @@ from test_nlp_insights.util.mock_service import (
     set_default_nlp,
 )
 from test_nlp_insights.util.resources import UnitTestUsingExternalResource
-from nlp_insights import app
 
 
 class TestConfig(UnitTestUsingExternalResource):
@@ -99,7 +99,7 @@ class TestConfig(UnitTestUsingExternalResource):
             self.assertEqual(rsp.get_data(as_text=True), cfg_acd)
 
             # Override does not change the default
-            configure_resource_nlp_override(service, Immunization, cfg_qu)
+            configure_resource_nlp_override(service, AllergyIntolerance, cfg_qu)
             rsp = service.get("/config")
             self.assertEqual(200, rsp.status_code)
             self.assertEqual(rsp.get_data(as_text=True), cfg_acd)
@@ -120,23 +120,23 @@ class TestConfig(UnitTestUsingExternalResource):
         with app.app.test_client() as service:
             cfg_qu = configure_quick_umls(service, is_default=False)
             configure_acd(service, is_default=True)
-            configure_resource_nlp_override(service, Immunization, cfg_qu)
+            configure_resource_nlp_override(service, AllergyIntolerance, cfg_qu)
             configure_resource_nlp_override(service, DiagnosticReport, cfg_qu)
 
             rsp = service.get("/config/resource")
             self.assertEqual(200, rsp.status_code)
             overrides = rsp.json
-            self.assertEqual(overrides["Immunization"], cfg_qu)
+            self.assertEqual(overrides["AllergyIntolerance"], cfg_qu)
             self.assertEqual(overrides["DiagnosticReport"], cfg_qu)
 
     def test_when_override_then_resource_overrides_correct(self):
         with app.app.test_client() as service:
             cfg_qu = configure_quick_umls(service, is_default=False)
             configure_acd(service, is_default=True)
-            configure_resource_nlp_override(service, Immunization, cfg_qu)
+            configure_resource_nlp_override(service, AllergyIntolerance, cfg_qu)
             configure_resource_nlp_override(service, DiagnosticReport, cfg_qu)
 
-            rsp = service.get("/config/resource/Immunization")
+            rsp = service.get("/config/resource/AllergyIntolerance")
             self.assertEqual(200, rsp.status_code)
             self.assertEqual(rsp.get_data(as_text=True), cfg_qu)
 
@@ -144,38 +144,38 @@ class TestConfig(UnitTestUsingExternalResource):
         with app.app.test_client() as service:
             cfg_qu = configure_quick_umls(service, is_default=False)
             configure_acd(service, is_default=True)
-            configure_resource_nlp_override(service, Immunization, cfg_qu)
+            configure_resource_nlp_override(service, AllergyIntolerance, cfg_qu)
             configure_resource_nlp_override(service, DiagnosticReport, cfg_qu)
 
             # verify setup OK
             rsp = service.get("/config/resource")
             self.assertEqual(200, rsp.status_code)
             overrides = rsp.json
-            self.assertEqual(overrides["Immunization"], cfg_qu)
+            self.assertEqual(overrides["AllergyIntolerance"], cfg_qu)
             self.assertEqual(overrides["DiagnosticReport"], cfg_qu)
 
             # delete and verify
-            rsp = service.delete("/config/resource/Immunization")
+            rsp = service.delete("/config/resource/AllergyIntolerance")
             self.assertEqual(200, rsp.status_code)
 
             rsp = service.get("/config/resource")
             self.assertEqual(200, rsp.status_code)
             overrides = rsp.json
             self.assertEqual(overrides["DiagnosticReport"], cfg_qu)
-            self.assertTrue("Immunization" not in overrides)
+            self.assertTrue("AllergyIntolerance" not in overrides)
 
     def test_when_delete_all_resource_overrides_then_no_resource_overrides(self):
         with app.app.test_client() as service:
             cfg_qu = configure_quick_umls(service, is_default=False)
             configure_acd(service, is_default=True)
-            configure_resource_nlp_override(service, Immunization, cfg_qu)
+            configure_resource_nlp_override(service, AllergyIntolerance, cfg_qu)
             configure_resource_nlp_override(service, DiagnosticReport, cfg_qu)
 
             # verify setup OK
             rsp = service.get("/config/resource")
             self.assertEqual(200, rsp.status_code)
             overrides = rsp.json
-            self.assertEqual(overrides["Immunization"], cfg_qu)
+            self.assertEqual(overrides["AllergyIntolerance"], cfg_qu)
             self.assertEqual(overrides["DiagnosticReport"], cfg_qu)
 
             # delete and verify
@@ -186,7 +186,7 @@ class TestConfig(UnitTestUsingExternalResource):
             self.assertEqual(200, rsp.status_code)
             overrides = rsp.json
             self.assertTrue("DiagnosticReport" not in overrides)
-            self.assertTrue("Immunization" not in overrides)
+            self.assertTrue("AllergyIntolerance" not in overrides)
 
     def test_when_get_all_configs_then_configs_returned(self):
         with app.app.test_client() as service:

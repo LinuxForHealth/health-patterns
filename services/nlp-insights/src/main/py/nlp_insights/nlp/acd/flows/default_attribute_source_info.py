@@ -20,14 +20,12 @@ from fhir.resources.condition import Condition
 from fhir.resources.medicationstatement import MedicationStatement
 
 from nlp_insights.insight_source.fields_of_interest import CodeableConceptRefType
-from nlp_insights.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
-    SourceCuiSearchMap,
+from nlp_insights.nlp.acd.fhir_enrichment.insights.attribute import (
+    SourceSearchMap,
     AnnotationContext,
-    AcdConceptCuiFallBack,
-    AcdAttrCuiSourceLoc,
+    AcdAttrSourceDfn,
     AttrSourcePropName,
 )
-from nlp_insights.umls import semtype_lookup
 
 
 # There's an assumption here that this allergy mapping is used
@@ -40,23 +38,16 @@ from nlp_insights.umls import semtype_lookup
 #
 ANNOTATION_TYPE_ALLERGY = AnnotationContext(
     attribute_mapping=[
-        AcdAttrCuiSourceLoc(
+        AcdAttrSourceDfn(
             attr_name="Diagnosis",
             source_prop_names=[AttrSourcePropName.SYMPTOM_DISEASE_IND],
         ),
-        AcdAttrCuiSourceLoc(
+        AcdAttrSourceDfn(
             attr_name="MedicationAllergy",
             source_prop_names=[AttrSourcePropName.MEDICATION_IND],
         ),
-    ],
-    concept_fallback=[
-        AcdConceptCuiFallBack(concept_types=semtype_lookup.ALLERGEN_TYPES),
-    ],
+    ]
 )
-
-# ACD has an extra concept type to look for in results in addition to base
-# UMLS types.
-ACD_CONDITION_UMLS_TYPES = semtype_lookup.CONDITION_TYPES + ["ICDiagnosis"]
 
 
 # Annotations to look at when deriving conditions
@@ -65,12 +56,11 @@ ACD_CONDITION_UMLS_TYPES = semtype_lookup.CONDITION_TYPES + ["ICDiagnosis"]
 # We do want "PatientReported".
 ANNOTATION_TYPE_CONDITION_DERIVED = AnnotationContext(
     attribute_mapping=[
-        AcdAttrCuiSourceLoc(
+        AcdAttrSourceDfn(
             attr_name=set(["Diagnosis", "PatientReportedCondition"]),
             source_prop_names=[AttrSourcePropName.SYMPTOM_DISEASE_IND],
         ),
     ],
-    concept_fallback=None,
 )
 
 
@@ -80,30 +70,11 @@ ANNOTATION_TYPE_CONDITION_DERIVED = AnnotationContext(
 # consider
 ANNOTATION_TYPE_CONDITION_ENRICH = AnnotationContext(
     attribute_mapping=[
-        AcdAttrCuiSourceLoc(
-            attr_name=set(["Diagnosis", "PotentialDiagnosis"]),
+        AcdAttrSourceDfn(
+            attr_name=set(["Diagnosis"]),
             source_prop_names=[AttrSourcePropName.SYMPTOM_DISEASE_IND],
         ),
     ],
-    concept_fallback=[AcdConceptCuiFallBack(concept_types=ACD_CONDITION_UMLS_TYPES)],
-)
-
-
-# ACD has additional types in addition to the umls types to use for
-# Vaccine
-ACD_IMMUNIZATION_TYPES = semtype_lookup.VACCINE_TYPES + ["ICMedication"]
-
-
-# This mapping assumes an immunization context (such as enriching an Immunization
-# resources's coding).
-# Because of that assumption, we can assume any concepts that look related to immunization
-# are codings we are interested in.
-#
-# We are not aware of an attribute for immunization, and so we only specify concepts to
-# look for.
-ANNOTATION_TYPE_IMMUNIZATION = AnnotationContext(
-    attribute_mapping=None,
-    concept_fallback=[AcdConceptCuiFallBack(concept_types=ACD_IMMUNIZATION_TYPES)],
 )
 
 
@@ -111,19 +82,18 @@ ANNOTATION_TYPE_IMMUNIZATION = AnnotationContext(
 # medication objects from unstructured text.
 ANNOTATION_TYPE_MEDICATION = AnnotationContext(
     attribute_mapping=[
-        AcdAttrCuiSourceLoc(
+        AcdAttrSourceDfn(
             attr_name="PrescribedMedication",
             source_prop_names=[AttrSourcePropName.MEDICATION_IND],
         ),
     ],
-    concept_fallback=None,
 )
 
 
 # There are two root types used as keys for this map
 # Fhir Resource & Codeable concept reference type.
 # For a concept reference type, we can use a mapping that assumes the text has a specific context,
-# such as when we enrich an allergy intolerance or immunization coding.
+# such as when we enrich an allergy intolerance coding.
 #
 # For a FHIR resource, this is the resource we want to create from unstructured text.
 # We can't assume the text is only about that resource, or even says anything about that
@@ -138,10 +108,9 @@ ANNOTATION_TYPE_MEDICATION = AnnotationContext(
 # It's also why in the actual rules we can get away with assuming 'Diagnosis' is talking about an
 # allergy diagnosis when enriching an AllergyIntolerance coding...but we could not use that same rule
 # if we were to someday try and create an allergy intolerance resource from a diagnostic report.
-RELEVANT_ANNOTATIONS_STANDARD_V1_0: SourceCuiSearchMap = {
+RELEVANT_ANNOTATIONS_STANDARD_V1_0: SourceSearchMap = {
     Condition: ANNOTATION_TYPE_CONDITION_DERIVED,
     MedicationStatement: ANNOTATION_TYPE_MEDICATION,
     CodeableConceptRefType.ALLERGEN: ANNOTATION_TYPE_ALLERGY,
     CodeableConceptRefType.CONDITION: ANNOTATION_TYPE_CONDITION_ENRICH,
-    CodeableConceptRefType.VACCINE: ANNOTATION_TYPE_IMMUNIZATION,
 }

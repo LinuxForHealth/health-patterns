@@ -72,7 +72,9 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
     def test_when_post_diag_then_condition_derived(self):
         report = make_diag_report(
             subject=make_patient_reference(),
-            attachments=[make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)],
+            attachments=[
+                make_attachment(unstructured_text.TEXT_FOR_MULTIPLE_CONDITIONS)
+            ],
         )
 
         with app.app.test_client() as service:
@@ -93,7 +95,7 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
                 make_diag_report(
                     subject=make_patient_reference(),
                     attachments=[
-                        make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)
+                        make_attachment(unstructured_text.TEXT_FOR_MULTIPLE_CONDITIONS)
                     ],
                 )
             ]
@@ -142,7 +144,7 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 )
@@ -199,7 +201,9 @@ class TestDiagReportUsingQuickUmls(UnitTestUsingExternalResource):
     def test_when_post_diag_then_condition_derived(self):
         report = make_diag_report(
             subject=make_patient_reference(),
-            attachments=[make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)],
+            attachments=[
+                make_attachment(unstructured_text.TEXT_FOR_MULTIPLE_CONDITIONS)
+            ],
         )
 
         with app.app.test_client() as service:
@@ -220,7 +224,7 @@ class TestDiagReportUsingQuickUmls(UnitTestUsingExternalResource):
                 make_diag_report(
                     subject=make_patient_reference(),
                     attachments=[
-                        make_attachment(unstructured_text.TEXT_FOR_TWO_CONDITIONS)
+                        make_attachment(unstructured_text.TEXT_FOR_MULTIPLE_CONDITIONS)
                     ],
                 )
             ]
@@ -269,7 +273,7 @@ class TestDiagReportUsingQuickUmls(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 )

@@ -25,9 +25,9 @@ from test_nlp_insights.util.fhir import (
     make_attachment,
     make_bundle,
     make_patient_reference,
-    make_immunization,
     make_codeable_concept,
     make_patient,
+    make_allergy_intolerance,
 )
 from test_nlp_insights.util.mock_service import (
     make_mock_acd_service_class,
@@ -60,13 +60,13 @@ class TestMultiResourceBundleUsingAcd(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 ),
-                make_immunization(
+                make_allergy_intolerance(
                     patient=make_patient_reference(),
-                    vaccine_code=make_codeable_concept(text="DTaP"),
+                    code=make_codeable_concept(text="peanut"),
                 ),
                 # Patient is here to prove that resources that we don't know how to handle
                 # will not cause a problem
@@ -109,13 +109,13 @@ class TestMultiResourceBundleUsingQuickUmls(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 ),
-                make_immunization(
+                make_allergy_intolerance(
                     patient=make_patient_reference(),
-                    vaccine_code=make_codeable_concept(text="DTaP"),
+                    code=make_codeable_concept(text="peanut"),
                 ),
                 # Patient is here to prove that resources that we don't know how to handle
                 # will not cause a problem

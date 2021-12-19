@@ -13,28 +13,34 @@
 # limitations under the License.
 """Derive medication statements from NLP output"""
 
-from collections import namedtuple
+import json
+from typing import Dict
 from typing import List
+from typing import NamedTuple
 from typing import Optional
 
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.medicationstatement import MedicationStatement
 from fhir.resources.reference import Reference
 
-from nlp_insights.fhir import alvearie_ext
 from nlp_insights.fhir import create_coding
 from nlp_insights.fhir import fhir_object_utils
 from nlp_insights.fhir.code_system import hl7
-from nlp_insights.insight import insight_id
-from nlp_insights.insight.span import Span
-from nlp_insights.insight.text_fragment import TextFragment
+from nlp_insights.insight import id_util
+from nlp_insights.insight.builder.derived_resource_builder import (
+    DerivedResourceInsightBuilder,
+)
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
 from nlp_insights.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
-from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse, QuickUmlsConcept
+from nlp_insights.nlp.quickUMLS.nlp_response import (
+    QuickUmlsResponse,
+    QuickUmlsConcept,
+    QuickUmlsEncoder,
+)
 from nlp_insights.umls.semtype_lookup import resource_relevant_to_any_type_names
 
 
-def _add_insight_codings_to_medication_stmt(
+def _add_codings_to_medication_stmt(
     medication_stmt: MedicationStatement, concept: QuickUmlsConcept
 ) -> None:
     """Adds information from the insight's concept to a MedicationStatement
@@ -58,56 +64,9 @@ def _add_insight_codings_to_medication_stmt(
     )
 
     if concept.cui not in existing_codes_by_system[hl7.UMLS_URL]:
-        coding = create_coding.create_coding(
-            hl7.UMLS_URL, concept.cui, derived_by_nlp=False
-        )
+        coding = create_coding.create_coding(hl7.UMLS_URL, concept.cui)
         medication_stmt.medicationCodeableConcept.coding.append(coding)
         existing_codes_by_system[hl7.UMLS_URL].add(concept.cui)
-
-    if concept.snomed_ct:
-        for snomed_code in concept.snomed_ct:
-            if snomed_code not in existing_codes_by_system[hl7.SNOMED_URL]:
-                coding = create_coding.create_coding(
-                    hl7.SNOMED_URL, snomed_code, derived_by_nlp=False
-                )
-                medication_stmt.medicationCodeableConcept.coding.append(coding)
-                existing_codes_by_system[hl7.SNOMED_URL].add(snomed_code)
-
-
-def _add_insight_to_medication_stmt(
-    text_source: UnstructuredText,
-    medication_stmt: MedicationStatement,
-    concept: QuickUmlsConcept,
-    insight_identifier: str,
-    nlp_config: NlpConfig,
-) -> None:
-    """Adds data from the insight to the MedicationStatement"""
-    insight_id_ext = alvearie_ext.create_insight_id_extension(
-        insight_identifier, nlp_config.nlp_system
-    )
-
-    source = TextFragment(
-        text_source=text_source,
-        text_span=Span(
-            begin=concept.begin, end=concept.end, covered_text=concept.covered_text
-        ),
-    )
-
-    nlp_output_ext = nlp_config.create_nlp_output_extension(concept)
-
-    unstructured_insight_detail = (
-        alvearie_ext.create_derived_from_unstructured_insight_detail_extension(
-            source=source,
-            confidences=None,
-            evaluated_output_ext=nlp_output_ext,
-        )
-    )
-
-    fhir_object_utils.add_insight_to_meta(
-        medication_stmt, insight_id_ext, unstructured_insight_detail
-    )
-
-    _add_insight_codings_to_medication_stmt(medication_stmt, concept)
 
 
 def _create_minimum_medication_statement(
@@ -133,7 +92,16 @@ def _create_minimum_medication_statement(
     )
 
 
-def create_med_statements_from_insights(
+class TrackerEntry(NamedTuple):
+    """For a given CUI, this binds the resource being derived to the
+    insight containing the evidence.
+    """
+
+    resource: MedicationStatement
+    insight_builder: DerivedResourceInsightBuilder
+
+
+def create_med_statements(
     text_source: UnstructuredText,
     nlp_response: QuickUmlsResponse,
     nlp_config: NlpConfig = QUICK_UMLS_NLP_CONFIG,
@@ -147,41 +115,42 @@ def create_med_statements_from_insights(
 
     Returns conditions derived by NLP, or None if there are no conditions
     """
-    TrackerEntry = namedtuple("TrackerEntry", ["fhir_resource", "id_maker"])
-    medication_tracker = {}  # key is UMLS ID, value is TrackerEntry
+    # The key is the insight id value, which is a hash of the source of the
+    # insight combined with the causing the new resource to be
+    # created, plus the new resource type.
+    # This creates a globally unique id value that will be the same
+    # for multiple occurrences of the same derived concept.
+    medication_tracker: Dict[str, TrackerEntry] = {}
 
     for concept in nlp_response.concepts:
         if resource_relevant_to_any_type_names(MedicationStatement, concept.types):
-            if concept.cui not in medication_tracker:
+            key = id_util.make_hash(text_source, concept.cui, MedicationStatement)
+
+            if key not in medication_tracker:
                 new_medication_stmt = _create_minimum_medication_statement(
                     subject=text_source.source_resource.subject, concept=concept
                 )
-                medication_tracker[concept.cui] = TrackerEntry(
-                    fhir_resource=new_medication_stmt,
-                    id_maker=insight_id.insight_id_maker_derive_resource(
-                        source=text_source,
-                        cui=concept.cui,
-                        derived=MedicationStatement,
-                        start=nlp_config.insight_id_start,
-                    ),
+
+                insight_builder = DerivedResourceInsightBuilder(
+                    resource_type=MedicationStatement,
+                    text_source=text_source,
+                    insight_id_value=key,
+                    insight_id_system=nlp_config.nlp_system,
+                    nlp_response_json=json.dumps(nlp_response, cls=QuickUmlsEncoder),
                 )
 
-            med_stmt, id_maker = medication_tracker[concept.cui]
+                medication_tracker[key] = TrackerEntry(
+                    resource=new_medication_stmt, insight_builder=insight_builder
+                )
 
-            _add_insight_to_medication_stmt(
-                text_source,
-                med_stmt,
-                concept,
-                next(id_maker),
-                nlp_config,
-            )
+            med_stmt, insight_builder = medication_tracker[key]
+            _add_codings_to_medication_stmt(med_stmt, concept)
 
     if not medication_tracker:
         return None
 
-    medication_stmts = [entry.fhir_resource for entry in medication_tracker.values()]
+    for medication, builder in medication_tracker.values():
+        builder.append_insight_to_resource_meta(medication)
+        builder.append_insight_summary_to_resource(medication)
 
-    for med_stmt in medication_stmts:
-        fhir_object_utils.append_derived_by_nlp_category_extension(med_stmt)
-
-    return medication_stmts
+    return [entry.resource for entry in medication_tracker.values()]

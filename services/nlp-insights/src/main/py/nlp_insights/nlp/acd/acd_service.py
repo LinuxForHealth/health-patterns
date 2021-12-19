@@ -35,10 +35,10 @@ from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptR
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
 from nlp_insights.nlp.abstract_nlp_service import NLPService, NLPServiceError
 from nlp_insights.nlp.acd.fhir_enrichment.insights.create_condition import (
-    create_conditions_from_insights,
+    create_conditions,
 )
 from nlp_insights.nlp.acd.fhir_enrichment.insights.create_medication import (
-    create_med_statements_from_insights,
+    create_med_statements,
 )
 from nlp_insights.nlp.acd.fhir_enrichment.insights.update_codeable_concepts import (
     update_codeable_concepts_and_meta_with_insights,
@@ -102,13 +102,13 @@ class ACDService(NLPService):
         new_resources: List[Resource] = []
 
         for response in nlp_responses:
-            conditions = create_conditions_from_insights(
+            conditions = create_conditions(
                 response.text_source, response.nlp_output, self.nlp_config
             )
             if conditions:
                 new_resources.extend(conditions)
 
-            medications = create_med_statements_from_insights(
+            medications = create_med_statements(
                 response.text_source, response.nlp_output, self.nlp_config
             )
             if medications:
@@ -129,5 +129,5 @@ class ACDService(NLPService):
         ]
 
         return update_codeable_concepts_and_meta_with_insights(
-            resource, nlp_responses, self.nlp_config
+            nlp_responses, self.nlp_config
         )

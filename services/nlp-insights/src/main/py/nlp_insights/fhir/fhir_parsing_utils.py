@@ -26,7 +26,6 @@ from fhir.resources.bundle import Bundle
 from fhir.resources.condition import Condition
 from fhir.resources.diagnosticreport import DiagnosticReport
 from fhir.resources.documentreference import DocumentReference
-from fhir.resources.immunization import Immunization
 from fhir.resources.medicationstatement import MedicationStatement
 from fhir.resources.resource import Resource
 from pydantic import ValidationError
@@ -50,7 +49,6 @@ def parse_fhir_resource_from_payload(doc: bytes) -> Resource:
         "DocumentReference": DocumentReference.parse_obj,
         "DiagnosticReport": DiagnosticReport.parse_obj,
         "AllergyIntolerance": AllergyIntolerance.parse_obj,
-        "Immunization": Immunization.parse_obj,
     }
 
     try:

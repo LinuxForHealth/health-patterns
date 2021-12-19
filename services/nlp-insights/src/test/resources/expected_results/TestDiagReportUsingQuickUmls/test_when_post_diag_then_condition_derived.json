@@ -14,8 +14,12 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "nlp-insight-81c462da919469b8f1a03253800baa8252dff5af66417c9886383e21-1"
+                    "value": "afb076c91e87bc2ffd327864d3de56b5cb5afd095d56670c850a8ee9"
                   }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
                 },
                 {
                   "extension": [
@@ -30,20 +34,78 @@
                       "valueString": "presentedForm[0].data"
                     },
                     {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
                       "extension": [
                         {
                           "extension": [
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
-                              "valueString": "heart attack"
+                              "valueString": "myocardial infarction"
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                              "valueInteger": 57
+                              "valueInteger": 112
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                              "valueInteger": 69
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        },
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        },
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        },
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
                             }
                           ],
                           "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
@@ -61,17 +123,29 @@
         },
         "extension": [
           {
-            "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "code": "natural-language-processing",
-                  "display": "NLP",
-                  "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "afb076c91e87bc2ffd327864d3de56b5cb5afd095d56670c850a8ee9"
                 }
-              ],
-              "text": "NLP"
-            }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
           }
         ],
         "code": {
@@ -79,113 +153,9 @@
             {
               "code": "C0027051",
               "system": "http://terminology.hl7.org/CodeSystem/umls"
-            },
-            {
-              "code": "500448019",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "350357012",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "622062019",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "37436014",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "37437017",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "299703017",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "241792015",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "395860017",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "500449010",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "299700019",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "395861018",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "241791010",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "37443015",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "37440017",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "37441018",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "37438010",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "241790011",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "500450010",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "395863015",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "1784873012",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "37442013",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "37439019",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "500452019",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "1784872019",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "2747117014",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "751689013",
-              "system": "http://snomed.info/sct"
             }
           ],
-          "text": "heart attack"
+          "text": "myocardial infarction"
         },
         "subject": {
           "reference": "Patient/1234567890"
@@ -207,8 +177,12 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "nlp-insight-85eb3b3aafb1431018cd8279545d0d8970695795776edce74cfe92d8-1"
+                    "value": "f38aae5d2e165402fcfc789d28629e303dd3c2102298a0765b8689ec"
                   }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
                 },
                 {
                   "extension": [
@@ -223,69 +197,61 @@
                       "valueString": "presentedForm[0].data"
                     },
                     {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
                       "extension": [
                         {
                           "extension": [
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
-                              "valueString": "pneumonia"
+                              "valueString": "myocardial infarction"
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                              "valueInteger": 12
+                              "valueInteger": 112
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                              "valueInteger": 21
+                              "valueInteger": 133
                             }
                           ],
                           "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
-                        }
-                      ],
-                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
-                    }
-                  ],
-                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
-                }
-              ],
-              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
-            },
-            {
-              "extension": [
-                {
-                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
-                  "valueIdentifier": {
-                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "nlp-insight-85eb3b3aafb1431018cd8279545d0d8970695795776edce74cfe92d8-2"
-                  }
-                },
-                {
-                  "extension": [
-                    {
-                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
-                      "valueReference": {
-                        "reference": "DiagnosticReport/12345"
-                      }
-                    },
-                    {
-                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "presentedForm[0].data"
-                    },
-                    {
-                      "extension": [
+                        },
                         {
                           "extension": [
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
-                              "valueString": "pneumonia"
+                              "valueString": "myocardial infarction"
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                              "valueInteger": 12
+                              "valueInteger": 112
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                              "valueInteger": 21
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        },
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
                             }
                           ],
                           "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
@@ -303,17 +269,1312 @@
         },
         "extension": [
           {
-            "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-            "valueCodeableConcept": {
-              "coding": [
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "f38aae5d2e165402fcfc789d28629e303dd3c2102298a0765b8689ec"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C0155668",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "old myocardial infarction"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
                 {
-                  "code": "natural-language-processing",
-                  "display": "NLP",
-                  "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "58d153739910a256a9033443dfc98539c8f8d82b34ca93e1aea27fcc"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        },
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
                 }
               ],
-              "text": "NLP"
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
             }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "58d153739910a256a9033443dfc98539c8f8d82b34ca93e1aea27fcc"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C0155626",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "acute myocardial infarction"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "5fa265d5e485ce20a8b1de61eb598fc8972986aace98160367114204"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "5fa265d5e485ce20a8b1de61eb598fc8972986aace98160367114204"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C0746727",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "septal myocardial infarction"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "0883ddb16b7032430d5977a2c4c38a36c96402e879f4410ca58c06aa"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "0883ddb16b7032430d5977a2c4c38a36c96402e879f4410ca58c06aa"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C0340324",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "silent myocardial infarction"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "1b0f8c54de9ae2b3815b8b66b6cb0b1f5d7a0f1827409b9c164bb3fc"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "1b0f8c54de9ae2b3815b8b66b6cb0b1f5d7a0f1827409b9c164bb3fc"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C3898652",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "type 5 myocardial infarction"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "e609c43d5c5da7a07c51c07bd1cce155a157c54bcfd7a21f09c284db"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "e609c43d5c5da7a07c51c07bd1cce155a157c54bcfd7a21f09c284db"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C3898656",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "type 3 myocardial infarction"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "8a778c8030306a27931e4670e962363a439cc35c36ad99c58b05e136"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "8a778c8030306a27931e4670e962363a439cc35c36ad99c58b05e136"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C3845502",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "myocardial infarction, stroke"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "69ab0e6ed48a103046da7693a3ecc53511785a9807aaf2ee08dc7036"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "69ab0e6ed48a103046da7693a3ecc53511785a9807aaf2ee08dc7036"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C3898653",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "type 4c myocardial infarction"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "59a49c7fe8c2867bc208604ef5fdedd826adb85aceb283dd3c65a533"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "59a49c7fe8c2867bc208604ef5fdedd826adb85aceb283dd3c65a533"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C3898654",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "type 4b myocardial infarction"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "2820916bf1e200acf92a716c16c44ae4d4b1707dc0afde8449bf72c6"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "myocardial infarction"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 112
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 133
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "2820916bf1e200acf92a716c16c44ae4d4b1707dc0afde8449bf72c6"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C3898655",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "type 4a myocardial infarction"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "92f2eb818b8fb33cd3a4f5d9be98aa32a8639841ef1c574ea6249526"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "chest pain"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 67
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 77
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        },
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "chest pain"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 67
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 77
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "92f2eb818b8fb33cd3a4f5d9be98aa32a8639841ef1c574ea6249526"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "code": "C0008031",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            }
+          ],
+          "text": "chest pain"
+        },
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                    "value": "26c0a5f96f57f498a9b77e334ecac6d7c058bf6abf7a3f0d99ad91d3"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "DiagnosticReport/12345"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "presentedForm[0].data"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "pneumonia"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 39
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 48
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        },
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "pneumonia"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 39
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 48
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "26c0a5f96f57f498a9b77e334ecac6d7c058bf6abf7a3f0d99ad91d3"
+                }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
           }
         ],
         "code": {
@@ -321,74 +1582,6 @@
             {
               "code": "C0032285",
               "system": "http://terminology.hl7.org/CodeSystem/umls"
-            },
-            {
-              "code": "396219014",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "242293010",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "100271014",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "350049016",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "100272019",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "242308013",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "409863013",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "535895010",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "535901013",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "242302014",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "100274018",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "799307012",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "2760037018",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "621810017",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "2721096015",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "2741003011",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "666821014",
-              "system": "http://snomed.info/sct"
             }
           ],
           "text": "pneumonia"
@@ -413,8 +1606,12 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "nlp-insight-857ca7d059dde235da70b390137badaf193ca5c6997da08e70c642c5-1"
+                    "value": "2e5e49c7db71edef7fbbe93340dc0c0c26570fa853a263e89a71af85"
                   }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "Condition"
                 },
                 {
                   "extension": [
@@ -429,6 +1626,13 @@
                       "valueString": "presentedForm[0].data"
                     },
                     {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "W1tbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMjkyNjA2MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzM4MTA4MTQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlhZ25vc3RpY1Byb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzAwMjcwNTEiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb25zIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm9sZCBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMwNDI4OTUzIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiZWNnIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5MYWJvcmF0b3J5T3JUZXN0UmVzdWx0Il0sIGZhbHNlXSwgWyJDMDQ4OTU3NyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiBhZ2UiLCBbInVtbHMuQ2xpbmljYWxBdHRyaWJ1dGUiXSwgZmFsc2VdLCBbIkMzNjQwOTExIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibmV3IG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMDAyNzA1MSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTY2OCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInBhc3QgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDQyODk1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImVjZzogbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkxhYm9yYXRvcnlPclRlc3RSZXN1bHQiXSwgZmFsc2VdLCBbIkMwMDI3MDUxIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uLCAobWkpIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDE1NTYyNiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImFjdXRlIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM1NDE5NTAiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJhY3V0ZSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzAxNTU2MjYiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJteW9jYXJkaWFsIGluZmFyY3Rpb24gYWN1dGUiLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODI5OTEwIiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMwNzQ2NzI3IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAic2VwdGFsIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzIzNDgzNjIiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzZXB0YWwgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkZpbmRpbmciXSwgZmFsc2VdLCBbIkMwMTU1NjY4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAiaGVhbGVkIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAzNDAzMjQiLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJzaWxlbnQgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNSBteW9jYXJkaWFsIGluZmFyY3Rpb24iLCBbInVtbHMuRGlzZWFzZU9yU3luZHJvbWUiXSwgZmFsc2VdLCBbIkMzODk4NjU2IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAzIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM4OTg2NTciLCAibXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgMTEyLCAxMzMsICJ0eXBlIDIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkludGVsbGVjdHVhbFByb2R1Y3QiXSwgZmFsc2VdLCBbIkMzODk4NjU4IiwgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIDExMiwgMTMzLCAidHlwZSAxIG15b2NhcmRpYWwgaW5mYXJjdGlvbiIsIFsidW1scy5GaW5kaW5nIl0sIGZhbHNlXSwgWyJDMjgyNTE1OSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgImRhdGUgb2YgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkNsaW5pY2FsQXR0cmlidXRlIl0sIGZhbHNlXSwgWyJDMzg0NTUwMiIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgIm15b2NhcmRpYWwgaW5mYXJjdGlvbiwgc3Ryb2tlIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1MyIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGMgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NCIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGIgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMzg5ODY1NSIsICJteW9jYXJkaWFsIGluZmFyY3Rpb24iLCAxMTIsIDEzMywgInR5cGUgNGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIiwgWyJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIl0sIGZhbHNlXSwgWyJDMDc0NzMwNyIsICJQYXRpZW50IHJlcG9ydHMiLCAwLCAxNSwgInBhdGllbnQgcmVwb3J0cyIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMDAwODAzMSIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5TaWduT3JTeW1wdG9tIl0sIGZhbHNlXSwgWyJDMjkyNjYxMyIsICJjaGVzdCBwYWluIiwgNjcsIDc3LCAiY2hlc3QgcGFpbiIsIFsidW1scy5DbGluaWNhbEF0dHJpYnV0ZSJdLCBmYWxzZV0sIFsiQzAwMDgwMzEiLCAiY2hlc3QgcGFpbiIsIDY3LCA3NywgImNoZXN0IHBhaW5zIiwgWyJ1bWxzLlNpZ25PclN5bXB0b20iXSwgZmFsc2VdLCBbIkMwMDMyMjg1IiwgInBuZXVtb25pYSIsIDM5LCA0OCwgInBuZXVtb25pYSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzM3MTQ2MzYiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhcyIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMzIyODUiLCAicG5ldW1vbmlhIiwgMzksIDQ4LCAicG5ldW1vbmlhZSIsIFsidW1scy5EaXNlYXNlT3JTeW5kcm9tZSJdLCBmYWxzZV0sIFsiQzAwMTE5MDAiLCAiZGlhZ25vc2VkIiwgOTUsIDEwNCwgImRpYWdub3NlZCIsIFsidW1scy5EaWFnbm9zdGljUHJvY2VkdXJlIl0sIGZhbHNlXSwgWyJDMTQwODM1MyIsICJkaWFnbm9zZWQiLCA5NSwgMTA0LCAidW5kaWFnbm9zZWQiLCBbInVtbHMuRmluZGluZyJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuQm9keVN1YnN0YW5jZSJdLCBmYWxzZV0sIFsiQzE1Nzg0ODUiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzE1Nzg0ODYiLCAicGF0aWVudCIsIDgzLCA5MCwgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV0sIFsiQzA1MjI3NzIiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NDg3NDYiLCAiaGF2aW5nIiwgNjAsIDY2LCAic2hhdmluZyIsIFsidW1scy5MYWJvcmF0b3J5UHJvY2VkdXJlIl0sIGZhbHNlXV1d"
+                      }
+                    },
+                    {
                       "extension": [
                         {
                           "extension": [
@@ -438,11 +1642,11 @@
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
-                              "valueInteger": 12
+                              "valueInteger": 39
                             },
                             {
                               "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
-                              "valueInteger": 21
+                              "valueInteger": 48
                             }
                           ],
                           "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
@@ -460,17 +1664,29 @@
         },
         "extension": [
           {
-            "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "code": "natural-language-processing",
-                  "display": "NLP",
-                  "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+            "extension": [
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                "valueIdentifier": {
+                  "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
+                  "value": "2e5e49c7db71edef7fbbe93340dc0c0c26570fa853a263e89a71af85"
                 }
-              ],
-              "text": "NLP"
-            }
+              },
+              {
+                "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "code": "natural-language-processing",
+                      "display": "NLP",
+                      "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                    }
+                  ],
+                  "text": "NLP"
+                }
+              }
+            ],
+            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
           }
         ],
         "code": {
@@ -478,18 +1694,6 @@
             {
               "code": "C3714636",
               "system": "http://terminology.hl7.org/CodeSystem/umls"
-            },
-            {
-              "code": "314740018",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "100273012",
-              "system": "http://snomed.info/sct"
-            },
-            {
-              "code": "590574014",
-              "system": "http://snomed.info/sct"
             }
           ],
           "text": "pneumonias"

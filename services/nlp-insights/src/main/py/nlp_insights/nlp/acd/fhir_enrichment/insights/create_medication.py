@@ -13,11 +13,12 @@
 # limitations under the License.
 """Functions to create derived medication statement resources"""
 
-from collections import namedtuple
+import json
 import logging
 from typing import Any
 from typing import Dict
 from typing import List
+from typing import NamedTuple
 from typing import Optional
 from typing import cast
 
@@ -28,25 +29,31 @@ from ibm_whcs_sdk.annotator_for_clinical_data import (
     annotator_for_clinical_data_v1 as acd,
 )
 
-from nlp_insights.fhir import alvearie_ext
 from nlp_insights.fhir import fhir_object_utils
 from nlp_insights.fhir.code_system import hl7
-from nlp_insights.insight import insight_id
-from nlp_insights.insight.span import Span
-from nlp_insights.insight.text_fragment import TextFragment
-from nlp_insights.insight_source.unstructured_text import UnstructuredText
-from nlp_insights.nlp.acd.fhir_enrichment.insights import confidence
-from nlp_insights.nlp.acd.fhir_enrichment.insights.attribute_source_cui import (
-    get_attribute_sources,
-    AttrSourceConcept,
+from nlp_insights.insight import id_util
+from nlp_insights.insight.builder.derived_resource_builder import (
+    DerivedResourceInsightBuilder,
 )
+from nlp_insights.insight_source.unstructured_text import UnstructuredText
+from nlp_insights.nlp.acd.fhir_enrichment.insights import attribute
+from nlp_insights.nlp.acd.fhir_enrichment.insights import confidence
 from nlp_insights.nlp.nlp_config import AcdNlpConfig
 
 
 logger = logging.getLogger(__name__)
 
 
-def create_med_statements_from_insights(
+class TrackerEntry(NamedTuple):
+    """For a given CUI, this binds the resource being derived to the
+    insight containing the evidence.
+    """
+
+    resource: MedicationStatement
+    insight_builder: DerivedResourceInsightBuilder
+
+
+def create_med_statements(
     text_source: UnstructuredText,
     acd_output: acd.ContainerAnnotation,
     nlp_config: AcdNlpConfig,
@@ -62,108 +69,73 @@ def create_med_statements_from_insights(
     """
     source_loc_map = nlp_config.acd_attribute_source_map
 
-    TrackerEntry = namedtuple("TrackerEntry", ["fhir_resource", "id_maker"])
-    med_statement_tracker = {}  # key is UMLS ID, value is TrackerEntry
+    # Tracks the medications that have been created for a cui
+    # If ACD produces multiple insights for the same CUI, we want to reuse the
+    # same insight (with an additional span).
+    # The key is the insight id value, which is a hash of the source of the
+    # insight combined with the causing the new resource to be
+    # created, plus the new resource type.
+    # This creates a globally unique id value that will be the same
+    # for multiple occurrences of the same derived concept.
+    med_statement_tracker: Dict[str, TrackerEntry] = {}
 
-    for cui_source in get_attribute_sources(
+    for attr in attribute.get_attribute_sources(
         acd_output, MedicationStatement, source_loc_map
     ):
-        if cui_source.sources:
-            # some attributes have the cui in multiple places, if so
-            # the first available source is the best one
-            source: AttrSourceConcept = next(iter(cui_source.sources.values()))
+        # only know how to handle the medication annotation at this time
+        if not isinstance(attr.best_source.source, acd.MedicationAnnotation):
+            raise NotImplementedError(
+                "Only support MedicationAnnotation CUI source at this time"
+            )
 
-            # only know how to handle the medication annotation at this time
-            if not isinstance(source, acd.MedicationAnnotation):
-                raise NotImplementedError(
-                    "Only support MedicationAnnotation CUI source at this time"
+        med_ind: acd.MedicationAnnotation = cast(
+            acd.MedicationAnnotation, attr.best_source.source
+        )
+
+        if med_ind.cui:
+            key = id_util.make_hash(text_source, med_ind.cui, MedicationStatement)
+            if key not in med_statement_tracker:
+                # Create a new medication statement + insight and store in tracker
+                med_stmt = _create_minimum_medication_statement(
+                    text_source.source_resource.subject, med_ind
+                )
+                insight_builder = DerivedResourceInsightBuilder(
+                    resource_type=MedicationStatement,
+                    text_source=text_source,
+                    insight_id_value=key,
+                    insight_id_system=nlp_config.nlp_system,
+                    nlp_response_json=json.dumps(acd_output.to_dict()),
                 )
 
-            med_ind: acd.MedicationAnnotation = cast(acd.MedicationAnnotation, source)
-
-            if med_ind.cui not in med_statement_tracker:
-                med_statement_tracker[med_ind.cui] = TrackerEntry(
-                    fhir_resource=_create_minimum_medication_statement(
-                        text_source.source_resource.subject, med_ind
-                    ),
-                    id_maker=insight_id.insight_id_maker_derive_resource(
-                        source=text_source,
-                        cui=source.cui,
-                        derived=MedicationStatement,
-                        start=nlp_config.insight_id_start,
-                    ),
+                med_statement_tracker[key] = TrackerEntry(
+                    resource=med_stmt,
+                    insight_builder=insight_builder,
                 )
 
-            med_statement, id_maker = med_statement_tracker[med_ind.cui]
+            # retrieve medication statement + insight
+            med_statement, insight_builder = med_statement_tracker[key]
 
-            _add_insight_to_medication_statement(
-                text_source,
-                med_statement,
-                cui_source.attr,
-                med_ind,
-                acd_output,
-                next(id_maker),
-                nlp_config,
-            )
-        else:
-            logger.info(
-                "Did not add codings because the attribute did not have an associated medication annotation %s",
-                cui_source,
-            )
+            # Update codings
+            _update_codings(med_statement, med_ind)
+
+            # Update Insight span
+            span = attr.get_attribute_span()
+            if span:
+                confidences = []
+                if attr.attr.insight_model_data:
+                    confidences = confidence.get_derived_medication_confidences(
+                        attr.attr.insight_model_data
+                    )
+                insight_builder.add_span(span=span, confidences=confidences)
 
     if not med_statement_tracker:
         return None
 
-    med_statements = [
-        trackedStmt.fhir_resource for trackedStmt in med_statement_tracker.values()
-    ]
-    for med_statement in med_statements:
-        fhir_object_utils.append_derived_by_nlp_category_extension(med_statement)
+    for medication, builder in med_statement_tracker.values():
+        builder.append_insight_to_resource_meta(medication)
+        builder.append_insight_summary_to_resource(medication)
 
-    return med_statements
-
-
-def _add_insight_to_medication_statement(  # pylint: disable=too-many-arguments
-    text_source: UnstructuredText,
-    med_statement: MedicationStatement,
-    attr: acd.AttributeValueAnnotation,
-    med_ind: acd.MedicationAnnotation,
-    acd_output: acd.ContainerAnnotation,
-    insight_id_string: str,
-    nlp_config: AcdNlpConfig,
-) -> None:
-    """Adds insight data to the medication statement"""
-
-    insight_id_ext = alvearie_ext.create_insight_id_extension(
-        insight_id_string, nlp_config.nlp_system
-    )
-
-    source = TextFragment(
-        text_source=text_source,
-        text_span=Span(begin=attr.begin, end=attr.end, covered_text=attr.covered_text),
-    )
-
-    confidences = confidence.get_derived_medication_confidences(attr.insight_model_data)
-
-    nlp_output_ext = nlp_config.create_nlp_output_extension(acd_output)
-
-    unstructured_insight_detail = (
-        alvearie_ext.create_derived_from_unstructured_insight_detail_extension(
-            source=source,
-            confidences=confidences,
-            evaluated_output_ext=nlp_output_ext,
-        )
-    )
-
-    fhir_object_utils.add_insight_to_meta(
-        med_statement, insight_id_ext, unstructured_insight_detail
-    )
-
-    _update_codings(med_statement, med_ind)
-
-    # ACD does seem to have the capability to give us the information we need for dosage and frequency
-    # in administration section. We will make use of that information here if we decide to add that
-    # information to the returned FHIR resource.
+    return [entry.resource for entry in med_statement_tracker.values()]
 
 
 def _create_minimum_medication_statement(
@@ -199,7 +171,6 @@ def _get_drug_from_annotation(annotation: acd.MedicationAnnotation) -> dict:
 
     Args:
        annotation - the ACD annotation to get the drug info from
-
 
     Return a dictionary
     """

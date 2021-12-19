@@ -191,9 +191,6 @@ MEDICATION_TYPES: List[UmlsTypeName] = [
 ]
 
 
-VACCINE_TYPES: List[UmlsTypeName] = ["umls.ImmunologicFactor"]
-
-
 ALLERGEN_TYPES: List[UmlsTypeName] = [
     "umls.DiseaseOrSyndrome",
     "umls.PathologicFunction",
@@ -210,7 +207,6 @@ _resource_type_to_type_names: Dict[str, List[UmlsTypeName]] = {
 _concept_type_to_type_names: Dict[CodeableConceptRefType, List[UmlsTypeName]] = {
     CodeableConceptRefType.ALLERGEN: ALLERGEN_TYPES,
     CodeableConceptRefType.CONDITION: CONDITION_TYPES,
-    CodeableConceptRefType.VACCINE: VACCINE_TYPES,
 }
 
 
@@ -252,7 +248,7 @@ def ref_type_relevant_to_any_type_names(
         true if any of the type names are relevant
 
     Example:
-    >>> ref_type_relevant_to_any_type_names(CodeableConceptRefType.VACCINE, ["umls.ImmunologicFactor"])
+    >>> ref_type_relevant_to_any_type_names(CodeableConceptRefType.ALLERGEN, ["umls.DiseaseOrSyndrome"])
     True
     """
     relevant_type_names = _concept_type_to_type_names.get(ref_type)

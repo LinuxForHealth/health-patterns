@@ -15,10 +15,12 @@
 Module for defining data types to represent QuickUmls concepts
 """
 
+import json
+from typing import Any
 from typing import List
 from typing import NamedTuple
-from typing import Optional
 from typing import Set
+
 from nlp_insights.umls.semtype_lookup import UmlsTypeName
 
 
@@ -31,11 +33,58 @@ class QuickUmlsConcept(NamedTuple):
     end: int
     preferred_name: str
     types: Set[UmlsTypeName]
-    snomed_ct: Optional[Set[str]]
     negated: bool = False
 
 
 class QuickUmlsResponse(NamedTuple):
-    """Models a response from QuickUmls"""
+    """Models a response from QuickUmls,
+
+    The class should be serialized to json using the
+    QuickUmlsEncoder
+    """
 
     concepts: List[QuickUmlsConcept]
+
+
+class QuickUmlsEncoder(json.JSONEncoder):
+    """Json Encoder for QuickUmlsResponse and QuickUmlsConcept
+
+    The built in json encoder can't serialize a set. This class
+    converts any set encountered into a sorted list for serialization.
+
+    Example:
+    >>> response = QuickUmlsResponse(
+    ...                concepts=[
+    ...                    QuickUmlsConcept(
+    ...                        cui="C12345",
+    ...                        covered_text="my text",
+    ...                        begin=1000,
+    ...                        end=1007,
+    ...                        preferred_name="concept preferred name",
+    ...                        types=set(["umls.DiseaseOrSyndrome", "umls.CellOrMolecularDysfunction"])
+    ...                    )
+    ...                ]
+    ...             )
+    >>> print(json.dumps(response, cls=QuickUmlsEncoder, indent=2))
+    [
+      [
+        [
+          "C12345",
+          "my text",
+          1000,
+          1007,
+          "concept preferred name",
+          [
+            "umls.CellOrMolecularDysfunction",
+            "umls.DiseaseOrSyndrome"
+          ],
+          false
+        ]
+      ]
+    ]
+    """
+
+    def default(self, o: Any) -> Any:
+        if isinstance(o, set):
+            return sorted(list(o))
+        return json.JSONEncoder.default(self, o)

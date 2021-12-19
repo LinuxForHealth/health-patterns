@@ -17,7 +17,6 @@ import importlib
 
 from fhir.resources.bundle import Bundle
 from fhir.resources.diagnosticreport import DiagnosticReport
-from fhir.resources.immunization import Immunization
 
 from nlp_insights import app
 from test_nlp_insights.util import unstructured_text
@@ -27,9 +26,9 @@ from test_nlp_insights.util.fhir import (
     make_attachment,
     make_bundle,
     make_patient_reference,
-    make_immunization,
     make_codeable_concept,
     make_patient,
+    make_allergy_intolerance,
 )
 from test_nlp_insights.util.mock_service import (
     make_mock_acd_service_class,
@@ -69,13 +68,13 @@ class TestMultiResourceBundleWithOverride(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 ),
-                make_immunization(
+                make_allergy_intolerance(
                     patient=make_patient_reference(),
-                    vaccine_code=make_codeable_concept(text="DTaP"),
+                    code=make_codeable_concept(text="peanut"),
                 ),
                 # Patient is here to prove that resources that we don't know how to handle
                 # will not cause a problem
@@ -104,13 +103,13 @@ class TestMultiResourceBundleWithOverride(UnitTestUsingExternalResource):
                     subject=make_patient_reference(),
                     attachments=[
                         make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
+                            unstructured_text.TEXT_FOR_CONDITION_AND_MEDICATION
                         )
                     ],
                 ),
-                make_immunization(
+                make_allergy_intolerance(
                     patient=make_patient_reference(),
-                    vaccine_code=make_codeable_concept(text="DTaP"),
+                    code=make_codeable_concept(text="peanut"),
                 ),
                 # Patient is here to prove that resources that we don't know how to handle
                 # will not cause a problem
@@ -122,76 +121,6 @@ class TestMultiResourceBundleWithOverride(UnitTestUsingExternalResource):
             configure_quick_umls(service)
             cfg_acd = configure_acd(service, is_default=False)
             configure_resource_nlp_override(service, DiagnosticReport, cfg_acd)
-            insight_resp = service.post("/discoverInsights", data=bundle.json())
-            self.assertEqual(200, insight_resp.status_code)
-
-            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
-            cmp = compare_actual_to_expected(
-                expected_path=self.expected_output_path(),
-                actual_resource=actual_bundle,
-            )
-            self.assertFalse(cmp, cmp.pretty())
-
-    def test_when_qu_override_immunization_then_correct_bundle_is_returned(self):
-        bundle = make_bundle(
-            [
-                make_diag_report(
-                    subject=make_patient_reference(),
-                    attachments=[
-                        make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
-                        )
-                    ],
-                ),
-                make_immunization(
-                    patient=make_patient_reference(),
-                    vaccine_code=make_codeable_concept(text="DTaP"),
-                ),
-                # Patient is here to prove that resources that we don't know how to handle
-                # will not cause a problem
-                make_patient(),
-            ]
-        )
-
-        with app.app.test_client() as service:
-            configure_acd(service)
-            cfg_qu = configure_quick_umls(service, is_default=False)
-            configure_resource_nlp_override(service, Immunization, cfg_qu)
-            insight_resp = service.post("/discoverInsights", data=bundle.json())
-            self.assertEqual(200, insight_resp.status_code)
-
-            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
-            cmp = compare_actual_to_expected(
-                expected_path=self.expected_output_path(),
-                actual_resource=actual_bundle,
-            )
-            self.assertFalse(cmp, cmp.pretty())
-
-    def test_when_acd_override_immunization_then_correct_bundle_is_returned(self):
-        bundle = make_bundle(
-            [
-                make_diag_report(
-                    subject=make_patient_reference(),
-                    attachments=[
-                        make_attachment(
-                            unstructured_text.TEXT_FOR_TWO_CONDITIONS_AND_MEDICATION
-                        )
-                    ],
-                ),
-                make_immunization(
-                    patient=make_patient_reference(),
-                    vaccine_code=make_codeable_concept(text="DTaP"),
-                ),
-                # Patient is here to prove that resources that we don't know how to handle
-                # will not cause a problem
-                make_patient(),
-            ]
-        )
-
-        with app.app.test_client() as service:
-            configure_quick_umls(service)
-            cfg_acd = configure_acd(service, is_default=False)
-            configure_resource_nlp_override(service, Immunization, cfg_acd)
             insight_resp = service.post("/discoverInsights", data=bundle.json())
             self.assertEqual(200, insight_resp.status_code)
 

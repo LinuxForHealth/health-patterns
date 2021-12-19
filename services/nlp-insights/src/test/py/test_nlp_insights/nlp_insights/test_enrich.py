@@ -17,7 +17,6 @@ import importlib
 
 from fhir.resources.bundle import Bundle
 from fhir.resources.condition import Condition
-from fhir.resources.immunization import Immunization
 
 from nlp_insights import app
 from test_nlp_insights.util.compare import compare_actual_to_expected
@@ -27,7 +26,6 @@ from test_nlp_insights.util.fhir import (
     make_bundle,
     make_patient_reference,
     make_allergy_intolerance,
-    make_immunization,
 )
 from test_nlp_insights.util.mock_service import (
     make_mock_acd_service_class,
@@ -95,28 +93,6 @@ class TestEnrichUsingAcd(UnitTestUsingExternalResource):
             )
             self.assertFalse(cmp, cmp.pretty())
 
-    def test_when_post_immunization_bundle_then_immunization_enriched(self):
-        bundle = make_bundle(
-            [
-                make_immunization(
-                    patient=make_patient_reference(),
-                    vaccine_code=make_codeable_concept(text="DTaP"),
-                )
-            ]
-        )
-
-        with app.app.test_client() as service:
-            configure_acd(service)
-            insight_resp = service.post("/discoverInsights", json=bundle.dict())
-            self.assertEqual(200, insight_resp.status_code, insight_resp.data)
-
-            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
-            cmp = compare_actual_to_expected(
-                expected_path=self.expected_output_path(),
-                actual_resource=actual_bundle,
-            )
-            self.assertFalse(cmp, cmp.pretty())
-
     def test_when_post_unknown_condition_then_condition_not_enriched(self):
         condition = make_condition(
             subject=make_patient_reference(),
@@ -129,24 +105,6 @@ class TestEnrichUsingAcd(UnitTestUsingExternalResource):
             self.assertEqual(200, insight_resp.status_code, insight_resp.data)
 
             actual_immunization = Condition.parse_obj(insight_resp.get_json())
-            cmp = compare_actual_to_expected(
-                expected_path=self.expected_output_path(),
-                actual_resource=actual_immunization,
-            )
-            self.assertFalse(cmp, cmp.pretty())
-
-    def test_when_post_immunization_then_immunization_enriched(self):
-        immunization = make_immunization(
-            patient=make_patient_reference(),
-            vaccine_code=make_codeable_concept(text="DTaP"),
-        )
-
-        with app.app.test_client() as service:
-            configure_acd(service)
-            insight_resp = service.post("/discoverInsights", json=immunization.dict())
-            self.assertEqual(200, insight_resp.status_code, insight_resp.data)
-
-            actual_immunization = Immunization.parse_obj(insight_resp.get_json())
             cmp = compare_actual_to_expected(
                 expected_path=self.expected_output_path(),
                 actual_resource=actual_immunization,
@@ -211,46 +169,6 @@ class TestEnrichUsingQuickUmls(UnitTestUsingExternalResource):
             )
             self.assertFalse(cmp, cmp.pretty())
 
-    def test_when_post_immunization_bundle_then_immunization_enriched(self):
-        bundle = make_bundle(
-            [
-                make_immunization(
-                    patient=make_patient_reference(),
-                    vaccine_code=make_codeable_concept(text="DTaP"),
-                )
-            ]
-        )
-
-        with app.app.test_client() as service:
-            configure_quick_umls(service)
-            insight_resp = service.post("/discoverInsights", json=bundle.dict())
-            self.assertEqual(200, insight_resp.status_code, insight_resp.data)
-
-            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
-            cmp = compare_actual_to_expected(
-                expected_path=self.expected_output_path(),
-                actual_resource=actual_bundle,
-            )
-            self.assertFalse(cmp, cmp.pretty())
-
-    def test_when_post_immunization_then_immunization_enriched(self):
-        immunization = make_immunization(
-            patient=make_patient_reference(),
-            vaccine_code=make_codeable_concept(text="DTaP"),
-        )
-
-        with app.app.test_client() as service:
-            configure_quick_umls(service)
-            insight_resp = service.post("/discoverInsights", json=immunization.dict())
-            self.assertEqual(200, insight_resp.status_code, insight_resp.data)
-
-            actual_immunization = Immunization.parse_obj(insight_resp.get_json())
-            cmp = compare_actual_to_expected(
-                expected_path=self.expected_output_path(),
-                actual_resource=actual_immunization,
-            )
-            self.assertFalse(cmp, cmp.pretty())
-
     def test_when_post_unknown_condition_then_condition_not_enriched(self):
         condition = make_condition(
             subject=make_patient_reference(),
@@ -262,9 +180,9 @@ class TestEnrichUsingQuickUmls(UnitTestUsingExternalResource):
             insight_resp = service.post("/discoverInsights", json=condition.dict())
             self.assertEqual(200, insight_resp.status_code, insight_resp.data)
 
-            actual_immunization = Condition.parse_obj(insight_resp.get_json())
+            actual_condition = Condition.parse_obj(insight_resp.get_json())
             cmp = compare_actual_to_expected(
                 expected_path=self.expected_output_path(),
-                actual_resource=actual_immunization,
+                actual_resource=actual_condition,
             )
             self.assertFalse(cmp, cmp.pretty())

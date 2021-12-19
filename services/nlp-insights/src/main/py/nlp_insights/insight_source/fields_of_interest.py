@@ -34,8 +34,8 @@ from typing import Type
 from fhir.resources.allergyintolerance import AllergyIntolerance
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.condition import Condition
-from fhir.resources.immunization import Immunization
 from fhir.resources.resource import Resource
+from nlp_insights.fhir.path import FhirPath
 
 
 class CodeableConceptRefType(Enum):
@@ -43,7 +43,6 @@ class CodeableConceptRefType(Enum):
 
     ALLERGEN = "ALLERGEN"
     CONDITION = "CONDITION"
-    VACCINE = "VACCINE"
 
 
 class CodeableConceptRef(NamedTuple):
@@ -59,7 +58,18 @@ class CodeableConceptRef(NamedTuple):
 
     type: CodeableConceptRefType
     code_ref: CodeableConcept
-    fhir_path: str
+    path: FhirPath
+    resource: Resource
+
+    @property
+    def path_text(self) -> FhirPath:
+        """Returns the path to the text that is being processed by NLP"""
+        return FhirPath(self.path + ".text")
+
+    @property
+    def path_coding(self) -> FhirPath:
+        """Returns the path to the coding that is being enriched"""
+        return FhirPath(self.path + ".coding")
 
 
 def _get_allergy_intolerance_concepts_to_analyze(
@@ -77,9 +87,10 @@ def _get_allergy_intolerance_concepts_to_analyze(
     if allergy_intolerance.code.text:
         fields_of_interest.append(
             CodeableConceptRef(
+                resource=allergy_intolerance,
                 type=CodeableConceptRefType.ALLERGEN,
                 code_ref=allergy_intolerance.code,
-                fhir_path="code",
+                path=FhirPath("AllergyIntolerance.code"),
             )
         )
 
@@ -97,29 +108,10 @@ def _get_condition_concepts_to_analyze(
     if condition.code and condition.code.text:
         return [
             CodeableConceptRef(
+                resource=condition,
                 type=CodeableConceptRefType.CONDITION,
                 code_ref=condition.code,
-                fhir_path="code",
-            )
-        ]
-
-    return []
-
-
-def _get_immunization_concepts_to_analyze(
-    immunization: Immunization,
-) -> Iterable[CodeableConceptRef]:
-    """Determines concepts with text to be analyzed by NLP for a immunization resource
-
-    args: immunization - the condition resource
-    returns: concepts to be analyzed
-    """
-    if immunization.vaccineCode.text:
-        return [
-            CodeableConceptRef(
-                type=CodeableConceptRefType.VACCINE,
-                code_ref=immunization.vaccineCode,
-                fhir_path="vaccineCode",
+                path=FhirPath("Condition.code"),
             )
         ]
 
@@ -131,7 +123,6 @@ ExtractorFunction = Callable[[Resource], Iterable[CodeableConceptRef]]
 _concept_extractors: Dict[Type[Resource], ExtractorFunction] = {
     AllergyIntolerance: _get_allergy_intolerance_concepts_to_analyze,
     Condition: _get_condition_concepts_to_analyze,
-    Immunization: _get_immunization_concepts_to_analyze,
 }
 
 

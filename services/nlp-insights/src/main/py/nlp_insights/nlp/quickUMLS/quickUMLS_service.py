@@ -16,12 +16,8 @@ from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptR
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
 from nlp_insights.nlp.abstract_nlp_service import NLPService, NLPServiceError
 from nlp_insights.nlp.nlp_config import QUICK_UMLS_NLP_CONFIG
-from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights.create_condition import (
-    create_conditions_from_insights,
-)
-from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights.create_medication import (
-    create_med_statements_from_insights,
-)
+from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights import create_condition
+from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights import create_medication
 from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights.update_codeable_concepts import (
     update_codeable_concepts_and_meta_with_insights,
     NlpConceptRef,
@@ -60,7 +56,6 @@ def create_nlp_response(
                 if "semtypes" in concept
                 else set()
             ),
-            snomed_ct=concept["snomed_ct"] if "snomed_ct" in concept else None,
         )
         for concept in server_response_concepts
         if "cui" in concept
@@ -103,13 +98,13 @@ class QuickUMLSService(NLPService):
 
         new_resources: List[Resource] = []
         for response in nlp_responses:
-            conditions = create_conditions_from_insights(
+            conditions = create_condition.create_conditions(
                 response.text_source, response.nlp_output, self.nlp_config
             )
             if conditions:
                 new_resources.extend(conditions)
 
-            medications = create_med_statements_from_insights(
+            medications = create_medication.create_med_statements(
                 response.text_source, response.nlp_output, self.nlp_config
             )
 
@@ -131,5 +126,5 @@ class QuickUMLSService(NLPService):
         ]
 
         return update_codeable_concepts_and_meta_with_insights(
-            resource, nlp_responses, self.nlp_config
+            nlp_responses, self.nlp_config
         )

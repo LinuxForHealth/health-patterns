@@ -25,7 +25,6 @@ from test_nlp_insights.util.fhir import (
     make_attachment,
     make_bundle,
     make_patient_reference,
-    make_codeable_concept,
 )
 from test_nlp_insights.util.mock_service import (
     make_mock_acd_service_class,
