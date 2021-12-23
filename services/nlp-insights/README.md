@@ -13,11 +13,7 @@ The primary purpose of the discover insights API is to accept a bundle of FHIR r
 Existing codes and text are used to derive additional codes for these resource elements:
 
 * Allergy Intolerance
-    * AllergyIntolerance.code
-
-* Immunization
-    * Immunization.vaccineCode
-    
+    * AllergyIntolerance.code    
 * Condition
     * Condition.code
     
@@ -36,7 +32,7 @@ The source text used to derive these new resources is found in the following res
 
 
 
-## Example FHIR Resources
+## Quick Start
 See our tutorials in the [documentation](./doc/examples).
 
 # Running the service
