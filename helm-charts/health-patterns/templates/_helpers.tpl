@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the FHIR Url to use
+*/}}
+{{- define "health-patterns.fhirUrl" -}}
+{{- if .Values.ingress.enabled }}https://{{ .Values.ingress.hostname}}/fhir{{- else }}http://{{ .Release.Name }}-fhir/fhir-server/api/v4{{- end }}
+{{- end }}

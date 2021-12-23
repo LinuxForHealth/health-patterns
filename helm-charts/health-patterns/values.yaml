@@ -160,6 +160,9 @@ fhir:
     secretKey:
     bulkDataBucketName:
 
+  exposeHttpEndpoint: true
+  exposeHttpPort: 80
+
 fhir-trigger:
   enabled: false
 

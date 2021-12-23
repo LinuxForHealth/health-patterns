@@ -16,11 +16,11 @@ spec:
       namespace: {{ .Release.namespace }}
   parameters:
     - name: FHIR_URL_PatientAccess
-      value: https://{{ .Values.ingress.hostname}}/fhir
+      value: "{{ include "health-patterns.fhirUrl" . }}"
       description: FHIR api for patient access
 
     - name: FHIR_URL_ProviderDirectory
-      value: https://{{ .Values.ingress.hostname}}/fhir
+      value: "{{ include "health-patterns.fhirUrl" . }}"
       description: FHIR api for provider
 
     - name: FHIR_User_PatientAccess
