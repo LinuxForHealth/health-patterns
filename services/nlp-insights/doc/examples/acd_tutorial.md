@@ -340,7 +340,7 @@ A bundle with the enriched condition is returned from the service. ACD has knowl
 ### Enrich an allergy intolerance
 In this example, a bundle with two allergy intolerance resources is sent to the nlp insights server. The first has a code with text "peanut", and the second resource has a code with text "amoxicillin".
 
-Both resources contain only text and do not contain any codes for the allergy. The nlp-insights service will enrich the resources with a UMLS code for the provided text.
+Both resources contain only text and do not contain any codes for the allergy. The nlp-insights service will enrich the resources with UMLS, snomed, icd-9 and icd-10 codes.
 
 ```
 curl  -w "\n%{http_code}\n" -s -o /tmp/output -XPOST localhost:5000/discoverInsights  -H 'Content-Type: application/json; charset=utf-8' --data-binary @- << EOF
