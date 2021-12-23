@@ -1,239 +1,9 @@
 {
-    "Allergy to peanut": [
-        {
-            "cui": "C0020517",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T046"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "383415012",
-                "151163017",
-                "324735010",
-                "170619015",
-                "36833018",
-                "36829013",
-                "2616374019",
-                "36830015",
-                "2622113011",
-                "36834012",
-                "324736011",
-                "36831016",
-                "246282011",
-                "246274011",
-                "403602014",
-                "409987014",
-                "538343014",
-                "36832011",
-                "170618011",
-                "324734014",
-                "403089015",
-                "2616596012",
-                "2580130011",
-                "360018",
-                "420294018",
-                "2550965018",
-                "2577369018",
-                "474056016",
-                "578749015",
-                "3295285012",
-                "3293488013",
-                "731115018",
-                "2736162015",
-                "666943017",
-                "598896013",
-                "2574058016",
-                "675707013",
-                "662127013",
-                "598895012",
-                "324733015",
-                "170620014",
-                "2574059012",
-                "751310013",
-                "834504017",
-                "648859016",
-                "2574102010",
-                "2622177015",
-                "2577416018",
-                "2606390010",
-                "2614008012",
-                "2622176012",
-                "2622175011",
-                "2613743012",
-                "2731578011"
-            ],
-            "start": 0,
-            "term": "allergy"
-        },
-        {
-            "cui": "C1314973",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T039"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "allergy"
-        },
-        {
-            "cui": "C1527304",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T046"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "2577368014",
-                "2574057014"
-            ],
-            "start": 0,
-            "term": "allergy"
-        },
-        {
-            "cui": "C0020517",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T046"
-            ],
-            "similarity": 0.8333333333333334,
-            "snomed_ct": [
-                "383415012",
-                "151163017",
-                "324735010",
-                "170619015",
-                "36833018",
-                "36829013",
-                "2616374019",
-                "36830015",
-                "2622113011",
-                "36834012",
-                "324736011",
-                "36831016",
-                "246282011",
-                "246274011",
-                "403602014",
-                "409987014",
-                "538343014",
-                "36832011",
-                "170618011",
-                "324734014",
-                "403089015",
-                "2616596012",
-                "2580130011",
-                "360018",
-                "420294018",
-                "2550965018",
-                "2577369018",
-                "474056016",
-                "578749015",
-                "3295285012",
-                "3293488013",
-                "731115018",
-                "2736162015",
-                "666943017",
-                "598896013",
-                "2574058016",
-                "675707013",
-                "662127013",
-                "598895012",
-                "324733015",
-                "170620014",
-                "2574059012",
-                "751310013",
-                "834504017",
-                "648859016",
-                "2574102010",
-                "2622177015",
-                "2577416018",
-                "2606390010",
-                "2614008012",
-                "2622176012",
-                "2622175011",
-                "2613743012",
-                "2731578011"
-            ],
-            "start": 0,
-            "term": "allergy."
-        },
-        {
-            "cui": "C0719113",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T109",
-                "T121"
-            ],
-            "similarity": 0.8333333333333334,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "callergy"
-        },
-        {
-            "cui": "C0719656",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T109",
-                "T121"
-            ],
-            "similarity": 0.8333333333333334,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "dallergy"
-        },
-        {
-            "cui": "C1572570",
-            "end": 17,
-            "ngram": "peanut",
-            "preferred": 1,
-            "semtypes": [
-                "T109",
-                "T121"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 11,
-            "term": "peanut"
-        },
-        {
-            "cui": "C2702419",
-            "end": 17,
-            "ngram": "peanut",
-            "preferred": 1,
-            "semtypes": [
-                "T129",
-                "T121"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 11,
-            "term": "peanut"
-        }
-    ],
-    "idonotknowthis": [
-    ],
-    "Heart Attack": [
+    "myocardial infarction": [
         {
             "cui": "C0027051",
-            "end": 12,
-            "ngram": "Heart Attack",
+            "end": 21,
+            "ngram": "myocardial infarction",
             "preferred": 1,
             "semtypes": [
                 "T047"
@@ -268,393 +38,708 @@
                 "751689013"
             ],
             "start": 0,
-            "term": "heart attack"
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 0,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C2926063",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C3810814",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T060"
+            ],
+            "similarity": 1.0,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.95,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 0,
+            "term": "myocardial infarctions"
+        },
+        {
+            "cui": "C0155668",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 0,
+            "term": "old myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 0,
+            "term": "ecg myocardial infarction"
+        },
+        {
+            "cui": "C0489577",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "myocardial infarction age"
+        },
+        {
+            "cui": "C3640911",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.8260869565217391,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "new myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 0,
+            "term": "myocardial infarction (mi)"
+        },
+        {
+            "cui": "C0155668",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 0,
+            "term": "past myocardial infarction"
+        },
+        {
+            "cui": "C0428953",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T034"
+            ],
+            "similarity": 0.7916666666666666,
+            "snomed_ct": [
+                "2607355010",
+                "108319019",
+                "256460011",
+                "520888012",
+                "224368019",
+                "224361013",
+                "520880017",
+                "256452010",
+                "3300375014",
+                "3300376010",
+                "3300377018",
+                "546248011",
+                "2748878010",
+                "546240016",
+                "2730758010",
+                "804656017",
+                "2607362018",
+                "2619221014",
+                "2619214014",
+                "2612497015",
+                "2620977012",
+                "2693159014"
+            ],
+            "start": 0,
+            "term": "ecg: myocardial infarction"
+        },
+        {
+            "cui": "C0027051",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "500448019",
+                "350357012",
+                "622062019",
+                "37436014",
+                "37437017",
+                "299703017",
+                "241792015",
+                "395860017",
+                "500449010",
+                "299700019",
+                "395861018",
+                "241791010",
+                "37443015",
+                "37440017",
+                "37441018",
+                "37438010",
+                "241790011",
+                "500450010",
+                "395863015",
+                "1784873012",
+                "37442013",
+                "37439019",
+                "500452019",
+                "1784872019",
+                "2747117014",
+                "751689013"
+            ],
+            "start": 0,
+            "term": "myocardial infarction, (mi)"
+        },
+        {
+            "cui": "C0155626",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "241795018",
+                "395858019",
+                "299702010",
+                "94884017",
+                "94885016",
+                "299721019",
+                "1231678011",
+                "299699015",
+                "395862013",
+                "241793013",
+                "241794019",
+                "395857012",
+                "299705012",
+                "795634013",
+                "578838018"
+            ],
+            "start": 0,
+            "term": "acute myocardial infarction"
+        },
+        {
+            "cui": "C3541950",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "acute myocardial infarction"
+        },
+        {
+            "cui": "C0155626",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+                "241795018",
+                "395858019",
+                "299702010",
+                "94884017",
+                "94885016",
+                "299721019",
+                "1231678011",
+                "299699015",
+                "395862013",
+                "241793013",
+                "241794019",
+                "395857012",
+                "299705012",
+                "795634013",
+                "578838018"
+            ],
+            "start": 0,
+            "term": "myocardial infarction acute"
+        },
+        {
+            "cui": "C3829910",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "had a myocardial infarction"
+        },
+        {
+            "cui": "C0746727",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "septal myocardial infarction"
+        },
+        {
+            "cui": "C2348362",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.76,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "septal myocardial infarction"
+        },
+        {
+            "cui": "C0155668",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+                "241798016",
+                "299752018",
+                "4031011",
+                "535621012",
+                "299751013",
+                "4032016",
+                "1221564010",
+                "2740994017",
+                "744868013",
+                "578857010",
+                "299754017",
+                "299753011",
+                "2748854017"
+            ],
+            "start": 0,
+            "term": "healed myocardial infarction"
+        },
+        {
+            "cui": "C0340324",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+                "299698011",
+                "350376014",
+                "350377017",
+                "622083013"
+            ],
+            "start": 0,
+            "term": "silent myocardial infarction"
+        },
+        {
+            "cui": "C3898652",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "type 5 myocardial infarction"
+        },
+        {
+            "cui": "C3898656",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "type 3 myocardial infarction"
+        },
+        {
+            "cui": "C3898657",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T170"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "type 2 myocardial infarction"
+        },
+        {
+            "cui": "C3898658",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T033"
+            ],
+            "similarity": 0.7307692307692307,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "type 1 myocardial infarction"
+        },
+        {
+            "cui": "C2825159",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T201"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "date of myocardial infarction"
+        },
+        {
+            "cui": "C3845502",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "myocardial infarction, stroke"
+        },
+        {
+            "cui": "C3898653",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "type 4c myocardial infarction"
+        },
+        {
+            "cui": "C3898654",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "type 4b myocardial infarction"
+        },
+        {
+            "cui": "C3898655",
+            "end": 21,
+            "ngram": "myocardial infarction",
+            "preferred": 1,
+            "semtypes": [
+                "T047"
+            ],
+            "similarity": 0.7037037037037037,
+            "snomed_ct": [
+            ],
+            "start": 0,
+            "term": "type 4a myocardial infarction"
         }
     ],
-    "Oxycodone": [
+    "idonotknowthis": [
+    ],
+    "peanut allergy": [
         {
-            "cui": "C0030049",
-            "end": 9,
-            "ngram": "Oxycodone",
+            "cui": "C0559470",
+            "end": 14,
+            "ngram": "peanut allergy",
             "preferred": 1,
             "semtypes": [
-                "T121",
-                "T109"
+                "T047"
             ],
             "similarity": 1.0,
             "snomed_ct": [
-                "92187014",
-                "2533173016",
-                "92189012",
-                "92188016",
-                "3486996015",
-                "3495407018",
-                "1209005011",
-                "2529742012",
-                "1195554017",
-                "793814012"
+                "152306018",
+                "598920012",
+                "324778017",
+                "835353014"
             ],
             "start": 0,
-            "term": "oxycodone"
+            "term": "peanut allergy"
         },
         {
-            "cui": "C0524222",
-            "end": 9,
-            "ngram": "Oxycodone",
+            "cui": "C0917918",
+            "end": 14,
+            "ngram": "peanut allergy",
             "preferred": 1,
             "semtypes": [
-                "T059"
+                "T033"
             ],
-            "similarity": 1.0,
+            "similarity": 0.8,
             "snomed_ct": [
-                "169305018",
-                "570370013"
             ],
             "start": 0,
-            "term": "oxycodone"
+            "term": "hx-peanut allergy"
         },
         {
-            "cui": "C0030049",
-            "end": 9,
-            "ngram": "Oxycodone",
+            "cui": "C0577620",
+            "end": 14,
+            "ngram": "peanut allergy",
             "preferred": 1,
             "semtypes": [
-                "T121",
-                "T109"
+                "T047"
             ],
-            "similarity": 0.7,
+            "similarity": 0.75,
             "snomed_ct": [
-                "92187014",
-                "2533173016",
-                "92189012",
-                "92188016",
-                "3486996015",
-                "3495407018",
-                "1209005011",
-                "2529742012",
-                "1195554017",
-                "793814012"
+                "1489311018",
+                "1469594019",
+                "1235714019",
+                "152305019",
+                "3286105013",
+                "3286074010",
+                "3084530017",
+                "835352016"
             ],
             "start": 0,
-            "term": "oxycodone sr"
-        },
-        {
-            "cui": "C0173449",
-            "end": 9,
-            "ngram": "Oxycodone",
-            "preferred": 1,
-            "semtypes": [
-                "T121",
-                "T109"
-            ],
-            "similarity": 0.7,
-            "snomed_ct": [
-                "3444594012",
-                "3444593018"
-            ],
-            "start": 0,
-            "term": "noroxycodone"
+            "term": "nut allergy"
         }
     ],
-    "Allergy to Oxycodone": [
+    "amoxicillin allergy": [
         {
-            "cui": "C0030049",
-            "end": 20,
-            "ngram": "Oxycodone",
+            "cui": "C0571417",
+            "end": 19,
+            "ngram": "amoxicillin allergy",
             "preferred": 1,
             "semtypes": [
-                "T121",
-                "T109"
+                "T047"
             ],
             "similarity": 1.0,
             "snomed_ct": [
-                "92187014",
-                "2533173016",
-                "92189012",
-                "92188016",
-                "3486996015",
-                "3495407018",
-                "1209005011",
-                "2529742012",
-                "1195554017",
-                "793814012"
-            ],
-            "start": 11,
-            "term": "oxycodone"
-        },
-        {
-            "cui": "C0524222",
-            "end": 20,
-            "ngram": "Oxycodone",
-            "preferred": 1,
-            "semtypes": [
-                "T059"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "169305018",
-                "570370013"
-            ],
-            "start": 11,
-            "term": "oxycodone"
-        },
-        {
-            "cui": "C0030049",
-            "end": 20,
-            "ngram": "Oxycodone",
-            "preferred": 1,
-            "semtypes": [
-                "T121",
-                "T109"
-            ],
-            "similarity": 0.7,
-            "snomed_ct": [
-                "92187014",
-                "2533173016",
-                "92189012",
-                "92188016",
-                "3486996015",
-                "3495407018",
-                "1209005011",
-                "2529742012",
-                "1195554017",
-                "793814012"
-            ],
-            "start": 11,
-            "term": "oxycodone sr"
-        },
-        {
-            "cui": "C0173449",
-            "end": 20,
-            "ngram": "Oxycodone",
-            "preferred": 1,
-            "semtypes": [
-                "T121",
-                "T109"
-            ],
-            "similarity": 0.7,
-            "snomed_ct": [
-                "3444594012",
-                "3444593018"
-            ],
-            "start": 11,
-            "term": "noroxycodone"
-        },
-        {
-            "cui": "C0020517",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T046"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "383415012",
-                "151163017",
-                "324735010",
-                "170619015",
-                "36833018",
-                "36829013",
-                "2616374019",
-                "36830015",
-                "2622113011",
-                "36834012",
-                "324736011",
-                "36831016",
-                "246282011",
-                "246274011",
-                "403602014",
-                "409987014",
-                "538343014",
-                "36832011",
-                "170618011",
-                "324734014",
-                "403089015",
-                "2616596012",
-                "2580130011",
-                "360018",
-                "420294018",
-                "2550965018",
-                "2577369018",
-                "474056016",
-                "578749015",
-                "3295285012",
-                "3293488013",
-                "731115018",
-                "2736162015",
-                "666943017",
-                "598896013",
-                "2574058016",
-                "675707013",
-                "662127013",
-                "598895012",
-                "324733015",
-                "170620014",
-                "2574059012",
-                "751310013",
-                "834504017",
-                "648859016",
-                "2574102010",
-                "2622177015",
-                "2577416018",
-                "2606390010",
-                "2614008012",
-                "2622176012",
-                "2622175011",
-                "2613743012",
-                "2731578011"
+                "2476309016",
+                "434782010",
+                "2959758014",
+                "689513016"
             ],
             "start": 0,
-            "term": "allergy"
-        },
-        {
-            "cui": "C1314973",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T039"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "allergy"
-        },
-        {
-            "cui": "C1527304",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T046"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "2577368014",
-                "2574057014"
-            ],
-            "start": 0,
-            "term": "allergy"
-        },
-        {
-            "cui": "C0020517",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T046"
-            ],
-            "similarity": 0.8333333333333334,
-            "snomed_ct": [
-                "383415012",
-                "151163017",
-                "324735010",
-                "170619015",
-                "36833018",
-                "36829013",
-                "2616374019",
-                "36830015",
-                "2622113011",
-                "36834012",
-                "324736011",
-                "36831016",
-                "246282011",
-                "246274011",
-                "403602014",
-                "409987014",
-                "538343014",
-                "36832011",
-                "170618011",
-                "324734014",
-                "403089015",
-                "2616596012",
-                "2580130011",
-                "360018",
-                "420294018",
-                "2550965018",
-                "2577369018",
-                "474056016",
-                "578749015",
-                "3295285012",
-                "3293488013",
-                "731115018",
-                "2736162015",
-                "666943017",
-                "598896013",
-                "2574058016",
-                "675707013",
-                "662127013",
-                "598895012",
-                "324733015",
-                "170620014",
-                "2574059012",
-                "751310013",
-                "834504017",
-                "648859016",
-                "2574102010",
-                "2622177015",
-                "2577416018",
-                "2606390010",
-                "2614008012",
-                "2622176012",
-                "2622175011",
-                "2613743012",
-                "2731578011"
-            ],
-            "start": 0,
-            "term": "allergy."
-        },
-        {
-            "cui": "C0719113",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T121",
-                "T109"
-            ],
-            "similarity": 0.8333333333333334,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "callergy"
-        },
-        {
-            "cui": "C0719656",
-            "end": 7,
-            "ngram": "Allergy",
-            "preferred": 1,
-            "semtypes": [
-                "T121",
-                "T109"
-            ],
-            "similarity": 0.8333333333333334,
-            "snomed_ct": [
-            ],
-            "start": 0,
-            "term": "dallergy"
-        }
-    ],
-    "DTaP vaccine": [
-        {
-            "cui": "C0535644",
-            "end": 12,
-            "ngram": "DTaP vaccine",
-            "preferred": 1,
-            "semtypes": [
-                "T121",
-                "T129"
-            ],
-            "similarity": 1.0,
-            "snomed_ct": [
-                "618501000124111",
-                "618491000124115",
-                "618511000124114"
-            ],
-            "start": 0,
-            "term": "dtap vaccine"
+            "term": "amoxicillin allergy"
         }
     ]
 }

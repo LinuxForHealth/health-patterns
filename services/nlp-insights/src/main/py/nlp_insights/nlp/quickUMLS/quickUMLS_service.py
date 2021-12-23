@@ -37,7 +37,7 @@ class _ResultEntry(NamedTuple):
 
 
 def create_nlp_response(
-    server_response_concepts: List[Dict[str, Any]]
+    server_response_concepts: List[Dict[str, Any]], response: str
 ) -> QuickUmlsResponse:
     """Converts a json response from the quickUmls server to an object
 
@@ -56,11 +56,12 @@ def create_nlp_response(
                 if "semtypes" in concept
                 else set()
             ),
+            similarity=concept.get("similarity", 0.0),
         )
         for concept in server_response_concepts
         if "cui" in concept
     ]
-    return QuickUmlsResponse(concepts=concepts)
+    return QuickUmlsResponse(concepts=concepts, service_resp=response)
 
 
 class QuickUMLSService(NLPService):
@@ -88,7 +89,7 @@ class QuickUMLSService(NLPService):
                 f"failed with an error {resp.status_code} {resp.reason}"
             )
         concepts = json.loads(resp.text)
-        return create_nlp_response(concepts)
+        return create_nlp_response(concepts, resp.text)
 
     def derive_new_resources(
         self, notes: List[UnstructuredText]

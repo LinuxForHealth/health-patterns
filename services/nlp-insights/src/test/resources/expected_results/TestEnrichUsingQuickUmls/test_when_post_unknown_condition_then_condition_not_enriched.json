@@ -1,47 +1,5 @@
 {
   "id": "12345",
-  "meta": {
-    "extension": [
-      {
-        "extension": [
-          {
-            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
-            "valueIdentifier": {
-              "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-              "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
-            }
-          },
-          {
-            "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
-            "valueString": "Condition.code.coding"
-          },
-          {
-            "extension": [
-              {
-                "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
-                "valueReference": {
-                  "reference": "Condition/12345"
-                }
-              },
-              {
-                "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                "valueString": "Condition.code.text"
-              },
-              {
-                "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
-                "valueAttachment": {
-                  "contentType": "application/json",
-                  "data": "W1tdXQ=="
-                }
-              }
-            ],
-            "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
-          }
-        ],
-        "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
-      }
-    ]
-  },
   "code": {
     "coding": [],
     "text": "idonotknowthis"

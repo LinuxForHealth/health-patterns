@@ -37,11 +37,29 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
                       "valueAttachment": {
                         "contentType": "application/json",
-                        "data": "W1tbIkMwMDA4ODM4IiwgIkNpc3BsYXRpbiIsIDE4LCAyNywgImNpc3BsYXRpbiIsIFsidW1scy5Jbm9yZ2FuaWNDaGVtaWNhbCIsICJ1bWxzLlBoYXJtYWNvbG9naWNTdWJzdGFuY2UiXSwgZmFsc2VdLCBbIkMwNjcxNDUwIiwgIkNpc3BsYXRpbiIsIDE4LCAyNywgIm1lIGNpc3BsYXRpbiIsIFsidW1scy5UaGVyYXBldXRpY09yUHJldmVudGl2ZVByb2NlZHVyZSJdLCBmYWxzZV0sIFsiQzE1NTA2NTUiLCAiUGF0aWVudCIsIDAsIDcsICJwYXRpZW50IiwgWyJ1bWxzLkJvZHlTdWJzdGFuY2UiXSwgZmFsc2VdLCBbIkMxNTc4NDg1IiwgIlBhdGllbnQiLCAwLCA3LCAicGF0aWVudCIsIFsidW1scy5JbnRlbGxlY3R1YWxQcm9kdWN0Il0sIGZhbHNlXSwgWyJDMTU3ODQ4NiIsICJQYXRpZW50IiwgMCwgNywgInBhdGllbnQiLCBbInVtbHMuSW50ZWxsZWN0dWFsUHJvZHVjdCJdLCBmYWxzZV1dXQ=="
+                        "data": "W3siY3VpIjogIkMwMDA4ODM4IiwgImVuZCI6IDI3LCAibmdyYW0iOiAiQ2lzcGxhdGluIiwgInByZWZlcnJlZCI6IDEsICJzZW10eXBlcyI6IFsiVDEyMSIsICJUMTk3Il0sICJzaW1pbGFyaXR5IjogMS4wLCAic25vbWVkX2N0IjogWyIxNDgxNDE4MDEwIiwgIjk0OTA1MDE3IiwgIjk0OTEyMDE0IiwgIjk0OTA3MDEzIiwgIjE0OTE5OTYwMTciLCAiMjY3MjcwMzAxMiIsICI0NDUzNDQwMTMiLCAiOTQ5MTEwMTkiLCAiMTQ5MjAwMDAxOCIsICI5NDkxMDAxOCIsICIxMjMxNjgyMDEzIiwgIjk0OTA5MDExIiwgIjE0OTE5OTgwMTYiLCAiOTQ5MDgwMTUiLCAiMTQ5MTk5OTAxMiIsICI5NDkwNjAxNiIsICIxNDkxOTk3MDE0IiwgIjEyMDM3NjkwMTciLCAiMTIzMTY4MTAxOCIsICI0NDUzNDUwMTQiLCAiMjY3MjcwMjAxOSIsICIzNTIzNzg0MDExIiwgIjM1MjM3ODMwMTciLCAiNzk1NjQ3MDE1IiwgIjE0NjE0OTYwMTgiLCAiNjk5NDQ4MDEwIl0sICJzdGFydCI6IDE4LCAidGVybSI6ICJjaXNwbGF0aW4ifSwgeyJjdWkiOiAiQzA2NzE0NTAiLCAiZW5kIjogMjcsICJuZ3JhbSI6ICJDaXNwbGF0aW4iLCAicHJlZmVycmVkIjogMSwgInNlbXR5cGVzIjogWyJUMDYxIl0sICJzaW1pbGFyaXR5IjogMC43LCAic25vbWVkX2N0IjogW10sICJzdGFydCI6IDE4LCAidGVybSI6ICJtZSBjaXNwbGF0aW4ifSwgeyJjdWkiOiAiQzE1NTA2NTUiLCAiZW5kIjogNywgIm5ncmFtIjogIlBhdGllbnQiLCAicHJlZmVycmVkIjogMSwgInNlbXR5cGVzIjogWyJUMDMxIl0sICJzaW1pbGFyaXR5IjogMS4wLCAic25vbWVkX2N0IjogW10sICJzdGFydCI6IDAsICJ0ZXJtIjogInBhdGllbnQifSwgeyJjdWkiOiAiQzE1Nzg0ODUiLCAiZW5kIjogNywgIm5ncmFtIjogIlBhdGllbnQiLCAicHJlZmVycmVkIjogMSwgInNlbXR5cGVzIjogWyJUMTcwIl0sICJzaW1pbGFyaXR5IjogMS4wLCAic25vbWVkX2N0IjogW10sICJzdGFydCI6IDAsICJ0ZXJtIjogInBhdGllbnQifSwgeyJjdWkiOiAiQzE1Nzg0ODYiLCAiZW5kIjogNywgIm5ncmFtIjogIlBhdGllbnQiLCAicHJlZmVycmVkIjogMSwgInNlbXR5cGVzIjogWyJUMTcwIl0sICJzaW1pbGFyaXR5IjogMS4wLCAic25vbWVkX2N0IjogW10sICJzdGFydCI6IDAsICJ0ZXJtIjogInBhdGllbnQifV0="
                       }
                     },
                     {
-                      "extension": [],
+                      "extension": [
+                        {
+                          "extension": [
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/covered-text",
+                              "valueString": "Cisplatin"
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-begin",
+                              "valueInteger": 18
+                            },
+                            {
+                              "url": "http://ibm.com/fhir/cdm/StructureDefinition/offset-end",
+                              "valueInteger": 27
+                            }
+                          ],
+                          "url": "http://ibm.com/fhir/cdm/StructureDefinition/span"
+                        }
+                      ],
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-result"
                     }
                   ],

@@ -95,6 +95,8 @@ def update_codeable_concepts_and_meta_with_insights(
         )
 
         builder.add_derived_codings(derive_codings(concept_insight, nlp_config))
-        builder.append_insight_to_resource_meta()
+
+        if builder.num_summary_extensions_added > 0:
+            builder.append_insight_to_resource_meta()
 
     return builder.num_summary_extensions_added

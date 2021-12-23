@@ -13,7 +13,6 @@
 # limitations under the License.
 """Derive condition from NLP output"""
 
-import json
 from typing import Dict
 from typing import List
 from typing import NamedTuple
@@ -35,9 +34,7 @@ from nlp_insights.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
 from nlp_insights.nlp.quickUMLS.nlp_response import (
     QuickUmlsResponse,
     QuickUmlsConcept,
-    QuickUmlsEncoder,
 )
-from nlp_insights.umls.semtype_lookup import resource_relevant_to_any_type_names
 
 
 def _add_codings_to_condition(condition: Condition, concept: QuickUmlsConcept) -> None:
@@ -98,38 +95,34 @@ def create_conditions(
     # for multiple occurrences of the same derived concept.
     condition_tracker: Dict[str, TrackerEntry] = {}
 
-    for concept in nlp_response.concepts:
-        if resource_relevant_to_any_type_names(Condition, concept.types):
-            key = id_util.make_hash(text_source, concept.cui, Condition)
-            if key not in condition_tracker:
-                condition = Condition.construct(
-                    subject=text_source.source_resource.subject
-                )
+    for concept in nlp_response.get_most_relevant_concepts(Condition):
+        key = id_util.make_hash(text_source, concept.cui, Condition)
+        if key not in condition_tracker:
+            condition = Condition.construct(subject=text_source.source_resource.subject)
 
-                insight_builder = DerivedResourceInsightBuilder(
-                    resource_type=Condition,
-                    text_source=text_source,
-                    insight_id_value=key,
-                    insight_id_system=nlp_config.nlp_system,
-                    nlp_response_json=json.dumps(nlp_response, cls=QuickUmlsEncoder),
-                )
-
-                condition_tracker[key] = TrackerEntry(
-                    resource=condition, insight_builder=insight_builder
-                )
-
-            condition, insight_builder = condition_tracker[key]
-
-            _add_codings_to_condition(condition, concept)
-
-            insight_builder.add_span(
-                Span(
-                    begin=concept.begin,
-                    end=concept.end,
-                    covered_text=concept.covered_text,
-                ),
-                confidences=[],
+            insight_builder = DerivedResourceInsightBuilder(
+                resource_type=Condition,
+                text_source=text_source,
+                insight_id_value=key,
+                insight_id_system=nlp_config.nlp_system,
+                nlp_response_json=nlp_response.service_resp,
             )
+
+            condition_tracker[key] = TrackerEntry(
+                resource=condition, insight_builder=insight_builder
+            )
+
+        condition, insight_builder = condition_tracker[key]
+        _add_codings_to_condition(condition, concept)
+
+        insight_builder.add_span(
+            Span(
+                begin=concept.begin,
+                end=concept.end,
+                covered_text=concept.covered_text,
+            ),
+            confidences=[],
+        )
 
     if not condition_tracker:
         return None

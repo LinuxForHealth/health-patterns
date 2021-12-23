@@ -51,11 +51,17 @@ def adjust_allergy_text(text: str) -> str:
 
     Example:
     >>> adjust_allergy_text('peanuts')
-    'Allergy to peanuts'
+    'peanuts allergy'
+    >>> adjust_allergy_text('peanut allergy')
+    'peanut allergy'
     """
     # Adjust code in order to get the correct codes for the allergy,
     # as the source text contains only the allergen.
-    return "Allergy to " + text
+    if not any(
+        term in text.lower() for term in set(["allergy", "allergic", "allergies"])
+    ):
+        return text + " allergy"
+    return text
 
 
 DEFAULT_CONCEPT_TEXT_ADJUSTERS: Dict[CodeableConceptRefType, Callable[[str], str]] = {

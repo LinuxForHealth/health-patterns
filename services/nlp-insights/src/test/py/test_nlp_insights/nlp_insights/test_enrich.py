@@ -19,6 +19,7 @@ from fhir.resources.bundle import Bundle
 from fhir.resources.condition import Condition
 
 from nlp_insights import app
+from test_nlp_insights.util import enrich_text
 from test_nlp_insights.util.compare import compare_actual_to_expected
 from test_nlp_insights.util.fhir import (
     make_condition,
@@ -54,7 +55,7 @@ class TestEnrichUsingAcd(UnitTestUsingExternalResource):
             [
                 make_condition(
                     subject=make_patient_reference(),
-                    code=make_codeable_concept(text="Heart Attack"),
+                    code=make_codeable_concept(text=enrich_text.CONDITION_HEART_ATTACK),
                 )
             ]
         )
@@ -76,8 +77,12 @@ class TestEnrichUsingAcd(UnitTestUsingExternalResource):
             [
                 make_allergy_intolerance(
                     patient=make_patient_reference(),
-                    code=make_codeable_concept(text="Oxycodone"),
-                )
+                    code=make_codeable_concept(text=enrich_text.ALLERGY_MEDICATION),
+                ),
+                make_allergy_intolerance(
+                    patient=make_patient_reference(),
+                    code=make_codeable_concept(text=enrich_text.ALLERGY_PEANUT),
+                ),
             ]
         )
 
@@ -96,7 +101,7 @@ class TestEnrichUsingAcd(UnitTestUsingExternalResource):
     def test_when_post_unknown_condition_then_condition_not_enriched(self):
         condition = make_condition(
             subject=make_patient_reference(),
-            code=make_codeable_concept(text="idonotknowthis"),
+            code=make_codeable_concept(text=enrich_text.UNKNOWN_TEXT),
         )
 
         with app.app.test_client() as service:
@@ -130,7 +135,7 @@ class TestEnrichUsingQuickUmls(UnitTestUsingExternalResource):
             [
                 make_condition(
                     subject=make_patient_reference(),
-                    code=make_codeable_concept(text="Heart Attack"),
+                    code=make_codeable_concept(text=enrich_text.CONDITION_HEART_ATTACK),
                 )
             ]
         )
@@ -152,8 +157,12 @@ class TestEnrichUsingQuickUmls(UnitTestUsingExternalResource):
             [
                 make_allergy_intolerance(
                     patient=make_patient_reference(),
-                    code=make_codeable_concept(text="Oxycodone"),
-                )
+                    code=make_codeable_concept(text=enrich_text.ALLERGY_MEDICATION),
+                ),
+                make_allergy_intolerance(
+                    patient=make_patient_reference(),
+                    code=make_codeable_concept(text=enrich_text.ALLERGY_PEANUT),
+                ),
             ]
         )
 
@@ -172,7 +181,7 @@ class TestEnrichUsingQuickUmls(UnitTestUsingExternalResource):
     def test_when_post_unknown_condition_then_condition_not_enriched(self):
         condition = make_condition(
             subject=make_patient_reference(),
-            code=make_codeable_concept(text="idonotknowthis"),
+            code=make_codeable_concept(text=enrich_text.UNKNOWN_TEXT),
         )
 
         with app.app.test_client() as service:

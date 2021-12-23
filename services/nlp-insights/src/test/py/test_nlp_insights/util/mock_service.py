@@ -169,7 +169,7 @@ class MockQuickUmlsService(quickUMLS_service.QuickUMLSService):
 
     def _run_nlp(self, text: str) -> QuickUmlsResponse:
         json_obj = self.response_map[text]
-        return quickUMLS_service.create_nlp_response(json_obj)
+        return quickUMLS_service.create_nlp_response(json_obj, json.dumps(json_obj))
 
 
 def make_mock_quick_umls_service_class(

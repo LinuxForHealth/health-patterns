@@ -13,7 +13,6 @@
 # limitations under the License.
 """Derive medication statements from NLP output"""
 
-import json
 from typing import Dict
 from typing import List
 from typing import NamedTuple
@@ -30,14 +29,13 @@ from nlp_insights.insight import id_util
 from nlp_insights.insight.builder.derived_resource_builder import (
     DerivedResourceInsightBuilder,
 )
+from nlp_insights.insight.span import Span
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
 from nlp_insights.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
 from nlp_insights.nlp.quickUMLS.nlp_response import (
     QuickUmlsResponse,
     QuickUmlsConcept,
-    QuickUmlsEncoder,
 )
-from nlp_insights.umls.semtype_lookup import resource_relevant_to_any_type_names
 
 
 def _add_codings_to_medication_stmt(
@@ -122,29 +120,37 @@ def create_med_statements(
     # for multiple occurrences of the same derived concept.
     medication_tracker: Dict[str, TrackerEntry] = {}
 
-    for concept in nlp_response.concepts:
-        if resource_relevant_to_any_type_names(MedicationStatement, concept.types):
-            key = id_util.make_hash(text_source, concept.cui, MedicationStatement)
+    for concept in nlp_response.get_most_relevant_concepts(MedicationStatement):
+        key = id_util.make_hash(text_source, concept.cui, MedicationStatement)
 
-            if key not in medication_tracker:
-                new_medication_stmt = _create_minimum_medication_statement(
-                    subject=text_source.source_resource.subject, concept=concept
-                )
+        if key not in medication_tracker:
+            new_medication_stmt = _create_minimum_medication_statement(
+                subject=text_source.source_resource.subject, concept=concept
+            )
 
-                insight_builder = DerivedResourceInsightBuilder(
-                    resource_type=MedicationStatement,
-                    text_source=text_source,
-                    insight_id_value=key,
-                    insight_id_system=nlp_config.nlp_system,
-                    nlp_response_json=json.dumps(nlp_response, cls=QuickUmlsEncoder),
-                )
+            insight_builder = DerivedResourceInsightBuilder(
+                resource_type=MedicationStatement,
+                text_source=text_source,
+                insight_id_value=key,
+                insight_id_system=nlp_config.nlp_system,
+                nlp_response_json=nlp_response.service_resp,
+            )
 
-                medication_tracker[key] = TrackerEntry(
-                    resource=new_medication_stmt, insight_builder=insight_builder
-                )
+            medication_tracker[key] = TrackerEntry(
+                resource=new_medication_stmt, insight_builder=insight_builder
+            )
 
-            med_stmt, insight_builder = medication_tracker[key]
-            _add_codings_to_medication_stmt(med_stmt, concept)
+        med_stmt, insight_builder = medication_tracker[key]
+        _add_codings_to_medication_stmt(med_stmt, concept)
+
+        insight_builder.add_span(
+            Span(
+                begin=concept.begin,
+                end=concept.end,
+                covered_text=concept.covered_text,
+            ),
+            confidences=[],
+        )
 
     if not medication_tracker:
         return None

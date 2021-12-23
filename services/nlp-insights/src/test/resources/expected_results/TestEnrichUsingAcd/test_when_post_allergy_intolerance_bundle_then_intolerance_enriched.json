@@ -38,7 +38,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
                       "valueAttachment": {
                         "contentType": "application/json",
-                        "data": "eyJhdHRyaWJ1dGVWYWx1ZXMiOiBbeyJiZWdpbiI6IDExLCAiZW5kIjogMjAsICJjb3ZlcmVkVGV4dCI6ICJPeHljb2RvbmUiLCAibmVnYXRlZCI6IGZhbHNlLCAicHJlZmVycmVkTmFtZSI6ICJveHljb2RvbmUiLCAidmFsdWVzIjogW3sidmFsdWUiOiAib3h5Y29kb25lIn1dLCAic291cmNlIjogIkNsaW5pY2FsIEluc2lnaHRzIC0gQXR0cmlidXRlcyIsICJzb3VyY2VWZXJzaW9uIjogInYxLjAiLCAiY29uY2VwdCI6IHsidWlkIjogNn0sICJuYW1lIjogIk1lZGljYXRpb25BbGxlcmd5IiwgInJ4Tm9ybUlkIjogIjc4MDQiLCAic2VjdGlvbk5vcm1hbGl6ZWROYW1lIjogIkFsbGVyZ2llcyIsICJzZWN0aW9uU3VyZmFjZUZvcm0iOiAiQWxsZXJneSIsICJkaXNhbWJpZ3VhdGlvbkRhdGEiOiB7InZhbGlkaXR5IjogIlZBTElEIn0sICJpbnNpZ2h0TW9kZWxEYXRhIjogeyJtZWRpY2F0aW9uIjogeyJ1c2FnZSI6IHsidGFrZW5TY29yZSI6IDEuMCwgImNvbnNpZGVyaW5nU2NvcmUiOiAwLjAsICJkaXNjdXNzZWRTY29yZSI6IDAuMCwgImxhYk1lYXN1cmVtZW50U2NvcmUiOiAwLjB9LCAic3RvcHBlZEV2ZW50IjogeyJzY29yZSI6IDAuMDAxLCAidXNhZ2UiOiB7ImV4cGxpY2l0U2NvcmUiOiAwLjAsICJjb25zaWRlcmluZ1Njb3JlIjogMC4wLCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjB9fSwgImRvc2VDaGFuZ2VkRXZlbnQiOiB7InNjb3JlIjogMC4wLCAidXNhZ2UiOiB7ImV4cGxpY2l0U2NvcmUiOiAwLjAsICJjb25zaWRlcmluZ1Njb3JlIjogMC4wLCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjB9fSwgImFkdmVyc2VFdmVudCI6IHsic2NvcmUiOiAxLjAsICJhbGxlcmd5U2NvcmUiOiAxLjAsICJ1c2FnZSI6IHsiZXhwbGljaXRTY29yZSI6IDAuOTc4LCAiY29uc2lkZXJpbmdTY29yZSI6IDAuMDIxLCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjAwMX19LCAic3RhcnRlZEV2ZW50IjogeyJzY29yZSI6IDAuMCwgInVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC4wLCAiY29uc2lkZXJpbmdTY29yZSI6IDAuMCwgImRpc2N1c3NlZFNjb3JlIjogMC4wfX19fX1dLCAiY29uY2VwdHMiOiBbeyJ0eXBlIjogInVtbHMuUGF0aG9sb2dpY0Z1bmN0aW9uIiwgImJlZ2luIjogMCwgImVuZCI6IDcsICJjb3ZlcmVkVGV4dCI6ICJBbGxlcmd5IiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDAyMDUxNyIsICJwcmVmZXJyZWROYW1lIjogIkh5cGVyc2Vuc2l0aXZpdHkiLCAic2VtYW50aWNUeXBlIjogInBhdGYiLCAic291cmNlIjogInVtbHMiLCAic291cmNlVmVyc2lvbiI6ICIyMDIwQUEiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJOT19ERUNJU0lPTiJ9LCAiaWNkOUNvZGUiOiAiOTk1LjMiLCAiaWNkMTBDb2RlIjogIlQ3OC40LFQ3OC40MFg/IiwgIm5jaUNvZGUiOiAiQzMxMTQiLCAic25vbWVkQ29uY2VwdElkIjogIjQxODYzNDAwNSw0MjE5NjEwMDIiLCAibWVzaElkIjogIk0wMDEwODUxIiwgImxvaW5jSWQiOiAiTEExNzc3MS05LExQMjA2OTctNixMUDc3NTYtMixMQTk1MzItOCxNVEhVMDIwODIyIiwgInZvY2FicyI6ICJNVEgsTE5DLE5DSV9OSUNIRCxDU1AsTVNILENTVCxIUE8sT01JTSxHTyxOQ0lfQ1RDQUUsSEw3VjIuNSxDT1NUQVIsSEw3VjMuMCxOQ0lfTkNJLUdMT1NTLElDUEMsQ0hWLE5DSV9GREEsTUVETElORVBMVVMsTkNJLExDSF9OVyxBT0QsU05PTUVEQ1RfVVMiLCAic2VjdGlvbk5vcm1hbGl6ZWROYW1lIjogIkFsbGVyZ2llcyIsICJzZWN0aW9uU3VyZmFjZUZvcm0iOiAiQWxsZXJneSJ9LCB7InR5cGUiOiAidW1scy5QYXRob2xvZ2ljRnVuY3Rpb24iLCAiYmVnaW4iOiAwLCAiZW5kIjogNywgImNvdmVyZWRUZXh0IjogIkFsbGVyZ3kiLCAibmVnYXRlZCI6IGZhbHNlLCAiY3VpIjogIkMxNTI3MzA0IiwgInByZWZlcnJlZE5hbWUiOiAiQWxsZXJnaWMgUmVhY3Rpb24iLCAic2VtYW50aWNUeXBlIjogInBhdGYiLCAic291cmNlIjogInVtbHMiLCAic291cmNlVmVyc2lvbiI6ICIyMDIwQUEiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJOT19ERUNJU0lPTiJ9LCAiaWNkOUNvZGUiOiAiOTk1LjMiLCAiaWNkMTBDb2RlIjogIlQ3OC40LFQ3OC40MFg/IiwgIm5jaUNvZGUiOiAiQzExNDQ3NiIsICJzbm9tZWRDb25jZXB0SWQiOiAiNDE5MDc2MDA1IiwgIm1lc2hJZCI6ICJNMDAxMDg1MiIsICJ2b2NhYnMiOiAiTkNJX05JQ0hELE1USCxDQ1NSXzEwLENDUyxNU0gsTkNJLE5DSV9DVENBRSxTTk9NRURDVF9VUyxOQ0lfTkNJLUdMT1NTIiwgInNlY3Rpb25Ob3JtYWxpemVkTmFtZSI6ICJBbGxlcmdpZXMiLCAic2VjdGlvblN1cmZhY2VGb3JtIjogIkFsbGVyZ3kifSwgeyJ0eXBlIjogInVtbHMuRmluZGluZyIsICJiZWdpbiI6IDAsICJlbmQiOiA3LCAiY292ZXJlZFRleHQiOiAiQWxsZXJneSIsICJuZWdhdGVkIjogZmFsc2UsICJjdWkiOiAiQzM1Mzk5MDkiLCAicHJlZmVycmVkTmFtZSI6ICJBbGxlcmdpYyBkaXNwb3NpdGlvbiIsICJzZW1hbnRpY1R5cGUiOiAiZm5kZyIsICJzb3VyY2UiOiAidW1scyIsICJzb3VyY2VWZXJzaW9uIjogIjIwMjBBQSIsICJkaXNhbWJpZ3VhdGlvbkRhdGEiOiB7InZhbGlkaXR5IjogIk5PX0RFQ0lTSU9OIn0sICJpY2Q5Q29kZSI6ICJWMTUuMDksOTk1LjMiLCAiaWNkMTBDb2RlIjogIlQ3OC40MFg/IiwgInNub21lZENvbmNlcHRJZCI6ICI2MDkzMjgwMDQiLCAidm9jYWJzIjogIk1USCxTTk9NRURDVF9VUyIsICJzZWN0aW9uTm9ybWFsaXplZE5hbWUiOiAiQWxsZXJnaWVzIiwgInNlY3Rpb25TdXJmYWNlRm9ybSI6ICJBbGxlcmd5In0sIHsidHlwZSI6ICJ1bWxzLk9yZ2FuaWNDaGVtaWNhbCIsICJ1aWQiOiA0LCAiYmVnaW4iOiAxMSwgImVuZCI6IDIwLCAiY292ZXJlZFRleHQiOiAiT3h5Y29kb25lIiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDAzMDA0OSIsICJwcmVmZXJyZWROYW1lIjogIm94eWNvZG9uZSIsICJzZW1hbnRpY1R5cGUiOiAib3JjaCIsICJzb3VyY2UiOiAidW1scyIsICJzb3VyY2VWZXJzaW9uIjogIjIwMjBBQSIsICJkaXNhbWJpZ3VhdGlvbkRhdGEiOiB7InZhbGlkaXR5IjogIk5PX0RFQ0lTSU9OIn0sICJuY2lDb2RlIjogIkMyOTMwOSIsICJzbm9tZWRDb25jZXB0SWQiOiAiNTU0NTIwMDEsNDE0OTg0MDA5IiwgIm1lc2hJZCI6ICJNMDAxNTY2NCIsICJyeE5vcm1JZCI6ICI3ODA0IiwgImxvaW5jSWQiOiAiTVRIVTA2MDQzMCxMQTI4NDIxLTgsTFAxNTAwMy00IiwgInZvY2FicyI6ICJNVEgsTE5DLE1TSCxNVEhTUEwsUlhOT1JNLENIVixBVEMsTkNJX0NUUlAsTkNJX0ZEQSxMQ0hfTlcsTkNJLEFPRCxTTk9NRURDVF9VUyxEUlVHQkFOSyxWQU5ERiIsICJzZWN0aW9uTm9ybWFsaXplZE5hbWUiOiAiQWxsZXJnaWVzIiwgInNlY3Rpb25TdXJmYWNlRm9ybSI6ICJBbGxlcmd5In0sIHsidHlwZSI6ICJ1bWxzLlBoYXJtYWNvbG9naWNTdWJzdGFuY2UiLCAidWlkIjogMiwgImJlZ2luIjogMTEsICJlbmQiOiAyMCwgImNvdmVyZWRUZXh0IjogIk94eWNvZG9uZSIsICJuZWdhdGVkIjogZmFsc2UsICJjdWkiOiAiQzAwMzAwNDkiLCAicHJlZmVycmVkTmFtZSI6ICJveHljb2RvbmUiLCAic2VtYW50aWNUeXBlIjogInBoc3UiLCAic291cmNlIjogInVtbHMiLCAic291cmNlVmVyc2lvbiI6ICIyMDIwQUEiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJOT19ERUNJU0lPTiJ9LCAibmNpQ29kZSI6ICJDMjkzMDkiLCAic25vbWVkQ29uY2VwdElkIjogIjU1NDUyMDAxLDQxNDk4NDAwOSIsICJtZXNoSWQiOiAiTTAwMTU2NjQiLCAicnhOb3JtSWQiOiAiNzgwNCIsICJsb2luY0lkIjogIk1USFUwNjA0MzAsTEEyODQyMS04LExQMTUwMDMtNCIsICJ2b2NhYnMiOiAiTVRILExOQyxNU0gsTVRIU1BMLFJYTk9STSxDSFYsQVRDLE5DSV9DVFJQLE5DSV9GREEsTENIX05XLE5DSSxBT0QsU05PTUVEQ1RfVVMsRFJVR0JBTkssVkFOREYiLCAic2VjdGlvbk5vcm1hbGl6ZWROYW1lIjogIkFsbGVyZ2llcyIsICJzZWN0aW9uU3VyZmFjZUZvcm0iOiAiQWxsZXJneSIsICJpbnNpZ2h0TW9kZWxEYXRhIjogeyJtZWRpY2F0aW9uIjogeyJ1c2FnZSI6IHsidGFrZW5TY29yZSI6IDEuMCwgImNvbnNpZGVyaW5nU2NvcmUiOiAwLjAsICJkaXNjdXNzZWRTY29yZSI6IDAuMCwgImxhYk1lYXN1cmVtZW50U2NvcmUiOiAwLjB9LCAic3RvcHBlZEV2ZW50IjogeyJzY29yZSI6IDAuMDAxLCAidXNhZ2UiOiB7ImV4cGxpY2l0U2NvcmUiOiAwLjAsICJjb25zaWRlcmluZ1Njb3JlIjogMC4wLCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjB9fSwgImRvc2VDaGFuZ2VkRXZlbnQiOiB7InNjb3JlIjogMC4wLCAidXNhZ2UiOiB7ImV4cGxpY2l0U2NvcmUiOiAwLjAsICJjb25zaWRlcmluZ1Njb3JlIjogMC4wLCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjB9fSwgImFkdmVyc2VFdmVudCI6IHsic2NvcmUiOiAxLjAsICJhbGxlcmd5U2NvcmUiOiAxLjAsICJ1c2FnZSI6IHsiZXhwbGljaXRTY29yZSI6IDAuOTc4LCAiY29uc2lkZXJpbmdTY29yZSI6IDAuMDIxLCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjAwMX19LCAic3RhcnRlZEV2ZW50IjogeyJzY29yZSI6IDAuMCwgInVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC4wLCAiY29uc2lkZXJpbmdTY29yZSI6IDAuMCwgImRpc2N1c3NlZFNjb3JlIjogMC4wfX19fX0sIHsidHlwZSI6ICJ1bWxzLkxhYm9yYXRvcnlQcm9jZWR1cmUiLCAidWlkIjogMywgImJlZ2luIjogMTEsICJlbmQiOiAyMCwgImNvdmVyZWRUZXh0IjogIk94eWNvZG9uZSIsICJuZWdhdGVkIjogZmFsc2UsICJjdWkiOiAiQzA1MjQyMjIiLCAicHJlZmVycmVkTmFtZSI6ICJPeHljb2RvbmUgbWVhc3VyZW1lbnQiLCAic2VtYW50aWNUeXBlIjogImxicHIiLCAic291cmNlIjogInVtbHMiLCAic291cmNlVmVyc2lvbiI6ICIyMDIwQUEiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJJTlZBTElEIn0sICJuY2lDb2RlIjogIkM3NDg4NCIsICJzbm9tZWRDb25jZXB0SWQiOiAiMTA1Mjc4MDAyIiwgInZvY2FicyI6ICJNVEgsTkNJX0NESVNDLE5DSSxTTk9NRURDVF9VUyIsICJzZWN0aW9uTm9ybWFsaXplZE5hbWUiOiAiQWxsZXJnaWVzIiwgInNlY3Rpb25TdXJmYWNlRm9ybSI6ICJBbGxlcmd5In0sIHsidHlwZSI6ICJJQ01lZGljYXRpb24iLCAiYmVnaW4iOiAxMSwgImVuZCI6IDIwLCAiY292ZXJlZFRleHQiOiAiT3h5Y29kb25lIiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDAzMDA0OSIsICJwcmVmZXJyZWROYW1lIjogIm94eWNvZG9uZSIsICJzb3VyY2UiOiAiQ2xpbmljYWwgSW5zaWdodHMgLSBEZXJpdmVkIENvbmNlcHRzIiwgInNvdXJjZVZlcnNpb24iOiAidjEuMCIsICJkaXNhbWJpZ3VhdGlvbkRhdGEiOiB7InZhbGlkaXR5IjogIlZBTElEIn0sICJuY2lDb2RlIjogIkMyOTMwOSIsICJzbm9tZWRDb25jZXB0SWQiOiAiNTU0NTIwMDEsNDE0OTg0MDA5IiwgIm1lc2hJZCI6ICJNMDAxNTY2NCIsICJyeE5vcm1JZCI6ICI3ODA0IiwgImxvaW5jSWQiOiAiTVRIVTA2MDQzMCxMQTI4NDIxLTgsTFAxNTAwMy00IiwgInNlY3Rpb25Ob3JtYWxpemVkTmFtZSI6ICJBbGxlcmdpZXMiLCAic2VjdGlvblN1cmZhY2VGb3JtIjogIkFsbGVyZ3kiLCAiaW5zaWdodE1vZGVsRGF0YSI6IHsibWVkaWNhdGlvbiI6IHsidXNhZ2UiOiB7InRha2VuU2NvcmUiOiAxLjAsICJjb25zaWRlcmluZ1Njb3JlIjogMC4wLCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjAsICJsYWJNZWFzdXJlbWVudFNjb3JlIjogMC4wfSwgInN0b3BwZWRFdmVudCI6IHsic2NvcmUiOiAwLjAwMSwgInVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC4wLCAiY29uc2lkZXJpbmdTY29yZSI6IDAuMCwgImRpc2N1c3NlZFNjb3JlIjogMC4wfX0sICJkb3NlQ2hhbmdlZEV2ZW50IjogeyJzY29yZSI6IDAuMCwgInVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC4wLCAiY29uc2lkZXJpbmdTY29yZSI6IDAuMCwgImRpc2N1c3NlZFNjb3JlIjogMC4wfX0sICJhZHZlcnNlRXZlbnQiOiB7InNjb3JlIjogMS4wLCAiYWxsZXJneVNjb3JlIjogMS4wLCAidXNhZ2UiOiB7ImV4cGxpY2l0U2NvcmUiOiAwLjk3OCwgImNvbnNpZGVyaW5nU2NvcmUiOiAwLjAyMSwgImRpc2N1c3NlZFNjb3JlIjogMC4wMDF9fSwgInN0YXJ0ZWRFdmVudCI6IHsic2NvcmUiOiAwLjAsICJ1c2FnZSI6IHsiZXhwbGljaXRTY29yZSI6IDAuMCwgImNvbnNpZGVyaW5nU2NvcmUiOiAwLjAsICJkaXNjdXNzZWRTY29yZSI6IDAuMH19fX0sICJydWxlSWQiOiAiNzg2MWMwMjQtYWQxYy00N2U2LWI0MGUtYzkwY2I3YjE5ZTI2IiwgImRlcml2ZWRGcm9tIjogW3sidWlkIjogMn1dfSwgeyJ0eXBlIjogIklDUHJvY2VkdXJlIiwgImJlZ2luIjogMTEsICJlbmQiOiAyMCwgImNvdmVyZWRUZXh0IjogIk94eWNvZG9uZSIsICJuZWdhdGVkIjogZmFsc2UsICJjdWkiOiAiQzA1MjQyMjIiLCAicHJlZmVycmVkTmFtZSI6ICJPeHljb2RvbmUgbWVhc3VyZW1lbnQiLCAic291cmNlIjogIkNsaW5pY2FsIEluc2lnaHRzIC0gRGVyaXZlZCBDb25jZXB0cyIsICJzb3VyY2VWZXJzaW9uIjogInYxLjAiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJJTlZBTElEIn0sICJuY2lDb2RlIjogIkM3NDg4NCIsICJzbm9tZWRDb25jZXB0SWQiOiAiMTA1Mjc4MDAyIiwgInNlY3Rpb25Ob3JtYWxpemVkTmFtZSI6ICJBbGxlcmdpZXMiLCAic2VjdGlvblN1cmZhY2VGb3JtIjogIkFsbGVyZ3kiLCAicnVsZUlkIjogIjZmYjg4NTJjLTZhOWYtNDQ5OS1iNzMyLTBhN2U1YzNkNzZhOCIsICJkZXJpdmVkRnJvbSI6IFt7InVpZCI6IDN9XX0sIHsidHlwZSI6ICJJQ05vcm1hbGl0eSIsICJiZWdpbiI6IDExLCAiZW5kIjogMjAsICJjb3ZlcmVkVGV4dCI6ICJPeHljb2RvbmUiLCAibmVnYXRlZCI6IGZhbHNlLCAiY3VpIjogIkMwNTI0MjIyIiwgInByZWZlcnJlZE5hbWUiOiAiT3h5Y29kb25lIG1lYXN1cmVtZW50IiwgInNvdXJjZSI6ICJDbGluaWNhbCBJbnNpZ2h0cyAtIERlcml2ZWQgQ29uY2VwdHMiLCAic291cmNlVmVyc2lvbiI6ICJ2MS4wIiwgImRpc2FtYmlndWF0aW9uRGF0YSI6IHsidmFsaWRpdHkiOiAiTk9fREVDSVNJT04ifSwgIm5jaUNvZGUiOiAiQzc0ODg0IiwgInNub21lZENvbmNlcHRJZCI6ICIxMDUyNzgwMDIiLCAic2VjdGlvbk5vcm1hbGl6ZWROYW1lIjogIkFsbGVyZ2llcyIsICJzZWN0aW9uU3VyZmFjZUZvcm0iOiAiQWxsZXJneSIsICJydWxlSWQiOiAiNTkzNDVkM2YtMWI2OC00YWFmLWI3Y2QtMDMzNGY0MTVjNGI0IiwgImRlcml2ZWRGcm9tIjogW3sidWlkIjogM31dfSwgeyJ0eXBlIjogIklDTm9ybWFsaXR5IiwgImJlZ2luIjogMTEsICJlbmQiOiAyMCwgImNvdmVyZWRUZXh0IjogIk94eWNvZG9uZSIsICJuZWdhdGVkIjogZmFsc2UsICJjdWkiOiAiQzAwMzAwNDkiLCAicHJlZmVycmVkTmFtZSI6ICJveHljb2RvbmUiLCAic291cmNlIjogIkNsaW5pY2FsIEluc2lnaHRzIC0gRGVyaXZlZCBDb25jZXB0cyIsICJzb3VyY2VWZXJzaW9uIjogInYxLjAiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJOT19ERUNJU0lPTiJ9LCAibmNpQ29kZSI6ICJDMjkzMDkiLCAic25vbWVkQ29uY2VwdElkIjogIjU1NDUyMDAxLDQxNDk4NDAwOSIsICJtZXNoSWQiOiAiTTAwMTU2NjQiLCAicnhOb3JtSWQiOiAiNzgwNCIsICJsb2luY0lkIjogIk1USFUwNjA0MzAsTEEyODQyMS04LExQMTUwMDMtNCIsICJzZWN0aW9uTm9ybWFsaXplZE5hbWUiOiAiQWxsZXJnaWVzIiwgInNlY3Rpb25TdXJmYWNlRm9ybSI6ICJBbGxlcmd5IiwgInJ1bGVJZCI6ICJkMDA0ZGY2Mi1hNjVkLTQxMzYtYWEzMi0xNjFhNDNlYjk1MDYiLCAiZGVyaXZlZEZyb20iOiBbeyJ1aWQiOiAyfV19LCB7InR5cGUiOiAiSUNOb3JtYWxpdHkiLCAiYmVnaW4iOiAxMSwgImVuZCI6IDIwLCAiY292ZXJlZFRleHQiOiAiT3h5Y29kb25lIiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDAzMDA0OSIsICJwcmVmZXJyZWROYW1lIjogIm94eWNvZG9uZSIsICJzb3VyY2UiOiAiQ2xpbmljYWwgSW5zaWdodHMgLSBEZXJpdmVkIENvbmNlcHRzIiwgInNvdXJjZVZlcnNpb24iOiAidjEuMCIsICJkaXNhbWJpZ3VhdGlvbkRhdGEiOiB7InZhbGlkaXR5IjogIk5PX0RFQ0lTSU9OIn0sICJzZWN0aW9uTm9ybWFsaXplZE5hbWUiOiAiQWxsZXJnaWVzIiwgInNlY3Rpb25TdXJmYWNlRm9ybSI6ICJBbGxlcmd5IiwgInJ1bGVJZCI6ICIzNDNlNjE1OC0yYzMwLTQ3MjYtYmU3MS0zM2E1NzBiMjg3MDMiLCAiZGVyaXZlZEZyb20iOiBbeyJ1aWQiOiA0fV19XSwgIk1lZGljYXRpb25JbmQiOiBbeyJ0eXBlIjogImFjaS5NZWRpY2F0aW9uSW5kIiwgInVpZCI6IDYsICJiZWdpbiI6IDExLCAiZW5kIjogMjAsICJjb3ZlcmVkVGV4dCI6ICJPeHljb2RvbmUiLCAibmVnYXRlZCI6IGZhbHNlLCAic2VjdGlvbk5vcm1hbGl6ZWROYW1lIjogIkFsbGVyZ2llcyIsICJjdWkiOiAiQzAwMzAwNDkiLCAiZHJ1ZyI6IFt7ImNvdmVyZWRUZXh0IjogIk94eWNvZG9uZSIsICJjdWkiOiAiQzAwMzAwNDkiLCAiY29tcGxleCI6ICJmYWxzZSIsICJlbmQiOiAyMCwgInR5cGUiOiAiYWNpLkluZF9EcnVnIiwgIm5hbWUxIjogW3sicnhOb3JtSUQiOiAiNzgwNCIsICJjb3ZlcmVkVGV4dCI6ICJPeHljb2RvbmUiLCAiY3VpIjogIkMwMDMwMDQ5IiwgImRydWdTdXJmYWNlRm9ybSI6ICJPeHljb2RvbmUiLCAiZHJ1Z05vcm1hbGl6ZWROYW1lIjogIm94eWNvZG9uZSIsICJlbmQiOiAyMCwgInR5cGUiOiAiYWNpLkRydWdOYW1lIiwgImJlZ2luIjogMTF9XSwgImJlZ2luIjogMTF9XSwgInNlY3Rpb25TdXJmYWNlRm9ybSI6ICJBbGxlcmd5IiwgImluc2lnaHRNb2RlbERhdGEiOiB7Im1lZGljYXRpb24iOiB7InVzYWdlIjogeyJ0YWtlblNjb3JlIjogMS4wLCAiY29uc2lkZXJpbmdTY29yZSI6IDAuMCwgImRpc2N1c3NlZFNjb3JlIjogMC4wLCAibGFiTWVhc3VyZW1lbnRTY29yZSI6IDAuMH0sICJzdG9wcGVkRXZlbnQiOiB7InNjb3JlIjogMC4wMDEsICJ1c2FnZSI6IHsiZXhwbGljaXRTY29yZSI6IDAuMCwgImNvbnNpZGVyaW5nU2NvcmUiOiAwLjAsICJkaXNjdXNzZWRTY29yZSI6IDAuMH19LCAiZG9zZUNoYW5nZWRFdmVudCI6IHsic2NvcmUiOiAwLjAsICJ1c2FnZSI6IHsiZXhwbGljaXRTY29yZSI6IDAuMCwgImNvbnNpZGVyaW5nU2NvcmUiOiAwLjAsICJkaXNjdXNzZWRTY29yZSI6IDAuMH19LCAiYWR2ZXJzZUV2ZW50IjogeyJzY29yZSI6IDEuMCwgImFsbGVyZ3lTY29yZSI6IDEuMCwgInVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC45NzgsICJjb25zaWRlcmluZ1Njb3JlIjogMC4wMjEsICJkaXNjdXNzZWRTY29yZSI6IDAuMDAxfX0sICJzdGFydGVkRXZlbnQiOiB7InNjb3JlIjogMC4wLCAidXNhZ2UiOiB7ImV4cGxpY2l0U2NvcmUiOiAwLjAsICJjb25zaWRlcmluZ1Njb3JlIjogMC4wLCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjB9fX19LCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJWQUxJRCIsICJjb21tZW50IjogIm1hcmtlZCBWQUxJRCBieSBjbGluaWNhbCBpbnNpZ2h0IG1vZGVscy4ifX1dLCAiU3ltcHRvbURpc2Vhc2VJbmQiOiBbeyJ0eXBlIjogImFjaS5TeW1wdG9tRGlzZWFzZUluZCIsICJiZWdpbiI6IDAsICJlbmQiOiA3LCAiY292ZXJlZFRleHQiOiAiQWxsZXJneSIsICJuZWdhdGVkIjogZmFsc2UsICJjdWkiOiAiQzAwMjA1MTciLCAic2VjdGlvbk5vcm1hbGl6ZWROYW1lIjogIkFsbGVyZ2llcyIsICJtb2RhbGl0eSI6ICJwb3NpdGl2ZSIsICJzeW1wdG9tRGlzZWFzZVN1cmZhY2VGb3JtIjogIkFsbGVyZ3kiLCAic3ltcHRvbURpc2Vhc2VOb3JtYWxpemVkTmFtZSI6ICJhbGxlcmdpYyByZWFjdGlvbiAobm9zKSIsICJzZWN0aW9uU3VyZmFjZUZvcm0iOiAiQWxsZXJneSIsICJkaXNhbWJpZ3VhdGlvbkRhdGEiOiB7InZhbGlkaXR5IjogIklOVkFMSUQifX1dLCAic2VjdGlvbnMiOiBbeyJiZWdpbiI6IDAsICJlbmQiOiAyMCwgInR5cGUiOiAiYWNpLlNlY3Rpb24iLCAidHJpZ2dlciI6IHsiYmVnaW4iOiAwLCAiY292ZXJlZFRleHQiOiAiQWxsZXJneSIsICJlbmQiOiA3LCAic2VjdGlvbk5vcm1hbGl6ZWROYW1lIjogIkFsbGVyZ2llcyIsICJzb3VyY2UiOiAiaW50ZXJuYWwiLCAidHlwZSI6ICJhY2kuU2VjdGlvblRyaWdnZXIifX1dLCAic3BlbGxDb3JyZWN0ZWRUZXh0IjogW3siY29ycmVjdGVkVGV4dCI6ICJBbGxlcmd5IHRvIE94eWNvZG9uZSJ9XX0="
+                        "data": "eyJhdHRyaWJ1dGVWYWx1ZXMiOiBbeyJiZWdpbiI6IDAsICJlbmQiOiAxOSwgImNvdmVyZWRUZXh0IjogImFtb3hpY2lsbGluIGFsbGVyZ3kiLCAibmVnYXRlZCI6IGZhbHNlLCAicHJlZmVycmVkTmFtZSI6ICJhbGxlcmd5IHRvIGFtb3hpY2lsbGluIiwgInZhbHVlcyI6IFt7InZhbHVlIjogImFsbGVyZ3kgdG8gYW1veGljaWxsaW4ifV0sICJzb3VyY2UiOiAiQ2xpbmljYWwgSW5zaWdodHMgLSBBdHRyaWJ1dGVzIiwgInNvdXJjZVZlcnNpb24iOiAidjEuMCIsICJjb25jZXB0IjogeyJ1aWQiOiA0fSwgIm5hbWUiOiAiRGlhZ25vc2lzIiwgImljZDlDb2RlIjogIkU5MzAuMCw5OTUuMjciLCAiaWNkMTBDb2RlIjogIlo4OC4wIiwgInNub21lZENvbmNlcHRJZCI6ICIyOTQ1MDUwMDgiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJWQUxJRCJ9LCAiaW5zaWdodE1vZGVsRGF0YSI6IHsiZGlhZ25vc2lzIjogeyJ1c2FnZSI6IHsiZXhwbGljaXRTY29yZSI6IDAuOTE5LCAicGF0aWVudFJlcG9ydGVkU2NvcmUiOiAwLjAwNywgImRpc2N1c3NlZFNjb3JlIjogMC4wNzV9LCAic3VzcGVjdGVkU2NvcmUiOiAwLjA5NiwgInN5bXB0b21TY29yZSI6IDAuMDAxLCAidHJhdW1hU2NvcmUiOiAwLjAsICJmYW1pbHlIaXN0b3J5U2NvcmUiOiAwLjAwNH19LCAiY2NzQ29kZSI6ICIyNTMifV0sICJjb25jZXB0cyI6IFt7InR5cGUiOiAidW1scy5EaXNlYXNlT3JTeW5kcm9tZSIsICJ1aWQiOiAyLCAiYmVnaW4iOiAwLCAiZW5kIjogMTksICJjb3ZlcmVkVGV4dCI6ICJhbW94aWNpbGxpbiBhbGxlcmd5IiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDU3MTQxNyIsICJwcmVmZXJyZWROYW1lIjogIkFsbGVyZ3kgdG8gYW1veGljaWxsaW4iLCAic2VtYW50aWNUeXBlIjogImRzeW4iLCAic291cmNlIjogInVtbHMiLCAic291cmNlVmVyc2lvbiI6ICIyMDIwQUEiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJOT19ERUNJU0lPTiJ9LCAiaWNkOUNvZGUiOiAiOTk1LjI3IiwgImljZDEwQ29kZSI6ICJaODguMCxaODguMSIsICJzbm9tZWRDb25jZXB0SWQiOiAiMjk0NTA1MDA4IiwgInZvY2FicyI6ICJDSFYsU05PTUVEQ1RfVVMiLCAiaW5zaWdodE1vZGVsRGF0YSI6IHsiZGlhZ25vc2lzIjogeyJ1c2FnZSI6IHsiZXhwbGljaXRTY29yZSI6IDAuOTE5LCAicGF0aWVudFJlcG9ydGVkU2NvcmUiOiAwLjAwNywgImRpc2N1c3NlZFNjb3JlIjogMC4wNzV9LCAic3VzcGVjdGVkU2NvcmUiOiAwLjA5NiwgInN5bXB0b21TY29yZSI6IDAuMDAxLCAidHJhdW1hU2NvcmUiOiAwLjAsICJmYW1pbHlIaXN0b3J5U2NvcmUiOiAwLjAwNH19fSwgeyJ0eXBlIjogIklDRGlhZ25vc2lzIiwgImJlZ2luIjogMCwgImVuZCI6IDE5LCAiY292ZXJlZFRleHQiOiAiYW1veGljaWxsaW4gYWxsZXJneSIsICJuZWdhdGVkIjogZmFsc2UsICJjdWkiOiAiQzA1NzE0MTciLCAicHJlZmVycmVkTmFtZSI6ICJBbGxlcmd5IHRvIGFtb3hpY2lsbGluIiwgInNvdXJjZSI6ICJDbGluaWNhbCBJbnNpZ2h0cyAtIERlcml2ZWQgQ29uY2VwdHMiLCAic291cmNlVmVyc2lvbiI6ICJ2MS4wIiwgImRpc2FtYmlndWF0aW9uRGF0YSI6IHsidmFsaWRpdHkiOiAiVkFMSUQifSwgImljZDlDb2RlIjogIjk5NS4yNyIsICJpY2QxMENvZGUiOiAiWjg4LjAsWjg4LjEiLCAic25vbWVkQ29uY2VwdElkIjogIjI5NDUwNTAwOCIsICJpbnNpZ2h0TW9kZWxEYXRhIjogeyJkaWFnbm9zaXMiOiB7InVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC45MTksICJwYXRpZW50UmVwb3J0ZWRTY29yZSI6IDAuMDA3LCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjA3NX0sICJzdXNwZWN0ZWRTY29yZSI6IDAuMDk2LCAic3ltcHRvbVNjb3JlIjogMC4wMDEsICJ0cmF1bWFTY29yZSI6IDAuMCwgImZhbWlseUhpc3RvcnlTY29yZSI6IDAuMDA0fX0sICJydWxlSWQiOiAiNjk4ZjJiMTktMjdiNi00ZGFiLTkxNTAtN2Q3ZWYzYjAzYTVjIiwgImRlcml2ZWRGcm9tIjogW3sidWlkIjogMn1dfV0sICJNZWRpY2F0aW9uSW5kIjogW3sidHlwZSI6ICJhY2kuTWVkaWNhdGlvbkluZCIsICJiZWdpbiI6IDAsICJlbmQiOiAxMSwgImNvdmVyZWRUZXh0IjogImFtb3hpY2lsbGluIiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDAwMjY0NSIsICJkcnVnIjogW3siY292ZXJlZFRleHQiOiAiYW1veGljaWxsaW4iLCAiY3VpIjogIkMwMDAyNjQ1IiwgImNvbXBsZXgiOiAiZmFsc2UiLCAiZW5kIjogMTEsICJ0eXBlIjogImFjaS5JbmRfRHJ1ZyIsICJuYW1lMSI6IFt7InJ4Tm9ybUlEIjogIjcyMyIsICJjb3ZlcmVkVGV4dCI6ICJhbW94aWNpbGxpbiIsICJjdWkiOiAiQzAwMDI2NDUiLCAiZHJ1Z1N1cmZhY2VGb3JtIjogImFtb3hpY2lsbGluIiwgImRydWdOb3JtYWxpemVkTmFtZSI6ICJhbW94aWNpbGxpbiIsICJlbmQiOiAxMSwgInR5cGUiOiAiYWNpLkRydWdOYW1lIiwgImJlZ2luIjogMH1dLCAiYmVnaW4iOiAwfV0sICJkaXNhbWJpZ3VhdGlvbkRhdGEiOiB7InZhbGlkaXR5IjogIklOVkFMSUQiLCAiY29tbWVudCI6ICJDbGluaWNhbCBJbnNpZ2h0czogVGhpcyBjb25jZXB0IHdhcyBzaG9ydGVyIHRoYW4gYW4gb3ZlcmxhcHBpbmcgY29uY2VwdC4ifX1dLCAiU3ltcHRvbURpc2Vhc2VJbmQiOiBbeyJ0eXBlIjogImFjaS5TeW1wdG9tRGlzZWFzZUluZCIsICJ1aWQiOiA0LCAiYmVnaW4iOiAwLCAiZW5kIjogMTksICJjb3ZlcmVkVGV4dCI6ICJhbW94aWNpbGxpbiBhbGxlcmd5IiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDU3MTQxNyIsICJpY2QxMENvZGUiOiAiWjg4LjAiLCAibW9kYWxpdHkiOiAicG9zaXRpdmUiLCAic3ltcHRvbURpc2Vhc2VTdXJmYWNlRm9ybSI6ICJhbW94aWNpbGxpbiBhbGxlcmd5IiwgInNub21lZENvbmNlcHRJZCI6ICIyOTQ1MDUwMDgiLCAiY2NzQ29kZSI6ICIyNTMiLCAic3ltcHRvbURpc2Vhc2VOb3JtYWxpemVkTmFtZSI6ICJhbGxlcmd5IHRvIGFtb3hpY2lsbGluIiwgImljZDlDb2RlIjogIkU5MzAuMCw5OTUuMjciLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJWQUxJRCJ9LCAiaW5zaWdodE1vZGVsRGF0YSI6IHsiZGlhZ25vc2lzIjogeyJ1c2FnZSI6IHsiZXhwbGljaXRTY29yZSI6IDAuOTE5LCAicGF0aWVudFJlcG9ydGVkU2NvcmUiOiAwLjAwNywgImRpc2N1c3NlZFNjb3JlIjogMC4wNzV9LCAic3VzcGVjdGVkU2NvcmUiOiAwLjA5NiwgInN5bXB0b21TY29yZSI6IDAuMDAxLCAidHJhdW1hU2NvcmUiOiAwLjAsICJmYW1pbHlIaXN0b3J5U2NvcmUiOiAwLjAwNH19fV0sICJzcGVsbENvcnJlY3RlZFRleHQiOiBbeyJjb3JyZWN0ZWRUZXh0IjogImFtb3hpY2lsbGluIGFsbGVyZ3kifV19"
                       }
                     }
                   ],
@@ -79,11 +79,352 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
                 }
               ],
-              "code": "C0030049",
+              "code": "C0571417",
+              "display": "allergy to amoxicillin",
               "system": "http://terminology.hl7.org/CodeSystem/umls"
+            },
+            {
+              "extension": [
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+                }
+              ],
+              "code": "294505008",
+              "system": "http://snomed.info/sct"
+            },
+            {
+              "extension": [
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+                }
+              ],
+              "code": "E930.0",
+              "system": "http://hl7.org/fhir/sid/icd-9-cm"
+            },
+            {
+              "extension": [
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+                }
+              ],
+              "code": "995.27",
+              "system": "http://hl7.org/fhir/sid/icd-9-cm"
+            },
+            {
+              "extension": [
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+                }
+              ],
+              "code": "Z88.0",
+              "system": "http://hl7.org/fhir/sid/icd-10-cm"
             }
           ],
-          "text": "Oxycodone"
+          "text": "amoxicillin"
+        },
+        "patient": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "AllergyIntolerance"
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "url": "AllergyIntolerance/67890"
+      },
+      "resource": {
+        "id": "67890",
+        "meta": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                  "valueIdentifier": {
+                    "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                    "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                  }
+                },
+                {
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/path",
+                  "valueString": "AllergyIntolerance.code.coding"
+                },
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+                      "valueReference": {
+                        "reference": "AllergyIntolerance/67890"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
+                      "valueString": "AllergyIntolerance.code.text"
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
+                      "valueAttachment": {
+                        "contentType": "application/json",
+                        "data": "eyJhdHRyaWJ1dGVWYWx1ZXMiOiBbeyJiZWdpbiI6IDAsICJlbmQiOiAxNCwgImNvdmVyZWRUZXh0IjogInBlYW51dCBhbGxlcmd5IiwgIm5lZ2F0ZWQiOiBmYWxzZSwgInByZWZlcnJlZE5hbWUiOiAiYWxsZXJneSB0byBwZWFudXQiLCAidmFsdWVzIjogW3sidmFsdWUiOiAiYWxsZXJneSB0byBwZWFudXQifV0sICJzb3VyY2UiOiAiQ2xpbmljYWwgSW5zaWdodHMgLSBBdHRyaWJ1dGVzIiwgInNvdXJjZVZlcnNpb24iOiAidjEuMCIsICJjb25jZXB0IjogeyJ1aWQiOiA0fSwgIm5hbWUiOiAiRGlhZ25vc2lzIiwgImljZDlDb2RlIjogIjk5NS4zIiwgImljZDEwQ29kZSI6ICJaOTEuMDEwLFo5MS4wIiwgInNub21lZENvbmNlcHRJZCI6ICI5MTkzNTAwOSIsICJkaXNhbWJpZ3VhdGlvbkRhdGEiOiB7InZhbGlkaXR5IjogIlZBTElEIn0sICJpbnNpZ2h0TW9kZWxEYXRhIjogeyJkaWFnbm9zaXMiOiB7InVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC44OTYsICJwYXRpZW50UmVwb3J0ZWRTY29yZSI6IDAuMDA5LCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjA5NX0sICJzdXNwZWN0ZWRTY29yZSI6IDAuMTA5LCAic3ltcHRvbVNjb3JlIjogMC4wMDEsICJ0cmF1bWFTY29yZSI6IDAuMCwgImZhbWlseUhpc3RvcnlTY29yZSI6IDAuMDAzfX0sICJjY3NDb2RlIjogIjI1MyJ9XSwgImNvbmNlcHRzIjogW3sidHlwZSI6ICJ1bWxzLkRpc2Vhc2VPclN5bmRyb21lIiwgInVpZCI6IDIsICJiZWdpbiI6IDAsICJlbmQiOiAxNCwgImNvdmVyZWRUZXh0IjogInBlYW51dCBhbGxlcmd5IiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDU1OTQ3MCIsICJwcmVmZXJyZWROYW1lIjogIkFsbGVyZ3kgdG8gcGVhbnV0cyIsICJzZW1hbnRpY1R5cGUiOiAiZHN5biIsICJzb3VyY2UiOiAidW1scyIsICJzb3VyY2VWZXJzaW9uIjogIjIwMjBBQSIsICJkaXNhbWJpZ3VhdGlvbkRhdGEiOiB7InZhbGlkaXR5IjogIk5PX0RFQ0lTSU9OIn0sICJpY2Q5Q29kZSI6ICI5OTUuMyIsICJpY2QxMENvZGUiOiAiWjkxLjAsWjkxLjAxMCIsICJzbm9tZWRDb25jZXB0SWQiOiAiOTE5MzUwMDkiLCAibWVzaElkIjogIk0wMzUxODM2IiwgInZvY2FicyI6ICJNVEgsQ0hWLE1TSCxNRURMSU5FUExVUyxTTk9NRURDVF9VUyIsICJpbnNpZ2h0TW9kZWxEYXRhIjogeyJkaWFnbm9zaXMiOiB7InVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC44OTYsICJwYXRpZW50UmVwb3J0ZWRTY29yZSI6IDAuMDA5LCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjA5NX0sICJzdXNwZWN0ZWRTY29yZSI6IDAuMTA5LCAic3ltcHRvbVNjb3JlIjogMC4wMDEsICJ0cmF1bWFTY29yZSI6IDAuMCwgImZhbWlseUhpc3RvcnlTY29yZSI6IDAuMDAzfX19LCB7InR5cGUiOiAiSUNEaWFnbm9zaXMiLCAiYmVnaW4iOiAwLCAiZW5kIjogMTQsICJjb3ZlcmVkVGV4dCI6ICJwZWFudXQgYWxsZXJneSIsICJuZWdhdGVkIjogZmFsc2UsICJjdWkiOiAiQzA1NTk0NzAiLCAicHJlZmVycmVkTmFtZSI6ICJBbGxlcmd5IHRvIHBlYW51dHMiLCAic291cmNlIjogIkNsaW5pY2FsIEluc2lnaHRzIC0gRGVyaXZlZCBDb25jZXB0cyIsICJzb3VyY2VWZXJzaW9uIjogInYxLjAiLCAiZGlzYW1iaWd1YXRpb25EYXRhIjogeyJ2YWxpZGl0eSI6ICJWQUxJRCJ9LCAiaWNkOUNvZGUiOiAiOTk1LjMiLCAiaWNkMTBDb2RlIjogIlo5MS4wLFo5MS4wMTAiLCAic25vbWVkQ29uY2VwdElkIjogIjkxOTM1MDA5IiwgIm1lc2hJZCI6ICJNMDM1MTgzNiIsICJpbnNpZ2h0TW9kZWxEYXRhIjogeyJkaWFnbm9zaXMiOiB7InVzYWdlIjogeyJleHBsaWNpdFNjb3JlIjogMC44OTYsICJwYXRpZW50UmVwb3J0ZWRTY29yZSI6IDAuMDA5LCAiZGlzY3Vzc2VkU2NvcmUiOiAwLjA5NX0sICJzdXNwZWN0ZWRTY29yZSI6IDAuMTA5LCAic3ltcHRvbVNjb3JlIjogMC4wMDEsICJ0cmF1bWFTY29yZSI6IDAuMCwgImZhbWlseUhpc3RvcnlTY29yZSI6IDAuMDAzfX0sICJydWxlSWQiOiAiNjk4ZjJiMTktMjdiNi00ZGFiLTkxNTAtN2Q3ZWYzYjAzYTVjIiwgImRlcml2ZWRGcm9tIjogW3sidWlkIjogMn1dfV0sICJTeW1wdG9tRGlzZWFzZUluZCI6IFt7InR5cGUiOiAiYWNpLlN5bXB0b21EaXNlYXNlSW5kIiwgInVpZCI6IDQsICJiZWdpbiI6IDAsICJlbmQiOiAxNCwgImNvdmVyZWRUZXh0IjogInBlYW51dCBhbGxlcmd5IiwgIm5lZ2F0ZWQiOiBmYWxzZSwgImN1aSI6ICJDMDU1OTQ3MCIsICJpY2QxMENvZGUiOiAiWjkxLjAxMCxaOTEuMCIsICJtb2RhbGl0eSI6ICJwb3NpdGl2ZSIsICJzeW1wdG9tRGlzZWFzZVN1cmZhY2VGb3JtIjogInBlYW51dCBhbGxlcmd5IiwgInNub21lZENvbmNlcHRJZCI6ICI5MTkzNTAwOSIsICJjY3NDb2RlIjogIjI1MyIsICJzeW1wdG9tRGlzZWFzZU5vcm1hbGl6ZWROYW1lIjogImFsbGVyZ3kgdG8gcGVhbnV0IiwgImljZDlDb2RlIjogIjk5NS4zIiwgImRpc2FtYmlndWF0aW9uRGF0YSI6IHsidmFsaWRpdHkiOiAiVkFMSUQifSwgImluc2lnaHRNb2RlbERhdGEiOiB7ImRpYWdub3NpcyI6IHsidXNhZ2UiOiB7ImV4cGxpY2l0U2NvcmUiOiAwLjg5NiwgInBhdGllbnRSZXBvcnRlZFNjb3JlIjogMC4wMDksICJkaXNjdXNzZWRTY29yZSI6IDAuMDk1fSwgInN1c3BlY3RlZFNjb3JlIjogMC4xMDksICJzeW1wdG9tU2NvcmUiOiAwLjAwMSwgInRyYXVtYVNjb3JlIjogMC4wLCAiZmFtaWx5SGlzdG9yeVNjb3JlIjogMC4wMDN9fX1dLCAic3BlbGxDb3JyZWN0ZWRUZXh0IjogW3siY29ycmVjdGVkVGV4dCI6ICJwZWFudXQgYWxsZXJneSJ9XX0="
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-detail"
+                }
+              ],
+              "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "extension": [
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+                }
+              ],
+              "code": "C0559470",
+              "display": "allergy to peanut",
+              "system": "http://terminology.hl7.org/CodeSystem/umls"
+            },
+            {
+              "extension": [
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+                }
+              ],
+              "code": "91935009",
+              "system": "http://snomed.info/sct"
+            },
+            {
+              "extension": [
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+                }
+              ],
+              "code": "995.3",
+              "system": "http://hl7.org/fhir/sid/icd-9-cm"
+            },
+            {
+              "extension": [
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+                }
+              ],
+              "code": "Z91.010",
+              "system": "http://hl7.org/fhir/sid/icd-10-cm"
+            },
+            {
+              "extension": [
+                {
+                  "extension": [
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
+                      "valueIdentifier": {
+                        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
+                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                      }
+                    },
+                    {
+                      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "code": "natural-language-processing",
+                            "display": "NLP",
+                            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
+                          }
+                        ],
+                        "text": "NLP"
+                      }
+                    }
+                  ],
+                  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
+                }
+              ],
+              "code": "Z91.0",
+              "system": "http://hl7.org/fhir/sid/icd-10-cm"
+            }
+          ],
+          "text": "peanut"
         },
         "patient": {
           "reference": "Patient/1234567890"

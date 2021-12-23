@@ -1,10 +1,198 @@
 {
-    "Allergy to peanut": {
+    "amoxicillin allergy": {
         "attributeValues": [
             {
                 "begin": 0,
-                "end": 17,
-                "coveredText": "Allergy to peanut",
+                "end": 19,
+                "coveredText": "amoxicillin allergy",
+                "negated": false,
+                "preferredName": "allergy to amoxicillin",
+                "values": [
+                    {
+                        "value": "allergy to amoxicillin"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 4
+                },
+                "name": "Diagnosis",
+                "icd9Code": "E930.0,995.27",
+                "icd10Code": "Z88.0",
+                "snomedConceptId": "294505008",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.919,
+                            "patientReportedScore": 0.007,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.096,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.004
+                    }
+                },
+                "ccsCode": "253"
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 2,
+                "begin": 0,
+                "end": 19,
+                "coveredText": "amoxicillin allergy",
+                "negated": false,
+                "cui": "C0571417",
+                "preferredName": "Allergy to amoxicillin",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "995.27",
+                "icd10Code": "Z88.0,Z88.1",
+                "snomedConceptId": "294505008",
+                "vocabs": "CHV,SNOMEDCT_US",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.919,
+                            "patientReportedScore": 0.007,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.096,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.004
+                    }
+                }
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 0,
+                "end": 19,
+                "coveredText": "amoxicillin allergy",
+                "negated": false,
+                "cui": "C0571417",
+                "preferredName": "Allergy to amoxicillin",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "995.27",
+                "icd10Code": "Z88.0,Z88.1",
+                "snomedConceptId": "294505008",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.919,
+                            "patientReportedScore": 0.007,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.096,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.004
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            }
+        ],
+        "MedicationInd": [
+            {
+                "type": "aci.MedicationInd",
+                "begin": 0,
+                "end": 11,
+                "coveredText": "amoxicillin",
+                "negated": false,
+                "cui": "C0002645",
+                "drug": [
+                    {
+                        "coveredText": "amoxicillin",
+                        "cui": "C0002645",
+                        "complex": "false",
+                        "end": 11,
+                        "type": "aci.Ind_Drug",
+                        "name1": [
+                            {
+                                "rxNormID": "723",
+                                "coveredText": "amoxicillin",
+                                "cui": "C0002645",
+                                "drugSurfaceForm": "amoxicillin",
+                                "drugNormalizedName": "amoxicillin",
+                                "end": 11,
+                                "type": "aci.DrugName",
+                                "begin": 0
+                            }
+                        ],
+                        "begin": 0
+                    }
+                ],
+                "disambiguationData": {
+                    "validity": "INVALID",
+                    "comment": "Clinical Insights: This concept was shorter than an overlapping concept."
+                }
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 4,
+                "begin": 0,
+                "end": 19,
+                "coveredText": "amoxicillin allergy",
+                "negated": false,
+                "cui": "C0571417",
+                "icd10Code": "Z88.0",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "amoxicillin allergy",
+                "snomedConceptId": "294505008",
+                "ccsCode": "253",
+                "symptomDiseaseNormalizedName": "allergy to amoxicillin",
+                "icd9Code": "E930.0,995.27",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.919,
+                            "patientReportedScore": 0.007,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.096,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.004
+                    }
+                }
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "amoxicillin allergy"
+            }
+        ]
+    },
+    "peanut allergy": {
+        "attributeValues": [
+            {
+                "begin": 0,
+                "end": 14,
+                "coveredText": "peanut allergy",
                 "negated": false,
                 "preferredName": "allergy to peanut",
                 "values": [
@@ -21,22 +209,20 @@
                 "icd9Code": "995.3",
                 "icd10Code": "Z91.010,Z91.0",
                 "snomedConceptId": "91935009",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
                 "disambiguationData": {
                     "validity": "VALID"
                 },
                 "insightModelData": {
                     "diagnosis": {
                         "usage": {
-                            "explicitScore": 0.899,
-                            "patientReportedScore": 0.015,
-                            "discussedScore": 0.086
+                            "explicitScore": 0.896,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.095
                         },
-                        "suspectedScore": 0.118,
-                        "symptomScore": 0.005,
-                        "traumaScore": 0.003,
-                        "familyHistoryScore": 0.004
+                        "suspectedScore": 0.109,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
                     }
                 },
                 "ccsCode": "253"
@@ -47,8 +233,8 @@
                 "type": "umls.DiseaseOrSyndrome",
                 "uid": 2,
                 "begin": 0,
-                "end": 17,
-                "coveredText": "Allergy to peanut",
+                "end": 14,
+                "coveredText": "peanut allergy",
                 "negated": false,
                 "cui": "C0559470",
                 "preferredName": "Allergy to peanuts",
@@ -63,27 +249,25 @@
                 "snomedConceptId": "91935009",
                 "meshId": "M0351836",
                 "vocabs": "MTH,CHV,MSH,MEDLINEPLUS,SNOMEDCT_US",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
                 "insightModelData": {
                     "diagnosis": {
                         "usage": {
-                            "explicitScore": 0.899,
-                            "patientReportedScore": 0.015,
-                            "discussedScore": 0.086
+                            "explicitScore": 0.896,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.095
                         },
-                        "suspectedScore": 0.118,
-                        "symptomScore": 0.005,
-                        "traumaScore": 0.003,
-                        "familyHistoryScore": 0.004
+                        "suspectedScore": 0.109,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
                     }
                 }
             },
             {
                 "type": "ICDiagnosis",
                 "begin": 0,
-                "end": 17,
-                "coveredText": "Allergy to peanut",
+                "end": 14,
+                "coveredText": "peanut allergy",
                 "negated": false,
                 "cui": "C0559470",
                 "preferredName": "Allergy to peanuts",
@@ -96,19 +280,17 @@
                 "icd10Code": "Z91.0,Z91.010",
                 "snomedConceptId": "91935009",
                 "meshId": "M0351836",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
                 "insightModelData": {
                     "diagnosis": {
                         "usage": {
-                            "explicitScore": 0.899,
-                            "patientReportedScore": 0.015,
-                            "discussedScore": 0.086
+                            "explicitScore": 0.896,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.095
                         },
-                        "suspectedScore": 0.118,
-                        "symptomScore": 0.005,
-                        "traumaScore": 0.003,
-                        "familyHistoryScore": 0.004
+                        "suspectedScore": 0.109,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
                     }
                 },
                 "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
@@ -124,18 +306,16 @@
                 "type": "aci.SymptomDiseaseInd",
                 "uid": 4,
                 "begin": 0,
-                "end": 17,
-                "coveredText": "Allergy to peanut",
+                "end": 14,
+                "coveredText": "peanut allergy",
                 "negated": false,
                 "cui": "C0559470",
                 "icd10Code": "Z91.010,Z91.0",
-                "sectionNormalizedName": "Allergies",
                 "modality": "positive",
-                "symptomDiseaseSurfaceForm": "Allergy to peanut",
+                "symptomDiseaseSurfaceForm": "peanut allergy",
                 "snomedConceptId": "91935009",
                 "ccsCode": "253",
                 "symptomDiseaseNormalizedName": "allergy to peanut",
-                "sectionSurfaceForm": "Allergy",
                 "icd9Code": "995.3",
                 "disambiguationData": {
                     "validity": "VALID"
@@ -143,52 +323,30 @@
                 "insightModelData": {
                     "diagnosis": {
                         "usage": {
-                            "explicitScore": 0.899,
-                            "patientReportedScore": 0.015,
-                            "discussedScore": 0.086
+                            "explicitScore": 0.896,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.095
                         },
-                        "suspectedScore": 0.118,
-                        "symptomScore": 0.005,
-                        "traumaScore": 0.003,
-                        "familyHistoryScore": 0.004
+                        "suspectedScore": 0.109,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
                     }
                 }
             }
         ],
-        "sections": [
-            {
-                "begin": 0,
-                "end": 17,
-                "type": "aci.Section",
-                "trigger": {
-                    "begin": 0,
-                    "coveredText": "Allergy",
-                    "end": 7,
-                    "sectionNormalizedName": "Allergies",
-                    "source": "internal",
-                    "type": "aci.SectionTrigger"
-                }
-            }
-        ],
         "spellCorrectedText": [
             {
-                "correctedText": "Allergy to peanut"
+                "correctedText": "peanut allergy"
             }
         ]
     },
-    "idonotknowthis": {
-        "spellCorrectedText": [
-            {
-                "correctedText": "idonotknowthis"
-            }
-        ]
-    },
-    "Heart Attack": {
+    "myocardial infarction": {
         "attributeValues": [
             {
                 "begin": 0,
-                "end": 12,
-                "coveredText": "Heart Attack",
+                "end": 21,
+                "coveredText": "myocardial infarction",
                 "negated": false,
                 "preferredName": "myocardial infarction",
                 "values": [
@@ -199,7 +357,7 @@
                 "source": "Clinical Insights - Attributes",
                 "sourceVersion": "v1.0",
                 "concept": {
-                    "uid": 4
+                    "uid": 5
                 },
                 "name": "Diagnosis",
                 "icd9Code": "410.90",
@@ -211,14 +369,14 @@
                 "insightModelData": {
                     "diagnosis": {
                         "usage": {
-                            "explicitScore": 0.884,
-                            "patientReportedScore": 0.003,
-                            "discussedScore": 0.113
+                            "explicitScore": 0.917,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.075
                         },
-                        "suspectedScore": 0.09,
-                        "symptomScore": 0.002,
+                        "suspectedScore": 0.092,
+                        "symptomScore": 0.0,
                         "traumaScore": 0.0,
-                        "familyHistoryScore": 0.001
+                        "familyHistoryScore": 0.003
                     }
                 },
                 "ccsCode": "100",
@@ -227,11 +385,48 @@
         ],
         "concepts": [
             {
+                "type": "umls.Finding",
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C4552959",
+                "preferredName": "Myocardial Infarction, CTCAE",
+                "semanticType": "fndg",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C143691",
+                "vocabs": "MTH,NCI_CTCAE_5,NCI"
+            },
+            {
+                "type": "umls.LaboratoryOrTestResult",
+                "uid": 3,
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "semanticType": "lbtr",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "icd10Code": "I21.4,I21.29,I21.09,I21.19,R94.31,I25.2,I21.9",
+                "nciCode": "C101589",
+                "snomedConceptId": "164865005",
+                "vocabs": "CHV,MTH,NCI_CDISC,NCI,SNOMEDCT_US"
+            },
+            {
                 "type": "umls.DiseaseOrSyndrome",
                 "uid": 2,
                 "begin": 0,
-                "end": 12,
-                "coveredText": "Heart Attack",
+                "end": 21,
+                "coveredText": "myocardial infarction",
                 "negated": false,
                 "cui": "C0027051",
                 "preferredName": "Myocardial Infarction",
@@ -250,22 +445,22 @@
                 "insightModelData": {
                     "diagnosis": {
                         "usage": {
-                            "explicitScore": 0.884,
-                            "patientReportedScore": 0.003,
-                            "discussedScore": 0.113
+                            "explicitScore": 0.917,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.075
                         },
-                        "suspectedScore": 0.09,
-                        "symptomScore": 0.002,
+                        "suspectedScore": 0.092,
+                        "symptomScore": 0.0,
                         "traumaScore": 0.0,
-                        "familyHistoryScore": 0.001
+                        "familyHistoryScore": 0.003
                     }
                 }
             },
             {
                 "type": "ICDiagnosis",
                 "begin": 0,
-                "end": 12,
-                "coveredText": "Heart Attack",
+                "end": 21,
+                "coveredText": "myocardial infarction",
                 "negated": false,
                 "cui": "C0027051",
                 "preferredName": "Myocardial Infarction",
@@ -282,14 +477,14 @@
                 "insightModelData": {
                     "diagnosis": {
                         "usage": {
-                            "explicitScore": 0.884,
-                            "patientReportedScore": 0.003,
-                            "discussedScore": 0.113
+                            "explicitScore": 0.917,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.075
                         },
-                        "suspectedScore": 0.09,
-                        "symptomScore": 0.002,
+                        "suspectedScore": 0.092,
+                        "symptomScore": 0.0,
                         "traumaScore": 0.0,
-                        "familyHistoryScore": 0.001
+                        "familyHistoryScore": 0.003
                     }
                 },
                 "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
@@ -298,20 +493,40 @@
                         "uid": 2
                     }
                 ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "ruleId": "c1e8d7d4-7d36-423b-b39d-4ebb5eb65b0c",
+                "derivedFrom": [
+                    {
+                        "uid": 3
+                    }
+                ]
             }
         ],
         "SymptomDiseaseInd": [
             {
                 "type": "aci.SymptomDiseaseInd",
-                "uid": 4,
+                "uid": 5,
                 "begin": 0,
-                "end": 12,
-                "coveredText": "Heart Attack",
+                "end": 21,
+                "coveredText": "myocardial infarction",
                 "negated": false,
                 "cui": "C0027051",
                 "icd10Code": "I21.9",
                 "modality": "positive",
-                "symptomDiseaseSurfaceForm": "Heart Attack",
+                "symptomDiseaseSurfaceForm": "myocardial infarction",
                 "snomedConceptId": "22298006",
                 "ccsCode": "100",
                 "symptomDiseaseNormalizedName": "myocardial infarction",
@@ -323,864 +538,28 @@
                 "insightModelData": {
                     "diagnosis": {
                         "usage": {
-                            "explicitScore": 0.884,
-                            "patientReportedScore": 0.003,
-                            "discussedScore": 0.113
+                            "explicitScore": 0.917,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.075
                         },
-                        "suspectedScore": 0.09,
-                        "symptomScore": 0.002,
+                        "suspectedScore": 0.092,
+                        "symptomScore": 0.0,
                         "traumaScore": 0.0,
-                        "familyHistoryScore": 0.001
+                        "familyHistoryScore": 0.003
                     }
                 }
             }
         ],
         "spellCorrectedText": [
             {
-                "correctedText": "Heart Attack"
+                "correctedText": "myocardial infarction"
             }
         ]
     },
-    "Allergy to Oxycodone": {
-        "attributeValues": [
-            {
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "preferredName": "oxycodone",
-                "values": [
-                    {
-                        "value": "oxycodone"
-                    }
-                ],
-                "source": "Clinical Insights - Attributes",
-                "sourceVersion": "v1.0",
-                "concept": {
-                    "uid": 6
-                },
-                "name": "MedicationAllergy",
-                "rxNormId": "7804",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "insightModelData": {
-                    "medication": {
-                        "usage": {
-                            "takenScore": 1.0,
-                            "consideringScore": 0.0,
-                            "discussedScore": 0.0,
-                            "labMeasurementScore": 0.0
-                        },
-                        "startedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "adverseEvent": {
-                            "score": 1.0,
-                            "allergyScore": 1.0,
-                            "usage": {
-                                "explicitScore": 0.978,
-                                "consideringScore": 0.021,
-                                "discussedScore": 0.001
-                            }
-                        },
-                        "stoppedEvent": {
-                            "score": 0.001,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "doseChangedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        }
-                    }
-                }
-            }
-        ],
-        "concepts": [
-            {
-                "type": "umls.PathologicFunction",
-                "begin": 0,
-                "end": 7,
-                "coveredText": "Allergy",
-                "negated": false,
-                "cui": "C0020517",
-                "preferredName": "Hypersensitivity",
-                "semanticType": "patf",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "icd9Code": "995.3",
-                "icd10Code": "T78.4,T78.40X?",
-                "nciCode": "C3114",
-                "snomedConceptId": "418634005,421961002",
-                "meshId": "M0010851",
-                "loincId": "LA17771-9,LP20697-6,LP7756-2,LA9532-8,MTHU020822",
-                "vocabs": "MTH,LNC,NCI_NICHD,CSP,MSH,CST,HPO,OMIM,GO,NCI_CTCAE,HL7V2.5,COSTAR,HL7V3.0,NCI_NCI-GLOSS,ICPC,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy"
-            },
-            {
-                "type": "umls.PathologicFunction",
-                "begin": 0,
-                "end": 7,
-                "coveredText": "Allergy",
-                "negated": false,
-                "cui": "C1527304",
-                "preferredName": "Allergic Reaction",
-                "semanticType": "patf",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "icd9Code": "995.3",
-                "icd10Code": "T78.4,T78.40X?",
-                "nciCode": "C114476",
-                "snomedConceptId": "419076005",
-                "meshId": "M0010852",
-                "vocabs": "NCI_NICHD,MTH,CCSR_10,CCS,MSH,NCI,NCI_CTCAE,SNOMEDCT_US,NCI_NCI-GLOSS",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy"
-            },
-            {
-                "type": "umls.Finding",
-                "begin": 0,
-                "end": 7,
-                "coveredText": "Allergy",
-                "negated": false,
-                "cui": "C3539909",
-                "preferredName": "Allergic disposition",
-                "semanticType": "fndg",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "icd9Code": "V15.09,995.3",
-                "icd10Code": "T78.40X?",
-                "snomedConceptId": "609328004",
-                "vocabs": "MTH,SNOMEDCT_US",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy"
-            },
-            {
-                "type": "umls.OrganicChemical",
-                "uid": 4,
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "cui": "C0030049",
-                "preferredName": "oxycodone",
-                "semanticType": "orch",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "nciCode": "C29309",
-                "snomedConceptId": "55452001,414984009",
-                "meshId": "M0015664",
-                "rxNormId": "7804",
-                "loincId": "MTHU060430,LA28421-8,LP15003-4",
-                "vocabs": "MTH,LNC,MSH,MTHSPL,RXNORM,CHV,ATC,NCI_CTRP,NCI_FDA,LCH_NW,NCI,AOD,SNOMEDCT_US,DRUGBANK,VANDF",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy"
-            },
-            {
-                "type": "umls.PharmacologicSubstance",
-                "uid": 2,
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "cui": "C0030049",
-                "preferredName": "oxycodone",
-                "semanticType": "phsu",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "nciCode": "C29309",
-                "snomedConceptId": "55452001,414984009",
-                "meshId": "M0015664",
-                "rxNormId": "7804",
-                "loincId": "MTHU060430,LA28421-8,LP15003-4",
-                "vocabs": "MTH,LNC,MSH,MTHSPL,RXNORM,CHV,ATC,NCI_CTRP,NCI_FDA,LCH_NW,NCI,AOD,SNOMEDCT_US,DRUGBANK,VANDF",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
-                "insightModelData": {
-                    "medication": {
-                        "usage": {
-                            "takenScore": 1.0,
-                            "consideringScore": 0.0,
-                            "discussedScore": 0.0,
-                            "labMeasurementScore": 0.0
-                        },
-                        "startedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "adverseEvent": {
-                            "score": 1.0,
-                            "allergyScore": 1.0,
-                            "usage": {
-                                "explicitScore": 0.978,
-                                "consideringScore": 0.021,
-                                "discussedScore": 0.001
-                            }
-                        },
-                        "stoppedEvent": {
-                            "score": 0.001,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "doseChangedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                "type": "umls.LaboratoryProcedure",
-                "uid": 3,
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "cui": "C0524222",
-                "preferredName": "Oxycodone measurement",
-                "semanticType": "lbpr",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "INVALID"
-                },
-                "nciCode": "C74884",
-                "snomedConceptId": "105278002",
-                "vocabs": "MTH,NCI_CDISC,NCI,SNOMEDCT_US",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy"
-            },
-            {
-                "type": "ICMedication",
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "cui": "C0030049",
-                "preferredName": "oxycodone",
-                "source": "Clinical Insights - Derived Concepts",
-                "sourceVersion": "v1.0",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "nciCode": "C29309",
-                "snomedConceptId": "55452001,414984009",
-                "meshId": "M0015664",
-                "rxNormId": "7804",
-                "loincId": "MTHU060430,LA28421-8,LP15003-4",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
-                "insightModelData": {
-                    "medication": {
-                        "usage": {
-                            "takenScore": 1.0,
-                            "consideringScore": 0.0,
-                            "discussedScore": 0.0,
-                            "labMeasurementScore": 0.0
-                        },
-                        "startedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "adverseEvent": {
-                            "score": 1.0,
-                            "allergyScore": 1.0,
-                            "usage": {
-                                "explicitScore": 0.978,
-                                "consideringScore": 0.021,
-                                "discussedScore": 0.001
-                            }
-                        },
-                        "stoppedEvent": {
-                            "score": 0.001,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "doseChangedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        }
-                    }
-                },
-                "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
-                "derivedFrom": [
-                    {
-                        "uid": 2
-                    }
-                ]
-            },
-            {
-                "type": "ICProcedure",
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "cui": "C0524222",
-                "preferredName": "Oxycodone measurement",
-                "source": "Clinical Insights - Derived Concepts",
-                "sourceVersion": "v1.0",
-                "disambiguationData": {
-                    "validity": "INVALID"
-                },
-                "nciCode": "C74884",
-                "snomedConceptId": "105278002",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
-                "ruleId": "6fb8852c-6a9f-4499-b732-0a7e5c3d76a8",
-                "derivedFrom": [
-                    {
-                        "uid": 3
-                    }
-                ]
-            },
-            {
-                "type": "ICNormality",
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "cui": "C0524222",
-                "preferredName": "Oxycodone measurement",
-                "source": "Clinical Insights - Derived Concepts",
-                "sourceVersion": "v1.0",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "nciCode": "C74884",
-                "snomedConceptId": "105278002",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
-                "ruleId": "59345d3f-1b68-4aaf-b7cd-0334f415c4b4",
-                "derivedFrom": [
-                    {
-                        "uid": 3
-                    }
-                ]
-            },
-            {
-                "type": "ICNormality",
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "cui": "C0030049",
-                "preferredName": "oxycodone",
-                "source": "Clinical Insights - Derived Concepts",
-                "sourceVersion": "v1.0",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "nciCode": "C29309",
-                "snomedConceptId": "55452001,414984009",
-                "meshId": "M0015664",
-                "rxNormId": "7804",
-                "loincId": "MTHU060430,LA28421-8,LP15003-4",
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
-                "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
-                "derivedFrom": [
-                    {
-                        "uid": 2
-                    }
-                ]
-            },
-            {
-                "type": "ICNormality",
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "cui": "C0030049",
-                "preferredName": "oxycodone",
-                "source": "Clinical Insights - Derived Concepts",
-                "sourceVersion": "v1.0",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "sectionNormalizedName": "Allergies",
-                "sectionSurfaceForm": "Allergy",
-                "ruleId": "343e6158-2c30-4726-be71-33a570b28703",
-                "derivedFrom": [
-                    {
-                        "uid": 4
-                    }
-                ]
-            }
-        ],
-        "MedicationInd": [
-            {
-                "type": "aci.MedicationInd",
-                "uid": 6,
-                "begin": 11,
-                "end": 20,
-                "coveredText": "Oxycodone",
-                "negated": false,
-                "sectionNormalizedName": "Allergies",
-                "cui": "C0030049",
-                "drug": [
-                    {
-                        "coveredText": "Oxycodone",
-                        "cui": "C0030049",
-                        "complex": "false",
-                        "end": 20,
-                        "type": "aci.Ind_Drug",
-                        "name1": [
-                            {
-                                "rxNormID": "7804",
-                                "coveredText": "Oxycodone",
-                                "cui": "C0030049",
-                                "drugSurfaceForm": "Oxycodone",
-                                "drugNormalizedName": "oxycodone",
-                                "end": 20,
-                                "type": "aci.DrugName",
-                                "begin": 11
-                            }
-                        ],
-                        "begin": 11
-                    }
-                ],
-                "sectionSurfaceForm": "Allergy",
-                "insightModelData": {
-                    "medication": {
-                        "usage": {
-                            "takenScore": 1.0,
-                            "consideringScore": 0.0,
-                            "discussedScore": 0.0,
-                            "labMeasurementScore": 0.0
-                        },
-                        "startedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "adverseEvent": {
-                            "score": 1.0,
-                            "allergyScore": 1.0,
-                            "usage": {
-                                "explicitScore": 0.978,
-                                "consideringScore": 0.021,
-                                "discussedScore": 0.001
-                            }
-                        },
-                        "stoppedEvent": {
-                            "score": 0.001,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "doseChangedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        }
-                    }
-                },
-                "disambiguationData": {
-                    "validity": "VALID",
-                    "comment": "marked VALID by clinical insight models."
-                }
-            }
-        ],
-        "SymptomDiseaseInd": [
-            {
-                "type": "aci.SymptomDiseaseInd",
-                "begin": 0,
-                "end": 7,
-                "coveredText": "Allergy",
-                "negated": false,
-                "cui": "C0020517",
-                "sectionNormalizedName": "Allergies",
-                "modality": "positive",
-                "symptomDiseaseSurfaceForm": "Allergy",
-                "symptomDiseaseNormalizedName": "allergic reaction (nos)",
-                "sectionSurfaceForm": "Allergy",
-                "disambiguationData": {
-                    "validity": "INVALID"
-                }
-            }
-        ],
-        "sections": [
-            {
-                "begin": 0,
-                "end": 20,
-                "type": "aci.Section",
-                "trigger": {
-                    "begin": 0,
-                    "coveredText": "Allergy",
-                    "end": 7,
-                    "sectionNormalizedName": "Allergies",
-                    "source": "internal",
-                    "type": "aci.SectionTrigger"
-                }
-            }
-        ],
+    "idonotknowthis": {
         "spellCorrectedText": [
             {
-                "correctedText": "Allergy to Oxycodone"
-            }
-        ]
-    },
-    "DTaP vaccine": {
-        "attributeValues": [
-            {
-                "begin": 0,
-                "end": 12,
-                "coveredText": "DTaP vaccine",
-                "negated": false,
-                "preferredName": "DTaP",
-                "values": [
-                    {
-                        "value": "DTaP"
-                    }
-                ],
-                "source": "Clinical Insights - Attributes",
-                "sourceVersion": "v1.0",
-                "concept": {
-                    "uid": 4
-                },
-                "name": "PrescribedMedication",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "insightModelData": {
-                    "medication": {
-                        "usage": {
-                            "takenScore": 0.783,
-                            "consideringScore": 0.004,
-                            "discussedScore": 0.208,
-                            "labMeasurementScore": 0.001
-                        },
-                        "startedEvent": {
-                            "score": 0.001,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "adverseEvent": {
-                            "score": 0.001,
-                            "allergyScore": 0.0,
-                            "usage": {
-                                "explicitScore": 0.001,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "stoppedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "doseChangedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        }
-                    }
-                }
-            }
-        ],
-        "concepts": [
-            {
-                "type": "umls.PharmacologicSubstance",
-                "uid": 2,
-                "begin": 0,
-                "end": 12,
-                "coveredText": "DTaP vaccine",
-                "negated": false,
-                "cui": "C0535644",
-                "preferredName": "Diphtheria-Tetanus-acellular Pertussis Vaccines",
-                "semanticType": "phsu",
-                "source": "umls",
-                "sourceVersion": "2020AA",
-                "disambiguationData": {
-                    "validity": "NO_DECISION"
-                },
-                "snomedConceptId": "429321000124106,429511000124109",
-                "meshId": "M0272463",
-                "vocabs": "CHV,MSH,SNOMEDCT_US",
-                "insightModelData": {
-                    "medication": {
-                        "usage": {
-                            "takenScore": 0.783,
-                            "consideringScore": 0.004,
-                            "discussedScore": 0.208,
-                            "labMeasurementScore": 0.001
-                        },
-                        "startedEvent": {
-                            "score": 0.001,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "adverseEvent": {
-                            "score": 0.001,
-                            "allergyScore": 0.0,
-                            "usage": {
-                                "explicitScore": 0.001,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "stoppedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "doseChangedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                "type": "ICMedication",
-                "begin": 0,
-                "end": 12,
-                "coveredText": "DTaP vaccine",
-                "negated": false,
-                "cui": "C0535644",
-                "preferredName": "Diphtheria-Tetanus-acellular Pertussis Vaccines",
-                "source": "Clinical Insights - Derived Concepts",
-                "sourceVersion": "v1.0",
-                "disambiguationData": {
-                    "validity": "VALID"
-                },
-                "snomedConceptId": "429321000124106,429511000124109",
-                "meshId": "M0272463",
-                "insightModelData": {
-                    "medication": {
-                        "usage": {
-                            "takenScore": 0.783,
-                            "consideringScore": 0.004,
-                            "discussedScore": 0.208,
-                            "labMeasurementScore": 0.001
-                        },
-                        "startedEvent": {
-                            "score": 0.001,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "adverseEvent": {
-                            "score": 0.001,
-                            "allergyScore": 0.0,
-                            "usage": {
-                                "explicitScore": 0.001,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "stoppedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "doseChangedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        }
-                    }
-                },
-                "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
-                "derivedFrom": [
-                    {
-                        "uid": 2
-                    }
-                ]
-            },
-            {
-                "type": "ICNormality",
-                "begin": 0,
-                "end": 12,
-                "coveredText": "DTaP vaccine",
-                "negated": false,
-                "cui": "C0535644",
-                "preferredName": "Diphtheria-Tetanus-acellular Pertussis Vaccines",
-                "source": "Clinical Insights - Derived Concepts",
-                "sourceVersion": "v1.0",
-                "disambiguationData": {
-                    "validity": "INVALID"
-                },
-                "snomedConceptId": "429321000124106,429511000124109",
-                "meshId": "M0272463",
-                "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
-                "derivedFrom": [
-                    {
-                        "uid": 2
-                    }
-                ]
-            }
-        ],
-        "MedicationInd": [
-            {
-                "type": "aci.MedicationInd",
-                "uid": 4,
-                "begin": 0,
-                "end": 12,
-                "coveredText": "DTaP vaccine",
-                "negated": false,
-                "cui": "C1579314",
-                "drug": [
-                    {
-                        "coveredText": "DTaP vaccine",
-                        "cui": "C1579314",
-                        "complex": "false",
-                        "end": 12,
-                        "type": "aci.Ind_Drug",
-                        "name1": [
-                            {
-                                "coveredText": "DTaP",
-                                "cui": "C1579314",
-                                "drugSurfaceForm": "DTaP",
-                                "drugNormalizedName": "DTaP",
-                                "end": 4,
-                                "type": "aci.DrugName",
-                                "begin": 0
-                            }
-                        ],
-                        "begin": 0
-                    }
-                ],
-                "insightModelData": {
-                    "medication": {
-                        "usage": {
-                            "takenScore": 0.783,
-                            "consideringScore": 0.004,
-                            "discussedScore": 0.208,
-                            "labMeasurementScore": 0.001
-                        },
-                        "startedEvent": {
-                            "score": 0.001,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "adverseEvent": {
-                            "score": 0.001,
-                            "allergyScore": 0.0,
-                            "usage": {
-                                "explicitScore": 0.001,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "stoppedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        },
-                        "doseChangedEvent": {
-                            "score": 0.0,
-                            "usage": {
-                                "explicitScore": 0.0,
-                                "consideringScore": 0.0,
-                                "discussedScore": 0.0
-                            }
-                        }
-                    }
-                },
-                "disambiguationData": {
-                    "validity": "VALID",
-                    "comment": "marked VALID by clinical insight models."
-                }
-            }
-        ],
-        "spellCorrectedText": [
-            {
-                "correctedText": "DTaP vaccine"
+                "correctedText": "idonotknowthis"
             }
         ]
     }

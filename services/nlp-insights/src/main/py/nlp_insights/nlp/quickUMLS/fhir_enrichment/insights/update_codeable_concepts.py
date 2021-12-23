@@ -13,8 +13,6 @@
 # limitations under the License.
 """Update codeable concepts with codings derived from NLP"""
 
-import json
-from typing import Generator
 from typing import List
 from typing import NamedTuple
 from fhir.resources.coding import Coding
@@ -25,16 +23,8 @@ from nlp_insights.insight.builder.enrich_resource_builder import (
     EnrichedResourceInsightBuilder,
 )
 from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptRef
-from nlp_insights.insight_source.fields_of_interest import (
-    CodeableConceptRefType,
-)
 from nlp_insights.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
-from nlp_insights.nlp.quickUMLS.nlp_response import (
-    QuickUmlsResponse,
-    QuickUmlsConcept,
-    QuickUmlsEncoder,
-)
-from nlp_insights.umls.semtype_lookup import ref_type_relevant_to_any_type_names
+from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse, QuickUmlsConcept
 
 
 class NlpConceptRef(NamedTuple):
@@ -43,18 +33,20 @@ class NlpConceptRef(NamedTuple):
     adjusted_concept: AdjustedConceptRef
     nlp_response: QuickUmlsResponse
 
-
-def _relevant_concepts(
-    ref_type: CodeableConceptRefType, response: QuickUmlsResponse
-) -> Generator[QuickUmlsConcept, None, None]:
-    """filter response to those concepts that are relevant to the code reference"""
-    for concept in response.concepts:
-        if ref_type_relevant_to_any_type_names(ref_type, concept.types):
-            yield concept
+    @property
+    def relevant_concepts(self) -> List[QuickUmlsConcept]:
+        """Returns best relevant concepts for the insight"""
+        return self.nlp_response.get_most_relevant_concepts(
+            self.adjusted_concept.concept_ref.type
+        )
 
 
 def _derive_codings(nlp_concept: QuickUmlsConcept) -> List[Coding]:
-    """Derives codings from QuickUMLs NLP response"""
+    """Derives codings from QuickUMLs NLP response
+
+    Today we only return the UMLS code, but in the future we could
+    return other codes using this interface as well.
+    """
     return [
         create_coding.create_coding(
             system=hl7.UMLS_URL,
@@ -92,21 +84,18 @@ def update_codeable_concepts_and_meta_with_insights(
                 concept_insight.adjusted_concept.concept_ref
             ),
             insight_id_system=nlp_config.nlp_system,
-            nlp_response_json=json.dumps(
-                concept_insight.nlp_response, cls=QuickUmlsEncoder
-            ),
+            nlp_response_json=concept_insight.nlp_response.service_resp,
         )
 
         derived_codes = [
             coding
-            for concept in _relevant_concepts(
-                concept_insight.adjusted_concept.concept_ref.type,
-                concept_insight.nlp_response,
-            )
+            for concept in concept_insight.relevant_concepts
             for coding in _derive_codings(concept)
         ]
 
         builder.add_derived_codings(derived_codes)
-        builder.append_insight_to_resource_meta()
+
+        if builder.num_summary_extensions_added > 0:
+            builder.append_insight_to_resource_meta()
 
     return builder.num_summary_extensions_added

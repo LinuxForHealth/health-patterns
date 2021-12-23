@@ -18,6 +18,7 @@ import importlib
 from fhir.resources.bundle import Bundle
 
 from nlp_insights import app
+from test_nlp_insights.util import enrich_text
 from test_nlp_insights.util import unstructured_text
 from test_nlp_insights.util.compare import compare_actual_to_expected
 from test_nlp_insights.util.fhir import (
@@ -66,7 +67,7 @@ class TestMultiResourceBundleUsingAcd(UnitTestUsingExternalResource):
                 ),
                 make_allergy_intolerance(
                     patient=make_patient_reference(),
-                    code=make_codeable_concept(text="peanut"),
+                    code=make_codeable_concept(text=enrich_text.ALLERGY_PEANUT),
                 ),
                 # Patient is here to prove that resources that we don't know how to handle
                 # will not cause a problem
@@ -115,7 +116,7 @@ class TestMultiResourceBundleUsingQuickUmls(UnitTestUsingExternalResource):
                 ),
                 make_allergy_intolerance(
                     patient=make_patient_reference(),
-                    code=make_codeable_concept(text="peanut"),
+                    code=make_codeable_concept(text=enrich_text.ALLERGY_PEANUT),
                 ),
                 # Patient is here to prove that resources that we don't know how to handle
                 # will not cause a problem

@@ -56,6 +56,18 @@ Example of a condition resource where NLP derived a UMLS coding.
      Add codings (with summary extension) to condition's code (defined by the concept reference):
      >>> insight.add_derived_codings(derived_codings)
 
+    Retrieve number of summary extensions added to codings:
+    >>> print(insight.num_summary_extensions_added)
+    1
+
+    The number of summary extensions might be different than the number of derived codings.
+    For example no extension is added when:
+    - The coding exists and was not derived
+    - The coding exists and was derived for an insight with the same id (in other words rerun of this insight)
+    An extension is added when:
+    - The coding did not exist and was added for this insight
+    - The coding exists and has a summary extension for a different insight id.
+
      Add insight to meta:
      >>> insight.append_insight_to_resource_meta()
 

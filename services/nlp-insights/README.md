@@ -37,9 +37,7 @@ The source text used to derive these new resources is found in the following res
 
 
 ## Example FHIR Resources
-Several examples of valid input bundles can be found in the repo under `src/test/resources/sample/bundle`.
-
-Examples of responses from nlp-insights can be seen in the `src/test/resources/expected_results` directory tree.
+See our tutorials in the [documentation](./doc/examples).
 
 # Running the service
 It is recommended that the service be deployed as a docker container, however you can run it outside of docker if necessary.

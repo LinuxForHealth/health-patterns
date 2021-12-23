@@ -22,13 +22,14 @@
    types.
 
 """
-
+# UMLS Type ID such as T116 or T020
 from typing import Dict
 from typing import Iterable
 from typing import List
 from typing import Set
 from typing import Type
 from typing import TypeVar
+from typing import Union
 
 from fhir.resources.condition import Condition
 from fhir.resources.medicationstatement import MedicationStatement
@@ -36,7 +37,7 @@ from fhir.resources.resource import Resource
 
 from nlp_insights.insight_source.fields_of_interest import CodeableConceptRefType
 
-# UMLS Type ID such as T116 or T020
+
 UmlsTypeId = str
 
 # UMLS Type Name such as umls.Activity
@@ -255,6 +256,43 @@ def ref_type_relevant_to_any_type_names(
     if relevant_type_names:
         return any(name in relevant_type_names for name in type_names)
     return False
+
+
+def is_relevant(
+    to_what: Union[Type[ExtendsResource], CodeableConceptRefType],
+    type_names: Iterable[UmlsTypeName],
+) -> bool:
+    """Tests if the provided type_names are relevant to the input type.
+
+    Args:
+    to_what - resource class or codeable concept type that at least one of the
+              provided type names must be relevant.
+    type_names - collection of type names to test for any relevance
+
+    Returns: true  if at least one type is relevant, false otherwise.
+
+    Examples:
+    >>> from fhir.resources.condition import Condition
+    >>> from fhir.resources.medicationstatement import MedicationStatement
+    >>> is_relevant(Condition, ["umls.DiseaseOrSyndrome", "umls.ImmunologicFactor"])
+    True
+
+    >>> is_relevant(CodeableConceptRefType.ALLERGEN, ["umls.DiseaseOrSyndrome"])
+    True
+
+    >>> is_relevant(CodeableConceptRefType.CONDITION, ["umls.Antibiotic"])
+    False
+
+    >>> is_relevant(MedicationStatement, ["umls.Antibiotic"])
+    True
+    """
+    if isinstance(to_what, type) and issubclass(to_what, Resource):
+        return resource_relevant_to_any_type_names(to_what, type_names)
+
+    if isinstance(to_what, CodeableConceptRefType):
+        return ref_type_relevant_to_any_type_names(to_what, type_names)
+
+    raise ValueError(f"to_what does not have a correct type {type(to_what)}")
 
 
 def get_names_from_type_ids(ids: Iterable[UmlsTypeId]) -> Set[UmlsTypeName]:
