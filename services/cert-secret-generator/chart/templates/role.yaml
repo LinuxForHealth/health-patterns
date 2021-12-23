@@ -4,8 +4,7 @@ metadata:
   name: {{ include "cert-secret-generator.fullname" . }}-role
   namespace: {{ .Release.Namespace }}
 rules:
-  - verbs:
-      - create
+  - verbs: ["create", "get", "watch", "list", "update", "delete"]
     apiGroups:
       - ''
     resources:

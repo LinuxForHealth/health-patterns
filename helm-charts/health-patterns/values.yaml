@@ -100,6 +100,8 @@ fhir:
   service:
     type: ClusterIP
     port: 80
+  keyStoreSecret: fhir-keystore-secret
+  trustStoreSecret: fhir-truststore-secret
   env:
     # Per the FHIR team this is recommended to avoid some time out issues seen when deploying recently.
     - name: FHIR_TRANSACTION_MANAGER_TIMEOUT

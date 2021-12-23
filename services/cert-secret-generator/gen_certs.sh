@@ -3,6 +3,26 @@
 # Exit script on any error
 #set -e
 
+# Connect to kubernetes using service account credentials
+TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+kubectl config set-credentials user --token=$TOKEN
+
+
+##
+## Cleanup existing secrets
+##
+KEYSTORE_SECRET_EXISTS=$(($(kubectl get secret fhir-keystore-secret --ignore-not-found | wc -c)>0))
+if [ $KEYSTORE_SECRET_EXISTS -ne "0" ]; then
+  echo "fhir-keystore-secret already exists. Deleting."
+  kubectl delete secret fhir-keystore-secret
+fi
+
+TRUSTSTORE_SECRET_EXISTS=$(($(kubectl get secret fhir-truststore-secret --ignore-not-found | wc -c)>0))
+if [ $TRUSTSTORE_SECRET_EXISTS -ne 0 ]; then
+  echo "fhir-truststore-secret already exists. Exiting."
+  kubectl delete secret fhir-truststore-secret
+fi
+
 
 PASSWORD=replace-me
 
