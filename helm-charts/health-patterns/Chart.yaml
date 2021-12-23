@@ -131,4 +131,4 @@ dependencies:
     repository: https://alvearie.github.io/health-patterns/charts
   - name: cert-secret-generator
     repository: https://alvearie.github.io/health-patterns/charts
-    version: 0.1.0
+    version: 0.1.1
