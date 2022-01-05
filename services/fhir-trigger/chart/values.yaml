@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: alvearie/fhir-trigger
   pullPolicy: Always
-  tag: 0.1.0
+  tag: 0.1.1
 service:
   type: ClusterIP
   port: 5000
