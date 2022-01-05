@@ -34,7 +34,6 @@ def run_deequ():
     try:
       output, error = process.communicate(timeout=REQUEST_TIMEOUT)
     except subprocess.TimeoutExpired:
-      process.kill()
       return make_response("Timeout processing Spark request.", 408)
 
   if error is not None:

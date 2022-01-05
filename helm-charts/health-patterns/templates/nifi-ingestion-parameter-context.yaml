@@ -46,6 +46,10 @@ spec:
       value: ingest.topic.failure
       description: Filter used for error topics
 
+    - name: data.quality.topic
+      value: data.quality.topic
+      description: Filter used for reporting data quality checks
+
     - name: FHIR_User_ProviderDirectory
       value: fhiruser
       description: FHIR server user for Provider Directory FHIR URL
