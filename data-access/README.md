@@ -30,7 +30,7 @@ docker-compose up -d
 Once the services are up, execute the following to configure a new realm on the keycloak service:
 
 ```
-docker run -e FHIR_BASE_URL=http://fhir-server:9080/fhir-server/api/v4 alvearie/keycloak-config
+docker run -e FHIR_BASE_URL=http://fhir-server:9080/fhir-server/api/v4 quay.io/alvearie/keycloak-config
 ```
 
 Finally, execute the following to tail the logs while it runs:
