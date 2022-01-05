@@ -53,17 +53,6 @@ jobs:
              --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
              --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-             
-    - name: Build FHIR Data Quality
-      if: ${{contains( steps.filecheck.outputs.changed_files ,'services/fhir-data-quality')}}
-      run: |
-           echo "Running FHIR Data Quality build"
-           .github/workflows/scripts/build-service.sh \
-             -s=fhir-data-quality \
-             -m=${{github.event_name}} \
-             --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
-             --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
     - name: Commit all changes and update Helm repo 
       if: ${{steps.filecheck.outputs.changed_files}}
       run: |
