@@ -126,7 +126,7 @@ dependencies:
     condition: hl7-resource-generator.enabled
     repository: https://alvearie.github.io/hl7-resource-generator-service/chart
   - name: fhir-data-quality
-    version: 0.1.0
+    version: 0.1.1
     condition: fhir-data-quality.enabled
     repository: https://alvearie.github.io/health-patterns/charts
   - name: cert-secret-generator
