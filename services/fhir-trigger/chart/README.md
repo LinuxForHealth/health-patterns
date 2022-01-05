@@ -42,7 +42,7 @@ You can augment this install with the following configuration parameters:
 
 `kafka.password`: See [KAFKAPW](../README.md#kafkapw) (Default: `integrati0n`)
 
-`kafka.producer_topic`: See [PRODUCERTOPIC](../README.md#producertopic) (Default: `patients.updated.out`)
+`kafka.producer_topic`: See [PRODUCERTOPIC](../README.md#producertopic) (Default: `enrich.topic.in`)
 
 `kafka.consumer_topic`: See [CONSUMERTOPIC](../README.md#consumertopic) (Default: `fhir.notification`)
 

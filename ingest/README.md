@@ -183,15 +183,24 @@ The NiFi canvas will show a pre-configured main process group called **Clinical 
 #### [Kafka](https://kafka.apache.org)
 The Ingestion Pattern includes a Kafka broker that can be used to feed clinical data into the pattern
 
-The entry point into the clinical ingestion flow is a Kakfa topic called `ingest.clinical.in`.  When we place data (either FHIR or HL7) onto that topic, it will automatically be consumed and sent through the rest of the flow.  In order to place data on a kafka topic, we will use the expose-kafka service that was deployed as part of the install (the url is included in the deployment information).  This can be done with Postman, curl, or some other http tool.  
+The entry point into the clinical ingestion flow is a Kakfa topic called `ingest.topic.in`.  When we place data (either FHIR or HL7) onto that topic, it will automatically be consumed and sent through the rest of the flow.  In order to place data on a kafka topic, we will use the [expose-kafka](../services/expose-kafka/README.md) service that was deployed as part of the install (the url is included in the deployment information).  This can be done with Postman, curl, or some other http tool.  
 
-For example, the curl command below will place the contents of the file `testpatient.json` (a patient FHIR bundle) on the ingest.clinical.in kafka topic.  At that point, the ingestion flow is listening for messages and will immediately take the new bundle and begin to process it.  You should see one bundle appear in the “success” state at the end of the flow.
+For example, the curl command below will place the contents of the file `testpatient.json` (a patient FHIR bundle) on the ingest.topic.in kafka topic.  At that point, the ingestion flow is listening for messages and will immediately take the new bundle and begin to process it.  You should see one bundle appear in the “success” state at the end of the flow.
 
 ```
-curl -X POST https://<<external-hostname>>/expose-kafka?topic=ingest.clinical.in  \
+curl -X POST https://<<external-hostname>>/expose-kafka?topic=ingest.topic.in  \
    --header "Content-Type: text/plain" \
    --data-binary  @/pathtofile/testpatient.json
 ```
+
+Additional Expose-Kafka URL parameters:
+
+`response_topic`: The response topic you wish to listen on, the API won't return until your result is complete (or a timeout is reached).  This topic is set in nifi-ingestion-parameter-context.yaml under `ingest.topic.out` and defaults to topic `ingest.topic.out`.
+`failure_topic`: The topic used to return errors occurring during the pipeline.  If `response_topic` is not set, no errors will be reported, but when both topics are specified, the request will monitor both topics for results.  This topic is set in nifi-ingestion-parameter-context.yaml under `ingest.topic.failure` and defaults to topic `ingest.topic.failure`.
+
+
+Note: One other topic of note is specified by `data.quality.topic` in nifi-ingestion-parameter-context.yaml.  This topic will contain the results of FHIR Data Quality checks done on each request (when configured).  You can view this topic using Expose-Kafka API's.
+
 
 #### [FHIR](https://github.com/ibm/fhir)
 After posting the patient through Kafka, if no errors have occurred, the patient will be persisted in the FHIR server. From the list of services provided after the deployment, grab the deployment base url for the FHIR server. You can then query the list of FHIR resources using your browser or an HTTP client. For instance, for querying patients you would do the following (using default credentials: _fhiruser_/_integrati0n_):
@@ -283,4 +292,4 @@ When deploying this chart, there are many configuration parameters specified in 
 
 #### Kafka topics for the pipeline
 
-To submit data to the Ingestion pipeline, it needs to be posted to the configured Kafka topic. The Kafka topic to target depends on the pipeline you are running and the Nifi configuration. For example, in the Ingestion pattern the topic is called `ingest.clinical.in` as was used above.  This can be found and/or updated in the Nifi parameter context `cms_adapter_parameters` under the parameter `kafka.topic.in`.
+To submit data to the Ingestion pipeline, it needs to be posted to the configured Kafka topic. The Kafka topic to target depends on the pipeline you are running and the Nifi configuration. For example, in the Ingestion pattern the topic is called `ingest.topic.in` as was used above.  This can be found and/or updated in the Nifi parameter context `cms_adapter_parameters` under the parameter `kafka.topic.in`.

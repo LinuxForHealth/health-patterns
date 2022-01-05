@@ -184,12 +184,12 @@ The NiFi canvas will show a pre-configured main process group called **Enrich FH
 #### [Kafka](https://kafka.apache.org)
 The Enrichment Pattern includes a Kafka broker that can be used to feed clinical data into the pattern
 
-The entry point into the enrichment flow is a Kakfa topic called `patients.updated.out`.  When we place data onto that topic, it will automatically be consumed and sent through the rest of the flow.  In order to place data on a Kafka topic, we will use the expose-kafka service that was deployed as part of the install (the url is included in the deployment information).  This can be done with Postman, curl, or some other http tool.  
+The entry point into the enrichment flow is a Kakfa topic called `enrich.topic.in`.  When we place data onto that topic, it will automatically be consumed and sent through the rest of the flow.  In order to place data on a Kafka topic, we will use the [expose-kafka](../services/expose-kafka/README.md) service that was deployed as part of the install (the url is included in the deployment information).  This can be done with Postman, curl, or some other http tool.  
 
-The example curl command below will place the contents of the file `testpatient.json` (a patient FHIR bundle) on the patients.updated.out kafka topic.  At that point, the enrichment flow is listening for messages and will immediately take the new bundle and begin to process it.  
+The example curl command below will place the contents of the file `testpatient.json` (a patient FHIR bundle) on the enrich.topic.in kafka topic.  At that point, the enrichment flow is listening for messages and will immediately take the new bundle and begin to process it.  
 
 ```
-curl -X POST https://<<external-hostname>>/expose-kafka?topic=patients.updated.out  \
+curl -X POST https://<<external-hostname>>/expose-kafka?topic=enrich.topic.in  \
    --header "Content-Type: text/plain" \
    --header "ResolveTerminology: true" \
    --header "DeidentifyData: false" \
@@ -205,12 +205,17 @@ Note that there are four headers in the above request describing which enrichmen
  - **RunASCVD** will run the FHIR bundle through the ASCVD service. This will calculate a ten-year risk of cardiovascular disease and store the result as an attribute in the flow file. Use of the attribute is left up to the user of the Clinical Ingestion pipeline to determine.
  - **AddNLPInsights** will run apply natural language processing to certain resource types in order to enhance resources by adding additional information to the resource or by adding new resources based on text found in the original resource.
 
-When the Enrichment process is complete, the updated FHIR result will be placed on a different Kafka topic called `patient.enriched.out`.  From there it is up to the user to decide what to do with the FHIR result.
+Additional Expose-Kafka URL parameters:
 
-In order to see those results, you can use the expose-kafka service and request to see all the messages on the patient.enriched.out topic.
+`response_topic`: The response topic you wish to listen on, the API won't return until your result is complete (or a timeout is reached).  This topic is set in nifi-enrich-parameter-context.yaml under `enrich.topic.out` and defaults to topic `enrich.topic.out`.
+`failure_topic`: The topic used to return errors occurring during the pipeline.  If `response_topic` is not set, no errors will be reported, but when both topics are specified, the request will monitor both topics for results.  This topic is set in nifi-enrich-parameter-context.yaml under `enrich.topic.failure` and defaults to topic `enrich.topic.failure`.
+
+When the Enrichment process is complete, the updated FHIR result will be placed on a different Kafka topic called `enrich.topic.out`.  From there it is up to the user to decide what to do with the FHIR result.
+
+In order to see those results, you can use the expose-kafka service and request to see all the messages on the enrich.topic.out topic.
 
 ```
-curl -X GET https://<<external-hostname>>/expose-kafka?topic=patient.enriched.out
+curl -X GET https://<<external-hostname>>/expose-kafka?topic=enrich.topic.out
 ```
 
 
@@ -279,9 +284,9 @@ Finally, to deploy run:
 
 #### Kafka topics for the pipeline
 
-To submit data to the Enrichment pipeline, it needs to be posted to the configured Kafka topic. The Kafka topic to target depends on the pipeline you are running and the Nifi configuration. For example, in the Enrichment pattern the topic is called `patients.updated.out` as was used above.  This can be found and/or updated in the Nifi parameter context `enrichment parameter context` under the parameter `enrich.in`.
+To submit data to the Enrichment pipeline, it needs to be posted to the configured Kafka topic. The Kafka topic to target depends on the pipeline you are running and the Nifi configuration. For example, in the Enrichment pattern the topic is called `enrich.topic.in` as was used above.  This can be found and/or updated in the Nifi parameter context `enrichment parameter context` under the parameter `enrich.in`.
 
-The FHIR response with the requested modifications will be placed on a topic called `patient.enriched.out`, again found in the `enrichment parameter context` under the parameter `enrich.out`.
+The FHIR response with the requested modifications will be placed on a topic called `enrich.topic.out`, again found in the `enrichment parameter context` under the parameter `enrich.out`.
 
 #### Other data formats
 Currently, the enrichment pattern is designed to operate only on data in FHIR format.
