@@ -124,7 +124,7 @@ if [ -z "$ORG" ]; then
   elif [[ ${MODE} == 'push' ]]
   then
     DOCKER_USER=${ALVEARIE_DOCKER_USER}
-    DOCKER_TOKEN = ${ALVEARIE_DOCKER_TOKEN}
+    DOCKER_TOKEN=${ALVEARIE_DOCKER_TOKEN}
     ORG="alvearie"
   fi
 fi

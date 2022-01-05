@@ -36,8 +36,8 @@ The Health Patterns Helm chart relies on a number of underlying services to oper
 
 To submit data to the Clinical Ingestion or Clinical Enrichment pipelines, it needs to be posted to the configured Kafka topic. The Kafka topic to target depends on which pipeline you are running:
 
-* Clinical Ingestion  - "ingest.clinical.in"  (This can be found/updated in the Nifi parameter context "cms_adapter_parameters" under the parameter "kafka.topic.in")
-* Clinical Enrichment - "patients.updated.out"  (This can be found/updated in the Nifi parameter context "cms_adapter_parameters" under the parameter "enrich.in")
+* Clinical Ingestion  - "ingest.topic.in"  (This can be found/updated in the Nifi parameter context "ingestion-parameter-context" under the parameter "ingest.topic.in")
+* Clinical Enrichment - "enrich.topic.in"  (This can be found/updated in the Nifi parameter context "enrichment-parameter-context" under the parameter "enrich.topic.in")
 
 For convenience, an HTTP endpoint will be deployed to allow easy access to the Kafka broker used by the pipelines. To use, call:
 
