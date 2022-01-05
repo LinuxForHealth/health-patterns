@@ -59,7 +59,7 @@ jobs:
       run: |
            echo "Running FHIR Data Quality build"
            .github/workflows/scripts/build-service.sh \
-             -s=fhir-trigger \
+             -s=fhir-data-quality \
              -m=${{github.event_name}} \
              --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
              --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
