@@ -22,8 +22,8 @@ from ibm_whcs_sdk.annotator_for_clinical_data import (
 )
 
 from nlp_insights.nlp.acd import acd_service
-from nlp_insights.nlp.quickUMLS import quickUMLS_service
-from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse
+from nlp_insights.nlp.quickumls import quickumls_service
+from nlp_insights.nlp.quickumls.concept_container import QuickUmlsConceptContainer
 
 
 ACD_CONFIG_DEF_NAME = "acdconfig1"
@@ -152,7 +152,7 @@ def make_mock_acd_service_class(
     return MockAcdServiceWithFile
 
 
-class MockQuickUmlsService(quickUMLS_service.QuickUMLSService):
+class MockQuickUmlsService(quickumls_service.QuickUmlsService):
     """Mock quick UMLS Service to return pre-defined response given a specific input string
 
     Input strings are loaded from file as a json object with keys
@@ -167,9 +167,9 @@ class MockQuickUmlsService(quickUMLS_service.QuickUMLSService):
             mapping_file_path
         )
 
-    def _run_nlp(self, text: str) -> QuickUmlsResponse:
+    def _run_nlp(self, text: str) -> QuickUmlsConceptContainer:
         json_obj = self.response_map[text]
-        return quickUMLS_service.create_nlp_response(json_obj, json.dumps(json_obj))
+        return quickumls_service.create_nlp_response(json_obj, json.dumps(json_obj))
 
 
 def make_mock_quick_umls_service_class(

@@ -18,27 +18,31 @@ This has the functionality to decide what is an attribute of interest in an ACD 
 how to find the source for that attribute. There is always a single source CUI object for an attribute, and
 that object is where most of the coding information and extensions come from.
 
-Although initially this code only has a single flow, different flows may have different attributes of interest.
-Additional flows might be necessary when/if the ACD pipeline is customized so that it returns additional attributes
-that are of inerest to nlp-insighs.
+Although nlp-inisghts supports only a single flow, in the future different flows may
+define different attributes of interest. Additional flows might be necessary when/if the
+ACD pipeline is customized so that it returns additional attributes that are of interest
+to nlp-insights.
 
-The source may be stored within different properties of the container for different flows, it can be a number
-of different types, depending on the attribute. Each of these types has similar properties.
+The source may be stored within different properties of the container for different flows,
+it can be a number of different types, depending on the attribute.
+Each of these types has similar properties.
 
-An SourceSearchMap determines which attributes to use and where to look for source CUI objects. These maps are defined in
-the nlp.acd.flows package.
+A SourceSearchMap determines which attributes to use and where to look for source CUI objects.
 
 """
 # The context of an NLP request is either a Resource that is being created,
 # or a type of codeableConcept that is being enriched.
 from enum import Enum
 import logging
-from typing import Dict, Type
+from typing import Dict
 from typing import Generator
 from typing import List, Set
 from typing import NamedTuple
 from typing import Optional
+from typing import Type
+from typing import TypeVar
 from typing import Union
+from typing import cast
 
 from fhir.resources.resource import Resource
 from ibm_whcs_sdk.annotator_for_clinical_data import (
@@ -95,6 +99,8 @@ SourceSearchMap = Dict[AnnotationContextType, AnnotationContext]
 
 logger = logging.getLogger(__name__)
 
+T = TypeVar("T")
+
 
 class AttributeSource(NamedTuple):
     """Representation of the source information for an attribute
@@ -106,6 +112,16 @@ class AttributeSource(NamedTuple):
 
     location: AttrSourcePropName
     source: AttrSourceConcept
+
+    def source_as(self, clazz: Type[T]) -> T:
+        """Returns the source, casted to the specified type
+
+        If the source is not of the specified type,
+        raises ValueError
+        """
+        if not isinstance(self.source, clazz):
+            raise ValueError(f"source must be a {clazz.__name__}")
+        return cast(T, self.source)
 
 
 class AttributeWithSource(NamedTuple):

@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 import dataclasses
 
-from nlp_insights.nlp.acd.fhir_enrichment.insights.attribute import (
+from nlp_insights.nlp.acd.flows.attribute import (
     SourceSearchMap,
 )
 from nlp_insights.nlp.acd.flows.default_attribute_source_info import (

@@ -38,7 +38,6 @@ INSIGHT_CONFIDENCE_SCORING_METHOD_URL = (
     "http://ibm.com/fhir/cdm/StructureDefinition/method"
 )
 
-INSIGHT_RESULT_ID_URL = "http://ibm.com/fhir/cdm/insight/result-insight-id"
 INSIGHT_CATEGORY_URL = "http://ibm.com/fhir/cdm/StructureDefinition/category"
 INSIGHT_URL = "http://ibm.com/fhir/cdm/StructureDefinition/insight"
 INSIGHT_REFERENCE_URL = "http://ibm.com/fhir/cdm/StructureDefinition/reference"

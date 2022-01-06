@@ -72,6 +72,33 @@ class TestEnrichUsingAcd(UnitTestUsingExternalResource):
             )
             self.assertFalse(cmp, cmp.pretty())
 
+    def test_when_enrich_twice_then_nothing_enriched(self):
+
+        bundle = make_bundle(
+            [
+                make_condition(
+                    subject=make_patient_reference(),
+                    code=make_codeable_concept(text=enrich_text.CONDITION_HEART_ATTACK),
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_acd(service)
+            insight_resp = service.post("/discoverInsights", json=bundle.dict())
+            self.assertEqual(200, insight_resp.status_code)
+
+            first_bundle = Bundle.parse_obj(insight_resp.get_json())
+            self.assertTrue(len(first_bundle.entry) == 1)
+            enriched_condition = first_bundle.entry[0].resource
+
+            # Post of an already enriched resource should not find anything to enrich
+            new_bundle = make_bundle([enriched_condition])
+            insight_resp = service.post("/discoverInsights", data=new_bundle.json())
+            second_bundle = Bundle.parse_obj(insight_resp.get_json())
+
+            self.assertFalse(second_bundle.entry)
+
     def test_when_post_allergy_intolerance_bundle_then_intolerance_enriched(self):
         bundle = make_bundle(
             [
@@ -195,3 +222,30 @@ class TestEnrichUsingQuickUmls(UnitTestUsingExternalResource):
                 actual_resource=actual_condition,
             )
             self.assertFalse(cmp, cmp.pretty())
+
+    def test_when_enrich_twice_then_nothing_enriched(self):
+
+        bundle = make_bundle(
+            [
+                make_condition(
+                    subject=make_patient_reference(),
+                    code=make_codeable_concept(text=enrich_text.CONDITION_HEART_ATTACK),
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_quick_umls(service)
+            insight_resp = service.post("/discoverInsights", json=bundle.dict())
+            self.assertEqual(200, insight_resp.status_code)
+
+            first_bundle = Bundle.parse_obj(insight_resp.get_json())
+            self.assertTrue(len(first_bundle.entry) == 1)
+            enriched_condition = first_bundle.entry[0].resource
+
+            # Post of an already enriched resource should not find anything to enrich
+            new_bundle = make_bundle([enriched_condition])
+            insight_resp = service.post("/discoverInsights", data=new_bundle.json())
+            second_bundle = Bundle.parse_obj(insight_resp.get_json())
+
+            self.assertFalse(second_bundle.entry)

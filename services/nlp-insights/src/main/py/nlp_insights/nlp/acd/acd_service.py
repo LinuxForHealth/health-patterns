@@ -20,7 +20,6 @@ The formal documentation for the ACD service can be found at: https://cloud.ibm.
 import logging
 from typing import Dict, Any
 from typing import List
-from typing import NamedTuple
 
 from fhir.resources.resource import Resource
 import ibm_cloud_sdk_core
@@ -34,13 +33,14 @@ from nlp_insights.fhir.create_bundle import BundleEntryDfn
 from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptRef
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
 from nlp_insights.nlp.abstract_nlp_service import NLPService, NLPServiceError
-from nlp_insights.nlp.acd.fhir_enrichment.insights.create_condition import (
-    create_conditions,
+from nlp_insights.nlp.acd.acd_to_fhir.fhir_resource.create.create_condition import (
+    ConditionBuilder,
 )
-from nlp_insights.nlp.acd.fhir_enrichment.insights.create_medication import (
-    create_med_statements,
+from nlp_insights.nlp.acd.acd_to_fhir.fhir_resource.create.create_medication import (
+    MedicationStatementBuilder,
 )
-from nlp_insights.nlp.acd.fhir_enrichment.insights.update_codeable_concepts import (
+
+from nlp_insights.nlp.acd.acd_to_fhir.fhir_resource.update.update_codeable_concepts import (
     update_codeable_concepts_and_meta_with_insights,
     AcdConceptRef,
 )
@@ -48,13 +48,6 @@ from nlp_insights.nlp.nlp_config import ACD_NLP_CONFIG_STANDARD_V1_0
 
 
 logger = logging.getLogger(__name__)
-
-
-class _ResultEntry(NamedTuple):
-    """Tracks nlp input and output"""
-
-    text_source: UnstructuredText
-    nlp_output: acd.ContainerAnnotation
 
 
 class ACDService(NLPService):
@@ -98,21 +91,20 @@ class ACDService(NLPService):
         self, notes: List[UnstructuredText]
     ) -> List[BundleEntryDfn]:
 
-        nlp_responses = [_ResultEntry(note, self._run_nlp(note.text)) for note in notes]
         new_resources: List[Resource] = []
 
-        for response in nlp_responses:
-            conditions = create_conditions(
-                response.text_source, response.nlp_output, self.nlp_config
-            )
-            if conditions:
-                new_resources.extend(conditions)
+        for note in notes:
+            container = self._run_nlp(note.text)
 
-            medications = create_med_statements(
-                response.text_source, response.nlp_output, self.nlp_config
+            new_resources.extend(
+                ConditionBuilder(note, container, self.nlp_config).build_resources()
             )
-            if medications:
-                new_resources.extend(medications)
+
+            new_resources.extend(
+                MedicationStatementBuilder(
+                    note, container, self.nlp_config
+                ).build_resources()
+            )
 
         return [
             BundleEntryDfn(resource=resource, method="POST", url=resource.resource_type)

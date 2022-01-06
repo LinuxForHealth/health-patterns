@@ -6,7 +6,6 @@ import json
 import logging
 from typing import Dict, Any
 from typing import List
-from typing import NamedTuple
 
 from fhir.resources.resource import Resource
 import requests
@@ -16,29 +15,29 @@ from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptR
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
 from nlp_insights.nlp.abstract_nlp_service import NLPService, NLPServiceError
 from nlp_insights.nlp.nlp_config import QUICK_UMLS_NLP_CONFIG
-from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights import create_condition
-from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights import create_medication
-from nlp_insights.nlp.quickUMLS.fhir_enrichment.insights.update_codeable_concepts import (
-    update_codeable_concepts_and_meta_with_insights,
-    NlpConceptRef,
+from nlp_insights.nlp.quickumls.concept_container import (
+    QuickUmlsConcept,
+    QuickUmlsConceptContainer,
 )
-from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse, QuickUmlsConcept
+from nlp_insights.nlp.quickumls.quickumls_to_fhir.fhir_resource.create.create_condition import (
+    ConditionBuilder,
+)
+from nlp_insights.nlp.quickumls.quickumls_to_fhir.fhir_resource.create.create_medication import (
+    MedicationStatementBuilder,
+)
+from nlp_insights.nlp.quickumls.quickumls_to_fhir.fhir_resource.update.update_codeable_concepts import (
+    update_codeable_concepts_and_meta_with_insights,
+    QuickumlsConceptRef,
+)
 from nlp_insights.umls.semtype_lookup import get_names_from_type_ids
 
 
 logger = logging.getLogger(__name__)
 
 
-class _ResultEntry(NamedTuple):
-    """Tracks nlp input and output"""
-
-    text_source: UnstructuredText
-    nlp_output: QuickUmlsResponse
-
-
 def create_nlp_response(
     server_response_concepts: List[Dict[str, Any]], response: str
-) -> QuickUmlsResponse:
+) -> QuickUmlsConceptContainer:
     """Converts a json response from the quickUmls server to an object
 
     The server's response is a list of concept objects, each of which must
@@ -61,10 +60,10 @@ def create_nlp_response(
         for concept in server_response_concepts
         if "cui" in concept
     ]
-    return QuickUmlsResponse(concepts=concepts, service_resp=response)
+    return QuickUmlsConceptContainer(concepts=concepts, service_resp=response)
 
 
-class QuickUMLSService(NLPService):
+class QuickUmlsService(NLPService):
     """
     The QuickUMLS Service is able to detect UMLS cuis in unstructured text.
     """
@@ -74,7 +73,7 @@ class QuickUMLSService(NLPService):
         self.quick_umls_url = config["config"]["endpoint"]
         self.nlp_config = QUICK_UMLS_NLP_CONFIG
 
-    def _run_nlp(self, text: str) -> QuickUmlsResponse:
+    def _run_nlp(self, text: str) -> QuickUmlsConceptContainer:
         request_body = {"text": text}
         try:
             resp = requests.post(self.quick_umls_url, json=request_body)
@@ -95,22 +94,26 @@ class QuickUMLSService(NLPService):
         self, notes: List[UnstructuredText]
     ) -> List[BundleEntryDfn]:
 
-        nlp_responses = [_ResultEntry(note, self._run_nlp(note.text)) for note in notes]
-
         new_resources: List[Resource] = []
-        for response in nlp_responses:
-            conditions = create_condition.create_conditions(
-                response.text_source, response.nlp_output, self.nlp_config
-            )
-            if conditions:
-                new_resources.extend(conditions)
 
-            medications = create_medication.create_med_statements(
-                response.text_source, response.nlp_output, self.nlp_config
+        for note in notes:
+            container = self._run_nlp(note.text)
+
+            new_resources.extend(
+                ConditionBuilder(
+                    note,
+                    container,
+                    self.nlp_config,
+                ).build_resources()
             )
 
-            if medications:
-                new_resources.extend(medications)
+            new_resources.extend(
+                MedicationStatementBuilder(
+                    note,
+                    container,
+                    self.nlp_config,
+                ).build_resources()
+            )
 
         return [
             BundleEntryDfn(resource=resource, method="POST", url=resource.resource_type)
@@ -122,7 +125,7 @@ class QuickUMLSService(NLPService):
     ) -> int:
 
         nlp_responses = [
-            NlpConceptRef(concept_ref, self._run_nlp(concept_ref.adjusted_text))
+            QuickumlsConceptRef(concept_ref, self._run_nlp(concept_ref.adjusted_text))
             for concept_ref in concept_refs
         ]
 

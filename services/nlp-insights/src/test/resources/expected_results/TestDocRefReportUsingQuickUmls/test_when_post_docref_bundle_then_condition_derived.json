@@ -14,7 +14,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "a0903a84705a18632dd335528df155ee1d4c786ac3a858a081b23372"
+                    "value": "9f74a38a9f4a44b2b6c8ce54c8390d90273918b53c2dde5850616c44"
                   }
                 },
                 {
@@ -31,7 +31,7 @@
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "content[0].attachment.data"
+                      "valueString": "DocumentReference.content[0].attachment.data"
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
@@ -77,7 +77,7 @@
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                  "value": "a0903a84705a18632dd335528df155ee1d4c786ac3a858a081b23372"
+                  "value": "9f74a38a9f4a44b2b6c8ce54c8390d90273918b53c2dde5850616c44"
                 }
               },
               {
@@ -126,7 +126,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "71c624ffbb8c0a772a496f6efc5a3e18c5ccc3cc7895793f27e9d98b"
+                    "value": "37c1202431ee02c04264faca04837d7ce5ab6fcff0baf4de331fead0"
                   }
                 },
                 {
@@ -143,7 +143,7 @@
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "content[0].attachment.data"
+                      "valueString": "DocumentReference.content[0].attachment.data"
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
@@ -189,7 +189,7 @@
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                  "value": "71c624ffbb8c0a772a496f6efc5a3e18c5ccc3cc7895793f27e9d98b"
+                  "value": "37c1202431ee02c04264faca04837d7ce5ab6fcff0baf4de331fead0"
                 }
               },
               {
@@ -238,7 +238,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "fbd5b947726e7a2a90d3d66041a870cfb331f7a58c830ffc5757ac13"
+                    "value": "9af651304214739ac2b6a76c84d96fa0a17318622a965a47d9b77c58"
                   }
                 },
                 {
@@ -255,7 +255,7 @@
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "content[0].attachment.data"
+                      "valueString": "DocumentReference.content[0].attachment.data"
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
@@ -301,7 +301,7 @@
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                  "value": "fbd5b947726e7a2a90d3d66041a870cfb331f7a58c830ffc5757ac13"
+                  "value": "9af651304214739ac2b6a76c84d96fa0a17318622a965a47d9b77c58"
                 }
               },
               {

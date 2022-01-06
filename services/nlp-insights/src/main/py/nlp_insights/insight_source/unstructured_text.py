@@ -25,6 +25,7 @@ from typing import Union
 
 from fhir.resources.diagnosticreport import DiagnosticReport
 from fhir.resources.documentreference import DocumentReference
+from fhir.resources.reference import Reference
 from fhir.resources.resource import Resource
 from nlp_insights.fhir.path import FhirPath
 
@@ -38,6 +39,11 @@ class UnstructuredText(NamedTuple):
     source_resource: UnstructuredFhirResource
     text_path: FhirPath
     text: str
+
+    @property
+    def subject(self) -> Reference:
+        """Returns a reference to the subject of this unstructured text"""
+        return self.source_resource.subject
 
 
 def _decode_text(encoded_data: bytes) -> str:
@@ -67,7 +73,7 @@ def _get_diagnostic_report_text(
         return [
             UnstructuredText(
                 source_resource=report,
-                text_path=FhirPath(f"presentedForm[{ix}].data"),
+                text_path=FhirPath(f"DiagnosticReport.presentedForm[{ix}].data"),
                 text=_decode_text(attachment.data),
             )
             for ix, attachment in enumerate(report.presentedForm)
@@ -94,7 +100,7 @@ def _get_document_reference_data(
         return [
             UnstructuredText(
                 source_resource=doc_ref,
-                text_path=FhirPath(f"content[{ix}].attachment.data"),
+                text_path=FhirPath(f"DocumentReference.content[{ix}].attachment.data"),
                 text=_decode_text(content.attachment.data),
             )
             for ix, content in enumerate(doc_ref.content)

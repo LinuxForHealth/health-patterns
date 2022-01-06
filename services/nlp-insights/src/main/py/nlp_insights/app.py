@@ -41,7 +41,7 @@ from nlp_insights.insight_source.unstructured_text import UnstructuredText
 from nlp_insights.insight_source.unstructured_text import get_unstructured_text
 from nlp_insights.nlp.abstract_nlp_service import NLPService, NLPServiceError
 from nlp_insights.nlp.acd.acd_service import ACDService
-from nlp_insights.nlp.quickUMLS.quickUMLS_service import QuickUMLSService
+from nlp_insights.nlp.quickumls.quickumls_service import QuickUmlsService
 
 
 logger = logging.getLogger()
@@ -53,15 +53,16 @@ logging.basicConfig(
 app = Flask(__name__)
 
 # Maps values seen in configs to NLP python classes
-all_nlp_services = {"acd": ACDService, "quickumls": QuickUMLSService}
+all_nlp_services = {"acd": ACDService, "quickumls": QuickUmlsService}
 
 
+# NLP Service currently configured
 # Using a global to track the current NLP service is dangerous. It does not scale correctly.
 # This is obvious when multiple processes or containers are used. It is also not thread safe when multiple
 # requests to update the config are made in parallel. Configurations do not persist beyond the life of the container.
 # Fixing this is a design issue, and a fix is not in plan at this time. The target audience is demo and starter code,
 # and until that changes we can't spend time fixing this.
-nlp_service = None  # NLP Service currently configured
+nlp_service = None  # pylint: disable=invalid-name
 
 
 # Stores instances of configured NLP Services
@@ -110,7 +111,7 @@ def persist_config_helper(config_dict: Dict[str, Any]) -> str:
 
 def init_configs() -> None:
     """Create initial configs from deployment values, if any"""
-    global nlp_service  # pylint: disable=global-statement
+    global nlp_service  # pylint: disable=global-statement, invalid-name
 
     logger.info("ACD enable config: %s", os.getenv("ACD_ENABLE_CONFIG"))
     logger.info("QuickUMLS enable config: %s", os.getenv("QUICKUMLS_ENABLE_CONFIG"))
@@ -175,8 +176,13 @@ def persist_config() -> Response:
     """Create a new named config"""
 
     request_str = request.data.decode("utf-8")
-    config_dict = json.loads(request_str)
-    config_name = persist_config_helper(config_dict)
+    try:
+        config_dict = json.loads(request_str)
+        config_name = persist_config_helper(config_dict)
+    except json.JSONDecodeError as jderr:
+        raise BadRequest(
+            description=f"json was not valid json: {str(jderr)}"
+        ) from jderr
     logger.info("%s added config:%s", config_name, str(nlp_services_dict))
 
     return Response(status=200)
@@ -222,7 +228,7 @@ def get_current_config() -> Response:
 @app.route("/config/setDefault", methods=["POST", "PUT"])
 def set_default_config() -> Response:
     """Set the default nlp instance"""
-    global nlp_service  # pylint: disable=global-statement
+    global nlp_service  # pylint: disable=global-statement, invalid-name
     if request.args and request.args.get("name"):
         config_name = request.args.get("name")
 
@@ -246,7 +252,7 @@ def set_default_config() -> Response:
 @app.route("/config/clearDefault", methods=["POST", "PUT"])
 def clear_default_config() -> Response:
     """Clear the default nlp instance"""
-    global nlp_service  # pylint: disable=global-statement
+    global nlp_service  # pylint: disable=global-statement, invalid-name
 
     nlp_service = None
     return Response(
@@ -383,7 +389,7 @@ def discover_insights() -> Response:
 
 
 def _get_nlp_service_for_resource(resource: Resource) -> NLPService:
-    global nlp_service  # pylint: disable=global-statement
+    global nlp_service  # pylint: disable=global-statement, invalid-name
 
     if nlp_service is None:
         raise BadRequest(

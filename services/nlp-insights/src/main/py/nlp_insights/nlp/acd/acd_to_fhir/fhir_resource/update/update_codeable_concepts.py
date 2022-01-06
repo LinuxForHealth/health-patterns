@@ -28,8 +28,8 @@ from nlp_insights.insight.builder.enrich_resource_builder import (
     EnrichedResourceInsightBuilder,
 )
 from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptRef
-from nlp_insights.nlp.acd.fhir_enrichment.insights import attribute
-from nlp_insights.nlp.acd.fhir_enrichment.insights import create_codings
+from nlp_insights.nlp.acd.acd_to_fhir import create_codings
+from nlp_insights.nlp.acd.flows import attribute
 from nlp_insights.nlp.nlp_config import AcdNlpConfig
 
 

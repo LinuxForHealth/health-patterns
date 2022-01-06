@@ -22,7 +22,7 @@ ext {
     'pytest:6.2.5',
     'pytest-cov:2.7.1',
     'deepdiff:5.5.0',
-    'flake8:3.7.8',
+    'flake8:4.0.1',
     'types-requests:2.25.9',
     /* https://docs.python.org/3/library/venv.html
     Common installation tools such as setuptools and pip work as expected with virtual environments.

@@ -24,19 +24,22 @@ from nlp_insights.insight.builder.enrich_resource_builder import (
 )
 from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptRef
 from nlp_insights.nlp.nlp_config import NlpConfig, QUICK_UMLS_NLP_CONFIG
-from nlp_insights.nlp.quickUMLS.nlp_response import QuickUmlsResponse, QuickUmlsConcept
+from nlp_insights.nlp.quickumls.concept_container import (
+    QuickUmlsConceptContainer,
+    QuickUmlsConcept,
+)
 
 
-class NlpConceptRef(NamedTuple):
-    """Binding between ref to a codeable concept and QuickUmls response"""
+class QuickumlsConceptRef(NamedTuple):
+    """Binding between ref to a codeable concept and QuickUmls concept container"""
 
     adjusted_concept: AdjustedConceptRef
-    nlp_response: QuickUmlsResponse
+    container: QuickUmlsConceptContainer
 
     @property
     def relevant_concepts(self) -> List[QuickUmlsConcept]:
         """Returns best relevant concepts for the insight"""
-        return self.nlp_response.get_most_relevant_concepts(
+        return self.container.get_most_relevant_concepts(
             self.adjusted_concept.concept_ref.type
         )
 
@@ -57,7 +60,7 @@ def _derive_codings(nlp_concept: QuickUmlsConcept) -> List[Coding]:
 
 
 def update_codeable_concepts_and_meta_with_insights(
-    concept_insights: List[NlpConceptRef],
+    concept_insights: List[QuickumlsConceptRef],
     nlp_config: NlpConfig = QUICK_UMLS_NLP_CONFIG,
 ) -> int:
     """Updates the resource with derived insights
@@ -84,7 +87,7 @@ def update_codeable_concepts_and_meta_with_insights(
                 concept_insight.adjusted_concept.concept_ref
             ),
             insight_id_system=nlp_config.nlp_system,
-            nlp_response_json=concept_insight.nlp_response.service_resp,
+            nlp_response_json=concept_insight.container.service_resp,
         )
 
         derived_codes = [

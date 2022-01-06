@@ -19,12 +19,14 @@ from typing import NamedTuple
 from typing import Set
 from typing import Type
 from typing import Union
+
+from nlp_insights.insight.span import Span
 from nlp_insights.insight_source.fields_of_interest import CodeableConceptRefType
 from nlp_insights.umls import semtype_lookup
 
 
 class QuickUmlsConcept(NamedTuple):
-    """Models a concept returned by QuickUmls
+    """represents a concept detected by QuickUmls
 
     cui - UMLS concept unique identifier
     covered_text - the text that the identified span covers
@@ -54,12 +56,21 @@ class QuickUmlsConcept(NamedTuple):
     types: Set[semtype_lookup.UmlsTypeName]
     similarity: float
 
+    @property
+    def span(self) -> Span:
+        """Returns the Span of the concept"""
+        return Span(
+            begin=self.begin,
+            end=self.end,
+            covered_text=self.covered_text,
+        )
 
-class QuickUmlsResponse(NamedTuple):
-    """Models a response from QuickUmls,"""
+
+class QuickUmlsConceptContainer(NamedTuple):
+    """Contains a list of concepts detected by QuickUMLS"""
 
     concepts: List[QuickUmlsConcept]
-    service_resp: str  # For debug, the original json response from the service
+    service_resp: str  # the original json response from the service
 
     def get_most_relevant_concepts(
         self,

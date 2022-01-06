@@ -1,5 +1,4 @@
 # NLP Insights
--------------------------------
 A Rest service for discovering insights within FHIR resources.
 The service is implemented as a Flask API within a docker container.
 
@@ -33,7 +32,9 @@ The source text used to derive these new resources is found in the following res
 
 
 ## Quick Start
-See our tutorials in the [documentation](./doc/examples).
+See our quick start guides:
+* [Tutorial for using the nlp-insights service with QuickUMLS](./doc/examples/quickumls/quickumls_tutorial.md)
+* [Tutorial for using the nlp-insights service with ACD](./doc/examples/acd/acd_tutorial)
 
 # Running the service
 It is recommended that the service be deployed as a docker container, however you can run it outside of docker if necessary.

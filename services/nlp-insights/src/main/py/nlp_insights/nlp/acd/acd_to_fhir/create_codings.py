@@ -23,7 +23,7 @@ from ibm_whcs_sdk.annotator_for_clinical_data import (
 
 from nlp_insights.fhir import create_coding
 from nlp_insights.fhir.code_system import hl7
-from nlp_insights.nlp.acd.fhir_enrichment.insights import attribute
+from nlp_insights.nlp.acd.flows import attribute
 
 
 def get_concept_display_text(concept: attribute.AttrSourceConcept) -> Optional[str]:
@@ -52,7 +52,15 @@ def get_concept_display_text(concept: attribute.AttrSourceConcept) -> Optional[s
 def create_codings(
     system: str, code: str, display: Optional[str] = None
 ) -> List[Coding]:
-    """Create one or more codings"""
+    """Create one or more codings
+
+    Args:
+        system - system to use for the coding
+        code - code value, possibly a list of codes separated by a ','
+        display - [optional], display text for the code
+    Returns:
+        List of Coding objects
+    """
 
     return [create_coding.create_coding(system, c, display) for c in code.split(",")]
 

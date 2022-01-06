@@ -22,6 +22,12 @@
     Although there are many confidence scores available,
     nlp-insights only uses a subset of them that are believed to be
     interesting for our examples and use cases.
+
+    The choice of confidence scores that are interesting is somewhat related
+    to the choice of ACD attributes that are used. For example a 'patient reported'
+    confidence score is likely to be high for a 'PatientReportedCondition' attribute.
+    If more attributes are added or removed, including additional confidence scores
+    may become valuable.
 """
 from typing import Optional, List
 

@@ -14,7 +14,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "26c0a5f96f57f498a9b77e334ecac6d7c058bf6abf7a3f0d99ad91d3"
+                    "value": "0d8323ed9b9e5bc10433e33babe92fc10cd4c1a90ccedafc66e97ac5"
                   }
                 },
                 {
@@ -31,7 +31,7 @@
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "presentedForm[0].data"
+                      "valueString": "DiagnosticReport.presentedForm[0].data"
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
@@ -125,7 +125,7 @@
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                  "value": "26c0a5f96f57f498a9b77e334ecac6d7c058bf6abf7a3f0d99ad91d3"
+                  "value": "0d8323ed9b9e5bc10433e33babe92fc10cd4c1a90ccedafc66e97ac5"
                 }
               },
               {
@@ -187,7 +187,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "92f2eb818b8fb33cd3a4f5d9be98aa32a8639841ef1c574ea6249526"
+                    "value": "b604fdd822cad1eb856a378aea06a885f61f97186922a3b523b1f059"
                   }
                 },
                 {
@@ -204,7 +204,7 @@
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "presentedForm[0].data"
+                      "valueString": "DiagnosticReport.presentedForm[0].data"
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
@@ -298,7 +298,7 @@
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                  "value": "92f2eb818b8fb33cd3a4f5d9be98aa32a8639841ef1c574ea6249526"
+                  "value": "b604fdd822cad1eb856a378aea06a885f61f97186922a3b523b1f059"
                 }
               },
               {
@@ -364,7 +364,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "afb076c91e87bc2ffd327864d3de56b5cb5afd095d56670c850a8ee9"
+                    "value": "6185c5471e6d6ac92e60bfa9d3cc8225796e93bf1033ee36d0838def"
                   }
                 },
                 {
@@ -381,7 +381,7 @@
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference-path",
-                      "valueString": "presentedForm[0].data"
+                      "valueString": "DiagnosticReport.presentedForm[0].data"
                     },
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/evaluated-output",
@@ -475,7 +475,7 @@
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                  "value": "afb076c91e87bc2ffd327864d3de56b5cb5afd095d56670c850a8ee9"
+                  "value": "6185c5471e6d6ac92e60bfa9d3cc8225796e93bf1033ee36d0838def"
                 }
               },
               {
