@@ -43,3 +43,9 @@ fhir:
   # -- IBM FHIR Server container image tag
     tag: "latest"
 ```
+
+If you wish to write cql libraries that access other user created resources (such as including other cql libraries or accessing a valueSet), then it is necessary to enable the `serverRegistryResourceProvider`.  This can be done by simply adding the following to your `values.yaml` file under the fhir server configurations.
+
+```
+serverRegistryResourceProviderEnabled: true
+```
