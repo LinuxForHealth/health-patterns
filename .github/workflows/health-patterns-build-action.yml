@@ -1,0 +1,62 @@
+name: Health Patterns Continuous Integration
+
+on: push
+
+jobs:
+  job:
+    name: Build Health Patterns
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Identify changed files
+      id: filecheck
+      run: |
+        git remote add original https://github.com/Alvearie/health-patterns.git
+        git fetch original
+        changed_files=$(git diff-tree --no-commit-id --name-only -r  HEAD original/main)
+        changed_files="${changed_files//'%'/'%25'}"
+        changed_files="${changed_files//$'\n'/'%0A'}"
+        changed_files="${changed_files//$'\r'/'%0D'}"
+        echo "::set-output name=changed_files::${changed_files}"
+    - name: Log Changed Files
+      run: echo "${{steps.filecheck.outputs.changed_files}}"
+    - name: Build Expose Kafka
+      if: ${{contains( steps.filecheck.outputs.changed_files ,'services/expose-kafka')}}
+      run: |
+           echo "Running Expose Kafka build"
+           .github/workflows/scripts/build-service.sh \
+             -s=expose-kafka \
+             -m=${{github.event_name}} \
+             --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
+             --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Build CQL Bulk Export
+      if: ${{contains( steps.filecheck.outputs.changed_files ,'services/cql-bulk-export')}}
+      run: |
+           echo "Running CQL Bulk Export build"
+           .github/workflows/scripts/build-service.sh \
+             -s=cql-bulk-export \
+             -m=${{github.event_name}} \
+             --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
+             --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+             
+    - name: Build FHIR Trigger
+      if: ${{contains( steps.filecheck.outputs.changed_files ,'services/fhir-trigger')}}
+      run: |
+           echo "Running FHIR Trigger build"
+           .github/workflows/scripts/build-service.sh \
+             -s=fhir-trigger \
+             -m=${{github.event_name}} \
+             --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
+             --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Commit all changes and update Helm repo 
+      if: ${{steps.filecheck.outputs.changed_files}}
+      run: |
+           echo "Committing/Pushing Artifacts to Git."
+           .github/workflows/scripts/build-health-patterns.sh \
+             -m=${{github.event_name}} \
+             --github-user=${{ github.actor }}

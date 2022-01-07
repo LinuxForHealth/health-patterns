@@ -40,6 +40,9 @@ These instructions assume that you have the following resources, tools, and conf
 - Access to ```kubectl```, the Kubernetes command line tool
 - PV provisioner support in the underlying infrastructure
 
+**Note:** If you don't have access to a kubernetes cluster, this pattern can also be [deployed to minikube](../helm-charts/health-patterns/README_minikube.md).
+
+
 #### Check out the code
 
 ```
@@ -58,6 +61,51 @@ Please note that although this is step is optional, it is highly recommended tha
 kubectl create namespace alvearie
 kubectl config set-context --current --namespace=alvearie
 ```
+
+**NOTE:** The length of a namespace name must be less than or equal to **20 characters**.  Using a name that is longer than 20 characters will result in a failure to deploy the Nifi pod due to a certificate issue (the error will be visible in the NifiKop log).
+
+### Configure Nifikop
+
+This chart relies on [NifiKop](https://orange-opensource.github.io/nifikop/) to deploy Apache Nifi.  This relies on a one-time setup for your cluster to install the Custom Resource Definitions properly.  See [Getting Started](https://orange-opensource.github.io/nifikop/docs/2_setup/1_getting_started) for instructions on how to setup your cluster.
+
+In addition, using NifiKop requires a NifiKop controller to be deployed in the namespace prior to deploying the Health Patterns Helm chart.  This allows the NifiKop custom resources to be managed correctly, and by deploying separately guarantees the controller remains active when custom resources are deleted, allowing proper clean-up.
+
+To deploy a NifiKop controller to your namespace, run:
+
+```
+helm repo add orange-incubator https://orange-kubernetes-charts-incubator.storage.googleapis.com/
+
+helm repo update
+
+helm install nifikop \
+    orange-incubator/nifikop \
+    --namespace=alvearie \
+    --version 0.7.1 \
+    --set image.tag=v0.7.1-release \
+    --set resources.requests.memory=256Mi \
+    --set resources.requests.cpu=250m \
+    --set resources.limits.memory=256Mi \
+    --set resources.limits.cpu=250m \
+    --set namespaces={"alvearie"}
+```
+
+### User Authentication - OpenID Connect
+
+Nifikop configures a secure Nifi instance which relies on [OIDC](https://openid.net/connect/) to authenticate user access.  This requires you to separately setup an OIDC service and supply the correct configuration information to this Helm chart.  For example, [App Id](https://www.ibm.com/cloud/app-id) is available for IBM Cloud instances.
+
+Once configured, update the values.yaml to populate the following parameters.
+
+```
+oidc:
+  users - a list of identity/name values representing the user(s) you want configured for access.  The identity must match the login identity from your OIDC endpoint, and the name should be lower-case and contain no spaces.
+  discovery:
+    url - The URL of your OIDC discovery service
+  client:
+    id - The client ID of your OIDC discovery service
+    secret - The client secret of your OIDC discovery service
+```
+
+**NOTE:** You will also need to register your OIDC callback (`https://<<external-hostname>>:443/nifi-api/access/oidc/callback`) with your OIDC service.  For IBM App ID, this is located under Manage Authentication->Authentication Settings->Add Web Redirect URLs.
 
 #### Ingress parameters
 
@@ -89,11 +137,21 @@ ingress:
 ```
 
 
+### Storage class
+And finally, if you are deploying to a non-IBM cloud, you will need to change the storage class used by Nifi by updating the following parameter:
+
+```
+nifi2:
+  storageClassName - The storage class you wish to use for persisting Nifi.
+```
+
 #### Deployment
 The following Helm command will deploy the enrichment pattern.  The enrichment pipeline will be ready to accept FHIR data and run it through a series of steps producing a possibly updated FHIR bundle with resources that have been added or modified by the enrichment process.
+
 ```
-helm install enrich .  -f clinical_enrichment.yaml
+helm install enrich .
 ```
+
 After running the command above, you will see notes that give you information about the deployment, in particular, where the important services (e.g. Nifi, expose-kafka) have been deployed.
 
 **IMPORTANT NOTE** The release name for the enrichment pipeline must be **enrich** (see [Advanced topics](#advanced-topics) for additional information)
@@ -102,8 +160,17 @@ After running the command above, you will see notes that give you information ab
 #### Uninstall/delete
 
 To uninstall/delete the deployment, use:
+
 ```
 helm delete enrich
+```
+
+Deletion of charts doesn't cascade to deleting associated `PersistedVolume`s and `PersistedVolumeClaims`s.
+To delete them:
+
+```bash
+kubectl delete pvc -l release=enrich
+kubectl delete pv -l release=enrich
 ```
 
 ## Using the pattern
@@ -117,18 +184,18 @@ The NiFi canvas will show a pre-configured main process group called **Enrich FH
 #### [Kafka](https://kafka.apache.org)
 The Enrichment Pattern includes a Kafka broker that can be used to feed clinical data into the pattern
 
-The entry point into the enrichment flow is a Kakfa topic called `patients.updated.out`.  When we place data onto that topic, it will automatically be consumed and sent through the rest of the flow.  In order to place data on a Kafka topic, we will use the expose-kafka service that was deployed as part of the install (the url is included in the deployment information).  This can be done with Postman, curl, or some other http tool.  
+The entry point into the enrichment flow is a Kakfa topic called `enrich.topic.in`.  When we place data onto that topic, it will automatically be consumed and sent through the rest of the flow.  In order to place data on a Kafka topic, we will use the [expose-kafka](../services/expose-kafka/README.md) service that was deployed as part of the install (the url is included in the deployment information).  This can be done with Postman, curl, or some other http tool.  
 
-The example curl command below will place the contents of the file `testpatient.json` (a patient FHIR bundle) on the patients.updated.out kafka topic.  At that point, the enrichment flow is listening for messages and will immediately take the new bundle and begin to process it.  
+The example curl command below will place the contents of the file `testpatient.json` (a patient FHIR bundle) on the enrich.topic.in kafka topic.  At that point, the enrichment flow is listening for messages and will immediately take the new bundle and begin to process it.  
 
 ```
-curl -X POST https://<<external-hostname>>/expose-kafka?topic=patients.updated.out  \
+curl -X POST https://<<external-hostname>>/expose-kafka?topic=enrich.topic.in  \
    --header "Content-Type: text/plain" \
    --header "ResolveTerminology: true" \
    --header "DeidentifyData: false" \
    --header "RunASCVD: true" \
    --header "AddNLPInsights: true" \
-   --data-binary  @<<pathtofile/testpatient.json
+   --data-binary  @/pathtofile/testpatient.json
 ```
 
 Note that there are four headers in the above request describing which enrichment steps should or should not be performed.  
@@ -138,12 +205,17 @@ Note that there are four headers in the above request describing which enrichmen
  - **RunASCVD** will run the FHIR bundle through the ASCVD service. This will calculate a ten-year risk of cardiovascular disease and store the result as an attribute in the flow file. Use of the attribute is left up to the user of the Clinical Ingestion pipeline to determine.
  - **AddNLPInsights** will run apply natural language processing to certain resource types in order to enhance resources by adding additional information to the resource or by adding new resources based on text found in the original resource.
 
-When the Enrichment process is complete, the updated FHIR result will be placed on a different Kafka topic called `patient.enriched.out`.  From there it is up to the user to decide what to do with the FHIR result.
+Additional Expose-Kafka URL parameters:
 
-In order to see those results, you can use the expose-kafka service and request to see all the messages on the patient.enriched.out topic.
+`response_topic`: The response topic you wish to listen on, the API won't return until your result is complete (or a timeout is reached).  This topic is set in nifi-enrich-parameter-context.yaml under `enrich.topic.out` and defaults to topic `enrich.topic.out`.
+`failure_topic`: The topic used to return errors occurring during the pipeline.  If `response_topic` is not set, no errors will be reported, but when both topics are specified, the request will monitor both topics for results.  This topic is set in nifi-enrich-parameter-context.yaml under `enrich.topic.failure` and defaults to topic `enrich.topic.failure`.
+
+When the Enrichment process is complete, the updated FHIR result will be placed on a different Kafka topic called `enrich.topic.out`.  From there it is up to the user to decide what to do with the FHIR result.
+
+In order to see those results, you can use the expose-kafka service and request to see all the messages on the enrich.topic.out topic.
 
 ```
-curl -X GET https://<<external-hostname>>/expose-kafka?topic=patient.enriched.out
+curl -X GET https://<<external-hostname>>/expose-kafka?topic=enrich.topic.out
 ```
 
 
@@ -162,6 +234,46 @@ If you would like to turn off that save to FHIR action, you can change the value
 
 ## Advanced topics
 
+#### Alternative deployment instructions (insecure)
+
+The instructions listed above are the recommended steps for deploying Health Patterns Enrichment flow. However, it requires sufficient authority to the target cluster to deploy Custom Resource Definitions and configure an OIDC service. If these authorities are not attainable it may be necessary to deploy an unsecured, non-authenticating version of Enrichment.
+
+**NOTE:** Given the significant differences between the Nifikop-based deployment and this, it is not feasible to maintain both approaches targeting current Nifi dataflows. Therefore, using the insecure deployment will result in a snapshot of these flows current as of November 2021, but not updated since.
+
+First, setup deployment parameters:
+
+1) Update your ingress parameters as noted [here](#ingress-parameters).
+
+2) Update values.yaml with the following changes:
+
+```
+nifikop:
+  disabled: &nifikopDisabled true
+  enabled: &nifikopEnabled false
+```
+
+**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `enrich`, you are required to update the clinical_enrichment.yaml file to correspond to the correct release name and bootstrapServers.
+
+```
+nifi:
+  extraContainers:
+    - name: post-start-setup
+      env:
+      - name: "RELEASE_NAME"
+        value: "enrich"
+
+fhir:
+  notifications:
+    kafka:
+      bootstrapServers: "enrich-kafka:9092"
+```
+
+
+Finally, to deploy run:
+
+`helm install enrich. -f clinical_enrichment.yaml`
+
+
 #### Synthetic data via Synthea
 
   If you don't have data, you can create some synthetic clinical data to push. Synthetic patient data can be generated using the Synthea Patient Generator.  Download Synthea and run the following command (for more information on Synthea visit their [Github page](https://github.com/synthetichealth/synthea)):
@@ -172,9 +284,9 @@ If you would like to turn off that save to FHIR action, you can change the value
 
 #### Kafka topics for the pipeline
 
-To submit data to the Enrichment pipeline, it needs to be posted to the configured Kafka topic. The Kafka topic to target depends on the pipeline you are running and the Nifi configuration. For example, in the Enrichment pattern the topic is called `patients.updated.out` as was used above.  This can be found and/or updated in the Nifi parameter context `enrichment parameter context` under the parameter `enrich.in`.
+To submit data to the Enrichment pipeline, it needs to be posted to the configured Kafka topic. The Kafka topic to target depends on the pipeline you are running and the Nifi configuration. For example, in the Enrichment pattern the topic is called `enrich.topic.in` as was used above.  This can be found and/or updated in the Nifi parameter context `enrichment parameter context` under the parameter `enrich.in`.
 
-The FHIR response with the requested modifications will be placed on a topic called `patient.enriched.out`, again found in the `enrichment parameter context` under the parameter `enrich.out`.
+The FHIR response with the requested modifications will be placed on a topic called `enrich.topic.out`, again found in the `enrichment parameter context` under the parameter `enrich.out`.
 
 #### Other data formats
 Currently, the enrichment pattern is designed to operate only on data in FHIR format.
@@ -182,27 +294,11 @@ Note that if the enrichment pattern is being used as part of the ingestion patte
 converted to FHIR (by ingestion) before it is allowed to run through the enrichment pipeline.
 Other data types (such as DICOM image data) are being considered but are currently not supported.
 
-#### Alternate configuration for Helm Chart
+
+#### Advanced configuration for Helm Chart
 
 When deploying this chart, there are many configuration parameters specified in the values.yaml file.  These can all be overridden based on individual preferences.  To do so, you can create a secondary YAML file containing your changes and specify it to the `helm install` command to override default configuration.
 
-```
-helm install <<RELEASE_NAME>> . \
-    -f value_overrides.yaml \
-    -f clinical_enrichment.yaml
-```
+`helm install enrich . -f value_overrides.yaml`
 
 **NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter.
-
-**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `enrich`, you are required to update the corresponding values.yaml file to have the correct release name.  
-
-For enrichment, update the `RELEASE_NAME` environment variable in the `clinical_enrichment.yaml` file.  The value should be changed from _enrich_ to whatever release name you choose.
-
-```
-env:
-- name: "RELEASE_NAME"
-  value: "enrich"
-```
-
-In that same file, update the line
-- `bootstrapServers: "enrich-kafka:9092"` to include the correct Kafka broker, replacing _enrich_ with the correct release name.

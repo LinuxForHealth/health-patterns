@@ -1,0 +1,180 @@
+{
+    "scenarioName": "********ingest_FHIR_DEID_BLK********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "ingestPatient",
+            "url": "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json", 
+                               "DeidentifyData": "true"  },
+                "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 ,
+                    "entry[0]": {
+                        "fullUrl": "$CONTAINS.STRING:${$.ingestPatient.response.body.entry[0].resource.id}" 
+                    } 
+                }
+            }
+        },   
+
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        },
+        {
+            "name": "waitForIngestion",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 5,
+            "verify": {
+            }
+        },
+        {
+            "name": "verifyDeIDPatient",
+            "url": "${deid_fhir_server}/Patient",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 ,
+                    "entry":[ {
+                        "resource": {
+                            "name": [{
+                              "family" : "$IS.NOTNULL",
+                              "given" : [ "$IS.NOTNULL" ]
+                            }],
+                           "birthDate" : "$IS.NOTNULL",
+                           "address" : [ {
+                               "line" : [ "$IS.NOTNULL" ],
+                               "city" : "$IS.NOTNULL",
+                               "state" : "$IS.NOTNULL",
+                               "postalCode" : "$IS.NOTNULL"
+                           } ]
+                        }
+                    } ]
+                }
+            }
+        },  
+        {
+            "name": "verifyDeIDFamilyName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Family Name",
+                 "deid": "${$.verifyDeIDPatient.response.body.entry[0].resource.name[0].family}",
+                 "phi":  "${$.verifyPatientIngestion.response.body.entry[0].resource.name[0].family}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyDeIDGivenName",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Given Name",
+                 "deid": "${$.verifyDeIDPatient.response.body.entry[0].resource.name[0].given}",
+                 "phi":  "${$.verifyPatientIngestion.response.body.entry[0].resource.name[0].given}"
+            },
+            "verify": {"result": true }
+        },               
+        {
+            "name": "verifyDeIDBirthDate",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Birth Date",
+                 "deid": "${$.verifyDeIDPatient.response.body.entry[0].resource.birthDate}",
+                 "phi":  "${$.verifyPatientIngestion.response.body.entry[0].resource.birthDate}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyDeIDAddressLine",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Address Line",
+                 "deid": "${$.verifyDeIDPatient.response.body.entry[0].resource.address[0].line[0]}",
+                 "phi":  "${$.verifyPatientIngestion.response.body.entry[0].resource.address[0].line[0]}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyDeIDCity",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "City",
+                 "deid": "${$.verifyDeIDPatient.response.body.entry[0].resource.address[0].city}",
+                 "phi":  "${$.verifyPatientIngestion.response.body.entry[0].resource.address[0].city}"
+            },
+            "verify": { "result": true }
+        },              
+        {
+            "name": "verifyDeIDPostalCode",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "notEqual",
+            "request": {
+                 "dataName": "Postal Code",
+                 "deid": "${$.verifyDeIDPatient.response.body.entry[0].resource.address[0].postalCode}",
+                 "phi":  "${$.verifyPatientIngestion.response.body.entry[0].resource.address[0].postalCode}"
+            },
+            "verify": { "result": true }
+        },
+        {
+            "name": "deletePatientOnDeIDFHIR",
+            "url": "${deid_fhir_server}/Patient/${$.verifyDeIDPatient.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyDeIDPatient.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }         
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738"
+        ]
+    }
+}

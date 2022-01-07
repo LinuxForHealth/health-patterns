@@ -39,3 +39,12 @@ spec:
             value: {{ .Values.inittopicnumpartitions | quote }}
           - name: INITTOPICREPLICATION
             value: {{ .Values.inittopicreplication | quote }}
+          - name: REQUEST_TIMEOUT
+            value: {{ .Values.requestTimeout | quote }}
+        readinessProbe:
+          exec:
+            command:
+              - cat
+              - /app/ready
+          initialDelaySeconds: 5
+          periodSeconds: 5

@@ -1,12 +1,53 @@
 apiVersion: v1
 entries:
+  cert-secret-generator:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-01-05T22:13:22.810987076Z"
+    description: A Helm Chart to generate secrets for certificates needed by Health
+      Patterns.
+    digest: 6d4c6638296effb8f8930776e8ae75dba5a0284bcf75d219ae2e27aea3d2a69c
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/cert-secret-generator
+    keywords:
+    - ibm
+    - alvearie
+    maintainers:
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    - email: dlranum@us.ibm.com
+      name: David Ranum
+    name: cert-secret-generator
+    type: application
+    urls:
+    - cert-secret-generator-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-01-05T22:13:22.810645071Z"
+    description: A Helm Chart to generate secrets for certificates needed by Health
+      Patterns.
+    digest: ca763ffb8e62c9b0c1d6e25a19ba00246c9e877c967ae7e9e5f083252da55296
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/cert-secret-generator
+    keywords:
+    - ibm
+    - alvearie
+    maintainers:
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    - email: dlranum@us.ibm.com
+      name: David Ranum
+    name: cert-secret-generator
+    type: application
+    urls:
+    - cert-secret-generator-0.1.0.tgz
+    version: 0.1.0
   cohort-service:
   - apiVersion: v2
     appVersion: 1.0.1
-    created: "2021-09-16T14:51:30.229697-05:00"
+    created: "2022-01-05T22:13:22.812636596Z"
     description: A Helm Chart to deploy the Alvearie Health Patterns Cohort Service
       App.
-    digest: 1c43f247ab23db5264b6a1a8083dd5d3cfcfccb1d487be0d8f5375bc59f70a59
+    digest: 71c3383c1cc667bdf519c3f6576d8ba8a340229bc5bd9ec1120d65887fd40090
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/cohort-service
     keywords:
     - ibm
@@ -23,7 +64,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2021-09-16T14:51:30.228598-05:00"
+    created: "2022-01-05T22:13:22.811487782Z"
     description: A Helm Chart to deploy the Alvearie Health Patterns Cohort Service
       App.
     digest: d2b554c8f4018cce30103fe79ceca2579f429162a82a972dc2fc6a5683bb9b39
@@ -41,12 +82,34 @@ entries:
     urls:
     - cohort-service-0.1.0.tgz
     version: 0.1.0
+  cql-bulk-export:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-01-05T22:13:22.813100402Z"
+    description: A Helm Chart to deploy the CQL BulkExport service.
+    digest: 944e329a95a57b52c48a007af7a11e9ebb5eca157e93267710b4a4e1907865aa
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/cql-bulk-export
+    keywords:
+    - ibm
+    - alvearie
+    - fhir
+    - cohorting
+    maintainers:
+    - email: dlranum@us.ibm.com
+      name: David Ranum
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    name: cql-bulk-export
+    type: application
+    urls:
+    - cql-bulk-export-0.1.0.tgz
+    version: 0.1.0
   cql-bulkexport:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-09-16T14:51:30.230675-05:00"
+    created: "2022-01-05T22:13:22.813575208Z"
     description: A Helm Chart to deploy the CQL BulkExport service.
-    digest: 3e38cd9412d7838c5bc3b9010c02363140c965aa7c67d6a6e455a1f57712f44a
+    digest: 9be0909dda5129cdfb34753482032df9dccf8b18eb2e620fbf8d69ef7626fc18
     home: https://github.com/Alvearie/health-patterns/tree/main/services/cql-bulkexport
     keywords:
     - ibm
@@ -66,7 +129,7 @@ entries:
   deid:
   - apiVersion: v2
     appVersion: 1.0.1
-    created: "2021-09-16T14:51:30.23201-05:00"
+    created: "2022-01-05T22:13:22.814035614Z"
     description: A Helm Chart to deploy the Alvearie De-Identification service.
     digest: 6b37a20c44af8225ae05455c32d2328e40c3fdff61fc67e2a878b01a0d9c8714
     home: https://github.com/Alvearie/de-identification
@@ -87,9 +150,9 @@ entries:
   deid-prep:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-09-16T14:51:30.233239-05:00"
+    created: "2022-01-05T22:13:22.814448819Z"
     description: A Helm Chart to deploy the Deid Prep service.
-    digest: af11108d72a77dc45e0f6c67376c27dcb5e22dc3532efdb68ad7b250b4956efd
+    digest: 987611c66cca85b9cb38b4894396252b2b48e07bb7eb698b3388fb6decc84fa1
     home: https://github.com/Alvearie/health-patterns/tree/main/services/deid-prep
     keywords:
     - ibm
@@ -106,9 +169,49 @@ entries:
   expose-kafka:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-09-16T14:51:30.234423-05:00"
+    created: "2022-01-05T22:13:22.81609994Z"
     description: A Helm Chart to deploy the Expose Kafka service.
-    digest: cf89d254c0b474a2363057812d82c2e36190c0d92e7bab6008ab30665ba42f2f
+    digest: 7b902c7be9839707e835f7ae7e7c2003be324c84825d5a9f6bab6fd92ee2f79c
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
+    keywords:
+    - ibm
+    - alvearie
+    - kafka
+    maintainers:
+    - email: dlranum@us.ibm.com
+      name: David Ranum
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    name: expose-kafka
+    type: application
+    urls:
+    - expose-kafka-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-01-05T22:13:22.815491232Z"
+    description: A Helm Chart to deploy the Expose Kafka service.
+    digest: 6a9830cd12b3c1270617ab48cd53c9d44961f3d5c96315421e605416aa817019
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
+    keywords:
+    - ibm
+    - alvearie
+    - kafka
+    maintainers:
+    - email: dlranum@us.ibm.com
+      name: David Ranum
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    name: expose-kafka
+    type: application
+    urls:
+    - expose-kafka-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-01-05T22:13:22.814907225Z"
+    description: A Helm Chart to deploy the Expose Kafka service.
+    digest: 9aa6deff1069d2e38f98cde089bc2c9159421d6a015b12c49b1f76fcc5920b42
     home: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka
     keywords:
     - ibm
@@ -124,33 +227,71 @@ entries:
     urls:
     - expose-kafka-0.1.0.tgz
     version: 0.1.0
-  fhir:
+  fhir-data-quality:
   - apiVersion: v2
-    appVersion: 4.7.1
-    created: "2021-09-16T14:51:30.236148-05:00"
-    description: A Helm Chart to deploy the IBM FHIR Server.
-    digest: 3c4ae92e6f3fd38c0ba5338bc298d0fdb1832bfbc94e066695784b1795ed6e44
-    home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/fhir
+    appVersion: 0.0.1
+    created: "2022-01-05T22:13:22.817205554Z"
+    description: A Helm Chart to deploy the FHIR Data Quality service.
+    digest: 5bcbf3a106fc4b21b9b0bf5a57678ff5186ee57cf401a51912d1656a7711980f
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/fhir-data-quality
     keywords:
     - ibm
-    - fhir
-    - health records
-    - clinical data
     - alvearie
     maintainers:
-    - email: luisg@us.ibm.com
-      name: Luis A. Garcia
-    name: fhir
+    - email: vamshi.krishna.murari@ibm.com
+      name: Vamshi Krishna Murari
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    name: fhir-data-quality
     type: application
     urls:
-    - fhir-0.4.0.tgz
-    version: 0.4.0
+    - fhir-data-quality-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-01-05T22:13:22.816643447Z"
+    description: A Helm Chart to deploy the FHIR Data Quality service.
+    digest: dcd459d8584cc19e5945a3c7aa34a068dacf0520fcca8484acce0af8306e52bd
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/fhir-data-quality
+    keywords:
+    - ibm
+    - alvearie
+    maintainers:
+    - email: vamshi.krishna.murari@ibm.com
+      name: Vamshi Krishna Murari
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    name: fhir-data-quality
+    type: application
+    urls:
+    - fhir-data-quality-0.1.0.tgz
+    version: 0.1.0
   fhir-trigger:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-09-16T14:51:30.23724-05:00"
+    created: "2022-01-05T22:13:22.81845207Z"
     description: A Helm Chart to deploy the Alvearie FHIR Trigger service.
-    digest: 13345c48eb3f9558db40aaf9ae5f87946fd67e7524b28c89f2a77ca99a38e1bc
+    digest: b7b694fefcbb3b11e90c743f15939bacc11a3b5c0f9981f14d05f8c5e6ae19a1
+    home: https://github.com/Alvearie/health-patterns/tree/main/services/fhir-trigger
+    keywords:
+    - ibm
+    - alvearie
+    - fhir
+    maintainers:
+    - email: dlranum@us.ibm.com
+      name: David Ranum
+    - email: atclark@us.ibm.com
+      name: Adam T. Clark
+    name: fhir-trigger
+    type: application
+    urls:
+    - fhir-trigger-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-01-05T22:13:22.817837862Z"
+    description: A Helm Chart to deploy the Alvearie FHIR Trigger service.
+    digest: 00521794b170471b78e2267a8a2e8434d3d1c7f9c1ffcb0c8a1c2f34bb27f3a5
     home: https://github.com/Alvearie/health-patterns/tree/main/services/fhir-trigger
     keywords:
     - ibm
@@ -169,9 +310,9 @@ entries:
   nifi-registry:
   - apiVersion: v2
     appVersion: 0.9.0
-    created: "2021-09-16T14:51:30.238552-05:00"
+    created: "2022-01-05T22:13:22.819791087Z"
     description: A Helm Chart to deploy a NiFi Registry.
-    digest: 665975588c986b1ddab7f008bd247dcd5b4094dd2ef2a75cb59cab5babb6ef58
+    digest: dbc89354ae77fc6e7047ac39f7b44b596d097264f00c16fc5b1533ca81baf261
     home: https://github.com/Alvearie/health-patterns/clinical-ingestion/helm-charts/nifi-registry
     keywords:
     - ibm
@@ -190,9 +331,9 @@ entries:
   nlp-insights:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-09-16T14:51:30.239515-05:00"
+    created: "2022-01-05T22:13:22.8208303Z"
     description: A Helm Chart to deploy the NLP Insights service.
-    digest: b557743af3b5c13fbbb28c8b68594119a8bee43a1a71688ba2c787041d958ae6
+    digest: 6f860eaf5a717339b2acbf12bf338d1410ae4cb0bd57034df3db5e922dfc6f3b
     home: https://github.com/Alvearie/health-patterns/tree/main/services/nlp-insights
     keywords:
     - ibm
@@ -210,9 +351,9 @@ entries:
   term-services-prep:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2021-09-16T14:51:30.240397-05:00"
+    created: "2022-01-05T22:13:22.821372806Z"
     description: A Helm Chart to deploy the Terminology Services Prep service.
-    digest: c3902ce192c235a40de7b40bdc0ad0acf852dcc7de9d6692ebc6c229766914b2
+    digest: 3b7e1a094a5f4aa37f8bc48b509b95843a5a11408401dc5f1bc0addeb6fd0a73
     home: https://github.com/Alvearie/health-patterns/tree/main/services/term-services-prep
     keywords:
     - ibm
@@ -227,4 +368,4 @@ entries:
     urls:
     - term-services-prep-0.1.0.tgz
     version: 0.1.0
-generated: "2021-09-16T14:51:30.225399-05:00"
+generated: "2022-01-05T22:13:22.809903362Z"

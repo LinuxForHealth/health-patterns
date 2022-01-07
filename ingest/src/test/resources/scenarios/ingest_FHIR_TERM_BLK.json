@@ -1,0 +1,66 @@
+{
+    "scenarioName": "********ingest_FHIR_TERM_BLK********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "ingestPatient",
+            "url":  "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json", 
+                               "ResolveTerminology": "${3}",
+                               "DeidentifyData": "false",
+                               "RunFHIRDataQuality": "false" },
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200,
+                "body": {
+                  "entry[0].resource.extension[4].url":"$CONTAINS.STRING:${4}",
+                  "entry[0].resource.extension[4].valueCode":"${5}"
+                }
+                }
+        },
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1,
+                    "entry[0].fullUrl": "$CONTAINS.STRING:${$.ingestPatient.response.body.entry[0].resource.id}",
+                    "entry[0].resource.extension[4].url":"$CONTAINS.STRING:${4}",
+                    "entry[0].resource.extension[4].valueCode":"${5}" 
+                }
+            }
+        },   
+
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }          
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/patient-with-us-core-birthsex.json},Brain142,Doyle959,true,sex-assigned-at-birth,female",
+            "${JSON.FILE:Patients/patient-with-us-core-birthsex.json},Brain142,Doyle959,false,us-core-birthsex,F"
+        ]
+    }
+}

@@ -1,2 +1,4 @@
 fhir/derby/fhirDB
+derby.log
+fhirschema.log
 *.jar

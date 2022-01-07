@@ -1,8 +1,8 @@
 # Build stage
-FROM maven:3-openjdk-11-slim AS build
-COPY pom.xml /
+FROM maven:3-jdk-8-slim AS build
 
-RUN mvn -B package
+RUN mvn dependency:copy -Dartifact=com.ibm.fhir:fhir-smart:LATEST -DoutputDirectory=target/dependency && \
+  mvn dependency:copy -Dartifact=com.ibm.fhir:fhir-ig-us-core:LATEST -DoutputDirectory=target/dependency
 
 
 # Package stage

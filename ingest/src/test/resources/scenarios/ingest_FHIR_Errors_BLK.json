@@ -1,0 +1,87 @@
+{
+    "scenarioName": "********ingest_FHIR_Errors_BLK********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "ingestInvalidPatient",
+            "url": "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json" },
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 400,
+                "body": "$CONTAINS.STRING:${4}"
+                }
+        },                    
+        {
+            "name": "verifyPatientNotIngested",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 0 
+                }
+            }
+        },
+        {
+            "name": "ingestValidPatient",
+            "url":"${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json",
+                              "DeidentifyData": "false",
+                              "RunFHIRDataQuality": "false" },
+                    "body":  "${3}" },            
+            "verify": {
+                "status": 200
+             }
+        }, 
+        {
+            "name": "verifyPatientIngested",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 ,
+                    "entry[0]": {
+                        "fullUrl": "$CONTAINS.STRING:${$.ingestValidPatient.response.body.entry[0].resource.id}" 
+                    }
+                }
+            }
+        },   
+
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngested.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngested.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }                  
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/Salina386_Buckridge80_Invalid_Bundle.json},Salina386,Buckridge80,${JSON.FILE:Patients/Salina386_Buckridge80.json},FHIRProvider: Invalid resource type:",
+            "${JSON.FILE:Patients/Salina386_Buckridge80_Invalid_Data.json},Salina386,Buckridge80,${JSON.FILE:Patients/Salina386_Buckridge80.json},FHIRProvider: Expected: NUMBER but found: STRING for element:"        
+        ]
+    }
+}

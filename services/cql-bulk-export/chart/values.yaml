@@ -1,0 +1,36 @@
+# Default values for cql-bulk-export.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: alvearie/cql-bulk-export
+  pullPolicy: Always
+  tag: 0.0.4
+service:
+  type: ClusterIP
+  port: 5000
+
+enabled: false
+
+fhir:
+  endpoint: http://ingestion-fhir/fhir-server/api/v4
+  user:
+  password:
+
+cohort:
+  endpoint: http://ingestion-cohort-service
+
+cos:
+  endpoint:
+  apikey:
+  instancecrn:
+
+bucketname:
+resourcelist: ""
+
+ingress:
+  enabled: false
+  class: public-iks-k8s-nginx
+  hostname:

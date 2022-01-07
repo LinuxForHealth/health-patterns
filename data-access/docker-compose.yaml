@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   fhir-server:
-    image: ibmcom/ibm-fhir-server:4.9.0
+    image: ibmcom/ibm-fhir-server:4.10.2
     hostname: fhir
     volumes:
       - type: bind
@@ -35,7 +35,7 @@ services:
     networks:
       - fhir
   keycloak:
-    image: alvearie/smart-keycloak:0.2.0
+    image: quay.io/alvearie/smart-keycloak:0.4.1
     hostname: keycloak
     environment:
       - KEYCLOAK_USER=admin

@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "cert-secret-generator.fullname" . }}-role
+  namespace: {{ .Release.Namespace }}
+rules:
+  - verbs: ["create", "get", "watch", "list", "update", "delete"]
+    apiGroups:
+      - ''
+    resources:
+      - secrets
