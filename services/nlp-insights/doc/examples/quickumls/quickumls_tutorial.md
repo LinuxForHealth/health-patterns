@@ -11,7 +11,7 @@ The nlp-insights service has been designed to interact with QuickUMLS for detect
 * This tutorial uses curl to submit REST requests to the service
 
 ## Start the nlp-insights service
-If the nlp-insights service has not been started, start the service in a local container by following the instructions [here](../setup/start_nlp_insights).
+If the nlp-insights service has not been started, start the service in a local container by following the instructions [here](../setup/start_nlp_insights.md).
 
 ## Configure nlp-insights to use quickumls for NLP
 The nlp-insights service must be configured to use QuickUMLS prior to using the service to obtain insights. The steps to configure the service are described [here](./configure_quickumls.md).

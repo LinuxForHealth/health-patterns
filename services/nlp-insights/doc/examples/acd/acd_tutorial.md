@@ -10,7 +10,7 @@ You must have access to an ACD service to complete this tutorial. You can view p
 
 
 ## Start the nlp-insights service
-If the nlp-insights service has not been started, start the service in a local container by following the instructions [here](../setup/start_nlp_insights).
+If the nlp-insights service has not been started, start the service in a local container by following the instructions [here](../setup/start_nlp_insights.md).
 
 ## Configure nlp-insights to use ACD for NLP
 The nlp-insights service must be configured to use ACD prior to using the service to obtain insights. The steps to configure the service are described [here](./configure_acd.md).
