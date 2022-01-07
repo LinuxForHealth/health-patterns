@@ -117,10 +117,10 @@ class ResourceBuilder(abc.ABC, Generic[T]):
                 resource, insight_builder = tracker[insight_id]
 
                 # Update codings
-                # This is most likely a no-op for any attributes after the first one
-                # that causes the condition to be created. (CUI is the same).
-                # Still, we should let ACD decide whether the codes are the same or not
-                # between two attributes and not assume.
+                # This is most likely a no-op for any concepts after the first one
+                # that causes the resource to be created. (CUI is the same).
+                # Still, we should allow for the possibility that a second span could
+                # decide to add an additional coding.
                 self.update_codings(resource, concept)
 
                 # Update insight with span and confidences

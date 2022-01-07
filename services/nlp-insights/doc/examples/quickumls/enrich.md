@@ -1,5 +1,4 @@
 # Enrich FHIR resources with nlp-insights and QuickUMLS
---------------------------------------
 The nlp-insights service supports enrichment of the following types of FHIR resources:
 
 * Condition
@@ -478,13 +477,15 @@ Each coding that has been derived by NLP contains an insight summary extension t
 
 For example consider the UMLS code C0559470 that was added to the allergy intolerance resource wxyz-123.
 
-```
+<!-- 
+code to extract coding
+
 cat /tmp/output | jq -r '
 .entry[].resource | 
 select(.id == "wxyz-123") |
 .code.coding[] | 
 select(.code == "C0559470" and .system == "http://terminology.hl7.org/CodeSystem/umls")'
-```
+-->
 
 <details><summary>C0559470 coding in AllergyIntolerance wxyz-123</summary>
 

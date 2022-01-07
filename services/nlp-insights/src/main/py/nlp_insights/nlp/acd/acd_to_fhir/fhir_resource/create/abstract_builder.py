@@ -124,9 +124,9 @@ class ResourceBuilder(abc.ABC, Generic[T]):
 
                 # Update codings
                 # This is most likely a no-op for any attributes after the first one
-                # that causes the condition to be created. (CUI is the same).
-                # Still, we should let ACD decide whether the codes are the same or not
-                # between two attributes and not assume.
+                # that causes the resource to be created. (CUI is the same).
+                # Still, we should not assume that ACD always gives us the same codes when
+                # the CUI is the same.
                 self.update_codings(resource, attr)
 
                 # Update insight with span and confidence information

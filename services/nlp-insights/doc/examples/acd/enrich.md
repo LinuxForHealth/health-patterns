@@ -827,13 +827,15 @@ Each coding that has been derived by NLP contains an insight summary extension t
 
 For example consider the UMLS code C0559470 that was added to the allergy intolerance resource pnt123.
 
-```
+<!--
+code to extract json object
+
 cat /tmp/output | jq -r '
 .entry[].resource | 
 select(.id == "pnt123") |
 .code.coding[] | 
 select(.code == "C0559470" and .system == "http://terminology.hl7.org/CodeSystem/umls")`
-```
+-->
 
 <details><summary>C0559470 coding in AllergyIntolerance pnt123</summary>
 
