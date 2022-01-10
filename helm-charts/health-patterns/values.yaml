@@ -359,7 +359,6 @@ nifi:
     - name: alvearie-nars
       emptyDir: {}
   properties:
-    externalSecure: true
     customLibPath: ./custom-nars
   logresources:
     requests:
