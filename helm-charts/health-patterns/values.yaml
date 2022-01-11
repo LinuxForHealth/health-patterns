@@ -265,12 +265,7 @@ cert-secret-generator:
 # Zookeeper Configuration
 # ------------------------------------------------------------------------------
 zookeeper:
-  enabled: *nifikopDisabled
-  # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
-  fullnameOverride: alvearie-zookeeper
-
-zookeeper2:
-  enabled: *nifikopEnabled
+  enabled: true
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
   fullnameOverride: alvearie-zookeeper
 
@@ -283,7 +278,7 @@ nifi2: # NifiKop based Nifi
   fullnameOverride: alvearie-nifi
   image:
     repository: apache/nifi
-    tag: 1.12.1
+    tag: 1.13.2
   user: *oidc_users
   oidc:
     discovery:
@@ -318,6 +313,8 @@ nifi2: # NifiKop based Nifi
 # Nifi Configuration
 # ------------------------------------------------------------------------------
 nifi:
+  image:
+    tag: 1.13.2
   fullnameOverride: alvearie-nifi
   enabled: *nifikopDisabled
   ingress:
