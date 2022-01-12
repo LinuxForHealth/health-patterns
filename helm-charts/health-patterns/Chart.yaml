@@ -55,7 +55,7 @@ dependencies:
     alias: fhir-deid
     repository: https://alvearie.io/alvearie-helm
   - name: fhir-trigger
-    version: 0.1.0
+    version: 0.1.1
     condition: fhir-deid-trigger.enabled
     alias: fhir-deid-trigger
     repository: https://alvearie.github.io/health-patterns/charts
