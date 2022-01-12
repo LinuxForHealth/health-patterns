@@ -36,14 +36,18 @@ if [ $CLUSTER_NAMESPACE = "tst-enrich" ]
 then
    # disable the ingestion deploy for an enrich-only deployment
    sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
-
+   
+   export DEPLOY_OPTIONS="--set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout "$HELM_TIMEOUT
    # deploy enrich
-   helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout $HELM_TIMEOUT
+   # helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout $HELM_TIMEOUT
 elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
 then
+   export DEPLOY_OPTIONS="--wait --timeout "$HELM_TIMEOUT 
    # deploy ingestion
-   helm3 install $HELM_RELEASE . --wait --timeout $HELM_TIMEOUT 
+   # helm3 install $HELM_RELEASE . --wait --timeout $HELM_TIMEOUT 
 fi
+
+helm3 install $HELM_RELEASE . $DEPLOY_OPTIONS
 
 echo "*************************************"
 echo "* Waiting for "$DEPLOY_WAIT" seconds          *"
