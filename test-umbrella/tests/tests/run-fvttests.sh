@@ -61,6 +61,7 @@ then
    # helm3 install $HELM_RELEASE . --wait --timeout $HELM_TIMEOUT 
 fi
 
+echo "Deployment options: '"$DEPLOY_OPTIONS"'"
 helm3 install $HELM_RELEASE . $DEPLOY_OPTIONS
 
 echo "*************************************"
