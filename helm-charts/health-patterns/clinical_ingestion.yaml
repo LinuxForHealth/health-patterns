@@ -11,7 +11,7 @@ pattern: "Clinical Ingestion"
 nifi:
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.4
+      image: alvearie/nifi-setup:0.1.5
       imagePullPolicy: Always
       env:
       - name: "RELEASE_NAME"
@@ -38,3 +38,5 @@ nifi:
         value: "default"
       - name: "DEID_PUSH_TO_FHIR"
         value: "True"
+      - name: "RUN_FHIR_DATA_QUALITY"
+        value: "False"

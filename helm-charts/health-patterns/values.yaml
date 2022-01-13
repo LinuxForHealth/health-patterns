@@ -52,8 +52,8 @@ oidc:
     secret: &oidc_client_secret replace-me
 
 nifikop:
-  disabled: &nifikopDisabled false
-  enabled: &nifikopEnabled true
+  disabled: &nifikopDisabled true
+  enabled: &nifikopEnabled false
 
 ascvd:
   enabled: true
@@ -253,6 +253,7 @@ nifi-registry:
 # ------------------------------------------------------------------------------
 fhir-data-quality:
   enabled: false
+  requestTimeout: 45
 
 # ------------------------------------------------------------------------------
 # Cert Secret Generator Configuration
@@ -453,6 +454,8 @@ expose-kafka:
   inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in,ingest.topic.in,ingest.topic.out,ingest.topic.failure,enrich.topic.in,enrich.topic.out,enrich.topic.failure"
   inittopicnumpartitions: 1
   inittopicreplication: 1
+  requestTimeout: 45
+
 
 # ------------------------------------------------------------------------------
 # CQL-Bulk-Export Service
