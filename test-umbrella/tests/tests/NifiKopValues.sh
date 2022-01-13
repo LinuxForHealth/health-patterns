@@ -1,12 +1,12 @@
 #!/bin/bash
 
+# Get to the deployment directory
+cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
+
 if [ $DEPLOY_NIFIKOP = "true" ]
 then
 
    # Prepare the values.yaml file for a deployment using NifiKop
-
-   # Get to the deployment directory
-   cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
    # oidic users
    sed -i -e "s/name: \"alvearie\"/name: \"alvearie\"\n    - identity: \"roger.guderian@ibm.com\"\n      name: \"roger.guderian\"\n    - identity: \"atclark@us.ibm.com\"\n      name: \"adam.t.clark\"/g" values.yaml
