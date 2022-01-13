@@ -36,6 +36,6 @@ else
    sed -i -e "s/\&nifikopDisabled false/\&nifikopDisabled true/g" values.yaml
    sed -i -e "s/\&nifikopEnabled true/\&nifikopEnabled false/g" values.yaml
 fi 
-
+# Verify the nifikop enable/disable values 
 cat values.yaml | grep nifikopDisabled
 cat values.yaml | grep nifikopEnabled
