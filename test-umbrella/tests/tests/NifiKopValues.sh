@@ -28,7 +28,6 @@ then
    helm3 repo update
    helm3 install nifikop orange-incubator/nifikop --namespace=$TEST_NAMESPACE --version 0.7.1 --set image.tag=v0.7.1-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"$TEST_NAMESPACE"}  --wait --timeout $HELM_TIMEOUT
 else
-then
    # Prepare values.yaml to deploy w/o nifikop
    # Disable NifiKop Deployment
    sed -i -e "s/\&nifikopDisabled true/\&nifikopDisabled true/g" values.yaml
