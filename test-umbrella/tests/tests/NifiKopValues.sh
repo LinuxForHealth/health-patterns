@@ -30,6 +30,12 @@ then
 else
    # Prepare values.yaml to deploy w/o nifikop
    # Disable NifiKop Deployment
+   echo "****************************************************" 
+   echo "* Setup for deployment w/o nifikop                 *"
+   echo "****************************************************"
    sed -i -e "s/\&nifikopDisabled true/\&nifikopDisabled true/g" values.yaml
    sed -i -e "s/\&nifikopEnabled false/\&nifikopEnabled false/g" values.yaml
 fi 
+
+cat values.yaml | grep nifikopDisabled
+cat values.yaml | grep nifikopEnabled

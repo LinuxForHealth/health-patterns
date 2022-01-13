@@ -31,7 +31,7 @@ cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
 # Execute the desired deployment
 echo "***************************************"
-echo $TEST_NAMESPACE" : Deploy via helm3"
+echo $TEST_NAMESPACE" : Deploy "$HELM_RELEASE"via helm3"
 date
 echo "***************************************"
 if [ $HELM_RELEASE = "enrich" ] 
