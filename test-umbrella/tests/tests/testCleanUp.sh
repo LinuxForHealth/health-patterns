@@ -25,16 +25,19 @@ then
 	echo "* Delete the Deployment             *"
 	echo "*************************************"
 	helm3 delete $HELM_RELEASE
-	echo "*************************************"
-	echo "* Waiting for 30  seconds           *"
-	echo "*************************************"
-	date
-	sleep 30   
-	date
-	echo "*************************************"
-	echo "* Delete NifiKop                    *"
-	echo "*************************************"
-	helm3 delete nifikop
+	if [$DEPLOY_NIFIKOP = "true" ]
+	then
+		echo "*************************************"
+		echo "* Waiting for 30  seconds           *"
+		echo "*************************************"
+		date
+		sleep 30   
+		date
+		echo "*************************************"
+		echo "* Delete NifiKop                    *"
+		echo "*************************************"
+		helm3 delete nifikop
+	fi	
 	echo "*************************************"
 	echo "* Waiting for 30  seconds           *"
 	echo "*************************************"
