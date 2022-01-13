@@ -20,6 +20,7 @@ def main():
     releaseName = ""
     deidConfigName = "default"
     deidPushToFhir = "True"
+    runFHIRDataQuality = False
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--baseUrl", help="Base url for nifi instance")
@@ -32,6 +33,8 @@ def main():
     parser.add_argument("--releaseName", help="Release Name")
     parser.add_argument("--deidConfigName", help="Deidentification Config Name")
     parser.add_argument("--deidPushToFhir", help="Boolean indicating deidentified data should be persisted")
+    parser.add_argument("--runFHIRDataQuality", help="Enable FHIR data quality check")
+
 
     args = parser.parse_args()
 
@@ -54,6 +57,8 @@ def main():
         deidConfigName = args.deidConfigName
     if args.deidPushToFhir:
         deidPushToFhir = args.deidPushToFhir
+    if args.runFHIRDataQuality:
+        runFHIRDataQuality = args.runFHIRDataQuality
 
     #now fix trailing / problem if needed
     if baseURL[-1] != "/":
@@ -63,7 +68,7 @@ def main():
     #Set specific passwords in the parameter contexts for fhir, kafka, and deid
 
     print("Updating parameter context parameters based on config...")
-    updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLPInsights, runASCVD, deidentifyData, resolveTerminology, deidConfigName, deidPushToFhir)
+    updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLPInsights, runASCVD, deidentifyData, resolveTerminology, deidConfigName, deidPushToFhir, runFHIRDataQuality)
     print("Parameter update complete...\n")
 
     print("Finding all processor groups to update")
@@ -204,7 +209,7 @@ def startAllProcessors(baseURL, finalGroupList):
             stoppedcount = statusdict["stoppedCount"]
             print("Stopped Count: ", agroup, "is ", int(stoppedcount))
 
-def updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLPInsights, runASCVD, deidentifyData, resolveTerminology, deidConfigName, deidPushToFhir):
+def updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLPInsights, runASCVD, deidentifyData, resolveTerminology, deidConfigName, deidPushToFhir, runFHIRDataQuality):
     #Get parameter contexts
     resp = requests.get(url=baseURL + "nifi-api/flow/parameter-contexts")
     if debug:
@@ -215,10 +220,10 @@ def updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLP
         print("CONTEXTS:", contexts)
 
     for context in contexts:
-        if "cms_adapter_parameters" in context["component"]["name"]:
+        if "ingestion-parameter-context" in context["component"]["name"]:
             if debug:
-                print("Processing new cms_adapter_parameters")
-            #setting the fhir and kafka passwords
+                print("Processing ingestion-parameter-context")
+
             contextId = context["id"]
             if debug:
                 print("FHIR context:", contextId)
@@ -230,11 +235,13 @@ def updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLP
             update_parameter(baseURL, contextId, "kafka.auth.password", kafka_password, True)
             update_parameter(baseURL, contextId, "kafka.brokers", releaseName + "-kafka:9092", False)
             update_parameter(baseURL, contextId, "HL7_RESOURCE_GENERATOR_URL", "http://" + releaseName + "-hl7-resource-generator:8080/hl7/transformation", False)
+            update_parameter(baseURL, contextId, "RUN_FHIR_DATA_QUALITY_URL", "http://" + releaseName + "-fhir-data-quality:5000", False)
+            update_parameter(baseURL, contextId, "RunFHIRDataQuality", runFHIRDataQuality)
 
-        if "Enrichment" in context["component"]["name"]:
+        if "enrichment-parameter-context" in context["component"]["name"]:
             if debug:
-                print("Processing enrichment")
-            #set Enrichment Parameters
+                print("Processing enrichment-parameter-context")
+
             contextId = context["id"]
             if debug:
                 print("Enrichment context: ", contextId)
@@ -250,13 +257,6 @@ def updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLP
             update_parameter(baseURL, contextId, "ResolveTerminology", resolveTerminology)
             update_parameter(baseURL, contextId, "DEID_CONFIG_NAME", deidConfigName)
             update_parameter(baseURL, contextId, "DEID_PUSH_TO_FHIR", deidPushToFhir)
-
-        if "ASCVD Parameter Context" in context["component"]["name"]:
-            if debug:
-                print("Processing ASCVD")
-            contextId = context["id"]
-            if debug:
-                print("ASCVD context: ", contextId)
             update_parameter(baseURL, contextId, "ASCVD_FROM_FHIR_URL", "http://" + releaseName + "-ascvd-from-fhir:5000", False)
 
 

@@ -9,8 +9,7 @@ python /scripts/loadHealthPatternsFlows.py \
   --baseUrl=http://$HOSTNAME:8080/ \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
-  --flowName="Clinical Ingestion" \
-  --version=34
+  --flowName="Clinical Ingestion"
 fi
 
 if [ "$ADD_CLINICAL_ENRICHMENT" = true ] ; then
@@ -19,7 +18,6 @@ python /scripts/loadHealthPatternsFlows.py \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
   --flowName="FHIR Bundle Enrichment" \
-  --version=11 \
   --x=0.0 \
   --y=200.0
 fi
@@ -34,7 +32,9 @@ python /scripts/startHealthPatternsFlow.py \
   --resolveTerminology=$RESOLVE_TERMINOLOGY \
   --releaseName=$RELEASE_NAME \
   --deidConfigName=$DEID_CONFIG_NAME \
-  --deidPushToFhir=$DEID_PUSH_TO_FHIR
+  --deidPushToFhir=$DEID_PUSH_TO_FHIR \
+  --runFHIRDataQuality=$RUN_FHIR_DATA_QUALITY
+  
 
 if [ $? -eq 0 ] ; then
     echo "NiFi canvas setup was successful!"
