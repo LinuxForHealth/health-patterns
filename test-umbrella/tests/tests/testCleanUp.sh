@@ -25,7 +25,7 @@ then
 	echo "* Delete the Deployment             *"
 	echo "*************************************"
 	helm3 delete $HELM_RELEASE
-	if [$DEPLOY_NIFIKOP = "true" ]
+	if [ $DEPLOY_NIFIKOP = "true" ]
 	then
 		echo "*************************************"
 		echo "* Waiting for 30  seconds           *"
