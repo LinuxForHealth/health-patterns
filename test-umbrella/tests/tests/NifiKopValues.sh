@@ -33,8 +33,8 @@ else
    echo "****************************************************" 
    echo "* Setup for deployment w/o nifikop                 *"
    echo "****************************************************"
-   sed -i -e "s/\&nifikopDisabled true/\&nifikopDisabled true/g" values.yaml
-   sed -i -e "s/\&nifikopEnabled false/\&nifikopEnabled false/g" values.yaml
+   sed -i -e "s/\&nifikopDisabled false/\&nifikopDisabled true/g" values.yaml
+   sed -i -e "s/\&nifikopEnabled true/\&nifikopEnabled false/g" values.yaml
 fi 
 
 cat values.yaml | grep nifikopDisabled
