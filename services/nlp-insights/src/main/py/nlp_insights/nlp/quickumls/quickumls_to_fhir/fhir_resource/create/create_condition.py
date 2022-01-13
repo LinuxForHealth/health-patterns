@@ -45,7 +45,7 @@ class ConditionBuilder(abstract_builder.ResourceBuilder):
         self,
         first_concept: QuickUmlsConcept,
     ) -> Condition:
-        return Condition.construct(subject=self.text_source.source_resource.subject)
+        return Condition.construct(subject=self.text_source.source_ref.resource.subject)
 
     def update_codings(self, resource: Condition, concept: QuickUmlsConcept) -> None:
         if resource.code is None:

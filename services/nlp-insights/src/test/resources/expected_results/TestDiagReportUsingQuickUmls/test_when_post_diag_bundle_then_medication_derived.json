@@ -1,6 +1,36 @@
 {
   "entry": [
     {
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000000",
+      "request": {
+        "method": "POST",
+        "url": "DiagnosticReport/0"
+      },
+      "resource": {
+        "id": "12345",
+        "code": {
+          "coding": [
+            {
+              "code": "1487",
+              "display": "ECHO CARDIOGRAM COMPLETE"
+            }
+          ],
+          "text": "ECHO CARDIOGRAM COMPLETE"
+        },
+        "presentedForm": [
+          {
+            "contentType": "text/plain",
+            "data": "UGF0aWVudCBpcyB0YWtpbmcgQ2lzcGxhdGluLg=="
+          }
+        ],
+        "status": "final",
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "DiagnosticReport"
+      }
+    },
+    {
       "request": {
         "method": "POST",
         "url": "MedicationStatement"
@@ -14,7 +44,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "7e13eeb5c17223af6af82f934e151c708e804f076d5297e0032d06af"
+                    "value": "d71a60944c46a70fe9fdf0013e424503042632d38493acdf6f5b1ab7"
                   }
                 },
                 {
@@ -26,7 +56,7 @@
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "DiagnosticReport/12345"
+                        "reference": "urn:uuid:00000000-0000-0000-0000-000000000000"
                       }
                     },
                     {
@@ -77,7 +107,7 @@
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                  "value": "7e13eeb5c17223af6af82f934e151c708e804f076d5297e0032d06af"
+                  "value": "d71a60944c46a70fe9fdf0013e424503042632d38493acdf6f5b1ab7"
                 }
               },
               {

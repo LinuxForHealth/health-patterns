@@ -25,6 +25,7 @@ Example of a condition resource where NLP derived a UMLS coding.
      >>> from fhir.resources.codeableconcept import CodeableConcept
      >>> from nlp_insights.insight_source.fields_of_interest import CodeableConceptRefType
      >>> from nlp_insights.fhir.path import FhirPath
+     >>> from nlp_insights.fhir.reference import ResourceReference
 
     Create example Condition:
      >>> condition = Condition.construct(id="12345",
@@ -35,7 +36,7 @@ Example of a condition resource where NLP derived a UMLS coding.
      >>> concept = CodeableConceptRef(type=CodeableConceptRefType.CONDITION,
      ...                              code_ref=condition.code,
      ...                              path=FhirPath("Condition.code"),
-     ...                              resource=condition)
+     ...                              resource_ref=ResourceReference(condition))
 
     Derived codings:
      >>> derived_codings = [Coding.construct(
@@ -221,7 +222,7 @@ class EnrichedResourceInsightBuilder(
             path=enriched_concept.path_coding,
             details=[
                 InsightDetailBuilder(
-                    reference=enriched_concept.resource,
+                    resource_ref=enriched_concept.resource_ref,
                     reference_path=enriched_concept.path_text,
                     evaluated_output=eval_response_builder,
                 )
@@ -237,8 +238,12 @@ class EnrichedResourceInsightBuilder(
     def append_insight_to_resource_meta(
         self, resource: Optional[Resource] = None
     ) -> None:
-        if resource is None or (resource == self.enriched_concept.resource):
-            super().append_insight_to_resource_meta(self.enriched_concept.resource)
+        if resource is None or (
+            resource == self.enriched_concept.resource_ref.resource
+        ):
+            super().append_insight_to_resource_meta(
+                self.enriched_concept.resource_ref.resource
+            )
         else:
             raise ValueError("Resource doesn't match the codeable concept resource!")
 

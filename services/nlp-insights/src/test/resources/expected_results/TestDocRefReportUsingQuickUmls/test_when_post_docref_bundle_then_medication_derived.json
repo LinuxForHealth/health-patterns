@@ -1,6 +1,40 @@
 {
   "entry": [
     {
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000000",
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference/0"
+      },
+      "resource": {
+        "id": "12345",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "68607-1",
+                "display": "Progress note",
+                "system": "http://loinc.org"
+              }
+            ]
+          }
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudCBpcyB0YWtpbmcgQ2lzcGxhdGluLg=="
+            }
+          }
+        ],
+        "status": "current",
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "DocumentReference"
+      }
+    },
+    {
       "request": {
         "method": "POST",
         "url": "MedicationStatement"
@@ -14,7 +48,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "84c98f54faf82188782e3e505c263b2165190572f30fcd6c9306d782"
+                    "value": "8463f226cc90e9b9472b91b465fafac332e11aed616b2554a5038da1"
                   }
                 },
                 {
@@ -26,7 +60,7 @@
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "DocumentReference/12345"
+                        "reference": "urn:uuid:00000000-0000-0000-0000-000000000000"
                       }
                     },
                     {
@@ -77,7 +111,7 @@
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                  "value": "84c98f54faf82188782e3e505c263b2165190572f30fcd6c9306d782"
+                  "value": "8463f226cc90e9b9472b91b465fafac332e11aed616b2554a5038da1"
                 }
               },
               {

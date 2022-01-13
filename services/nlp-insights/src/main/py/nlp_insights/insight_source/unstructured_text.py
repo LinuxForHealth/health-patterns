@@ -21,29 +21,27 @@
 import base64
 from typing import List
 from typing import NamedTuple
-from typing import Union
 
 from fhir.resources.diagnosticreport import DiagnosticReport
 from fhir.resources.documentreference import DocumentReference
 from fhir.resources.reference import Reference
 from fhir.resources.resource import Resource
-from nlp_insights.fhir.path import FhirPath
 
-# Data type that represents FHIR resources with unstructured notes
-UnstructuredFhirResource = Union[DiagnosticReport, DocumentReference]
+from nlp_insights.fhir.path import FhirPath
+from nlp_insights.fhir.reference import ResourceReference
 
 
 class UnstructuredText(NamedTuple):
     """Models text data that can be used to derive new FHIR resources"""
 
-    source_resource: UnstructuredFhirResource
+    source_ref: ResourceReference[Resource]
     text_path: FhirPath
     text: str
 
     @property
     def subject(self) -> Reference:
         """Returns a reference to the subject of this unstructured text"""
-        return self.source_resource.subject
+        return self.source_ref.resource.subject
 
 
 def _decode_text(encoded_data: bytes) -> str:
@@ -58,25 +56,25 @@ def _decode_text(encoded_data: bytes) -> str:
 
 
 def _get_diagnostic_report_text(
-    report: DiagnosticReport,
+    reference: ResourceReference[DiagnosticReport],
 ) -> List[UnstructuredText]:
     """Returns the (decoded) attached document(s) and path of the document text.
 
     The method ignores the content type field of the attachment and assumed plain text.
 
     Args:
-       report - the report to retrieve presented form text from
+       reference - reference to the report to retrieve presented form text from
     Returns:
        path and decoded text from the document, or empty if there is no text
     """
-    if report.presentedForm:
+    if reference.resource.presentedForm:
         return [
             UnstructuredText(
-                source_resource=report,
+                source_ref=reference,
                 text_path=FhirPath(f"DiagnosticReport.presentedForm[{ix}].data"),
                 text=_decode_text(attachment.data),
             )
-            for ix, attachment in enumerate(report.presentedForm)
+            for ix, attachment in enumerate(reference.resource.presentedForm)
             if attachment.data
         ]
 
@@ -84,7 +82,7 @@ def _get_diagnostic_report_text(
 
 
 def _get_document_reference_data(
-    doc_ref: DocumentReference,
+    reference: ResourceReference[DocumentReference],
 ) -> List[UnstructuredText]:
     """Returns the (decoded) attached document(s) and path of the document text.
 
@@ -92,38 +90,40 @@ def _get_document_reference_data(
     The document reference must have a subject, as a subject is required for all derived resources.
 
     Args:
-       doc_ref - the report to retrieve presented form text from
+       reference - reference to the report to retrieve presented form text from
     Returns:
        path and decoded text from the document, or empty if there is no text
     """
-    if doc_ref.content and doc_ref.subject:
+    if reference.resource.content and reference.resource.subject:
         return [
             UnstructuredText(
-                source_resource=doc_ref,
+                source_ref=reference,
                 text_path=FhirPath(f"DocumentReference.content[{ix}].attachment.data"),
                 text=_decode_text(content.attachment.data),
             )
-            for ix, content in enumerate(doc_ref.content)
+            for ix, content in enumerate(reference.resource.content)
             if content.attachment and content.attachment.data
         ]
 
     return []
 
 
-def get_unstructured_text(resource: Resource) -> List[UnstructuredText]:
+def get_unstructured_text(
+    resource_ref: ResourceReference[Resource],
+) -> List[UnstructuredText]:
     """Returns unstructured text that can be used to derive new resources
 
     If the resource does not have text suitable for deriving new resources,
     an empty list is returned.
 
     Args:
-        resource - the resource to search for unstructured text
+        resource_ref - reference to the resource to search for unstructured text
     Returns: the unstructured text elements from the resource
     """
-    if isinstance(resource, DiagnosticReport):
-        return _get_diagnostic_report_text(resource)
+    if diag_report := resource_ref.down_cast(DiagnosticReport):
+        return _get_diagnostic_report_text(diag_report)
 
-    if isinstance(resource, DocumentReference):
-        return _get_document_reference_data(resource)
+    if doc_ref := resource_ref.down_cast(DocumentReference):
+        return _get_document_reference_data(doc_ref)
 
     return []

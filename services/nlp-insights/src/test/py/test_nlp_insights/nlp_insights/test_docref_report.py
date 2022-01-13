@@ -43,8 +43,11 @@ class TestDocRefReportUsingAcd(UnitTestUsingExternalResource):
         # flawed way of reseting the state between test cases.
         # It should work "well-enough" in most cases.
         importlib.reload(app)
-        app.all_nlp_services["acd"] = make_mock_acd_service_class(
-            self.resource_path + "/acd/TestReportResponses.json"
+        app.config.set_mock_nlp_service_class(
+            "acd",
+            make_mock_acd_service_class(
+                self.resource_path + "/acd/TestReportResponses.json"
+            ),
         )
 
     def test_when_post_docref_then_condition_derived(self):
@@ -213,8 +216,11 @@ class TestDocRefReportUsingQuickUmls(UnitTestUsingExternalResource):
         # flawed way of reseting the state between test cases.
         # It should work "well-enough" in most cases.
         importlib.reload(app)
-        app.all_nlp_services["quickumls"] = make_mock_quick_umls_service_class(
-            self.resource_path + "/quickUmls/TestReportResponses.json"
+        app.config.set_mock_nlp_service_class(
+            "quickumls",
+            make_mock_quick_umls_service_class(
+                self.resource_path + "/quickUmls/TestReportResponses.json"
+            ),
         )
 
     def test_when_post_docref_then_condition_derived(self):

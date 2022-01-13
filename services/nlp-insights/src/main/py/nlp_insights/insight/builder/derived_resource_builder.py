@@ -26,6 +26,7 @@ Example of a condition resource that was derived from a diagnostic report:
      >>> from fhir.resources.diagnosticreport import DiagnosticReport
      >>> from fhir.resources.reference import Reference
      >>> from nlp_insights.fhir.insight_builder import ConfidenceMethod
+     >>> from nlp_insights.fhir.reference import ResourceReference
 
     Create example diagnostic Report:
      >>> visit_code = CodeableConcept.construct(text='Chief complaint Narrative - Reported')
@@ -46,7 +47,7 @@ Example of a condition resource that was derived from a diagnostic report:
     Create Insight:
      >>> insight = DerivedResourceInsightBuilder(
      ...               Condition,
-     ...               UnstructuredText(source_resource=report,
+     ...               UnstructuredText(source_ref=ResourceReference(report),
      ...                                text_path=FhirPath("DiagnosticReport.presentedForm[0].data"),
      ...                                text=report_text),
      ...               insight_id_value="nlp-insights-1",
@@ -302,7 +303,7 @@ class DerivedResourceInsightBuilder(
             path=FhirPath(resource_type.__name__),
             details=[
                 InsightDetailBuilder(
-                    reference=text_source.source_resource,
+                    resource_ref=text_source.source_ref,
                     reference_path=text_source.text_path,
                     evaluated_output=eval_response_builder,
                     insight_results=[

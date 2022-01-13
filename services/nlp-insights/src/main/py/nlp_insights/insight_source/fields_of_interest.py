@@ -24,18 +24,15 @@ References to the codeable concept may be used to update the concept with discov
 insights.
 """
 from enum import Enum
-from typing import Callable
-from typing import Dict
 from typing import Iterable
 from typing import NamedTuple
-from typing import Optional
-from typing import Type
 
 from fhir.resources.allergyintolerance import AllergyIntolerance
 from fhir.resources.codeableconcept import CodeableConcept
 from fhir.resources.condition import Condition
 from fhir.resources.resource import Resource
 from nlp_insights.fhir.path import FhirPath
+from nlp_insights.fhir.reference import ResourceReference
 
 
 class CodeableConceptRefType(Enum):
@@ -59,7 +56,7 @@ class CodeableConceptRef(NamedTuple):
     type: CodeableConceptRefType
     code_ref: CodeableConcept
     path: FhirPath
-    resource: Resource
+    resource_ref: ResourceReference[Resource]
 
     @property
     def path_text(self) -> FhirPath:
@@ -73,23 +70,23 @@ class CodeableConceptRef(NamedTuple):
 
 
 def _get_allergy_intolerance_concepts_to_analyze(
-    allergy_intolerance: AllergyIntolerance,
+    allergy_ref: ResourceReference[AllergyIntolerance],
 ) -> Iterable[CodeableConceptRef]:
     """Determines concepts that should be analyzed by NLP for an Allergy Intolerance
 
     Args:
-        allergy_intolerance - the FHIR resource
+        allergy_ref - the allergy intolerance's reference
 
     Returns: Concepts to analyze with NLP
     """
     fields_of_interest = []
 
-    if allergy_intolerance.code.text:
+    if allergy_ref.resource.code.text:
         fields_of_interest.append(
             CodeableConceptRef(
-                resource=allergy_intolerance,
+                resource_ref=allergy_ref,
                 type=CodeableConceptRefType.ALLERGEN,
-                code_ref=allergy_intolerance.code,
+                code_ref=allergy_ref.resource.code,
                 path=FhirPath("AllergyIntolerance.code"),
             )
         )
@@ -98,19 +95,19 @@ def _get_allergy_intolerance_concepts_to_analyze(
 
 
 def _get_condition_concepts_to_analyze(
-    condition: Condition,
+    condition_ref: ResourceReference[Condition],
 ) -> Iterable[CodeableConceptRef]:
     """Determines concepts with text to be analyzed by NLP for a Condition resource
 
-    args: condition - the condition resource
+    args: condition_ref - the condition resource's reference
     returns: concepts to be analyzed
     """
-    if condition.code and condition.code.text:
+    if condition_ref.resource.code and condition_ref.resource.code.text:
         return [
             CodeableConceptRef(
-                resource=condition,
+                resource_ref=condition_ref,
                 type=CodeableConceptRefType.CONDITION,
-                code_ref=condition.code,
+                code_ref=condition_ref.resource.code,
                 path=FhirPath("Condition.code"),
             )
         ]
@@ -118,27 +115,21 @@ def _get_condition_concepts_to_analyze(
     return []
 
 
-ExtractorFunction = Callable[[Resource], Iterable[CodeableConceptRef]]
-
-_concept_extractors: Dict[Type[Resource], ExtractorFunction] = {
-    AllergyIntolerance: _get_allergy_intolerance_concepts_to_analyze,
-    Condition: _get_condition_concepts_to_analyze,
-}
-
-
 def get_concepts_for_nlp_analysis(
-    resource: Resource,
-    concept_extractors: Optional[Dict[Type[Resource], ExtractorFunction]] = None,
+    resource_ref: ResourceReference[Resource],
 ) -> Iterable[CodeableConceptRef]:
     """Determines concepts for a FHIR Resource that should be analyzed by NLP
 
     Args:
-        resource - the resource with potential NLP Concepts
-        concept_extractors - (optional) mapping of resource class name to extractor
-                             function.
+        resource_ref - the resource reference with potential NLP Concepts
+
     returns:
         references to concepts with text that can be updated with NLP insights
     """
-    extractors = concept_extractors if concept_extractors else _concept_extractors
-    extractor = extractors.get(type(resource))
-    return extractor(resource) if extractor else []
+    if allergy := resource_ref.down_cast(AllergyIntolerance):
+        return _get_allergy_intolerance_concepts_to_analyze(allergy)
+
+    if condition := resource_ref.down_cast(Condition):
+        return _get_condition_concepts_to_analyze(condition)
+
+    return []

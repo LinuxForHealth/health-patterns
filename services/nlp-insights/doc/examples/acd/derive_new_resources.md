@@ -1,3 +1,5 @@
+# OUTPUT OBSOLETE
+
 # Derive New Resources with nlp-insights and ACD
 Some resources such as DiagnosticReports and DocumentReferences contain clinical notes or other unstructured text. When the nlp-insights service receives one of these resources, it can derive new FHIR resources for detected concepts.
 

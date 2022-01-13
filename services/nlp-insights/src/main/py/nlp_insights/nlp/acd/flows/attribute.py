@@ -18,7 +18,7 @@ This has the functionality to decide what is an attribute of interest in an ACD 
 how to find the source for that attribute. There is always a single source CUI object for an attribute, and
 that object is where most of the coding information and extensions come from.
 
-Although nlp-inisghts supports only a single flow, in the future different flows may
+Although nlp-insights supports only a single flow, in the future different flows may
 define different attributes of interest. Additional flows might be necessary when/if the
 ACD pipeline is customized so that it returns additional attributes that are of interest
 to nlp-insights.

@@ -15,6 +15,7 @@
 
 import base64
 from typing import List, Dict, Any, Optional
+import uuid
 
 from fhir.resources.allergyintolerance import (
     AllergyIntolerance,
@@ -42,19 +43,24 @@ def make_patient() -> Patient:
 
 
 def make_diag_report(
-    subject: Reference = None, attachments: List[Attachment] = None
+    subject: Reference = None,
+    attachments: List[Attachment] = None,
+    id_val: Optional[str] = "12345",
 ) -> DiagnosticReport:
     """Creates a FHIR diagnostic report"""
-    report = DiagnosticReport.parse_obj(
-        {
-            "id": "12345",
-            "status": "final",
-            "code": {
-                "coding": [{"code": "1487", "display": "ECHO CARDIOGRAM COMPLETE"}],
-                "text": "ECHO CARDIOGRAM COMPLETE",
-            },
-        }
-    )
+    obj = {
+        "status": "final",
+        "code": {
+            "coding": [{"code": "1487", "display": "ECHO CARDIOGRAM COMPLETE"}],
+            "text": "ECHO CARDIOGRAM COMPLETE",
+        },
+    }
+
+    report = DiagnosticReport.parse_obj(obj)
+
+    if id_val:
+        report.id = id_val
+
     if subject:
         report.subject = subject
 
@@ -139,7 +145,7 @@ def make_allergy_intolerance(
     return allergy
 
 
-def make_bundle(resources: List[Resource]) -> Bundle:
+def make_bundle(resources: List[Resource], add_full_url: bool = True) -> Bundle:
     """Makes a bundle of resources for test"""
 
     bundle = Bundle.construct()
@@ -153,6 +159,8 @@ def make_bundle(resources: List[Resource]) -> Bundle:
             {"url": f"{type(resource).__name__}/{index}", "method": "POST"}
         )
         bundle_entry.request = request
+        if add_full_url:
+            bundle_entry.fullUrl = uuid.UUID(int=index).urn
         bundle.entry.append(bundle_entry)
 
     return bundle

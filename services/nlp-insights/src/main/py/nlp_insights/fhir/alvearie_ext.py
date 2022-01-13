@@ -22,6 +22,7 @@ import base64
 import json  # noqa: F401 pylint: disable=unused-import
 from typing import List
 from typing import Optional
+from typing import Union
 
 from fhir.resources.attachment import Attachment
 from fhir.resources.codeableconcept import CodeableConcept
@@ -322,7 +323,7 @@ def create_insight_detail_extension(
     return insight_detail
 
 
-def create_reference_extension(resource: Resource) -> Extension:
+def create_reference_extension(resource: Union[Resource, str]) -> Extension:
     """Creates an extension to reference the provided resource
 
     This is used to explain where the passed resource came from.
@@ -331,7 +332,12 @@ def create_reference_extension(resource: Resource) -> Extension:
     https://alvearie.io/alvearie-fhir-ig/StructureDefinition-reference.html
 
     Args:
-        resource - FHIR resource to reference
+        resource - FHIR resource to reference. This could be the resource itself,
+                   or a string containing one of the other reference types, such
+                   as a logical URI (UUID).
+
+    In the case where a FHIR resource is supplied, the resource id is used
+    to construct the reference. e.g. "DiagnosticReport/12345"
 
     Returns:
         the "based-on" extension
@@ -354,10 +360,25 @@ def create_reference_extension(resource: Resource) -> Extension:
         "reference": "DiagnosticReport/12345"
       }
     }
+
+    Examlpe #2:
+    >>> ext = create_reference_extension("urn:uuid:05efabf0-4be2-4561-91ce-51548425acb9")
+    >>> print(ext.json(indent=2))
+    {
+      "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
+      "valueReference": {
+        "reference": "urn:uuid:05efabf0-4be2-4561-91ce-51548425acb9"
+      }
+    }
     """
-    reference_id = resource.id if resource.id else ""
     reference = Reference.construct()
-    reference.reference = resource.resource_type + "/" + reference_id
+    if isinstance(resource, Resource):
+        reference_id = resource.id if resource.id else ""
+        reference.reference = resource.resource_type + "/" + reference_id
+    elif isinstance(resource, str):
+        reference.reference = resource
+    else:
+        raise TypeError("This method supports only string and resource")
 
     based_on_extension = Extension.construct()
     based_on_extension.url = alvearie_ext_url.INSIGHT_REFERENCE_URL

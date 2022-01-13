@@ -47,11 +47,14 @@ class TestMultiResourceBundleUsingAcd(UnitTestUsingExternalResource):
         # flawed way of reseting the state between test cases.
         # It should work "well-enough" in most cases.
         importlib.reload(app)
-        app.all_nlp_services["acd"] = make_mock_acd_service_class(
-            [
-                str(self.resource_path) + "/acd/TestReportResponses.json",
-                str(self.resource_path) + "/acd/TestEnrichResponses.json",
-            ]
+        app.config.set_mock_nlp_service_class(
+            "acd",
+            make_mock_acd_service_class(
+                [
+                    str(self.resource_path) + "/acd/TestReportResponses.json",
+                    str(self.resource_path) + "/acd/TestEnrichResponses.json",
+                ]
+            ),
         )
 
     def test_when_post_multi_resources_then_bundle_is_returned(self):
@@ -96,11 +99,14 @@ class TestMultiResourceBundleUsingQuickUmls(UnitTestUsingExternalResource):
         # flawed way of reseting the state between test cases.
         # It should work "well-enough" in most cases.
         importlib.reload(app)
-        app.all_nlp_services["quickumls"] = make_mock_quick_umls_service_class(
-            [
-                str(self.resource_path) + "/quickUmls/TestReportResponses.json",
-                str(self.resource_path) + "/quickUmls/TestEnrichResponses.json",
-            ]
+        app.config.set_mock_nlp_service_class(
+            "quickumls",
+            make_mock_quick_umls_service_class(
+                [
+                    str(self.resource_path) + "/quickUmls/TestReportResponses.json",
+                    str(self.resource_path) + "/quickUmls/TestEnrichResponses.json",
+                ]
+            ),
         )
 
     def test_when_post_multi_resources_then_bundle_is_returned(self):

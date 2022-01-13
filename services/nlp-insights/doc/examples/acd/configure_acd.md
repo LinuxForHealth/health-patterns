@@ -1,3 +1,5 @@
+# OUTPUT OBSOLETE 
+
 # Configure nlp-insights to use ACD for NLP
 Once nlp-insights has been configured to use ACD, it will use the ACD 
 service for it's NLP operations by default.

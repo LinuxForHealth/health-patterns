@@ -1,3 +1,5 @@
+# OUTPUT OBSOLETE
+
 # Context awareness with ACD
 
 A significant advantage of configuring nlp insights with ACD is that in addition to simple concept detection, the context of the concept is considered.

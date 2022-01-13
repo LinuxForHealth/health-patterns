@@ -1,5 +1,40 @@
 {
-  "entry": [],
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000000",
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference/0"
+      },
+      "resource": {
+        "id": "12345",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "68607-1",
+                "display": "Progress note",
+                "system": "http://loinc.org"
+              }
+            ]
+          }
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "c3VzcGVjdCBza2luIGNhbmNlciBiZWNhdXNlIHRoZSBwYXRpZW50J3MgYnJvdGhlciBoYXMgc2tpbiBjYW5jZXI="
+            }
+          }
+        ],
+        "status": "current",
+        "subject": {
+          "reference": "Patient/1234567890"
+        },
+        "resourceType": "DocumentReference"
+      }
+    }
+  ],
   "type": "transaction",
   "resourceType": "Bundle"
 }

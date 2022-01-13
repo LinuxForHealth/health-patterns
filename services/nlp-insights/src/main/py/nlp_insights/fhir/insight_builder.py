@@ -39,7 +39,7 @@
     ...             path=FhirPath("Condition"),
     ...             details=[
     ...                 InsightDetailBuilder(
-    ...                     reference=report,
+    ...                     resource_ref=ResourceReference(report),
     ...                     reference_path=FhirPath("DiagnosticReport.presentedForm[0].data"),
     ...                     insight_results=[
     ...                         InsightResultBuilder(spans=[InsightSpanBuilder(
@@ -147,10 +147,10 @@ import dataclasses
 from typing import Optional, List, NamedTuple
 
 from fhir.resources.extension import Extension
-from fhir.resources.resource import Resource
 
 from nlp_insights.fhir import alvearie_ext
 from nlp_insights.fhir.path import FhirPath
+from nlp_insights.fhir.reference import ResourceReference
 from nlp_insights.insight.span import Span
 
 
@@ -254,7 +254,7 @@ class InsightEvaluatedOutputBuilder(Builder):
 class InsightDetailBuilder(Builder):
     """insight detail extension"""
 
-    reference: Resource
+    resource_ref: ResourceReference
     reference_path: FhirPath
     evaluated_output: Optional[InsightEvaluatedOutputBuilder] = None
     insight_results: List[InsightResultBuilder] = dataclasses.field(
@@ -263,7 +263,7 @@ class InsightDetailBuilder(Builder):
 
     def build_extension(self) -> Extension:
         return alvearie_ext.create_insight_detail_extension(
-            alvearie_ext.create_reference_extension(self.reference),
+            alvearie_ext.create_reference_extension(self.resource_ref.reference),
             alvearie_ext.create_reference_path_extension(self.reference_path),
             self.evaluated_output.build_extension() if self.evaluated_output else None,
             [result.build_extension() for result in self.insight_results],

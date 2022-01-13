@@ -1,9 +1,10 @@
 {
   "entry": [
     {
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000000",
       "request": {
-        "method": "PUT",
-        "url": "Condition/12345"
+        "method": "POST",
+        "url": "Condition/0"
       },
       "resource": {
         "id": "12345",
@@ -15,7 +16,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
+                    "value": "eb138f5a355b828c449bce47c95c7a52dc5726bb91187a68ffe29eaf"
                   }
                 },
                 {
@@ -27,7 +28,7 @@
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "Condition/12345"
+                        "reference": "urn:uuid:00000000-0000-0000-0000-000000000000"
                       }
                     },
                     {
@@ -53,7 +54,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
+                    "value": "eb138f5a355b828c449bce47c95c7a52dc5726bb91187a68ffe29eaf"
                   }
                 },
                 {
@@ -65,7 +66,7 @@
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "Condition/12345"
+                        "reference": "urn:uuid:00000000-0000-0000-0000-000000000000"
                       }
                     },
                     {
@@ -97,7 +98,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
+                        "value": "eb138f5a355b828c449bce47c95c7a52dc5726bb91187a68ffe29eaf"
                       }
                     },
                     {
@@ -122,7 +123,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                        "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
+                        "value": "eb138f5a355b828c449bce47c95c7a52dc5726bb91187a68ffe29eaf"
                       }
                     },
                     {
@@ -154,7 +155,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
+                        "value": "eb138f5a355b828c449bce47c95c7a52dc5726bb91187a68ffe29eaf"
                       }
                     },
                     {
@@ -185,7 +186,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
+                        "value": "eb138f5a355b828c449bce47c95c7a52dc5726bb91187a68ffe29eaf"
                       }
                     },
                     {
@@ -216,7 +217,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "a0e9ac886f8cef798bb0930a535cb081fc35aba1538694fabca4c765"
+                        "value": "eb138f5a355b828c449bce47c95c7a52dc5726bb91187a68ffe29eaf"
                       }
                     },
                     {

@@ -19,8 +19,6 @@ from typing import Any
 from typing import Dict
 from typing import List
 
-from fhir.resources.resource import Resource
-
 from nlp_insights.fhir.create_bundle import BundleEntryDfn
 from nlp_insights.insight_source.concept_text_adjustment import AdjustedConceptRef
 from nlp_insights.insight_source.unstructured_text import UnstructuredText
@@ -67,9 +65,7 @@ class NLPService(ABC):
         """
 
     @abstractmethod
-    def enrich_codeable_concepts(
-        self, resource: Resource, concept_refs: List[AdjustedConceptRef]
-    ) -> int:
+    def enrich_codeable_concepts(self, concept_refs: List[AdjustedConceptRef]) -> int:
         """Invokes NLP each concept's text, updates the concept's FHIR resource with derived codings
 
         The resource's meta is updated with insight detail. The insight id uses a starting value, and
@@ -78,8 +74,7 @@ class NLPService(ABC):
         As of 10/07/2021 there is no need for this feature since all concepts for the resource are provided in a
         single call.
 
-        Args: resource - the resource containing the codeable concepts to derive new codings for
-              concept_refs - the codeable concepts to derive new codings for (within resource)
+        Args: concept_refs - the codeable concepts to derive new codings
         Returns: number of insights appended to the FHIR resource
 
         Raises NLPServiceError

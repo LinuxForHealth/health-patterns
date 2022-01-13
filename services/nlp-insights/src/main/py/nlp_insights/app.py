@@ -16,12 +16,7 @@ REST interface to NLP Insights
 """
 import json
 import logging
-import os
-from typing import Any
-from typing import Dict
-from typing import List
 from typing import Tuple
-from typing import cast
 
 from fhir.resources.bundle import Bundle
 from fhir.resources.diagnosticreport import DiagnosticReport
@@ -30,18 +25,13 @@ from fhir.resources.resource import Resource
 from flask import Flask, request, Response
 from werkzeug.exceptions import BadRequest, InternalServerError
 
-from nlp_insights.fhir.create_bundle import BundleEntryDfn
+from nlp_insights.app_util import config
+from nlp_insights.app_util import discover
+from nlp_insights.app_util import mime
 from nlp_insights.fhir.create_bundle import create_transaction_bundle
 from nlp_insights.fhir.fhir_parsing_utils import parse_fhir_resource_from_payload
-from nlp_insights.insight_source.concept_text_adjustment import adjust_concept_text
-from nlp_insights.insight_source.fields_of_interest import (
-    get_concepts_for_nlp_analysis,
-)
-from nlp_insights.insight_source.unstructured_text import UnstructuredText
-from nlp_insights.insight_source.unstructured_text import get_unstructured_text
-from nlp_insights.nlp.abstract_nlp_service import NLPService, NLPServiceError
-from nlp_insights.nlp.acd.acd_service import ACDService
-from nlp_insights.nlp.quickumls.quickumls_service import QuickUmlsService
+from nlp_insights.fhir.reference import ResourceReference
+from nlp_insights.nlp.abstract_nlp_service import NLPServiceError
 
 
 logger = logging.getLogger()
@@ -52,111 +42,12 @@ logging.basicConfig(
 
 app = Flask(__name__)
 
-# Maps values seen in configs to NLP python classes
-all_nlp_services = {"acd": ACDService, "quickumls": QuickUmlsService}
-
-
-# NLP Service currently configured
-# Using a global to track the current NLP service is dangerous. It does not scale correctly.
-# This is obvious when multiple processes or containers are used. It is also not thread safe when multiple
-# requests to update the config are made in parallel. Configurations do not persist beyond the life of the container.
-# Fixing this is a design issue, and a fix is not in plan at this time. The target audience is demo and starter code,
-# and until that changes we can't spend time fixing this.
-nlp_service = None  # pylint: disable=invalid-name
-
-
-# Stores instances of configured NLP Services
-nlp_services_dict: Dict[str, NLPService] = {}
-# Stores resource to config overrides
-override_resource_config: Dict[str, str] = {}
-
-
-def setup_config_dir() -> str:
-    """Set up the directory structure for configs
-
-    Returns the directory where configs should be stored
-    """
-    local_path = f"/tmp/{__name__}/configs"
-    if not os.path.isdir(local_path):
-        os.makedirs(local_path)
-    logger.info("Configs will be stored in %s", local_path)
-    return local_path
-
-
-def persist_config_helper(config_dict: Dict[str, Any]) -> str:
-    """Helper function to check config details and create nlp instantiation"""
-
-    if "nlpServiceType" not in config_dict:
-        raise BadRequest(description="'nlpService' must be a key in config")
-    if "name" not in config_dict:
-        raise BadRequest(description="'name' must be a key in config")
-    if "config" not in config_dict:
-        raise BadRequest(description="'config' must be a key in config")
-    if not isinstance(config_dict["name"], str):
-        raise BadRequest(description='config["name"] must be a string')
-
-    config_name = cast(str, config_dict["name"])
-    nlp_service_type = config_dict["nlpServiceType"]
-    if nlp_service_type.lower() not in all_nlp_services.keys():
-        raise BadRequest(
-            description=f"only 'acd' and 'quickumls' allowed at this time: {nlp_service_type}"
-        )
-    with open(f"{configDir}/{config_name}", "w", encoding="utf-8") as json_file:
-        json_file.write(json.dumps(config_dict))
-
-    new_nlp_service_object = all_nlp_services[nlp_service_type.lower()](config_dict)
-    nlp_services_dict[new_nlp_service_object.config_name] = new_nlp_service_object
-    return config_name
-
-
-def init_configs() -> None:
-    """Create initial configs from deployment values, if any"""
-    global nlp_service  # pylint: disable=global-statement, invalid-name
-
-    logger.info("ACD enable config: %s", os.getenv("ACD_ENABLE_CONFIG"))
-    logger.info("QuickUMLS enable config: %s", os.getenv("QUICKUMLS_ENABLE_CONFIG"))
-
-    details: Dict[str, str] = {}
-    if os.getenv("ACD_ENABLE_CONFIG") == "true":
-        # fill up a config for ACD
-        tmp_config: Dict[str, Any] = {}
-        tmp_config["name"] = os.getenv("ACD_NAME", "")
-        tmp_config["nlpServiceType"] = "acd"
-        details["endpoint"] = os.getenv("ACD_ENDPOINT", "")
-        details["apikey"] = os.getenv("ACD_API_KEY", "")
-        details["flow"] = os.getenv("ACD_FLOW", "")
-        tmp_config["config"] = details
-        persist_config_helper(tmp_config)
-        logger.info("%s added:%s", tmp_config["name"], str(nlp_services_dict))
-
-    if os.getenv("QUICKUMLS_ENABLE_CONFIG") == "true":
-        # fill up a config for quickumls
-        tmp_config = {}
-        tmp_config["name"] = os.getenv("QUICKUMLS_NAME", "")
-        tmp_config["nlpServiceType"] = "quickumls"
-        details["endpoint"] = os.getenv("QUICKUMLS_ENDPOINT", "")
-        tmp_config["config"] = details
-        persist_config_helper(tmp_config)
-        logger.info("%s added:%s", tmp_config["name"], str(nlp_services_dict))
-
-    default_nlp_service = os.getenv("NLP_SERVICE_DEFAULT")
-    if default_nlp_service is not None and len(default_nlp_service) > 0:
-        if default_nlp_service in nlp_services_dict:
-            logger.info("Setting nlp service to %s", default_nlp_service)
-            nlp_service = nlp_services_dict[default_nlp_service]
-        else:
-            logger.info("%s is not a valid nlp instance", default_nlp_service)
-
-
-configDir = setup_config_dir()
-init_configs()
-
 
 @app.route("/config/<config_name>", methods=["GET"])
 def get_config(config_name: str) -> Response:
     """Gets and returns the given config details"""
     try:
-        with open(configDir + f"/{config_name}", "r", encoding="utf-8") as json_file:
+        with open(CONFIG_DIR + f"/{config_name}", "r", encoding="utf-8") as json_file:
             json_string = json_file.read()
         c_dict = json.loads(json_string)
         if c_dict["nlpServiceType"] == "acd":
@@ -178,12 +69,11 @@ def persist_config() -> Response:
     request_str = request.data.decode("utf-8")
     try:
         config_dict = json.loads(request_str)
-        config_name = persist_config_helper(config_dict)
+        config.persist_config_helper(config_dict, CONFIG_DIR)
     except json.JSONDecodeError as jderr:
         raise BadRequest(
             description=f"json was not valid json: {str(jderr)}"
         ) from jderr
-    logger.info("%s added config:%s", config_name, str(nlp_services_dict))
 
     return Response(status=200)
 
@@ -191,19 +81,7 @@ def persist_config() -> Response:
 @app.route("/config/<config_name>", methods=["DELETE"])
 def delete_config(config_name: str) -> Response:
     """Delete a config by name"""
-    if config_name not in nlp_services_dict:
-        raise BadRequest(description=f"{config_name} must exist")
-    if nlp_service is not None:
-        current_config = json.loads(nlp_service.json_string)
-        if config_name == current_config["name"]:
-            raise BadRequest(description="Cannot delete the default nlp service")
-    if config_name in list(override_resource_config.values()):
-        raise BadRequest(
-            description=f"f{config_name} has an existing override and cannot be deleted"
-        )
-    os.remove(configDir + f"/{config_name}")
-    del nlp_services_dict[config_name]
-
+    config.delete_config(config_name, CONFIG_DIR)
     logger.info("Config successfully deleted: %s", config_name)
     return Response("Config successfully deleted: " + config_name, status=200)
 
@@ -211,39 +89,43 @@ def delete_config(config_name: str) -> Response:
 @app.route("/all_configs", methods=["GET"])
 def get_all_configs() -> Response:
     """Get and return all configs by name"""
-    configs = list(nlp_services_dict.keys())
-    logger.info("Config list displayed")
-    return Response(json.dumps(configs), status=200, mimetype="application/json")
+    return Response(
+        json.dumps(config.get_config_names()),
+        status=200,
+        mimetype="application/json",
+    )
 
 
 @app.route("/config", methods=["GET"])
 def get_current_config() -> Response:
     """Returns the NLP instance that is currently set"""
 
-    if nlp_service is None:
+    default_nlp_service = config.get_default_nlp_service()
+    if not default_nlp_service:
         raise BadRequest(description="No default nlp service is currently set")
-    return Response(nlp_service.config_name, status=200, mimetype="text/plain")
+
+    return Response(default_nlp_service.config_name, status=200, mimetype="text/plain")
 
 
 @app.route("/config/setDefault", methods=["POST", "PUT"])
 def set_default_config() -> Response:
     """Set the default nlp instance"""
-    global nlp_service  # pylint: disable=global-statement, invalid-name
+
     if request.args and request.args.get("name"):
         config_name = request.args.get("name")
 
         if not config_name:
             raise BadRequest(description=f"{config_name} was not supplied")
-        if config_name not in nlp_services_dict:
+
+        if not config.set_default_nlp_service(config_name):
             raise BadRequest(description=f"{config_name} is not a config")
-        nlp_service = nlp_services_dict[config_name]
+
         return Response(
             "Default config set to: " + config_name,
             status=200,
             mimetype="text/plain",
         )
 
-    logger.warning("Did not provide query parameter 'name' to set default config")
     raise BadRequest(
         description="Did not provide query parameter 'name' to set default config"
     )
@@ -252,9 +134,8 @@ def set_default_config() -> Response:
 @app.route("/config/clearDefault", methods=["POST", "PUT"])
 def clear_default_config() -> Response:
     """Clear the default nlp instance"""
-    global nlp_service  # pylint: disable=global-statement, invalid-name
 
-    nlp_service = None
+    config.clear_default_nlp_service()
     return Response(
         "Default config has been cleared", status=200, mimetype="text/plain"
     )
@@ -264,7 +145,7 @@ def clear_default_config() -> Response:
 def get_current_override_configs() -> Response:
     """Get and return all override definitions"""
     return Response(
-        json.dumps(override_resource_config),
+        config.get_overrides_as_json_str(),
         status=200,
         mimetype="application/json",
     )
@@ -273,10 +154,13 @@ def get_current_override_configs() -> Response:
 @app.route("/config/resource/<resource_name>", methods=["GET"])
 def get_current_override_config(resource_name: str) -> Response:
     """Get and return override for this resource"""
-    if resource_name not in override_resource_config:
+    override_config_name = config.get_override_config_name(resource_name)
+
+    if not override_config_name:
         return Response("No override for this resource: " + resource_name, status=400)
+
     return Response(
-        override_resource_config[resource_name],
+        override_config_name,
         status=200,
         mimetype="text/plain",
     )
@@ -285,18 +169,16 @@ def get_current_override_config(resource_name: str) -> Response:
 @app.route("/config/resource/<resource_name>/<config_name>", methods=["POST", "PUT"])
 def setup_override_config(resource_name: str, config_name: str) -> Response:
     """Create a new override for a given resource"""
-    if config_name not in nlp_services_dict:
-        raise BadRequest(config_name + " is not a config")
-
-    override_resource_config[resource_name] = config_name
-
-    return Response(str(override_resource_config), status=200, mimetype="text/plain")
+    config.set_override_config(resource_name, config_name)
+    return Response(
+        config.get_overrides_as_json_str(), status=200, mimetype="application/json"
+    )
 
 
 @app.route("/config/resource/<resource_name>", methods=["DELETE"])
 def delete_resource(resource_name: str) -> Response:
     """Delete a resource override by name"""
-    del override_resource_config[resource_name]
+    config.delete_override_config(resource_name)
 
     logger.info("Override successfully deleted: %s", resource_name)
     return Response("Override successfully deleted: " + resource_name, status=200)
@@ -305,52 +187,10 @@ def delete_resource(resource_name: str) -> Response:
 @app.route("/config/resource", methods=["DELETE"])
 def delete_resources() -> Response:
     """Delete all resource overrides"""
-    override_resource_config.clear()
+    config.delete_all_overrides()
 
     logger.info("Overrides successfully deleted")
     return Response("Overrides successfully deleted", status=200)
-
-
-def _derive_bundle_entries(resource: Resource) -> List[BundleEntryDfn]:
-    """Derives new bundle entries for the resource
-
-    The returned entries may be
-     - new resources derived from text within the resource OR
-     - the same resource, with enriched concepts.
-
-    An empty list will be returned if nothing new was derived
-
-    Args: resource - the fhir resource
-    Returns the list of bundle entries for enriched resources
-    """
-    result: List[BundleEntryDfn] = []
-
-    if isinstance(resource, Bundle):
-        if resource.entry:
-            for entry in resource.entry:
-                result.extend(_derive_bundle_entries(entry.resource))
-    else:
-        nlp = _get_nlp_service_for_resource(resource)
-        text_for_new_resources: List[UnstructuredText] = get_unstructured_text(resource)
-
-        if text_for_new_resources:
-            result.extend(nlp.derive_new_resources(text_for_new_resources))
-
-        concepts_to_enrich = get_concepts_for_nlp_analysis(resource)
-        if concepts_to_enrich:
-            adjusted_concepts = [
-                adjust_concept_text(concept) for concept in concepts_to_enrich
-            ]
-            if nlp.enrich_codeable_concepts(resource, adjusted_concepts):
-                result.append(
-                    BundleEntryDfn(
-                        resource=resource,
-                        method="PUT",
-                        url=resource.resource_type + "/" + str(resource.id),
-                    )
-                )
-
-    return result
 
 
 @app.route("/discoverInsights", methods=["POST"])
@@ -361,45 +201,29 @@ def discover_insights() -> Response:
     """
 
     fhir_resource: Resource = parse_fhir_resource_from_payload(request.data)
-    bundle: Bundle = create_transaction_bundle(_derive_bundle_entries(fhir_resource))
 
-    if not isinstance(fhir_resource, Bundle):
-        if not bundle.entry and not (
-            isinstance(fhir_resource, (DiagnosticReport, DocumentReference))
-        ):
-            # Nothing changed, return original resource, except for types that
-            # are considered "unstructured, those should be empty bundle"
+    # Bundle input is the typical case
+    if isinstance(fhir_resource, Bundle):
+        if fhir_resource.type.lower() == "transaction":
+            discover.update_bundle_with_insights(fhir_resource)
             return Response(
-                fhir_resource.json(), content_type="application/json", status=200
+                fhir_resource.json(), content_type=mime.FHIR_JSON, status=200
             )
-        if (
-            len(bundle.entry) == 1
-            and bundle.entry[0].request
-            and bundle.entry[0].request.method
-            and bundle.entry[0].request.method == "PUT"
-        ):
-            # simple update, response is bundle.entry[0].resource
-            return Response(
-                bundle.entry[0].resource.json(),
-                content_type="application/json",
-                status=200,
-            )
+        logger.info("Bundle type of %s is not supported", fhir_resource.type)
+        return Response(fhir_resource.json, content_type=mime.FHIR_JSON, status=200)
 
-    return Response(bundle.json(), content_type="application/json", status=200)
+    # Process non-bundle input (i.e a single FHIR resource)
+    # This path is legacy, the bundle path is more common, and also has less specific
+    # behavior to resource type.
+    reference = ResourceReference[Resource](fhir_resource)
+    if isinstance(
+        fhir_resource, (DiagnosticReport, DocumentReference)
+    ):  # need to return bundle
+        bundle = create_transaction_bundle(discover.derive_new_resources(reference))
+        return Response(bundle.json(), content_type=mime.FHIR_JSON, status=200)
 
-
-def _get_nlp_service_for_resource(resource: Resource) -> NLPService:
-    global nlp_service  # pylint: disable=global-statement, invalid-name
-
-    if nlp_service is None:
-        raise BadRequest(
-            description="No NLP service has been configured, please define the config"
-        )
-
-    if resource.resource_type in override_resource_config:
-        return nlp_services_dict[override_resource_config[resource.resource_type]]
-
-    return nlp_service
+    discover.enrich_resource(reference)
+    return Response(fhir_resource.json(), content_type=mime.FHIR_JSON, status=200)
 
 
 @app.errorhandler(NLPServiceError)
@@ -418,5 +242,7 @@ def nlp_service_errors(error: Exception) -> Tuple[str, int]:
     return error.description, InternalServerError.code
 
 
+CONFIG_DIR = config.init_configs(__name__)
+config.init_configs_from_env(CONFIG_DIR)
 if __name__ == "__main__":
     app.run(debug=False, host="0.0.0.0", port=5000)

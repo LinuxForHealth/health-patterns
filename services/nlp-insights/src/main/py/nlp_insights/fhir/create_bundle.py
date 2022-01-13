@@ -34,6 +34,14 @@ class BundleEntryDfn(NamedTuple):
     method: str
     url: str
 
+    def to_bundle_entry(self) -> BundleEntry:
+        """Builds a bundle entry from the definition"""
+        bundle_entry = BundleEntry.construct()
+        bundle_entry.resource = self.resource
+        request = BundleEntryRequest.parse_obj({"url": self.url, "method": self.method})
+        bundle_entry.request = request
+        return bundle_entry
+
 
 def create_transaction_bundle(resource_action_list: List[BundleEntryDfn]) -> Bundle:
     """Creates a bundle from a list of bundle resources
@@ -114,13 +122,6 @@ def create_transaction_bundle(resource_action_list: List[BundleEntryDfn]) -> Bun
     bundle.entry = []
 
     for res_act in resource_action_list:
-        bundle_entry = BundleEntry.construct()
-        bundle_entry.resource = res_act.resource
-        request = BundleEntryRequest.parse_obj(
-            {"url": res_act.url, "method": res_act.method}
-        )
-
-        bundle_entry.request = request
-        bundle.entry.append(bundle_entry)
+        bundle.entry.append(res_act.to_bundle_entry())
 
     return bundle

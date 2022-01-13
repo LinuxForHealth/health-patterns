@@ -120,9 +120,7 @@ class QuickUmlsService(NLPService):
             for resource in new_resources
         ]
 
-    def enrich_codeable_concepts(
-        self, resource: Resource, concept_refs: List[AdjustedConceptRef]
-    ) -> int:
+    def enrich_codeable_concepts(self, concept_refs: List[AdjustedConceptRef]) -> int:
 
         nlp_responses = [
             QuickumlsConceptRef(concept_ref, self._run_nlp(concept_ref.adjusted_text))

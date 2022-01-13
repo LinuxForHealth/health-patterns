@@ -20,6 +20,7 @@ from fhir.resources.condition import Condition
 
 from nlp_insights import app
 from test_nlp_insights.util import enrich_text
+from test_nlp_insights.util.compare import ResourceDifferences
 from test_nlp_insights.util.compare import compare_actual_to_expected
 from test_nlp_insights.util.fhir import (
     make_condition,
@@ -45,8 +46,11 @@ class TestEnrichUsingAcd(UnitTestUsingExternalResource):
         # flawed way of reseting the state between test cases.
         # It should work "well-enough" in most cases.
         importlib.reload(app)
-        app.all_nlp_services["acd"] = make_mock_acd_service_class(
-            self.resource_path + "/acd/TestEnrichResponses.json"
+        app.config.set_mock_nlp_service_class(
+            "acd",
+            make_mock_acd_service_class(
+                self.resource_path + "/acd/TestEnrichResponses.json"
+            ),
         )
 
     def test_when_post_condition_bundle_then_condition_enriched(self):
@@ -90,14 +94,14 @@ class TestEnrichUsingAcd(UnitTestUsingExternalResource):
 
             first_bundle = Bundle.parse_obj(insight_resp.get_json())
             self.assertTrue(len(first_bundle.entry) == 1)
-            enriched_condition = first_bundle.entry[0].resource
 
             # Post of an already enriched resource should not find anything to enrich
-            new_bundle = make_bundle([enriched_condition])
-            insight_resp = service.post("/discoverInsights", data=new_bundle.json())
+            insight_resp = service.post("/discoverInsights", data=first_bundle.json())
             second_bundle = Bundle.parse_obj(insight_resp.get_json())
 
-            self.assertFalse(second_bundle.entry)
+            cmp = ResourceDifferences(expected=first_bundle, actual=second_bundle)
+
+            self.assertFalse(cmp, cmp.pretty())
 
     def test_when_post_allergy_intolerance_bundle_then_intolerance_enriched(self):
         bundle = make_bundle(
@@ -152,8 +156,11 @@ class TestEnrichUsingQuickUmls(UnitTestUsingExternalResource):
         # flawed way of reseting the state between test cases.
         # It should work "well-enough" in most cases.
         importlib.reload(app)
-        app.all_nlp_services["quickumls"] = make_mock_quick_umls_service_class(
-            self.resource_path + "/quickUmls/TestEnrichResponses.json"
+        app.config.set_mock_nlp_service_class(
+            "quickumls",
+            make_mock_quick_umls_service_class(
+                self.resource_path + "/quickUmls/TestEnrichResponses.json"
+            ),
         )
 
     def test_when_post_condition_bundle_then_condition_enriched(self):
@@ -241,11 +248,12 @@ class TestEnrichUsingQuickUmls(UnitTestUsingExternalResource):
 
             first_bundle = Bundle.parse_obj(insight_resp.get_json())
             self.assertTrue(len(first_bundle.entry) == 1)
-            enriched_condition = first_bundle.entry[0].resource
 
             # Post of an already enriched resource should not find anything to enrich
-            new_bundle = make_bundle([enriched_condition])
-            insight_resp = service.post("/discoverInsights", data=new_bundle.json())
+
+            insight_resp = service.post("/discoverInsights", data=first_bundle.json())
             second_bundle = Bundle.parse_obj(insight_resp.get_json())
 
-            self.assertFalse(second_bundle.entry)
+            cmp = ResourceDifferences(expected=first_bundle, actual=second_bundle)
+
+            self.assertFalse(cmp, cmp.pretty())

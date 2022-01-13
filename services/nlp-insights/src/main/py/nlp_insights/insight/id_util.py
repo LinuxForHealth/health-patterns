@@ -39,13 +39,13 @@ def make_hash(
         if isinstance(arg, str):
             hash_input += arg
         elif isinstance(arg, UnstructuredText):
-            hash_input += arg.source_resource.id
+            hash_input += arg.source_ref.reference
             hash_input += arg.text_path
             hash_input += arg.text
         elif isinstance(arg, CodeableConceptRef):
             hash_input += str(arg.type)
             hash_input += str(arg.path)
-            hash_input += str(arg.resource.id)
+            hash_input += str(arg.resource_ref.reference)
         elif isinstance(arg, type) and issubclass(arg, Resource):
             hash_input += arg.__name__
 

@@ -1,3 +1,5 @@
+# OUTPUT OBSOLETE
+
 # Enrich FHIR resources with nlp-insights and ACD
 The nlp-insights service supports enrichment of the following types of FHIR resources:
 

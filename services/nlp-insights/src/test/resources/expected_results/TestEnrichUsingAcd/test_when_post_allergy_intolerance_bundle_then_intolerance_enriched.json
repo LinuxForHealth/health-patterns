@@ -1,9 +1,10 @@
 {
   "entry": [
     {
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000000",
       "request": {
-        "method": "PUT",
-        "url": "AllergyIntolerance/67890"
+        "method": "POST",
+        "url": "AllergyIntolerance/0"
       },
       "resource": {
         "id": "67890",
@@ -15,7 +16,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                    "value": "954e8510494520ccf018fa037c7e5478477bc5b2654fbf7bb3d1caed"
                   }
                 },
                 {
@@ -27,7 +28,7 @@
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "AllergyIntolerance/67890"
+                        "reference": "urn:uuid:00000000-0000-0000-0000-000000000000"
                       }
                     },
                     {
@@ -59,7 +60,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "954e8510494520ccf018fa037c7e5478477bc5b2654fbf7bb3d1caed"
                       }
                     },
                     {
@@ -91,7 +92,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "954e8510494520ccf018fa037c7e5478477bc5b2654fbf7bb3d1caed"
                       }
                     },
                     {
@@ -122,7 +123,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "954e8510494520ccf018fa037c7e5478477bc5b2654fbf7bb3d1caed"
                       }
                     },
                     {
@@ -153,7 +154,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "954e8510494520ccf018fa037c7e5478477bc5b2654fbf7bb3d1caed"
                       }
                     },
                     {
@@ -184,7 +185,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "954e8510494520ccf018fa037c7e5478477bc5b2654fbf7bb3d1caed"
                       }
                     },
                     {
@@ -217,9 +218,10 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000001",
       "request": {
-        "method": "PUT",
-        "url": "AllergyIntolerance/67890"
+        "method": "POST",
+        "url": "AllergyIntolerance/1"
       },
       "resource": {
         "id": "67890",
@@ -231,7 +233,7 @@
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                    "value": "344bef8f78daa3784a74321012834568e7cee48508e7dd7980bc20a0"
                   }
                 },
                 {
@@ -243,7 +245,7 @@
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "AllergyIntolerance/67890"
+                        "reference": "urn:uuid:00000000-0000-0000-0000-000000000001"
                       }
                     },
                     {
@@ -275,7 +277,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "344bef8f78daa3784a74321012834568e7cee48508e7dd7980bc20a0"
                       }
                     },
                     {
@@ -307,7 +309,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "344bef8f78daa3784a74321012834568e7cee48508e7dd7980bc20a0"
                       }
                     },
                     {
@@ -338,7 +340,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "344bef8f78daa3784a74321012834568e7cee48508e7dd7980bc20a0"
                       }
                     },
                     {
@@ -369,7 +371,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "344bef8f78daa3784a74321012834568e7cee48508e7dd7980bc20a0"
                       }
                     },
                     {
@@ -400,7 +402,7 @@
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "19d84dc650da69487995b1b97c4e507edd4b3e7d91e920e541e6204c"
+                        "value": "344bef8f78daa3784a74321012834568e7cee48508e7dd7980bc20a0"
                       }
                     },
                     {
