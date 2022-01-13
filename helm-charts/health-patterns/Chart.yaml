@@ -90,7 +90,7 @@ dependencies:
 
 # Old Nifi
   - name: nifi
-    version: 1.0.4
+    version: 0.7.8
     condition: nifikop.disabled, nifi.enabled
     repository: https://cetic.github.io/helm-charts
 
