@@ -222,8 +222,8 @@ def updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLP
     for context in contexts:
         if "ingestion-parameter-context" in context["component"]["name"]:
             if debug:
-                print("Processing new cms_adapter_parameters")
-            #setting the fhir and kafka passwords
+                print("Processing ingestion-parameter-context")
+
             contextId = context["id"]
             if debug:
                 print("FHIR context:", contextId)
@@ -240,8 +240,8 @@ def updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLP
 
         if "enrichment-parameter-context" in context["component"]["name"]:
             if debug:
-                print("Processing enrichment")
-            #set Enrichment Parameters
+                print("Processing enrichment-parameter-context")
+
             contextId = context["id"]
             if debug:
                 print("Enrichment context: ", contextId)
