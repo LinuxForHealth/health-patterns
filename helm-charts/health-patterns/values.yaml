@@ -315,16 +315,19 @@ nifi2: # NifiKop based Nifi
 # ------------------------------------------------------------------------------
 nifi:
   image:
-    tag: 1.13.2
+    tag: 1.15.2
   fullnameOverride: alvearie-nifi
   enabled: *nifikopDisabled
+  auth:
+    singleUser:
+      username: alvearie
+      password: wats0nHealth # Must to have at least 12 characters
   ingress:
     enabled: false
     class: *ingressClass
     hostname: *hostname
   service:
-    type: ClusterIP
-    port: 8080
+    port: 8443
     processors:
       enabled: true
       ports:
@@ -332,8 +335,6 @@ nifi:
         - name: nifi-metrics
           port: 12667
           targetPort: 12667
-  url: ""
-  port: 80
   zookeeper:
     ## Values: https://github.com/bitnami/charts/blob/master/bitnami/zookeeper/values.yaml
     enabled: false
@@ -361,6 +362,11 @@ nifi:
       emptyDir: {}
   properties:
     customLibPath: ./custom-nars
+    isSecure: true
+    isNode: true
+    sensitiveKey: wats0nHealth
+    safetyValve:
+      nifi.security.allow.anonymous.authentication: true
   logresources:
     requests:
       memory: 30Mi

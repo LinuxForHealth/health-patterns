@@ -6,10 +6,12 @@
 import requests
 import sys
 import time
-
 import argparse
+import urllib3
 
-debug = False  # turn off debug by default
+urllib3.disable_warnings()
+
+debug = True  # turn off debug by default
 
 def main():
     regName = "default"  #default registry to use
@@ -69,7 +71,7 @@ def main():
     theFlow = None
 
     regURL = baseURL + "nifi-api/flow/registries"
-    resp = requests.get(url=regURL)
+    resp = requests.get(url=regURL, verify=False)
     if debug:
         print(dict(resp.json()))
     respDict = dict(resp.json())
@@ -93,7 +95,7 @@ def main():
     #search for bucket
     bucketFound = False
     buckURL = regURL + "/" + regId + "/buckets"
-    resp = requests.get(url=buckURL)
+    resp = requests.get(url=buckURL, verify=False)
     if debug:
         print(dict(resp.json()))
     bucketDict = dict(resp.json())
@@ -114,7 +116,7 @@ def main():
     #search for flow
     flowFound = False
     flowURL = buckURL + "/" + bucketId + "/" + "flows"
-    resp = requests.get(url=flowURL)
+    resp = requests.get(url=flowURL, verify=False)
     if debug:
         print(dict(resp.json()))
     flowDict = dict(resp.json())
@@ -138,7 +140,7 @@ def main():
     #unless version is not None because then version already provided explicitly
     if version == None:
         versionURL = flowURL + "/" + theFlow + "/" + "versions"
-        resp = requests.get(url=versionURL)
+        resp = requests.get(url=versionURL, verify=False)
         if debug:
             print(dict(resp.json()))
         versionDict = dict(resp.json())
@@ -154,7 +156,7 @@ def main():
     #Get root id for canvas process group
 
     URL = baseURL + "nifi-api/flow/process-groups/root"
-    resp = requests.get(url=URL)
+    resp = requests.get(url=URL, verify=False)
     if debug:
         print(resp)
         print(resp.content)
@@ -166,7 +168,7 @@ def main():
 
     createJson = {"revision":{"version":0},"component":{"versionControlInformation":{"registryId":theRegistry,"bucketId":theBucket,"flowId":theFlow,"version":version},"position":{"x":x_pos,"y":y_pos}}}
     createPostEndpoint = "nifi-api/process-groups/" + rootId + "/process-groups"
-    resp = requests.post(url=baseURL + createPostEndpoint, json=createJson)
+    resp = requests.post(url=baseURL + createPostEndpoint, json=createJson, verify=False)
     if debug:
         print("Response from new group...")
         print(resp.content)

@@ -38,6 +38,10 @@ nifi:
         value: "default"
       - name: "DEID_PUSH_TO_FHIR"
         value: "True"
+      - name: "INTERNAL_HOSTNAME"
+        value: alvearie-nifi-0.alvearie-nifi-headless.atc.svc.cluster.local
+      - name: "HTTPS_PORT"
+        value: "8443"
 
 fhir:
   notifications:

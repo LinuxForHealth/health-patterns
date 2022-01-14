@@ -1,12 +1,12 @@
 #!/bin/bash
 
-scripts/wait-for-nifi.sh $HOSTNAME 8080
+scripts/wait-for-nifi.sh $INTERNAL_HOSTNAME $HTTPS_PORT
 
-scripts/initialize-reporting-task.sh $HOSTNAME 8080
+scripts/initialize-reporting-task.sh $INTERNAL_HOSTNAME $HTTPS_PORT
 
 if [ "$ADD_CLINICAL_INGESTION" = true ] ; then
 python /scripts/loadHealthPatternsFlows.py \
-  --baseUrl=http://$HOSTNAME:8080/ \
+  --baseUrl=https://$INTERNAL_HOSTNAME:$HTTPS_PORT/ \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
   --flowName="Clinical Ingestion"
@@ -14,7 +14,7 @@ fi
 
 if [ "$ADD_CLINICAL_ENRICHMENT" = true ] ; then
 python /scripts/loadHealthPatternsFlows.py \
-  --baseUrl=http://$HOSTNAME:8080/ \
+  --baseUrl=https://$INTERNAL_HOSTNAME:$HTTPS_PORT/ \
   --reg=$NIFI_REGISTRY \
   --bucket=Health_Patterns \
   --flowName="FHIR Bundle Enrichment" \
@@ -23,7 +23,7 @@ python /scripts/loadHealthPatternsFlows.py \
 fi
 
 python /scripts/startHealthPatternsFlow.py \
-  --baseUrl=http://$HOSTNAME:8080/ \
+  --baseUrl=https://$INTERNAL_HOSTNAME:$HTTPS_PORT/ \
   --fhir_pw=$FHIR_PW \
   --kafka_pw=$KAFKA_PW \
   --addNLPInsights=$ADD_NLP_INSIGHTS \

@@ -17,19 +17,19 @@ spec:
     - host: {{ .Values.ingress.hostname }}
       http:
         paths:
-          - path: /nifi
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: alvearie-nifi
-                port: 
-                  number: {{ $ingressPort }}
-          - path: /nifi-api
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: alvearie-nifi
-                port:
-                  number: {{ $ingressPort }}
+        - path: /nifi
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: alvearie-nifi
+              port: 
+                number: {{ $ingressPort }}
+        - path: /nifi-api
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: alvearie-nifi
+              port:
+                number: {{ $ingressPort }}
 {{- end }}
 {{- end }}
