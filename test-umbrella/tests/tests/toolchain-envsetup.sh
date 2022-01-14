@@ -4,6 +4,7 @@
 # Input is test type (smoke, fvt, or ivt)
 #
 # Environment Variables passed in from the toolchain:
+# HELM_RELEASE - deployment release name: ingestion or enrich
 # GIT_BRANCH - alvearie repo branch for git clone operation of the alvearie repo
 # CLUSTER_NAMESPACE - base name to use when build the TEST_NAMEPSACE name
 # DEPLOY_WAIT - the time in seconds to wait for the deployment to be operational after the helm install completes
@@ -11,6 +12,7 @@
 # ENV_CLEAN_UP - flag to indicate to clean up the test environment at the end
 # INGRESS_SUBDOMAIN - ingress subdomain for the deployment
 # LOGLEVEL - test execution logging level (logback-test) ERROR, WARNING, or INFO
+# DEPLOY_NIFIKOP - true to configure/deploy nifikop, false to skip nifikop deployment
 
 echo "*************************************"
 echo "* Linux version                     *"
@@ -28,15 +30,6 @@ echo "*************************************"
 export DEFAULT_PASSWORD=integrati0n
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0
 export TEST_NAMESPACE=$CLUSTER_NAMESPACE"-"$1
-
-# Set the deploymemt-specific variables/values
-if [ $CLUSTER_NAMESPACE = "tst-enrich" ]
-then
-   export HELM_RELEASE=enrich
-elif [ $CLUSTER_NAMESPACE = "tst-ingest" ] 
-then
-   export HELM_RELEASE=ingestion
-fi
 
 echo "*************************************"
 echo "* setup base directory for test     *"
