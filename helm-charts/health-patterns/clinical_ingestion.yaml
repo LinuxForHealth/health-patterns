@@ -44,3 +44,7 @@ nifi:
         value: alvearie-nifi-0.alvearie-nifi-headless.atc.svc.cluster.local
       - name: "HTTPS_PORT"
         value: "8443"
+      - name: "NIFI_USERNAME"
+        value: "alvearie"
+      - name: "NIFI_PASSWORD"
+        value: "wats0nHealth"

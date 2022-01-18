@@ -13,6 +13,8 @@ urllib3.disable_warnings()
 
 debug = False # turn off debug by default
 
+headers = {}
+
 def main():
     fhir_password = "integrati0n"
     kafka_password = "integrati0n"
@@ -24,9 +26,11 @@ def main():
     deidConfigName = "default"
     deidPushToFhir = "True"
     runFHIRDataQuality = False
+    bearerToken = None
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--baseUrl", help="Base url for nifi instance")
+    parser.add_argument("--bearerToken", help="Bearer Token to make API calls")
     parser.add_argument("--fhir_pw", help="FHIR password")
     parser.add_argument("--kafka_pw", help="Kafka password")
     parser.add_argument("--addNLPInsights", help="Enable Add NLP Insights by default")
@@ -38,10 +42,11 @@ def main():
     parser.add_argument("--deidPushToFhir", help="Boolean indicating deidentified data should be persisted")
     parser.add_argument("--runFHIRDataQuality", help="Enable FHIR data quality check")
 
-
     args = parser.parse_args()
 
     baseURL = args.baseUrl
+    if args.bearerToken:
+        bearerToken = args.bearerToken
     if args.fhir_pw:
         fhir_password = args.fhir_pw
     if args.kafka_pw:
@@ -68,6 +73,10 @@ def main():
         print("BaseURL requires trailing /, fixing...")
         baseURL = baseURL + "/"  #add the trailing / if needed
 
+    if bearerToken:
+        global headers
+        headers["Authorization"]="Bearer "+bearerToken
+
     #Set specific passwords in the parameter contexts for fhir, kafka, and deid
 
     print("Updating parameter context parameters based on config...")
@@ -92,7 +101,7 @@ def main():
 
 def findProcessorGroups(baseURL):
     rootProcessGroupsURL = baseURL + "nifi-api/flow/process-groups/root"
-    resp = requests.get(url=rootProcessGroupsURL, verify=False)
+    resp = requests.get(url=rootProcessGroupsURL, headers=headers, verify=False)
     if debug:
         print(resp, resp.content)
 
@@ -114,7 +123,7 @@ def findProcessorGroups(baseURL):
         nextGroup = groupList.pop(0)
         finalGroupList.append(nextGroup)
         pgURL = baseURL + "nifi-api/flow/process-groups/" + nextGroup
-        resp = requests.get(url=pgURL, verify=False)
+        resp = requests.get(url=pgURL, headers=headers, verify=False)
         groupDict = dict(resp.json())
         # add all first level subgroups
         for group in groupDict["processGroupFlow"]["flow"]["processGroups"]:
@@ -130,7 +139,7 @@ def enableControllerServices(baseURL, finalGroupList):
 
     for agroup in finalGroupList:
         csURL = baseURL + "nifi-api/flow/process-groups/" + agroup + "/controller-services"
-        resp = requests.get(url=csURL, verify=False)
+        resp = requests.get(url=csURL, headers=headers, verify=False)
         if debug:
             print(resp, resp.content)
         csDict = dict(resp.json())
@@ -145,7 +154,7 @@ def enableControllerServices(baseURL, finalGroupList):
 
     for cs in controllerServices:
         csURL = baseURL + "nifi-api/controller-services/" + cs
-        resp = requests.get(url=csURL, verify=False)
+        resp = requests.get(url=csURL, headers=headers, verify=False)
         if debug:
             print("CS=", cs)
             print(resp, resp.content)
@@ -158,7 +167,7 @@ def enableControllerServices(baseURL, finalGroupList):
             enableJson = {"revision": {"version": 0}, "state": "ENABLED"}
             enableURL = baseURL + "nifi-api/controller-services/" + cs + "/run-status"
 
-            resp = requests.put(url=enableURL, json=enableJson, verify=False)
+            resp = requests.put(url=enableURL, headers=headers, json=enableJson, verify=False)
 
             if debug:
                 print(resp, resp.content)
@@ -177,7 +186,7 @@ def startAllProcessors(baseURL, finalGroupList):
     MAXRETRIES = 5
     for thegroup in finalGroupList:
         status2GetEndpoint = "nifi-api/process-groups/" + thegroup
-        resp = requests.get(url=baseURL + status2GetEndpoint, verify=False)
+        resp = requests.get(url=baseURL + status2GetEndpoint, headers=headers, verify=False)
         statusdict = dict(resp.json())
         stoppedcount = statusdict["stoppedCount"]
         if debug:
@@ -186,7 +195,7 @@ def startAllProcessors(baseURL, finalGroupList):
         while stoppedcount > 0 and tries < MAXRETRIES:  #there are still some processors that are not running so start again
             startupJson = {"id":thegroup,"state":"RUNNING"} #reschedule to running state
             startupPutEndpoint = "nifi-api/flow/process-groups/" + thegroup
-            resp = requests.put(url=baseURL + startupPutEndpoint, json=startupJson, verify=False)
+            resp = requests.put(url=baseURL + startupPutEndpoint, headers=headers, json=startupJson, verify=False)
             tries = tries + 1  #we will only do this MAXTRIES times
             if debug:
                 print(resp.content)
@@ -198,7 +207,7 @@ def startAllProcessors(baseURL, finalGroupList):
             time.sleep(1) #wait a bit for the process group to reset itself before getting next status
 
             status2GetEndpoint = "nifi-api/process-groups/" + thegroup
-            resp = requests.get(url=baseURL + status2GetEndpoint, verify=False)
+            resp = requests.get(url=baseURL + status2GetEndpoint, headers=headers, verify=False)
             statusdict = dict(resp.json())
             stoppedcount = statusdict["stoppedCount"]
             if debug:
@@ -207,14 +216,14 @@ def startAllProcessors(baseURL, finalGroupList):
     if debug:
         for agroup in finalGroupList:
             status2GetEndpoint = "nifi-api/process-groups/" + agroup
-            resp = requests.get(url=baseURL + status2GetEndpoint, verify=False)
+            resp = requests.get(url=baseURL + status2GetEndpoint, headers=headers, verify=False)
             statusdict = dict(resp.json())
             stoppedcount = statusdict["stoppedCount"]
             print("Stopped Count: ", agroup, "is ", int(stoppedcount))
 
 def updateParameters(baseURL, fhir_password, kafka_password, releaseName, addNLPInsights, runASCVD, deidentifyData, resolveTerminology, deidConfigName, deidPushToFhir, runFHIRDataQuality):
     #Get parameter contexts
-    resp = requests.get(url=baseURL + "nifi-api/flow/parameter-contexts", verify=False)
+    resp = requests.get(url=baseURL + "nifi-api/flow/parameter-contexts", headers=headers, verify=False)
     if debug:
         print(resp.content)
 
@@ -274,7 +283,7 @@ def update_parameter(baseURL, contextId, name, value, sensitive=False):
         parameterJson = {"revision": {"version": versionNum}, "id": contextId, "component": {
             "parameters": [{"parameter": {"name": name, "sensitive": sensitive, "value": value}}],
             "id": contextId}}
-        resp = requests.post(url=baseURL + createPostEndpoint, json=parameterJson, verify=False)
+        resp = requests.post(url=baseURL + createPostEndpoint, headers=headers, json=parameterJson, verify=False)
         if (resp.status_code==200):
             break
         versionNum += 1
@@ -285,7 +294,7 @@ def update_parameter(baseURL, contextId, name, value, sensitive=False):
     requestId = dict(resp.json())["request"]["requestId"]
     if debug:
         print(requestId)
-    resp = requests.get(url=baseURL + createPostEndpoint + "/" + requestId, verify=False)
+    resp = requests.get(url=baseURL + createPostEndpoint + "/" + requestId, headers=headers, verify=False)
     if debug:
         print(resp, resp.content)
 
@@ -296,7 +305,7 @@ def update_parameter(baseURL, contextId, name, value, sensitive=False):
         if debug:
             print("task not complete", name)
 
-        resp = requests.get(url=baseURL + createPostEndpoint + "/" + requestId, verify=False)
+        resp = requests.get(url=baseURL + createPostEndpoint + "/" + requestId, headers=headers, verify=False)
         if debug:
             print(resp, resp.content)
 
@@ -306,7 +315,7 @@ def update_parameter(baseURL, contextId, name, value, sensitive=False):
 
     if debug:
         print("Deleting the update task", name)
-    resp = requests.delete(url=baseURL + createPostEndpoint + "/" + requestId, verify=False)
+    resp = requests.delete(url=baseURL + createPostEndpoint + "/" + requestId, headers=headers, verify=False)
 
 if __name__ == '__main__':
     main()

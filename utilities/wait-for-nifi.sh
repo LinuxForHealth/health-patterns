@@ -3,23 +3,18 @@
 
 NIFI_HOST=$1
 NIFI_PORT=$2
-
-echo "waiting for NiFi API to start nifi $NIFI_PORT"
-until nc -vzw 1 $NIFI_HOST $NIFI_PORT; do
-  echo "waiting for nifi api..."
-  sleep 5
-done
+BEARER_TOKEN=$3
 
 echo "wait for flow controller initialization..."
 initializing='initializing'
 echo "> https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/status"
-response=$(curl -s -k -X GET --url https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/status)
+response=$(curl -s -k -X GET --url https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/status -H 'Authorization: Bearer '$BEARER_TOKEN)
 echo "< $response"
 
 while [[ "$response" == *"$initializing"* ]];
 do
   echo "> https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/status"
-  response=$(curl -s -k -X GET --url https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/status)
+  response=$(curl -s -k -X GET --url https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/status -H 'Authorization: Bearer '$BEARER_TOKEN)
   echo "< $response"
   sleep 5
 done
@@ -30,7 +25,7 @@ cluster='connectedToCluster":true'
 while [[ "$response" != *"$cluster"* ]];
 do
   echo "> https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/cluster/summary"
-  response=$(curl -s -k -X GET --url https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/cluster/summary)
+  response=$(curl -s -k -X GET --url https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/cluster/summary -H 'Authorization: Bearer '$BEARER_TOKEN)
   echo "< $response"
   sleep 2
 done
@@ -41,7 +36,7 @@ connected='connectedNodeCount":1'
 while [[ "$response" != *"$connected"* ]];
 do
   echo "> https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/cluster/summary"
-  response=$(curl -s -k -X GET --url https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/cluster/summary)
+  response=$(curl -s -k -X GET --url https://$NIFI_HOST:$NIFI_PORT/nifi-api/flow/cluster/summary -H 'Authorization: Bearer '$BEARER_TOKEN)
   echo "< $response"
   sleep 2
 done

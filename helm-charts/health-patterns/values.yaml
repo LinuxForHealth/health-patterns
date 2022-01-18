@@ -366,7 +366,8 @@ nifi:
     isNode: true
     sensitiveKey: wats0nHealth
     safetyValve:
-      nifi.security.allow.anonymous.authentication: true
+      #Enable to allow Nifi connection w/o requiring login
+      nifi.security.allow.anonymous.authentication: false
   logresources:
     requests:
       memory: 30Mi
