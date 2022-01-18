@@ -30,6 +30,13 @@ tolerations: []
 
 affinity: {}
 
+releaseName: &releaseName ingestion
+releaseNamespace: &releaseNamespace alvearie
+password: &alveariePassword integrati0n
+
+# Update "alvearie.svc" to "<your namespace>.svc"
+internalHostName: &internalHostName alvearie-nifi-0.alvearie-nifi-headless.alvearie.svc.cluster.local
+
 ingress:
   enabled: &ingressEnabled true
   class: &ingressClass public-iks-k8s-nginx
@@ -135,8 +142,8 @@ fhir:
       class: *ingressClass
       hostname: *hostname
 
-  fhirUserPassword: integrati0n
-  fhirAdminPassword: integrati0n
+  fhirUserPassword: *alveariePassword
+  fhirAdminPassword: *alveariePassword
 
   postgresql:
     enabled: false
@@ -163,8 +170,17 @@ fhir:
   exposeHttpEndpoint: true
   exposeHttpPort: 80
 
+  notifications:
+    kafka:
+      enabled: *enrichmentEnabled
+      topicName: "fhir.notification"
+      bootstrapServers: "enrich-kafka:9092"
+      password: *alveariePassword
+      securityProtocol: "PLAINTEXT"
+
+
 fhir-trigger:
-  enabled: false
+  enabled: *enrichmentEnabled
 
 fhir-deid:
   name: fhir-deid
@@ -205,8 +221,8 @@ fhir-deid:
       class: *ingressClass
       hostname: *hostname
 
-  fhirUserPassword: integrati0n
-  fhirAdminPassword: integrati0n
+  fhirUserPassword: *alveariePassword
+  fhirAdminPassword: *alveariePassword
 
   postgresql:
     enabled: false
@@ -260,7 +276,7 @@ fhir-data-quality:
 # ------------------------------------------------------------------------------
 cert-secret-generator:
   enabled: true
-  password: integrati0n
+  password: *alveariePassword
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
@@ -320,14 +336,14 @@ nifi:
   enabled: *nifikopDisabled
   auth:
     singleUser:
-      username: alvearie
-      password: wats0nHealth # Must to have at least 12 characters
+      username: &nifiUser alvearie
+      password: &nifiPassword wats0nHealth # Must to have at least 12 characters
   ingress:
     enabled: false
     class: *ingressClass
     hostname: *hostname
   service:
-    port: 8443
+    port: &nifiPort 8443
     processors:
       enabled: true
       ports:
@@ -354,6 +370,45 @@ nifi:
       volumeMounts:
       - name: alvearie-nars
         mountPath: /nars
+  extraContainers:
+    - name: post-start-setup
+      image: alvearie/nifi-setup:0.1.5
+      imagePullPolicy: Always
+      env:
+      - name: "RELEASE_NAME"
+        value: *releaseName
+      - name: "NIFI_REGISTRY"
+        value: "default"
+      - name: "ADD_CLINICAL_INGESTION"
+        value: *ingestionEnabled
+      - name: "ADD_CLINICAL_ENRICHMENT"
+        value: *enrichmentEnabled
+      - name: "FHIR_PW"
+        value: *alveariePassword
+      - name: "KAFKA_PW"
+        value: *alveariePassword
+      - name: "ADD_NLP_INSIGHTS"
+        value: "True"
+      - name: "RUN_ASCVD"
+        value: "True"
+      - name: "RESOLVE_TERMINOLOGY"
+        value: "True"
+      - name: "DEIDENTIFY_DATA"
+        value: "True"
+      - name: "DEID_CONFIG_NAME"
+        value: "default"
+      - name: "DEID_PUSH_TO_FHIR"
+        value: "True"
+      - name: "RUN_FHIR_DATA_QUALITY"
+        value: "False"
+      - name: "INTERNAL_HOSTNAME"
+        value: *internalHostName
+      - name: "HTTPS_PORT"
+        value: *nifiPort
+      - name: "NIFI_USERNAME"
+        value: *nifiUser
+      - name: "NIFI_PASSWORD"
+        value: *nifiPassword
   extraVolumeMounts:
     - name: alvearie-nars
       mountPath: /opt/nifi/nifi-current/custom-nars
@@ -412,7 +467,7 @@ kafka:
 
     serviceMonitor:
       enabled: false
-  password: integrati0n
+  password: *alveariePassword
 
 # ------------------------------------------------------------------------------
 # De-Identification Service
