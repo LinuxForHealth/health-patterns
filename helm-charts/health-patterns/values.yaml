@@ -48,6 +48,12 @@ ingress:
   class: &ingressClass public-iks-k8s-nginx
   hostname: &hostname replace-me
 
+ingestion:
+  enabled: &ingestionEnabled "true"
+
+enrichment:
+  enabled: &enrichmentEnabled "true"
+
 ##################################################################
 ##        End of Common attributes to change per deploy         ##
 ##################################################################
@@ -55,12 +61,6 @@ ingress:
 ##################################################################
 ##     Common attributes to change per NifiKop-based deploy     ##
 ##################################################################
-
-ingestion:
-  enabled: &ingestionEnabled "true"
-
-enrichment:
-  enabled: &enrichmentEnabled "true"
 
 oidc:
   users: &oidc_users
