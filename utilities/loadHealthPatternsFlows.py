@@ -182,7 +182,7 @@ def main():
     createJson = {"revision":{"version":0},"component":{"versionControlInformation":{"registryId":theRegistry,"bucketId":theBucket,"flowId":theFlow,"version":version},"position":{"x":x_pos,"y":y_pos}}}
     createPostEndpoint = "nifi-api/process-groups/" + rootId + "/process-groups"
     resp = requests.post(url=baseURL + createPostEndpoint, headers=headers, json=createJson, verify=False, timeout=30)
-    if resp.status_code >= 200 and resp.status_cod <= 299:
+    if resp.status_code >= 200 and resp.status_code <= 299:
         if debug:
             print("Response from new group...")
             print(resp.content)

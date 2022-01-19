@@ -441,6 +441,7 @@ nifi:
     safetyValve:
       #Enable to allow Nifi connection w/o requiring login
       nifi.security.allow.anonymous.authentication: false
+      nifi.web.proxy.host: *hostname
   logresources:
     requests:
       memory: 30Mi
