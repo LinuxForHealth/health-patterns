@@ -75,7 +75,7 @@ def main():
 
     if bearerToken:
         global headers
-        headers["Authorization"]="Bearer "+bearerToken
+        headers["Authorization"] = "Bearer " + bearerToken
 
     #Set specific passwords in the parameter contexts for fhir, kafka, and deid
 

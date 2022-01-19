@@ -59,7 +59,7 @@ def main():
 
     if bearerToken:
         global headers
-        headers["Authorization"]="Bearer "+bearerToken
+        headers["Authorization"] = "Bearer " + bearerToken
 
     if debug:
         print([regName, bucketName, version])
