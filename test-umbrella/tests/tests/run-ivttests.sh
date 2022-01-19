@@ -41,26 +41,11 @@ then
   
   export DEPLOY_OPTIONS="-f /workspace/"$TEST_NAMESPACE"/health-patterns/enrich/src/test/resources/configs/NLP-IVT-values.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.nlpservice.acd.apikey="$ACD_APIKEY" --wait --timeout "$HELM_TIMEOUT
 
-  if [ $DEPLOY_NIFIKOP != "true" ]
-  then
-     export DEPLOY_OPTIONS=" -f clinical_enrichment.yaml "$DEPLOY_OPTIONS
-  fi
-
-  # deploy enrich
-  # helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/enrich/src/test/resources/configs/NLP-IVT-values.yaml --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout $HELM_TIMEOUT
 elif [ $HELM_RELEASE = "ingestion" ] 
 then
 
    export DEPLOY_OPTIONS="-f /workspace/"$TEST_NAMESPACE"/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey="$ACD_APIKEY" --wait --timeout "$HELM_TIMEOUT" --set fhir-data-quality.enabled=true --set fhir-data-quality.requestTimeout=60 --set expose-kafka.requestTimeout=60"
     
-    
-  if [ $DEPLOY_NIFIKOP != "true" ]
-  then
-     export DEPLOY_OPTIONS=" -f clinical_ingestion.yaml "$DEPLOY_OPTIONS
-  fi
-  
-   # deploy ingestion
-   # helm3 install $HELM_RELEASE . -f /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --wait --timeout $HELM_TIMEOUT --set fhir-data-quality.enabled=true --set fhir-data-quality.requestTimeout=60 --set expose-kafka.requestTimeout=60
 fi
 
 echo "Deployment options: '"$DEPLOY_OPTIONS"'"
