@@ -30,23 +30,37 @@ tolerations: []
 
 affinity: {}
 
+##################################################################
+##            Common attributes to change per deploy            ##
+##################################################################
+
 releaseName: &releaseName ingestion
-releaseNamespace: &releaseNamespace alvearie
 password: &alveariePassword integrati0n
 
 # Update "alvearie.svc" to "<your namespace>.svc"
 internalHostName: &internalHostName alvearie-nifi-0.alvearie-nifi-headless.alvearie.svc.cluster.local
+
+# Enable to automatically process data using fhir notifications
+fhirNotificationsEnabled: &fhirNotificationsEnabled false
 
 ingress:
   enabled: &ingressEnabled true
   class: &ingressClass public-iks-k8s-nginx
   hostname: &hostname replace-me
 
+##################################################################
+##        End of Common attributes to change per deploy         ##
+##################################################################
+
+##################################################################
+##     Common attributes to change per NifiKop-based deploy     ##
+##################################################################
+
 ingestion:
-  enabled: &ingestionEnabled true
+  enabled: &ingestionEnabled "true"
 
 enrichment:
-  enabled: &enrichmentEnabled true
+  enabled: &enrichmentEnabled "true"
 
 oidc:
   users: &oidc_users
@@ -61,6 +75,10 @@ oidc:
 nifikop:
   disabled: &nifikopDisabled true
   enabled: &nifikopEnabled false
+
+##################################################################
+## End of Common attributes to change per NifiKop-based deploy  ##
+##################################################################
 
 ascvd:
   enabled: true
@@ -172,7 +190,7 @@ fhir:
 
   notifications:
     kafka:
-      enabled: *enrichmentEnabled
+      enabled: *fhirNotificationsEnabled
       topicName: "fhir.notification"
       bootstrapServers: "enrich-kafka:9092"
       password: *alveariePassword
@@ -180,7 +198,7 @@ fhir:
 
 
 fhir-trigger:
-  enabled: *enrichmentEnabled
+  enabled: *fhirNotificationsEnabled
 
 fhir-deid:
   name: fhir-deid
@@ -343,7 +361,7 @@ nifi:
     class: *ingressClass
     hostname: *hostname
   service:
-    port: &nifiPort 8443
+    port: 8443
     processors:
       enabled: true
       ports:
@@ -372,7 +390,7 @@ nifi:
         mountPath: /nars
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.5
+      image: alvearie/nifi-setup:0.1.6
       imagePullPolicy: Always
       env:
       - name: "RELEASE_NAME"
@@ -404,7 +422,7 @@ nifi:
       - name: "INTERNAL_HOSTNAME"
         value: *internalHostName
       - name: "HTTPS_PORT"
-        value: *nifiPort
+        value: "8443"
       - name: "NIFI_USERNAME"
         value: *nifiUser
       - name: "NIFI_PASSWORD"

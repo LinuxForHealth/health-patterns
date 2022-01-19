@@ -30,7 +30,7 @@ The following services have been deployed:
 - De-Identification Service{{- if .Values.deid.ingress.enabled }} --- https://{{ .Values.deid.ingress.hostname}}/deid/api/v1/{{- end }}
 {{- end }}
 {{- if .Values.nifi.enabled }}
-- NiFi Server{{- if .Values.ingress.enabled }} ----------------- https://{{ .Values.nifi.ingress.hostname}}/nifi{{- end }}
+- NiFi Server  ----------------- https://localhost:8443/nifi (first run: 'kubectl port-forward alvearie-nifi-0 8443:8443' )
 {{- end }}
 {{- if .Values.nifi2.enabled }}
 - NiFi Server{{- if .Values.ingress.enabled }} ----------------- https://{{ .Values.nifi2.ingress.hostname}}/nifi{{- end }}
