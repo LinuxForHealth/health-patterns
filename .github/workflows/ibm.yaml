@@ -62,34 +62,6 @@ jobs:
         kubectl create namespace ${CLUSTER_NAMESPACE}
         ibmcloud cis glb-create ${DOMAIN_ID} --json '{"name" : "'${CLUSTER_NAMESPACE}'.wh-health-patterns.dev.watson-health.ibm.com", "fallback_pool" : "'${POOL_ID}'", "default_pools" : ["'${POOL_ID}'"], "ttl" : 1, "proxied" : true, "session_affinity" : "cookie"}' -i "${CIS_INSTANCE}"
 
-    # Setup and Install NifiKop 
-    - name: Install NifiKop
-      run: |
-        kubectl config current-context
-        kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
-
-        cd helm-charts/health-patterns
-
-        # oidic users
-        sed -i -e "s/name: \"alvearie\"/name: \"alvearie\"\n    - identity: \"roger.guderian@ibm.com\"\n      name: \"roger.guderian\"\n    - identity: \"atclark@us.ibm.com\"\n      name: \"adam.t.clark\"/g" values.yaml
-
-        # oidc discovery URL
-        sed -i -e "s/\&oidc_discovery_url \"replace-me\"/\&oidc_discovery_url \"https:\/\/us-east.appid.cloud.ibm.com\/oauth\/v4\/82343deb-31d3-4a15-9c30-469d12651b89\/.well-known\/openid-configuration\"/g" values.yaml
-
-        #oidc client and secret
-        sed -i -e "s/\&oidc_client_id replace-me/\&oidc_client_id 38c44769-91c3-4650-a8d5-b24f8992a821/g" values.yaml
-        sed -i -e "s/\&oidc_client_secret replace-me/\&oidc_client_secret MmJjODZiNDUtNzdmYS00ZmJlLWFhNDYtZGFmMWFhMmI1MTI2/g" values.yaml
-
-        # Enable NifiKop Deployment
-        sed -i -e "s/\&nifikopDisabled true/\&nifikopDisabled false/g" values.yaml
-        sed -i -e "s/\&nifikopEnabled false/\&nifikopEnabled true/g" values.yaml
-
-        # Deploy NifiKop
-        echo "Deploy NifiKop"
-        helm repo add orange-incubator https://orange-kubernetes-charts-incubator.storage.googleapis.com/
-        helm repo update 
-        helm install nifikop orange-incubator/nifikop --namespace=${CLUSTER_NAMESPACE} --version 0.7.1 --set image.tag=v0.7.1-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"${CLUSTER_NAMESPACE}"}  --wait --timeout $HELM_TIMEOUT
-
 
     # Setup and Install Ingestion Chart 
     - name: Install Ingestion Chart
@@ -99,7 +71,9 @@ jobs:
         kubectl config current-context
         kubectl config set-context --current --namespace=${CLUSTER_NAMESPACE}
         helm dependency update || true
+        sed -i -e "s/alvearie-nifi-headless.alvearie.svc/alvearie-nifi-headless."${CLUSTER_NAMESPACE}".svc/g" values.yaml
         sed -i -e "s/\&hostname replace-me/\&hostname ${CLUSTER_NAMESPACE}.wh-health-patterns.dev.watson-health.ibm.com/g" values.yaml
+        cat values.yaml | grep ${CLUSTER_NAMESPACE}
         helm install ingestion . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_API_KEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout $HELM_TIMEOUT
         kubectl get all
 
