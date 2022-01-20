@@ -1,109 +1,56 @@
-NLP Text Analytics
--------------------------------
-A flask API for applying NLP-powered text analytics to FHIR resources.  
+# NLP Insights
+A Rest service for updating bundles of FHIR resources with discovered insights.
+The service is implemented as a Flask API within a docker container.
 
-### Currently supported resource types:
-
-Allergy Intolerance --> Adds an extension to the resource containing diseases/syndromes, symptoms, and pathologic
-functions and their codes inferred from the resource.
-
-Immunization --> Adds an extension to the resource containing immunizations/immunologic factors and their codes inferred from the resource.
-
-Diagnostic Report --> Creates Condition and/or Medication Statement resources generated from the diagnostic report resource
-
-DocumentReference --> Creates Condition and/or Medication Statement resources generated from the document reference resource
-
-### Running the service
-To run the app on its own, fill in `text_analytics/acd/acd_config.ini` and `text_analytics/quickUMLS/quickumls_config.ini` with your config information for each service.
-
-Then from the root directory execute the following:
-```bash
-export FLASK_APP=text_analytics/app.py
-gradle clean build
-source build/venv/bin/activate
-pip install .
-flask run
-```
-
-#### Docker:
-To build the image locally, run `gradle docker`
-
-Then to run on localhost:5000, run `gradle dockerRun`
-
-To push the docker image and deploy on a kubernetes cluster, first replace the field `<replace with docker user id>` with your docker id
-in both `kubernetes.yml` and `gradle.properties`
-Then run `gradle dockerPush` to push the image 'nlp-insights' to your repository.
-To deploy, run `kubectl apply -f kubernetes.yml` to deploy both the service and the persistent volume/claim needed to persist configurations.
-If deploying on a cluster where the service is already deployed in another namespace, change the name of the persistent volume to something unique to avoid conflicts.
+## Purpose
+The primary purpose of the discover insights API is to accept a bundle of FHIR resources and to return an updated bundle that includes discovered insights.
+* Resources in the bundle may have been enriched by adding additional codes. 
+  - For example an AllergyIntolerance resource for a peanut allergy might have UMLS code C0559470 or SNOMED-CT code 91935009 added to it.
+* New resources may have been derived from unstructured text (such as clinical notes) contained within the bundle's resources. 
+  - For example a DiagnosticReport that says *the patient had a myocardial infarction* might result in a derived Condition resource being added to the bundle.
 
 
-### Using the service
-The app currently supports running two different NLP engine types: IBM's Annotator for Clinical Data (ACD) and the
-open-source QuickUMLS.  It is possible to configure as many different instances of these two engines as needed with different configuration details.  Configuation jsons require a `name`, an `nlpServiceType` (either `acd` or `quickumls`), and config details specific to that type.
-For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, and a `flow`.
+## Supported NLP Engines
+The nlp-insights service requires an NLP engine service to perform NLP related tasks. We support two NLP services.
 
-#### HTTP Endpoints
-
-| Action | Method | Endpoint | Body | Returns on Success |
-|:------:|:------:|:---------|:----:|:-------:|
-| Get All Configs | `GET` | `/all_configs` | | Newline-delimited list of config names |
-| Add Named Config  | `PUT/POST` | `/config/definition` | Config (json) contains `name` | Status `200`
-| Get Current Default Config | `GET` | `/config` | | Current default `configName` |
-| Get Config Details | `GET` | `/config/{configName}` | | Config details named `configName` |
-| Delete Config | `DELETE` | `/config/{configName}` | | Status `200` |
-| Make Config default | `POST/PUT` | `/config/setDefault?name={configName}` | | Status `200` |
-| Clear default config | `POST/PUT` | `/config/clearDefault` | | Status `200` |
-| Apply NLP | `POST` | `/discoverInsights` | FHIR bundle or resource | Object annotated with NLP insights |
-| Get all active overrides | `GET` | `/config/resource` | | dictionary-Status `200` |
-| Get the active override for a resource | `GET` | `/config/resource/{resource}` | | `configName`-Status `200` |
-| Add resource override | `POST/PUT` | `/config/resource/{resourcetype}/{configName}` | | Status `200` |
-| Delete a resource override | `DELETE` | `/config/resource/{resourcetype}` | | Status `200` |
-| Delete all resource overrides | `DELETE` | `/config/resource` | | Status `200` |
-#### Configuring at deploy time
-
-It is possible to provide an initial (deploy time) named configuration for quickulms and/or acd.  This is done by modifying the `values.yaml` file before deployment.  In the nlp-insights chart, the following configuration values are defined:
-
-```
-nlpservice:
-  quickumls:
-    enableconfig: false
-    name:
-    endpoint:
-  acd:
-    enableconfig: false
-    name:
-    endpoint:
-    apikey:
-    flow:
-  default:
-  ```
-
-By setting the appropriate `enableconfig` flag to true and providing the `name` of the config as well as the details (dependent on the type of the nlp engine), an initial named configuration will be created.  In addition, the configuration can be made the default by setting the `default` value to one of the previously defined names.
+* IBM's [Annotator for Clinical Data (ACD)](https://www.ibm.com/cloud/watson-annotator-for-clinical-data) and 
+* Open-source [QuickUMLS](https://github.com/Georgetown-IR-Lab/QuickUMLS)
 
 
-#### Example Resources
+## Quick Start
+Our tutorials describe how to setup and configure nlp-insights with a supported NLP service. They also provide extensive description of how resources are derived and enriched:
 
-Example json FHIR that can be processed by the service can be found in text_analytics/test/resources
+* [Tutorial for using the nlp-insights service with QuickUMLS](./doc/examples/quickumls/quickumls_tutorial.md)
+* [Tutorial for using the nlp-insights service with ACD](./doc/examples/acd/acd_tutorial.md)
 
-##### Example config jsons:
-```
-{
-  "name": "quickconfig1",
-  "nlpServiceType": "quickumls",
-  "config": {
-    "endpoint": "https://quickumlsEndpointURL/match"
-  }
-}
-```
 
-```
-{
-  "name": "acdconfig1",
-  "nlpServiceType": "acd",
-  "config": {
-    "apikey": "apikeyxxxxxxxxx",
-    "endpoint": "https://acdEndpointURL/api",
-    "flow": "acd_standard_flow"
-  }
-}
-```
+## Running the service locally
+The docker image for the container has been published, and you can pull it from [here](https://hub.docker.com/r/alvearie/nlp-insights).
+
+Developers that have cloned the repo should follow the instructions for starting the service that are documented [here](./doc/examples/setup/start_nlp_insights.md).
+
+Although discouraged, it is possible to [run the service outside of a docker container](./doc/developer/run_service_no_docker.md).
+
+## Kubernetes
+The nlp-insights service is designed to be part of a larger health-patterns ingestion and enrichment pipeline. Helm charts are included so that the service can be deployed to kubernetes. The deployed service can then be integrated into a pipeline.
+
+More details on deployment and configuration in a k8s environment are discussed [here](./doc/developer/kubernetes.md)
+
+## HTTP Endpoints
+The HTTP APIs for the service are described [here](./doc/developer/http_endpoints.md).
+These APIs allow you to:
+
+* Define the connection to the NLP engine service(s),
+* Select the default NLP engine that will be used for insight discovery
+* Discover insights
+* Override the default engine and use a different NLP engine for one or more resource types
+
+## Build
+We use gradle for all build and test related tasks. The important features are documented [here](./doc/developer/gradle_tasks.md).
+
+## Contributing
+We welcome contributions! Please look at our [contributing guide](./doc/developer/CONTRIBUTING.md) for details on how to begin.
+
+
+## License
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
