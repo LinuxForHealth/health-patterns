@@ -63,7 +63,7 @@ EOF
 ```
 
 ## Inspect the response bundle
-Although the input text mentions a condition, a resource is not created because the condition is not for the patient. In addition, there are no insight extensions included in the DiagnosticReport.
+Although the input text mentions a condition, a resource is not created because the condition is not for the patient. The Diagnostic report and bundle are not modified in any meaningful way.
 
 `cat /tmp/output.json | jq`
 
