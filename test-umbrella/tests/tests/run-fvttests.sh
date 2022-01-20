@@ -37,8 +37,8 @@ echo "***************************************"
 if [ $HELM_RELEASE = "enrich" ] 
 then
    # disable the ingestion deploy for an enrich-only deployment
-   sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
-   
+   sed -i -e "s/\&ingestionEnabled \"true\"/\&ingestionEnabled \"false\"/g" values.yaml
+   cat values.yaml | grep ingestionEnabled
    export DEPLOY_OPTIONS="--set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout "$HELM_TIMEOUT
 
 elif [ $HELM_RELEASE = "ingestion" ] 
