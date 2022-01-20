@@ -23,3 +23,6 @@ The nlp-insights service can use ACD to derive new FHIR resources from clinical 
 
 ## Context awareness
 When nlp-insights is configured to use ACD, the nlp-insights service will take advantage of ACD attributes to determine the context of concepts. This avoids creating resources for the patient that are not correct. See the details [here](./context_awareness.md)
+
+## FHIR Integration
+ The nlp-insights service is designed to enrich a bundle prior to posting that bundle to a FHIR server. Learn how to to work with derived data that is stored in a FHIR server [here](../fhir_integration/fhir_integration_tutorial.ipynb) You will need a view for jupyter-notebooks to view the tutorial.

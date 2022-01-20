@@ -1,5 +1,3 @@
-# OUTPUT OBSOLETE
-
 # Enrich FHIR resources with nlp-insights and ACD
 The nlp-insights service supports enrichment of the following types of FHIR resources:
 
@@ -15,10 +13,10 @@ If the nlp-insights service has not been configured to use ACD by default, follo
 
 ## Enrich a Condition
 
-In this example, the nlp-insights service is sent a bundle that contains a single condition. The condition has a code with text "myocardial infarction", but no coding values. The service will add coding values to the code. This curl command is written to store the response in a file /tmp/output for later analysis.
+In this example, the nlp-insights service is sent a bundle that contains a single condition. The condition has a code with text "myocardial infarction", but no coding values. The service will add coding values to the code. This curl command is written to store the response in a file /tmp/output.json for later analysis.
 
 ```
-curl  -w "\n%{http_code}\n" -s -o /tmp/output -XPOST localhost:5000/discoverInsights  -H 'Content-Type: application/json; charset=utf-8' --data-binary @- << EOF
+curl  -w "\n%{http_code}\n" -s -o /tmp/output.json -XPOST localhost:5000/discoverInsights  -H 'Content-Type: application/json; charset=utf-8' --data-binary @- << EOF
 {
     "resourceType": "Bundle",
     "id": "abc",
@@ -54,17 +52,19 @@ EOF
 ### Enriched condition
 The response from the service is a bundle with the enriched condition.
 
-`cat /tmp/output | jq`
+`cat /tmp/output.json | jq`
 
 <details><summary>Returned Bundle</summary>
 
 ```json
 {
+  "id": "abc",
   "entry": [
     {
+      "fullUrl": "urn:uuid:7ea4903e-e14a-4407-8e37-8eae239d964d",
       "request": {
-        "method": "PUT",
-        "url": "Condition/abcefg-1234567890"
+        "method": "POST",
+        "url": "Condition"
       },
       "resource": {
         "id": "abcefg-1234567890",
@@ -76,7 +76,7 @@ The response from the service is a bundle with the enriched condition.
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "f5d5c76179f75f1883c92a6ef73d6cd9a103673518cabe2b38b7a180"
+                    "value": "53958b4f7cef2dec63f88ff266b1e24bf95d3f12a32e88f7ad764bdb"
                   }
                 },
                 {
@@ -88,7 +88,7 @@ The response from the service is a bundle with the enriched condition.
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "Condition/abcefg-1234567890"
+                        "reference": "urn:uuid:7ea4903e-e14a-4407-8e37-8eae239d964d"
                       }
                     },
                     {
@@ -120,7 +120,7 @@ The response from the service is a bundle with the enriched condition.
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "f5d5c76179f75f1883c92a6ef73d6cd9a103673518cabe2b38b7a180"
+                        "value": "53958b4f7cef2dec63f88ff266b1e24bf95d3f12a32e88f7ad764bdb"
                       }
                     },
                     {
@@ -152,7 +152,7 @@ The response from the service is a bundle with the enriched condition.
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "f5d5c76179f75f1883c92a6ef73d6cd9a103673518cabe2b38b7a180"
+                        "value": "53958b4f7cef2dec63f88ff266b1e24bf95d3f12a32e88f7ad764bdb"
                       }
                     },
                     {
@@ -183,7 +183,7 @@ The response from the service is a bundle with the enriched condition.
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "f5d5c76179f75f1883c92a6ef73d6cd9a103673518cabe2b38b7a180"
+                        "value": "53958b4f7cef2dec63f88ff266b1e24bf95d3f12a32e88f7ad764bdb"
                       }
                     },
                     {
@@ -214,7 +214,7 @@ The response from the service is a bundle with the enriched condition.
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "f5d5c76179f75f1883c92a6ef73d6cd9a103673518cabe2b38b7a180"
+                        "value": "53958b4f7cef2dec63f88ff266b1e24bf95d3f12a32e88f7ad764bdb"
                       }
                     },
                     {
@@ -250,10 +250,10 @@ The response from the service is a bundle with the enriched condition.
   "type": "transaction",
   "resourceType": "Bundle"
 }
+
 ```
 </details>
 
-The entry for the condition in the returned bundle has a method of *PUT*, which indicates that this resource has been enriched with additional codes.
 
 ### Condition derived codes
 ACD understands a wide variety of standard code systems. As a result SNOMED, ICD-9 and ICD-10 coding values are included in the condition, in addition to the UMLS concept id.
@@ -261,7 +261,7 @@ ACD understands a wide variety of standard code systems. As a result SNOMED, ICD
 <!--
 code to generate the table
 
-cat /tmp/output | jq -r '
+cat /tmp/output.json | jq -r '
 ["System", "Code", "Display"],
 ["------", "----", "----"], 
 (.entry[0].resource.code.coding[] | [.system, .code, .display]) 
@@ -283,7 +283,7 @@ In this example, a bundle with two allergy intolerance resources is sent to the 
 Both resources contain only text and do not contain any codes for the allergy. The nlp-insights service will enrich the resources by adding UMLS, SNOMED, ICD-9 and ICD-10 codes.
 
 ```
-curl  -w "\n%{http_code}\n" -s -o /tmp/output -XPOST localhost:5000/discoverInsights  -H 'Content-Type: application/json; charset=utf-8' --data-binary @- << EOF
+curl  -w "\n%{http_code}\n" -s -o /tmp/output.json -XPOST localhost:5000/discoverInsights  -H 'Content-Type: application/json; charset=utf-8' --data-binary @- << EOF
 {
     "resourceType": "Bundle",
     "id": "abc",
@@ -333,19 +333,21 @@ EOF
 
 </details>
 
-A bundle is returned that contains the enriched allergy intolerance resources. Both entries in the bundle have method *PUT*, indicating that these contain enriched resources. Each resource now contains the additional derived code values.
+A bundle is returned that contains the enriched allergy intolerance resources. Each resource now includes the additional derived code values.
 
-`cat /tmp/output | jq`
+`cat /tmp/output.json | jq`
 
 <details><summary>Returned bundle</summary>
 
 ```
 {
+  "id": "abc",
   "entry": [
     {
+      "fullUrl": "urn:uuid:12f769ca-81a8-4482-a07a-c98260b4991b",
       "request": {
-        "method": "PUT",
-        "url": "AllergyIntolerance/pnt123"
+        "method": "POST",
+        "url": "Condition"
       },
       "resource": {
         "id": "pnt123",
@@ -357,7 +359,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "dced3e94fd2e5a77e6b6beb78019b1a89f17cb0a2731c4e31c24c5e4"
+                    "value": "33376613c387908fbcd8ffafca135a19d84efef2bd195e9750d4bd41"
                   }
                 },
                 {
@@ -369,7 +371,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "AllergyIntolerance/pnt123"
+                        "reference": "urn:uuid:12f769ca-81a8-4482-a07a-c98260b4991b"
                       }
                     },
                     {
@@ -401,7 +403,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "dced3e94fd2e5a77e6b6beb78019b1a89f17cb0a2731c4e31c24c5e4"
+                        "value": "33376613c387908fbcd8ffafca135a19d84efef2bd195e9750d4bd41"
                       }
                     },
                     {
@@ -433,7 +435,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "dced3e94fd2e5a77e6b6beb78019b1a89f17cb0a2731c4e31c24c5e4"
+                        "value": "33376613c387908fbcd8ffafca135a19d84efef2bd195e9750d4bd41"
                       }
                     },
                     {
@@ -464,7 +466,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "dced3e94fd2e5a77e6b6beb78019b1a89f17cb0a2731c4e31c24c5e4"
+                        "value": "33376613c387908fbcd8ffafca135a19d84efef2bd195e9750d4bd41"
                       }
                     },
                     {
@@ -495,7 +497,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "dced3e94fd2e5a77e6b6beb78019b1a89f17cb0a2731c4e31c24c5e4"
+                        "value": "33376613c387908fbcd8ffafca135a19d84efef2bd195e9750d4bd41"
                       }
                     },
                     {
@@ -526,7 +528,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "dced3e94fd2e5a77e6b6beb78019b1a89f17cb0a2731c4e31c24c5e4"
+                        "value": "33376613c387908fbcd8ffafca135a19d84efef2bd195e9750d4bd41"
                       }
                     },
                     {
@@ -559,9 +561,10 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
       }
     },
     {
+      "fullUrl": "urn:uuid:8ded6929-2c8f-4d0b-bb5f-e402924f407e",
       "request": {
-        "method": "PUT",
-        "url": "AllergyIntolerance/amx123"
+        "method": "POST",
+        "url": "Condition"
       },
       "resource": {
         "id": "amx123",
@@ -573,7 +576,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                    "value": "eab3b2e367a16867de5b9249611542d2bd3df1f934db118237e31c2e"
+                    "value": "56af15e63b156a13a88436e138c479f2801d758d339fff32a93b3de8"
                   }
                 },
                 {
@@ -585,7 +588,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "AllergyIntolerance/amx123"
+                        "reference": "urn:uuid:8ded6929-2c8f-4d0b-bb5f-e402924f407e"
                       }
                     },
                     {
@@ -617,7 +620,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "eab3b2e367a16867de5b9249611542d2bd3df1f934db118237e31c2e"
+                        "value": "56af15e63b156a13a88436e138c479f2801d758d339fff32a93b3de8"
                       }
                     },
                     {
@@ -649,7 +652,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "eab3b2e367a16867de5b9249611542d2bd3df1f934db118237e31c2e"
+                        "value": "56af15e63b156a13a88436e138c479f2801d758d339fff32a93b3de8"
                       }
                     },
                     {
@@ -680,7 +683,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "eab3b2e367a16867de5b9249611542d2bd3df1f934db118237e31c2e"
+                        "value": "56af15e63b156a13a88436e138c479f2801d758d339fff32a93b3de8"
                       }
                     },
                     {
@@ -711,7 +714,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "eab3b2e367a16867de5b9249611542d2bd3df1f934db118237e31c2e"
+                        "value": "56af15e63b156a13a88436e138c479f2801d758d339fff32a93b3de8"
                       }
                     },
                     {
@@ -742,7 +745,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                       "valueIdentifier": {
                         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-                        "value": "eab3b2e367a16867de5b9249611542d2bd3df1f934db118237e31c2e"
+                        "value": "56af15e63b156a13a88436e138c479f2801d758d339fff32a93b3de8"
                       }
                     },
                     {
@@ -778,6 +781,7 @@ A bundle is returned that contains the enriched allergy intolerance resources. B
   "type": "transaction",
   "resourceType": "Bundle"
 }
+
 ```
 </details>
 
@@ -787,7 +791,7 @@ The food allergy resource has been enriched with new codes.
 <!--
 code to generate the table
 
-cat /tmp/output | jq -r '["System", "Code", "Display"], ["---", "---", "---"], (.entry[].resource | select(.id == "pnt123") | .code.coding[] | [.system,  .code, .display]) | @tsv' | column -t -s $'\t' -o "|"
+cat /tmp/output.json | jq -r '["System", "Code", "Display"], ["---", "---", "---"], (.entry[].resource | select(.id == "pnt123") | .code.coding[] | [.system,  .code, .display]) | @tsv' | column -t -s $'\t' -o "|"
 -->
 
 System                                    |Code    |Display
@@ -798,15 +802,15 @@ http://hl7.org/fhir/sid/icd-9-cm          |995.3   |
 http://hl7.org/fhir/sid/icd-10-cm         |Z91.010 |
 http://hl7.org/fhir/sid/icd-10-cm         |Z91.0   |
 
+
 In a similar way, the medication allergy resource has been enriched with new codes.
 
 <!--
 code to generate table
 
-cat /tmp/output | jq -r '["System", "Code", "Display"], ["---", "---", "---"], (.entry[].resource | select(.id == "amx123") | .code.coding[] | [.system,  .code, .display]) | @tsv' | column -t -s $'\t' -o "|"
+cat /tmp/output.json | jq -r '["System", "Code", "Display"], ["---", "---", "---"], (.entry[].resource | select(.id == "amx123") | .code.coding[] | [.system,  .code, .display]) | @tsv' | column -t -s $'\t' -o "|"
 
 -->
-
 
 System                                    |Code     |Display
 ---                                       |---      |---
@@ -815,9 +819,6 @@ http://snomed.info/sct                    |294505008|
 http://hl7.org/fhir/sid/icd-9-cm          |E930.0   |
 http://hl7.org/fhir/sid/icd-9-cm          |995.27   |
 http://hl7.org/fhir/sid/icd-10-cm         |Z88.0    |
-
-
-
 
 ## Evidence
 nlp-insights enriches resources according to the [Alvearie FHIR IG](https://alvearie.io/alvearie-fhir-ig/index.html).
@@ -832,11 +833,11 @@ For example consider the UMLS code C0559470 that was added to the allergy intole
 <!--
 code to extract json object
 
-cat /tmp/output | jq -r '
+cat /tmp/output.json | jq -r '
 .entry[].resource | 
 select(.id == "pnt123") |
 .code.coding[] | 
-select(.code == "C0559470" and .system == "http://terminology.hl7.org/CodeSystem/umls")`
+select(.code == "C0559470" and .system == "http://terminology.hl7.org/CodeSystem/umls")'
 -->
 
 <details><summary>C0559470 coding in AllergyIntolerance pnt123</summary>
@@ -850,7 +851,7 @@ select(.code == "C0559470" and .system == "http://terminology.hl7.org/CodeSystem
           "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
           "valueIdentifier": {
             "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-            "value": "dced3e94fd2e5a77e6b6beb78019b1a89f17cb0a2731c4e31c24c5e4"
+            "value": "33376613c387908fbcd8ffafca135a19d84efef2bd195e9750d4bd41"
           }
         },
         {
@@ -874,6 +875,7 @@ select(.code == "C0559470" and .system == "http://terminology.hl7.org/CodeSystem
   "display": "allergy to peanut",
   "system": "http://terminology.hl7.org/CodeSystem/umls"
 }
+}
 ```
 
 </details><BR/>
@@ -892,7 +894,7 @@ The insight identified by the summary extension has an insight extension in the 
 <!-- 
  jq code to extract the extension
  
-cat /tmp/output | jq -r ' .entry[].resource | select(.id == "pnt123").meta.extension[0]'
+cat /tmp/output.json | jq -r ' .entry[].resource | select(.id == "pnt123").meta.extension[0]'
 
 -->
 
@@ -905,7 +907,7 @@ cat /tmp/output | jq -r ' .entry[].resource | select(.id == "pnt123").meta.exten
       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
       "valueIdentifier": {
         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/acd",
-        "value": "dced3e94fd2e5a77e6b6beb78019b1a89f17cb0a2731c4e31c24c5e4"
+        "value": "33376613c387908fbcd8ffafca135a19d84efef2bd195e9750d4bd41"
       }
     },
     {
@@ -917,7 +919,7 @@ cat /tmp/output | jq -r ' .entry[].resource | select(.id == "pnt123").meta.exten
         {
           "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
           "valueReference": {
-            "reference": "AllergyIntolerance/pnt123"
+            "reference": "urn:uuid:12f769ca-81a8-4482-a07a-c98260b4991b"
           }
         },
         {

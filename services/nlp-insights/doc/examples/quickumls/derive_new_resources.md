@@ -1,5 +1,3 @@
-# OUTPUT OBSOLETE
-
 # Derive New Resources with nlp-insights and QuickUMLS
 Some resources such as DiagnosticReports and DocumentReferences contain clinical notes or other unstructured text. When the nlp-insights service receives one of these resources, it can derive new FHIR resources for detected concepts.
 
@@ -25,11 +23,11 @@ The Text data in a diagnostic report must be base64 encoded, which can be done w
 B64_REPORT_TEXT=$(echo 'The patient had a myocardial infarction in 2015 and was prescribed Losartan.' | base64 -w 0)
 ```
 
-The text can now be included in a diagnostic report and sent to the nlp-insights service. The curl command stores the response json in a file /tmp/output for future analysis.
+The text can now be included in a diagnostic report and sent to the nlp-insights service. The curl command stores the response json in a file /tmp/output.json for future analysis.
 
 
 ```
-curl  -w "\n%{http_code}\n" -s -o /tmp/output -XPOST localhost:5000/discoverInsights  -H 'Content-Type: application/json; charset=utf-8' --data-binary @- << EOF
+curl  -w "\n%{http_code}\n" -s -o /tmp/output.json -XPOST localhost:5000/discoverInsights  -H 'Content-Type: application/json; charset=utf-8' --data-binary @- << EOF
 {
     "resourceType": "Bundle",
     "id": "abc",
@@ -70,13 +68,38 @@ EOF
 
 </details>
 
-`cat /tmp/output | jq`
+`cat /tmp/output.json | jq`
 
 <details><summary>Returned Bundle</summary>
 
 ```json
 {
+  "id": "abc",
   "entry": [
+    {
+      "fullUrl": "urn:uuid:894fc0f0-c6cb-4464-83eb-e42a6c92f9f6",
+      "request": {
+        "method": "POST",
+        "url": "DiagnosticReport"
+      },
+      "resource": {
+        "id": "abcefg-1234567890",
+        "code": {
+          "text": "Chief complaint Narrative - Reported"
+        },
+        "presentedForm": [
+          {
+            "contentType": "text",
+            "creation": "2020-08-02T12:44:55+08:00",
+            "data": "VGhlIHBhdGllbnQgaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIGluIDIwMTUgYW5kIHdhcyBwcmVzY3JpYmVkIExvc2FydGFuLgo=",
+            "language": "en",
+            "title": "ER VISIT"
+          }
+        ],
+        "status": "final",
+        "resourceType": "DiagnosticReport"
+      }
+    },
     {
       "request": {
         "method": "POST",
@@ -91,7 +114,7 @@ EOF
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "3667c29882ecfe50d9cbaf162ef5df199e406563770186c7e637c234"
+                    "value": "f2c75a905c5371833f3498356b4c4a5241be3b36c4d9ea85dd0545df"
                   }
                 },
                 {
@@ -103,7 +126,7 @@ EOF
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "DiagnosticReport/abcefg-1234567890"
+                        "reference": "urn:uuid:894fc0f0-c6cb-4464-83eb-e42a6c92f9f6"
                       }
                     },
                     {
@@ -154,7 +177,7 @@ EOF
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                  "value": "3667c29882ecfe50d9cbaf162ef5df199e406563770186c7e637c234"
+                  "value": "f2c75a905c5371833f3498356b4c4a5241be3b36c4d9ea85dd0545df"
                 }
               },
               {
@@ -200,7 +223,7 @@ EOF
                   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                   "valueIdentifier": {
                     "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                    "value": "9dec57cd4b3e8e635fd86a993edd4d40dd609200597aa0550b7d5f0f"
+                    "value": "16f3982942687e142241c6145467accf85c314d47b4698edbe210b83"
                   }
                 },
                 {
@@ -212,7 +235,7 @@ EOF
                     {
                       "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
                       "valueReference": {
-                        "reference": "DiagnosticReport/abcefg-1234567890"
+                        "reference": "urn:uuid:894fc0f0-c6cb-4464-83eb-e42a6c92f9f6"
                       }
                     },
                     {
@@ -263,7 +286,7 @@ EOF
                 "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
                 "valueIdentifier": {
                   "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-                  "value": "9dec57cd4b3e8e635fd86a993edd4d40dd609200597aa0550b7d5f0f"
+                  "value": "16f3982942687e142241c6145467accf85c314d47b4698edbe210b83"
                 }
               },
               {
@@ -303,14 +326,12 @@ EOF
 ```
 </details><br/>
 
-The returned bundle has two entries with resources. These entries each have method *POST*, which tells us that these resources were created by nlp-insights. 
-
-We'll look at the codes associated with these resources independently.
+The returned bundle has two new entries for derived resources. We'll look at the codes associated with these resources independently.
 
 <!-- 
 Command pipeline to generate the table
 
-cat /tmp/output | jq -r '
+cat /tmp/output.json | jq -r '
 ["Resource Type", "Description"], 
 ["---", "---"] , 
 (.entry[].resource | [.resourceType, .code.text // .medicationCodeableConcept.text]) 
@@ -318,10 +339,13 @@ cat /tmp/output | jq -r '
 
 -->
 
+
 Resource Type      |Description
 ---                |---
+DiagnosticReport   |Chief complaint Narrative - Reported
 Condition          |myocardial infarction
 MedicationStatement|losartan
+
 
 ### Derived condition codes
 Included in the condition is the UMLS code that was detected by QuickUMLS.
@@ -329,7 +353,7 @@ Included in the condition is the UMLS code that was detected by QuickUMLS.
 <!-- 
 Command pipeline to generate the table
 
-cat /tmp/output | jq -r '
+cat /tmp/output.json | jq -r '
 ["System", "Code", "Display"], 
 ["---", "---", "---"], 
 (.entry[].resource | select(.resourceType == "Condition") | .code.coding[] | [.system, .code, .display]) 
@@ -341,13 +365,14 @@ System                                    |Code    |Display
 ---                                       |---     |---
 http://terminology.hl7.org/CodeSystem/umls|C0027051|
 
+
 ### Derived MedicationStatement codes
 The derived MedicationStatement also contains the UMLS code that was detected by QuickUMLS
 
 <!--
 Command to generate the table
 
- cat /tmp/output | jq -r '
+ cat /tmp/output.json | jq -r '
  ["System", "Code", "Display"],
  ["---", "---", "---"],
  (.entry[].resource | 
@@ -358,11 +383,11 @@ Command to generate the table
  | @tsv' | column -t -o "|" -s $'\t' 
  
  -->
- 
- System                                    |Code    |Display
+
+System                                    |Code    |Display
 ---                                       |---     |---
 http://terminology.hl7.org/CodeSystem/umls|C0126174|
- 
+
  
 ## Evidence
 The structure of derived resources is based on the [Alvearie FHIR IG](https://alvearie.io/alvearie-fhir-ig/index.html).
@@ -376,7 +401,7 @@ The summary extension for the derived Condition looks like this:
 <!--
 command to generate the json
 
-cat /tmp/output | jq -r '.entry[].resource | select(.resourceType == "Condition") | .extension[0]'
+cat /tmp/output.json | jq -r '.entry[].resource | select(.resourceType == "Condition") | .extension[0]'
 
 -->
 
@@ -387,7 +412,7 @@ cat /tmp/output | jq -r '.entry[].resource | select(.resourceType == "Condition"
       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
       "valueIdentifier": {
         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-        "value": "3667c29882ecfe50d9cbaf162ef5df199e406563770186c7e637c234"
+        "value": "f2c75a905c5371833f3498356b4c4a5241be3b36c4d9ea85dd0545df"
       }
     },
     {
@@ -406,7 +431,6 @@ cat /tmp/output | jq -r '.entry[].resource | select(.resourceType == "Condition"
   ],
   "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
 }
-
 ```
 
 The insight id has a system and identifier that together identify the insight. In this example, the system tells us that the insight was discovered using QuickUMLS. The identifier value is unique (within the system) to this insight.
@@ -421,7 +445,7 @@ Although the alvearie FHIR IG supports multiple insights, nlp-insights will crea
 <!-- 
  jq code to extract the extension
  
- cat /tmp/output | jq -r '.entry[].resource | select(.resourceType == "Condition") | .meta.extension[0]'
+ cat /tmp/output.json | jq -r '.entry[].resource | select(.resourceType == "Condition") | .meta.extension[0]'
 
 -->
 
@@ -434,34 +458,7 @@ Although the alvearie FHIR IG supports multiple insights, nlp-insights will crea
       "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
       "valueIdentifier": {
         "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-        "value": "3667c29882ecfe50d9cbaf162ef5df199e406563770186c7e637c234"
-      }
-    },
-    {
-      "url": "http://ibm.com/fhir/cdm/StructureDefinition/category",
-      "valueCodeableConcept": {
-        "coding": [
-          {
-            "code": "natural-language-processing",
-            "display": "NLP",
-            "system": "http://ibm.com/fhir/cdm/CodeSystem/insight-category-code-system"
-          }
-        ],
-        "text": "NLP"
-      }
-    }
-  ],
-  "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-summary"
-}
-ntl:nlp-insights$ cat /tmp/output | jq -r '.entry[].resource | select(.resourceType == "Condition") | .meta.extension[0]
-> '
-{
-  "extension": [
-    {
-      "url": "http://ibm.com/fhir/cdm/StructureDefinition/insight-id",
-      "valueIdentifier": {
-        "system": "urn:alvearie.io/health_patterns/services/nlp_insights/quickumls",
-        "value": "3667c29882ecfe50d9cbaf162ef5df199e406563770186c7e637c234"
+        "value": "f2c75a905c5371833f3498356b4c4a5241be3b36c4d9ea85dd0545df"
       }
     },
     {
@@ -473,7 +470,7 @@ ntl:nlp-insights$ cat /tmp/output | jq -r '.entry[].resource | select(.resourceT
         {
           "url": "http://ibm.com/fhir/cdm/StructureDefinition/reference",
           "valueReference": {
-            "reference": "DiagnosticReport/abcefg-1234567890"
+            "reference": "urn:uuid:894fc0f0-c6cb-4464-83eb-e42a6c92f9f6"
           }
         },
         {
