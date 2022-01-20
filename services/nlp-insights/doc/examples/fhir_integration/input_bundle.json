@@ -1,0 +1,235 @@
+{
+  "id": "abc",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:c70e2a78-1e77-4eb1-8215-8b83351ce009",
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      },
+      "resource": {
+        "address": [
+          {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "latitude",
+                    "valueDecimal": 42.77527371433669
+                  },
+                  {
+                    "url": "longitude",
+                    "valueDecimal": -70.87682138922806
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/geolocation"
+              }
+            ],
+            "city": "Rowley",
+            "country": "US",
+            "line": [
+              "845 Hegmann Hollow"
+            ],
+            "postalCode": "01969",
+            "state": "Massachusetts"
+          }
+        ],
+        "birthDate": "2002-11-10",
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "code": "en-US",
+                  "display": "English (United States)",
+                  "system": "urn:ietf:bcp:47"
+                }
+              ],
+              "text": "English"
+            }
+          }
+        ],
+        "gender": "female",
+        "identifier": [
+          {
+            "system": "https://github.com/synthetichealth/synthea",
+            "value": "78480da7-7361-4c99-bfb9-339a403d9ae1"
+          },
+          {
+            "system": "http://hospital.smarthealthit.org",
+            "type": {
+              "coding": [
+                {
+                  "code": "MR",
+                  "display": "Medical Record Number",
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203"
+                }
+              ],
+              "text": "Medical Record Number"
+            },
+            "value": "78480da7-7361-4c99-bfb9-339a403d9ae1"
+          },
+          {
+            "system": "http://hl7.org/fhir/sid/us-ssn",
+            "type": {
+              "coding": [
+                {
+                  "code": "TAX",
+                  "display": "Tax ID number",
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203"
+                }
+              ],
+              "text": "Social Security Number"
+            },
+            "value": "999-44-4977"
+          },
+          {
+            "system": "urn:oid:2.16.840.1.113883.4.3.25",
+            "type": {
+              "coding": [
+                {
+                  "code": "DL",
+                  "display": "Driver's license number",
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203"
+                }
+              ],
+              "text": "Driver's License"
+            },
+            "value": "S99934484"
+          }
+        ],
+        "maritalStatus": {
+          "coding": [
+            {
+              "code": "S",
+              "display": "Never Married",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"
+            }
+          ],
+          "text": "Never Married"
+        },
+        "multipleBirthBoolean": false,
+        "name": [
+          {
+            "family": "Crooks009",
+            "given": [
+              "Alethea978"
+            ],
+            "use": "official"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "use": "home",
+            "value": "555-753-8082"
+          }
+        ],
+        "resourceType": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000001",
+      "request": {
+        "method": "POST",
+        "url": "DiagnosticReport"
+      },
+      "resource": {
+        "code": {
+          "text": "Chief complaint Narrative - Reported"
+        },
+        "presentedForm": [
+          {
+            "contentType": "text/plain",
+            "creation": "2020-08-02T12:44:55+08:00",
+            "data": "VGhlIHBhdGllbnQgaGFkIGEgbXlvY2FyZGlhbCBpbmZhcmN0aW9uIGluIDIwMTUgYW5kIHdhcyBwcmVzY3JpYmVkIExvc2FydGFuLlRoZSBwYXRpZW50IGlzIHRha2luZyBMb3NhcnRhbiBleGFjdGx5IGFzIHByZXNjcmliZWQgYW5kIGhhcyBoYWQgbm8gc2lkZSBlZmZlY3RzLg==",
+            "language": "en",
+            "title": "ER VISIT"
+          }
+        ],
+        "status": "final",
+        "subject": {
+          "reference": "urn:uuid:c70e2a78-1e77-4eb1-8215-8b83351ce009"
+        },
+        "resourceType": "DiagnosticReport"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000002",
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      },
+      "resource": {
+	"clinicalStatus" : {
+		"coding" : [
+			{
+			"system" : "http://terminology.hl7.org/CodeSystem/condition-clinical",
+			"code" : "active"
+			}
+		]
+	},
+        "code": {
+          "text": "diabetes"
+        },
+        "subject": {
+          "reference": "urn:uuid:c70e2a78-1e77-4eb1-8215-8b83351ce009"
+        },
+        "resourceType": "Condition"
+      }
+    },
+    {
+     "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000003",
+      "request": {
+        "method": "POST",
+        "url": "AllergyIntolerance"
+      },
+      "resource": {
+
+	"clinicalStatus" : {
+		"coding" : [
+			{
+			"system" : "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+			"code" : "active"
+			}
+		]
+	},
+        "code": {
+          "text": "peanut"
+        },
+        "patient": {
+          "reference": "urn:uuid:c70e2a78-1e77-4eb1-8215-8b83351ce009"
+        },
+        "resourceType": "AllergyIntolerance"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000004",
+      "request": {
+        "method": "POST",
+        "url": "AllergyIntolerance"
+      },
+      "resource": {
+
+	"clinicalStatus" : {
+		"coding" : [
+			{
+			"system" : "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+			"code" : "active"
+			}
+		]
+	},
+        "code": {
+          "text": "amoxicillin"
+        },
+        "patient": {
+          "reference": "urn:uuid:c70e2a78-1e77-4eb1-8215-8b83351ce009"
+        },
+        "resourceType": "AllergyIntolerance"
+      }
+    }
+  ],
+  "type": "transaction",
+  "resourceType": "Bundle"
+}
+
