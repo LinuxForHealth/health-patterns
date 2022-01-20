@@ -63,6 +63,10 @@ echo " Current Directory:"
 pwd
 
 # Add hostname to values.yaml
+sed -i -e "s/alvearie-nifi-headless.alvearie.svc/alvearie-nifi-headless."$TEST_NAMESPACE".svc/g" values.yaml
+cat values.yaml | grep $TEST_NAMESPACE
+
+# Add namespace to internalHostName in values.yaml
 sed -i -e "s/\&hostname replace-me/\&hostname $TEST_NAMESPACE.$INGRESS_SUBDOMAIN/g" values.yaml
 cat values.yaml | grep $TEST_NAMESPACE.$INGRESS_SUBDOMAIN
 
