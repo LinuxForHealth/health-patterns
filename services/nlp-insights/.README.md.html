@@ -640,237 +640,51 @@ function setDocumentScrollTop(ypos)
 </head>
 <body class="markdown-body">
 <h1> <a id="nlp-insights" class="anchor" href="#nlp-insights" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NLP Insights</h1> 
-<p>A Rest service for discovering insights within FHIR resources. The service is implemented as a Flask API within a docker container.</p> 
+<p>A Rest service for updating bundles of FHIR resources with discovered insights. The service is implemented as a Flask API within a docker container.</p> 
 <h2> <a id="purpose" class="anchor" href="#purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose</h2> 
-<p>The primary purpose of the discover insights API is to accept a bundle of FHIR resources and to return a bundle that contains:</p> 
+<p>The primary purpose of the discover insights API is to accept a bundle of FHIR resources and to return an updated bundle that includes discovered insights.</p> 
 <ul> 
- <li>Resources from the input bundle that have been enriched with additional codes.</li> 
- <li>New resources that have been derived from resources in the input bundle</li> 
-</ul> 
-<h2> <a id="resources-that-are-enriched" class="anchor" href="#resources-that-are-enriched" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resources that are enriched</h2> 
-<p>Existing codes and text are used to derive additional codes for these resource elements:</p> 
-<ul> 
- <li>Allergy Intolerance 
+ <li>Resources in the bundle may have been enriched by adding additional codes. 
   <ul> 
-   <li>AllergyIntolerance.code</li> 
+   <li>For example an AllergyIntolerance resource for a peanut allergy might have UMLS code C0559470 or SNOMED-CT code 91935009 added to it.</li> 
   </ul> </li> 
- <li>Condition 
+ <li>New resources may have been derived from unstructured text (such as clinical notes) contained within the bundle's resources. 
   <ul> 
-   <li>Condition.code</li> 
+   <li>For example a DiagnosticReport that says <em>the patient had a myocardial infarction</em> might result in a derived Condition resource being added to the bundle.</li> 
   </ul> </li> 
 </ul> 
-<h2> <a id="new-resources-that-are-derived-from-input-resources" class="anchor" href="#new-resources-that-are-derived-from-input-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>New resources that are derived from input resources</h2> 
-<p>The service will derive the following FHIR resources from unstructured text:</p> 
+<h2> <a id="supported-nlp-engines" class="anchor" href="#supported-nlp-engines" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported NLP Engines</h2> 
+<p>The nlp-insights service requires an NLP engine service to derive insights. We support two NLP engines. Each NLP service has different NLP goals and capabilities.</p> 
 <ul> 
- <li>MedicationStatement</li> 
- <li>Condition</li> 
-</ul> 
-<p>The source text used to derive these new resources is found in the following resource elements:</p> 
-<ul> 
- <li>DiagnosticReport 
-  <ul> 
-   <li>DiagnosticReport.presentedForm[].data</li> 
-  </ul> </li> 
- <li>DocumentReference 
-  <ul> 
-   <li>DocumentReference.content[].attachment.data</li> 
-  </ul> </li> 
+ <li>IBM's <a href="https://www.ibm.com/cloud/watson-annotator-for-clinical-data" rel="nofollow">Annotator for Clinical Data (ACD)</a> and</li> 
+ <li>Open-source <a href="https://github.com/Georgetown-IR-Lab/QuickUMLS" rel="nofollow">QuickUMLS</a> </li> 
 </ul> 
 <h2> <a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick Start</h2> 
-<p>See our quick start guides:</p> 
+<p>Our tutorials describe how to setup and configure the nlp-service with a supported NLP service. They also provide extensive description of how resources are derived and enriched:</p> 
 <ul> 
  <li><a href="./doc/examples/quickumls/.quickumls_tutorial.md.html">Tutorial for using the nlp-insights service with QuickUMLS</a></li> 
  <li><a href="./doc/examples/acd/.acd_tutorial.md.html">Tutorial for using the nlp-insights service with ACD</a></li> 
 </ul> 
-<h1> <a id="running-the-service" class="anchor" href="#running-the-service" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running the service</h1> 
-<p>It is recommended that the service be deployed as a docker container, however you can run it outside of docker if necessary.</p> 
-<p>We use gradle as our build framework. It is recommended that you use the wrapper that is included in this git repo for build related activities. If you are using windows, use <code>gradlew.bat</code> instead of <code>gradlew</code>, <code>gradlew</code> is used in these directions.</p> 
-<p>A prerequisite to these directions is python 3.9 and pip. Docker builds will also require a container runtime.</p> 
-<p>These instructions assume that build properties are set via the command line, however you can set defaults for them by modifying <code>gradle.properties</code>.</p> 
-<h2> <a id="running-the-service-outside-of-a-docker-container" class="anchor" href="#running-the-service-outside-of-a-docker-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running the service outside of a docker container</h2> 
-<ol> 
- <li> <p>Build and install nlp-insights to a virtual environment<br /> <code>./gradlew install</code></p> </li> 
- <li> <p>Switch to the <a href="https://docs.python.org/3/library/venv.html" rel="nofollow">virtual env</a> where nlp-insights is installed<br /> <code>source ./build/venv/bin/activate</code></p> </li> 
- <li> <p>Set the FLASK_APP environment variable to the installed package<br /> <code>export FLASK_APP=nlp_insights.app</code></p> </li> 
- <li> <p>Start the service (5000 is the default port, however this value can be changed to suit your needs)<br /> <code>python -m flask run --port=5000</code></p> </li> 
-</ol> 
-<h2> <a id="running-the-service-locally-as-a-docker-container" class="anchor" href="#running-the-service-locally-as-a-docker-container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running the service locally as a docker container</h2> 
-<p><strong>Start the container</strong><br /> <code>./gradlew dockerRun -PdockerUser=&lt;your_user_id&gt; -PdockerLocalPort=&lt;port&gt;</code></p> 
-<p>The server is now running on the selected port. If you omit the dockerLocalPort property, 5000 is the default port.<br /> The dockerRun task will also perform the following dependent build tasks:</p> 
-<ul> 
- <li>nlp-insights will be built and installed to the virtual environment</li> 
- <li>the docker image will be built</li> 
- <li>unit tests will run</li> 
-</ul> 
-<h3> <a id="other-useful-commands-for-locally-working-with-containers" class="anchor" href="#other-useful-commands-for-locally-working-with-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other useful commands for locally working with containers:</h3> 
-<ol> 
- <li>Stop a running nlp-insights container<br /> <code>./gradlew dockerStop -PdockerUser=&lt;your_user_id&gt; -PdockerLocalPort=&lt;port&gt;</code> </li> 
- <li>Remove a container from your local repo<br /> <code>./gradlew dockerRemoveContainer -PdockerUser=&lt;your_user_id&gt; -PdockerLocalPort=&lt;port&gt;</code> </li> 
-</ol> 
-<h2> <a id="deploy-the-docker-image-to-a-kubernetes-cluster" class="anchor" href="#deploy-the-docker-image-to-a-kubernetes-cluster" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deploy the docker image to a kubernetes cluster</h2> 
-<ol> 
- <li>Log into your cloud provider and container registry. The commands to do this depend on your cloud provider.</li> 
- <li>Push the docker image to the remote repository <code>./gradlew dockerPush -PdockerUser=&lt;docker_user_id&gt;</code> </li> 
- <li>Install the helm charts (The version that was used to tag the docker image is defined in gradle.properties)<br /> <code>helm install nlp-insights chart --set image.repository=&lt;docker_user_id&gt;/nlp-insights --set image.tag=&lt;version&gt;</code> </li> 
- <li>Wait for the pod to start running <code>kubectl get pods</code> (look for &quot;nlp-insights-*&quot;)</li> 
- <li>Connect to the pod's port 5000 <code>kubectl port-forward nlp-insights-xxxxxx-xxxx &lt;local-port&gt;:5000</code> </li> 
-</ol> 
-<p>You can now connect to the service via localhost:</p> 
-<p>Be aware that some cloud providers may require additional configuration in order for the deployment to work. For example you may need to create a pull secret. Consult your provider's documentation for details.</p> 
-<h1> <a id="using-the-service" class="anchor" href="#using-the-service" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using the service</h1> 
-<p>The app currently supports running two different NLP engine types:</p> 
-<ul> 
- <li> <a href="https://www.ibm.com/cloud/watson-annotator-for-clinical-data" rel="nofollow">IBM's Annotator for Clinical Data (ACD)</a> and</li> 
- <li><a href="https://github.com/Georgetown-IR-Lab/QuickUMLS" rel="nofollow">open-source QuickUMLS</a></li> 
-</ul> 
-<p>It is possible to configure as many different instances of these two engines as needed with different configuration details. Configuation jsons require a <code>name</code>, an <code>nlpServiceType</code> (either <code>acd</code> or <code>quickumls</code>), and config details specific to that type. For quickumls, an <code>endpoint</code> is required. For ACD, an <code>endpoint</code>, an <code>apikey</code>, and a <code>flow</code>.</p> 
+<h2> <a id="running-the-service-locally" class="anchor" href="#running-the-service-locally" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running the service locally</h2> 
+<p>The docker image for the container has been published, and you can pull it from <a href="https://hub.docker.com/r/alvearie/nlp-insights" rel="nofollow">here</a>.</p> 
+<p>Developers that have cloned the repo should follow the instructions for starting the service that are documented <a href="./doc/examples/setup/.start_nlp_insights.md.html">here</a>.</p> 
+<p>Although discouraged, it is possible to <a href="./doc/developer/.run_service_no_docker.md.html">run the service outside of a docker container</a>.</p> 
+<h2> <a id="kubernetes" class="anchor" href="#kubernetes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Kubernetes</h2> 
+<p>The nlp-insights service is designed to be part of a larger health-patterns ingestion and enrichment pipeline. Helm charts are included so that the service can be deployed to kubernetes. The service can then be integrated into a pipeline.</p> 
+<p>More details on deployment and configuration in a k8s environment are discussed <a href="./doc/developer/.kubernetes.md.html">here</a></p> 
 <h2> <a id="http-endpoints" class="anchor" href="#http-endpoints" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>HTTP Endpoints</h2> 
-<table> 
- <thead> 
-  <tr> 
-   <th align="center">Action</th> 
-   <th align="center">Method</th> 
-   <th align="left">Endpoint</th> 
-   <th align="center">Body</th> 
-   <th align="center">Returns on Success</th> 
-  </tr> 
- </thead> 
- <tbody> 
-  <tr> 
-   <td align="center">Get All Configs</td> 
-   <td align="center"><code>GET</code></td> 
-   <td align="left"><code>/all_configs</code></td> 
-   <td align="center"></td> 
-   <td align="center">Newline-delimited list of config names</td> 
-  </tr> 
-  <tr> 
-   <td align="center">Add Named Config</td> 
-   <td align="center"><code>PUT/POST</code></td> 
-   <td align="left"><code>/config/definition</code></td> 
-   <td align="center">Config (json) contains <code>name</code> </td> 
-   <td align="center">Status <code>200</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Get Current Default Config</td> 
-   <td align="center"><code>GET</code></td> 
-   <td align="left"><code>/config</code></td> 
-   <td align="center"></td> 
-   <td align="center">Current default <code>configName</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Get Config Details</td> 
-   <td align="center"><code>GET</code></td> 
-   <td align="left"><code>/config/{configName}</code></td> 
-   <td align="center"></td> 
-   <td align="center">Config details named <code>configName</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Delete Config</td> 
-   <td align="center"><code>DELETE</code></td> 
-   <td align="left"><code>/config/{configName}</code></td> 
-   <td align="center"></td> 
-   <td align="center">Status <code>200</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Make Config default</td> 
-   <td align="center"><code>POST/PUT</code></td> 
-   <td align="left"><code>/config/setDefault?name={configName}</code></td> 
-   <td align="center"></td> 
-   <td align="center">Status <code>200</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Clear default config</td> 
-   <td align="center"><code>POST/PUT</code></td> 
-   <td align="left"><code>/config/clearDefault</code></td> 
-   <td align="center"></td> 
-   <td align="center">Status <code>200</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Apply NLP</td> 
-   <td align="center"><code>POST</code></td> 
-   <td align="left"><code>/discoverInsights</code></td> 
-   <td align="center">FHIR bundle or resource</td> 
-   <td align="center">Object annotated with NLP insights</td> 
-  </tr> 
-  <tr> 
-   <td align="center">Get all active overrides</td> 
-   <td align="center"><code>GET</code></td> 
-   <td align="left"><code>/config/resource</code></td> 
-   <td align="center"></td> 
-   <td align="center">dictionary-Status <code>200</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Get the active override for a resource</td> 
-   <td align="center"><code>GET</code></td> 
-   <td align="left"><code>/config/resource/{resource}</code></td> 
-   <td align="center"></td> 
-   <td align="center"> <code>configName</code>-Status <code>200</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Add resource override</td> 
-   <td align="center"><code>POST/PUT</code></td> 
-   <td align="left"><code>/config/resource/{resourcetype}/{configName}</code></td> 
-   <td align="center"></td> 
-   <td align="center">Status <code>200</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Delete a resource override</td> 
-   <td align="center"><code>DELETE</code></td> 
-   <td align="left"><code>/config/resource/{resourcetype}</code></td> 
-   <td align="center"></td> 
-   <td align="center">Status <code>200</code> </td> 
-  </tr> 
-  <tr> 
-   <td align="center">Delete all resource overrides</td> 
-   <td align="center"><code>DELETE</code></td> 
-   <td align="left"><code>/config/resource</code></td> 
-   <td align="center"></td> 
-   <td align="center">Status <code>200</code> </td> 
-  </tr> 
- </tbody> 
-</table> 
-<h2> <a id="configuring-at-deploy-time" class="anchor" href="#configuring-at-deploy-time" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuring at deploy time</h2> 
-<p>It is possible to provide an initial (deploy time) named configuration for quickulms and/or acd. This is done by modifying the <code>values.yaml</code> file before deployment. In the nlp-insights chart, the following configuration values are defined:</p> 
-<pre><code>nlpservice:
-  quickumls:
-    enableconfig: false
-    name:
-    endpoint:
-  acd:
-    enableconfig: false
-    name:
-    endpoint:
-    apikey:
-    flow:
-  default:
-</code></pre> 
-<p>By setting the appropriate <code>enableconfig</code> flag to true and providing the <code>name</code> of the config as well as the details (dependent on the type of the nlp engine), an initial named configuration will be created. In addition, the configuration can be made the default by setting the <code>default</code> value to one of the previously defined names.</p> 
-<h3> <a id="example-config-jsons" class="anchor" href="#example-config-jsons" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example config jsons:</h3> 
-<pre><code>{
-  &quot;name&quot;: &quot;quickconfig1&quot;,
-  &quot;nlpServiceType&quot;: &quot;quickumls&quot;,
-  &quot;config&quot;: {
-    &quot;endpoint&quot;: &quot;https://quickumlsEndpointURL/match&quot;
-  }
-}
-</code></pre> 
-<pre><code>{
-  &quot;name&quot;: &quot;acdconfig1&quot;,
-  &quot;nlpServiceType&quot;: &quot;acd&quot;,
-  &quot;config&quot;: {
-    &quot;apikey&quot;: &quot;apikeyxxxxxxxxx&quot;,
-    &quot;endpoint&quot;: &quot;https://acdEndpointURL/api&quot;,
-    &quot;flow&quot;: &quot;acd_standard_flow&quot;
-  }
-}
-</code></pre> 
-<h1> <a id="coding-style-guidlines" class="anchor" href="#coding-style-guidlines" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Coding style guidlines</h1> 
-<p>This project makes use of several coding conventions and tools.</p> 
-<h2> <a id="formatting" class="anchor" href="#formatting" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Formatting</h2> 
-<p>The project is formatted using <a href="https://black.readthedocs.io/en/stable/" rel="nofollow">Black</a></p> 
-<h2> <a id="unit-tests" class="anchor" href="#unit-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unit tests</h2> 
-<p>Unit tests and Doc tests are part of the build process<br /> <code>./gradlew test</code></p> 
-<h2> <a id="static-code-checking" class="anchor" href="#static-code-checking" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Static code checking</h2> 
-<p>The project uses a combination of flake8, pylint, and mypy to detect static code problems. The configuration is defined in <code>setup.cfg</code>. These checks can be run as a build task (this will also run unit tests).<br /> <code>./gradlew checkSource</code></p>
+<p>The HTTP APIs for the service are described <a href="./doc/developer/.http_endpoints.md.html">here</a>. These APIs allow you to:</p> 
+<ul> 
+ <li>Define the connection to the NLP engine service(s),</li> 
+ <li>Select the default NLP engine that will be used for insight discovery</li> 
+ <li>Discover insights</li> 
+ <li>Override the default engine and use a different NLP engine for one or more resource types</li> 
+</ul> 
+<h2> <a id="build" class="anchor" href="#build" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build</h2> 
+<p>We use gradle for all build and test related tasks. The important features are documented <a href="./doc/developer/.gradle_tasks.md.html">here</a>.</p> 
+<h2> <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2> 
+<p>We welcome contributions! Please look at our <a href="./doc/developer/.CONTRIBUTING.md.html">contributing guide</a> for details on how to begin.</p> 
+<h2> <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2> 
+<p><a href="https://opensource.org/licenses/Apache-2.0" rel="nofollow"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" style="max-width:100%;" /></a></p>
 </body>
 </html>

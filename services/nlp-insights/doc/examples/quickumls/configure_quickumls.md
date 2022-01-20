@@ -38,5 +38,7 @@ curl -w "\n%{http_code}\n" -o - -XPOST localhost:5000/config/setDefault?name=qui
 Default config set to: quickconfig1
 
 200
-
 </details>
+
+## Configuring at deploy time
+In some environments (such as k8s), it may be necessary to configure the server at deploy time, rather than with a REST API. Instructions for how to do that is located [here](../../developer/kubernetes.md).

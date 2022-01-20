@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: alvearie/nlp-insights
   pullPolicy: Always
-  tag: 0.0.3
+  tag: 0.0.4
   pullSecret:
 
 service:

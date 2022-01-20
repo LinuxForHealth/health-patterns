@@ -23,4 +23,4 @@ The nlp-insights service can use QuickUMLS to derive additional coding values in
 The nlp-insights service can use QuickUMLS to derive new FHIR resources from clinical notes embedded in other FHIR resources. Learn how [here](./derive_new_resources.md)
 
 ## FHIR Integration
- The nlp-insights service is designed to enrich a bundle prior to posting that bundle to a FHIR server. Learn how to to work with derived data that is stored in a FHIR server [here](../fhir_integration/fhir_integration_tutorial.ipynb) You will need a view for jupyter-notebooks to view the tutorial.
+ The nlp-insights service is designed to enrich a bundle prior to posting that bundle to a FHIR server. Learn how to to work with derived data that is stored in a FHIR server [here](../fhir_integration/fhir_integration_tutorial.ipynb) You will need a viewer for jupyter-notebooks to view the tutorial.
