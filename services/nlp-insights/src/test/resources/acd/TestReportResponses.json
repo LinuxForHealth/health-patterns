@@ -1,0 +1,3808 @@
+{
+    "The patient had a myocardial infarction in 2015 and was prescribed Losartan. His prescription was changed to Irbesartan in 2019. He had a second heart attack in 2021, and is now taking Losartan again.": {
+        "attributeValues": [
+            {
+                "begin": 18,
+                "end": 39,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "preferredName": "myocardial infarction",
+                "values": [
+                    {
+                        "value": "myocardial infarction"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 15
+                },
+                "name": "Diagnosis",
+                "icd9Code": "410.90",
+                "icd10Code": "I21.9",
+                "snomedConceptId": "22298006",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.993,
+                            "patientReportedScore": 0.003,
+                            "discussedScore": 0.004
+                        },
+                        "suspectedScore": 0.02,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ccsCode": "100",
+                "hccCode": "86",
+                "temporal": [
+                    {
+                        "begin": 43,
+                        "end": 47,
+                        "coveredText": "2015",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.998,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "begin": 67,
+                "end": 75,
+                "coveredText": "Losartan",
+                "negated": false,
+                "preferredName": "losartan",
+                "values": [
+                    {
+                        "value": "losartan"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 12
+                },
+                "name": "PrescribedMedication",
+                "rxNormId": "52175",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.002,
+                            "usage": {
+                                "explicitScore": 0.002,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 43,
+                        "end": 47,
+                        "coveredText": "2015",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.585,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "begin": 109,
+                "end": 119,
+                "coveredText": "Irbesartan",
+                "negated": false,
+                "preferredName": "irbesartan",
+                "values": [
+                    {
+                        "value": "irbesartan"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 13
+                },
+                "name": "PrescribedMedication",
+                "rxNormId": "83818",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.998,
+                            "usage": {
+                                "explicitScore": 0.998,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 123,
+                        "end": 127,
+                        "coveredText": "2019",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 1.0,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "begin": 145,
+                "end": 157,
+                "coveredText": "heart attack",
+                "negated": false,
+                "preferredName": "myocardial infarction",
+                "values": [
+                    {
+                        "value": "myocardial infarction"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 16
+                },
+                "name": "Diagnosis",
+                "icd9Code": "410.90",
+                "icd10Code": "I21.9",
+                "snomedConceptId": "22298006",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.991,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.001
+                        },
+                        "suspectedScore": 0.002,
+                        "symptomScore": 0.008,
+                        "traumaScore": 0.017,
+                        "familyHistoryScore": 0.002
+                    }
+                },
+                "ccsCode": "100",
+                "hccCode": "86",
+                "temporal": [
+                    {
+                        "begin": 161,
+                        "end": 165,
+                        "coveredText": "2021",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.999,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "begin": 185,
+                "end": 193,
+                "coveredText": "Losartan",
+                "negated": false,
+                "preferredName": "losartan",
+                "values": [
+                    {
+                        "value": "losartan"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 14
+                },
+                "name": "PrescribedMedication",
+                "rxNormId": "52175",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.001,
+                            "usage": {
+                                "explicitScore": 0.001,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 174,
+                        "end": 177,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.998,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.Finding",
+                "begin": 18,
+                "end": 39,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C4552959",
+                "preferredName": "Myocardial Infarction, CTCAE",
+                "semanticType": "fndg",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C143691",
+                "vocabs": "MTH,NCI_CTCAE_5,NCI"
+            },
+            {
+                "type": "umls.LaboratoryOrTestResult",
+                "uid": 7,
+                "begin": 18,
+                "end": 39,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "semanticType": "lbtr",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "icd10Code": "I21.4,I21.29,I21.09,I21.19,R94.31,I25.2,I21.9",
+                "nciCode": "C101589",
+                "snomedConceptId": "164865005",
+                "vocabs": "CHV,MTH,NCI_CDISC,NCI,SNOMEDCT_US"
+            },
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 5,
+                "begin": 18,
+                "end": 39,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.993,
+                            "patientReportedScore": 0.003,
+                            "discussedScore": 0.004
+                        },
+                        "suspectedScore": 0.02,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 43,
+                        "end": 47,
+                        "coveredText": "2015",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.998,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "umls.HealthCareActivity",
+                "begin": 56,
+                "end": 66,
+                "coveredText": "prescribed",
+                "negated": false,
+                "cui": "C0278329",
+                "preferredName": "Prescribed",
+                "semanticType": "hlca",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "vocabs": "MTH,CHV,LCH"
+            },
+            {
+                "type": "umls.OrganicChemical",
+                "uid": 8,
+                "begin": 67,
+                "end": 75,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "semanticType": "orch",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C66869",
+                "snomedConceptId": "96309000,373567002",
+                "meshId": "M0029400",
+                "rxNormId": "52175",
+                "loincId": "LP171619-2",
+                "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,NCI_CTRP,NCI_FDA,NCI,AOD,SNOMEDCT_US,DRUGBANK,VANDF"
+            },
+            {
+                "type": "umls.PharmacologicSubstance",
+                "uid": 2,
+                "begin": 67,
+                "end": 75,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "semanticType": "phsu",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C66869",
+                "snomedConceptId": "96309000,373567002",
+                "meshId": "M0029400",
+                "rxNormId": "52175",
+                "loincId": "LP171619-2",
+                "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,NCI_CTRP,NCI_FDA,NCI,AOD,SNOMEDCT_US,DRUGBANK,VANDF",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.002,
+                            "usage": {
+                                "explicitScore": 0.002,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 43,
+                        "end": 47,
+                        "coveredText": "2015",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.585,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "umls.HealthCareActivity",
+                "begin": 81,
+                "end": 93,
+                "coveredText": "prescription",
+                "negated": false,
+                "cui": "C0033080",
+                "preferredName": "Prescription procedure",
+                "semanticType": "hlca",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "snomedConceptId": "16076005,260885003",
+                "meshId": "M0017558",
+                "loincId": "LA27931-7",
+                "vocabs": "MTH,CHV,LNC,MSH,SNOMEDCT_US"
+            },
+            {
+                "type": "umls.OrganicChemical",
+                "uid": 9,
+                "begin": 109,
+                "end": 119,
+                "coveredText": "Irbesartan",
+                "negated": false,
+                "cui": "C0288171",
+                "preferredName": "irbesartan",
+                "semanticType": "orch",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C29130",
+                "snomedConceptId": "386877005,108585000",
+                "meshId": "M0216909",
+                "rxNormId": "83818",
+                "loincId": "LP171611-9",
+                "vocabs": "LNC,CSP,MSH,MTHSPL,RXNORM,NCI_DCP,CHV,ATC,USP,NCI_FDA,NCI,USPMG,SNOMEDCT_US,DRUGBANK,VANDF"
+            },
+            {
+                "type": "umls.PharmacologicSubstance",
+                "uid": 3,
+                "begin": 109,
+                "end": 119,
+                "coveredText": "Irbesartan",
+                "negated": false,
+                "cui": "C0288171",
+                "preferredName": "irbesartan",
+                "semanticType": "phsu",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C29130",
+                "snomedConceptId": "386877005,108585000",
+                "meshId": "M0216909",
+                "rxNormId": "83818",
+                "loincId": "LP171611-9",
+                "vocabs": "LNC,CSP,MSH,MTHSPL,RXNORM,NCI_DCP,CHV,ATC,USP,NCI_FDA,NCI,USPMG,SNOMEDCT_US,DRUGBANK,VANDF",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.998,
+                            "usage": {
+                                "explicitScore": 0.998,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 123,
+                        "end": 127,
+                        "coveredText": "2019",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 1.0,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 6,
+                "begin": 145,
+                "end": 157,
+                "coveredText": "heart attack",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.991,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.001
+                        },
+                        "suspectedScore": 0.002,
+                        "symptomScore": 0.008,
+                        "traumaScore": 0.017,
+                        "familyHistoryScore": 0.002
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 161,
+                        "end": 165,
+                        "coveredText": "2021",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.999,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "umls.OrganicChemical",
+                "uid": 10,
+                "begin": 185,
+                "end": 193,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "semanticType": "orch",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C66869",
+                "snomedConceptId": "96309000,373567002",
+                "meshId": "M0029400",
+                "rxNormId": "52175",
+                "loincId": "LP171619-2",
+                "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,NCI_CTRP,NCI_FDA,NCI,AOD,SNOMEDCT_US,DRUGBANK,VANDF"
+            },
+            {
+                "type": "umls.PharmacologicSubstance",
+                "uid": 4,
+                "begin": 185,
+                "end": 193,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "semanticType": "phsu",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C66869",
+                "snomedConceptId": "96309000,373567002",
+                "meshId": "M0029400",
+                "rxNormId": "52175",
+                "loincId": "LP171619-2",
+                "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_NCI-GLOSS,CHV,ATC,NCI_CTRP,NCI_FDA,NCI,AOD,SNOMEDCT_US,DRUGBANK,VANDF",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.001,
+                            "usage": {
+                                "explicitScore": 0.001,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 174,
+                        "end": 177,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.998,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 18,
+                "end": 39,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.993,
+                            "patientReportedScore": 0.003,
+                            "discussedScore": 0.004
+                        },
+                        "suspectedScore": 0.02,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 5
+                    }
+                ],
+                "temporal": [
+                    {
+                        "begin": 43,
+                        "end": 47,
+                        "coveredText": "2015",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.998,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 18,
+                "end": 39,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "ruleId": "c1e8d7d4-7d36-423b-b39d-4ebb5eb65b0c",
+                "derivedFrom": [
+                    {
+                        "uid": 7
+                    }
+                ]
+            },
+            {
+                "type": "ICMedication",
+                "begin": 67,
+                "end": 75,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "nciCode": "C66869",
+                "snomedConceptId": "96309000,373567002",
+                "meshId": "M0029400",
+                "rxNormId": "52175",
+                "loincId": "LP171619-2",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.002,
+                            "usage": {
+                                "explicitScore": 0.002,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ],
+                "temporal": [
+                    {
+                        "begin": 43,
+                        "end": 47,
+                        "coveredText": "2015",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.585,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 67,
+                "end": 75,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C66869",
+                "snomedConceptId": "96309000,373567002",
+                "meshId": "M0029400",
+                "rxNormId": "52175",
+                "loincId": "LP171619-2",
+                "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 67,
+                "end": 75,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "ruleId": "343e6158-2c30-4726-be71-33a570b28703",
+                "derivedFrom": [
+                    {
+                        "uid": 8
+                    }
+                ]
+            },
+            {
+                "type": "ICMedication",
+                "begin": 109,
+                "end": 119,
+                "coveredText": "Irbesartan",
+                "negated": false,
+                "cui": "C0288171",
+                "preferredName": "irbesartan",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "nciCode": "C29130",
+                "snomedConceptId": "386877005,108585000",
+                "meshId": "M0216909",
+                "rxNormId": "83818",
+                "loincId": "LP171611-9",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.998,
+                            "usage": {
+                                "explicitScore": 0.998,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+                "derivedFrom": [
+                    {
+                        "uid": 3
+                    }
+                ],
+                "temporal": [
+                    {
+                        "begin": 123,
+                        "end": 127,
+                        "coveredText": "2019",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 1.0,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 109,
+                "end": 119,
+                "coveredText": "Irbesartan",
+                "negated": false,
+                "cui": "C0288171",
+                "preferredName": "irbesartan",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C29130",
+                "snomedConceptId": "386877005,108585000",
+                "meshId": "M0216909",
+                "rxNormId": "83818",
+                "loincId": "LP171611-9",
+                "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+                "derivedFrom": [
+                    {
+                        "uid": 3
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 109,
+                "end": 119,
+                "coveredText": "Irbesartan",
+                "negated": false,
+                "cui": "C0288171",
+                "preferredName": "irbesartan",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "ruleId": "343e6158-2c30-4726-be71-33a570b28703",
+                "derivedFrom": [
+                    {
+                        "uid": 9
+                    }
+                ]
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 145,
+                "end": 157,
+                "coveredText": "heart attack",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.991,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.001
+                        },
+                        "suspectedScore": 0.002,
+                        "symptomScore": 0.008,
+                        "traumaScore": 0.017,
+                        "familyHistoryScore": 0.002
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 6
+                    }
+                ],
+                "temporal": [
+                    {
+                        "begin": 161,
+                        "end": 165,
+                        "coveredText": "2021",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.999,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "ICMedication",
+                "begin": 185,
+                "end": 193,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "nciCode": "C66869",
+                "snomedConceptId": "96309000,373567002",
+                "meshId": "M0029400",
+                "rxNormId": "52175",
+                "loincId": "LP171619-2",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.001,
+                            "usage": {
+                                "explicitScore": 0.001,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+                "derivedFrom": [
+                    {
+                        "uid": 4
+                    }
+                ],
+                "temporal": [
+                    {
+                        "begin": 174,
+                        "end": 177,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.998,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 185,
+                "end": 193,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C66869",
+                "snomedConceptId": "96309000,373567002",
+                "meshId": "M0029400",
+                "rxNormId": "52175",
+                "loincId": "LP171619-2",
+                "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+                "derivedFrom": [
+                    {
+                        "uid": 4
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 185,
+                "end": 193,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "preferredName": "losartan",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "ruleId": "343e6158-2c30-4726-be71-33a570b28703",
+                "derivedFrom": [
+                    {
+                        "uid": 10
+                    }
+                ]
+            }
+        ],
+        "MedicationInd": [
+            {
+                "type": "aci.MedicationInd",
+                "uid": 12,
+                "begin": 67,
+                "end": 75,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "drug": [
+                    {
+                        "coveredText": "Losartan",
+                        "cui": "C0126174",
+                        "complex": "false",
+                        "end": 75,
+                        "type": "aci.Ind_Drug",
+                        "name1": [
+                            {
+                                "rxNormID": "52175",
+                                "coveredText": "Losartan",
+                                "cui": "C0126174",
+                                "drugSurfaceForm": "Losartan",
+                                "drugNormalizedName": "losartan",
+                                "end": 75,
+                                "type": "aci.DrugName",
+                                "begin": 67
+                            }
+                        ],
+                        "begin": 67
+                    }
+                ],
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.002,
+                            "usage": {
+                                "explicitScore": 0.002,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 43,
+                        "end": 47,
+                        "coveredText": "2015",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.585,
+                            "durationScore": 0.0
+                        }
+                    }
+                ],
+                "disambiguationData": {
+                    "validity": "VALID",
+                    "comment": "marked VALID by clinical insight models."
+                }
+            },
+            {
+                "type": "aci.MedicationInd",
+                "uid": 13,
+                "begin": 109,
+                "end": 119,
+                "coveredText": "Irbesartan",
+                "negated": false,
+                "cui": "C0288171",
+                "drug": [
+                    {
+                        "coveredText": "Irbesartan",
+                        "cui": "C0288171",
+                        "complex": "false",
+                        "end": 119,
+                        "type": "aci.Ind_Drug",
+                        "name1": [
+                            {
+                                "rxNormID": "83818",
+                                "coveredText": "Irbesartan",
+                                "cui": "C0288171",
+                                "drugSurfaceForm": "Irbesartan",
+                                "drugNormalizedName": "irbesartan",
+                                "end": 119,
+                                "type": "aci.DrugName",
+                                "begin": 109
+                            }
+                        ],
+                        "begin": 109
+                    }
+                ],
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.998,
+                            "usage": {
+                                "explicitScore": 0.998,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 123,
+                        "end": 127,
+                        "coveredText": "2019",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 1.0,
+                            "durationScore": 0.0
+                        }
+                    }
+                ],
+                "disambiguationData": {
+                    "validity": "VALID",
+                    "comment": "marked VALID by clinical insight models."
+                }
+            },
+            {
+                "type": "aci.MedicationInd",
+                "uid": 14,
+                "begin": 185,
+                "end": 193,
+                "coveredText": "Losartan",
+                "negated": false,
+                "cui": "C0126174",
+                "drug": [
+                    {
+                        "coveredText": "Losartan",
+                        "cui": "C0126174",
+                        "complex": "false",
+                        "end": 193,
+                        "type": "aci.Ind_Drug",
+                        "name1": [
+                            {
+                                "rxNormID": "52175",
+                                "coveredText": "Losartan",
+                                "cui": "C0126174",
+                                "drugSurfaceForm": "Losartan",
+                                "drugNormalizedName": "losartan",
+                                "end": 193,
+                                "type": "aci.DrugName",
+                                "begin": 185
+                            }
+                        ],
+                        "begin": 185
+                    }
+                ],
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.001,
+                            "usage": {
+                                "explicitScore": 0.001,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.0,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 174,
+                        "end": 177,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.998,
+                            "durationScore": 0.001
+                        }
+                    }
+                ],
+                "disambiguationData": {
+                    "validity": "VALID",
+                    "comment": "marked VALID by clinical insight models."
+                }
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 15,
+                "begin": 18,
+                "end": 39,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "icd10Code": "I21.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "myocardial infarction",
+                "snomedConceptId": "22298006",
+                "ccsCode": "100",
+                "symptomDiseaseNormalizedName": "myocardial infarction",
+                "icd9Code": "410.90",
+                "hccCode": "86",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.993,
+                            "patientReportedScore": 0.003,
+                            "discussedScore": 0.004
+                        },
+                        "suspectedScore": 0.02,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 43,
+                        "end": 47,
+                        "coveredText": "2015",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.998,
+                            "durationScore": 0.0
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 16,
+                "begin": 145,
+                "end": 157,
+                "coveredText": "heart attack",
+                "negated": false,
+                "cui": "C0027051",
+                "icd10Code": "I21.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "heart attack",
+                "snomedConceptId": "22298006",
+                "ccsCode": "100",
+                "symptomDiseaseNormalizedName": "myocardial infarction",
+                "icd9Code": "410.90",
+                "hccCode": "86",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.991,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.001
+                        },
+                        "suspectedScore": 0.002,
+                        "symptomScore": 0.008,
+                        "traumaScore": 0.017,
+                        "familyHistoryScore": 0.002
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 161,
+                        "end": 165,
+                        "coveredText": "2021",
+                        "temporalType": {
+                            "dateScore": 1.0,
+                            "relativeScore": 0.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.999,
+                            "durationScore": 0.0
+                        }
+                    }
+                ],
+                "modifiers": [
+                    {
+                        "coveredText": "second",
+                        "end": 144,
+                        "type": "aci.ModifierGroupInd",
+                        "begin": 138
+                    }
+                ]
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "The patient had a myocardial infarction in 2015 and was prescribed Losartan. His prescription was changed to Irbesartan in 2019. He had a second heart attack in 2021, and is now taking Losartan again."
+            }
+        ],
+        "temporalSpans": [
+            {
+                "begin": 43,
+                "end": 47,
+                "coveredText": "2015",
+                "temporalType": {
+                    "dateScore": 1.0,
+                    "relativeScore": 0.0
+                }
+            },
+            {
+                "begin": 123,
+                "end": 127,
+                "coveredText": "2019",
+                "temporalType": {
+                    "dateScore": 1.0,
+                    "relativeScore": 0.0
+                }
+            },
+            {
+                "begin": 161,
+                "end": 165,
+                "coveredText": "2021",
+                "temporalType": {
+                    "dateScore": 1.0,
+                    "relativeScore": 0.0
+                }
+            },
+            {
+                "begin": 174,
+                "end": 177,
+                "coveredText": "now",
+                "temporalType": {
+                    "dateScore": 0.0,
+                    "relativeScore": 1.0
+                }
+            }
+        ]
+    },
+    "Patient reports that they recently had pneumonia and is now having chest pain. The patient was diagnosed with a myocardial infarction.": {
+        "attributeValues": [
+            {
+                "begin": 39,
+                "end": 48,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "preferredName": "pneumonia",
+                "values": [
+                    {
+                        "value": "pneumonia"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 7
+                },
+                "name": "PatientReportedCondition",
+                "icd9Code": "486",
+                "icd10Code": "J18.9",
+                "snomedConceptId": "233604007",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.005,
+                            "patientReportedScore": 0.99,
+                            "discussedScore": 0.004
+                        },
+                        "suspectedScore": 0.068,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.006,
+                        "familyHistoryScore": 0.001
+                    }
+                },
+                "ccsCode": "122"
+            },
+            {
+                "begin": 67,
+                "end": 77,
+                "coveredText": "chest pain",
+                "negated": false,
+                "preferredName": "chest pain",
+                "values": [
+                    {
+                        "value": "chest pain"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 8
+                },
+                "name": "PatientReportedCondition",
+                "icd9Code": "786.50",
+                "icd10Code": "R07.4,R07.9",
+                "snomedConceptId": "29857009",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.005,
+                            "patientReportedScore": 0.994,
+                            "discussedScore": 0.001
+                        },
+                        "suspectedScore": 0.001,
+                        "symptomScore": 0.992,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.001
+                    }
+                },
+                "ccsCode": "102",
+                "temporal": [
+                    {
+                        "begin": 56,
+                        "end": 59,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.996,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "begin": 112,
+                "end": 133,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "preferredName": "myocardial infarction",
+                "values": [
+                    {
+                        "value": "myocardial infarction"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 9
+                },
+                "name": "Diagnosis",
+                "icd9Code": "410.90",
+                "icd10Code": "I21.9",
+                "snomedConceptId": "22298006",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.93,
+                            "patientReportedScore": 0.036,
+                            "discussedScore": 0.035
+                        },
+                        "suspectedScore": 0.059,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.001
+                    }
+                },
+                "ccsCode": "100",
+                "hccCode": "86"
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.HealthCareActivity",
+                "begin": 8,
+                "end": 15,
+                "coveredText": "reports",
+                "negated": false,
+                "cui": "C0700287",
+                "preferredName": "Reporting",
+                "semanticType": "hlca",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C25651",
+                "snomedConceptId": "223458004",
+                "loincId": "LP6486-7,MTHU051529,MTHU002737,LA25254-6,LP7554-1",
+                "vocabs": "MTH,CHV,LNC,NCI,AOD,SNOMEDCT_US"
+            },
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 2,
+                "begin": 39,
+                "end": 48,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "cui": "C0032285",
+                "preferredName": "Pneumonia",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "484.8",
+                "icd10Code": "J18.9",
+                "nciCode": "C3333",
+                "snomedConceptId": "233604007",
+                "meshId": "M0017064",
+                "loincId": "LP21407-9,LA7465-3,MTHU020831",
+                "vocabs": "LNC,NCI_NICHD,MTH,CSP,MSH,CST,HPO,OMIM,COSTAR,NCI_NCI-GLOSS,ICPC,LCH,CHV,NCI_FDA,MEDLINEPLUS,LCH_NW,NCI,AOD,SNOMEDCT_US,DXP,NCI_CPTAC",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.005,
+                            "patientReportedScore": 0.99,
+                            "discussedScore": 0.004
+                        },
+                        "suspectedScore": 0.068,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.006,
+                        "familyHistoryScore": 0.001
+                    }
+                }
+            },
+            {
+                "type": "umls.SignOrSymptom",
+                "uid": 4,
+                "begin": 67,
+                "end": 77,
+                "coveredText": "chest pain",
+                "negated": false,
+                "cui": "C0008031",
+                "preferredName": "Chest Pain",
+                "semanticType": "sosy",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "786.59",
+                "icd10Code": "R07.4,R07.9",
+                "nciCode": "C38665",
+                "snomedConceptId": "29857009",
+                "meshId": "M0004035",
+                "loincId": "LA28842-5,MTHU035552,LP98885-4",
+                "vocabs": "MTH,NCI_NICHD,LNC,MSH,CST,HPO,OMIM,COSTAR,NCI_NCI-GLOSS,LCH,CHV,CCSR_10,CCS,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,ICD9CM,SNOMEDCT_US,DXP",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.005,
+                            "patientReportedScore": 0.994,
+                            "discussedScore": 0.001
+                        },
+                        "suspectedScore": 0.001,
+                        "symptomScore": 0.992,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.001
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 56,
+                        "end": 59,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.996,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "umls.Finding",
+                "begin": 112,
+                "end": 133,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C4552959",
+                "preferredName": "Myocardial Infarction, CTCAE",
+                "semanticType": "fndg",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C143691",
+                "vocabs": "MTH,NCI_CTCAE_5,NCI"
+            },
+            {
+                "type": "umls.LaboratoryOrTestResult",
+                "uid": 5,
+                "begin": 112,
+                "end": 133,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "semanticType": "lbtr",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "icd10Code": "I21.4,I21.29,I21.09,I21.19,R94.31,I25.2,I21.9",
+                "nciCode": "C101589",
+                "snomedConceptId": "164865005",
+                "vocabs": "CHV,MTH,NCI_CDISC,NCI,SNOMEDCT_US"
+            },
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 3,
+                "begin": 112,
+                "end": 133,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.93,
+                            "patientReportedScore": 0.036,
+                            "discussedScore": 0.035
+                        },
+                        "suspectedScore": 0.059,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.001
+                    }
+                }
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 39,
+                "end": 48,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "cui": "C0032285",
+                "preferredName": "Pneumonia",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "484.8",
+                "icd10Code": "J18.9",
+                "nciCode": "C3333",
+                "snomedConceptId": "233604007",
+                "meshId": "M0017064",
+                "loincId": "LP21407-9,LA7465-3,MTHU020831",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.005,
+                            "patientReportedScore": 0.99,
+                            "discussedScore": 0.004
+                        },
+                        "suspectedScore": 0.068,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.006,
+                        "familyHistoryScore": 0.001
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 67,
+                "end": 77,
+                "coveredText": "chest pain",
+                "negated": false,
+                "cui": "C0008031",
+                "preferredName": "Chest Pain",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "786.59",
+                "icd10Code": "R07.4,R07.9",
+                "nciCode": "C38665",
+                "snomedConceptId": "29857009",
+                "meshId": "M0004035",
+                "loincId": "LA28842-5,MTHU035552,LP98885-4",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.005,
+                            "patientReportedScore": 0.994,
+                            "discussedScore": 0.001
+                        },
+                        "suspectedScore": 0.001,
+                        "symptomScore": 0.992,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.001
+                    }
+                },
+                "ruleId": "3cf38e29-77f0-47b3-9950-4a0292f64c93",
+                "derivedFrom": [
+                    {
+                        "uid": 4
+                    }
+                ],
+                "temporal": [
+                    {
+                        "begin": 56,
+                        "end": 59,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.996,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 112,
+                "end": 133,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.93,
+                            "patientReportedScore": 0.036,
+                            "discussedScore": 0.035
+                        },
+                        "suspectedScore": 0.059,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.001
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 3
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 112,
+                "end": 133,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "ruleId": "c1e8d7d4-7d36-423b-b39d-4ebb5eb65b0c",
+                "derivedFrom": [
+                    {
+                        "uid": 5
+                    }
+                ]
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 7,
+                "begin": 39,
+                "end": 48,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "cui": "C0032285",
+                "icd10Code": "J18.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "pneumonia",
+                "snomedConceptId": "233604007",
+                "ccsCode": "122",
+                "symptomDiseaseNormalizedName": "pneumonia",
+                "icd9Code": "486",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.005,
+                            "patientReportedScore": 0.99,
+                            "discussedScore": 0.004
+                        },
+                        "suspectedScore": 0.068,
+                        "symptomScore": 0.003,
+                        "traumaScore": 0.006,
+                        "familyHistoryScore": 0.001
+                    }
+                }
+            },
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 8,
+                "begin": 67,
+                "end": 77,
+                "coveredText": "chest pain",
+                "negated": false,
+                "cui": "C0008031",
+                "icd10Code": "R07.4,R07.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "chest pain",
+                "snomedConceptId": "29857009",
+                "ccsCode": "102",
+                "symptomDiseaseNormalizedName": "chest pain",
+                "icd9Code": "786.50",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.005,
+                            "patientReportedScore": 0.994,
+                            "discussedScore": 0.001
+                        },
+                        "suspectedScore": 0.001,
+                        "symptomScore": 0.992,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.001
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 56,
+                        "end": 59,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.996,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 9,
+                "begin": 112,
+                "end": 133,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "icd10Code": "I21.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "myocardial infarction",
+                "snomedConceptId": "22298006",
+                "ccsCode": "100",
+                "symptomDiseaseNormalizedName": "myocardial infarction",
+                "icd9Code": "410.90",
+                "hccCode": "86",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.93,
+                            "patientReportedScore": 0.036,
+                            "discussedScore": 0.035
+                        },
+                        "suspectedScore": 0.059,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.001
+                    }
+                }
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "Patient reports that they recently had pneumonia and is now having chest pain. The patient was diagnosed with a myocardial infarction."
+            }
+        ],
+        "temporalSpans": [
+            {
+                "begin": 56,
+                "end": 59,
+                "coveredText": "now",
+                "temporalType": {
+                    "dateScore": 0.0,
+                    "relativeScore": 1.0
+                }
+            }
+        ]
+    },
+    "Patient is taking Cisplatin.": {
+        "attributeValues": [
+            {
+                "begin": 18,
+                "end": 27,
+                "coveredText": "Cisplatin",
+                "negated": false,
+                "preferredName": "cisplatin",
+                "values": [
+                    {
+                        "value": "cisplatin"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 4
+                },
+                "name": "PrescribedMedication",
+                "rxNormId": "2555",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.003,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.003,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.PharmacologicSubstance",
+                "uid": 2,
+                "begin": 18,
+                "end": 27,
+                "coveredText": "Cisplatin",
+                "negated": false,
+                "cui": "C0008838",
+                "preferredName": "cisplatin",
+                "semanticType": "phsu",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C376,C756",
+                "snomedConceptId": "387318005,57066004",
+                "meshId": "M0004505",
+                "rxNormId": "2555",
+                "loincId": "MTHU060553,LP16079-3",
+                "vocabs": "MTH,LNC,CSP,MSH,MTHSPL,RXNORM,NCI_DCP,NCI_NCI-GLOSS,CHV,ATC,LCH,USP,NCI_CTRP,NCI_FDA,LCH_NW,NCI,SNOMEDCT_US,PDQ,DRUGBANK,VANDF",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.003,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.003,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "ICMedication",
+                "begin": 18,
+                "end": 27,
+                "coveredText": "Cisplatin",
+                "negated": false,
+                "cui": "C0008838",
+                "preferredName": "cisplatin",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "nciCode": "C376,C756",
+                "snomedConceptId": "387318005,57066004",
+                "meshId": "M0004505",
+                "rxNormId": "2555",
+                "loincId": "MTHU060553,LP16079-3",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.003,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.003,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 18,
+                "end": 27,
+                "coveredText": "Cisplatin",
+                "negated": false,
+                "cui": "C0008838",
+                "preferredName": "cisplatin",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C376,C756",
+                "snomedConceptId": "387318005,57066004",
+                "meshId": "M0004505",
+                "rxNormId": "2555",
+                "loincId": "MTHU060553,LP16079-3",
+                "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            }
+        ],
+        "MedicationInd": [
+            {
+                "type": "aci.MedicationInd",
+                "uid": 4,
+                "begin": 18,
+                "end": 27,
+                "coveredText": "Cisplatin",
+                "negated": false,
+                "cui": "C0008838",
+                "drug": [
+                    {
+                        "coveredText": "Cisplatin",
+                        "cui": "C0008838",
+                        "complex": "false",
+                        "end": 27,
+                        "type": "aci.Ind_Drug",
+                        "name1": [
+                            {
+                                "rxNormID": "2555",
+                                "coveredText": "Cisplatin",
+                                "cui": "C0008838",
+                                "drugSurfaceForm": "Cisplatin",
+                                "drugNormalizedName": "cisplatin",
+                                "end": 27,
+                                "type": "aci.DrugName",
+                                "begin": 18
+                            }
+                        ],
+                        "begin": 18
+                    }
+                ],
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 1.0,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.0,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.003,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.003,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "disambiguationData": {
+                    "validity": "VALID",
+                    "comment": "marked VALID by clinical insight models."
+                }
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "Patient is taking Cisplatin."
+            }
+        ]
+    },
+    "Patient had pneumonia a month ago and has now been diagnosed with a myocardial infarction. Prescribed Acebutolol.": {
+        "attributeValues": [
+            {
+                "begin": 12,
+                "end": 21,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "preferredName": "pneumonia",
+                "values": [
+                    {
+                        "value": "pneumonia"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 9
+                },
+                "name": "Diagnosis",
+                "icd9Code": "486",
+                "icd10Code": "J18.9",
+                "snomedConceptId": "233604007",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.97,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.021
+                        },
+                        "suspectedScore": 0.017,
+                        "symptomScore": 0.005,
+                        "traumaScore": 0.001,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ccsCode": "122",
+                "temporal": [
+                    {
+                        "begin": 22,
+                        "end": 33,
+                        "coveredText": "a month ago",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 0.999
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.999,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "begin": 68,
+                "end": 89,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "preferredName": "myocardial infarction",
+                "values": [
+                    {
+                        "value": "myocardial infarction"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 10
+                },
+                "name": "Diagnosis",
+                "icd9Code": "410.90",
+                "icd10Code": "I21.9",
+                "snomedConceptId": "22298006",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.981,
+                            "patientReportedScore": 0.003,
+                            "discussedScore": 0.016
+                        },
+                        "suspectedScore": 0.02,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ccsCode": "100",
+                "hccCode": "86",
+                "temporal": [
+                    {
+                        "begin": 42,
+                        "end": 45,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.952,
+                            "durationScore": 0.002
+                        }
+                    }
+                ]
+            },
+            {
+                "begin": 102,
+                "end": 112,
+                "coveredText": "Acebutolol",
+                "negated": false,
+                "preferredName": "acebutolol",
+                "values": [
+                    {
+                        "value": "acebutolol"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 8
+                },
+                "name": "PrescribedMedication",
+                "rxNormId": "149",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 0.999,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.001,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.001,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.001,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 3,
+                "begin": 12,
+                "end": 21,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "cui": "C0032285",
+                "preferredName": "Pneumonia",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "484.8",
+                "icd10Code": "J18.9",
+                "nciCode": "C3333",
+                "snomedConceptId": "233604007",
+                "meshId": "M0017064",
+                "loincId": "LP21407-9,LA7465-3,MTHU020831",
+                "vocabs": "LNC,NCI_NICHD,MTH,CSP,MSH,CST,HPO,OMIM,COSTAR,NCI_NCI-GLOSS,ICPC,LCH,CHV,NCI_FDA,MEDLINEPLUS,LCH_NW,NCI,AOD,SNOMEDCT_US,DXP,NCI_CPTAC",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.97,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.021
+                        },
+                        "suspectedScore": 0.017,
+                        "symptomScore": 0.005,
+                        "traumaScore": 0.001,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 22,
+                        "end": 33,
+                        "coveredText": "a month ago",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 0.999
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.999,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "umls.Finding",
+                "begin": 68,
+                "end": 89,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C4552959",
+                "preferredName": "Myocardial Infarction, CTCAE",
+                "semanticType": "fndg",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C143691",
+                "vocabs": "MTH,NCI_CTCAE_5,NCI"
+            },
+            {
+                "type": "umls.LaboratoryOrTestResult",
+                "uid": 5,
+                "begin": 68,
+                "end": 89,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "semanticType": "lbtr",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "icd10Code": "I21.4,I21.29,I21.09,I21.19,R94.31,I25.2,I21.9",
+                "nciCode": "C101589",
+                "snomedConceptId": "164865005",
+                "vocabs": "CHV,MTH,NCI_CDISC,NCI,SNOMEDCT_US"
+            },
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 4,
+                "begin": 68,
+                "end": 89,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.981,
+                            "patientReportedScore": 0.003,
+                            "discussedScore": 0.016
+                        },
+                        "suspectedScore": 0.02,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 42,
+                        "end": 45,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.952,
+                            "durationScore": 0.002
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "umls.HealthCareActivity",
+                "begin": 91,
+                "end": 101,
+                "coveredText": "Prescribed",
+                "negated": false,
+                "cui": "C0278329",
+                "preferredName": "Prescribed",
+                "semanticType": "hlca",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "vocabs": "MTH,CHV,LCH"
+            },
+            {
+                "type": "umls.OrganicChemical",
+                "uid": 6,
+                "begin": 102,
+                "end": 112,
+                "coveredText": "Acebutolol",
+                "negated": false,
+                "cui": "C0000946",
+                "preferredName": "acebutolol",
+                "semanticType": "orch",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C61525",
+                "snomedConceptId": "372815001,68088000",
+                "meshId": "M0000100",
+                "rxNormId": "149",
+                "loincId": "LP16015-7,MTHU007114",
+                "vocabs": "MTH,LNC,MSH,RXNORM,MTHSPL,CHV,ATC,NCI_FDA,NCI,USPMG,SNOMEDCT_US,DRUGBANK,VANDF"
+            },
+            {
+                "type": "umls.PharmacologicSubstance",
+                "uid": 2,
+                "begin": 102,
+                "end": 112,
+                "coveredText": "Acebutolol",
+                "negated": false,
+                "cui": "C0000946",
+                "preferredName": "acebutolol",
+                "semanticType": "phsu",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C61525",
+                "snomedConceptId": "372815001,68088000",
+                "meshId": "M0000100",
+                "rxNormId": "149",
+                "loincId": "LP16015-7,MTHU007114",
+                "vocabs": "MTH,LNC,MSH,RXNORM,MTHSPL,CHV,ATC,NCI_FDA,NCI,USPMG,SNOMEDCT_US,DRUGBANK,VANDF",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 0.999,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.001,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.001,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.001,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 12,
+                "end": 21,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "cui": "C0032285",
+                "preferredName": "Pneumonia",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "484.8",
+                "icd10Code": "J18.9",
+                "nciCode": "C3333",
+                "snomedConceptId": "233604007",
+                "meshId": "M0017064",
+                "loincId": "LP21407-9,LA7465-3,MTHU020831",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.97,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.021
+                        },
+                        "suspectedScore": 0.017,
+                        "symptomScore": 0.005,
+                        "traumaScore": 0.001,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 3
+                    }
+                ],
+                "temporal": [
+                    {
+                        "begin": 22,
+                        "end": 33,
+                        "coveredText": "a month ago",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 0.999
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.999,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 68,
+                "end": 89,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.981,
+                            "patientReportedScore": 0.003,
+                            "discussedScore": 0.016
+                        },
+                        "suspectedScore": 0.02,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 4
+                    }
+                ],
+                "temporal": [
+                    {
+                        "begin": 42,
+                        "end": 45,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.952,
+                            "durationScore": 0.002
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 68,
+                "end": 89,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "ruleId": "c1e8d7d4-7d36-423b-b39d-4ebb5eb65b0c",
+                "derivedFrom": [
+                    {
+                        "uid": 5
+                    }
+                ]
+            },
+            {
+                "type": "ICMedication",
+                "begin": 102,
+                "end": 112,
+                "coveredText": "Acebutolol",
+                "negated": false,
+                "cui": "C0000946",
+                "preferredName": "acebutolol",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "nciCode": "C61525",
+                "snomedConceptId": "372815001,68088000",
+                "meshId": "M0000100",
+                "rxNormId": "149",
+                "loincId": "LP16015-7,MTHU007114",
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 0.999,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.001,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.001,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.001,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "ruleId": "7861c024-ad1c-47e6-b40e-c90cb7b19e26",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 102,
+                "end": 112,
+                "coveredText": "Acebutolol",
+                "negated": false,
+                "cui": "C0000946",
+                "preferredName": "acebutolol",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C61525",
+                "snomedConceptId": "372815001,68088000",
+                "meshId": "M0000100",
+                "rxNormId": "149",
+                "loincId": "LP16015-7,MTHU007114",
+                "ruleId": "d004df62-a65d-4136-aa32-161a43eb9506",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 102,
+                "end": 112,
+                "coveredText": "Acebutolol",
+                "negated": false,
+                "cui": "C0000946",
+                "preferredName": "acebutolol",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "ruleId": "343e6158-2c30-4726-be71-33a570b28703",
+                "derivedFrom": [
+                    {
+                        "uid": 6
+                    }
+                ]
+            }
+        ],
+        "MedicationInd": [
+            {
+                "type": "aci.MedicationInd",
+                "uid": 8,
+                "begin": 102,
+                "end": 112,
+                "coveredText": "Acebutolol",
+                "negated": false,
+                "cui": "C0000946",
+                "drug": [
+                    {
+                        "coveredText": "Acebutolol",
+                        "cui": "C0000946",
+                        "complex": "false",
+                        "end": 112,
+                        "type": "aci.Ind_Drug",
+                        "name1": [
+                            {
+                                "rxNormID": "149",
+                                "coveredText": "Acebutolol",
+                                "cui": "C0000946",
+                                "drugSurfaceForm": "Acebutolol",
+                                "drugNormalizedName": "acebutolol",
+                                "end": 112,
+                                "type": "aci.DrugName",
+                                "begin": 102
+                            }
+                        ],
+                        "begin": 102
+                    }
+                ],
+                "insightModelData": {
+                    "medication": {
+                        "usage": {
+                            "takenScore": 0.999,
+                            "consideringScore": 0.0,
+                            "discussedScore": 0.001,
+                            "labMeasurementScore": 0.0
+                        },
+                        "startedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "adverseEvent": {
+                            "score": 0.001,
+                            "allergyScore": 0.0,
+                            "usage": {
+                                "explicitScore": 0.001,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "stoppedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        },
+                        "doseChangedEvent": {
+                            "score": 0.0,
+                            "usage": {
+                                "explicitScore": 0.0,
+                                "consideringScore": 0.0,
+                                "discussedScore": 0.0
+                            }
+                        }
+                    }
+                },
+                "disambiguationData": {
+                    "validity": "VALID",
+                    "comment": "marked VALID by clinical insight models."
+                }
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 9,
+                "begin": 12,
+                "end": 21,
+                "coveredText": "pneumonia",
+                "negated": false,
+                "cui": "C0032285",
+                "icd10Code": "J18.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "pneumonia",
+                "snomedConceptId": "233604007",
+                "ccsCode": "122",
+                "symptomDiseaseNormalizedName": "pneumonia",
+                "icd9Code": "486",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.97,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.021
+                        },
+                        "suspectedScore": 0.017,
+                        "symptomScore": 0.005,
+                        "traumaScore": 0.001,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 22,
+                        "end": 33,
+                        "coveredText": "a month ago",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 0.999
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.999,
+                            "durationScore": 0.001
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 10,
+                "begin": 68,
+                "end": 89,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "icd10Code": "I21.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "myocardial infarction",
+                "snomedConceptId": "22298006",
+                "ccsCode": "100",
+                "symptomDiseaseNormalizedName": "myocardial infarction",
+                "icd9Code": "410.90",
+                "hccCode": "86",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.981,
+                            "patientReportedScore": 0.003,
+                            "discussedScore": 0.016
+                        },
+                        "suspectedScore": 0.02,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.0
+                    }
+                },
+                "temporal": [
+                    {
+                        "begin": 42,
+                        "end": 45,
+                        "coveredText": "now",
+                        "temporalType": {
+                            "dateScore": 0.0,
+                            "relativeScore": 1.0
+                        },
+                        "relationTypes": {
+                            "overlapsScore": 0.952,
+                            "durationScore": 0.002
+                        }
+                    }
+                ]
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "Patient had pneumonia a month ago and has now been diagnosed with a myocardial infarction. Prescribed Acebutolol."
+            }
+        ],
+        "temporalSpans": [
+            {
+                "begin": 22,
+                "end": 33,
+                "coveredText": "a month ago",
+                "temporalType": {
+                    "dateScore": 0.0,
+                    "relativeScore": 0.999
+                }
+            },
+            {
+                "begin": 42,
+                "end": 45,
+                "coveredText": "now",
+                "temporalType": {
+                    "dateScore": 0.0,
+                    "relativeScore": 1.0
+                }
+            }
+        ]
+    },
+    "suspect skin cancer because the patient's brother has skin cancer": {
+        "attributeValues": [
+            {
+                "begin": 8,
+                "end": 19,
+                "coveredText": "skin cancer",
+                "negated": false,
+                "preferredName": "malignant neoplasm of skin",
+                "values": [
+                    {
+                        "value": "malignant neoplasm of skin"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 5
+                },
+                "name": "PotentialDiagnosis",
+                "icd9Code": "173.99",
+                "icd10Code": "C44.9,C44.90",
+                "snomedConceptId": "372130007",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.925,
+                            "patientReportedScore": 0.017,
+                            "discussedScore": 0.058
+                        },
+                        "suspectedScore": 0.988,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.122
+                    }
+                },
+                "ccsCode": "23"
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.NeoplasticProcess",
+                "uid": 2,
+                "begin": 8,
+                "end": 19,
+                "coveredText": "skin cancer",
+                "negated": false,
+                "cui": "C0007114",
+                "preferredName": "Malignant neoplasm of skin",
+                "semanticType": "neop",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "173.9,173.8",
+                "icd10Code": "C44.9,C44.90",
+                "nciCode": "C2920",
+                "snomedConceptId": "372130007",
+                "meshId": "M0333435",
+                "loincId": "LA10543-9",
+                "vocabs": "MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_NCI-GLOSS,ICPC,CHV,CCS,NCI_CTRP,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,NCI_CPTAC",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.925,
+                            "patientReportedScore": 0.017,
+                            "discussedScore": 0.058
+                        },
+                        "suspectedScore": 0.988,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.122
+                    }
+                }
+            },
+            {
+                "type": "umls.NeoplasticProcess",
+                "uid": 3,
+                "begin": 54,
+                "end": 65,
+                "coveredText": "skin cancer",
+                "negated": false,
+                "cui": "C0007114",
+                "preferredName": "Malignant neoplasm of skin",
+                "semanticType": "neop",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "173.9,173.8",
+                "icd10Code": "C44.9,C44.90",
+                "nciCode": "C2920",
+                "snomedConceptId": "372130007",
+                "meshId": "M0333435",
+                "loincId": "LA10543-9",
+                "vocabs": "MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_NCI-GLOSS,ICPC,CHV,CCS,NCI_CTRP,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,PDQ,NCI_CPTAC",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 1.0,
+                            "patientReportedScore": 0.0,
+                            "discussedScore": 0.0
+                        },
+                        "suspectedScore": 0.002,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.997
+                    }
+                }
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 8,
+                "end": 19,
+                "coveredText": "skin cancer",
+                "negated": false,
+                "cui": "C0007114",
+                "preferredName": "Malignant neoplasm of skin",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "173.9,173.8",
+                "icd10Code": "C44.9,C44.90",
+                "nciCode": "C2920",
+                "snomedConceptId": "372130007",
+                "meshId": "M0333435",
+                "loincId": "LA10543-9",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.925,
+                            "patientReportedScore": 0.017,
+                            "discussedScore": 0.058
+                        },
+                        "suspectedScore": 0.988,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.122
+                    }
+                },
+                "ruleId": "33e6be29-a746-40f1-a012-952410bade6f",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 54,
+                "end": 65,
+                "coveredText": "skin cancer",
+                "negated": false,
+                "cui": "C0007114",
+                "preferredName": "Malignant neoplasm of skin",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "173.9,173.8",
+                "icd10Code": "C44.9,C44.90",
+                "nciCode": "C2920",
+                "snomedConceptId": "372130007",
+                "meshId": "M0333435",
+                "loincId": "LA10543-9",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 1.0,
+                            "patientReportedScore": 0.0,
+                            "discussedScore": 0.0
+                        },
+                        "suspectedScore": 0.002,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.997
+                    }
+                },
+                "ruleId": "33e6be29-a746-40f1-a012-952410bade6f",
+                "derivedFrom": [
+                    {
+                        "uid": 3
+                    }
+                ]
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 5,
+                "begin": 8,
+                "end": 19,
+                "coveredText": "skin cancer",
+                "negated": false,
+                "cui": "C0007114",
+                "icd10Code": "C44.9,C44.90",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "skin cancer",
+                "snomedConceptId": "372130007",
+                "ccsCode": "23",
+                "symptomDiseaseNormalizedName": "malignant neoplasm of skin",
+                "icd9Code": "173.99",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.925,
+                            "patientReportedScore": 0.017,
+                            "discussedScore": 0.058
+                        },
+                        "suspectedScore": 0.988,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.122
+                    }
+                }
+            },
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "begin": 54,
+                "end": 65,
+                "coveredText": "skin cancer",
+                "negated": false,
+                "cui": "C0007114",
+                "icd10Code": "C44.9,C44.90",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "skin cancer",
+                "snomedConceptId": "372130007",
+                "ccsCode": "23",
+                "symptomDiseaseNormalizedName": "malignant neoplasm of skin",
+                "icd9Code": "173.99",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 1.0,
+                            "patientReportedScore": 0.0,
+                            "discussedScore": 0.0
+                        },
+                        "suspectedScore": 0.002,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.997
+                    }
+                }
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "suspect skin cancer because the patient's brother has skin cancer"
+            }
+        ]
+    }
+}

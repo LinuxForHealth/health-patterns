@@ -37,27 +37,20 @@ echo "***************************************"
 if [ $HELM_RELEASE = "enrich" ] 
 then
    # disable the ingestion deploy for an enrich-only deployment
-   sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
-
-   export DEPLOY_OPTIONS="--set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey="$ACD_APIKEY" --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout "$HELM_TIMEOUT
+   sed -i -e "s/\&ingestionEnabled \"true\"/\&ingestionEnabled \"false\"/g" values.yaml
+   cat values.yaml | grep ingestionEnabled
+      
+   # Change release name from the default ingestion to enrich
+   sed -i -e "s/\&releaseName ingestion/\&releaseName enrich/g" values.yaml
+   cat values.yaml | grep releaseName
    
-   if [ $DEPLOY_NIFIKOP != "true" ]
-   then
-      export DEPLOY_OPTIONS=" -f clinical_enrichment.yaml "$DEPLOY_OPTIONS
-   fi
+   export DEPLOY_OPTIONS="--set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey="$ACD_APIKEY" --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout "$HELM_TIMEOUT
 
-   # deploy enrich
-   # helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey=$ACD_APIKEY --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout $HELM_TIMEOUT
 elif [ $HELM_RELEASE = "ingestion" ] 
 then
    # deploy ingestion
    export DEPLOY_OPTIONS="--wait --timeout "$HELM_TIMEOUT
-   
-   if [ $DEPLOY_NIFIKOP != "true" ]
-   then
-      export DEPLOY_OPTIONS=" -f clinical_ingestion.yaml "$DEPLOY_OPTIONS
-   fi
-   # helm3 install $HELM_RELEASE . --wait --timeout $HELM_TIMEOUT
+
 fi
 
 echo "Deployment options: '"$DEPLOY_OPTIONS"'"

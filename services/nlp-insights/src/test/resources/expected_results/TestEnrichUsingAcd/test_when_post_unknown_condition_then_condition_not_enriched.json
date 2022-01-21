@@ -1,0 +1,11 @@
+{
+  "id": "12345",
+  "code": {
+    "coding": [],
+    "text": "idonotknowthis"
+  },
+  "subject": {
+    "reference": "Patient/1234567890"
+  },
+  "resourceType": "Condition"
+}

@@ -1,0 +1,566 @@
+{
+    "amoxicillin allergy": {
+        "attributeValues": [
+            {
+                "begin": 0,
+                "end": 19,
+                "coveredText": "amoxicillin allergy",
+                "negated": false,
+                "preferredName": "allergy to amoxicillin",
+                "values": [
+                    {
+                        "value": "allergy to amoxicillin"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 4
+                },
+                "name": "Diagnosis",
+                "icd9Code": "E930.0,995.27",
+                "icd10Code": "Z88.0",
+                "snomedConceptId": "294505008",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.919,
+                            "patientReportedScore": 0.007,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.096,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.004
+                    }
+                },
+                "ccsCode": "253"
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 2,
+                "begin": 0,
+                "end": 19,
+                "coveredText": "amoxicillin allergy",
+                "negated": false,
+                "cui": "C0571417",
+                "preferredName": "Allergy to amoxicillin",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "995.27",
+                "icd10Code": "Z88.0,Z88.1",
+                "snomedConceptId": "294505008",
+                "vocabs": "CHV,SNOMEDCT_US",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.919,
+                            "patientReportedScore": 0.007,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.096,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.004
+                    }
+                }
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 0,
+                "end": 19,
+                "coveredText": "amoxicillin allergy",
+                "negated": false,
+                "cui": "C0571417",
+                "preferredName": "Allergy to amoxicillin",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "995.27",
+                "icd10Code": "Z88.0,Z88.1",
+                "snomedConceptId": "294505008",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.919,
+                            "patientReportedScore": 0.007,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.096,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.004
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            }
+        ],
+        "MedicationInd": [
+            {
+                "type": "aci.MedicationInd",
+                "begin": 0,
+                "end": 11,
+                "coveredText": "amoxicillin",
+                "negated": false,
+                "cui": "C0002645",
+                "drug": [
+                    {
+                        "coveredText": "amoxicillin",
+                        "cui": "C0002645",
+                        "complex": "false",
+                        "end": 11,
+                        "type": "aci.Ind_Drug",
+                        "name1": [
+                            {
+                                "rxNormID": "723",
+                                "coveredText": "amoxicillin",
+                                "cui": "C0002645",
+                                "drugSurfaceForm": "amoxicillin",
+                                "drugNormalizedName": "amoxicillin",
+                                "end": 11,
+                                "type": "aci.DrugName",
+                                "begin": 0
+                            }
+                        ],
+                        "begin": 0
+                    }
+                ],
+                "disambiguationData": {
+                    "validity": "INVALID",
+                    "comment": "Clinical Insights: This concept was shorter than an overlapping concept."
+                }
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 4,
+                "begin": 0,
+                "end": 19,
+                "coveredText": "amoxicillin allergy",
+                "negated": false,
+                "cui": "C0571417",
+                "icd10Code": "Z88.0",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "amoxicillin allergy",
+                "snomedConceptId": "294505008",
+                "ccsCode": "253",
+                "symptomDiseaseNormalizedName": "allergy to amoxicillin",
+                "icd9Code": "E930.0,995.27",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.919,
+                            "patientReportedScore": 0.007,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.096,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.004
+                    }
+                }
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "amoxicillin allergy"
+            }
+        ]
+    },
+    "peanut allergy": {
+        "attributeValues": [
+            {
+                "begin": 0,
+                "end": 14,
+                "coveredText": "peanut allergy",
+                "negated": false,
+                "preferredName": "allergy to peanut",
+                "values": [
+                    {
+                        "value": "allergy to peanut"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 4
+                },
+                "name": "Diagnosis",
+                "icd9Code": "995.3",
+                "icd10Code": "Z91.010,Z91.0",
+                "snomedConceptId": "91935009",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.896,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.095
+                        },
+                        "suspectedScore": 0.109,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
+                    }
+                },
+                "ccsCode": "253"
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 2,
+                "begin": 0,
+                "end": 14,
+                "coveredText": "peanut allergy",
+                "negated": false,
+                "cui": "C0559470",
+                "preferredName": "Allergy to peanuts",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd9Code": "995.3",
+                "icd10Code": "Z91.0,Z91.010",
+                "snomedConceptId": "91935009",
+                "meshId": "M0351836",
+                "vocabs": "MTH,CHV,MSH,MEDLINEPLUS,SNOMEDCT_US",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.896,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.095
+                        },
+                        "suspectedScore": 0.109,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
+                    }
+                }
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 0,
+                "end": 14,
+                "coveredText": "peanut allergy",
+                "negated": false,
+                "cui": "C0559470",
+                "preferredName": "Allergy to peanuts",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd9Code": "995.3",
+                "icd10Code": "Z91.0,Z91.010",
+                "snomedConceptId": "91935009",
+                "meshId": "M0351836",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.896,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.095
+                        },
+                        "suspectedScore": 0.109,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 4,
+                "begin": 0,
+                "end": 14,
+                "coveredText": "peanut allergy",
+                "negated": false,
+                "cui": "C0559470",
+                "icd10Code": "Z91.010,Z91.0",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "peanut allergy",
+                "snomedConceptId": "91935009",
+                "ccsCode": "253",
+                "symptomDiseaseNormalizedName": "allergy to peanut",
+                "icd9Code": "995.3",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.896,
+                            "patientReportedScore": 0.009,
+                            "discussedScore": 0.095
+                        },
+                        "suspectedScore": 0.109,
+                        "symptomScore": 0.001,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
+                    }
+                }
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "peanut allergy"
+            }
+        ]
+    },
+    "myocardial infarction": {
+        "attributeValues": [
+            {
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "preferredName": "myocardial infarction",
+                "values": [
+                    {
+                        "value": "myocardial infarction"
+                    }
+                ],
+                "source": "Clinical Insights - Attributes",
+                "sourceVersion": "v1.0",
+                "concept": {
+                    "uid": 5
+                },
+                "name": "Diagnosis",
+                "icd9Code": "410.90",
+                "icd10Code": "I21.9",
+                "snomedConceptId": "22298006",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.917,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.092,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
+                    }
+                },
+                "ccsCode": "100",
+                "hccCode": "86"
+            }
+        ],
+        "concepts": [
+            {
+                "type": "umls.Finding",
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C4552959",
+                "preferredName": "Myocardial Infarction, CTCAE",
+                "semanticType": "fndg",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "nciCode": "C143691",
+                "vocabs": "MTH,NCI_CTCAE_5,NCI"
+            },
+            {
+                "type": "umls.LaboratoryOrTestResult",
+                "uid": 3,
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "semanticType": "lbtr",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "icd10Code": "I21.4,I21.29,I21.09,I21.19,R94.31,I25.2,I21.9",
+                "nciCode": "C101589",
+                "snomedConceptId": "164865005",
+                "vocabs": "CHV,MTH,NCI_CDISC,NCI,SNOMEDCT_US"
+            },
+            {
+                "type": "umls.DiseaseOrSyndrome",
+                "uid": 2,
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "semanticType": "dsyn",
+                "source": "umls",
+                "sourceVersion": "2020AA",
+                "disambiguationData": {
+                    "validity": "NO_DECISION"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "vocabs": "NCI_NICHD,MTH,LNC,CSP,MSH,CST,HPO,OMIM,NCI_CTCAE,COSTAR,AIR,CHV,NCI_FDA,MEDLINEPLUS,NCI,LCH_NW,AOD,SNOMEDCT_US,DXP",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.917,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.092,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
+                    }
+                }
+            },
+            {
+                "type": "ICDiagnosis",
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "preferredName": "Myocardial Infarction",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "icd10Code": "I21.9",
+                "nciCode": "C27996",
+                "snomedConceptId": "22298006",
+                "meshId": "M0014340",
+                "loincId": "MTHU035551,LA14274-7,LP98884-7,LA16286-9",
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.917,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.092,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
+                    }
+                },
+                "ruleId": "698f2b19-27b6-4dab-9150-7d7ef3b03a5c",
+                "derivedFrom": [
+                    {
+                        "uid": 2
+                    }
+                ]
+            },
+            {
+                "type": "ICNormality",
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0428953",
+                "preferredName": "Electrocardiogram: myocardial infarction (finding)",
+                "source": "Clinical Insights - Derived Concepts",
+                "sourceVersion": "v1.0",
+                "disambiguationData": {
+                    "validity": "INVALID"
+                },
+                "ruleId": "c1e8d7d4-7d36-423b-b39d-4ebb5eb65b0c",
+                "derivedFrom": [
+                    {
+                        "uid": 3
+                    }
+                ]
+            }
+        ],
+        "SymptomDiseaseInd": [
+            {
+                "type": "aci.SymptomDiseaseInd",
+                "uid": 5,
+                "begin": 0,
+                "end": 21,
+                "coveredText": "myocardial infarction",
+                "negated": false,
+                "cui": "C0027051",
+                "icd10Code": "I21.9",
+                "modality": "positive",
+                "symptomDiseaseSurfaceForm": "myocardial infarction",
+                "snomedConceptId": "22298006",
+                "ccsCode": "100",
+                "symptomDiseaseNormalizedName": "myocardial infarction",
+                "icd9Code": "410.90",
+                "hccCode": "86",
+                "disambiguationData": {
+                    "validity": "VALID"
+                },
+                "insightModelData": {
+                    "diagnosis": {
+                        "usage": {
+                            "explicitScore": 0.917,
+                            "patientReportedScore": 0.008,
+                            "discussedScore": 0.075
+                        },
+                        "suspectedScore": 0.092,
+                        "symptomScore": 0.0,
+                        "traumaScore": 0.0,
+                        "familyHistoryScore": 0.003
+                    }
+                }
+            }
+        ],
+        "spellCorrectedText": [
+            {
+                "correctedText": "myocardial infarction"
+            }
+        ]
+    },
+    "idonotknowthis": {
+        "spellCorrectedText": [
+            {
+                "correctedText": "idonotknowthis"
+            }
+        ]
+    }
+}

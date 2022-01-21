@@ -37,28 +37,18 @@ echo "***************************************"
 if [ $HELM_RELEASE = "enrich" ] 
 then
    # disable the ingestion deploy for an enrich-only deployment
-   sed -i -e "s/\&ingestionEnabled true/\&ingestionEnabled false/g" values.yaml
+   sed -i -e "s/\&ingestionEnabled \"true\"/\&ingestionEnabled \"false\"/g" values.yaml
+   cat values.yaml | grep ingestionEnabled
+   
+   # Change release name from the default ingestion to enrich
+   sed -i -e "s/\&releaseName ingestion/\&releaseName enrich/g" values.yaml
+   cat values.yaml | grep releaseName
    
    export DEPLOY_OPTIONS="--set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout "$HELM_TIMEOUT
-   
-   if [ $DEPLOY_NIFIKOP != "true" ]
-   then
-      export DEPLOY_OPTIONS=" -f clinical_enrichment.yaml "$DEPLOY_OPTIONS
-   fi
-   
-   # deploy enrich
-   # helm3 install $HELM_RELEASE . --set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true  --wait --timeout $HELM_TIMEOUT
+
 elif [ $HELM_RELEASE = "ingestion" ] 
 then
    export DEPLOY_OPTIONS="--wait --timeout "$HELM_TIMEOUT
-   
-   if [ $DEPLOY_NIFIKOP != "true" ]
-   then
-      export DEPLOY_OPTIONS=" -f clinical_ingestion.yaml "$DEPLOY_OPTIONS
-   fi 
-   
-   # deploy ingestion
-   # helm3 install $HELM_RELEASE . --wait --timeout $HELM_TIMEOUT 
 fi
 
 echo "Deployment options: '"$DEPLOY_OPTIONS"'"
