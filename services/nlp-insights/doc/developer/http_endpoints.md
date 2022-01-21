@@ -43,7 +43,7 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 | &nbsp; | Method | Endpoint | Body | Returns on Success |
 |:------:|:------:|:---------|:----:|:-------:|
   __Config Definition__ | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-| Get All Configs | `GET` | `/all_configs` |&nbsp; | Newline-delimited list of config names |
+| Get All Configs | `GET` | `/all_configs` |&nbsp; | Array of config names |
 | Add Named Config  | `PUT/POST` | `/config/definition` | Config (json) contains `name` | Status `200`
 | Delete Config | `DELETE` | `/config/{configName}` | | Status `200` |
 | Get Config Details | `GET` | `/config/{configName}` | | Config details named `configName` |

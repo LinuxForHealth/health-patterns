@@ -226,3 +226,24 @@ class TestConfig(UnitTestUsingExternalResource):
             services = set(rsp.json)
             self.assertTrue(cfg_qu not in services)
             self.assertTrue(cfg_acd not in services)
+
+    def test_when_delete_default_config_then_fail(self):
+        with app.app.test_client() as service:
+            cfg_qu = configure_quick_umls(service, is_default=False)
+            cfg_acd = configure_acd(service, is_default=False)
+
+            # Make Quick umls default
+            set_default_nlp(service, cfg_qu)
+
+            # verify setup ok
+            rsp = service.get("/all_configs")
+            services = set(rsp.json)
+            self.assertTrue(cfg_qu in services)
+
+            rsp = service.delete(f"/config/{cfg_qu}")
+            self.assertEqual(400, rsp.status_code)
+
+            # Test than after clearing the default we can delete
+            rsp = service.post("/config/clearDefault")
+            rsp = service.delete(f"/config/{cfg_qu}")
+            self.assertEqual(200, rsp.status_code)
