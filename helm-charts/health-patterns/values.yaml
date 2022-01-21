@@ -360,6 +360,8 @@ nifi:
     enabled: false
     class: *ingressClass
     hostname: *hostname
+  persistence:
+    enabled: true
   service:
     port: 8443
     processors:
@@ -390,7 +392,7 @@ nifi:
         mountPath: /nars
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.6
+      image: alvearie/nifi-setup:0.1.7
       imagePullPolicy: Always
       env:
       - name: "RELEASE_NAME"
