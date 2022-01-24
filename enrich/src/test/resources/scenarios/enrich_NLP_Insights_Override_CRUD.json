@@ -1,6 +1,6 @@
 {
     "scenarioName": "********enrich_NLP_Insights_Override_CRUD********",
-    "ignoreStepFailures": false,
+    "ignoreStepFailures": true,
     "steps": [ 
         {
             "name": "getOverrides",
@@ -59,7 +59,9 @@
                 "request": { },            
             "verify": {
                 "status": 200,
-                "rawBody": "$CONTAINS.STRING:'DocumentReference': '${2}'"
+                "body": {
+                    "DocumentReference" : "${2}"
+                }
             }
         },
         {
@@ -69,7 +71,9 @@
                 "request": { },            
             "verify": {
                 "status": 200,
-                "rawBody": "$CONTAINS.STRING:'AllergyIntolerance': '${4}'"
+                "body": {
+                   "AllergyIntolerance" : "${4}"
+                }
             }
         },
         {
@@ -79,7 +83,9 @@
                 "request": { },            
             "verify": {
                 "status": 200,
-                "rawBody": "$CONTAINS.STRING:'DiagnosticReport': '${2}'"
+                "body": {
+                   "DiagnosticReport" : "${2}"
+                }
             }
         },        
         {
@@ -89,7 +95,9 @@
                 "request": { },            
             "verify": {
                 "status": 200,
-                "rawBody": "$CONTAINS.STRING:'Immunization': '${4}'"
+                "body": {
+                  "Immunization" : "${4}"
+                }
             }
         }, 
         {
@@ -99,7 +107,9 @@
                 "request": { },            
             "verify": {
                 "status": 200,
-                "rawBody": "$CONTAINS.STRING:'Immunization': '${2}'"
+                "body": {
+                  "Immunization" : "${2}" 
+                }
             }
         },       
         {
@@ -125,7 +135,7 @@
             "url": "utilities.ZerocodeUtilities",
             "method": "containsString",
             "request": {
-                 "string1": "${$.getOverridesNoImmunization.response.rawBody}",
+                 "string1": "${$.getOverridesNoImmunization.response.body}",
                  "string2": "Immunization"
             },
             "verify": { "result": "false" }
@@ -136,7 +146,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 400
+                "status": 500
             }
         },
         {

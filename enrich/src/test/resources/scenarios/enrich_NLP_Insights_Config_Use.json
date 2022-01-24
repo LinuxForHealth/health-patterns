@@ -1,6 +1,6 @@
 {
     "scenarioName": "********enrich_NLP_Insights_Config_Use********",
-    "ignoreStepFailures": false,
+    "ignoreStepFailures": true,
     "steps": [ 
 
         {
@@ -64,16 +64,14 @@
      ],
      "parameterized": {
         "csvSource":[
-            "PUT,acd,${JSON.FILE:Patients/patientbundleNLP.json},ACD Structured",
-            "POST,default,${JSON.FILE:Patients/patientbundleNLP.json},QuickUMLS Unstructured",
-            "POST,acd,${JSON.FILE:Patients/diagnosticreportNLP.json},ACD Unstructured",
-            "PUT,default,${JSON.FILE:Patients/diagnosticreportNLP.json},QuickUMLS Unstructured",
-            "PUT,acd,${JSON.FILE:Patients/allergyintoleranceNLP.json},ACD Structured",
-            "POST,default,${JSON.FILE:Patients/allergyintoleranceNLP.json},QuickUMLS Structured",
-            "POST,acd,${JSON.FILE:Patients/immunizationNLP.json},ACD Structured",
-            "PUT,default,${JSON.FILE:Patients/immunizationNLP.json},QuickUMLS Structured",
-            "PUT,acd,${JSON.FILE:Patients/documentreferenceNLP.json},ACD Unstructured",
-            "POST,default,${JSON.FILE:Patients/documentreferenceNLP.json},QuickUMLS Unstructured"
+            "PUT,acd,${JSON.FILE:Patients/patientbundleNLP.json},services/nlp_insights/acd",
+            "POST,default,${JSON.FILE:Patients/patientbundleNLP.json},services/nlp_insights/quickumls",
+            "POST,acd,${JSON.FILE:Patients/diagnosticreportNLP.json},services/nlp_insights/acd",
+            "PUT,default,${JSON.FILE:Patients/diagnosticreportNLP.json},services/nlp_insights/quickumls",
+            "PUT,acd,${JSON.FILE:Patients/allergyintoleranceNLP.json},services/nlp_insights/acd",
+            "POST,default,${JSON.FILE:Patients/allergyintoleranceNLP.json},services/nlp_insights/quickumls",
+            "PUT,acd,${JSON.FILE:Patients/documentreferenceNLP.json},services/nlp_insights/acd",
+            "POST,default,${JSON.FILE:Patients/documentreferenceNLP.json},services/nlp_insights/quickumls"
 
         ]
     }
