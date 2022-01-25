@@ -170,6 +170,13 @@ class TestConfig(UnitTestUsingExternalResource):
             self.assertEqual(overrides["DiagnosticReport"], cfg_qu)
             self.assertTrue("AllergyIntolerance" not in overrides)
 
+    def test_when_delete_non_exist_resource_override_then_400(self):
+        with app.app.test_client() as service:
+            configure_acd(service, is_default=True)
+
+            rsp = service.delete("/config/resource/AllergyIntolerance")
+            self.assertEqual(400, rsp.status_code, rsp.data)
+
     def test_when_delete_all_resource_overrides_then_no_resource_overrides(self):
         with app.app.test_client() as service:
             cfg_qu = configure_quick_umls(service, is_default=False)
@@ -230,7 +237,6 @@ class TestConfig(UnitTestUsingExternalResource):
     def test_when_delete_default_config_then_fail(self):
         with app.app.test_client() as service:
             cfg_qu = configure_quick_umls(service, is_default=False)
-            cfg_acd = configure_acd(service, is_default=False)
 
             # Make Quick umls default
             set_default_nlp(service, cfg_qu)
@@ -240,10 +246,15 @@ class TestConfig(UnitTestUsingExternalResource):
             services = set(rsp.json)
             self.assertTrue(cfg_qu in services)
 
+            cfg_qu = configure_quick_umls(service, is_default=False)
+
             rsp = service.delete(f"/config/{cfg_qu}")
             self.assertEqual(400, rsp.status_code)
 
             # Test than after clearing the default we can delete
             rsp = service.post("/config/clearDefault")
+            rsp = service.get("/config")
+            self.assertTrue(rsp.status_code == 400)
+
             rsp = service.delete(f"/config/{cfg_qu}")
             self.assertEqual(200, rsp.status_code)

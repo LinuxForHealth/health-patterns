@@ -253,7 +253,10 @@ def set_override_config(resource_name: str, config_name: str) -> None:
 def delete_override_config(resource_name: str) -> None:
     """Removes an override for a resource"""
     global override_resource_config  # pylint: disable=global-statement, invalid-name
-    del override_resource_config[resource_name]
+    if resource_name in override_resource_config:
+        del override_resource_config[resource_name]
+    else:
+        raise BadRequest(f"There is no override defined for {resource_name}")
 
 
 def delete_all_overrides() -> None:
