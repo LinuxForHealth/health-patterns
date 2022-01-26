@@ -27,10 +27,10 @@ jobs:
       - name: Get changed charts (ct list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed --chart-dirs clinical-ingestion/helm-charts --target-branch main)
+          changed=$(ct list-changed --chart-dirs docs/charts --chart-dirs helm-charts/health-patterns --target-branch main)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
           fi
 
       - name: Lint charts (ct lint)
-        run: ct lint --chart-dirs clinical-ingestion/helm-charts --target-branch main --validate-maintainers=false --debug
+        run: ct lint --chart-dirs docs/charts --chart-dirs helm-charts/health-patterns --target-branch main --validate-maintainers=false --debug
