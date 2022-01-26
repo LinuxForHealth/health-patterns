@@ -71,7 +71,7 @@ oidc:
   client:
     id: &oidc_client_id replace-me
     secret: &oidc_client_secret replace-me
-
+#nifikop is disabled by default
 nifikop:
   disabled: &nifikopDisabled true
   enabled: &nifikopEnabled false
