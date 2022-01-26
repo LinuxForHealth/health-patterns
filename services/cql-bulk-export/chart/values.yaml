@@ -27,6 +27,7 @@ cos:
   apikey:
   instancecrn:
 
+#cos bucket name
 bucketname:
 resourcelist: ""
 
