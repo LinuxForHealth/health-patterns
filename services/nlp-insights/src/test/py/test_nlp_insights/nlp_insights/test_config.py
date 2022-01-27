@@ -162,7 +162,7 @@ class TestConfig(UnitTestUsingExternalResource):
 
             # delete and verify
             rsp = service.delete("/config/resource/AllergyIntolerance")
-            self.assertEqual(200, rsp.status_code)
+            self.assertEqual(204, rsp.status_code)
 
             rsp = service.get("/config/resource")
             self.assertEqual(200, rsp.status_code)
@@ -193,7 +193,7 @@ class TestConfig(UnitTestUsingExternalResource):
 
             # delete and verify
             rsp = service.delete("/config/resource")
-            self.assertEqual(200, rsp.status_code)
+            self.assertEqual(204, rsp.status_code)
 
             rsp = service.get("/config/resource")
             self.assertEqual(200, rsp.status_code)
@@ -223,10 +223,10 @@ class TestConfig(UnitTestUsingExternalResource):
             self.assertTrue(cfg_acd in services)
 
             rsp = service.delete(f"/config/{cfg_qu}")
-            self.assertEqual(200, rsp.status_code)
+            self.assertEqual(204, rsp.status_code)
 
             rsp = service.delete(f"/config/{cfg_acd}")
-            self.assertEqual(200, rsp.status_code)
+            self.assertEqual(204, rsp.status_code)
 
             rsp = service.get("/all_configs")
             services = set(rsp.json["all_configs"])
@@ -256,4 +256,4 @@ class TestConfig(UnitTestUsingExternalResource):
             self.assertTrue(rsp.status_code == 400)
 
             rsp = service.delete(f"/config/{cfg_qu}")
-            self.assertEqual(200, rsp.status_code)
+            self.assertEqual(204, rsp.status_code)

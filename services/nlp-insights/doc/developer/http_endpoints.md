@@ -37,8 +37,45 @@ The app currently supports running two different NLP engine types:
 * [IBM's Annotator for Clinical Data (ACD)](https://www.ibm.com/cloud/watson-annotator-for-clinical-data) and 
 * [open-source QuickUMLS](https://github.com/Georgetown-IR-Lab/QuickUMLS)
 
-It is possible to configure as many different instances of these two engines as needed with different configuration details.  Configuration jsons require a `name`, an `nlpServiceType` (either `acd` or `quickumls`), and config details specific to that type.
-For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, and a `flow`.
+It is possible to configure as many different instances of these two engines as needed with different configuration details.
+
+### Configuration Definition
+The configuration definition jsons that are used by the APIs require a `name`, an `nlpServiceType` (either `acd` or `quickumls`), and config details specific to that type.
+
+#### QuickUmls
+For QuickUmls, an `endpoint` is required.
+
+Sample configuration json:
+
+```json
+{
+  "name": "quickconfig1",
+  "nlpServiceType": "quickumls",
+  "config": {
+    "endpoint": "https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match"
+  }
+}
+```
+
+#### ACD
+For ACD, an `endpoint`, an `apikey`, and a `flow` are required. The nlp-insights service is desgined to work with the
+flow `wh_acd.ibm_clinical_insights_v1.0_standard_flow`, other flows may require code modifications.
+
+Sample Configuration json:
+
+```json
+{
+  "name": "acdconfig1",
+  "nlpServiceType": "acd",
+  "config": {
+    "apikey": "***api key***",
+    "endpoint": "https://<endpoint-url>/wh-acd/api",
+    "flow": "wh_acd.ibm_clinical_insights_v1.0_standard_flow"
+  }
+}
+```
+### Configuration endpoints
+These APIs are used for configuring the NLP engine that will be used to discover insights. Successful requests will return a 2xx status code. Requests using the GET method will also respond with a json object in the response body.
 
 <table cellspacing=0 cellpadding=0 border=0>
 <thead>
@@ -62,31 +99,48 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 
 <tr><td> Add Named Config </td><td> PUT/POST <BR/><I><code>/config/definition</code></I></td><td>json config see:
 
-* [Configure ACD](../examples/acd/configure_acd.md)
-* [Configure QuickUMLS](../example/quickumls/configure_quickumls.md)
+* [Configuration Definition](#configuration-definition)
 
-</td><td></td></tr>
+</td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
 
-<tr><td> Delete Config </td><td> DELETE<BR/><I><code>/config/{configName}</code></I></td> <td></td><td></td></tr>
+<tr><td> Delete Config </td><td> DELETE<BR/><I><code>/config/{configName}</code></I></td> <td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
 
-<tr><td> Get Config Details </td><td> GET <BR/><I><Code>/config/{configName}</CODE></I></td><td></td><td> Example Response:
+<tr><td> Get Config Details </td><td> GET <BR/><I><Code>/config/{configName}</CODE></I></td><td></td><td> Configuration json (sensitive data will be masked):
+
+QuickUmls Example:
 
 ```json
 {
   "name": "quickconfig1",
   "nlpServiceType": "quickumls",
   "config": {
-    "endpoint": "http://***"
+    "endpoint": "http://endpoint/match"
   }
 }
 ```
+
+ACD Example:
+
+```json
+{
+  "name": "acdconfig1",
+  "nlpServiceType": "acd",
+  "config": {
+    "apikey": "********************************************",
+    "endpoint": "https://endpoint/api",
+    "flow": "wh_acd.ibm_clinical_insights_v1.0_standard_flow"
+  }
+}
+
+```
+
 </td></tr>
 
 </tbody>
 <tbody>
 <tr><th colspan=4 align="left"> Default NLP</th></tr>
 
-<tr><td> Make Config default </td><td> POST/PUT <BR/><I><Code>/config/setDefault?name={configName}</CODE></I></td><td></td><td>  </td></tr>
+<tr><td> Make Config default </td><td> POST/PUT <BR/><I><Code>/config/setDefault?name={configName}</CODE></I></td><td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
 
 <tr><td> Get Current Default Config </td><td> GET <BR/><I><Code>/config</Code></I></td><td></td><td> Current default configName:
 
@@ -97,7 +151,7 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 ```
 </td></tr>
 
-<tr><td> Clear default config </td><td> POST/PUT <BR/><I><CODE>/config/clearDefault</CODE></I></td><td> </td><td> </td></tr>
+<tr><td> Clear default config </td><td> POST/PUT <BR/><I><CODE>/config/clearDefault</CODE></I></td><td> </td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
 
 
 </tbody><tbody>
@@ -138,9 +192,9 @@ If no override is defined:
 }
 ```
 </td></tr>
-<tr><td>Add resource override</td><td>POST/PUT<br/><I><CODE>/config/resource/{resourcetype}/{configName}</CODE></I></td><td></td><td>  </td></tr>
-<tr><td>Delete a resource override</td><td>DELETE<BR/><I><CODE>/config/resource/{resourcetype}</CODE></I></td><td></td><td> </td></tr>
-<tr><td>Delete all resource overrides</td><td>DELETE<br/><I><CODE>/config/resource</CODE></I></td><td></td><td> </td></tr>
+<tr><td>Add resource override</td><td>POST/PUT<br/><I><CODE>/config/resource/{resourcetype}/{configName}</CODE></I></td><td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
+<tr><td>Delete a resource override</td><td>DELETE<BR/><I><CODE>/config/resource/{resourcetype}</CODE></I></td><td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
+<tr><td>Delete all resource overrides</td><td>DELETE<br/><I><CODE>/config/resource</CODE></I></td><td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
 </tbody>
 </table> 
 

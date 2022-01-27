@@ -18,8 +18,7 @@ Define HTTP Error Classes
 from json import JSONDecodeError
 import json
 import logging
-from typing import Optional
-
+from typing import Optional, Any
 from flask import Response
 from werkzeug.exceptions import HTTPException
 
@@ -27,29 +26,26 @@ from werkzeug.exceptions import HTTPException
 logger = logging.getLogger(__name__)
 
 
-def build_message(message: str, json_details: Optional[str] = None) -> str:
-    """Builds a message json structure for a UserError
+def _safe_loads(json_details: str) -> Any:
+    """Loads a json string into an object
+
+       If the json is not valid, error is logged and {} is returned
 
     Args:
-    message - describes the error in human readable format
-    json_details - (optional) if provided, is a serialized json that has
-                   additional information about the error.
+    json_details - a serialized json
+
+    Returns Python object for the json
     """
-    msg = {"message": message}
 
-    if json_details:
-        try:
-            msg["details"] = json.loads(json_details)
-        except JSONDecodeError:
-            logger.exception(
-                "Could not build message for %s / %s", message, json_details
-            )
-
-    return json.dumps(msg)
+    try:
+        return json.loads(json_details)
+    except JSONDecodeError as err:
+        logger.exception("Could not build json for %s %s", json_details, str(err))
+        return {}
 
 
 class UserError(HTTPException):
-    """Behaves like a BadRequest, except the response is converted to a json string"""
+    """Behaves like a BadRequest, with json mimetype and potential for details"""
 
     def __init__(
         self,
@@ -65,10 +61,12 @@ class UserError(HTTPException):
         json_details - (optional) if provided, is a serialized json that has
                        additional information about the error.
         """
+        rmessage = {"message": message}
+        if json_details:
+            rmessage["details"] = _safe_loads(json_details)
+
         super().__init__(
             response=Response(
-                build_message(message, json_details),
-                status=400,
-                mimetype="application/json",
+                json.dumps(rmessage), status=400, mimetype="application/json"
             )
         )

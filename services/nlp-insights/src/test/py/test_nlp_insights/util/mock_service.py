@@ -46,7 +46,7 @@ def configure_acd(service: FlaskClient, is_default: bool = True) -> str:
         },
     )
 
-    if rsp.status_code != 200:
+    if rsp.status_code not in (200, 204):
         raise RuntimeError(
             f"Failed to register config code = {rsp.status_code} {rsp.data}"
         )
@@ -69,7 +69,7 @@ def configure_quick_umls(service: FlaskClient, is_default: bool = True) -> str:
         },
     )
 
-    if rsp.status_code != 200:
+    if rsp.status_code not in (200, 204):
         raise RuntimeError(
             f"Failed to register config code = {rsp.status_code} {rsp.data}"
         )
@@ -83,7 +83,7 @@ def configure_quick_umls(service: FlaskClient, is_default: bool = True) -> str:
 def set_default_nlp(service: FlaskClient, config_name: str) -> None:
     """Sets the default config"""
     rsp = service.post(f"/config/setDefault?name={config_name}")
-    if rsp.status_code != 200:
+    if rsp.status_code not in (200, 204):
         raise RuntimeError(
             f"Failed to set default config code = {rsp.status_code} {rsp.data}"
         )
@@ -94,7 +94,7 @@ def configure_resource_nlp_override(
 ) -> None:
     """Uses specfied NLP for the specified resource types"""
     rsp = service.post(f"/config/resource/{resource_type.__name__}/{config_name}")
-    if rsp.status_code != 200:
+    if rsp.status_code not in (200, 204):
         raise RuntimeError(
             f"Failed to set default config code = {rsp.status_code} {rsp.data}"
         )

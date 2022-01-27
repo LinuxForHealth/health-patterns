@@ -75,7 +75,7 @@ def persist_config() -> Response:
     except json.JSONDecodeError as jderr:
         raise UserError(message=f"json was not valid json. {str(jderr)}") from jderr
 
-    return Response(status=200)
+    return Response(status=204)
 
 
 @app.route("/config/<config_name>", methods=["DELETE"])
@@ -83,7 +83,7 @@ def delete_config(config_name: str) -> Response:
     """Delete a config by name"""
     config.delete_config(config_name, CONFIG_DIR)
     logger.info("Config successfully deleted: %s", config_name)
-    return Response(status=200)
+    return Response(status=204)
 
 
 @app.route("/all_configs", methods=["GET"])
@@ -109,7 +109,7 @@ def set_default_config() -> Response:
 
     if flask.request.args and (config_name := flask.request.args.get("name")):
         config.set_default_nlp_service(config_name)
-        return Response(status=200)
+        return Response(status=204)
 
     raise UserError(
         message="Did not provide query parameter 'name' to set default config"
@@ -121,7 +121,7 @@ def clear_default_config() -> Response:
     """Clear the default nlp instance"""
 
     config.clear_default_nlp_service()
-    return Response(status=200)
+    return Response(status=204)
 
 
 @app.route("/config/resource", methods=["GET"])
@@ -142,25 +142,23 @@ def get_current_override_config(resource_name: str) -> Response:
 def setup_override_config(resource_name: str, config_name: str) -> Response:
     """Create a new override for a given resource"""
     config.set_override_config(resource_name, config_name)
-    return flask.jsonify(config.get_overrides())
+    return Response(status=204)
 
 
 @app.route("/config/resource/<resource_name>", methods=["DELETE"])
 def delete_resource(resource_name: str) -> Response:
     """Delete a resource override by name"""
     config.delete_override_config(resource_name)
-
     logger.info("Override successfully deleted: %s", resource_name)
-    return Response(status=200)
+    return Response(status=204)
 
 
 @app.route("/config/resource", methods=["DELETE"])
 def delete_resources() -> Response:
     """Delete all resource overrides"""
     config.delete_all_overrides()
-
     logger.info("Overrides successfully deleted")
-    return Response(status=200)
+    return Response(status=204)
 
 
 @app.route("/discoverInsights", methods=["POST"])
