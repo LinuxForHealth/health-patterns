@@ -22,12 +22,14 @@ from fhir.resources.bundle import Bundle
 from fhir.resources.diagnosticreport import DiagnosticReport
 from fhir.resources.documentreference import DocumentReference
 from fhir.resources.resource import Resource
-from flask import Flask, request, Response
-from werkzeug.exceptions import BadRequest, InternalServerError
+from flask import Flask, Response
+import flask
+from werkzeug.exceptions import InternalServerError
 
 from nlp_insights.app_util import config
 from nlp_insights.app_util import discover
 from nlp_insights.app_util import mime
+from nlp_insights.app_util.exception import UserError
 from nlp_insights.fhir.create_bundle import create_transaction_bundle
 from nlp_insights.fhir.fhir_parsing_utils import parse_fhir_resource_from_payload
 from nlp_insights.fhir.reference import ResourceReference
@@ -53,11 +55,11 @@ def get_config(config_name: str) -> Response:
         if c_dict["nlpServiceType"] == "acd":
             c_dict["config"]["apikey"] = "*" * len(c_dict["config"]["apikey"])
             json_string = json.dumps(c_dict)
-    except FileNotFoundError:
+    except FileNotFoundError as fnfe:
         logger.error("Config with the name %s doesn't exist.", config_name)
-        return Response(
-            "Config with the name: " + config_name + " doesn't exist.", status=400
-        )
+        raise UserError(
+            "Config with the name: " + config_name + " doesn't exist."
+        ) from fnfe
     logger.info("Config found")
     return Response(json_string, status=200, mimetype="application/json")
 
@@ -66,16 +68,14 @@ def get_config(config_name: str) -> Response:
 def persist_config() -> Response:
     """Create a new named config"""
 
-    request_str = request.data.decode("utf-8")
+    request_str = flask.request.data.decode("utf-8")
     try:
         config_dict = json.loads(request_str)
         config.persist_config_helper(config_dict, CONFIG_DIR)
     except json.JSONDecodeError as jderr:
-        raise BadRequest(
-            description=f"json was not valid json: {str(jderr)}"
-        ) from jderr
+        raise UserError(message=f"json was not valid json. {str(jderr)}") from jderr
 
-    return Response(status=200)
+    return Response(status=204)
 
 
 @app.route("/config/<config_name>", methods=["DELETE"])
@@ -83,17 +83,13 @@ def delete_config(config_name: str) -> Response:
     """Delete a config by name"""
     config.delete_config(config_name, CONFIG_DIR)
     logger.info("Config successfully deleted: %s", config_name)
-    return Response("Config successfully deleted: " + config_name, status=200)
+    return Response(status=204)
 
 
 @app.route("/all_configs", methods=["GET"])
 def get_all_configs() -> Response:
     """Get and return all configs by name"""
-    return Response(
-        json.dumps(config.get_config_names()),
-        status=200,
-        mimetype="application/json",
-    )
+    return flask.jsonify(config.get_config_names())
 
 
 @app.route("/config", methods=["GET"])
@@ -102,32 +98,21 @@ def get_current_config() -> Response:
 
     default_nlp_service = config.get_default_nlp_service()
     if not default_nlp_service:
-        raise BadRequest(description="No default nlp service is currently set")
+        raise UserError(message="No default nlp service is currently set")
 
-    return Response(default_nlp_service.config_name, status=200, mimetype="text/plain")
+    return flask.jsonify(config=default_nlp_service.config_name)
 
 
 @app.route("/config/setDefault", methods=["POST", "PUT"])
 def set_default_config() -> Response:
     """Set the default nlp instance"""
 
-    if request.args and request.args.get("name"):
-        config_name = request.args.get("name")
+    if flask.request.args and (config_name := flask.request.args.get("name")):
+        config.set_default_nlp_service(config_name)
+        return Response(status=204)
 
-        if not config_name:
-            raise BadRequest(description=f"{config_name} was not supplied")
-
-        if not config.set_default_nlp_service(config_name):
-            raise BadRequest(description=f"{config_name} is not a config")
-
-        return Response(
-            "Default config set to: " + config_name,
-            status=200,
-            mimetype="text/plain",
-        )
-
-    raise BadRequest(
-        description="Did not provide query parameter 'name' to set default config"
+    raise UserError(
+        message="Did not provide query parameter 'name' to set default config"
     )
 
 
@@ -136,33 +121,20 @@ def clear_default_config() -> Response:
     """Clear the default nlp instance"""
 
     config.clear_default_nlp_service()
-    return Response(
-        "Default config has been cleared", status=200, mimetype="text/plain"
-    )
+    return Response(status=204)
 
 
 @app.route("/config/resource", methods=["GET"])
 def get_current_override_configs() -> Response:
     """Get and return all override definitions"""
-    return Response(
-        config.get_overrides_as_json_str(),
-        status=200,
-        mimetype="application/json",
-    )
+    return flask.jsonify(config.get_overrides())
 
 
 @app.route("/config/resource/<resource_name>", methods=["GET"])
 def get_current_override_config(resource_name: str) -> Response:
     """Get and return override for this resource"""
-    override_config_name = config.get_override_config_name(resource_name)
-
-    if not override_config_name:
-        return Response("No override for this resource: " + resource_name, status=400)
-
-    return Response(
-        override_config_name,
-        status=200,
-        mimetype="text/plain",
+    return flask.jsonify(
+        {f"{resource_name}": config.get_override_config_name(resource_name)}
     )
 
 
@@ -170,27 +142,23 @@ def get_current_override_config(resource_name: str) -> Response:
 def setup_override_config(resource_name: str, config_name: str) -> Response:
     """Create a new override for a given resource"""
     config.set_override_config(resource_name, config_name)
-    return Response(
-        config.get_overrides_as_json_str(), status=200, mimetype="application/json"
-    )
+    return Response(status=204)
 
 
 @app.route("/config/resource/<resource_name>", methods=["DELETE"])
 def delete_resource(resource_name: str) -> Response:
     """Delete a resource override by name"""
     config.delete_override_config(resource_name)
-
     logger.info("Override successfully deleted: %s", resource_name)
-    return Response("Override successfully deleted: " + resource_name, status=200)
+    return Response(status=204)
 
 
 @app.route("/config/resource", methods=["DELETE"])
 def delete_resources() -> Response:
     """Delete all resource overrides"""
     config.delete_all_overrides()
-
     logger.info("Overrides successfully deleted")
-    return Response("Overrides successfully deleted", status=200)
+    return Response(status=204)
 
 
 @app.route("/discoverInsights", methods=["POST"])
@@ -200,7 +168,7 @@ def discover_insights() -> Response:
     Returns the enhanced resource, or newly derived resources to the user.
     """
 
-    fhir_resource: Resource = parse_fhir_resource_from_payload(request.data)
+    fhir_resource: Resource = parse_fhir_resource_from_payload(flask.request.data)
 
     # Bundle input is the typical case
     if isinstance(fhir_resource, Bundle):
@@ -210,7 +178,7 @@ def discover_insights() -> Response:
                 fhir_resource.json(), content_type=mime.FHIR_JSON, status=200
             )
         logger.info("Bundle type of %s is not supported", fhir_resource.type)
-        return Response(fhir_resource.json, content_type=mime.FHIR_JSON, status=200)
+        return Response(fhir_resource.json(), content_type=mime.FHIR_JSON, status=200)
 
     # Process non-bundle input (i.e a single FHIR resource)
     # This path is legacy, the bundle path is more common, and also has less specific

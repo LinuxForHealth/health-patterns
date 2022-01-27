@@ -43,8 +43,8 @@ ext {
 
 python {
   pip production_pkgs
-
-
+  minPythonVersion = project.minPythonVersion
+  minPipVersion = project.minPipVersion
   envPath = buildVenv
   pythonBinary = 'python3'
 }
@@ -243,6 +243,7 @@ task build(type: PythonTask) {
   inputs.files(project.tasks.copySource.outputs.files)
   inputs.files(project.tasks.setupBuildProperties.outputs.files)
   inputs.files(project.tasks.generateReqs.outputs.files)
+  inputs.property 'minPythonVersion', minPythonVersion
 
   outputs.file("${buildDir}/${pyDistDir}/${project.name.replace("-", "_")}-${version}-py3-none-any.whl")
 

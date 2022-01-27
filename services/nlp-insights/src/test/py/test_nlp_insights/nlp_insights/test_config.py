@@ -96,19 +96,19 @@ class TestConfig(UnitTestUsingExternalResource):
             set_default_nlp(service, cfg_qu)
             rsp = service.get("/config")
             self.assertEqual(200, rsp.status_code)
-            self.assertEqual(rsp.get_data(as_text=True), cfg_qu)
+            self.assertEqual(rsp.get_json()["config"], cfg_qu)
 
             # Make ACD the default
             set_default_nlp(service, cfg_acd)
             rsp = service.get("/config")
             self.assertEqual(200, rsp.status_code)
-            self.assertEqual(rsp.get_data(as_text=True), cfg_acd)
+            self.assertEqual(rsp.get_json()["config"], cfg_acd)
 
             # Override does not change the default
             configure_resource_nlp_override(service, AllergyIntolerance, cfg_qu)
             rsp = service.get("/config")
             self.assertEqual(200, rsp.status_code)
-            self.assertEqual(rsp.get_data(as_text=True), cfg_acd)
+            self.assertEqual(rsp.get_json()["config"], cfg_acd)
 
     def test_when_clear_default_config_then_no_current_config(self):
         with app.app.test_client() as service:
@@ -116,7 +116,7 @@ class TestConfig(UnitTestUsingExternalResource):
 
             rsp = service.get("/config")
             self.assertEqual(200, rsp.status_code)
-            self.assertEqual(rsp.get_data(as_text=True), cfg_acd)
+            self.assertEqual(rsp.get_json()["config"], cfg_acd)
 
             rsp = service.post("/config/clearDefault")
             rsp = service.get("/config")
@@ -144,7 +144,7 @@ class TestConfig(UnitTestUsingExternalResource):
 
             rsp = service.get("/config/resource/AllergyIntolerance")
             self.assertEqual(200, rsp.status_code)
-            self.assertEqual(rsp.get_data(as_text=True), cfg_qu)
+            self.assertEqual(cfg_qu, rsp.json["AllergyIntolerance"])
 
     def test_when_delete_resource_override_then_resource_overrides_correct(self):
         with app.app.test_client() as service:
@@ -162,13 +162,20 @@ class TestConfig(UnitTestUsingExternalResource):
 
             # delete and verify
             rsp = service.delete("/config/resource/AllergyIntolerance")
-            self.assertEqual(200, rsp.status_code)
+            self.assertEqual(204, rsp.status_code)
 
             rsp = service.get("/config/resource")
             self.assertEqual(200, rsp.status_code)
             overrides = rsp.json
             self.assertEqual(overrides["DiagnosticReport"], cfg_qu)
             self.assertTrue("AllergyIntolerance" not in overrides)
+
+    def test_when_delete_non_exist_resource_override_then_400(self):
+        with app.app.test_client() as service:
+            configure_acd(service, is_default=True)
+
+            rsp = service.delete("/config/resource/AllergyIntolerance")
+            self.assertEqual(400, rsp.status_code, rsp.data)
 
     def test_when_delete_all_resource_overrides_then_no_resource_overrides(self):
         with app.app.test_client() as service:
@@ -186,7 +193,7 @@ class TestConfig(UnitTestUsingExternalResource):
 
             # delete and verify
             rsp = service.delete("/config/resource")
-            self.assertEqual(200, rsp.status_code)
+            self.assertEqual(204, rsp.status_code)
 
             rsp = service.get("/config/resource")
             self.assertEqual(200, rsp.status_code)
@@ -200,8 +207,7 @@ class TestConfig(UnitTestUsingExternalResource):
             cfg_acd = configure_acd(service, is_default=False)
 
             rsp = service.get("/all_configs")
-            self.assertTrue(isinstance(rsp.json, list))
-            services = set(rsp.json)
+            services = set(rsp.json["all_configs"])
             self.assertTrue(cfg_qu in services)
             self.assertTrue(cfg_acd in services)
 
@@ -212,17 +218,42 @@ class TestConfig(UnitTestUsingExternalResource):
 
             # verify setup ok
             rsp = service.get("/all_configs")
-            services = set(rsp.json)
+            services = set(rsp.json["all_configs"])
             self.assertTrue(cfg_qu in services)
             self.assertTrue(cfg_acd in services)
 
             rsp = service.delete(f"/config/{cfg_qu}")
-            self.assertEqual(200, rsp.status_code)
+            self.assertEqual(204, rsp.status_code)
 
             rsp = service.delete(f"/config/{cfg_acd}")
-            self.assertEqual(200, rsp.status_code)
+            self.assertEqual(204, rsp.status_code)
 
             rsp = service.get("/all_configs")
-            services = set(rsp.json)
+            services = set(rsp.json["all_configs"])
             self.assertTrue(cfg_qu not in services)
             self.assertTrue(cfg_acd not in services)
+
+    def test_when_delete_default_config_then_fail(self):
+        with app.app.test_client() as service:
+            cfg_qu = configure_quick_umls(service, is_default=False)
+
+            # Make Quick umls default
+            set_default_nlp(service, cfg_qu)
+
+            # verify setup ok
+            rsp = service.get("/all_configs")
+            services = set(rsp.json["all_configs"])
+            self.assertTrue(cfg_qu in services)
+
+            cfg_qu = configure_quick_umls(service, is_default=False)
+
+            rsp = service.delete(f"/config/{cfg_qu}")
+            self.assertEqual(400, rsp.status_code)
+
+            # Test than after clearing the default we can delete
+            rsp = service.post("/config/clearDefault")
+            rsp = service.get("/config")
+            self.assertTrue(rsp.status_code == 400)
+
+            rsp = service.delete(f"/config/{cfg_qu}")
+            self.assertEqual(204, rsp.status_code)
