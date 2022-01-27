@@ -1,0 +1,108 @@
+{
+    "scenarioName": "********ingest_FHIR_NLP_Insights_Override_BLK********",
+    "ignoreStepFailures": false,
+    "steps": [ 
+        {
+            "name": "addllergyToleranceOverride",
+            "url": "${nlp_insights}/config/resource/AllergyIntolerance/acd",
+            "operation": "POST",           
+                "request": { },            
+            "verify": {
+                "status": 200,
+                "rawBody": "$CONTAINS.STRING:'AllergyIntolerance': 'acd'"
+            }
+        },
+        {
+            "name": "ingestPatient",
+            "url":  "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json", 
+                               "AddNLPInsights": "${3}",
+                               "DeidentifyData": "false",
+                               "RunFHIRDataQuality": "false" },
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },    
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                }
+            }
+        },
+        {
+            "name": "getPatientImmunization",
+            "url": "${pri_fhir_server}/Immunization",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200 
+                }
+        },  
+        {
+            "name": "verifyAnalyticType",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getPatientImmunization.response.body}",
+                 "string2": "${4}"
+            },
+            "verify": { "result": "${3}" }
+        },  
+        {
+            "name": "getPatientAllergyIntolerance",
+            "url": "${pri_fhir_server}/AllergyIntolerance",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200 
+                }
+        },  
+        {
+            "name": "verifyAnalyticType",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getPatientAllergyIntolerance.response.body}",
+                 "string2": "ACD Structured"
+            },
+            "verify": { "result": "${3}" }
+        },  
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }          
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/patientbundleNLP.json},Alethea978,Crooks009,true,QuickUMLS Structured",
+            "${JSON.FILE:Patients/patientbundleNLP.json},Alethea978,Crooks009,false,QuickUMLS Structured"        
+         ]
+    }
+}
