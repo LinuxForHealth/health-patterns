@@ -30,16 +30,37 @@ tolerations: []
 
 affinity: {}
 
+##################################################################
+##            Common attributes to change per deploy            ##
+##################################################################
+
+releaseName: &releaseName ingestion
+password: &alveariePassword integrati0n
+
+# Update "alvearie.svc" to "<your namespace>.svc"
+internalHostName: &internalHostName alvearie-nifi-0.alvearie-nifi-headless.alvearie.svc.cluster.local
+
+# Enable to automatically process data using fhir notifications
+fhirNotificationsEnabled: &fhirNotificationsEnabled false
+
 ingress:
   enabled: &ingressEnabled true
   class: &ingressClass public-iks-k8s-nginx
   hostname: &hostname replace-me
 
 ingestion:
-  enabled: &ingestionEnabled true
+  enabled: &ingestionEnabled "true"
 
 enrichment:
-  enabled: &enrichmentEnabled true
+  enabled: &enrichmentEnabled "true"
+
+##################################################################
+##        End of Common attributes to change per deploy         ##
+##################################################################
+
+##################################################################
+##     Common attributes to change per NifiKop-based deploy     ##
+##################################################################
 
 oidc:
   users: &oidc_users
@@ -52,8 +73,12 @@ oidc:
     secret: &oidc_client_secret replace-me
 
 nifikop:
-  disabled: &nifikopDisabled false
-  enabled: &nifikopEnabled true
+  disabled: &nifikopDisabled true
+  enabled: &nifikopEnabled false
+
+##################################################################
+## End of Common attributes to change per NifiKop-based deploy  ##
+##################################################################
 
 ascvd:
   enabled: true
@@ -135,8 +160,8 @@ fhir:
       class: *ingressClass
       hostname: *hostname
 
-  fhirUserPassword: integrati0n
-  fhirAdminPassword: integrati0n
+  fhirUserPassword: *alveariePassword
+  fhirAdminPassword: *alveariePassword
 
   postgresql:
     enabled: false
@@ -163,8 +188,17 @@ fhir:
   exposeHttpEndpoint: true
   exposeHttpPort: 80
 
+  notifications:
+    kafka:
+      enabled: *fhirNotificationsEnabled
+      topicName: "fhir.notification"
+      bootstrapServers: "enrich-kafka:9092"
+      password: *alveariePassword
+      securityProtocol: "PLAINTEXT"
+
+
 fhir-trigger:
-  enabled: false
+  enabled: *fhirNotificationsEnabled
 
 fhir-deid:
   name: fhir-deid
@@ -205,8 +239,8 @@ fhir-deid:
       class: *ingressClass
       hostname: *hostname
 
-  fhirUserPassword: integrati0n
-  fhirAdminPassword: integrati0n
+  fhirUserPassword: *alveariePassword
+  fhirAdminPassword: *alveariePassword
 
   postgresql:
     enabled: false
@@ -253,24 +287,20 @@ nifi-registry:
 # ------------------------------------------------------------------------------
 fhir-data-quality:
   enabled: false
+  requestTimeout: 45
 
 # ------------------------------------------------------------------------------
 # Cert Secret Generator Configuration
 # ------------------------------------------------------------------------------
 cert-secret-generator:
   enabled: true
-  password: integrati0n
+  password: *alveariePassword
 
 # ------------------------------------------------------------------------------
 # Zookeeper Configuration
 # ------------------------------------------------------------------------------
 zookeeper:
-  enabled: *nifikopDisabled
-  # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
-  fullnameOverride: alvearie-zookeeper
-
-zookeeper2:
-  enabled: *nifikopEnabled
+  enabled: true
   # The zookeeper fullname is overridden so that the same instance deployed here by default can be referred to by both NiFi and Kafka
   fullnameOverride: alvearie-zookeeper
 
@@ -283,7 +313,7 @@ nifi2: # NifiKop based Nifi
   fullnameOverride: alvearie-nifi
   image:
     repository: apache/nifi
-    tag: 1.12.1
+    tag: 1.13.2
   user: *oidc_users
   oidc:
     discovery:
@@ -318,15 +348,22 @@ nifi2: # NifiKop based Nifi
 # Nifi Configuration
 # ------------------------------------------------------------------------------
 nifi:
+  image:
+    tag: 1.15.2
   fullnameOverride: alvearie-nifi
   enabled: *nifikopDisabled
+  auth:
+    singleUser:
+      username: &nifiUser alvearie
+      password: &nifiPassword wats0nHealth # Must to have at least 12 characters
   ingress:
     enabled: false
     class: *ingressClass
     hostname: *hostname
+  persistence:
+    enabled: true
   service:
-    type: ClusterIP
-    port: 8080
+    port: 8443
     processors:
       enabled: true
       ports:
@@ -334,8 +371,6 @@ nifi:
         - name: nifi-metrics
           port: 12667
           targetPort: 12667
-  url: ""
-  port: 80
   zookeeper:
     ## Values: https://github.com/bitnami/charts/blob/master/bitnami/zookeeper/values.yaml
     enabled: false
@@ -344,25 +379,53 @@ nifi:
     ## We use a different NiFi Registry than the default one, that loads the flow from the Alvearie Github NiFi flow repository
     enabled: false
     url: alvearie-nifi-registry
-  initContainers:
-    # This init container will install the custom NiFi Processors (packed in the proper NAR format).
-    # The NARs will be copied to a shared volume, and the customLibPath will be set to the location
-    # of that shared volume in the main NiFi server container and set in nifi.properties
-    alvearie-nars-init:
-      image: alvearie/nars:0.0.4
+  extraContainers:
+    - name: post-start-setup
+      image: alvearie/nifi-setup:0.1.7
       imagePullPolicy: Always
-      command: ["sh", "-c", "cp *.nar /nars"]
-      volumeMounts:
-      - name: alvearie-nars
-        mountPath: /nars
-  extraVolumeMounts:
-    - name: alvearie-nars
-      mountPath: /opt/nifi/nifi-current/custom-nars
-  extraVolumes:
-    - name: alvearie-nars
-      emptyDir: {}
+      env:
+      - name: "RELEASE_NAME"
+        value: *releaseName
+      - name: "NIFI_REGISTRY"
+        value: "default"
+      - name: "ADD_CLINICAL_INGESTION"
+        value: *ingestionEnabled
+      - name: "ADD_CLINICAL_ENRICHMENT"
+        value: *enrichmentEnabled
+      - name: "FHIR_PW"
+        value: *alveariePassword
+      - name: "KAFKA_PW"
+        value: *alveariePassword
+      - name: "ADD_NLP_INSIGHTS"
+        value: "True"
+      - name: "RUN_ASCVD"
+        value: "True"
+      - name: "RESOLVE_TERMINOLOGY"
+        value: "True"
+      - name: "DEIDENTIFY_DATA"
+        value: "True"
+      - name: "DEID_CONFIG_NAME"
+        value: "default"
+      - name: "DEID_PUSH_TO_FHIR"
+        value: "True"
+      - name: "RUN_FHIR_DATA_QUALITY"
+        value: "False"
+      - name: "INTERNAL_HOSTNAME"
+        value: *internalHostName
+      - name: "HTTPS_PORT"
+        value: "8443"
+      - name: "NIFI_USERNAME"
+        value: *nifiUser
+      - name: "NIFI_PASSWORD"
+        value: *nifiPassword
   properties:
-    customLibPath: ./custom-nars
+    isSecure: true
+    isNode: true
+    sensitiveKey: wats0nHealth
+    safetyValve:
+      #Enable to allow Nifi connection w/o requiring login
+      nifi.security.allow.anonymous.authentication: false
+      nifi.web.proxy.host: *hostname
   logresources:
     requests:
       memory: 30Mi
@@ -407,7 +470,7 @@ kafka:
 
     serviceMonitor:
       enabled: false
-  password: integrati0n
+  password: *alveariePassword
 
 # ------------------------------------------------------------------------------
 # De-Identification Service
@@ -456,6 +519,8 @@ expose-kafka:
   inittopics: "ingest.clinical.in,patients.updated.out,patients.enriched.out,failure.topic.in,ingest.topic.in,ingest.topic.out,ingest.topic.failure,enrich.topic.in,enrich.topic.out,enrich.topic.failure"
   inittopicnumpartitions: 1
   inittopicreplication: 1
+  requestTimeout: 45
+
 
 # ------------------------------------------------------------------------------
 # CQL-Bulk-Export Service

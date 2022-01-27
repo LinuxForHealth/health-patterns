@@ -9,7 +9,8 @@
                 "request": {
                 "headers" : { "Content-Type": "application/json",
                 "DeidentifyData": "false",
-                "RunASCVD" : "true"},
+                "RunASCVD" : "true",
+                "RunFHIRDataQuality": "false"},
                     "body":  "${0}" },            
             "verify": {
                 "status": 200

@@ -1,40 +1,61 @@
 #!/bin/bash
 
-scripts/wait-for-nifi.sh $HOSTNAME 8080
 
-scripts/initialize-reporting-task.sh $HOSTNAME 8080
+echo "waiting for NiFi API to start nifi $HTTPS_PORT"
+until nc -vzw 1 $INTERNAL_HOSTNAME $HTTPS_PORT; do
+  echo "waiting for nifi api..."
+  sleep 5
+done
 
-if [ "$ADD_CLINICAL_INGESTION" = true ] ; then
-python /scripts/loadHealthPatternsFlows.py \
-  --baseUrl=http://$HOSTNAME:8080/ \
-  --reg=$NIFI_REGISTRY \
-  --bucket=Health_Patterns \
-  --flowName="Clinical Ingestion" \
-  --version=34
+BEARER_TOKEN=$(curl -k 'https://'$INTERNAL_HOSTNAME':'$HTTPS_PORT'/nifi-api/access/token' -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' --data 'username='$NIFI_USERNAME'&password='$NIFI_PASSWORD --compressed)
+
+scripts/wait-for-nifi.sh $INTERNAL_HOSTNAME $HTTPS_PORT $BEARER_TOKEN
+
+deployCheck=$(python /scripts/deployCheck.py \
+  --baseUrl=https://$INTERNAL_HOSTNAME:$HTTPS_PORT/ \
+  --bearerToken=$BEARER_TOKEN)
+
+if [[ "$deployCheck" == "deployed" ]]; then
+  echo "Already Deployed, skipping..."
+else
+  echo "Initializing Nifi Canvas..."
+
+  scripts/initialize-reporting-task.sh $INTERNAL_HOSTNAME $HTTPS_PORT $BEARER_TOKEN
+
+  if [ "$ADD_CLINICAL_INGESTION" = true ] ; then
+  python /scripts/loadHealthPatternsFlows.py \
+    --baseUrl=https://$INTERNAL_HOSTNAME:$HTTPS_PORT/ \
+    --bearerToken=$BEARER_TOKEN \
+    --reg=$NIFI_REGISTRY \
+    --bucket=Health_Patterns \
+    --flowName="Clinical Ingestion"
+  fi
+
+  if [ "$ADD_CLINICAL_ENRICHMENT" = true ] ; then
+  python /scripts/loadHealthPatternsFlows.py \
+    --baseUrl=https://$INTERNAL_HOSTNAME:$HTTPS_PORT/ \
+    --bearerToken=$BEARER_TOKEN \
+    --reg=$NIFI_REGISTRY \
+    --bucket=Health_Patterns \
+    --flowName="FHIR Bundle Enrichment" \
+    --x=0.0 \
+    --y=200.0
+  fi
+
+  python /scripts/startHealthPatternsFlow.py \
+    --baseUrl=https://$INTERNAL_HOSTNAME:$HTTPS_PORT/ \
+    --bearerToken=$BEARER_TOKEN \
+    --fhir_pw=$FHIR_PW \
+    --kafka_pw=$KAFKA_PW \
+    --addNLPInsights=$ADD_NLP_INSIGHTS \
+    --runASCVD=$RUN_ASCVD \
+    --deidentifyData=$DEIDENTIFY_DATA \
+    --resolveTerminology=$RESOLVE_TERMINOLOGY \
+    --releaseName=$RELEASE_NAME \
+    --deidConfigName=$DEID_CONFIG_NAME \
+    --deidPushToFhir=$DEID_PUSH_TO_FHIR \
+    --runFHIRDataQuality=$RUN_FHIR_DATA_QUALITY
 fi
-
-if [ "$ADD_CLINICAL_ENRICHMENT" = true ] ; then
-python /scripts/loadHealthPatternsFlows.py \
-  --baseUrl=http://$HOSTNAME:8080/ \
-  --reg=$NIFI_REGISTRY \
-  --bucket=Health_Patterns \
-  --flowName="FHIR Bundle Enrichment" \
-  --version=11 \
-  --x=0.0 \
-  --y=200.0
-fi
-
-python /scripts/startHealthPatternsFlow.py \
-  --baseUrl=http://$HOSTNAME:8080/ \
-  --fhir_pw=$FHIR_PW \
-  --kafka_pw=$KAFKA_PW \
-  --addNLPInsights=$ADD_NLP_INSIGHTS \
-  --runASCVD=$RUN_ASCVD \
-  --deidentifyData=$DEIDENTIFY_DATA \
-  --resolveTerminology=$RESOLVE_TERMINOLOGY \
-  --releaseName=$RELEASE_NAME \
-  --deidConfigName=$DEID_CONFIG_NAME \
-  --deidPushToFhir=$DEID_PUSH_TO_FHIR
 
 if [ $? -eq 0 ] ; then
     echo "NiFi canvas setup was successful!"

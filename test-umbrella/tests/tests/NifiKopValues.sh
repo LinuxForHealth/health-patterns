@@ -1,26 +1,41 @@
 #!/bin/bash
 
-# Prepare the values.yaml file for a deployment using NifiKop
-
 # Get to the deployment directory
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
-# oidic users
-sed -i -e "s/name: \"alvearie\"/name: \"alvearie\"\n    - identity: \"roger.guderian@ibm.com\"\n      name: \"roger.guderian\"\n    - identity: \"atclark@us.ibm.com\"\n      name: \"adam.t.clark\"/g" values.yaml
+if [ $DEPLOY_NIFIKOP = "true" ]
+then
 
-# oidc discovery URL
-sed -i -e "s/\&oidc_discovery_url \"replace-me\"/\&oidc_discovery_url \"https:\/\/us-east.appid.cloud.ibm.com\/oauth\/v4\/82343deb-31d3-4a15-9c30-469d12651b89\/.well-known\/openid-configuration\"/g" values.yaml
+   # Prepare the values.yaml file for a deployment using NifiKop
 
-#oidc client and secret
-sed -i -e "s/\&oidc_client_id replace-me/\&oidc_client_id 38c44769-91c3-4650-a8d5-b24f8992a821/g" values.yaml
-sed -i -e "s/\&oidc_client_secret replace-me/\&oidc_client_secret MmJjODZiNDUtNzdmYS00ZmJlLWFhNDYtZGFmMWFhMmI1MTI2/g" values.yaml
+   # oidic users
+   sed -i -e "s/name: \"alvearie\"/name: \"alvearie\"\n    - identity: \"roger.guderian@ibm.com\"\n      name: \"roger.guderian\"\n    - identity: \"atclark@us.ibm.com\"\n      name: \"adam.t.clark\"/g" values.yaml
 
-# Enable NifiKop Deployment
-sed -i -e "s/\&nifikopDisabled true/\&nifikopDisabled false/g" values.yaml
-sed -i -e "s/\&nifikopEnabled false/\&nifikopEnabled true/g" values.yaml
+   # oidc discovery URL
+   sed -i -e "s/\&oidc_discovery_url \"replace-me\"/\&oidc_discovery_url \"https:\/\/us-east.appid.cloud.ibm.com\/oauth\/v4\/82343deb-31d3-4a15-9c30-469d12651b89\/.well-known\/openid-configuration\"/g" values.yaml
 
-# Deploy NifiKop
-echo "Deploy NifiKop"
-helm3 repo add orange-incubator https://orange-kubernetes-charts-incubator.storage.googleapis.com/
-helm3 repo update
-helm3 install nifikop orange-incubator/nifikop --namespace=$TEST_NAMESPACE --version 0.7.1 --set image.tag=v0.7.1-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"$TEST_NAMESPACE"}  --wait --timeout $HELM_TIMEOUT
+   #oidc client and secret
+   sed -i -e "s/\&oidc_client_id replace-me/\&oidc_client_id 38c44769-91c3-4650-a8d5-b24f8992a821/g" values.yaml
+   sed -i -e "s/\&oidc_client_secret replace-me/\&oidc_client_secret MmJjODZiNDUtNzdmYS00ZmJlLWFhNDYtZGFmMWFhMmI1MTI2/g" values.yaml
+
+   # Enable NifiKop Deployment
+   sed -i -e "s/\&nifikopDisabled true/\&nifikopDisabled false/g" values.yaml
+   sed -i -e "s/\&nifikopEnabled false/\&nifikopEnabled true/g" values.yaml
+
+   # Deploy NifiKop
+   echo "Deploy NifiKop"
+   helm3 repo add orange-incubator https://orange-kubernetes-charts-incubator.storage.googleapis.com/
+   helm3 repo update
+   helm3 install nifikop orange-incubator/nifikop --namespace=$TEST_NAMESPACE --version 0.7.1 --set image.tag=v0.7.1-release --set resources.requests.memory=256Mi --set resources.requests.cpu=250m --set resources.limits.memory=256Mi --set resources.limits.cpu=250m --set namespaces={"$TEST_NAMESPACE"}  --wait --timeout $HELM_TIMEOUT
+else
+   # Prepare values.yaml to deploy w/o nifikop
+   # Disable NifiKop Deployment
+   echo "****************************************************" 
+   echo "* Setup for deployment w/o nifikop                 *"
+   echo "****************************************************"
+   sed -i -e "s/\&nifikopDisabled false/\&nifikopDisabled true/g" values.yaml
+   sed -i -e "s/\&nifikopEnabled true/\&nifikopEnabled false/g" values.yaml
+fi 
+# Verify the nifikop enable/disable values 
+cat values.yaml | grep nifikopDisabled
+cat values.yaml | grep nifikopEnabled

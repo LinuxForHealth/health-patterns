@@ -8,7 +8,8 @@
             "operation": "POST",           
                 "request": {
                 "headers" : { "Content-Type": "application/json", 
-                               "DeidentifyData": "true"  },
+                               "DeidentifyData": "true",
+                               "RunFHIRDataQuality": "false"  },
                 "body":  "${0}" },            
             "verify": {
                 "status": 200

@@ -6,10 +6,14 @@
 import requests
 import sys
 import time
-
 import argparse
+import urllib3
 
-debug = False  # turn off debug by default
+urllib3.disable_warnings()
+
+debug = False # turn off debug by default
+
+headers = {}
 
 def main():
     regName = "default"  #default registry to use
@@ -18,9 +22,11 @@ def main():
     flowName = "Clinical Ingestion"  #assume that we want clinical ingestion flow for now
     x_pos = 0 # Specify an x position to place this component
     y_pos = 0 # Specify an y position to place this component
+    bearerToken = None
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--baseUrl", help="Base url for nifi instance")
+    parser.add_argument("--bearerToken", help="Bearer Token to make API calls")
     parser.add_argument("--reg", help="Registry")
     parser.add_argument("--bucket", help="Bucket")
     parser.add_argument("--flowName", help="Flow Name")
@@ -29,6 +35,10 @@ def main():
     parser.add_argument("--y", help="Vertical position to place new component")
 
     args = parser.parse_args()
+
+    baseURL = args.baseUrl
+    if args.bearerToken:
+        bearerToken = args.bearerToken
     if args.reg:
         regName = args.reg
     if args.bucket:
@@ -42,7 +52,14 @@ def main():
     if args.y:
         y_pos = args.y
 
-    baseURL = args.baseUrl
+    #now fix trailing / problem if needed
+    if baseURL[-1] != "/":
+        print("BaseURL requires trailing /, fixing...")
+        baseURL = baseURL + "/"  #add the trailing / if needed
+
+    if bearerToken:
+        global headers
+        headers["Authorization"] = "Bearer " + bearerToken
 
     if debug:
         print([regName, bucketName, version])
@@ -69,7 +86,7 @@ def main():
     theFlow = None
 
     regURL = baseURL + "nifi-api/flow/registries"
-    resp = requests.get(url=regURL)
+    resp = requests.get(url=regURL, headers=headers, verify=False)
     if debug:
         print(dict(resp.json()))
     respDict = dict(resp.json())
@@ -93,7 +110,7 @@ def main():
     #search for bucket
     bucketFound = False
     buckURL = regURL + "/" + regId + "/buckets"
-    resp = requests.get(url=buckURL)
+    resp = requests.get(url=buckURL, headers=headers, verify=False)
     if debug:
         print(dict(resp.json()))
     bucketDict = dict(resp.json())
@@ -114,7 +131,7 @@ def main():
     #search for flow
     flowFound = False
     flowURL = buckURL + "/" + bucketId + "/" + "flows"
-    resp = requests.get(url=flowURL)
+    resp = requests.get(url=flowURL, headers=headers, verify=False)
     if debug:
         print(dict(resp.json()))
     flowDict = dict(resp.json())
@@ -138,7 +155,7 @@ def main():
     #unless version is not None because then version already provided explicitly
     if version == None:
         versionURL = flowURL + "/" + theFlow + "/" + "versions"
-        resp = requests.get(url=versionURL)
+        resp = requests.get(url=versionURL, headers=headers, verify=False)
         if debug:
             print(dict(resp.json()))
         versionDict = dict(resp.json())
@@ -151,10 +168,9 @@ def main():
         if debug:
             print("FOUND Version: ", version)
 
-    #Get root id for canvas process group
-
+    print("Getting root id for canvas process group")
     URL = baseURL + "nifi-api/flow/process-groups/root"
-    resp = requests.get(url=URL)
+    resp = requests.get(url=URL, headers=headers, verify=False)
     if debug:
         print(resp)
         print(resp.content)
@@ -162,18 +178,18 @@ def main():
     if debug:
         print(rootId)
 
-    #Create new process group from repo
-
+    print("Creating new process group from repo")
     createJson = {"revision":{"version":0},"component":{"versionControlInformation":{"registryId":theRegistry,"bucketId":theBucket,"flowId":theFlow,"version":version},"position":{"x":x_pos,"y":y_pos}}}
     createPostEndpoint = "nifi-api/process-groups/" + rootId + "/process-groups"
-    resp = requests.post(url=baseURL + createPostEndpoint, json=createJson)
-    if debug:
-        print("Response from new group...")
-        print(resp.content)
-    newgroupid = (dict(resp.json()))["id"]
-    if debug:
-        print("New process group id...",newgroupid)
-    print("Process group created...")
-
+    resp = requests.post(url=baseURL + createPostEndpoint, headers=headers, json=createJson, verify=False, timeout=30)
+    if resp.status_code >= 200 and resp.status_code <= 299:
+        if debug:
+            print("Response from new group...")
+            print(resp.content)
+            newgroupid = (dict(resp.json()))["id"]
+            print("New process group id...",newgroupid)
+        print("Process group created...")
+    else:
+        print("Response code: "+str(resp.status_code))
 if __name__ == '__main__':
     main()
