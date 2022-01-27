@@ -4,7 +4,7 @@
 The discoverInsights API accepts an input bundle and returns an updated bundle with:
 * Resources that have been enriched with additional codes
 * Resources that have been derived from unstructured text (such as clinical notes) contained within the bundle's resources.
-
+ 
 | Action | Method | Endpoint | Body | Returns on Success |
 |:------:|:------:|:---------|:----:|:-------:|
 | Add insights | `POST` | `/discoverInsights` | FHIR bundle | Enriched FHIR Bundle |
@@ -41,11 +41,13 @@ It is possible to configure as many different instances of these two engines as 
 For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, and a `flow`.
 
 <table>
+<thead>
+<tr align="left"><th> &nbsp; </th><th> Method &<BR/> Endpoint</th><th> Body </th><th> Response Body on Success </th></tr>
+</thead>
+<tbody>
+<tr> <th colspan=4  align="left"> Config Definition</th></tr>
 
-
-<tr> <th> &nbsp; </th><th> Method &<BR/> Endpoint</th><th> Body </th><th> Returns on Success </th></tr>
-<tr> <td> <B>Config Definition</B> </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td></tr>
-<tr><td> Get All Configs </td><td> GET <BR/>/all_configs</td><td>&nbsp;</td><td> Config definition names: 
+<tr><td> Get All Configs </td><td> GET <BR/>/all_configs</td><td></td><td> Config definition names: 
 
 ```json 
 {
@@ -58,7 +60,7 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 
 </td></tr>
 
-<tr><td> Add Named Config </td><td> PUT<BR/>POST <BR/>/config/definition</td><td>json config (contains name). Example:
+<tr><td> Add Named Config </td><td> PUT/POST <BR/>/config/definition</td><td>json config (contains name). Example:
 
 ```json
 {
@@ -70,12 +72,11 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 }
 ```
 
-</td><td> Status 200</td></tr>
+</td><td></td></tr>
 
-<tr><td> Delete Config </td><td> DELETE<BR/>/config/{configName}</td> <td> &nbsp; </td><td> Status 200 </td></tr>
+<tr><td> Delete Config </td><td> DELETE<BR/>/config/{configName}</td> <td></td><td></td></tr>
 
-<tr><td> Get Config Details </td><td> GET <BR/> /config/{configName} </td><td></td>
-<td> Example Response:
+<tr><td> Get Config Details </td><td> GET <BR/> /config/{configName} </td><td></td><td> Example Response:
 
 ```json
 {
@@ -86,11 +87,14 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
   }
 }
 ```
-</td>
-</tr>
-<tr><td>&nbsp; </td><td> &nbsp; </td><td> &nbsp; <td> &nbsp; </td></tr>
-<tr> <td> <B>Default NLP</B> </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td></tr>
-<tr><td> Make Config default </td><td> POST<BR/>PUT <BR/>/config/setDefault?name={configName}</td><td></td><td> Status 200 </td></tr>
+</td></tr>
+
+</tbody>
+<tbody>
+<tr><th colspan=4 align="left"> Default NLP</th></tr>
+
+<tr><td> Make Config default </td><td> POST/PUT <BR/>/config/setDefault?name={configName}</td><td></td><td>  </td></tr>
+
 <tr><td> Get Current Default Config </td><td> GET <BR/> /config </td><td></td><td> Current default configName:
 
 ```json
@@ -98,16 +102,15 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
   "config": "acdconfig1"
 }
 ```
+</td></tr>
+
+<tr><td> Clear default config </td><td> POST/PUT <BR/> /config/clearDefault</td><td> </td><td> </td></tr>
 
 
-<tr><td> Clear default config </td><td> POST<BR/>PUT <BR/> /config/clearDefault</td><td> </td><td> Status 200 </td><tr>
+</tbody><tbody>
+<tr><th colspan=4 align="left"> Override NLP Engine for a resource </th></tr>
 
- </td></tr>
- 
- <tr><td>&nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td></tr>
-<tr> <td> <B>Override NLP Engine for a resource </B> </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td></tr>
-
-<tr><td>  Get all active overrides </td><td> GET <BR/>/config/resource </td><td> </td><td>
+<tr><td>  Get all active overrides </td><td> GET <BR/>/config/resource </td><td></td><td>
 Dictionary of overrides:
 
 ```json
@@ -118,7 +121,7 @@ Dictionary of overrides:
 ```
 </td></tr>
 
-<tr><td>  Get the active override for a resource </td><td> GET <Br/>/config/resource/{resource} </td><td> </td><td>
+<tr><td>Get the active override for a resource </td><td> GET <Br/>/config/resource/{resource} </td><td> </td><td>
 Dictionary of override:
 
 ```json
@@ -136,12 +139,11 @@ If no override is defined:
   "resource": "Condition"
 }
 ```
-
 </td></tr>
-
-<tr><td>Add resource override</td><td>POST<BR/>PUT<br/>/config/resource/{resourcetype}/{configName}</td><td></td><td> Status 200 </td></tr>
-<tr><td>Delete a resource override</td><td>DELETE<BR/>/config/resource/{resourcetype}</td><td></td><td>Status 200 </td></tr>
-<tr><td>Delete all resource overrides</td><td>DELETE<br/>/config/resource</td><td></td><td> Status 200</td></tr>
+<tr><td>Add resource override</td><td>POST/PUT<br/>/config/resource/{resourcetype}/{configName}</td><td></td><td>  </td></tr>
+<tr><td>Delete a resource override</td><td>DELETE<BR/>/config/resource/{resourcetype}</td><td></td><td> </td></tr>
+<tr><td>Delete all resource overrides</td><td>DELETE<br/>/config/resource</td><td></td><td> </td></tr>
+</tbody>
 </table> 
 
 
