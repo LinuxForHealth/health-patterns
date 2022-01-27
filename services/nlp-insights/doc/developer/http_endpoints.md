@@ -41,6 +41,14 @@ It is possible to configure as many different instances of these two engines as 
 For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, and a `flow`.
 
 <table>
+<colgroup>
+       <col span="1" style="width: 10%;">
+       <col span="1" style="width: 5%;">
+       <col span="1" style="width: 30%;">
+       <col span="1" style="width: 30%;">
+       <col span="1" style="width: 30%;">
+</colgroup>
+
 <tr> <th> &nbsp; </th><th> Method </th><th> Endpoint </th><th> Body </th><th> Returns on Success </th></tr>
 <tr> <td> <B>Config Definition</B> </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td></tr>
 <tr><td> Get All Configs </td><td> GET </td><td>/all_configs</td><td>&nbsp;</td><td> Config definition names: 
@@ -63,7 +71,7 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
   "name": "quickconfig1",
   "nlpServiceType": "quickumls",
   "config": {
-    "endpoint": "https://***/match"
+    "endpoint": "http://***"
   }
 }
 ```
@@ -80,7 +88,7 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
   "name": "quickconfig1",
   "nlpServiceType": "quickumls",
   "config": {
-    "endpoint": "https://***/match"
+    "endpoint": "http://***"
   }
 }
 ```
@@ -88,7 +96,7 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 </tr>
 <tr><td>&nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; <tr></tr>
 <tr> <td> <B>Default NLP</B> </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td></tr>
-<tr><td> Make Config default </td><td> POST/PUT </td> <td>/config/setDefault?name={configName}</td><td></td><td> Status 200 </td></tr>
+<tr><td> Make Config default </td><td> POST<BR/>PUT </td> <td>/config/setDefault?name={configName}</td><td></td><td> Status 200 </td></tr>
 <tr><td> Get Current Default Config </td><td> GET </td><td> /config </td><td></td><td> Current default configName:
 
 ```json
@@ -98,7 +106,7 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 ```
 
 
-<tr><td> Clear default config </td><td> POST/PUT </td><td> /config/clearDefault</td><td> </td><td> Status 200 </td><tr>
+<tr><td> Clear default config </td><td> POST<BR/>PUT </td><td> /config/clearDefault</td><td> </td><td> Status 200 </td><tr>
 
  </td></tr>
  
@@ -137,7 +145,7 @@ If no override is defined:
 
 </td></tr>
 
-<tr><td>Add resource override</td><td>POST/PUT</td><td>/config/resource/{resourcetype}/{configName}</td><td></td><td> Status 200 </td></tr>
+<tr><td>Add resource override</td><td>POST<BR/>PUT</td><td>/config/resource/{resourcetype}/{configName}</td><td></td><td> Status 200 </td></tr>
 <tr><td>Delete a resource override</td><td>DELETE</td><td>/config/resource/{resourcetype}</td><td></td><td>Status 200 </td></tr>
 <tr><td>Delete all resource overrides</td><td>DELETE</td><td>/config/resource</td><td></td><td> Status 200</td></tr>
 </table> 
