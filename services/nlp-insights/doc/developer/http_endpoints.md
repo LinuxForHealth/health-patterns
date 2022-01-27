@@ -37,25 +37,140 @@ The app currently supports running two different NLP engine types:
 * [IBM's Annotator for Clinical Data (ACD)](https://www.ibm.com/cloud/watson-annotator-for-clinical-data) and 
 * [open-source QuickUMLS](https://github.com/Georgetown-IR-Lab/QuickUMLS)
 
-It is possible to configure as many different instances of these two engines as needed with different configuration details.  Configuation jsons require a `name`, an `nlpServiceType` (either `acd` or `quickumls`), and config details specific to that type.
+It is possible to configure as many different instances of these two engines as needed with different configuration details.  Configuration jsons require a `name`, an `nlpServiceType` (either `acd` or `quickumls`), and config details specific to that type.
 For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, and a `flow`.
 
-| &nbsp; | Method | Endpoint | Body | Returns on Success |
-|:------:|:------:|:---------|:----:|:-------:|
-  __Config Definition__ | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-| Get All Configs | `GET` | `/all_configs` |&nbsp; | Array of config names |
-| Add Named Config  | `PUT/POST` | `/config/definition` | Config (json) contains `name` | Status `200`
-| Delete Config | `DELETE` | `/config/{configName}` | | Status `200` |
-| Get Config Details | `GET` | `/config/{configName}` | | Config details named `configName` |
- &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp;
- __Default NLP__ | &nbsp; | &nbsp; | &nbsp; | &nbsp;
-| Make Config default | `POST/PUT` | `/config/setDefault?name={configName}` | | Status `200` |
-| Get Current Default Config | `GET` | `/config` | | Current default `configName` |
-| Clear default config | `POST/PUT` | `/config/clearDefault` | | Status `200` |
- &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp;
- __Override NLP engine for a resource__ | &nbsp; | &nbsp; | &nbsp; | &nbsp;
-| Get all active overrides | `GET` | `/config/resource` | | dictionary-Status `200` |
-| Get the active override for a resource | `GET` | `/config/resource/{resource}` | | `configName`-Status `200` |
-| Add resource override | `POST/PUT` | `/config/resource/{resourcetype}/{configName}` | | Status `200` |
-| Delete a resource override | `DELETE` | `/config/resource/{resourcetype}` | | Status `200` |
-| Delete all resource overrides | `DELETE` | `/config/resource` | | Status `200` |
+<table>
+<tr> <th> &nbsp; </th><th> Method </th><th> Endpoint </th><th> Body </th><th> Returns on Success </th></tr>
+<tr> <td> <B>Config Definition</B> </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td></tr>
+<tr><td> Get All Configs </td><td> GET </td><td>/all_configs</td><td>&nbsp;</td><td> Config definition names: 
+
+```json 
+{
+  "all_configs": [
+    "acdconfig1",
+    "quickconfig1"
+  ]
+}
+``` 
+
+</td></tr>
+
+<tr><td> Add Named Config </td><td> PUT/POST </td><td>/config/definition</td><td>json config (contains name). Example:
+
+```json
+{
+  "name": "quickconfig1",
+  "nlpServiceType": "quickumls",
+  "config": {
+    "endpoint": "https://***/match"
+  }
+}
+```
+
+</td><td> Status 200</td></tr>
+
+<tr><td> Delete Config </td><td> DELETE</td> <td>/config/{configName}</td> <td> &nbsp; </td><td> Status 200 </td></tr>
+
+<tr><td> Get Config Details </td><td> GET </td><td> /config/{configName} </td><td></td>
+<td> Example Response:
+
+```json
+{
+  "name": "quickconfig1",
+  "nlpServiceType": "quickumls",
+  "config": {
+    "endpoint": "https://***/match"
+  }
+}
+```
+</td>
+</tr>
+<tr><td>&nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; <tr></tr>
+<tr> <td> <B>Default NLP</B> </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td></tr>
+<tr><td> Make Config default </td><td> POST/PUT </td> <td>/config/setDefault?name={configName}</td><td></td><td> Status 200 </td></tr>
+<tr><td> Get Current Default Config </td><td> GET </td><td> /config </td><td></td><td> Current default configName:
+
+```json
+{
+  "config": "acdconfig1"
+}
+```
+
+
+<tr><td> Clear default config </td><td> POST/PUT </td><td> /config/clearDefault</td><td> </td><td> Status 200 </td><tr>
+
+ </td></tr>
+ 
+ <tr><td>&nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; <tr></tr>
+<tr> <td> <B>Override NLP Engine for a resource </B> </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td><td> &nbsp; </td></tr>
+
+<tr><td>  Get all active overrides </td><td> GET </td><td>/config/resource </td><td> </td><td>
+Dictionary of overrides:
+
+```json
+{
+  "AllergyIntolerance": "acdconfig1",
+  "Condition": "acdconfig1"
+}
+```
+</td></tr>
+
+<tr><td>  Get the active override for a resource </td><td> GET </td><td>/config/resource/{resource} </td><td> </td><td>
+Dictionary of override:
+
+```json
+{
+  "resource": "Condition",
+  "config": "acdconfig1"
+}
+```
+
+If no override is defined:
+
+```json
+{
+  "config": null,
+  "resource": "Condition"
+}
+```
+
+</td></tr>
+
+<tr><td>Add resource override</td><td>POST/PUT</td><td>/config/resource/{resourcetype}/{configName}</td><td></td><td> Status 200 </td></tr>
+<tr><td>Delete a resource override</td><td>DELETE</td><td>/config/resource/{resourcetype}</td><td></td><td>Status 200 </td></tr>
+<tr><td>Delete all resource overrides</td><td>DELETE</td><td>/config/resource</td><td></td><td> Status 200</td></tr>
+</table> 
+
+
+# Error Responses
+Responses with status codes in the 4xx range usually have a json body with a "message" property with a human readable description. Other details about the error may also be included in the structure.
+
+## Example for invalid json sent to discoverInsights API:
+
+```json
+{
+  "message": "Resource was not valid json: Expecting property name enclosed in double quotes: line 29 column 10 (char 676)"
+}
+```
+
+## Example of invalid FHIR resource sent to discoverInsights API
+
+```json
+{
+  "message": "Resource was not valid",
+  "details": [
+    {
+      "loc": [
+        "reaction",
+        0,
+        "manifestation",
+        0,
+        "text2"
+      ],
+      "msg": "extra fields not permitted",
+      "type": "value_error.extra"
+    }
+  ]
+}
+```

@@ -40,8 +40,8 @@ from typing import Type
 from typing import cast
 
 from fhir.resources.resource import Resource
-from werkzeug.exceptions import BadRequest
 
+from nlp_insights.app_util.exception import UserError
 from nlp_insights.nlp.abstract_nlp_service import NLPService
 from nlp_insights.nlp.acd.acd_service import ACDService
 from nlp_insights.nlp.quickumls.quickumls_service import QuickUmlsService
@@ -102,19 +102,19 @@ def persist_config_helper(config_dict: Dict[str, Any], config_dir: str) -> str:
     """Helper function to check config details and create nlp instantiation"""
 
     if "nlpServiceType" not in config_dict:
-        raise BadRequest(description="'nlpService' must be a key in config")
+        raise UserError(message="'nlpService' must be a key in config")
     if "name" not in config_dict:
-        raise BadRequest(description="'name' must be a key in config")
+        raise UserError(message="'name' must be a key in config")
     if "config" not in config_dict:
-        raise BadRequest(description="'config' must be a key in config")
+        raise UserError(message="'config' must be a key in config")
     if not isinstance(config_dict["name"], str):
-        raise BadRequest(description='config["name"] must be a string')
+        raise UserError(message='config["name"] must be a string')
 
     config_name = cast(str, config_dict["name"])
     nlp_service_type = config_dict["nlpServiceType"]
     if nlp_service_type.lower() not in ALL_NLP_SERVICES.keys():
-        raise BadRequest(
-            description=f"only 'acd' and 'quickumls' allowed at this time: {nlp_service_type}"
+        raise UserError(
+            message=f"only 'acd' and 'quickumls' allowed at this time: {nlp_service_type}"
         )
     with open(f"{config_dir}/{config_name}", "w", encoding="utf-8") as json_file:
         json_file.write(json.dumps(config_dict))
@@ -126,10 +126,10 @@ def persist_config_helper(config_dict: Dict[str, Any], config_dir: str) -> str:
     return config_name
 
 
-def get_config_names() -> List[str]:
-    """Returns the list of named configurations"""
+def get_config_names() -> Dict[str, List[str]]:
+    """Returns dictionary with list of named configurations"""
     global nlp_services_dict  # pylint: disable=global-statement, invalid-name
-    return list(nlp_services_dict.keys())
+    return {"all_configs": list(nlp_services_dict.keys())}
 
 
 def update_configured_service(config_name: str, service: NLPService) -> None:
@@ -183,30 +183,30 @@ def is_config_in_overrides(config_name: str) -> bool:
 def delete_config(config_name: str, config_dir: str) -> None:
     """Deletes the config with config_name
 
-    raises BadRequest if the config is not able to be deleted due to user error
+    raises UserError if the config is not able to be deleted due to user error
     """
     global nlp_services_dict  # pylint: disable=global-statement, invalid-name
     if not get_configured_service(config_name):
-        raise BadRequest(description=f"{config_name} must exist")
+        raise UserError(message=f"{config_name} must exist")
 
     if is_default_service(config_name):
-        raise BadRequest(description="Cannot delete the default nlp service")
+        raise UserError(message="Cannot delete the default nlp service")
 
     if is_config_in_overrides(config_name):
-        raise BadRequest(
-            description=f"f{config_name} has an existing override and cannot be deleted"
+        raise UserError(
+            message=f"f{config_name} has an existing override and cannot be deleted"
         )
     os.remove(config_dir + f"/{config_name}")
     del nlp_services_dict[config_name]
 
 
-def set_default_nlp_service(config_name: str) -> bool:
+def set_default_nlp_service(config_name: str) -> None:
     """Sets the default nlp service for the application
 
     Args:
         config_name - the name of the configuration that maps to an NLP service to use
 
-    Returns true if the default was updated, false if the configuration did not exist.
+    Raises UserError if the config does not exist
     """
     global nlp_services_dict  # pylint: disable=global-statement, invalid-name
     global nlp_service  # pylint: disable=global-statement, invalid-name
@@ -214,10 +214,9 @@ def set_default_nlp_service(config_name: str) -> bool:
     if config_name in nlp_services_dict:
         logger.info("Setting nlp service to %s", config_name)
         nlp_service = nlp_services_dict[config_name]
-        return True
-
-    logger.info("%s is not a valid nlp instance", config_name)
-    return False
+    else:
+        logger.info("%s is not a valid nlp instance", config_name)
+        raise UserError(message=f"{config_name} is not a config")
 
 
 def clear_default_nlp_service() -> None:
@@ -226,10 +225,10 @@ def clear_default_nlp_service() -> None:
     nlp_service = None
 
 
-def get_overrides_as_json_str() -> str:
+def get_overrides() -> Dict[str, Any]:
     """Returns the overrides structure as a json string"""
     global override_resource_config  # pylint: disable=global-statement, invalid-name
-    return json.dumps(override_resource_config)
+    return override_resource_config
 
 
 def get_override_config_name(resource_name: str) -> Optional[str]:
@@ -241,11 +240,11 @@ def get_override_config_name(resource_name: str) -> Optional[str]:
 def set_override_config(resource_name: str, config_name: str) -> None:
     """Sets the specified config as an override for resource name
 
-    throws BadRequest if the config does not exist
+    throws UserError if the config does not exist
     """
     global override_resource_config  # pylint: disable=global-statement, invalid-name
     if config_name not in nlp_services_dict:
-        raise BadRequest(config_name + " is not a config")
+        raise UserError(message=f"{config_name} is not a config")
 
     override_resource_config[resource_name] = config_name
 
@@ -256,7 +255,7 @@ def delete_override_config(resource_name: str) -> None:
     if resource_name in override_resource_config:
         del override_resource_config[resource_name]
     else:
-        raise BadRequest(f"There is no override defined for {resource_name}")
+        raise UserError(message=f"There is no override defined for {resource_name}")
 
 
 def delete_all_overrides() -> None:
@@ -301,14 +300,14 @@ def get_nlp_service_for_resource(resource: Resource) -> NLPService:
 
     Args: resource - the resource class to return an NLP service for
 
-    raises BadRequest if no NLP service has been configured
+    raises UserError if no NLP service has been configured
     """
     global override_resource_config  # pylint: disable=global-statement, invalid-name
     global nlp_services_dict  # pylint: disable=global-statement, invalid-name
 
     if nlp_service is None:
-        raise BadRequest(
-            description="No NLP service has been configured, please define the config"
+        raise UserError(
+            message="No NLP service has been configured, please define the config"
         )
 
     if resource.resource_type in override_resource_config:

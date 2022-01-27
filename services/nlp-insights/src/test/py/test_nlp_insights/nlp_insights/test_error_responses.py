@@ -120,7 +120,7 @@ class TestErrorResponses(UnitTestUsingExternalResource):
             """,
             )
             self.assertEqual(400, rsp.status_code)
-            self.assertEqual(rsp.json[0]["type"], "value_error.missing")
+            self.assertEqual(rsp.json["details"][0]["type"], "value_error.missing")
 
     def test_when_bad_resource_then_error(self):
 
