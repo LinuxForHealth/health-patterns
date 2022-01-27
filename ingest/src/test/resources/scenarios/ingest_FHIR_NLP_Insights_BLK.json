@@ -32,7 +32,7 @@
         },
        {
             "name": "getPatientConditionForInsights",
-            "url": "${pri_fhir_server}/Condition",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionForInsights.response.body.entry[0].resource.id}/Condition",
             "method": "GET",
             "request": {
             },
@@ -71,7 +71,7 @@
         },
         {
             "name": "GetAllConditions",
-            "url": "${pri_fhir_server}/Condition",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionForInsights.response.body.entry[0].resource.id}/Condition",
             "method": "GET",
             "request": {
             },
@@ -157,7 +157,7 @@
         },
        {
             "name": "getPatientConditionNoInsights",
-            "url": "${pri_fhir_server}/Condition",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionNoInsights.response.body.entry[0].resource.id}/Condition",
             "method": "GET",
             "request": {
             },

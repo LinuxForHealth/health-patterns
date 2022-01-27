@@ -10,6 +10,7 @@
                 "headers" : { "Content-Type": "application/json", 
                                "ResolveTerminology": "${3}",
                                "DeidentifyData": "true",
+                               "AddNLPInsights": "false",
                                "RunFHIRDataQuality": "false" },
                     "body":  "${0}" },            
             "verify": {

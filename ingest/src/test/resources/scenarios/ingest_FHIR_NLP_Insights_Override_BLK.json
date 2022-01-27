@@ -39,7 +39,7 @@
         },
         {
             "name": "getPatientConditionNoOverride",
-            "url": "${pri_fhir_server}/Condition",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionNoOverride.response.body.entry[0].resource.id}/Condition",
             "method": "GET",
             "request": {
             },
@@ -77,7 +77,7 @@
         },        
         {
             "name": "GetAllConditions",
-            "url": "${pri_fhir_server}/Condition",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionNoOverride.response.body.entry[0].resource.id}/Condition",
             "method": "GET",
             "request": {
             },
@@ -175,7 +175,7 @@
         },
         {
             "name": "getPatientConditionWithOverride",
-            "url": "${pri_fhir_server}/Condition",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionWithOverride.response.body.entry[0].resource.id}/Condition",
             "method": "GET",
             "request": {
             },
@@ -213,7 +213,7 @@
         },
         {
             "name": "GetAllConditions",
-            "url": "${pri_fhir_server}/Condition",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionWithOverride.response.body.entry[0].resource.id}/Condition",
             "method": "GET",
             "request": {
             },
