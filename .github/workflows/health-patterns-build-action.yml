@@ -60,3 +60,11 @@ jobs:
            .github/workflows/scripts/build-health-patterns.sh \
              -m=${{github.event_name}} \
              --github-user=${{ github.actor }}
+
+   - name: Build nlp-insights
+     if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
+     run: |
+          echo "Building nlp-insights"
+          cd ./services/nlp-insights
+          ./gradlew checkSource
+          cd ../..
