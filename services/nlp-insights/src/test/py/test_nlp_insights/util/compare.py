@@ -56,15 +56,15 @@ def pdiff(a: Any, b: Any) -> str:
                 a_str.splitlines(keepends=True), b_str.splitlines(keepends=True)
             )
         )
-    else:
-        return ""
+
+    return ""
 
 
 class ResourceDifferences:
     """Wraps differences for easier debug"""
 
     def __init__(
-        self, expected: Resource, actual: Resource, exclude_types={bytes}
+        self, expected: Resource, actual: Resource, exclude_types=frozenset({bytes})
     ) -> None:
         """Determines the differences between an expected resource and a test case actual
 
