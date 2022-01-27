@@ -11,6 +11,12 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: upgrade python
+      run: |
+           sudo apt install python3.9
+           sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python/3.8 2
+           sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+           sudo update-alternatives --auto python3
     - name: Identify changed files
       id: filecheck
       run: |
