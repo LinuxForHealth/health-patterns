@@ -40,14 +40,14 @@ The app currently supports running two different NLP engine types:
 It is possible to configure as many different instances of these two engines as needed with different configuration details.  Configuration jsons require a `name`, an `nlpServiceType` (either `acd` or `quickumls`), and config details specific to that type.
 For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, and a `flow`.
 
-<table>
+<table cellspacing=0 cellpadding=0 border=0>
 <thead>
 <tr align="left"><th> &nbsp; </th><th> Method &<BR/> Endpoint</th><th> Body </th><th> Response Body on Success </th></tr>
 </thead>
 <tbody>
 <tr> <th colspan=4  align="left"> Config Definition</th></tr>
 
-<tr><td> Get All Configs </td><td> GET <BR/>/all_configs</td><td></td><td> Config definition names: 
+<tr><td> Get All Configs </td><td> GET <BR/><I><code>/all_configs</code></I></td><td></td><td> Config definition names: 
 
 ```json 
 {
@@ -60,23 +60,16 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 
 </td></tr>
 
-<tr><td> Add Named Config </td><td> PUT/POST <BR/>/config/definition</td><td>json config (contains name). Example:
+<tr><td> Add Named Config </td><td> PUT/POST <BR/><I><code>/config/definition</code></I></td><td>json config see:
 
-```json
-{
-  "name": "quickconfig1",
-  "nlpServiceType": "quickumls",
-  "config": {
-    "endpoint": "http://***"
-  }
-}
-```
+* [Configure ACD](../examples/acd/configure_acd.md)
+* [Configure QuickUMLS](../example/quickumls/configure_quickumls.md)
 
 </td><td></td></tr>
 
-<tr><td> Delete Config </td><td> DELETE<BR/>/config/{configName}</td> <td></td><td></td></tr>
+<tr><td> Delete Config </td><td> DELETE<BR/><I><code>/config/{configName}</code></I></td> <td></td><td></td></tr>
 
-<tr><td> Get Config Details </td><td> GET <BR/> /config/{configName} </td><td></td><td> Example Response:
+<tr><td> Get Config Details </td><td> GET <BR/><I><Code>/config/{configName}</CODE></I></td><td></td><td> Example Response:
 
 ```json
 {
@@ -93,9 +86,9 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 <tbody>
 <tr><th colspan=4 align="left"> Default NLP</th></tr>
 
-<tr><td> Make Config default </td><td> POST/PUT <BR/>/config/setDefault?name={configName}</td><td></td><td>  </td></tr>
+<tr><td> Make Config default </td><td> POST/PUT <BR/><I><Code>/config/setDefault?name={configName}</CODE></I></td><td></td><td>  </td></tr>
 
-<tr><td> Get Current Default Config </td><td> GET <BR/> /config </td><td></td><td> Current default configName:
+<tr><td> Get Current Default Config </td><td> GET <BR/><I><Code>/config</Code></I></td><td></td><td> Current default configName:
 
 ```json
 {
@@ -104,13 +97,13 @@ For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, a
 ```
 </td></tr>
 
-<tr><td> Clear default config </td><td> POST/PUT <BR/> /config/clearDefault</td><td> </td><td> </td></tr>
+<tr><td> Clear default config </td><td> POST/PUT <BR/><I><CODE>/config/clearDefault</CODE></I></td><td> </td><td> </td></tr>
 
 
 </tbody><tbody>
 <tr><th colspan=4 align="left"> Override NLP Engine for a resource </th></tr>
 
-<tr><td>  Get all active overrides </td><td> GET <BR/>/config/resource </td><td></td><td>
+<tr><td>  Get all active overrides </td><td> GET <BR/><I><CODE>/config/resource</CODE></I> </td><td></td><td>
 Dictionary of overrides:
 
 ```json
@@ -119,15 +112,21 @@ Dictionary of overrides:
   "Condition": "acdconfig1"
 }
 ```
+
+If no overrides are defined:
+
+```json
+{}
+```
+
 </td></tr>
 
-<tr><td>Get the active override for a resource </td><td> GET <Br/>/config/resource/{resource} </td><td> </td><td>
+<tr><td>Get the active override for a resource </td><td> GET <Br/><I><CODE>/config/resource/{resource}</CODE></I></td><td> </td><td>
 Dictionary of override:
 
 ```json
 {
-  "resource": "Condition",
-  "config": "acdconfig1"
+  "Condition": "acdconfig1"
 }
 ```
 
@@ -135,14 +134,13 @@ If no override is defined:
 
 ```json
 {
-  "config": null,
-  "resource": "Condition"
+  "AllergyIntolerance": null
 }
 ```
 </td></tr>
-<tr><td>Add resource override</td><td>POST/PUT<br/>/config/resource/{resourcetype}/{configName}</td><td></td><td>  </td></tr>
-<tr><td>Delete a resource override</td><td>DELETE<BR/>/config/resource/{resourcetype}</td><td></td><td> </td></tr>
-<tr><td>Delete all resource overrides</td><td>DELETE<br/>/config/resource</td><td></td><td> </td></tr>
+<tr><td>Add resource override</td><td>POST/PUT<br/><I><CODE>/config/resource/{resourcetype}/{configName}</CODE></I></td><td></td><td>  </td></tr>
+<tr><td>Delete a resource override</td><td>DELETE<BR/><I><CODE>/config/resource/{resourcetype}</CODE></I></td><td></td><td> </td></tr>
+<tr><td>Delete all resource overrides</td><td>DELETE<br/><I><CODE>/config/resource</CODE></I></td><td></td><td> </td></tr>
 </tbody>
 </table> 
 
@@ -150,7 +148,8 @@ If no override is defined:
 # Error Responses
 Responses with status codes in the 4xx range usually have a json body with a "message" property with a human readable description. Other details about the error may also be included in the structure.
 
-## Example for invalid json sent to discoverInsights API:
+## Example response when an invalid json is sent to the discoverInsights API:
+* Status Code = 400
 
 ```json
 {
@@ -158,7 +157,8 @@ Responses with status codes in the 4xx range usually have a json body with a "me
 }
 ```
 
-## Example of invalid FHIR resource sent to discoverInsights API
+## Example response when an invalid FHIR resource is sent to the discoverInsights API
+* Status Code = 400
 
 ```json
 {

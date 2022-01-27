@@ -144,8 +144,7 @@ class TestConfig(UnitTestUsingExternalResource):
 
             rsp = service.get("/config/resource/AllergyIntolerance")
             self.assertEqual(200, rsp.status_code)
-            self.assertEqual(rsp.json["resource"], "AllergyIntolerance")
-            self.assertEqual(rsp.json["config"], cfg_qu)
+            self.assertEqual(cfg_qu, rsp.json["AllergyIntolerance"])
 
     def test_when_delete_resource_override_then_resource_overrides_correct(self):
         with app.app.test_client() as service:

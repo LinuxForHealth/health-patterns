@@ -134,7 +134,7 @@ def get_current_override_configs() -> Response:
 def get_current_override_config(resource_name: str) -> Response:
     """Get and return override for this resource"""
     return flask.jsonify(
-        resource=resource_name, config=config.get_override_config_name(resource_name)
+        {f"{resource_name}": config.get_override_config_name(resource_name)}
     )
 
 
