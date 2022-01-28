@@ -9,7 +9,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },        
         {
@@ -19,7 +19,9 @@
                 "request": { },            
             "verify": {
                 "status": 200,
-                "rawBody": "$CONTAINS.STRING:${1}"
+                "body": {
+                    "config": "${1}"
+                }
             }
         },
         {  
@@ -48,7 +50,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -58,7 +60,9 @@
                 "request": { },            
             "verify": {
                 "status": 200,
-                "rawBody": "$CONTAINS.STRING:default"
+                "body": {
+                   "config": "default"
+                }
             }
         }                 
      ],

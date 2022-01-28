@@ -139,9 +139,7 @@
             "operation": "POST",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "body": { "DocumentReference" : "acd"
-                }
+                "status": 204
             }
         },        
         {
