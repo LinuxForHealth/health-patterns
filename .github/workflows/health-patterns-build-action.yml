@@ -77,3 +77,8 @@ jobs:
            cd ./services/nlp-insights
            ./gradlew checkSource
            cd ../..
+    - name: Archive nlp-insights test-results
+        uses: actions/upload-artifact@v2
+        with:
+          name: nlp-insights-tests 
+          path: ./services/nlp-insights/build/reports
