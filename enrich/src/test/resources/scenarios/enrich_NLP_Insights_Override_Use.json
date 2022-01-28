@@ -9,7 +9,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },        
 
@@ -19,10 +19,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "body": {
-                    "${3}" : "${4}"
-                }    
+                "status": 204
             }
         },
         {  
@@ -51,7 +48,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         }                
      ],

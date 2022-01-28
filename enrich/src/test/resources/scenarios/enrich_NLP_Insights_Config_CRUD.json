@@ -10,7 +10,7 @@
                 "body" : "${1}"
                 },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -49,8 +49,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "rawBody":"$CONTAINS.STRING:${2}"
+                "status": 204
             }
         },        
         {
@@ -60,7 +59,9 @@
                 "request": { },            
             "verify": {
                 "status": 200,
-                "rawBody":"$CONTAINS.STRING:${2}"
+                "body": {
+                   "config": "${2}"
+                }
             }
         },
         {
@@ -71,7 +72,7 @@
                 "body" : "${1}"
                 },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -89,7 +90,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
              }
         },
         {
@@ -98,7 +99,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {

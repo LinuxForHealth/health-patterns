@@ -29,7 +29,7 @@
                 "body" : "${1}"
                 },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -40,7 +40,7 @@
                 "body" : "${3}"
                 },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -58,10 +58,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "body": {
-                    "DocumentReference" : "${2}"
-                }
+                "status": 204
             }
         },
         {
@@ -70,10 +67,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "body": {
-                   "AllergyIntolerance" : "${4}"
-                }
+                "status": 204
             }
         },
         {
@@ -82,10 +76,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "body": {
-                   "DiagnosticReport" : "${2}"
-                }
+                "status": 204
             }
         },        
         {
@@ -94,10 +85,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "body": {
-                  "Immunization" : "${4}"
-                }
+                "status": 204
             }
         }, 
         {
@@ -106,10 +94,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "body": {
-                  "Immunization" : "${2}" 
-                }
+                "status": 204
             }
         },       
         {
@@ -118,7 +103,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -146,7 +131,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 500
+                "status": 400
             }
         },
         {
@@ -155,7 +140,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -183,7 +168,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -192,7 +177,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -201,7 +186,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         }
      ],
