@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: alvearie/nlp-insights
+  repository: quay.io/alvearie/nlp-insights
   pullPolicy: Always
-  tag: 0.0.4
+  tag: 0.0.5
   pullSecret:
 
 service:
