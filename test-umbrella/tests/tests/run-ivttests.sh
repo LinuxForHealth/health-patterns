@@ -30,7 +30,7 @@ echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
 # set up to use fhir-cql image
-sed -i -e "0,s/name: fhir/s//name: fhir\n  image:\n    repository: quay.io\/alvearie\/fhir-cql\n    tag: \"latest\"\n  serverRegistryResourceProviderEnabled: true/" values.yaml
+sed -i -e "s/name: fhir/name: fhir\n  image:\n    repository: quay.io\/alvearie\/fhir-cql\n    tag: \"latest\"\n  serverRegistryResourceProviderEnabled: true/0" values.yaml
 cat values.yaml | grep serverRegistryResourceProviderEnabled
 
 # Execute the desired deployment
