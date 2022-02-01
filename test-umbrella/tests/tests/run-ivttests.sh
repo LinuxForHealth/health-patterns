@@ -29,6 +29,10 @@ export KAFKA_TOPIC_IN="ingest.topic.in"
 echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
+# set up to use fhir-cql image
+sed -i -e "s/name: fhir/name: fhir\n  image:\n    repository: quay.io\/alvearie\/fhir-cql\n    tag: \"latest\"\n  serverRegistryResourceProviderEnabled: true/" values.yaml
+cat values.yaml | grep serverRegistryResourceProviderEnabled
+
 # Execute the desired deployment
 echo "***************************************"
 echo $TEST_NAMESPACE" : Deploy "$HELM_RELEASE" via helm3"
