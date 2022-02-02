@@ -135,6 +135,7 @@ then
    mvn -DskipTests=false -Dtest=NLPIngestionTests test
    mvn -DskipTests=false -Dtest=NLPIngestionBLKTests test
    mvn -DskipTests=false -Dtest=FHIRDataQualityBLKTests test
+   mvn -DskipTests=false -Dtest=FHIRCQLTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -148,7 +149,8 @@ then
    cat target/surefire-reports/categories.ASCVDIngestionBLKTests.txt
    cat target/surefire-reports/categories.NLPIngestionTests.txt
    cat target/surefire-reports/categories.NLPIngestionBLKTests.txt
-   cat target/surefire-reports/categories.FHIRDataQualityBLKTests.txt   
+   cat target/surefire-reports/categories.FHIRDataQualityBLKTests.txt  
+   cat target/surefire-reports/categories.FHIRCQLTests.txt 
     
 fi   
 echo "*************************************" 
