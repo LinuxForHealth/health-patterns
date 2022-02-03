@@ -181,6 +181,7 @@ printf "\nBuilding ${ORG}/${REPOSITORY}:${TAG}\n"
 #docker build -q services/${REPOSITORY} -t ${ORG}/${REPOSITORY}:${TAG}
 cd services/nlp-insights
 ./gradlew docker -PdockerUser=${ORG}/${REPOSITORY} -Pversion=${TAG}
+cd ../..
 
 #####################################
 ## Push Docker image to docker hub ##
@@ -189,9 +190,10 @@ cd services/nlp-insights
 printf "\nPushing docker image to repository: ${ORG}/${REPOSITORY}:${TAG}\n"
 
 # Login to Docker
+echo docker login --username ${DOCKER_USER}
 #echo  ${DOCKER_TOKEN} | docker login --username ${DOCKER_USER} --password-stdin
   
-#docker push -q ${ORG}/${REPOSITORY}:${TAG}
+echo docker push -q ${ORG}/${REPOSITORY}:${TAG}
 
 
 ######################################
