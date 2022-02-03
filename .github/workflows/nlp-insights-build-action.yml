@@ -59,7 +59,7 @@ jobs:
            -s=nlp-insights \
            -m=${{github.event_name}} \
            --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
-             --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN 
+           --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} 
 
 
 
