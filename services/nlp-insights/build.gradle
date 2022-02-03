@@ -464,32 +464,37 @@ task checkSource {
       warnings.put(reportFile, warningList)
 
       root."**".findAll({ it.name() == "failure"}).each { f ->
-        warningList.add("${f.text()}")
+        warningList.add("${f.'@message'}:${f.text()}")
       }
     }
 
-    println("\nLINT AND TEST WARNINGS")
-    println("------------------------")
+    def message = new StringBuffer()
+    message.append("\nLINT AND TEST WARNINGS\n")
+    message.append("------------------------\n")
     warnings.each { k, v ->
       if (v.size() > 0) {
-        println("\n$k\n")
+        message.append("$k\n")
         v.each { w ->
-          println("\t$w".replace("\n", "\n\t\t"))
+          message.append("\t$w".replace("\n", "\n\t\t"))
+          message.append("\n")
         }
       }
     }
 
-    println("SUMMARY")
+    message.append("\nSUMMARY\n")
     def count = 0;
     warnings.each { k, v ->
       def fname = String.format("%30.30s", k.name)
       count += v.size()
-      println("${fname} : ${v.size()} warnings")
+      message.append("${fname} : ${v.size()} warnings\n")
     }
     
     if (count && !project.hasProperty("noFailForSourceProblems")) {
+      System.err.println(message)
       throw new GradleException("Build Failed with ${count} source code issues!")
-    }  
+    }
+    
+    println(message)
   }
 }
 
