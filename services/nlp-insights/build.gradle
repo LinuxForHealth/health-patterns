@@ -93,7 +93,7 @@ task createRequirementsTextForDev {
     pinned_text.append("### Using this file, you can install all required dependencies for development into your IDE's venv.\n")
     pinned_text.append("### The pinned.txt that is created in the build directory has only the dependencies needed for production.\n")
     pinned_text.append("### This file may be safely checked into version control so that others may set-up their environments.\n")
-    pinned_text.append("### Use this file with \"pip -r requirements_dev.txt\" to install dependencies into your venv.\n")
+    pinned_text.append("### Use this file with \"pip install -r requirements_dev.txt\" to install dependencies into your venv.\n")
     pinned_text.append("### Most IDEs will allow you to specify the file when setting up the venv, \n")
     pinned_text.append("### and you won't have to run that command directly.\n")
     pinned_text.append("### DO NOT CHANGE THIS FILE\n")
