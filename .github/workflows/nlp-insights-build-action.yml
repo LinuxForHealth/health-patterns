@@ -1,8 +1,9 @@
 name: nlp-insights
-on: push
-  paths:
-   - 'services/nlp-insights/**'
-   - '.github/**'
+on: 
+  push:
+    paths:
+    - 'services/nlp-insights/**'
+    - '.github/**'
 concurrency: health-patterns
 
 jobs:
