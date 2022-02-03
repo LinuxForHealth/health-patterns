@@ -9,8 +9,6 @@ defaults:
     shell: bash
     working-directory: services/nlp-insights
 
-concurrency: health-patterns
-
 jobs:
   job:
     name: Build nlp-insights
@@ -28,7 +26,7 @@ jobs:
            sudo update-alternatives --set python3 /usr/bin/python3.9
            sudo pip3 install -U pip
     - name: Unit Test 
-      run: gradlew test 
+      run: ./gradlew test 
 
     - name: Static Code Analysis
       run: |
