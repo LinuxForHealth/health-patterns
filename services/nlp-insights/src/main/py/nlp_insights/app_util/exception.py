@@ -26,7 +26,7 @@ from werkzeug.exceptions import HTTPException
 logger = logging.getLogger(__name__)
 
 
-def _safe_loads(json_details: str) -> Any:
+def _safe_loads(json_details: str):
     """Loads a json string into an object
 
        If the json is not valid, error is logged and {} is returned
