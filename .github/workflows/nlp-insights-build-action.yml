@@ -35,11 +35,13 @@ jobs:
            ./gradlew test
            cd ../..
     - name: Static code analysis
-      if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
+      #if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
       run: |
            echo "Static Code Analysis"
            cd ./services/nlp-insights
-           if $(echo ${{ github.event.head_commit.message }} | grep  "[noFailForSourceProblems]"); then
+           MESSAGE=$(git log -1 HEAD --pretty=format:%s)
+           echo $MESSAGE
+           if [[ "$MESSAGE" == *\[noFailForSourceProblems\]* ]]; then
              CHECK_SOURCE_NO_FAIL = "-PnoFailForSourceProblems"
            fi
            ./gradlew checkSource $CHECK_SOURCE_NO_FAIL
