@@ -40,7 +40,6 @@ jobs:
            echo "Static Code Analysis"
            cd ./services/nlp-insights
            MESSAGE=$(git log -1 HEAD --pretty=format:%s)
-           echo $MESSAGE
            if [[ "$MESSAGE" == *\[noFailForSourceProblems\]* ]]; then
              CHECK_SOURCE_NO_FAIL = "-PnoFailForSourceProblems"
            fi
