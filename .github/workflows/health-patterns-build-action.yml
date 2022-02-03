@@ -10,16 +10,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-
-    - name: upgrade python
-      run: |
-           sudo apt install python3.9
-           sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
-           sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
-           sudo update-alternatives --set python3 /usr/bin/python3.9
-           sudo pip3 install -U pip
-           #/usr/local/bin/pip3 --version
-           #which pip3
     - name: Identify changed files
       id: filecheck
       run: |
@@ -70,15 +60,3 @@ jobs:
              -m=${{github.event_name}} \
              --github-user=${{ github.actor }}
 
-    - name: Build nlp-insights
-      #if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
-      run: |
-           echo "Building nlp-insights"
-           cd ./services/nlp-insights
-           ./gradlew checkSource
-           cd ../..
-    - name: Archive nlp-insights test-results
-      uses: actions/upload-artifact@v2
-      with:
-        name: nlp-insights-tests 
-        path: ./services/nlp-insights/build/reports

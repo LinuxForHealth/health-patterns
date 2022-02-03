@@ -17,12 +17,12 @@ flask==2.0.1
 
 ### Development Dependencies
 pytest==6.2.5
-pytest-cov==2.7.1
+pytest-cov==3.0.0
 deepdiff==5.5.0
 flake8==4.0.1
 types-requests==2.25.9
 pytest-html==3.1.1
 pylint==2.10.2
-pylint-junit==0.3.2
+pylint2junit==1.0.1
 flake8-formatter-junit-xml==0.0.6
-mypy==0.910
+mypy==0.931
