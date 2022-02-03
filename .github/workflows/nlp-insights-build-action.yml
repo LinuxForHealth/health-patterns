@@ -41,7 +41,7 @@ jobs:
            cd ./services/nlp-insights
            MESSAGE=$(git log -1 HEAD --pretty=format:%s)
            if [[ "$MESSAGE" == *\[noFailForSourceProblems\]* ]]; then
-             CHECK_SOURCE_NO_FAIL = "-PnoFailForSourceProblems"
+             CHECK_SOURCE_NO_FAIL="-PnoFailForSourceProblems"
            fi
            ./gradlew checkSource $CHECK_SOURCE_NO_FAIL
            cd ../..
