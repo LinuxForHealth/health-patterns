@@ -1,6 +1,7 @@
 name: Health Patterns Continuous Integration
 
 on: push
+concurrency: health-patterns
 
 jobs:
   job:

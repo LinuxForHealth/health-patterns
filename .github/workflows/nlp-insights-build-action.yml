@@ -1,5 +1,6 @@
 name: nlp-insights build process
 on: push
+concurrency: health-patterns
 
 jobs:
   job:
@@ -51,6 +52,14 @@ jobs:
       with:
         name: nlp-insights-tests
         path: ./services/nlp-insights/build/reports
+    - name: Docker build
+      if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
+      run: |
+           .github/workflows/scripts/build-nlp-insights-docker.sh \
+           -s=nlp-insights \
+           -m=${{github.event_name}} \
+           --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
+             --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN 
 
 
 
