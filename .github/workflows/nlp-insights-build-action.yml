@@ -35,7 +35,7 @@ jobs:
            ./gradlew test
            cd ../..
     - name: Static code analysis
-      #if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
+      if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
       run: |
            echo "Static Code Analysis"
            cd ./services/nlp-insights
