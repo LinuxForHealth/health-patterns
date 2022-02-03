@@ -1,5 +1,8 @@
-name: nlp-insights build process
+name: nlp-insights
 on: push
+  paths:
+   - 'services/nlp-insights/**'
+   - '.github/**'
 concurrency: health-patterns
 
 jobs:
@@ -11,55 +14,63 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: upgrade python
+    - name: Setup 
       run: |
+           # Update Python
            sudo apt install python3.9
            sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
            sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
            sudo update-alternatives --set python3 /usr/bin/python3.9
            sudo pip3 install -U pip
-    - name: Identify changed files
-      id: filecheck
-      run: |
-        git remote add original https://github.com/Alvearie/health-patterns.git
-        git fetch original
-        changed_files=$(git diff-tree --no-commit-id --name-only -r  HEAD original/main)
-        changed_files="${changed_files//'%'/'%25'}"
-        changed_files="${changed_files//$'\n'/'%0A'}"
-        changed_files="${changed_files//$'\r'/'%0D'}"
-        echo "::set-output name=changed_files::${changed_files}"
-    - name: Unit test nlp-insights
-      if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
+           cd ./services/nlp-insights
+           #    - name: Identify changed files
+           #id: filecheck
+           #run: |
+           #git remote add original https://github.com/Alvearie/health-patterns.git
+           #git fetch original
+           #changed_files=$(git diff-tree --no-commit-id --name-only -r  HEAD original/main)
+           #changed_files="${changed_files//'%'/'%25'}"
+           #changed_files="${changed_files//$'\n'/'%0A'}"
+           #changed_files="${changed_files//$'\r'/'%0D'}"
+           #echo "::set-output name=changed_files::${changed_files}"
+    - name: Unit Test 
+      #if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
       run: |
            echo "Unit test nlp-insights"
-           cd ./services/nlp-insights
+           #          cd ./services/nlp-insights
            ./gradlew test
-           cd ../..
-    - name: Static code analysis
-      if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
+           # cd ../..
+    - name: Static Code Analysis
+      # if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
       run: |
            echo "Static Code Analysis"
-           cd ./services/nlp-insights
+           #cd ./services/nlp-insights
            MESSAGE=$(git log -1 HEAD --pretty=format:%s)
            if [[ "$MESSAGE" == *\[noFailForSourceProblems\]* ]]; then
              CHECK_SOURCE_NO_FAIL="-PnoFailForSourceProblems"
            fi
            ./gradlew checkSource $CHECK_SOURCE_NO_FAIL
-           cd ../..
-    - name: Save artifiacts
-      if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
+           #cd ../..
+    - name: DockerLint
+      run: |
+           echo "Checking Docker FIle"
+           dockerlint
+           #cd ../..
+    - name: Save Artifiacts
+      #if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
       uses: actions/upload-artifact@v2
       with:
         name: nlp-insights-tests
-        path: ./services/nlp-insights/build/reports
-    - name: Docker build
-      if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
-      run: |
-           .github/workflows/scripts/build-nlp-insights-docker.sh \
-           -s=nlp-insights \
-           -m=${{github.event_name}} \
-           --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
-           --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} 
+        path: ./build/reports
+      
+        #    - name: Docker build
+        # if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
+        #run: |
+        #   .github/workflows/scripts/build-nlp-insights-docker.sh \
+        #   -s=nlp-insights \
+        #   -m=${{github.event_name}} \
+        #   --docker-user=${{ secrets.DOCKER_HUB_USERNAME }} \
+        #   --docker-token=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} 
 
 
 
