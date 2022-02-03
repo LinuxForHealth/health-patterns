@@ -44,7 +44,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: nlp-insights-tests
-        path: ./build/reports
+        path: ./services/nlp-insights/build/reports
       
         #    - name: Docker build
         # if: ${{contains( steps.filecheck.outputs.changed_files, 'services/nlp-insights')}}
