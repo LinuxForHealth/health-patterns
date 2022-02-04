@@ -29,6 +29,11 @@ export KAFKA_TOPIC_IN="ingest.topic.in"
 echo " change to the correct deployment directory"
 cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 
+# set up to use fhir-cql image
+echo " Change to use FHIR-CQL image"
+sed  -i -e  " 120,150 s/fhir:/fhir:\n  image:\n    repository: quay.io\/alvearie\/fhir-cql\n    tag: \"latest\"\n  serverRegistryResourceProviderEnabled: true/" values.yaml
+cat values.yaml | grep serverRegistryResourceProviderEnabled
+
 # Execute the desired deployment
 echo "***************************************"
 echo $TEST_NAMESPACE" : Deploy "$HELM_RELEASE" via helm3"
@@ -130,6 +135,7 @@ then
    mvn -DskipTests=false -Dtest=NLPIngestionTests test
    mvn -DskipTests=false -Dtest=NLPIngestionBLKTests test
    mvn -DskipTests=false -Dtest=FHIRDataQualityBLKTests test
+   mvn -DskipTests=false -Dtest=FHIRCQLTests test
 
    # JUNIT execution reports available in the below folder
    ls -lrt target/surefire-reports
@@ -143,7 +149,8 @@ then
    cat target/surefire-reports/categories.ASCVDIngestionBLKTests.txt
    cat target/surefire-reports/categories.NLPIngestionTests.txt
    cat target/surefire-reports/categories.NLPIngestionBLKTests.txt
-   cat target/surefire-reports/categories.FHIRDataQualityBLKTests.txt   
+   cat target/surefire-reports/categories.FHIRDataQualityBLKTests.txt  
+   cat target/surefire-reports/categories.FHIRCQLTests.txt 
     
 fi   
 echo "*************************************" 
