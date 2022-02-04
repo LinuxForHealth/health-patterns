@@ -1,0 +1,125 @@
+{
+    "scenarioName": "********ingest_FHIR_BLK_CQL_$EVAL********",
+    "ignoreStepFailures": true,
+    "steps": [ 
+        {
+            "name": "getTestEvalLibrary",
+            "url": "${pri_fhir_server}/Library?url=${4}",
+            "method": "GET",
+            "request": { },
+            "verify":{   
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 0
+                }
+            }
+        },
+        {
+            "name": "ingestPatient",
+            "url": "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json",
+                "DeidentifyData": "false"},
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1,
+                    "entry[0]": {
+                        "fullUrl": "$CONTAINS.STRING:${$.ingestPatient.response.body.entry[0].resource.id}"
+                     } 
+                }
+            }
+        },
+        {
+            "name": "postEvalLibrary",
+            "url": "${pri_fhir_server}/Library",
+            "method": "POST",
+            "request": { 
+                 "body":  "${3}" 
+            },
+            "verify":{
+                "status": 201     
+            }
+        }, 
+        {
+            "name": "evaluateCQLUsingEVALEndpoint",
+            "url": "${pri_fhir_server}/Library/$evaluate",
+            "method": "POST",
+            "request": {
+                "headers" : { "Content-Type": "application/json" },
+                "body": {
+                   "resourceType": "Parameters",
+                   "parameter": [
+                      {
+                         "name": "library",
+                         "valueCanonical": "${4}|${5}"
+                      },
+                      {
+                         "name": "subject",
+                         "valueString": "Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}"
+                      }
+                   ] 
+                }   
+            },
+            "verify":{
+                "status": 200   
+            }
+        }, 
+        {
+            "name": "verifyEvaluation",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.evaluateCQLUsingEVALEndpoint.response.body}",
+                 "string2": "\"valueBoolean\":true"
+            },
+            "verify": { "result": "true" }
+        }, 
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        },
+        {
+            "name": "deleteTestEvalLibrary",
+            "url": "${pri_fhir_server}/Library?url=${4}",
+            "method": "DELETE",
+            "request": { },
+            "verify":{
+                "status": 200     
+            }
+        }        
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738,${JSON.FILE:configs/FHIR-CQL-Gender-Eval-Library.json},http://health-patterns.com/health/Library/GenderEval,1.1.1"        
+        ]
+    }
+}
