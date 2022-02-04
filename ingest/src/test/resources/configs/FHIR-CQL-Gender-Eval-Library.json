@@ -1,0 +1,20 @@
+{
+   "resourceType": "Library",  
+   "id": "GenderEval",  
+   "name": "GenderEval",  
+   "url": "http://health-patterns.com/health/Library/GenderEval",  
+   "version": "1.1.1",  
+   "title": "GenderEval",  
+   "status": "active",  
+   "type": {    
+      "coding": [{        
+         "code": "logic-library"      
+      }]  
+    },
+    "date": "2022-02-03",  
+    "description": "Gender Eval CQL",  
+    "content": [{      
+       "contentType": "text/cql",      
+       "data": "bGlicmFyeSAiR2VuZGVyRXZhbCIgdmVyc2lvbiAnMS4xLjEnCgp1c2luZyBGSElSIHZlcnNpb24gJzQuMC4xJwoKY29udGV4dCBQYXRpZW50CgpkZWZpbmUgIlBhdGllbnQgaXMgTWFsZSI6CiAgIFBhdGllbnQuZ2VuZGVyLnZhbHVlID0gJ21hbGUn"
+     }] 
+}
