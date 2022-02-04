@@ -1,17 +1,17 @@
 name: nlp-insights push docker image 
 on: 
   workflow_dispatch:
-          inputs:
-            username:
-              description: 'docker login'
-              required: true
-            password:
-              description: 'docker user password'
-              required: true
-            server:
-              description: 'server'
-              required: false
-              default: 'docker.io'
+    inputs:
+      username:
+        description: 'docker login'
+        required: true
+      password:
+        description: 'docker user password'
+        required: true
+      server:
+        description: 'server'
+        required: false
+        default: 'docker.io'
 defaults:
   run:
     shell: bash
