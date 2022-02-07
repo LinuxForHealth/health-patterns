@@ -38,7 +38,11 @@ Once the container has been rebuilt and pushed, the helm chart `values.yaml` has
 This script is responsible for gathering all changed files, committing them, and then pushing those changes to github.
 
 ### ibm.yaml
-This action will create a deployment and run tests against it.
+This action will: 
+1. Create a test namespace in the health-patterns-1 cluster in the IBM Cloud. 
+1. Deploy a basic ingestion configuration in the test namespace.   
+1. Build and execute basic ingestion and enrichment tests.
+1. Clean up the deployment and namespace.
 
 ### maven.yml
 This action performs maven builds for a few of the services.
