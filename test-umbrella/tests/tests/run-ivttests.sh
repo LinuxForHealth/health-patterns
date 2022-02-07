@@ -171,8 +171,8 @@ then
 elif [ $RUN_IVT = "false" ]
 then
     echo "Skipping IVT"
+    
     # Create an ivttest.xml test result file that shows "good" or no results for the Insights toolchain
-
     touch ivttest.xml
 	
 fi	
