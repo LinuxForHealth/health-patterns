@@ -14,12 +14,13 @@
 # LOGLEVEL - test execution logging level (logback-test) ERROR, WARNING, or INFO
 # DEPLOY_NIFIKOP - true to configure/deploy nifikop, false to skip nifikop deployment
 
-# Setup the test environment
-chmod +x ./tests/toolchain-envsetup.sh
-source ./tests/toolchain-envsetup.sh "smoke"
 
 if [ $RUN_SMOKE = "true" ]
 then
+
+	# Setup the test environment
+	chmod +x ./tests/toolchain-envsetup.sh
+	source ./tests/toolchain-envsetup.sh "smoke"
 
 	# Setup for NifiKop Deployment if enabled
 	cd /workspace/$TEST_NAMESPACE/health-patterns/test-umbrella/tests
@@ -143,4 +144,17 @@ then
 	elif [ $RUN_SMOKE = "false" ]
 	then
 	    echo "Skipping Smoke Tests"
+	    
+	    # Create a smoketests.xml test result file that shows "good" or no results for the Insights toolchain
+
+		output="<testcase classname=\"bash\" name=\"test1\" time=\"0\"/>"
+		currentTime=`date +"%Y-%m-%dT%T"`
+		header="<testsuite name=\"Smoke tests\" tests=\"0\" failures=\"0\" errors=\"0\" skipped=\"0\" timestamp=\"${currentTime}\" time=\"0\">"
+		footer="</testsuite>"
+		
+		cat << EOF > smoketests.xml
+		$header
+		$output
+		$footer
+		EOF
 	fi    
