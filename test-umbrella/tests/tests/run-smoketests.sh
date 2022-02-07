@@ -18,7 +18,7 @@
 chmod +x ./tests/toolchain-envsetup.sh
 source ./tests/toolchain-envsetup.sh "smoke"
 
-if [ RUN_SMOKE = "false"]
+if [ $RUN_SMOKE = "false"]
 then
 echo " Not running Smoke Tests"
 exit 0

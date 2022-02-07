@@ -14,7 +14,7 @@
 # LOGLEVEL - test execution logging level (logback-test) ERROR, WARNING, or INFO
 # DEPLOY_NIFIKOP - true to configure/deploy nifikop, false to skip nifikop deployment
 
-if [ RUN_IVT = "false"]
+if [ $RUN_IVT = "false"]
 then
 echo " Not running IVT"
 exit 0
