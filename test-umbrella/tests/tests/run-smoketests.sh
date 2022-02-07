@@ -141,10 +141,11 @@ then
 	chmod +x /workspace/test-umbrella/tests/tests/testCleanUp.sh
 	source /workspace/test-umbrella/tests/tests/testCleanUp.sh
 
-	elif [ $RUN_SMOKE = "false" ]
-	then
-	    echo "Skipping Smoke Tests"
-	    
-	    # Create a smoketests.xml test result file that shows "good" or no results for the Insights toolchain
-        touch smoketests.xml
-	fi    
+elif [ $RUN_SMOKE = "false" ]
+then
+    echo "Skipping Smoke Tests"
+    
+    # Create a smoketests.xml test result file that shows "good" or no results for the Insights toolchain
+    touch smoketests.xml
+        
+fi    

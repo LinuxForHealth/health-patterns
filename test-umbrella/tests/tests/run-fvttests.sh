@@ -151,6 +151,7 @@ then
 	chmod +x /workspace/test-umbrella/tests/tests/testCleanUp.sh
 	source /workspace/test-umbrella/tests/tests/testCleanUp.sh
 elif [ $RUN_FVT = "false" ]
+then
     echo "Skipping FVT"
     
     # Create a fvttest.xml test result file that shows "good" or no results for the Insights toolchain
