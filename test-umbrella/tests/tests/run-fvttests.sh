@@ -14,6 +14,13 @@
 # LOGLEVEL - test execution logging level (logback-test) ERROR, WARNING, or INFO
 # DEPLOY_NIFIKOP - true to configure/deploy nifikop, false to skip nifikop deployment
 
+if [ RUN_FVVT = "false"]
+then
+echo " Not running FVT"
+exit 0
+fi
+
+
 # Setup the test environment
 chmod +x ./tests/toolchain-envsetup.sh
 source ./tests/toolchain-envsetup.sh "fvt"

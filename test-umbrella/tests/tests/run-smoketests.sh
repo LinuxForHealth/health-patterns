@@ -18,6 +18,12 @@
 chmod +x ./tests/toolchain-envsetup.sh
 source ./tests/toolchain-envsetup.sh "smoke"
 
+if [ RUN_SMOKE = "false"]
+then
+echo " Not running Smoke Tests"
+exit 0
+fi
+
 # Setup for NifiKop Deployment if enabled
 cd /workspace/$TEST_NAMESPACE/health-patterns/test-umbrella/tests
 chmod +x ./tests/NifiKopValues.sh
