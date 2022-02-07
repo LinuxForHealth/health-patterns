@@ -146,16 +146,5 @@ then
 	    echo "Skipping Smoke Tests"
 	    
 	    # Create a smoketests.xml test result file that shows "good" or no results for the Insights toolchain
-
-		output="<testcase classname=\"bash\" name=\"test1\" time=\"0\"/>"
-		currentTime=`date +"%Y-%m-%dT%T"`
-		header="<testsuite name=\"Smoke tests\" tests=\"0\" failures=\"0\" errors=\"0\" skipped=\"0\" timestamp=\"${currentTime}\" time=\"0\">"
-		footer="</testsuite>"
-		
-		cat << EOF > smoketests.xml
-		$header
-		$output
-		$footer
-		EOF
-		
+        touch smoketests.xml
 	fi    
