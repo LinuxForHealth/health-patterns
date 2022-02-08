@@ -13,6 +13,9 @@
 # INGRESS_SUBDOMAIN - ingress subdomain for the deployment
 # LOGLEVEL - test execution logging level (logback-test) ERROR, WARNING, or INFO
 # DEPLOY_NIFIKOP - true to configure/deploy nifikop, false to skip nifikop deployment
+# RUN_SMOKE - true/false - select to run/not run the smoke tests
+# RUN_FVT - true/false - select to run/not run the FVT tests
+# RUN_IVT - true/false - select to run/not run the IVT tests
 
 if [ $RUN_IVT = "true" ]
 then
