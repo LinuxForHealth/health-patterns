@@ -144,8 +144,8 @@ then
 elif [ $RUN_SMOKE = "false" ]
 then
     echo "Skipping Smoke Tests"
-    
     # Create a smoketests.xml test result file that shows "good" or no results for the Insights toolchain
-    touch smoketests.xml
+    chmod +x /workspace/test-umbrella/tests/tests/createZeroTestResults.sh
+    source /workspace/test-umbrella/tests/tests/createZeroTestResults.sh smoketests.xml smoketest
         
 fi    

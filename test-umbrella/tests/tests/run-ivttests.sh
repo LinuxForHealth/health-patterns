@@ -173,6 +173,7 @@ then
     echo "Skipping IVT"
     
     # Create an ivttest.xml test result file that shows "good" or no results for the Insights toolchain
-    touch ivttest.xml
+    chmod +x /workspace/test-umbrella/tests/tests/createZeroTestResults.sh
+    source /workspace/test-umbrella/tests/tests/createZeroTestResults.sh ivttest.xml IVT
 	
 fi	

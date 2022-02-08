@@ -155,6 +155,7 @@ then
     echo "Skipping FVT"
     
     # Create a fvttest.xml test result file that shows "good" or no results for the Insights toolchain
-    touch fvttest.xml
+    chmod +x /workspace/test-umbrella/tests/tests/createZeroTestResults.sh
+    source /workspace/test-umbrella/tests/tests/createZeroTestResults.sh fvttest.xml FVT
 	
 fi  
