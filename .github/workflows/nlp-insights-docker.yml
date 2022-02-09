@@ -5,13 +5,26 @@ on:
       username:
         description: 'docker login'
         required: true
+        default: ${{ secrets.DOCKER_HUB_USERNAME }}
       password:
         description: 'docker user password'
         required: true
+        default: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      org:
+        description: 'docker organization'
+        required: true
+        default: 'alvearie'
+      repo:
+        description: 'docker repository'
+        required: true
+        default: 'nlp-insights'
       server:
         description: 'server'
-        required: false
+        required: true
         default: 'docker.io'
+      version:
+        description: 'image version tag'
+        required: true
 defaults:
   run:
     shell: bash
@@ -37,7 +50,9 @@ jobs:
     - name: Docker login
       run: echo "::add-mask::${{ github.event.inputs.username }}" | docker login --username ::add-mask::${{ github.event.inputs.username }} --password-stdin ${{ github.event.inputs.server }}
     - name: Docker build
-      run:  ./gradlew docker -PdockerUser=::add-mask::${{ github.event.inputs.username }}
+      run:  ./gradlew docker -PdockerUser=${{ github.event.inputs.org }}/${{ github.event.inputs.repo }} -Pversion=${{ github.event.inputs.version }}
+    - name: Docker push
+      run:  ./gradlew dockerPush -PdockerUser=${{ github.event.inputs.org }}/${{ github.event.inputs.repo }} -Pversion=${{ github.event.inputs.version }}
 
 
 
