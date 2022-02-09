@@ -27,6 +27,7 @@ import categories.ASCVDIngestionBLK;
 import categories.NLPIngestion;
 import categories.NLPIngestionBLK;
 import categories.FHIRProxyIngestion;
+import categories.FHIRCQL;
 
 @TargetEnv("clinical-ingestion-flow.properties")
 @RunWith(ZeroCodeUnitRunner.class)
@@ -169,6 +170,19 @@ public class Ingestion_Flow {
 	 @Category({FHIRDataQualityBLK.class})
 	 @Scenario("scenarios/ingest_FHIR_Data_Quality_BLK.json")
 	    public void ingest_FHIR_Data_Quality_BLK() throws Exception {
+	    }
+	 
+	 //  FHIR CQL Endpoint Tests
+	 @Test
+	 @Category({FHIRCQL.class})
+	 @Scenario("scenarios/ingest_FHIR_BLK_CQL_$CQL.json")
+	    public void ingest_FHIR_BLK_CQL_$CQL() throws Exception {
+	    }
+	 
+	 @Test
+	 @Category({FHIRCQL.class})
+	 @Scenario("scenarios/ingest_FHIR_BLK_CQL_$EVAL.json")
+	    public void ingest_FHIR_BLK_CQL_$EVAL() throws Exception {
 	    }
 	 
 }

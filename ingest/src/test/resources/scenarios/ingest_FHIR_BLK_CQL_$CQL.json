@@ -1,0 +1,78 @@
+{
+    "scenarioName": "********ingest_FHIR_BLK_CQL_$CQL********",
+    "ignoreStepFailures": true,
+    "steps": [ 
+        {
+            "name": "ingestPatient",
+            "url": "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json",
+                "DeidentifyData": "false"},
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "verifyPatientIngestion",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1,
+                    "entry[0]": {
+                        "fullUrl": "$CONTAINS.STRING:${$.ingestPatient.response.body.entry[0].resource.id}"
+                     } 
+                }
+            }
+        }, 
+        {
+            "name": "evaluateCQLUsingCQLEndpoint",
+            "url": "${pri_fhir_server}/$cql?expression=64%20%2B%2040&subject=Patient%2F${$.ingestPatient.response.body.entry[0].resource.id}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Parameters",
+                    "parameter[0]": {
+                        "name": "return",
+                        "part[0]":{
+                            "name": "InlineExpression",
+                            "valueInteger": 104
+                        } 
+                     } 
+                }
+            }
+        },  
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }         
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738"        
+        ]
+    }
+}
