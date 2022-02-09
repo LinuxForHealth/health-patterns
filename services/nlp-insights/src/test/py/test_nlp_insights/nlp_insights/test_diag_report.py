@@ -191,6 +191,30 @@ class TestDiagReportUsingAcd(UnitTestUsingExternalResource):
             )
             self.assertFalse(cmp, cmp.pretty())
 
+    def test_when_post_diag_bundle_then_adverse_event_derived(self):
+        bundle = make_bundle(
+            [
+                make_diag_report(
+                    subject=make_patient_reference(),
+                    attachments=[
+                        make_attachment(unstructured_text.TEXT_FOR_ADVERSE_EVENT)
+                    ],
+                )
+            ]
+        )
+
+        with app.app.test_client() as service:
+            configure_acd(service)
+            insight_resp = service.post("/discoverInsights", data=bundle.json())
+            self.assertEqual(200, insight_resp.status_code)
+
+            actual_bundle = Bundle.parse_obj(insight_resp.get_json())
+            cmp = compare_actual_to_expected(
+                expected_path=self.expected_output_path(),
+                actual_resource=actual_bundle,
+            )
+            self.assertFalse(cmp, cmp.pretty())
+
     def test_when_post_diag_bundle_then_medication_derived(self):
         bundle = make_bundle(
             [
