@@ -4,7 +4,7 @@
 The discoverInsights API accepts an input bundle and returns an updated bundle with:
 * Resources that have been enriched with additional codes
 * Resources that have been derived from unstructured text (such as clinical notes) contained within the bundle's resources.
-
+ 
 | Action | Method | Endpoint | Body | Returns on Success |
 |:------:|:------:|:---------|:----:|:-------:|
 | Add insights | `POST` | `/discoverInsights` | FHIR bundle | Enriched FHIR Bundle |
@@ -37,25 +37,198 @@ The app currently supports running two different NLP engine types:
 * [IBM's Annotator for Clinical Data (ACD)](https://www.ibm.com/cloud/watson-annotator-for-clinical-data) and 
 * [open-source QuickUMLS](https://github.com/Georgetown-IR-Lab/QuickUMLS)
 
-It is possible to configure as many different instances of these two engines as needed with different configuration details.  Configuation jsons require a `name`, an `nlpServiceType` (either `acd` or `quickumls`), and config details specific to that type.
-For quickumls, an `endpoint` is required. For ACD, an `endpoint`, an `apikey`, and a `flow`.
+It is possible to configure as many different instances of these two engines as needed with different configuration details.
 
-| &nbsp; | Method | Endpoint | Body | Returns on Success |
-|:------:|:------:|:---------|:----:|:-------:|
-  __Config Definition__ | &nbsp; | &nbsp; | &nbsp; | &nbsp; 
-| Get All Configs | `GET` | `/all_configs` |&nbsp; | Newline-delimited list of config names |
-| Add Named Config  | `PUT/POST` | `/config/definition` | Config (json) contains `name` | Status `200`
-| Delete Config | `DELETE` | `/config/{configName}` | | Status `200` |
-| Get Config Details | `GET` | `/config/{configName}` | | Config details named `configName` |
- &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp;
- __Default NLP__ | &nbsp; | &nbsp; | &nbsp; | &nbsp;
-| Make Config default | `POST/PUT` | `/config/setDefault?name={configName}` | | Status `200` |
-| Get Current Default Config | `GET` | `/config` | | Current default `configName` |
-| Clear default config | `POST/PUT` | `/config/clearDefault` | | Status `200` |
- &nbsp; | &nbsp; | &nbsp; | &nbsp; | &nbsp;
- __Override NLP engine for a resource__ | &nbsp; | &nbsp; | &nbsp; | &nbsp;
-| Get all active overrides | `GET` | `/config/resource` | | dictionary-Status `200` |
-| Get the active override for a resource | `GET` | `/config/resource/{resource}` | | `configName`-Status `200` |
-| Add resource override | `POST/PUT` | `/config/resource/{resourcetype}/{configName}` | | Status `200` |
-| Delete a resource override | `DELETE` | `/config/resource/{resourcetype}` | | Status `200` |
-| Delete all resource overrides | `DELETE` | `/config/resource` | | Status `200` |
+### Configuration Definition
+The configuration definition jsons that are used by the APIs require a `name`, an `nlpServiceType` (either `acd` or `quickumls`), and config details specific to that type.
+
+#### QuickUmls
+For QuickUmls, an `endpoint` is required.
+
+Sample configuration json:
+
+```json
+{
+  "name": "quickconfig1",
+  "nlpServiceType": "quickumls",
+  "config": {
+    "endpoint": "https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match"
+  }
+}
+```
+
+#### ACD
+For ACD, an `endpoint`, an `apikey`, and a `flow` are required. The nlp-insights service is desgined to work with the
+flow `wh_acd.ibm_clinical_insights_v1.0_standard_flow`, other flows may require code modifications.
+
+Sample Configuration json:
+
+```json
+{
+  "name": "acdconfig1",
+  "nlpServiceType": "acd",
+  "config": {
+    "apikey": "***api key***",
+    "endpoint": "https://<endpoint-url>/wh-acd/api",
+    "flow": "wh_acd.ibm_clinical_insights_v1.0_standard_flow"
+  }
+}
+```
+### Configuration endpoints
+These APIs are used for configuring the NLP engine that will be used to discover insights. Successful requests will return a 2xx status code. Requests using the GET method will also respond with a json object in the response body.
+
+<table cellspacing=0 cellpadding=0 border=0>
+<thead>
+<tr align="left"><th> &nbsp; </th><th> Method &<BR/> Endpoint</th><th> Body </th><th> Response Body on Success </th></tr>
+</thead>
+<tbody>
+<tr> <th colspan=4  align="left"> Config Definition</th></tr>
+
+<tr><td> Get All Configs </td><td> GET <BR/><I><code>/all_configs</code></I></td><td></td><td> Config definition names: 
+
+```json 
+{
+  "all_configs": [
+    "acdconfig1",
+    "quickconfig1"
+  ]
+}
+``` 
+
+</td></tr>
+
+<tr><td> Add Named Config </td><td> PUT/POST <BR/><I><code>/config/definition</code></I></td><td>json config see:
+
+* [Configuration Definition](#configuration-definition)
+
+</td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
+
+<tr><td> Delete Config </td><td> DELETE<BR/><I><code>/config/{configName}</code></I></td> <td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
+
+<tr><td> Get Config Details </td><td> GET <BR/><I><Code>/config/{configName}</CODE></I></td><td></td><td> Configuration json (sensitive data will be masked):
+
+QuickUmls Example:
+
+```json
+{
+  "name": "quickconfig1",
+  "nlpServiceType": "quickumls",
+  "config": {
+    "endpoint": "http://endpoint/match"
+  }
+}
+```
+
+ACD Example:
+
+```json
+{
+  "name": "acdconfig1",
+  "nlpServiceType": "acd",
+  "config": {
+    "apikey": "********************************************",
+    "endpoint": "https://endpoint/api",
+    "flow": "wh_acd.ibm_clinical_insights_v1.0_standard_flow"
+  }
+}
+
+```
+
+</td></tr>
+
+</tbody>
+<tbody>
+<tr><th colspan=4 align="left"> Default NLP</th></tr>
+
+<tr><td> Make Config default </td><td> POST/PUT <BR/><I><Code>/config/setDefault?name={configName}</CODE></I></td><td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
+
+<tr><td> Get Current Default Config </td><td> GET <BR/><I><Code>/config</Code></I></td><td></td><td> Current default configName:
+
+```json
+{
+  "config": "acdconfig1"
+}
+```
+</td></tr>
+
+<tr><td> Clear default config </td><td> POST/PUT <BR/><I><CODE>/config/clearDefault</CODE></I></td><td> </td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
+
+
+</tbody><tbody>
+<tr><th colspan=4 align="left"> Override NLP Engine for a resource </th></tr>
+
+<tr><td>  Get all active overrides </td><td> GET <BR/><I><CODE>/config/resource</CODE></I> </td><td></td><td>
+Dictionary of overrides:
+
+```json
+{
+  "AllergyIntolerance": "acdconfig1",
+  "Condition": "acdconfig1"
+}
+```
+
+If no overrides are defined:
+
+```json
+{}
+```
+
+</td></tr>
+
+<tr><td>Get the active override for a resource </td><td> GET <Br/><I><CODE>/config/resource/{resource}</CODE></I></td><td> </td><td>
+Dictionary of override:
+
+```json
+{
+  "Condition": "acdconfig1"
+}
+```
+
+If no override is defined:
+
+```json
+{
+  "AllergyIntolerance": null
+}
+```
+</td></tr>
+<tr><td>Add resource override</td><td>POST/PUT<br/><I><CODE>/config/resource/{resourcetype}/{configName}</CODE></I></td><td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
+<tr><td>Delete a resource override</td><td>DELETE<BR/><I><CODE>/config/resource/{resourcetype}</CODE></I></td><td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
+<tr><td>Delete all resource overrides</td><td>DELETE<br/><I><CODE>/config/resource</CODE></I></td><td></td><td>Status: <CODE>204 NO CONTENT</CODE></td></tr>
+</tbody>
+</table> 
+
+
+# Error Responses
+Responses with status codes in the 4xx range usually have a json body with a "message" property with a human readable description. Other details about the error may also be included in the structure.
+
+## Example response when an invalid json is sent to the discoverInsights API:
+* Status Code = 400
+
+```json
+{
+  "message": "Resource was not valid json: Expecting property name enclosed in double quotes: line 29 column 10 (char 676)"
+}
+```
+
+## Example response when an invalid FHIR resource is sent to the discoverInsights API
+* Status Code = 400
+
+```json
+{
+  "message": "Resource was not valid",
+  "details": [
+    {
+      "loc": [
+        "reaction",
+        0,
+        "manifestation",
+        0,
+        "text2"
+      ],
+      "msg": "extra fields not permitted",
+      "type": "value_error.extra"
+    }
+  ]
+}
+```

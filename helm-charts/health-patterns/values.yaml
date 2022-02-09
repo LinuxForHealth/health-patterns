@@ -478,7 +478,7 @@ kafka:
 deid:
   enabled: true
   image:
-    tag: 0.0.1
+    tag: v1.1.2
   ingress:
     # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
     enabled: false

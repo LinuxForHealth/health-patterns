@@ -1,9 +1,7 @@
 {
     "scenarioName": "********enrich_NLP_Insights_Config_CRUD********",
-    "ignoreStepFailures": false,
+    "ignoreStepFailures": true,
     "steps": [ 
-
- 
         {
             "name": "createConfig${0}",
             "url": "${nlp_insights}/config/definition",
@@ -12,7 +10,7 @@
                 "body" : "${1}"
                 },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -27,14 +25,23 @@
             }
         },
         {
-            "name": "getAllConfigs${0}",
+            "name": "getAllConfigs",
             "url": "${nlp_insights}/all_configs",
             "operation": "GET",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "rawBody":"$CONTAINS.STRING:${2}"
+                "status": 200
             }
+        },
+              {
+            "name": "verifyConfigNameInList${0}",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getAllConfigs.response.body}",
+                 "string2": "${2}"
+            },
+            "verify": { "result": "true" }
         },
         {
             "name": "setDefaultConfig${0}",
@@ -42,8 +49,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200,
-                "rawBody":"$CONTAINS.STRING:${2}"
+                "status": 204
             }
         },        
         {
@@ -53,7 +59,9 @@
                 "request": { },            
             "verify": {
                 "status": 200,
-                "rawBody":"$CONTAINS.STRING:${2}"
+                "body": {
+                   "config": "${2}"
+                }
             }
         },
         {
@@ -64,7 +72,7 @@
                 "body" : "${1}"
                 },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -82,7 +90,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
              }
         },
         {
@@ -91,7 +99,7 @@
             "operation": "DELETE",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
             }
         },
         {
@@ -125,8 +133,9 @@
      ],
      "parameterized": {
         "csvSource":[
-            "POST,${JSON.FILE:configs/NLP-POST-config.json},NLP-POST-config",
-            "PUT,${JSON.FILE:configs/NLP-PUT-config.json},NLP-PUT-config"
+            "PUT,${JSON.FILE:configs/NLP-PUT-config.json},NLP-PUT-config",
+            "POST,${JSON.FILE:configs/NLP-POST-config.json},NLP-POST-config"
+            
         ]
     }
 }

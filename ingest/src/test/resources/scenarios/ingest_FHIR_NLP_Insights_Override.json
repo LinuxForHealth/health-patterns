@@ -1,24 +1,21 @@
 {
     "scenarioName": "********ingest_FHIR_NLP_Insights_Override********",
-    "ignoreStepFailures": false,
+    "ignoreStepFailures": true,
     "steps": [ 
         {
-            "name": "addllergyToleranceOverride",
-            "url": "${nlp_insights}/config/resource/AllergyIntolerance/acd",
-            "operation": "POST",           
+            "name": "deleteDocRefOverrideAtStart",
+            "url": "${nlp_insights}/config/resource/DocumentReference",
+            "operation": "DELETE",           
                 "request": { },            
-            "verify": {
-                "status": 200,
-                "rawBody": "$CONTAINS.STRING:'AllergyIntolerance': 'acd'"
-            }
+            "verify": {  }
         },
         {
-            "name": "ingestPatient",
+            "name": "ingestPatientNoOverride",
             "url":  "${expose_kafka}?topic=${kafka.ingestion.topic}",
             "operation": "POST",           
                 "request": {
                 "headers" : { "Content-Type": "application/json", 
-                               "AddNLPInsights": "${3}",
+                               "AddNLPInsights": "true",
                                "DeidentifyData": "false",
                                "RunFHIRDataQuality": "false" },
                     "body":  "${0}" },            
@@ -28,7 +25,7 @@
         },
                
         {
-            "name": "waitForIngestion",
+            "name": "waitForIngestionNoOverride",
             "url": "utilities.ZerocodeUtilities",
             "method": "secondsDelay",
             "request": 15,
@@ -37,7 +34,7 @@
         },
         
         {
-            "name": "verifyPatientIngestion",
+            "name": "verifyPatientIngestionNoOverride",
             "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
             "method": "GET",
             "request": {
@@ -51,8 +48,8 @@
             }
         },
         {
-            "name": "getPatientImmunization",
-            "url": "${pri_fhir_server}/Immunization",
+            "name": "getPatientConditionNoOverride",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionNoOverride.response.body.entry[0].resource.id}/Condition",
             "method": "GET",
             "request": {
             },
@@ -61,38 +58,18 @@
                 }
         },  
         {
-            "name": "verifyAnalyticType",
+            "name": "verifyAnalyticTypeNoOverride",
             "url": "utilities.ZerocodeUtilities",
             "method": "containsString",
             "request": {
-                 "string1": "${$.getPatientImmunization.response.body}",
+                 "string1": "${$.getPatientConditionNoOverride.response.body}",
                  "string2": "${4}"
             },
-            "verify": { "result": "${3}" }
+            "verify": { "result": "false" }
         },  
         {
-            "name": "getPatientAllergyIntolerance",
-            "url": "${pri_fhir_server}/AllergyIntolerance",
-            "method": "GET",
-            "request": {
-            },
-            "verify": {
-                "status": 200 
-                }
-        },  
-        {
-            "name": "verifyAnalyticType",
-            "url": "utilities.ZerocodeUtilities",
-            "method": "containsString",
-            "request": {
-                 "string1": "${$.getPatientAllergyIntolerance.response.body}",
-                 "string2": "ACD Structured"
-            },
-            "verify": { "result": "${3}" }
-        },  
-        {
-            "name": "deletePatientOnPhiFHIR",
-            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestion.response.body.entry[0].resource.id}",
+            "name": "deletePatientOnPhiFHIRNoOverride",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionNoOverride.response.body.entry[0].resource.id}",
             "method": "DELETE",
             "request": {
             },
@@ -102,17 +79,225 @@
                     "resourceType": "OperationOutcome",
                     "issue": [{
                         "details": {
-                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestion.response.body.entry[0].resource.id}" 
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestionNoOverride.response.body.entry[0].resource.id}" 
                            }
                      }]
                 }
             }
-        }          
+        },        
+        {
+            "name": "GetAllConditions",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionNoOverride.response.body.entry[0].resource.id}/Condition",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "deleteCondition1",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition2",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[1].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition3",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[2].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition4",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[3].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition5",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[4].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition6",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[5].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "addDocumentReferenceOverride",
+            "url": "${nlp_insights}/config/resource/DocumentReference/acd",
+            "operation": "POST",           
+                "request": { },            
+            "verify": {
+                "status": 204
+            }
+        },        
+        {
+            "name": "ingestPatientWithOverride",
+            "url":  "${expose_kafka}?topic=${kafka.ingestion.topic}",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json", 
+                               "AddNLPInsights": "true",
+                               "DeidentifyData": "false",
+                               "RunFHIRDataQuality": "false" },
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+               
+        {
+            "name": "waitForIngestionWithOverride",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 15,
+            "verify": {
+            }
+        },
+        
+        {
+            "name": "verifyPatientIngestionWithOverride",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                }
+            }
+        },
+        {
+            "name": "getPatientConditionWithOverride",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionWithOverride.response.body.entry[0].resource.id}/Condition",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200 
+                }
+        },  
+        {
+            "name": "verifyAnalyticTypeWithOverride",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getPatientConditionWithOverride.response.body}",
+                 "string2": "${4}"
+            },
+            "verify": { "result": "true" }
+        },  
+        {
+            "name": "deletePatientOnPhiFHIRWithOverride",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionWithOverride.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestionWithOverride.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        },
+        {
+            "name": "GetAllConditions",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionWithOverride.response.body.entry[0].resource.id}/Condition",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "deleteCondition1",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition2",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[1].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition3",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[2].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition4",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[3].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition5",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[4].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },
+        {
+            "name": "deleteCondition6",
+            "url": "${pri_fhir_server}/Condition/${$.GetAllConditions.response.body.entry[5].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        },       
+        {
+            "name": "deleteDocRefOverride",
+            "url": "${nlp_insights}/config/resource/DocumentReference",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {
+            }
+        }           
     ],
     "parameterized": {
         "csvSource":[
-            "${JSON.FILE:Patients/patientbundleNLP.json},Alethea978,Crooks009,true,QuickUMLS Structured",
-            "${JSON.FILE:Patients/patientbundleNLP.json},Alethea978,Crooks009,false,QuickUMLS Structured"        
+            "${JSON.FILE:Patients/patientbundleNLP.json},Alethea978,Crooks009,true,alvearie.io/health_patterns/services/nlp_insights/acd"        
          ]
     }
 }

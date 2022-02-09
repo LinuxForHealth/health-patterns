@@ -161,14 +161,14 @@
         "url": "Condition"
       },
       "resource": {
-	"clinicalStatus" : {
-		"coding" : [
-			{
-			"system" : "http://terminology.hl7.org/CodeSystem/condition-clinical",
-			"code" : "active"
-			}
-		]
-	},
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
         "code": {
           "text": "diabetes"
         },
@@ -179,21 +179,20 @@
       }
     },
     {
-     "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000003",
+      "fullUrl": "urn:uuid:00000000-0000-0000-0000-000000000003",
       "request": {
         "method": "POST",
         "url": "AllergyIntolerance"
       },
       "resource": {
-
-	"clinicalStatus" : {
-		"coding" : [
-			{
-			"system" : "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
-			"code" : "active"
-			}
-		]
-	},
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+              "code": "active"
+            }
+          ]
+        },
         "code": {
           "text": "peanut"
         },
@@ -210,15 +209,14 @@
         "url": "AllergyIntolerance"
       },
       "resource": {
-
-	"clinicalStatus" : {
-		"coding" : [
-			{
-			"system" : "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
-			"code" : "active"
-			}
-		]
-	},
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+              "code": "active"
+            }
+          ]
+        },
         "code": {
           "text": "amoxicillin"
         },
@@ -232,4 +230,3 @@
   "type": "transaction",
   "resourceType": "Bundle"
 }
-

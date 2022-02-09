@@ -57,8 +57,8 @@ def pdiff(a: Any, b: Any) -> str:
                 a_str.splitlines(keepends=True), b_str.splitlines(keepends=True)
             )
         )
-    else:
-        return ""
+
+    return ""
 
 
 class ResourceDifferences:

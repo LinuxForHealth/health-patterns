@@ -9,7 +9,7 @@
             "operation": "${0}",           
                 "request": { },            
             "verify": {
-                "status": 200
+                "status": 204
              }
         },              
         {
@@ -58,7 +58,9 @@
                 "request": { },            
             "verify": {
                 "status": 400,
-                "rawBody":"$CONTAINS.STRING:No default nlp service is currently set"
+                "body": {
+                    "message": "No default nlp service is currently set"
+                }
             }
         }             
      ],
