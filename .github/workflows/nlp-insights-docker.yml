@@ -5,11 +5,9 @@ on:
       username:
         description: 'docker login'
         required: true
-        default: ${{ secrets.DOCKER_HUB_USERNAME }}
       password:
         description: 'docker user password'
         required: true
-        default: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       org:
         description: 'docker organization'
         required: true
