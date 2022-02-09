@@ -13,6 +13,7 @@
 # limitations under the License.
 """Methods for comparing expected vs actual test results"""
 import base64
+
 import difflib
 import json
 from json.decoder import JSONDecodeError
@@ -64,7 +65,7 @@ class ResourceDifferences:
     """Wraps differences for easier debug"""
 
     def __init__(
-        self, expected: Resource, actual: Resource, exclude_types={bytes}
+        self, expected: Resource, actual: Resource, exclude_types=frozenset({bytes})
     ) -> None:
         """Determines the differences between an expected resource and a test case actual
 
