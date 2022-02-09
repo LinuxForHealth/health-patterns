@@ -46,7 +46,7 @@ jobs:
            sudo pip3 install -U pip
       
     - name: Docker login
-      run: echo "::add-mask::${{ github.event.inputs.username }}" | docker login --username ::add-mask::${{ github.event.inputs.username }} --password-stdin ${{ github.event.inputs.server }}
+      run: echo ::add-mask::${{ github.event.inputs.password }} | docker login --username ${{ github.event.inputs.username }} --password-stdin ${{ github.event.inputs.server }}
     - name: Docker build
       run:  ./gradlew docker -PdockerUser=${{ github.event.inputs.org }}/${{ github.event.inputs.repo }} -Pversion=${{ github.event.inputs.version }}
     - name: Docker push
