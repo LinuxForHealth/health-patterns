@@ -149,7 +149,7 @@ def get_derived_medication_confidences(
     """Returns confidences for a derived medication
 
     Args: insight_model_data - model data from the attribute's concept
-    Returns: a list of confidence builders, or none if confidences could not be computed.
+    Returns: a list of confidence builders, or empty list if confidences could not be computed.
     """
     if not insight_model_data:
         return []
@@ -168,7 +168,7 @@ def get_derived_ae_confidences(
     """Returns confidences for a derived medication adverse event
 
     Args: insight_model_data - model data from the attribute's concept
-    Returns: a list of confidence builders, or none if confidences could not be computed.
+    Returns: a list of confidence builders, or empty list if confidences could not be computed.
     """
     if not insight_model_data:
         return []
@@ -184,18 +184,18 @@ def get_derived_ae_confidences(
 def get_ae_taken_confidence(
     insight_model_data: InsightModelData,
 ) -> Optional[InsightConfidenceBuilder]:
-    """Returns a builder for the adverse event medication taken confidence, if the confidence exists
+    """Returns a builder for the adverse event score confidence, if the confidence exists
     """
     try:
-        taken_score = insight_model_data.medication.usage.taken_score
+        ae_score = insight_model_data.medication.adverseEvent.get("score", 0.0)
     except AttributeError:
         return None
 
     return InsightConfidenceBuilder(
         ConfidenceMethod(
             acd_scoring_method.SCORING_METHOD_ACD_CODE_SYSTEM,
-            acd_scoring_method.MEDICATION_TAKEN_SCORE,
+            acd_scoring_method.ADVERSE_EVENT_SCORE,
         ),
-        taken_score,
-        "Medication Taken Score",
+        ae_score,
+        "Adverse Event Score",
     )

@@ -26,3 +26,4 @@ SCORING_METHOD_ACD_CODE_SYSTEM = (
 DIAGNOSIS_EXPLICIT_SCORE = "Diagnosis_Explicit_Score"
 DIAGNOSIS_PATIENT_REPORTED_SCORE = "Diagnosis_Patient_Reported_Score"
 MEDICATION_TAKEN_SCORE = "Medication_Taken_Score"
+ADVERSE_EVENT_SCORE = "Adverse_Event_Score"
