@@ -13,6 +13,7 @@
 # limitations under the License.
 """Methods for comparing expected vs actual test results"""
 import base64
+
 import difflib
 import json
 from json.decoder import JSONDecodeError

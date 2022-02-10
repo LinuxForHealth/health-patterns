@@ -1,9 +1,8 @@
 plugins {
   id "ru.vyarus.use-python" version "2.3.0"
-  id "com.palantir.docker" version "0.27.0"
-  id 'com.palantir.docker-run' version "0.27.0"
+  id "com.palantir.docker" version "0.32.0"
+  id 'com.palantir.docker-run' version "0.32.0"
 }
-
 
 group = ''
 description = """NLP Insights"""
@@ -12,32 +11,35 @@ description = """NLP Insights"""
 ext {
   buildVenv = "${buildDir}/venv"
   rootPackage = "nlp_insights"
-  
+  dockerZipFile = "${buildDir}/dockerFileArchive.zip"
+
   production_pkgs = [
     'ibm-whcs-sdk:1.9.0',
     'fhir.resources:6.1.0',
-    'flask:2.0.1']
+    'flask:2.0.1'
+  ]
 
   dev_pkgs = [
     'pytest:6.2.5',
-    'pytest-cov:2.7.1',
+    'pytest-cov:3.0.0',
     'deepdiff:5.5.0',
     'flake8:4.0.1',
     'types-requests:2.25.9',
     /* https://docs.python.org/3/library/venv.html
-    Common installation tools such as setuptools and pip work as expected with virtual environments.
-    In other words, when a virtual environment is active, they install Python packages into the virtual environment
-    without needing to be told to do so explicitly.
-    Explicitly trying to install wheel causes this task to always run, because wheel is already there,
-    but wasn't installed by the build process.
-    */
+     Common installation tools such as setuptools and pip work as expected with virtual environments.
+     In other words, when a virtual environment is active, they install Python packages into the virtual environment
+     without needing to be told to do so explicitly.
+     Explicitly trying to install wheel causes this task to always run, because wheel is already there,
+     but wasn't installed by the build process.
+     */
     //'wheel:0.36.2',
     'pytest-html:3.1.1',
     'pylint:2.10.2',
-    'pylint-junit:0.3.2',
+    'pylint2junit:1.0.1',
     'flake8-formatter-junit-xml:0.0.6',
-    'mypy:0.910']
-  }
+    'mypy:0.931'
+  ]
+}
 
 
 
@@ -73,11 +75,11 @@ task createRequirementsTextForDev {
   // intentionally going into the project directory
   // developers need a way to install the required dependencies into their own virtual environment
   // this file can be checked in, it will not be removed on a clean
-  
+
   inputs.property("prod_modules", production_pkgs)
   inputs.property("dev_modules", dev_pkgs)
   outputs.file(layout.projectDirectory.file('requirements_dev.txt'))
-  
+
   doLast{
     def pinned_text = new StringBuilder()
     pinned_text.append("### DO NOT CHANGE THIS FILE\n")
@@ -87,24 +89,24 @@ task createRequirementsTextForDev {
     pinned_text.append("### Using this file, you can install all required dependencies for development into your IDE's venv.\n")
     pinned_text.append("### The pinned.txt that is created in the build directory has only the dependencies needed for production.\n")
     pinned_text.append("### This file may be safely checked into version control so that others may set-up their environments.\n")
-    pinned_text.append("### Use this file with \"pip -r requirements_dev.txt\" to install dependencies into your venv.\n")
+    pinned_text.append("### Use this file with \"pip install -r requirements_dev.txt\" to install dependencies into your venv.\n")
     pinned_text.append("### Most IDEs will allow you to specify the file when setting up the venv, \n")
     pinned_text.append("### and you won't have to run that command directly.\n")
     pinned_text.append("### DO NOT CHANGE THIS FILE\n")
-    
+
     pinned_text.append("\n### Production Dependencies\n")
     production_pkgs.each { module ->
       pinned_text.append(module.replace(":", "==") + "\n")
     }
-    
+
     pinned_text.append("\n### Development Dependencies\n")
-    dev_pkgs.each {
-      module -> pinned_text.append(module.replace(":", "==") + "\n")
+    dev_pkgs.each { module ->
+      pinned_text.append(module.replace(":", "==") + "\n")
     }
-    
+
     outputs.files.singleFile.text = pinned_text.toString()
   }
-  
+
 }
 
 
@@ -112,7 +114,7 @@ task generateReqs {
   description 'creates pinned.txt file, the additional required modules to run the application'
   outputs.file(layout.buildDirectory.file('pinned.txt')).withPropertyName("pinned")
   inputs.property "prod_deps", production_pkgs.join(",")
-  
+
   doLast {
     def pinned_text = new StringBuilder()
     production_pkgs.each { module ->
@@ -222,7 +224,7 @@ task buildConfiguration {
       include "setup.py"
       into "${buildDir}"
     }
-    
+
     copy {
       from "${rootDir}"
       include "setup.cfg"
@@ -298,6 +300,7 @@ task reportsDir {
 }
 
 
+
 task pytest(type: PythonTask) {
   description 'runs testcases'
   group null
@@ -310,20 +313,22 @@ task pytest(type: PythonTask) {
   inputs.files(project.tasks.buildConfiguration.outputs.files)
 
   def pyTestXmlReportFile =  "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/pytest-report.xml"
-  def pyTestHtmlReportFile = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/pytest-report.html"
+  def coverageDirectory = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/coverage"
+
 
   outputs.file(pyTestXmlReportFile)
-  outputs.file(pyTestHtmlReportFile)
-
+  outputs.dir(coverageDirectory)
+  outputs.file("${buildDir}/.coverage")
 
   workDir = "${project.buildDir}"
   module = 'pytest'
   extraArgs = [
     "${buildDir}/${pyTestDir}/py",
-    "--junitxml=${pyTestXmlReportFile}",
-    "--html=${pyTestHtmlReportFile}",
-    "--self-contained-html"
-  ]
+    "--pyargs",
+    "--cov-report=html:${coverageDirectory}",
+    "--cov=nlp_insights",
+    "--junit-xml=${pyTestXmlReportFile}"
+    ]
 }
 
 
@@ -337,25 +342,21 @@ task docTestSource(type: PythonTask) {
   inputs.files(project.tasks.install.outputs.files.singleFile)
 
   def pyDocTestXmlFile = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/doc-test.xml"
-  def pyDocTestHtmlFile = "${project.tasks.reportsDir.outputs.files.singleFile.absolutePath}/doc-test.html"
-
   outputs.file(layout.buildDirectory.file(pyDocTestXmlFile))
-  outputs.file(layout.buildDirectory.file(pyDocTestHtmlFile))
 
   workDir = "${project.buildDir}"
   module = 'pytest'
   extraArgs = [
     "${pySrcDir}/py",
     "--doctest-modules",
-    "--junitxml=${pyDocTestXmlFile}",
-    "--html=${pyDocTestHtmlFile}",
-    "--self-contained-html"
+    "--junit-xml=${pyDocTestXmlFile}"
   ]
+  
 }
 
 
 task test {
-  description 'runs unit tests and places reports in reports directory'
+  description 'runs unit and doc tests and places reports in reports directory'
   group 'quality'
   dependsOn project.tasks.pytest
   dependsOn project.tasks.docTestSource
@@ -378,9 +379,11 @@ task flake8(type: Exec) {
   ignoreExitValue=true
   workingDir = "${project.buildDir}"
   commandLine "${buildVenv}/bin/flake8", "${pySrcDir}/py", "--format=junit-xml", "--config=setup.cfg"
+  
   doLast {
     outputs.files.singleFile.text = standardOutput.toString()
   }
+  
 }
 
 
@@ -399,7 +402,7 @@ task pylint(type: Exec) {
   standardOutput = new ByteArrayOutputStream()
   ignoreExitValue=true
   workingDir = "${project.buildDir}"
-  commandLine "${buildVenv}/bin/pylint", "${pySrcDir}/py/${rootPackage}", "--output-format=pylint_junit.JUnitReporter", "--rcfile=setup.cfg"
+  commandLine "${buildVenv}/bin/pylint", "${pySrcDir}/py/${rootPackage}", "--output-format=pylint2junit.JunitReporter", "--rcfile=setup.cfg"
   doLast {
     outputs.files.singleFile.text = standardOutput.toString()
   }
@@ -442,7 +445,8 @@ task checkSource {
   group 'quality'
   dependsOn project.tasks.lint
   dependsOn project.tasks.test
-
+  
+  
   doLast {
     groovy.xml.XmlSlurper slurper = new groovy.xml.XmlSlurper();
 
@@ -456,26 +460,37 @@ task checkSource {
       warnings.put(reportFile, warningList)
 
       root."**".findAll({ it.name() == "failure"}).each { f ->
-        warningList.add("${f.text()}")
+        warningList.add("${f.'@message'}:${f.text()}")
       }
     }
 
-    println("\nLINT AND TEST WARNINGS")
-    println("------------------------")
+    def message = new StringBuffer()
+    message.append("\nLINT AND TEST WARNINGS\n")
+    message.append("------------------------\n")
     warnings.each { k, v ->
       if (v.size() > 0) {
-        println("\n$k\n")
+        message.append("$k\n")
         v.each { w ->
-          println("\t$w".replace("\n", "\n\t\t"))
+          message.append("\t$w".replace("\n", "\n\t\t"))
+          message.append("\n")
         }
       }
     }
 
-    println("SUMMARY")
+    message.append("\nSUMMARY\n")
+    def count = 0;
     warnings.each { k, v ->
       def fname = String.format("%30.30s", k.name)
-      println("${fname} : ${v.size()} warnings")
+      count += v.size()
+      message.append("${fname} : ${v.size()} warnings\n")
     }
+    
+    if (count && !project.hasProperty("noFailForSourceProblems")) {
+      System.err.println(message)
+      throw new GradleException("Build Failed with ${count} source code issues!")
+    }
+    
+    println(message)
   }
 }
 
@@ -493,7 +508,8 @@ project.tasks.dockerPrepare.dependsOn project.tasks.verifyDockerUser
 project.tasks.dockerPrepare.dependsOn project.tasks.test
 project.tasks.dockerRun.dependsOn project.tasks.docker
 project.tasks.dockerPush.dependsOn project.tasks.docker
-
+// needs to be set for dependency stuff to work, couldn't find a better way
+project.tasks.dockerfileZip.archiveFile.set(new File(dockerZipFile))
 
 docker {
   description 'builds the docker image, tagging with the  dockerUser and version properties'
@@ -506,8 +522,8 @@ docker {
 
   name dockerUser + "/${project.name}:" + version
   dockerfile file('Dockerfile')
+  
 }
-
 
 dockerPush {}
 
