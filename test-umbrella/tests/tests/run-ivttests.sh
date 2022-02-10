@@ -60,7 +60,7 @@ then
 	elif [ $HELM_RELEASE = "ingestion" ] 
 	then
 	
-       export DEPLOY_OPTIONS="-f /workspace/"$TEST_NAMESPACE"/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey="$ACD_APIKEY" --wait --timeout "$HELM_TIMEOUT" --set expose-kafka.requestTimeout=60"
+       export DEPLOY_OPTIONS="--set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey="$ACD_APIKEY" --wait --timeout "$HELM_TIMEOUT" --set fhir-data-quality.enabled=true --set fhir-data-quality.requestTimeout=60 --set expose-kafka.requestTimeout=60"
 #	   export DEPLOY_OPTIONS="-f /workspace/"$TEST_NAMESPACE"/health-patterns/ingest/src/test/resources/configs/NLP-ingestion-values.yaml  --set fhir.proxy.enabled=true --set fhir-deid.proxy.enabled=true --set nlp-insights.nlpservice.acd.apikey="$ACD_APIKEY" --wait --timeout "$HELM_TIMEOUT" --set fhir-data-quality.enabled=true --set fhir-data-quality.requestTimeout=60 --set expose-kafka.requestTimeout=60"
 	    
 	fi
@@ -139,9 +139,9 @@ then
 	   mvn -DskipTests=false -Dtest=DeIDIngestionBLKTests test
 	   mvn -DskipTests=false -Dtest=ASCVDIngestionTests test
 	   mvn -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
-	   mvn -DskipTests=false -Dtest=NLPIngestionTests test
-	   mvn -DskipTests=false -Dtest=NLPIngestionBLKTests test
-#	   mvn -DskipTests=false -Dtest=FHIRDataQualityBLKTests test
+#	   mvn -DskipTests=false -Dtest=NLPIngestionTests test
+#	   mvn -DskipTests=false -Dtest=NLPIngestionBLKTests test
+ 	   mvn -DskipTests=false -Dtest=FHIRDataQualityBLKTests test
 	   mvn -DskipTests=false -Dtest=FHIRCQLTests test
 	
 	   # JUNIT execution reports available in the below folder
@@ -154,9 +154,9 @@ then
 	   cat target/surefire-reports/categories.DeIDIngestionBLKTests.txt
 	   cat target/surefire-reports/categories.ASCVDIngestionTests.txt
 	   cat target/surefire-reports/categories.ASCVDIngestionBLKTests.txt
-	   cat target/surefire-reports/categories.NLPIngestionTests.txt
-	   cat target/surefire-reports/categories.NLPIngestionBLKTests.txt
-#      cat target/surefire-reports/categories.FHIRDataQualityBLKTests.txt 
+#	   cat target/surefire-reports/categories.NLPIngestionTests.txt
+#	   cat target/surefire-reports/categories.NLPIngestionBLKTests.txt
+       cat target/surefire-reports/categories.FHIRDataQualityBLKTests.txt 
 	   cat target/surefire-reports/categories.FHIRCQLTests.txt 
 	    
 	fi   
