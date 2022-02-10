@@ -36,9 +36,9 @@ then
 	cd /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns
 	
 	# set up to use fhir-cql image
-	#echo " Change to use FHIR-CQL image"
-	#sed  -i -e  " 120,150 s/fhir:/fhir:\n  image:\n    repository: quay.io\/alvearie\/fhir-cql\n    tag: \"latest\"\n  serverRegistryResourceProviderEnabled: true/" values.yaml
-	#cat values.yaml | grep serverRegistryResourceProviderEnabled
+	echo " Change to use FHIR-CQL image"
+	sed  -i -e  " 120,150 s/fhir:/fhir:\n  image:\n    repository: quay.io\/alvearie\/fhir-cql\n    tag: \"latest\"\n  serverRegistryResourceProviderEnabled: true/" values.yaml
+	cat values.yaml | grep serverRegistryResourceProviderEnabled
 	
 	# Execute the desired deployment
 	echo "***************************************"
@@ -136,12 +136,10 @@ then
 	   mvn -DskipTests=false -Dtest=BasicIngestionBLKTests test
 	   mvn -DskipTests=false -Dtest=DeIDIngestionTests test
 	   mvn -DskipTests=false -Dtest=DeIDIngestionBLKTests test
-	   mvn -DskipTests=false -Dtest=ASCVDIngestionTests test
-	   mvn -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
 	   mvn -DskipTests=false -Dtest=NLPIngestionTests test
 	   mvn -DskipTests=false -Dtest=NLPIngestionBLKTests test
  	   mvn -DskipTests=false -Dtest=FHIRDataQualityBLKTests test
-#	   mvn -DskipTests=false -Dtest=FHIRCQLTests test
+	   mvn -DskipTests=false -Dtest=FHIRCQLTests test
 	
 	   # JUNIT execution reports available in the below folder
 	   ls -lrt target/surefire-reports
@@ -151,12 +149,10 @@ then
 	   cat target/surefire-reports/categories.BasicIngestionBLKTests.txt
 	   cat target/surefire-reports/categories.DeIDIngestionTests.txt
 	   cat target/surefire-reports/categories.DeIDIngestionBLKTests.txt
-	   cat target/surefire-reports/categories.ASCVDIngestionTests.txt
-	   cat target/surefire-reports/categories.ASCVDIngestionBLKTests.txt
 	   cat target/surefire-reports/categories.NLPIngestionTests.txt
 	   cat target/surefire-reports/categories.NLPIngestionBLKTests.txt
        cat target/surefire-reports/categories.FHIRDataQualityBLKTests.txt 
-#	   cat target/surefire-reports/categories.FHIRCQLTests.txt 
+	   cat target/surefire-reports/categories.FHIRCQLTests.txt 
 	    
 	fi   
 	echo "*************************************" 
