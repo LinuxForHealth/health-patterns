@@ -37,6 +37,13 @@ TEXT_FOR_CONDITION_SUSPECTED_AND_FAM_HISTORY = (
     "suspect skin cancer because the patient's brother has skin cancer"
 )
 
+TEXT_FOR_ADVERSE_EVENT = (
+    "The patient's course was also complicated by mental status changes secondary "
+    + "to a combination of his narcotics and Neurontin, which had been given for his "
+    + "trigeminal neuralgia and chronic pain. The Neurontin was stopped and he "
+    + "received hemodialysis on consecutive days."
+)
+
 # Important thing with this text is that there are multiple spans over the same
 # condition and medication
 # With the condition, "myocardial infarction" == "heart attack"

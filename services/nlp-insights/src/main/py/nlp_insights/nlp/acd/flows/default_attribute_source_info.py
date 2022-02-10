@@ -18,6 +18,7 @@
 
 from fhir.resources.condition import Condition
 from fhir.resources.medicationstatement import MedicationStatement
+from fhir.resources.adverseevent import AdverseEvent
 
 from nlp_insights.insight_source.fields_of_interest import CodeableConceptRefType
 from nlp_insights.nlp.acd.flows.attribute import (
@@ -90,6 +91,15 @@ ANNOTATION_TYPE_MEDICATION = AnnotationContext(
 )
 
 
+ANNOTATION_TYPE_MEDICATION_AE = AnnotationContext(
+    attribute_mapping=[
+        AcdAttrSourceDfn(
+            attr_name="MedicationAdverseEvent",
+            source_prop_names=[AttrSourcePropName.MEDICATION_IND],
+        ),
+    ],
+)
+
 # There are two root types used as keys for this map
 # Fhir Resource & Codeable concept reference type.
 # For a concept reference type, we can use a mapping that assumes the text has a specific context,
@@ -111,6 +121,7 @@ ANNOTATION_TYPE_MEDICATION = AnnotationContext(
 RELEVANT_ANNOTATIONS_STANDARD_V1_0: SourceSearchMap = {
     Condition: ANNOTATION_TYPE_CONDITION_DERIVED,
     MedicationStatement: ANNOTATION_TYPE_MEDICATION,
+    AdverseEvent: ANNOTATION_TYPE_MEDICATION_AE,
     CodeableConceptRefType.ALLERGEN: ANNOTATION_TYPE_ALLERGY,
     CodeableConceptRefType.CONDITION: ANNOTATION_TYPE_CONDITION_ENRICH,
 }

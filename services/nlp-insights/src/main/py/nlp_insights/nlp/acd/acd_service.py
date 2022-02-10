@@ -40,6 +40,10 @@ from nlp_insights.nlp.acd.acd_to_fhir.fhir_resource.create.create_medication imp
     MedicationStatementBuilder,
 )
 
+from nlp_insights.nlp.acd.acd_to_fhir.fhir_resource.create.create_adverseevent import (
+    AdverseEventBuilder,
+)
+
 from nlp_insights.nlp.acd.acd_to_fhir.fhir_resource.update.update_codeable_concepts import (
     update_codeable_concepts_and_meta_with_insights,
     AcdConceptRef,
@@ -102,6 +106,12 @@ class ACDService(NLPService):
 
             new_resources.extend(
                 MedicationStatementBuilder(
+                    note, container, self.nlp_config
+                ).build_resources()
+            )
+
+            new_resources.extend(
+                AdverseEventBuilder(
                     note, container, self.nlp_config
                 ).build_resources()
             )
