@@ -156,6 +156,12 @@ public class Ingestion_Flow {
 	    public void ingest_FHIR_NLP_Insights_Override_BLK() throws Exception {
 	    }
 	
+	 @Test
+	 @Category({NLPIngestionBLK.class})
+	 @Scenario("scenarios/ingest_FHIR_NLP_Insights_BLK_AdverseEvent.json")
+	    public void ingest_FHIR_NLP_Insights_BLK_AdverseEvent() throws Exception {
+	    }
+	 
 	 
 	 // FHIR Proxy health tests
 		

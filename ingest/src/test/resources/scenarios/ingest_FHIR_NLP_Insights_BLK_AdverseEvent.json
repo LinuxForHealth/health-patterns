@@ -1,0 +1,173 @@
+{
+    "scenarioName": "********ingest_FHIR_NLP_Insights_BLK_AdverseEvent********",
+    "ignoreStepFailures": true,
+    "steps": [ 
+        {
+            "name": "deleteOverridesAtStart",
+            "url": "${nlp_insights}/config/resource",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {  }
+        },
+        {
+            "name": "ingestPatientQuickUMLS",
+            "url":  "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json", 
+                               "AddNLPInsights": "true",
+                               "DeidentifyData": "false",
+                               "RunFHIRDataQuality": "false" },
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },        
+        {
+            "name": "verifyPatientIngestionQuickUMLS",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                }
+            }
+        },
+        {
+            "name": "getPatientAdverseEvent",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionQuickUMLS.response.body.entry[0].resource.id}/AdverseEvent",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 0 
+                }
+                }
+        },    
+        {
+            "name": "deletePatientOnPhiFHIRQuickUMLS",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionQuickUMLS.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestionQuickUMLS.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        },        
+        {
+            "name": "addDiagnosticReportOverride",
+            "url": "${nlp_insights}/config/resource/DiagnosticReport/acd",
+            "operation": "POST",           
+                "request": { },            
+            "verify": {
+                "status": 204
+            }
+        },        
+        {
+            "name": "ingestPatientACD",
+            "url":  "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json", 
+                               "AddNLPInsights": "true",
+                               "DeidentifyData": "false",
+                               "RunFHIRDataQuality": "false" },
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+        
+        {
+            "name": "verifyPatientIngestionACD",
+            "url": "${pri_fhir_server}/Patient?family=${2}&given=${1}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                }
+            }
+        },
+        {
+            "name": "getPatientAdverseEvent",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionACD.response.body.entry[0].resource.id}/AdverseEvent",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 1 
+                } 
+             }
+        },  
+        {
+            "name": "verifyAdverseEventACD",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "containsString",
+            "request": {
+                 "string1": "${$.getPatientAdverseEvent.response.body}",
+                 "string2": "neurontin"
+            },
+            "verify": { "result": "true" }
+        }, 
+        {
+            "name": "deleteAdverseEvent",
+            "url": "${pri_fhir_server}/AdverseEvent/${$.getPatientAdverseEvent.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": { }
+        }, 
+        {
+            "name": "deletePatientOnPhiFHIRACD",
+            "url": "${pri_fhir_server}/Patient/${$.verifyPatientIngestionACD.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.verifyPatientIngestionACD.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        },
+        {
+            "name": "deleteOverridesAtEnd",
+            "url": "${nlp_insights}/config/resource/DiagnosticReport",
+            "operation": "DELETE",           
+                "request": { },            
+            "verify": {  }
+        }    
+    ],
+    "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/adverse_event_bundle.json},Alethea978,Crooks009"        
+         ]
+    }
+}
