@@ -78,11 +78,11 @@ dependencies:
   - name: ascvd
     version: 0.1.0
     condition: ascvd.enabled
-    repository: https://alvearie.github.io/health-analytics/charts
+    repository: https://linuxforhealth.github.io/health-analytics/charts
   - name: ascvd-from-fhir
     version: 0.1.0
     condition: ascvd.enabled
-    repository: https://alvearie.github.io/health-analytics/charts
+    repository: https://linuxforhealth.github.io/health-analytics/charts
   - name: zookeeper
     version: 7.6.0
     condition: zookeeper.enabled
