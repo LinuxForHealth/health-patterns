@@ -50,6 +50,10 @@ then
 	  # disable the ingestion deploy for an enrich-only deployment
 	  sed -i -e "s/\&ingestionEnabled \"true\"/\&ingestionEnabled \"false\"/g" values.yaml
 	  cat values.yaml | grep ingestionEnabled
+	  
+	  # enable the fhir-trigger service
+	  sed -i -e "s/\&fhirNotificationsEnabled \"false\"/\&fhirNotificationsEnabled \"true\"/g" values.yaml
+	  cat values.yaml | grep fhirNotificationsEnabled
 	     
 	  # Change release name from the default ingestion to enrich
 	  sed -i -e "s/\&releaseName ingestion/\&releaseName enrich/g" values.yaml
