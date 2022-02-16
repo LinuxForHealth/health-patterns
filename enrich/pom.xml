@@ -96,6 +96,10 @@
                    <value>${ip.ascvd.from.fhir}</value>
                </replacement>
                <replacement>
+                   <token>@@ip.expkafka@@</token>
+                   <value>${ip.expkafka}</value>
+               </replacement>
+               <replacement>
                    <token>@@ip.nlp.insights@@</token>
                    <value>${ip.nlp.insights}</value>
                </replacement> 
