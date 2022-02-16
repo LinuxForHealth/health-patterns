@@ -105,6 +105,7 @@ then
 	   mvn -DskipTests=false -Dtest=EnrichmentConfigTests test
 	   mvn -DskipTests=false -Dtest=ASCVDEnrichmentTests test
 	   mvn -DskipTests=false -Dtest=NLPEnrichmentTests test
+	   mvn -DskipTests=false -Dtest=FHIRTriggerTests test
 	
 	   # JUNIT execution reports available in the below folder
 	   ls -lrt target/surefire-reports
@@ -113,6 +114,7 @@ then
 	   cat target/surefire-reports/categories.EnrichmentConfigTests.txt
 	   cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt
 	   cat target/surefire-reports/categories.NLPEnrichmentTests.txt
+	   cat target/surefire-reports/categories.FHIRTriggerTests.txt
 	
 	elif [ $HELM_RELEASE = "ingestion" ] 
 	then
