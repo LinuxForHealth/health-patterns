@@ -52,7 +52,7 @@ then
 	  cat values.yaml | grep ingestionEnabled
 	  
 	  # enable the fhir-trigger service
-	  sed -i -e "s/\&fhirNotificationsEnabled \"false\"/\&fhirNotificationsEnabled \"true\"/g" values.yaml
+	  sed -i -e "s/\&fhirNotificationsEnabled false/\&fhirNotificationsEnabled true/g" values.yaml
 	  cat values.yaml | grep fhirNotificationsEnabled
 	     
 	  # Change release name from the default ingestion to enrich
