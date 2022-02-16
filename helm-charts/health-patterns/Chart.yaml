@@ -28,12 +28,10 @@ keywords:
 home: https://github.com/Alvearie/health-patterns/helm-charts/health-patterns
 
 maintainers:
-  - name: Adam T. Clark
-    email: atclark@us.ibm.com
   - name: David Ranum
     email: dlranum@us.ibm.com
-  - name: Luis A. Garcia
-    email: luisg@us.ibm.com
+  - name: Nick Lawrence
+    email: ntl@us.ibm.com
 
 dependencies:
   - name: ibm-fhir-server
@@ -110,7 +108,7 @@ dependencies:
   - name: nlp-insights
     version: 0.1.0
     condition: nlp-insights.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/nlp-insights/charts
   - name: kube-prometheus-stack
     version: 12.0.4
     condition: kube-prometheus-stack.enabled
