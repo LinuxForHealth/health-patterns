@@ -20,7 +20,7 @@ git:
   username: read-only-not-needed
   password: read-only-not-needed
   # By default this registry loads the health-patterns NiFi flows
-  repository: https://github.com/Alvearie/health-patterns-nifi-flows.git
+  repository: https://github.com/LinuxForHealth/health-patterns-nifi-flows.git
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
