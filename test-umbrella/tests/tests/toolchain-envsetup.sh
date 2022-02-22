@@ -51,7 +51,7 @@ echo "* Fetch the Code from Repo          *"
 echo "*************************************"
 
 echo " clone clinical ingestion git repo using "$GIT_BRANCH " branch"
-git clone --branch $GIT_BRANCH https://github.com/Alvearie/health-patterns.git
+git clone --branch $GIT_BRANCH $USER_GIT_REPO.git
 
 echo " change to the correct directory"
 cd health-patterns/helm-charts/health-patterns
