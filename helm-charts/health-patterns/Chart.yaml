@@ -25,7 +25,7 @@ keywords:
   - clinical data
   - alvearie
 
-home: https://github.com/Alvearie/health-patterns/helm-charts/health-patterns
+home: https://github.com/LinuxForHealth/health-patterns/helm-charts/health-patterns
 
 maintainers:
   - name: David Ranum
@@ -42,11 +42,11 @@ dependencies:
   - name: term-services-prep
     version: 0.1.0
     condition: fhir.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: fhir-trigger
     version: 0.1.1
     condition: fhir-trigger.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: ibm-fhir-server
     version: 0.5.0
     condition: fhir-deid.enabled
@@ -56,23 +56,23 @@ dependencies:
     version: 0.1.1
     condition: fhir-deid-trigger.enabled
     alias: fhir-deid-trigger
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: deid
     version: 1.0.1
     condition: deid.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: deid-prep
     version: 0.1.0
     condition: deid.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: cohort-service
     version: 1.0.1
     condition: cohort-service.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: nifi-registry
     version: 0.1.0
     condition: nifi-registry.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: ascvd
     version: 0.1.0
     condition: ascvd.enabled
@@ -100,11 +100,11 @@ dependencies:
   - name: expose-kafka
     version: 0.2.1
     condition: kafka.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: cql-bulk-export
     version: 0.1.0
     condition: cql-bulk-export.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: nlp-insights
     version: 0.1.0
     condition: nlp-insights.enabled
@@ -120,7 +120,7 @@ dependencies:
   - name: fhir-data-quality
     version: 0.1.1
     condition: fhir-data-quality.enabled
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: cert-secret-generator
-    repository: https://alvearie.github.io/health-patterns/charts
+    repository: https://linuxforhealth.github.io/health-patterns/charts
     version: 0.1.1
