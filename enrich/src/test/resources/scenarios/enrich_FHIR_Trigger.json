@@ -1,0 +1,75 @@
+{
+    "scenarioName": "********enrich_FHIR_Trigger********",
+    "ignoreStepFailures": true,
+    "steps": [ 
+        {
+            "name": "getUpdatedPatientsTopicAtStart",
+            "url": "${expose_kafka}?topic=patients.updated.out",
+            "operation": "GET",           
+                "request": {
+                "headers" : { "Content-Type": "application/json"}
+                },            
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "postPatientToFHIR",
+            "url": "${pri_fhir_server}",
+            "operation": "POST",
+            "request": {
+                "headers" : { "Content-Type": "application/json"},
+                "body":  "${0}"
+            },
+            "verify": {
+                "status": 200
+            }
+        },
+        {
+            "name": "waitForFHIRTrigger",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 60,
+            "verify": {
+            }
+        },
+        {
+            "name": "getUpdatedPatientsTopicAtEnd",
+            "url": "${expose_kafka}?topic=patients.updated.out",
+            "operation": "GET",           
+                "request": {
+                "headers" : { "Content-Type": "application/json"}
+                },            
+            "verify": {
+                "status": 200,
+                "body": {
+                   "nummessages" : "$GT.${$.getUpdatedPatientsTopicAtStart.response.body.nummessages}"           
+                }
+                
+                }
+        },
+        {
+            "name": "deletePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.postPatientToFHIR.response.body.entry[0].response.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.postPatientToFHIR.response.body.entry[0].response.id}" 
+                           }
+                     }]
+                }
+            }
+        }
+     ],
+          "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json}"
+        ]
+    }
+}

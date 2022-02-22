@@ -50,6 +50,10 @@ then
 	  # disable the ingestion deploy for an enrich-only deployment
 	  sed -i -e "s/\&ingestionEnabled \"true\"/\&ingestionEnabled \"false\"/g" values.yaml
 	  cat values.yaml | grep ingestionEnabled
+	  
+	  # enable the fhir-trigger service
+	  sed -i -e "s/\&fhirNotificationsEnabled false/\&fhirNotificationsEnabled true/g" values.yaml
+	  cat values.yaml | grep fhirNotificationsEnabled
 	     
 	  # Change release name from the default ingestion to enrich
 	  sed -i -e "s/\&releaseName ingestion/\&releaseName enrich/g" values.yaml
@@ -91,7 +95,7 @@ then
 	   echo "*************************************" 
 	   echo "* Build the testcases               *"
 	   echo "*************************************"
-	   mvn clean install  --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD -Dloglevel=$LOGLEVEL
+	   mvn clean install  --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.deid.prep=$DEID_PREP_IP -Dip.term.prep=$TERM_PREP_IP -Dip.ascvd.from.fhir=$ASCVD_FROM_FHIR_IP -Dip.expkafka=$EXP_KAFKA_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dpw=$DEFAULT_PASSWORD -Dloglevel=$LOGLEVEL
 	
 	   echo "*************************************" 
 	   echo "* Execute the testcases             *"
@@ -101,6 +105,7 @@ then
 	   mvn -DskipTests=false -Dtest=EnrichmentConfigTests test
 	   mvn -DskipTests=false -Dtest=ASCVDEnrichmentTests test
 	   mvn -DskipTests=false -Dtest=NLPEnrichmentTests test
+	   mvn -DskipTests=false -Dtest=FHIRTriggerTests test
 	
 	   # JUNIT execution reports available in the below folder
 	   ls -lrt target/surefire-reports
@@ -109,6 +114,7 @@ then
 	   cat target/surefire-reports/categories.EnrichmentConfigTests.txt
 	   cat target/surefire-reports/categories.ASCVDEnrichmentTests.txt
 	   cat target/surefire-reports/categories.NLPEnrichmentTests.txt
+	   cat target/surefire-reports/categories.FHIRTriggerTests.txt
 	
 	elif [ $HELM_RELEASE = "ingestion" ] 
 	then

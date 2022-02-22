@@ -17,6 +17,7 @@ import categories.EnrichmentConfig;
 import categories.EnrichmentInit;
 import categories.NLPEnrichment;
 import categories.NLPEnrichmentFVT;
+import categories.FHIRTrigger;
 
 
 @TargetEnv("enrich-flow.properties")
@@ -133,5 +134,11 @@ public class Enrich_Flow {
 	 @Category({NLPEnrichment.class})
 	 @Scenario("scenarios/enrich_NLP_Insights_Override_Use.json")
 	    public void enrich_NLP_Insights_Override_Use() throws Exception {
+	    }
+	
+	@Test
+	 @Category({FHIRTrigger.class})
+	 @Scenario("scenarios/enrich_FHIR_Trigger.json")
+	    public void enrich_FHIR_Trigger() throws Exception {
 	    }
 }
