@@ -381,7 +381,7 @@ nifi:
     url: alvearie-nifi-registry
   extraContainers:
     - name: post-start-setup
-      image: alvearie/nifi-setup:0.1.7
+      image: quay.io/alvearie/nifi-setup:0.1.7
       imagePullPolicy: Always
       env:
       - name: "RELEASE_NAME"
