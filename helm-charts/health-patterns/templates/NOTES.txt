@@ -8,7 +8,7 @@ Welcome to the
 888        888      888    888
 888        888      888    888
 888        888      888    888
-88888888   888      888    888 
+88888888   888      888    888
 
                                Clinical Data Ingestion Framework
 
@@ -67,7 +67,7 @@ The following services have been deployed:
 {{- if .Values.kafka.enabled }}
 
 
-To access the deployed pipeline, use the Expose Kafka service to read from and send to the kafka service the pipeline uses.  See documentation on use of Expose Kafka here: https://github.com/Alvearie/health-patterns/tree/main/services/expose-kafka#operations
+To access the deployed pipeline, use the Expose Kafka service to read from and send to the kafka service the pipeline uses.  See documentation on use of Expose Kafka here: https://github.com/LinuxForHealth/health-patterns/tree/main/services/expose-kafka#operations
 
 
 {{- end }}
