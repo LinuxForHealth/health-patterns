@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: alvearie/deid-prep
+  repository: quay.io/alvearie/deid-prep
   pullPolicy: Always
   tag: 0.1.0
 service:
