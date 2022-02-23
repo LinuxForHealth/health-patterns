@@ -23,13 +23,10 @@ version: 0.1.1
 appVersion: 0.0.1
 
 keywords:
-  - ibm
-  - alvearie
+  - linuxforhealth
 
-home: https://github.com/Alvearie/health-patterns/tree/main/services/cert-secret-generator
+home: https://github.com/LinuxForHealth/health-patterns/tree/main/services/cert-secret-generator
 
 maintainers:
-  - name: Adam T. Clark
-    email: atclark@us.ibm.com
   - name: David Ranum
     email: dlranum@us.ibm.com
