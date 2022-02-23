@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: alvearie/term-services-prep
+  repository: quay.io/alvearie/term-services-prep
   pullPolicy: Always
   tag: 0.1.0
 service:
