@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: alvearie/fhir-trigger
+  repository: quay.io/alvearie/fhir-trigger
   pullPolicy: Always
   tag: 0.1.1
 service:
@@ -34,13 +34,13 @@ kafka:
   username: token
   password: integrati0n
   # Optional - Will be generated if omitted
-  # bootstrap: 
+  # bootstrap:
   producer_topic: patients.updated.out
   # Required for FHIR Notification
   consumer_topic: fhir.notification
-  
+
 fhir:
   # Optional - Will be generated if omitted
-  # endpoint: 
+  # endpoint:
   username: fhiruser
   password: integrati0n
