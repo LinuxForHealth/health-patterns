@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: alvearie/cohort-service
+  repository: quay.io/alvearie/cohort-service
   pullPolicy: IfNotPresent
   tag: 1.0.1
 
@@ -16,7 +16,7 @@ service:
 ingress:
   enabled: false
   class: public-iks-k8s-nginx
-  hostname: 
+  hostname:
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
