@@ -1,12 +1,12 @@
 # Enrichment Test Repository
 
 ## Overview
-This is a Maven project that uses [Zerocode](https://github.com/authorjapps/zerocode) to define the tests and Java Junits to execute the tests.  The tests are organized and executed by Junit categories.  The tests use a properties file, [enrich-flow.properties](https://github.com/Alvearie/health-patterns/blob/main/enrich/src/test/resources/enrich-flow.properties), that defines the URLs for each of the enrich services used in the tests.
+This is a Maven project that uses [Zerocode](https://github.com/authorjapps/zerocode) to define the tests and Java Junits to execute the tests.  The tests are organized and executed by Junit categories.  The tests use a properties file, [enrich-flow.properties](https://github.com/LinuxForHealth/health-patterns/blob/main/enrich/src/test/resources/enrich-flow.properties), that defines the URLs for each of the enrich services used in the tests.
 
 ## Repository Organization
-- [Zercode Test Scenarios](https://github.com/Alvearie/health-patterns/tree/main/enrich/src/test/resources/scenarios)
-- [Junit Tests](https://github.com/Alvearie/health-patterns/tree/main/enrich/src/test/java/tests)
-- [Junit Test Categories](https://github.com/Alvearie/health-patterns/tree/main/enrich/src/test/java/categories)
+- [Zercode Test Scenarios](https://github.com/LinuxForHealth/health-patterns/tree/main/enrich/src/test/resources/scenarios)
+- [Junit Tests](https://github.com/LinuxForHealth/health-patterns/tree/main/enrich/src/test/java/tests)
+- [Junit Test Categories](https://github.com/LinuxForHealth/health-patterns/tree/main/enrich/src/test/java/categories)
 
 
 ## Test Build
