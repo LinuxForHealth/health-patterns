@@ -14,19 +14,19 @@ health-patterns is a place to find cloud reference implementations for the overa
 
 #### Enrichment Pattern Overview
 
-The **Enrichment** health pattern is a reference implementation of a clinical data enrichment process. It allows medical data to be enriched using various components, such as de-identification, terminology normalization, and the [ASCVD](https://github.com/Alvearie/health-analytics/tree/main/ascvd) analytic evaluation.
+The **Enrichment** health pattern is a reference implementation of a clinical data enrichment process. It allows medical data to be enriched using various components, such as de-identification, terminology normalization, and the [ASCVD](https://github.com/LinuxForHealth/health-analytics/tree/main/ascvd) analytic evaluation.
 
 The Enrichment Flow is designed to read medical data (in FHIR format) from a configured [Kafka](https://kafka.apache.org) topic. As the data is processed, any errors that are detected are logged and posted to target kafka topics (if configured). Once complete, the updated FHIR data is posted back to a Kafka topic for further use.
 
 The current flow is designed to operate on FHIR resources only.  Currently, for any FHIR data that enters the pipeline, we support the following enrichment steps:
 
-  - NLP Insights: This step will process FHIR resources (or a bundle of resources).  It will apply natural language processing to certain resource types in order to enhance resources by adding additional information to the resource or by adding new resources based on text found in the original resource.  At present, the supported resource types are AllergyIntolerance, Immunization, DiagnosticReport, and DocumentReference. For configuration details, see the [nlp-insights documentation](https://github.com/Alvearie/health-patterns/tree/main/services/nlp-insights).
+  - NLP Insights: This step will process FHIR resources (or a bundle of resources).  It will apply natural language processing to certain resource types in order to enhance resources by adding additional information to the resource or by adding new resources based on text found in the original resource.  At present, the supported resource types are AllergyIntolerance, Immunization, DiagnosticReport, and DocumentReference. For configuration details, see the [nlp-insights documentation](https://github.com/LinuxForHealth/nlp-insights).
 
-  - FHIR Terminology Service: This step will update the clinical data by adding/updating values to adhere to the terminology service configuration. The configuration mapping rules are currently static and can be found [here](https://github.com/Alvearie/health-patterns/tree/main/services/term-services-prep/src/main/resources/defaultMappings)
+  - FHIR Terminology Service: This step will update the clinical data by adding/updating values to adhere to the terminology service configuration. The configuration mapping rules are currently static and can be found [here](https://github.com/LinuxForHealth/health-patterns/tree/main/services/term-services-prep/src/main/resources/defaultMappings)
 
   - [De-Identification](https://github.com/Alvearie/de-identification) Service: This step will de-identify the clinical data flowing through the pipeline and store the de-identified version in a separate FHIR server. The de-identification rules are currently static and can be found here.
 
-  - [Million Hearts ASCVD Model](https://github.com/Alvearie/health-analytics/tree/main/ascvd): This step will calculate a ten-year risk of cardiovascular disease using the Million Hearts ASCVD Model.
+  - [Million Hearts ASCVD Model](https://github.com/LinuxForHealth/health-analytics/tree/main/ascvd): This step will calculate a ten-year risk of cardiovascular disease using the Million Hearts ASCVD Model.
 
 ## How to deploy
 Note: Although the Enrichment pattern can be deployed on its own by following these steps, it will also be deployed as part of the default Ingestion pattern deployment [see Ingestion](../ingest/README.md).
@@ -46,7 +46,7 @@ These instructions assume that you have the following resources, tools, and conf
 #### Check out the code
 
 ```
-git clone https://github.com/Alvearie/health-patterns.git
+git clone https://github.com/LinuxForHealth/health-patterns.git
 cd health-patterns/helm-charts/health-patterns
 helm dependency update
 ```
@@ -55,22 +55,22 @@ Note: by changing the directory as shown above, you will be in the right place f
 
 #### Create a new namespace
 
-Please note that although this is step is optional, it is highly recommended that you create a new namespace in your Kubernetes cluster before installing the pattern.  This will help prevent the various artifacts it will install from mixing with other artifacts that might already be present in your Kubernetes cluster.  To create a new namespace called ```alvearie``` and make it your default for future commands:
+Please note that although this is step is optional, it is highly recommended that you create a new namespace in your Kubernetes cluster before installing the pattern.  This will help prevent the various artifacts it will install from mixing with other artifacts that might already be present in your Kubernetes cluster.  To create a new namespace called ```your-namespace``` and make it your default for future commands:
 
 ```bash
-kubectl create namespace alvearie
-kubectl config set-context --current --namespace=alvearie
+kubectl create namespace your-namespace
+kubectl config set-context --current --namespace=your-namespace
 ```
 
 **NOTE:** The length of a namespace name must be less than or equal to **20 characters**.  Using a name that is longer than 20 characters will result in a failure to deploy the Nifi pod due to a certificate issue (the error will be visible in the NifiKop log).
 
 #### Update the internalHostName
 
-The internal host name used to communicate with nifi requires that you substitute your custom namespace (created above) into the value shown below.  For example, if you created a namespace called `my-namespace` then the update in the `values.yaml` file would be
+The internal host name used to communicate with nifi requires that you substitute your custom namespace (created above) into the value shown below.  For example, if you created a namespace called `your-namespace` then the update in the `values.yaml` file would be
 
 ```
 # Update "alvearie.svc" to "<your namespace>.svc"
-internalHostName: &internalHostName alvearie-nifi-0.alvearie-nifi-headless.my-namespace.svc.cluster.local
+internalHostName: &internalHostName alvearie-nifi-0.alvearie-nifi-headless.your-namespace.svc.cluster.local
 ```
 
 #### Set the releaseName
@@ -153,7 +153,7 @@ kubectl delete pv -l release=enrich
 
 ## Using the pattern
 
-By default, there are two important external services exposed by the Alvearie Enrichment Pattern: NiFi and Kafka via expose-kafka. Again, as mentioned above, the urls for those services are provided in the post-deployment information.  Let’s go through them one by one and discuss their corresponding functionality.
+By default, there are two important external services exposed by the LinuxForHealth Enrichment Pattern: NiFi and Kafka via expose-kafka. Again, as mentioned above, the urls for those services are provided in the post-deployment information.  Let’s go through them one by one and discuss their corresponding functionality.
 
 #### [NiFi](https://github.com/apache/nifi)
 Let’s start with the alvearie-nifi service: `https://<<external-hostname>>/nifi`. Once you login using the `username` / `password` defined in the nifi section of the `values.yaml` (default is **alvearie** / **wats0nHealth**) you will see the Nifi canvas.
