@@ -134,7 +134,7 @@ kubectl delete pv -l release=ingestion
 
 ## Using the pattern
 
-By default, there are three important external services exposed by the LinuxForHealth Ingestion Pattern: NiFi, Kafka via expose-kafka, and FHIR. Again, as mentioned above, the urls for those services are provided in the post-deployment information.  Let’s go through them one by one and discuss their corresponding functionality.
+By default, there are three important external services exposed by the Ingestion Pattern: NiFi, Kafka via expose-kafka, and FHIR. Again, as mentioned above, the urls for those services are provided in the post-deployment information.  Let’s go through them one by one and discuss their corresponding functionality.
 
 #### [NiFi](https://github.com/apache/nifi)
 Let’s start with the alvearie-nifi service: `https://<<external-hostname>>/nifi`.  Once you login using the `username` / `password` defined in the nifi section of the `values.yaml` (default is **alvearie** / **wats0nHealth**) you will see the Nifi canvas.
