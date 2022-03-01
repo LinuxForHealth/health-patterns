@@ -1,6 +1,6 @@
 # Health Patterns Helm Chart
 
-The Health Patterns Helm Chart encompasses many services which are frequently used together to achieve health care goals.  This pattern can be configured via Helm values to operate differently based on your use case and needs. Currently, two different uses are supported: Clinical Ingestion and Clinical Enrichment. 
+The Health Patterns Helm Chart encompasses many services which are frequently used together to achieve health care goals.  This pattern can be configured via Helm values to operate differently based on your use case and needs. Currently, two different uses are supported: Clinical Ingestion and Clinical Enrichment.
 
 # Clinical Ingestion
 Clinical Ingestion is a reference implementation of a clinical data ingestion process.  It allows medical data to be processed by various components, enriched, normalized, transformed, and eventually stored in a specified [FHIR](https://www.hl7.org/fhir/) server.
@@ -12,7 +12,7 @@ The current flow is designed to operate on FHIR resources. If [HL7](https://www.
 The Clinical Ingestion flow can also enrich the data as it flows through. This relies on the Clinical Enrichment flow described below.
 
 # Clinical Enrichment
-Clinical Enrichment is a reference implementation of a clinical data enrichment process.  It allows medical data to be enriched using various components, such as de-identification, terminology normalization, and the [ASCVD](https://github.com/Alvearie/health-analytics/tree/main/ascvd) analytic evaluation.
+Clinical Enrichment is a reference implementation of a clinical data enrichment process.  It allows medical data to be enriched using various components, such as de-identification, terminology normalization, and the [ASCVD](https://github.com/LinuxForHealth/health-analytics/tree/main/ascvd) analytic evaluation.
 
 The Clinical Enrichment Flow is designed to read medical data (in FHIR format) from a configured [kafka](https://kafka.apache.org/) topic.  As the data is processed, any errors that are detected are logged and posted to target kafka topics (if configured).  Once complete, the updated FHIR data is posted back to a Kafka topic for further use.
 
@@ -26,7 +26,7 @@ Currently we support the following enrichment steps:
 
 * [De-Identification](https://github.com/Alvearie/de-identification) Service - This step will de-identify the clinical data flowing through the pipeline and store the de-identified version in a separate FHIR server.  The de-identification rules are currently static and can be found [here](../../services/deid-core/src/main/resources/de-id-config.json).
 
-* [Million Hearts ASCVD Model](https://github.com/Alvearie/health-analytics/tree/main/ascvd): This step will calculate a ten-year risk of cardiovascular disease using the Million Hearts ASCVD Model.
+* [Million Hearts ASCVD Model](https://github.com/LinuxForHealth/health-analytics/tree/main/ascvd): This step will calculate a ten-year risk of cardiovascular disease using the Million Hearts ASCVD Model.
 
 ## Deploying the Health Patterns Helm chart
 
@@ -48,7 +48,7 @@ Alternatively, you can directly post to Kafka if your environment allows. Postin
 
 An explanation of the parameters:
 
-* "path/to/json" - (Required) Clinical data you wish to process (for example, "patientData/patient-with-us-core-birthsex.json"). Currently only FHIR and HL7 data are supported by this flow. 
+* "path/to/json" - (Required) Clinical data you wish to process (for example, "patientData/patient-with-us-core-birthsex.json"). Currently only FHIR and HL7 data are supported by this flow.
 * "Expose Kafka URL" - (Required) The URL for the Expose Kafka service.  By default, this is an ingress URL that you can find listed in your kubernetes ingresses under "ingestion-expose-kafka".  It is also listed in the notes shown at the end of the helm install process.
 * "RequestId: request-0001" - (Optional) A user-generated ID. When used, the provided value will be persisted throughout the ingestion pipeline as a flowfile attribute for better tracking of the request.
 * "ResolveTerminology: true" - (Optional) Run the bundle through the terminology normalization process.
