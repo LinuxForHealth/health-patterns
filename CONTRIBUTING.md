@@ -71,11 +71,6 @@ git commit -s
 ## Communication
 Connect with us by opening an [issue](https://github.com/LinuxForHealth/health-patterns/issues).
 
-## Setup
-Avlearie health-patterns is built with Maven and requires Java 8 or higher.  Since it is composed of several patterns, each pattern will be stored in a separate sub-folder of the health-patterns repository.  To build any pattern, navigate to the folder containing the pattern and execute:
-
-> mvn clean install
-
 ## Testing
 To ensure a working build, please run the full build from the root of each pattern affected by your pull request before submitting.
 
