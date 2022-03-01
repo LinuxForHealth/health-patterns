@@ -4,7 +4,6 @@
 - [Welcome to health-patterns](#cohort-overview)
 - [How to deploy](#how-to-deploy)
 - [Using the pattern](#using-the-pattern)
-- [Options](#options)
 - [Advanced topics](#advanced-topics)
 
 ## Welcome to health-patterns
@@ -39,7 +38,7 @@ These instructions assume that you have the following resources, tools, and conf
 #### Check out the code
 
 ```
-git clone https://github.com/Alvearie/health-patterns.git
+git clone https://github.com/LinuxForHealth/health-patterns.git
 cd health-patterns/helm-charts/health-patterns
 helm dependency update
 ```
@@ -48,11 +47,22 @@ Note: by changing the directory as shown above, you will be in the right place f
 
 #### Create a new namespace
 
-Please note that although this is step is optional, it is highly recommended that you create a new namespace in your Kubernetes cluster before installing the pattern.  This will help prevent the various artifacts it will install from mixing with other artifacts that might already be present in your Kubernetes cluster.  To create a new namespace called ```alvearie``` and make it your default for future commands:
+Please note that although this step is optional, it is highly recommended that you create a new namespace in your Kubernetes cluster before installing the pattern.  This will help prevent the various artifacts it will install from mixing with other artifacts that might already be present in your Kubernetes cluster.  To create a new namespace called ```your-namespace``` and make it your default for future commands:
 
 ```bash
-kubectl create namespace alvearie
-kubectl config set-context --current --namespace=alvearie
+kubectl create namespace your-namespace
+kubectl config set-context --current --namespace=your-namespace
+```
+
+**NOTE:** The length of a namespace name must be less than or equal to **20 characters**.  Using a name that is longer than 20 characters will result in a failure to deploy the Nifi pod due to a certificate issue (the error will be visible in the NifiKop log).
+
+#### Update the internalHostName
+
+The internal host name used to communicate with nifi requires that you substitute your custom namespace (created above) into the value shown below.  For example, if you created a namespace called `your-namespace` then the update in the `values.yaml` file would be
+
+```
+# Update "alvearie.svc" to "<your namespace>.svc"
+internalHostName: &internalHostName alvearie-nifi-0.alvearie-nifi-headless.your-namespace.svc.cluster.local
 ```
 
 #### Ingress parameters
@@ -72,7 +82,7 @@ Once you know these values, use both of them to update the `ingress` section of 
 ingress:
   enabled: &ingressEnabled true
   class: &ingressClass public-iks-k8s-nginx
-  hostname: &hostname <<external-hostname>>
+  hostname: &hostname replace-me
 ```
 
 For example, to deploy in the IBM Cloud environment, we would add
@@ -84,7 +94,8 @@ ingress:
   hostname: &hostname <<your-ibm-hostname>>
 ```
 
-#### Enable the cohort service
+
+#### KEY STEP...Enable the cohort service
 
 The only configuration change that needs to be made is to enable the cohort service.  This is done by changing the `enabled` flag in the `cohort-service` section of the `values.yaml` file as shown below.
 
@@ -96,7 +107,7 @@ cohort-service:
 
 The following Helm command will deploy the ingestion pattern including the initiation of the cohort service.
 ```
-helm install ingestion .  -f clinical_ingestion.yaml
+helm install ingestion .
 ```
 After running the command above, you will see notes that give you information about the deployment, in particular, where the important services (e.g. cohort-service) have been deployed.
 
@@ -149,9 +160,6 @@ After adding a new library, it is possible to list the current libraries by doin
 https://<<external-hostname>>/cohort-service/libraries/FemalePatientsOver25-1.0.1/patientIds
 ```
 
-
-## Options
-
 ## Advanced topics
 
 #### Synthetic data via Synthea
@@ -162,24 +170,16 @@ https://<<external-hostname>>/cohort-service/libraries/FemalePatientsOver25-1.0.
 
   This command will have created FHIR bundles for 10 patients with their clinical history and their corresponding medical providers.
 
-#### Alternate configuration for Helm Chart
+### Changing the release name
 
-When deploying this chart, there are many configuration parameters specified in the values.yaml file.  These can all be overridden based on individual preferences.  To do so, you can create a secondary YAML file containing your changes and specify it to the `helm install` command to override default configuration.
-
-```
-helm install <<RELEASE_NAME>> . \
-    -f value_overrides.yaml \
-    -f clinical_ingestion.yaml
-```
-
-**NOTE:** You can chain multiple override file parameters in yaml, so if you want to deploy the load balancer values as well as other overrides, just specify each using another "-f" parameter.
-
-**NOTE:** Due to a limitation in Helm, when using the Health Patterns chart with a release name other than the defaults of `ingestion`, you are required to update the corresponding values.yaml file to correspond to the correct release name.  
-
-For ingestion, update the `RELEASE_NAME` environment variable in the `clinical_ingestion.yaml` file.  The value _ingestion_ should be changed to whatever release name you choose.
+The `values.yaml` file contains a  `releaseName` variable that can be set to values other than the default of `ingestion`.
 
 ```
-env:
-- name: "RELEASE_NAME"
-  value: "ingestion"
+releaseName: &releaseName <<your new release name>>
+```
+
+If you choose to change the default then be sure to also use the new release name in the helm install command.
+
+```
+helm install <<your new release name>> .
 ```
