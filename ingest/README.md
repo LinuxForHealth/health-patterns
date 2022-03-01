@@ -45,7 +45,7 @@ These instructions assume that you have the following resources, tools, and conf
 #### Check out the code
 
 ```
-git clone https://github.com/Alvearie/health-patterns.git
+git clone https://github.com/LinuxForHealth/health-patterns.git
 cd health-patterns/helm-charts/health-patterns
 helm dependency update
 ```
@@ -54,22 +54,22 @@ Note: by changing the directory as shown above, you will be in the right place f
 
 #### Create a new namespace
 
-Please note that although this step is optional, it is highly recommended that you create a new namespace in your Kubernetes cluster before installing the pattern.  This will help prevent the various artifacts it will install from mixing with other artifacts that might already be present in your Kubernetes cluster.  To create a new namespace called ```alvearie``` and make it your default for future commands:
+Please note that although this step is optional, it is highly recommended that you create a new namespace in your Kubernetes cluster before installing the pattern.  This will help prevent the various artifacts it will install from mixing with other artifacts that might already be present in your Kubernetes cluster.  To create a new namespace called ```your-namespace``` and make it your default for future commands:
 
 ```bash
-kubectl create namespace alvearie
-kubectl config set-context --current --namespace=alvearie
+kubectl create namespace your-namespace
+kubectl config set-context --current --namespace=your-namespace
 ```
 
 **NOTE:** The length of a namespace name must be less than or equal to **20 characters**.  Using a name that is longer than 20 characters will result in a failure to deploy the Nifi pod due to a certificate issue (the error will be visible in the NifiKop log).
 
 #### Update the internalHostName
 
-The internal host name used to communicate with nifi requires that you substitute your custom namespace (created above) into the value shown below.  For example, if you created a namespace called `my-namespace` then the update in the `values.yaml` file would be
+The internal host name used to communicate with nifi requires that you substitute your custom namespace (created above) into the value shown below.  For example, if you created a namespace called `your-namespace` then the update in the `values.yaml` file would be
 
 ```
 # Update "alvearie.svc" to "<your namespace>.svc"
-internalHostName: &internalHostName alvearie-nifi-0.alvearie-nifi-headless.my-namespace.svc.cluster.local
+internalHostName: &internalHostName alvearie-nifi-0.alvearie-nifi-headless.your-namespace.svc.cluster.local
 ```
 
 #### Ingress parameters
@@ -134,7 +134,7 @@ kubectl delete pv -l release=ingestion
 
 ## Using the pattern
 
-By default, there are three important external services exposed by the Alvearie Ingestion Pattern: NiFi, Kafka via expose-kafka, and FHIR. Again, as mentioned above, the urls for those services are provided in the post-deployment information.  Let’s go through them one by one and discuss their corresponding functionality.
+By default, there are three important external services exposed by the Ingestion Pattern: NiFi, Kafka via expose-kafka, and FHIR. Again, as mentioned above, the urls for those services are provided in the post-deployment information.  Let’s go through them one by one and discuss their corresponding functionality.
 
 #### [NiFi](https://github.com/apache/nifi)
 Let’s start with the alvearie-nifi service: `https://<<external-hostname>>/nifi`.  Once you login using the `username` / `password` defined in the nifi section of the `values.yaml` (default is **alvearie** / **wats0nHealth**) you will see the Nifi canvas.
