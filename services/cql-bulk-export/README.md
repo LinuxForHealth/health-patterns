@@ -181,7 +181,7 @@ You should see a response similar to
 
 Note that the response provides the ndjson filename and the job id for the next step.
 
-#### Use Step 3
+### Use Step 3
 
 Query the status endpoint using the job id from the previous step.  This should
 show the current status of the export (either `working` or `done`)
