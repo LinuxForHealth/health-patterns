@@ -152,12 +152,13 @@ def cql_bulk_processing(cql, job_id):
         for resource in resources:
             resource_url = cos_urls[resource]
             parts = resource_url.split("/")
-            del_key = parts[-2] + "/" + parts[-1]
+            del_key = parts[-2] + "/" + (parts[-1].split("ndjson")[0]) + "ndjson"
 
-            f = urlopen(resource_url)
-            for aline in f:
-                lines = lines + 1
-                out_file.write((aline.decode("utf-8")))
+            if "Group" not in resource:  # skip processing group resources
+                f = urlopen(resource_url)
+                for aline in f:
+                    lines = lines + 1
+                    out_file.write((aline.decode("utf-8")))
 
             result = cos_delete_client.delete_object(Bucket=bucket_name, Key=del_key)
             print(result)
@@ -288,7 +289,7 @@ def get_cql_library():
                 lib_id = item["id"]
                 lib_list.append(lib_id)
 
-        return generate_response(200, {"available libraries": str(lib_list)})
+        return generate_response(200, {"available cql libraries": str(lib_list)})
     else:
         generate_response(500, {"message": "Cohort libraries not available"})
 
