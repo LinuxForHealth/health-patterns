@@ -82,13 +82,21 @@
                 }
             }
            
+        },
+        {
+            "name": "waitBeforeNextPatient",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 3,
+            "verify": {
+            }
         }            
      ],
      "parameterized": {
         "csvSource":[
-            "${JSON.FILE:Patients/ascvd_bundle.json},Adam631,Pouros728,$GT.0",
-            "${JSON.FILE:Patients/ascvd_bundle_old_ascvd.json},Adam631,Pouros728,$GT.0",
-            "${JSON.FILE:Patients/ascvd_bundle_old_ascvd_no_birthdate.json},Adam631,Pouros728,$EQ.0"
+          "${JSON.FILE:Patients/ascvd_bundle.json},Adam631,Pouros728,$GT.0",    
+          "${JSON.FILE:Patients/ascvd_bundle_old_ascvd.json},Adam631,Pouros728,$GT.0", 
+          "${JSON.FILE:Patients/ascvd_bundle_old_ascvd_no_birthdate.json},Adam631,Pouros728,$EQ.0"
         ]
     }
 }
