@@ -87,7 +87,7 @@
             "name": "waitBeforeNextPatient",
             "url": "utilities.ZerocodeUtilities",
             "method": "secondsDelay",
-            "request": 3,
+            "request": 4,
             "verify": {
             }
         }            
