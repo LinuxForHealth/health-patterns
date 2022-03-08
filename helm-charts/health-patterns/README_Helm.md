@@ -19,7 +19,7 @@ Alvearie Health Patterns is comprised of multiple components described in more d
 #### Checkout the Code
 
 ```
-git clone https://github.com/Alvearie/health-patterns.git
+git clone https://github.com/LinuxForHealth/health-patterns.git
 cd health-patterns/helm-charts/health-patterns
 helm dependency update
 ```
