@@ -116,6 +116,15 @@ nlp-insights:
       flow:
     default:
 
+# To disable the patient browser UI set enabled to false
+patient-browser:
+  enabled: true
+  ingress:
+    enabled: true
+    class: *ingressClass
+    hostname: *hostname
+  fhirServer: 
+
 # ------------------------------------------------------------------------------
 # FHIR Configuration
 # ------------------------------------------------------------------------------

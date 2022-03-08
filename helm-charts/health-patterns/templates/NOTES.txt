@@ -63,6 +63,10 @@ The following services have been deployed:
 - Grafana{{- if index .Values "kube-prometheus-stack" "ingress" "enabled" }} --------------------- https://{{ index .Values "kube-prometheus-stack" "ingress" "hostname"}}/grafana{{- end }}
 {{- end }}
 
+{{- if index .Values "patient-browser" "enabled" }}
+- Patient Browser{{- if index .Values "patient-browser" "ingress" "enabled" }} -------------- https://{{ index .Values "patient-browser" "ingress" "hostname"}}/patient-browser/{{- end }}
+{{- end }}
+
 {{- if .Values.ingress.enabled }}
 {{- if .Values.kafka.enabled }}
 
@@ -72,6 +76,7 @@ To access the deployed pipeline, use the Expose Kafka service to read from and s
 
 {{- end }}
 {{- end }}
+
 
 Inside the cluster you can access the services at the following locations:
 

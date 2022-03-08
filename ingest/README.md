@@ -101,7 +101,25 @@ ingress:
   hostname: &hostname <<your-ibm-hostname>>
 ```
 
+#### Update FHIR server url for patient-browser UI
 
+By default, a simple FHIR UI called `patient-browser` will be deployed.  In order for the UI to connect to the FHIR server, you need to provide the url in the `values.yaml` patient-browser configuration as shown below.
+
+```
+patient-browser:
+  enabled: true
+  ingress:
+    enabled: true
+    class: *ingressClass
+    hostname: *hostname
+  fhirServer: <<provide FHIRserver url here>>
+```
+
+For example, if you are deploying your FHIR server using this deployment with ingress, your url will use the `hostname` above as follows:
+
+`https://<<hostname>>/fhir`
+
+If you wish to disable the patient-browser, set the `enabled` value to `false`.
 
 
 #### Deployment
@@ -190,23 +208,6 @@ This pattern relies on a FHIR server for data persistence and retrieval.  It pro
   `java -jar synthea-with-dependencies.jar -p 10`
 
   This command will have created FHIR bundles for 10 patients with their clinical history and their corresponding medical providers.
-
-### Optional: Deploy a FHIR UI
-
-Follow the instructions for deploying the [Alvearie Patient Browser App](https://github.com/Alvearie/patient-browser/tree/master/chart#installation) if you need a FHIR UI.
-
-When specifying the FHIR URL (fhirServer parameter) you must use an open server (not requiring authorization).  If you enable the FHIR Proxy Ingress, you can use the corresponding host name.  The proxy allows unauthenticated access to the FHIR server, so will not be enabled by default. To enable it, when deploying the Clinical Ingestion helm chart, include:
-
-```
---set fhir.proxy.enabled=true
-```
-
-and
-
-```
---set fhir-deid.proxy.enabled=true
-```
-
 
 
 ### Advanced configuration for Helm Chart

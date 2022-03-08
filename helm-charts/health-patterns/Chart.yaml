@@ -124,3 +124,7 @@ dependencies:
   - name: cert-secret-generator
     repository: https://linuxforhealth.github.io/health-patterns/charts
     version: 0.1.1
+  - name: patient-browser
+    version: 1.0.0
+    condition: patient-browser.enabled
+    repository: https://alvearie.io/patient-browser/charts
