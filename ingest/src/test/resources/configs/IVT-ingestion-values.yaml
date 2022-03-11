@@ -38,7 +38,7 @@ cql-bulk-export:
     
   cos:
     endpoint: https://s3.us-east.cloud-object-storage.appdomain.cloud
-    apikey: J7ACVpPqsSXnI3czsG9G0_dp3G0y9FBteWk0-bnFBFEh
+    apikey: 
     instancecrn: crn:v1:bluemix:public:iam-identity::a/6694a1bda7d84197b130c3ea87ef3e77::serviceid:ServiceId-77b345c5-069f-4f48-af17-62c2628d65f3
     
   bucketname: hptestbucket
@@ -55,8 +55,8 @@ fhir:
     enabled: true
     location: us
     endpointUrl: https://s3.us-east.cloud-object-storage.appdomain.cloud
-    accessKey: 1b3c92080c764daaa4791f131c3157da
-    secretKey: e129d3f4589cc9b50de4ea991eef250325802fb570a8b1b3
+    accessKey: 
+    secretKey: 
     bulkDataBucketName: hptestbucket
     
 cohort-service:
