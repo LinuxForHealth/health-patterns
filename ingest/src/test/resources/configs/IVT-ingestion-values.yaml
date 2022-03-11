@@ -1,0 +1,65 @@
+# Basic configuration for the NLP-Insights serivce for ingestion tests
+
+pattern: "IVT-Ingestion-Overrides"
+
+nlp-insights:
+  enabled: true
+  ingress:
+     enabled: true
+  nlpservice:
+    quickumls:
+      enableconfig: true
+      name: default
+      endpoint: https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match
+
+    acd:
+      enableconfig: true
+      name: acd
+      endpoint: https://us-east.wh-acd.cloud.ibm.com/wh-acd/api
+      apikey:
+      flow: wh_acd.ibm_clinical_insights_v1.0_standard_flow
+
+    default: default
+    
+# Configuration of cql-bulk-export
+
+cql-bulk-export:
+  enabled: true
+  ingress:
+    enabled: true
+    
+  fhir:
+    endpoint: http://ingestion-fhir/fhir-server/api/v4
+    user: fhiruser
+    password: integrati0n
+    
+  cohort:
+    endpoint: http://ingestion-cohort-service
+    
+  cos:
+    endpoint: https://s3.us-east.cloud-object-storage.appdomain.cloud
+    apikey: 
+    instancecrn: crn:v1:bluemix:public:iam-identity::a/6694a1bda7d84197b130c3ea87ef3e77::serviceid:ServiceId-77b345c5-069f-4f48-af17-62c2628d65f3
+    
+  bucketname: hptestbucket
+  resourcelist: ""
+  
+fhir:
+  image:
+    repository: quay.io/alvearie/fhir-cql
+    tag: "latest"
+    
+  serverRegistryResourceProviderEnabled: true
+   
+  objectStorage:
+    enabled: true
+    location: us
+    endpointUrl: https://s3.us-east.cloud-object-storage.appdomain.cloud
+    accessKey: 
+    secretKey: 
+    bulkDataBucketName: hptestbucket
+    
+cohort-service:
+  ingress:
+    # disable ingress in the base chart, allowing re-use of the Health-Patterns-wide ingress definitions
+    enabled: true

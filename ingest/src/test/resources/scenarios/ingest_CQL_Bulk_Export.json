@@ -1,0 +1,191 @@
+{
+    "scenarioName": "********ingest_CQL_Bulk_Export********",
+    "ignoreStepFailures": true,
+    "steps": [ 
+        {
+            "name": "deleteCohortCQLLibrary",
+            "url": "${cohort_server}/libraries/MalePatients-1.0.0",
+            "method": "DELETE",
+            "request": { },
+            "verify": { }
+        },
+        {
+            "name": "createCohortCQLLibrary",
+            "url": "${cohort_server}/libraries",
+            "method": "POST",
+            "request": {
+               "headers" : { "Content-Type": "application/text" },
+               "body": 	              
+	                " library \"MalePatients\" version '1.0.0'\n using FHIR version '4.0.1'\n include \"FHIRHelpers\" version '4.0.1' called FHIRHelpers\n context Patient\n define \"Patient is Male\":\n    Patient.gender.value = 'male'\n define \"Initial Population\":\n    \"Patient is Male\"\n define \"Denominator\":\n    \"Initial Population\"\n define \"Numerator\":\n    \"Initial Population\"" 
+            },
+            "verify":{
+               "status": 201,
+               "rawBody": "$CONTAINS.STRING:CQL created! "
+            }
+        },
+        {
+            "name": "ingestMalePatient",
+            "url": "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json",
+                "DeidentifyData": "false"},
+                    "body":  "${0}" },            
+            "verify": {
+                "status": 200
+                }
+        }, 
+        {
+            "name": "ingestFemalePatient",
+            "url": "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
+            "operation": "POST",           
+                "request": {
+                "headers" : { "Content-Type": "application/json",
+                "DeidentifyData": "false"},
+                    "body":  "${3}" },            
+            "verify": {
+                "status": 200
+                }
+        },
+        {
+            "name": "verifyPatientsIngested",
+            "url": "${pri_fhir_server}/Patient",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "Bundle",
+                    "total" : 2 
+                }
+            }
+        },
+        {
+            "name": "startCQLBulkExport",
+            "url": "${cql_bulk_export_server}?cql=MalePatients-1.0.0",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+                "status": 202
+            }
+        },
+        {
+            "name": "waitForBulkExport",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 30,
+            "verify": { }
+        },
+        {
+			"name": "getBulkExportJobId",
+			"url": "utilities.ZerocodeUtilities",
+			"method": "getJobId",
+			"request": {
+				"string1": "${$.startCQLBulkExport.response.body.message}"
+			},
+			"verify": { }
+		},
+		{
+            "name": "getCQLBulkExportStatus",
+            "url": "${cql_bulk_export_server}/status?id=${$.getBulkExportJobId.response.result}",
+            "method": "GET",
+            "request": {
+            },
+            "verify": {
+               "status" : 200,
+               "body": {
+                  "info": {
+                        "number_of_patients"  : 1
+                  }
+               }      
+            }
+        },
+        {
+			"name": "verifyMalePatient",
+			"url": "utilities.ZerocodeUtilities",
+			"method": "getItem",
+			"request": {
+				"bucketName": "hptestbucket",
+				"apiKey": "J7ACVpPqsSXnI3czsG9G0_dp3G0y9FBteWk0-bnFBFEh",
+				"serviceInstanceId": "crn:v1:bluemix:public:cloud-object-storage:global:a/6694a1bda7d84197b130c3ea87ef3e77:131a8d10-c8ff-4e05-b344-921abdd60bcc::",
+				"endpointUrl": "https://s3.us-east.cloud-object-storage.appdomain.cloud",
+				"itemName": "MalePatients.ndjson",
+				"findString": "${1}",
+				"location": "us"
+			},
+			"verify": {			
+			  "result": "true"
+			}
+		},
+		{
+			"name": "verifyFemalePatient",
+			"url": "utilities.ZerocodeUtilities",
+			"method": "getItem",
+			"request": {
+				"bucketName": "hptestbucket",
+				"apiKey": "J7ACVpPqsSXnI3czsG9G0_dp3G0y9FBteWk0-bnFBFEh",
+				"serviceInstanceId": "crn:v1:bluemix:public:cloud-object-storage:global:a/6694a1bda7d84197b130c3ea87ef3e77:131a8d10-c8ff-4e05-b344-921abdd60bcc::",
+				"endpointUrl": "https://s3.us-east.cloud-object-storage.appdomain.cloud",
+				"itemName": "MalePatients.ndjson",
+				"findString": "${4}",
+				"location": "us"
+			},
+			"verify": {
+			
+			  "result": "false"
+
+			}
+		},
+        {
+            "name": "deleteMalePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.ingestMalePatient.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.ingestMalePatient.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        }, 
+        {
+            "name": "deleteFemalePatientOnPhiFHIR",
+            "url": "${pri_fhir_server}/Patient/${$.ingestFemalePatient.response.body.entry[0].resource.id}",
+            "method": "DELETE",
+            "request": {
+            },
+            "verify": {
+                "status": 200,
+                "body": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [{
+                        "details": {
+                           "text": "$CONTAINS.STRING:${$.ingestFemalePatient.response.body.entry[0].resource.id}" 
+                           }
+                     }]
+                }
+            }
+        },
+        {
+            "name": "deleteCohortCQLLibraryAtTestEnd",
+            "url": "${cohort_server}/libraries/MalePatients-1.0.0",
+            "method": "DELETE",
+            "request": { },
+            "verify": { }
+        } 
+       
+	  ],
+      "parameterized": {
+        "csvSource":[
+            "${JSON.FILE:Patients/Luis_Miguel102_Gurule738.json},Miguel102,Gurule738,${JSON.FILE:Patients/Salina386_Buckridge80.json},Buckridge80,Salina386"        
+        ]
+    }
+	}	

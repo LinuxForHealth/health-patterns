@@ -38,6 +38,17 @@
       <artifactId>guice</artifactId>
       <version>5.0.1</version>
     </dependency>
+    <dependency>
+       <groupId>com.ibm.cos</groupId>
+       <artifactId>ibm-cos-java-sdk</artifactId>
+       <version>2.8.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+    <dependency>
+       <groupId>org.apache.httpcomponents</groupId>
+       <artifactId>httpclient</artifactId>
+       <version>4.5.13</version>
+    </dependency>
   </dependencies>
     <build>
     <finalName>${project.artifactId}</finalName>
@@ -111,6 +122,14 @@
                 <token>@@kafka.topic.in@@</token>
                 <value>${kafka.topic.in}</value>
             </replacement> 
+            <replacement>
+                <token>@@ip.cohort@@</token>
+                <value>${ip.cohort}</value>
+            </replacement>
+            <replacement>
+                <token>@@ip.cql.bulk.export@@</token>
+                <value>${ip.cql.bulk.export}</value>
+            </replacement>
             <replacement>
                 <token>@@loglevel@@</token>
                 <value>${loglevel}</value>
