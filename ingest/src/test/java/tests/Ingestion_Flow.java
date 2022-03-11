@@ -191,4 +191,10 @@ public class Ingestion_Flow {
 	    public void ingest_FHIR_BLK_CQL_$EVAL() throws Exception {
 	    }
 	 
+	 @Test
+	 @Category({FHIRCQL.class})
+	 @Scenario("scenarios/ingest_CQL_Bulk_Export.json")
+	    public void ingest_CQL_Bulk_Export() throws Exception {
+	 }
+	 
 }

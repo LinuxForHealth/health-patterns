@@ -11,7 +11,15 @@ package utilities;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import utilities.ZerocodeString;
 
@@ -120,6 +128,17 @@ public class ZerocodeUtilities {
     	return zs;
     }
     
+    public ZerocodeString getJobId(ZerocodeString zs)throws InterruptedException {
+    	
+    	/* Started process to build MalePatients.ndjson JOB ID=28f8611d-f89c-43a0-92dc-8cae25ca28fe */
+    	
+    	int i = zs.getString1().indexOf("JOB ID=") + 7;
+    	
+        zs.setResult(zs.getString1().substring(i));
+    	
+    	return zs;
+    }
+    
 // Functions for delaying the test steps
     public void milliSecondsDelay(int milliSec) throws InterruptedException {
         Thread.sleep(milliSec);
@@ -132,7 +151,17 @@ public class ZerocodeUtilities {
     public void minutesDelay(int min) throws InterruptedException {
         Thread.sleep(min*60*1000);
     }
-        
-
+ 
 	
+ // Functions for Cos Storage
+    
+    
+    public Map<String, String> getItem(Map<String, String> inputMap)  {
+    	
+    	IBMCos cos = new IBMCos(inputMap);
+
+    	return cos.getItem();
+    	
+    }
+    
 }

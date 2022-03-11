@@ -136,3 +136,15 @@ export NLP_INSIGHTS_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/nlp-insights
 echo "*************************************"
 echo NLP Insights server: $NLP_INSIGHTS_IP
 echo "*************************************"
+
+# COHORT Service - using INGRESS
+export COHORT_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/cohort-service
+echo "*************************************"
+echo COHORT server: $COHORT_IP
+echo "*************************************"
+
+# cql-bulk-export Service - using INGRESS
+export CQLBULKEXPORT_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/cql-bulk-export
+echo "*************************************"
+echo cql-bulk-export server: $CQLBULKEXPORT_IP
+echo "*************************************"
