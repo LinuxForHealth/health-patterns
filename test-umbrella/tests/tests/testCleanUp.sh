@@ -47,8 +47,8 @@ then
 	echo "*************************************"
 	echo "* Delete PVCs                       *"
 	echo "*************************************"
-	kubectl delete pvc -l release=$HELM_RELEASE
-        kubectl delete pv -l release=$HELM_RELEASE
+	kubectl delete pvc,pv -l release=$HELM_RELEASE
+        kubectl delete pvc,pv data-alvearie-zookeeper-0
 	echo "*************************************"
 	echo "* Waiting for 30  seconds           *"
 	echo "*************************************"
