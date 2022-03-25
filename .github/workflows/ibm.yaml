@@ -151,7 +151,10 @@ jobs:
 
     # Uninstall Ingestion Chart
     - name: Clean Up Ingestion Deployment
-      run: helm uninstall ingestion
+      run: 
+        helm uninstall ingestion
+        kubectl delete pvc -l release=ingestion
+        kubectl delete pvc data-alvearie-zookeeper-0
       continue-on-error: true
       if: ${{ always() }}
 
