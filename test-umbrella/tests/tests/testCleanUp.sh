@@ -45,6 +45,17 @@ then
 	sleep 30  
 	date
 	echo "*************************************"
+	echo "* Delete PVCs                       *"
+	echo "*************************************"
+	kubectl delete pvc -l release=ingestion
+        kubectl delete pv -l release=ingestion
+	echo "*************************************"
+	echo "* Waiting for 30  seconds           *"
+	echo "*************************************"
+	date
+	sleep 30  
+	date
+	echo "*************************************"
 	echo "* Delete Namespace                  *"
 	echo "*************************************"
 	kubectl delete namespace $TEST_NAMESPACE	
