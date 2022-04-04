@@ -123,12 +123,13 @@ then
 	   echo "*************************************" 
 	   echo "* Execute the testcases             *"
 	   echo "*************************************"
+	   mvn  -DskipTests=false -Dtest=ASCVDIngestionTests test
+	   mvn  -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
 	   mvn  -DskipTests=false -Dtest=BasicIngestionTests test
 	   mvn  -DskipTests=false -Dtest=BasicIngestionBLKTests test
 	   mvn  -DskipTests=false -Dtest=DeIDIngestionTests test
 	   mvn  -DskipTests=false -Dtest=DeIDIngestionBLKTests test
-	   mvn  -DskipTests=false -Dtest=ASCVDIngestionTests test
-	   mvn  -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
+
 	
 	   # JUNIT execution reports available in the below folder
 	   ls -lrt target/surefire-reports
