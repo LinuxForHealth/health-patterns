@@ -54,7 +54,7 @@ then
 	
 	elif [ $HELM_RELEASE = "ingestion" ] 
 	then
-	   export DEPLOY_OPTIONS="--wait --timeout "$HELM_TIMEOUT
+	   export DEPLOY_OPTIONS="--wait --timeout "$HELM_TIMEOUT" --set expose-kafka.requestTimeout=120"
 	fi
 	
 	echo "Deployment options: '"$DEPLOY_OPTIONS"'"
@@ -123,12 +123,12 @@ then
 	   echo "*************************************" 
 	   echo "* Execute the testcases             *"
 	   echo "*************************************"
-	   mvn  -DskipTests=false -Dtest=ASCVDIngestionTests test
-	   mvn  -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
 	   mvn  -DskipTests=false -Dtest=BasicIngestionTests test
 	   mvn  -DskipTests=false -Dtest=BasicIngestionBLKTests test
 	   mvn  -DskipTests=false -Dtest=DeIDIngestionTests test
 	   mvn  -DskipTests=false -Dtest=DeIDIngestionBLKTests test
+	   mvn  -DskipTests=false -Dtest=ASCVDIngestionTests test
+	   mvn  -DskipTests=false -Dtest=ASCVDIngestionBLKTests test
 
 	
 	   # JUNIT execution reports available in the below folder
