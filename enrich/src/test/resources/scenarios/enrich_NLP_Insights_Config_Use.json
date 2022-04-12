@@ -64,6 +64,14 @@
                    "config": "default"
                 }
             }
+        },
+        {
+            "name": "waitForNextTest",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 10,
+            "verify": {
+            }
         }                 
      ],
      "parameterized": {
