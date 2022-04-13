@@ -51,12 +51,12 @@ then
 	   sed -i -e "s/\&releaseName ingestion/\&releaseName enrich/g" values.yaml
 	   cat values.yaml | grep releaseName
 	   
-	   export DEPLOY_OPTIONS="--set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey="$ACD_APIKEY" --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --wait --timeout "$HELM_TIMEOUT
+	   export DEPLOY_OPTIONS="--set ascvd-from-fhir.ingress.enabled=true --set deid-prep.ingress.enabled=true --set term-services-prep.ingress.enabled=true --set nlp-insights.enabled=true --set nlp-insights.ingress.enabled=true --set nlp-insights.nlpservice.quickumls.endpoint=https://quickumls.wh-health-patterns.dev.watson-health.ibm.com/match --set nlp-insights.nlpservice.acd.endpoint=https://us-east.wh-acd.cloud.ibm.com/wh-acd/api --set nlp-insights.nlpservice.acd.apikey="$ACD_APIKEY" --set nlp-insights.nlpservice.acd.flow=wh_acd.ibm_clinical_insights_v1.0_standard_flow --set patient-browser.fhirServer=https://"$FHIR_IP" --wait --timeout "$HELM_TIMEOUT
 	
 	elif [ $HELM_RELEASE = "ingestion" ] 
 	then
 	   # deploy ingestion
-	   export DEPLOY_OPTIONS="--wait --timeout "$HELM_TIMEOUT
+	   export DEPLOY_OPTIONS="--set patient-browser.fhirServer=https://"$FHIR_IP" --wait --timeout "$HELM_TIMEOUT
 	
 	fi
 	
