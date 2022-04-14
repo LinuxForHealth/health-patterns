@@ -51,7 +51,7 @@ public class PatientList extends PageClass{
 		return waitAndFindElement(By.className("fa-arrow-right"));
 	}
 	
-    private WebElement sortButton(String buttonName) {
+	private WebElement sortButton(String buttonName) {
 		
 		WebElement sortButton = null;
 		WebElement sortSection = waitAndFindElement(By.className("nav-pills"));
