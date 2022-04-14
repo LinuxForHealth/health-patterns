@@ -12,6 +12,17 @@
      <skipTests>true</skipTests>
   </properties>
     <dependencies>
+      <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>4.1.0</version>
+     </dependency>
+     <dependency>
+        <groupId>com.codeborne</groupId>
+        <artifactId>selenide</artifactId>
+        <version>6.3.5</version>
+        <scope>test</scope>
+     </dependency>
   	 <dependency>
   		<groupId>org.jsmart</groupId>
   		<artifactId>zerocode-tdd</artifactId>
