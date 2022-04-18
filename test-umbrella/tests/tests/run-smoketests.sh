@@ -113,7 +113,7 @@ then
 	   echo "* Build the testcases               *"
 	   echo "*************************************"
 	   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.nifi=$NIFI_IP -Dip.nifi.api=$NIFI_API_IP -Dip.kafka=$KAFKA_IP -Dip.deid=$DEID_IP -Dip.patient.browser=$PB_IP -Dip.expkafka=$EXP_KAFKA_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD -Dloglevel=$LOGLEVEL
-	   cat /workspace/$TEST_NAMESPACE/health-patterns/helm-charts/health-patterns/ingest/src/test/resources/clinical-ingestion-flow.properties
+	   cat /workspace/$TEST_NAMESPACE/health-patterns/ingest/src/test/resources/clinical-ingestion-flow.properties
 	
 	   echo "*************************************" 
 	   echo "* Execute Initialize testcases      *"
