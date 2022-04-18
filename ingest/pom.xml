@@ -142,6 +142,10 @@
                 <value>${ip.cql.bulk.export}</value>
             </replacement>
             <replacement>
+                <token>@@ip.patient.browser@@</token>
+                <value>${ip.patient.browser}</value>
+            </replacement>
+            <replacement>
                 <token>@@loglevel@@</token>
                 <value>${loglevel}</value>
             </replacement>                                            
