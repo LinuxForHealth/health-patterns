@@ -2,6 +2,8 @@ package ui.tests;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.After;
@@ -17,10 +19,9 @@ import ui.pageobjects.PatientList;
 public class PatientListPageTests extends TestClass {
 	
 	static PatientList patientListPage = null;
-	static String testURL = "https://test-ui.wh-health-patterns.dev.watson-health.ibm.com/patient-browser/";
 	
 	@Before
-	public void setupForTest()  throws InterruptedException
+	public void setupForTest() throws InterruptedException,IOException,FileNotFoundException
 	{
 		// Setup Up the selenium/selenide structure and create the page objects
 		driverSetup();		
