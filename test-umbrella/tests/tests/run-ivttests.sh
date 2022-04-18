@@ -127,7 +127,7 @@ then
 	   echo "*************************************" 
 	   echo "* Build the testcases               *"
 	   echo "*************************************"
-	   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.proxy=$FHIR_PROXY_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.fhir.deid.proxy=$FHIR_DEID_PROXY_IP -Dip.deid=$DEID_IP -Dip.nifi=$NIFI_IP -Dip.expkafka=$EXP_KAFKA_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dip.cohort=$COHORT_IP -Dip.cql.bulk.export=$CQLBULKEXPORT_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dpw=$DEFAULT_PASSWORD -Dloglevel=$LOGLEVEL
+	   mvn clean install --log-file ./mvnBuild.log -Dip.fhir=$FHIR_IP -Dip.fhir.proxy=$FHIR_PROXY_IP -Dip.fhir.deid=$FHIR_DEID_IP -Dip.fhir.deid.proxy=$FHIR_DEID_PROXY_IP -Dip.deid=$DEID_IP -Dip.nifi=$NIFI_IP -Dip.expkafka=$EXP_KAFKA_IP -Dip.nlp.insights=$NLP_INSIGHTS_IP -Dip.cohort=$COHORT_IP -Dip.cql.bulk.export=$CQLBULKEXPORT_IP -Dkafka.topic.in=$KAFKA_TOPIC_IN -Dip.patient.browser=$PB_IP -Dpw=$DEFAULT_PASSWORD -Dloglevel=$LOGLEVEL
 	
 	   echo "*************************************" 
 	   echo "* Initialize the testcases          *"

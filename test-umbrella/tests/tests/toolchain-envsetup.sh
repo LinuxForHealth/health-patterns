@@ -148,3 +148,9 @@ export CQLBULKEXPORT_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/cql-bulk-export
 echo "*************************************"
 echo cql-bulk-export server: $CQLBULKEXPORT_IP
 echo "*************************************"
+
+# patient-browser -  using INGRESS
+export PB_IP=$TEST_NAMESPACE.$INGRESS_SUBDOMAIN/patient-browser/
+echo "*************************************"
+echo patient-browser url: $PB_IP
+echo "*************************************"
