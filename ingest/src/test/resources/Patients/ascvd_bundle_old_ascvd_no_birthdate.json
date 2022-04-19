@@ -2474,7 +2474,7 @@
         }, {
           "reference" : "urn:uuid:177dad3db58-00f9d309-b214-4293-b076-55248d4feb06"
         } ],
-        "id" : "cardiac_old",
+        "id" : "cardiac-old",
         "occurrenceDateTime" : "2020-07-22T00:00:00Z",
         "prediction" : [ {
           "outcome" : {
