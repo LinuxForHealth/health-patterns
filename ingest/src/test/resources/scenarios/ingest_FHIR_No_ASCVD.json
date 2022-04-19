@@ -60,16 +60,12 @@
         },
         {
             "name": "getPatientRiskAssessment",
-            "url": "${pri_fhir_server}/RiskAssessment",
+            "url": "${pri_fhir_server}/RiskAssessment/cardiac",
             "method": "GET",
             "request": {
             },
             "verify": {
-                "status": 200,
-                "body": {
-                    "resourceType": "Bundle",
-                    "total" : 0
-                }
+                "status": "$GT.403"
             }
            
 		}            

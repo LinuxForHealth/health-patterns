@@ -60,35 +60,29 @@
         },
         {
             "name": "getPatientRiskAssessment",
-            "url": "${pri_fhir_server}/RiskAssessment",
+            "url": "${pri_fhir_server}/RiskAssessment/cardiac",
             "method": "GET",
             "request": {
             },
             "verify": {
                 "status": 200,
                 "body": {
-                    "resourceType": "Bundle",
-                    "total" : 1,
-                    "entry[0].resource.prediction[0].probabilityDecimal" : "${3}"
+                    "resourceType": "RiskAssessment",
+                    "prediction[0].probabilityDecimal" : "${3}"
                 }
             }
            
         },
         {
             "name": "deletePatientRiskAssessment",
-            "url": "${pri_fhir_server}/RiskAssessment/${$.getPatientRiskAssessment.response.body.entry[0].resource.id}",
+            "url": "${pri_fhir_server}/RiskAssessment/cardiac",
             "method": "DELETE",
             "request": {
             },
             "verify": {
                 "status": 200,
                 "body": {
-                    "resourceType": "OperationOutcome",
-                    "issue": [{
-                        "details": {
-                           "text": "$CONTAINS.STRING:${$.getPatientRiskAssessment.response.body.entry[0].resource.id}" 
-                           }
-                     }]
+                    "resourceType": "OperationOutcome"
                 }
             }
            
@@ -96,9 +90,9 @@
      ],
      "parameterized": {
         "csvSource":[
-       //     "${JSON.FILE:Patients/ascvd_bundle.json},Adam631,Pouros728,$GT.0",
-       //     "${JSON.FILE:Patients/ascvd_bundle_old_ascvd.json},Adam631,Pouros728,$GT.0",
-            "${JSON.FILE:Patients/ascvd_bundle_old_ascvd_no_birthdate.json},Adam631,Pouros728,$EQ.0"
+            "${JSON.FILE:Patients/ascvd_bundle.json},Adam631,Pouros728,$GT.0",
+            "${JSON.FILE:Patients/ascvd_bundle_old_ascvd.json},Adam631,Pouros728,$GT.0"
+         //   "${JSON.FILE:Patients/ascvd_bundle_old_ascvd_no_birthdate.json},Adam631,Pouros728,$EQ.0"
         ]
     }
 }
