@@ -3,6 +3,14 @@
     "ignoreStepFailures": false,
     "steps": [ 
          {
+            "name": "waitBeforePatient",
+            "url": "utilities.ZerocodeUtilities",
+            "method": "secondsDelay",
+            "request": 30,
+            "verify": {
+            }
+         },   
+         {
             "name": "ingestPatientforASCVD",
             "url": "${expose_kafka}?topic=ingest.topic.in&response_topic=ingest.topic.out&failure_topic=ingest.topic.failure",
             "operation": "POST",           
@@ -82,21 +90,13 @@
                 }
             }
            
-        },
-        {
-            "name": "waitBeforeNextPatient",
-            "url": "utilities.ZerocodeUtilities",
-            "method": "secondsDelay",
-            "request": 30,
-            "verify": {
-            }
-        }            
+        }         
      ],
      "parameterized": {
         "csvSource":[
-          "${JSON.FILE:Patients/ascvd_bundle.json},Adam631,Pouros728,$GT.0"    
-        //  "${JSON.FILE:Patients/ascvd_bundle_old_ascvd.json},Adam631,Pouros728,$GT.0" 
-        //  "${JSON.FILE:Patients/ascvd_bundle_old_ascvd_no_birthdate.json},Adam631,Pouros728,$EQ.0"
+          "${JSON.FILE:Patients/ascvd_bundle.json},Adam631,Pouros728,$GT.0",    
+          "${JSON.FILE:Patients/ascvd_bundle_old_ascvd.json},Adam631,Pouros728,$GT.0", 
+          "${JSON.FILE:Patients/ascvd_bundle_old_ascvd_no_birthdate.json},Adam631,Pouros728,$EQ.0"
         ]
     }
 }
