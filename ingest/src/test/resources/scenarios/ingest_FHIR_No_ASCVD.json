@@ -65,7 +65,7 @@
             "request": {
             },
             "verify": {
-                "status": 410
+                "status": "$GT.403"
             }
            
 		}            
