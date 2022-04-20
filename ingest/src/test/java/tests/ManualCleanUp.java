@@ -18,6 +18,10 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import categories.BasicIngestion;
 import categories.DeIDIngestion;
 import categories.FHIRProxyIngestion;
@@ -40,5 +44,10 @@ public class ManualCleanUp {
 	 @Scenario("scenarios/create_Kafka_Topic.json")
 	    public void createKafkaTopic() throws Exception {
 	 } 
+	 
+	 @Test
+	 @Scenario("scenarios/ingest_CQL_Bulk_Export.json")
+	    public void ingest_CQL_Bulk_Export() throws Exception {
+	 }
 	 
 }
