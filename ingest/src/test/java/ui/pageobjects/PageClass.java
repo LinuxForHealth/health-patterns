@@ -103,11 +103,10 @@ public abstract class PageClass {
 
 	/**
 	 * Indicates the browser in use (i.e. Firefox, Chrome, etc)
-	 * NOTE currently only Firefox is used in Interop
 	 * @return the type of browser
 	 */
 	public static String getBrowserType() {
-		return setupProperties.getProperty("test.browser", "Firefox");
+		return setupProperties.getProperty("test.browser", "Chrome");
 	}
 
 	/**
