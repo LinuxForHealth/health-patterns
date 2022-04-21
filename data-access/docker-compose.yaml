@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   fhir-server:
-    image: ibmcom/ibm-fhir-server:4.10.2
+    image: ibmcom/ibm-fhir-server:4.11.0
     hostname: fhir
     volumes:
       - type: bind
