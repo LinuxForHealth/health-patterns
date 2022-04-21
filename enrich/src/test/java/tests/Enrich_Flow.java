@@ -1,7 +1,9 @@
+/*
+ * (C) Copyright IBM Corp. 2021, 2022
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-/*******************************************************************************
- * jUnit Java Driver for the Zerocode-based Enrichment tests
- *******************************************************************************/
 package tests;
 
 import org.jsmart.zerocode.core.domain.Scenario;

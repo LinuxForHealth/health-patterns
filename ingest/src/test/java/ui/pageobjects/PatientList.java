@@ -1,12 +1,9 @@
-/*******************************************************************************
- * IBM Confidential OCO Source Materials
- * 5737-D31, 5737-A56
- * (C) Copyright IBM Corp. 2021
+/*
+ * (C) Copyright IBM Corp. 2022
  *
- * The source code for this program is not published or otherwise
- * divested of its trade secrets, irrespective of what has
- * been deposited with the U.S. Copyright Office.
- *******************************************************************************/
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package ui.pageobjects;
 
 
@@ -29,6 +26,10 @@ public class PatientList extends PageClass{
 	}
 	
 	// private element locator methods
+	
+	/**
+	* A method to locate the web element that contains the "patient x to y of z" string 
+	*/
 	private WebElement patientCount() {
 		try {
 			return $(By.className("text-center"));
@@ -37,20 +38,33 @@ public class PatientList extends PageClass{
 		}
 	}
 	
+	/**
+	* A method to locate each patient on the patient list page and return a list of patient web elements
+	*/
 	private List<WebElement> patientListOnPage() {
 		List<WebElement> plist = null;
 		plist =  waitAndFindElements(By.className("patient"));
 		return plist;
 	}
 	
+	/**
+	* A method to locate the "<- Prev" button
+	*/
 	private WebElement prevButton() {
 		return waitAndFindElement(By.className("fa-arrow-left"));
 	}
 	
+	/**
+	* A method to locate the "Next ->" button
+	*/
 	private WebElement nextButton() {
 		return waitAndFindElement(By.className("fa-arrow-right"));
 	}
 	
+	/**
+	* A method to locate desired Sort By button
+	* @param string name of the Sort By button to locate/return
+	*/
 	private WebElement sortButton(String buttonName) {
 		
 		WebElement sortButton = null;
@@ -66,21 +80,33 @@ public class PatientList extends PageClass{
 		return sortButton;
 	}
 	
+	/**
+	* A method to locate the "Patient ID" Sort By button
+	*/
 	private WebElement sortByIDButton() {
 		
 		return sortButton("Patient");
 	}
 	
+	/**
+	* A method to locate the "Name" Sort By button
+	*/
 	private WebElement sortByNameButton() {
 		
 		return sortButton("Name");
 	}
 	
+	/**
+	* A method to locate the "Gender" Sort By button
+	*/
 	private WebElement sortByGenderButton() {
 		
 		return sortButton("Gender");
 	}
 	
+	/**
+	* A method to locate the "DOB" Sort By button
+	*/
 	private WebElement sortByDOBButton() {
 		
 		return sortButton("DOB");
@@ -88,10 +114,16 @@ public class PatientList extends PageClass{
 	
 	// public actions
 	
+	/**
+	* A method to return the "patient x to y of z" string 
+	*/
 	public String getPatientCounts() {
 		return patientCount().getText();
 	}
 	
+	/**
+	* A method to return "z" in the "patient x to y of z" string 
+	*/
 	public int getTotalPatientCount() {
 		
 		int totalPatients = 0;	
@@ -104,6 +136,9 @@ public class PatientList extends PageClass{
 		return totalPatients;
 	}
 	
+	/**
+	* A method to return "x" in the "patient x to y of z" string 
+	*/
 	public int getPatientCountFirstOnPage() {
 		
 		int firstPatientOnPage = 0;	
@@ -115,7 +150,10 @@ public class PatientList extends PageClass{
 
 		return firstPatientOnPage;
 	}
-	
+
+	/**
+	* A method to return "y" in the "patient x to y of z" string 
+	*/
 	public int getPatientCountLastOnPage() {
 		
 		int lastPatientOnPage = 0;	
@@ -129,6 +167,9 @@ public class PatientList extends PageClass{
 		return lastPatientOnPage;
 	}
 	
+	/**
+	* A method to return a list of patient IDs for each patient listed on the page
+	*/
 	public List<String> getPatientIDsOnPage()  {
 		
 		List<String> patientIDs = new ArrayList<String>();
@@ -152,6 +193,9 @@ public class PatientList extends PageClass{
 		
 	}
 	
+	/**
+	* A method to return a list of patient Names (excluding MR., Mrs, and Ms. titles) for each patient listed on the page
+	*/
 	public List<String> getPatientNamesOnPage()  {
 		
 		List<String> patientNames = new ArrayList<String>();
@@ -184,6 +228,9 @@ public class PatientList extends PageClass{
 		
 	}
 	
+	/**
+	* A method to return a list of patient DOBs (date of birth) for each patient listed on the page
+	*/
 	public List<String> getPatientDOBsOnPage()  {
 		
 		List<String> patientDOBs = new ArrayList<String>();
@@ -207,6 +254,9 @@ public class PatientList extends PageClass{
 		
 	}
 	
+	/**
+	* A method to return a list of patient genders for each patient listed on the page
+	*/
 	public List<String> getPatientGendersOnPage()  {
 		
 		List<String> patientGenders = new ArrayList<String>();
@@ -230,25 +280,43 @@ public class PatientList extends PageClass{
 		
 	}
 
+	/**
+	* A method to click on the Sort By Patient ID button
+	*/
 	public void clickOnSortByID() {	
 		sortByIDButton().click();	
 	}
-
+	/**
+	* A method to click on the Sort By Patient Name button
+	*/
 	public void clickOnSortByName() {
 		sortByNameButton().click();
 	}
 	
+	/**
+	* A method to click on the Sort By Patient Gender button
+	*/
 	public void clickOnSortByGender() {
 		sortByGenderButton().click();
 	}
 	
+	/**
+	* A method to click on the Sort By Patient DOB button
+	*/
 	public void clickOnSortByDOB() {
 		sortByDOBButton().click();
 	}
 	
+	/**
+	* A method to click on the "<- Prev" button
+	*/
 	public void clickOnPrev() {
 		prevButton().click();
 	}
+	
+	/**
+	* A method to click on the "Next ->" button
+	*/
 	public void clickOnNext() {
 		nextButton().click();
 	}

@@ -1,12 +1,9 @@
-/*******************************************************************************
- * IBM Confidential OCO Source Materials
- * 5737-D31, 5737-A56
- * (C) Copyright IBM Corp. 2021
+/*
+ * (C) Copyright IBM Corp. 2022
  *
- * The source code for this program is not published or otherwise
- * divested of its trade secrets, irrespective of what has
- * been deposited with the U.S. Copyright Office.
- *******************************************************************************/
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package ui.pageobjects;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -94,11 +91,10 @@ public abstract class PageClass {
 
 	/**
 	 * Indicates the browser in use (i.e. Firefox, Chrome, etc)
-	 * NOTE currently only Firefox is used in Interop
 	 * @return the type of browser
 	 */
 	public static String getBrowserType() {
-		return setupProperties.getProperty("test.browser", "Firefox");
+		return setupProperties.getProperty("test.browser", "Chrome");
 	}
 
 	/**

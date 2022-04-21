@@ -1,3 +1,9 @@
+/*
+ * (C) Copyright IBM Corp. 2022
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package ui.tests;
 
 import org.openqa.selenium.Keys;
@@ -82,7 +88,7 @@ public class TestClass  {
 	
 	
 	protected static void browseToURL(String url) throws InterruptedException {
-			
+		
 		open(url);
 		
 	}

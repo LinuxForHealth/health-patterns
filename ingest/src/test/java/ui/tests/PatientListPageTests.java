@@ -1,3 +1,10 @@
+/*
+ * (C) Copyright IBM Corp. 2022
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
 package ui.tests;
 
 import static org.junit.Assert.assertTrue;
@@ -20,6 +27,10 @@ public class PatientListPageTests extends TestClass {
 	
 	static PatientList patientListPage = null;
 	
+	/**
+	* A method that runs before each test to set up the selenium environment 
+	* and loads the patient list page
+	*/
 	@Before
 	public void setupForTest() throws InterruptedException,IOException,FileNotFoundException
 	{
@@ -33,7 +44,12 @@ public class PatientListPageTests extends TestClass {
 		PatientList.sleepWithReason(2, "Wait For Patient List Page to Be Displayed");
 	}
 	
-	
+	/**
+	* Sort By Patient IDs Ascending 
+	* Press the Sort By Patient IDs button once
+	* Scroll through the list of patients and collect the IDs
+	* Verify the ID list is in ascending order
+	*/
 	@Test
 	public void sortAscendingByIDTest() throws InterruptedException {
 
@@ -49,6 +65,7 @@ public class PatientListPageTests extends TestClass {
             patientIDs.addAll(patientListPage.getPatientIDsOnPage());
         }
         
+        // Go through the list and verify ascending order
         String prevItem = patientIDs.get(0);
         
         for( String id: patientIDs )  {
@@ -61,6 +78,12 @@ public class PatientListPageTests extends TestClass {
 		
 	}
 	
+	/**
+	* Sort By Patient IDs Descending 
+	* Press the Sort By Patient IDs button twice
+	* Scroll through the list of patients and collect the IDs
+	* Verify the ID list is in descending order
+	*/
 	@Test
 	public void sortDescendingByIDTest() throws InterruptedException {
 
@@ -79,6 +102,7 @@ public class PatientListPageTests extends TestClass {
   
         }
         
+        // Go through the list and verify descending order
         String prevItem = patientIDs.get(0);
         
         for( String id: patientIDs )  {
@@ -91,6 +115,12 @@ public class PatientListPageTests extends TestClass {
 		
 	}
 	
+	/**
+	* Sort By Patient Names Ascending 
+	* Press the Sort By Name button once
+	* Scroll through the list of patients and collect the Names (removing titles Mr., Mrs., and Ms.)
+	* Verify the Name list is in ascending order
+	*/
 	@Test
 	public void sortAscendingByNameTest() throws InterruptedException {
 		
@@ -107,6 +137,7 @@ public class PatientListPageTests extends TestClass {
             	
         }
         
+        // Go through the list and verify ascending order
         String prevItem = patientNames.get(0);
         
         for( String name: patientNames )  {
@@ -119,6 +150,12 @@ public class PatientListPageTests extends TestClass {
 
 	}
 	
+	/**
+	* Sort By Patient Names Descending 
+	* Press the Sort By Name button twice
+	* Scroll through the list of patients and collect the Names (removing titles Mr., Mrs., and Ms.)
+	* Verify the Name list is in descending order
+	*/
 	@Test
 	public void sortDescendingByNameTest() throws InterruptedException {
 		
@@ -136,6 +173,7 @@ public class PatientListPageTests extends TestClass {
             patientNames.addAll(patientListPage.getPatientNamesOnPage());
         }
        
+        // Go through the list and verify descending order
         String prevItem = patientNames.get(0);
         
         for( String name: patientNames )  {
@@ -148,6 +186,12 @@ public class PatientListPageTests extends TestClass {
 
 	}
 	
+	/**
+	* Sort By Gender Ascending 
+	* Press the Sort By Gender button once
+	* Scroll through the list of patients and collect the Genders 
+	* Verify the Gender list is in ascending order
+	*/
 	@Test
 	public void sortAscendingByGenderTest() throws InterruptedException {
 
@@ -163,6 +207,7 @@ public class PatientListPageTests extends TestClass {
 	        patientGenders.addAll(patientListPage.getPatientGendersOnPage());
         }
         
+        // Go through the list and verify ascending order
         String prevItem = patientGenders.get(0);
         
         for( String gender: patientGenders )  {
@@ -175,6 +220,12 @@ public class PatientListPageTests extends TestClass {
 
 	}
 	
+	/**
+	* Sort By Gender Descending 
+	* Press the Sort By Gender button twice
+	* Scroll through the list of patients and collect the Genders 
+	* Verify the Gender list is in descending order
+	*/
 	@Test
 	public void sortDescendingByGenderTest() throws InterruptedException {
 
@@ -192,6 +243,7 @@ public class PatientListPageTests extends TestClass {
 	        patientGenders.addAll(patientListPage.getPatientGendersOnPage());
         }
         
+        // Go through the list and verify descending order
         String prevItem = patientGenders.get(0);
         
         for( String gender: patientGenders )  {
@@ -204,6 +256,12 @@ public class PatientListPageTests extends TestClass {
 
 	}
 	
+	/**
+	* Sort By DOB Ascending 
+	* Press the Sort By DOB button once
+	* Scroll through the list of patients and collect the DOBs 
+	* Verify the DOB list is in ascending order
+	*/
 	@Test
 	public void sortAscendingByDOBTest() throws InterruptedException {
 
@@ -219,6 +277,7 @@ public class PatientListPageTests extends TestClass {
 	        patientDOBs.addAll(patientListPage.getPatientDOBsOnPage());
         }
         
+        // Go through the list and verify ascending order
         String prevItem = patientDOBs.get(0);
         
         for( String dob: patientDOBs )  {
@@ -231,6 +290,12 @@ public class PatientListPageTests extends TestClass {
 
 	}
 	
+	/**
+	* Sort By DOB Descending 
+	* Press the Sort By DOB button twice
+	* Scroll through the list of patients and collect the DOBs 
+	* Verify the DOB list is in descending order
+	*/
 	@Test
 	public void sortDescendingByDOBTest() throws InterruptedException {
 
@@ -248,6 +313,7 @@ public class PatientListPageTests extends TestClass {
 	        patientDOBs.addAll(patientListPage.getPatientDOBsOnPage());
         }
         
+     // Go through the list and verify descending order
         String prevItem = patientDOBs.get(0);
         
         for( String dob: patientDOBs )  {
@@ -260,6 +326,12 @@ public class PatientListPageTests extends TestClass {
 
 	}
 	
+	/**
+	* Patient list scrolling test 
+	* Press the Sort By DOB button once
+	* Scroll forward (Next ->) through the patient list and verify x, y, and z in "patient x to y of z"
+	* Scroll backward (<- Prev) through the patient list and verify x, y, and z in "patient x to y of z"
+	*/
 	@Test
 	public void scrollingTest() throws InterruptedException {
 		
@@ -342,7 +414,9 @@ public class PatientListPageTests extends TestClass {
         
 	}
 	
-	
+	/**
+	* A method that runs after each test to close the web page  
+	*/
 	@After
 	public void cleanUpTest() throws InterruptedException{
 		
