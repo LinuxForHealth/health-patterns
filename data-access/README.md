@@ -98,11 +98,29 @@ What if the end user has access to multiple different patient records? The Keycl
 ---
 
 ### Notes for upgrading the sample db schema
+From the `health-patterns/data-access` directory:
 1. grab the latest fhir-persistence-schema cli jar
 ```sh
 mvn dependency:copy -Dartifact=com.ibm.fhir:fhir-persistence-schema:LATEST:jar:cli -DoutputDirectory=.
 ```
 2. run it against the sample db
 ```sh
-java -jar fhir-persistence-schema-4.10.2-cli.jar --db-type derby --prop db.database=fhir/derby/fhirDB --update-schema-fhir
+java -jar fhir-persistence-schema-*-cli.jar --db-type derby --prop db.database=fhir/derby/fhirDB --update-schema-fhir
 ```
+3. reindex (if needed)
+```sh
+curl --request POST \
+  --url 'https://localhost:9443/fhir-server/api/v4/$reindex' \
+  --header 'Authorization: Bearer YOUR_TOKEN_HERE' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"resourceType": "Parameters",
+	"parameter": [
+		{
+			"name": "tstamp",
+			"valueString": "CURRENT_DATE"
+		}
+	]
+}'
+```
+Replace YOUR_TOKEN_HERE and CURRENT_DATE with appropriate values.
