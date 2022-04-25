@@ -107,3 +107,20 @@ mvn dependency:copy -Dartifact=com.ibm.fhir:fhir-persistence-schema:LATEST:jar:c
 ```sh
 java -jar fhir-persistence-schema-*-cli.jar --db-type derby --prop db.database=fhir/derby/fhirDB --update-schema-fhir
 ```
+3. reindex (if needed)
+```sh
+curl --request POST \
+  --url 'https://localhost:9443/fhir-server/api/v4/$reindex' \
+  --header 'Authorization: Bearer YOUR_TOKEN_HERE' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"resourceType": "Parameters",
+	"parameter": [
+		{
+			"name": "tstamp",
+			"valueString": "CURRENT_DATE"
+		}
+	]
+}'
+```
+Replace YOUR_TOKEN_HERE and CURRENT_DATE with appropriate values.
