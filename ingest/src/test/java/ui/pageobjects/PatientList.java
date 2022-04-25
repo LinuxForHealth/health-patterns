@@ -13,10 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import com.codeborne.selenide.SelenideElement;
 
 public class PatientList extends PageClass{
 	
@@ -39,6 +43,22 @@ public class PatientList extends PageClass{
 	}
 	
 	/**
+	* A method to locate the patient that contains the passed in patient info (name, ID, MRN, DOB, etc)
+	*/
+	private WebElement locatePatient(String pinfo) {
+		List<WebElement> plist = patientListOnPage();
+		WebElement thePatient = null;
+		
+		// go through the list of patient elements and find the one with the name that was passed in
+		for (WebElement patient: plist  )  {	
+			if(patient.getText().contains(pinfo)) {				
+				thePatient = patient;			
+			}		
+		}
+		return thePatient;
+	}
+	 
+	/**
 	* A method to locate each patient on the patient list page and return a list of patient web elements
 	*/
 	private List<WebElement> patientListOnPage() {
@@ -51,14 +71,14 @@ public class PatientList extends PageClass{
 	* A method to locate the "<- Prev" button
 	*/
 	private WebElement prevButton() {
-		return waitAndFindElement(By.className("fa-arrow-left"));
+		return $(By.className("fa-arrow-left"));
 	}
 	
 	/**
 	* A method to locate the "Next ->" button
 	*/
 	private WebElement nextButton() {
-		return waitAndFindElement(By.className("fa-arrow-right"));
+		return $(By.className("fa-arrow-right"));
 	}
 	
 	/**
@@ -68,7 +88,7 @@ public class PatientList extends PageClass{
 	private WebElement sortButton(String buttonName) {
 		
 		WebElement sortButton = null;
-		WebElement sortSection = waitAndFindElement(By.className("nav-pills"));
+		WebElement sortSection = $(By.className("nav-pills"));
 		List<WebElement> sortButtons = sortSection.findElements(By.xpath("//li"));
 		
 		for(WebElement button: sortButtons) {
@@ -76,7 +96,7 @@ public class PatientList extends PageClass{
 				sortButton = button;
 			}
 		}
-		
+
 		return sortButton;
 	}
 	
@@ -110,6 +130,30 @@ public class PatientList extends PageClass{
 	private WebElement sortByDOBButton() {
 		
 		return sortButton("DOB");
+	}
+	
+	/**
+	* A method to locate the gender selector in the Demographics tab
+	*/
+	private WebElement nameField() {
+		
+		return waitAndFindElement(By.className("col-sm-12")).findElement(By.className("input-sm"));
+	}
+	
+	/**
+	* A method to locate the gender selector in the Demographics tab
+	*/
+	private WebElement genderSelector() {
+		
+		return $(By.id("genderSelector"));
+	}
+	
+	/**
+	* A method to locate the age selector in the Demographics tab
+	*/
+	private WebElement ageSelector() {
+		
+		return $(By.id("ageSelector"));
 	}
 	
 	// public actions
@@ -229,6 +273,34 @@ public class PatientList extends PageClass{
 	}
 	
 	/**
+	* A method to return a list of patient Names (including MR., Mrs, and Ms. titles) for each patient listed on the page
+	*/
+	public List<String> getPatientNamesWithTitlesOnPage()  {
+		
+		List<String> patientNames = new ArrayList<String>();
+		String pName;
+		int nameStart;
+		int nameEnd;
+		
+		List<WebElement> plist = patientListOnPage();
+		
+		for (WebElement patient: plist  )  {
+			
+			pName = patient.getText();
+			nameStart = 0;
+			nameEnd = pName.indexOf("\n");
+			pName = pName.substring(nameStart,nameEnd);
+
+			patientNames.add(pName);
+			
+		}
+		
+		return patientNames;
+		
+	}
+	
+	
+	/**
 	* A method to return a list of patient DOBs (date of birth) for each patient listed on the page
 	*/
 	public List<String> getPatientDOBsOnPage()  {
@@ -279,18 +351,48 @@ public class PatientList extends PageClass{
 		return patientGenders;
 		
 	}
+	
+	/**
+	* A method to return a list of patient genders for each patient listed on the page
+	*/
+	public List<Integer> getPatientAgesOnPage()  {
+		
+		List<Integer> patientAges = new ArrayList<Integer>();
+		String pAge;
+		int ageStart;
+		int ageEnd;
+		
+		List<WebElement> plist = patientListOnPage();
+		
+		System.out.println("patient list: "+plist);
+		
+		for (WebElement patient: plist  )  {
+
+			pAge = patient.getText();
+			ageStart = pAge.indexOf("\n") + 1;
+			ageEnd = pAge.substring(ageStart).indexOf("year old ")-1;
+			pAge = pAge.substring(ageStart).substring(0,ageEnd);
+			patientAges.add(Integer.parseInt(pAge));
+			System.out.println("Found this age:'"+pAge+"'");	
+		}
+		
+		return patientAges;
+		
+	}
 
 	/**
 	* A method to click on the Sort By Patient ID button
 	*/
 	public void clickOnSortByID() {	
 		sortByIDButton().click();	
+		PatientList.sleepWithReason(1, "Wait after clicking on Sort By Patient ID");
 	}
 	/**
 	* A method to click on the Sort By Patient Name button
 	*/
 	public void clickOnSortByName() {
 		sortByNameButton().click();
+		PatientList.sleepWithReason(1, "Wait after clicking on Sort By Name");
 	}
 	
 	/**
@@ -298,6 +400,7 @@ public class PatientList extends PageClass{
 	*/
 	public void clickOnSortByGender() {
 		sortByGenderButton().click();
+		PatientList.sleepWithReason(1, "Wait after clicking on Sort By Gender");
 	}
 	
 	/**
@@ -305,6 +408,7 @@ public class PatientList extends PageClass{
 	*/
 	public void clickOnSortByDOB() {
 		sortByDOBButton().click();
+		PatientList.sleepWithReason(1, "Wait after clicking on Sort By DOB");
 	}
 	
 	/**
@@ -312,15 +416,106 @@ public class PatientList extends PageClass{
 	*/
 	public void clickOnPrev() {
 		prevButton().click();
+		PatientList.sleepWithReason(1, "Wait after clicking on <- Prev");
 	}
 	
 	/**
 	* A method to click on the "Next ->" button
 	*/
 	public void clickOnNext() {
+		
 		nextButton().click();
+		PatientList.sleepWithReason(1, "Wait after clicking on Prev ->");
 	}
 
+	/**
+	* A method to click on the patient that contains the passed in information
+	*/
+	public void openPatientDetails(String patientInfo) {
+		locatePatient(patientInfo).click();
+	}
+	
+	/**
+    * A method to type text in the name field of the Demographic Tab
+    */
+	
+	public void typeInNameField(String text) {
+		nameField().clear();
+		nameField().sendKeys(text);
+	}
+	
+	/**
+	* A method to press enter in the name field of the Demographic Tab
+	*/
+		
+	public void pressEnterInNameField() {
+		nameField().sendKeys(Keys.ENTER);
+	}
+		
+	
+	/**
+	* A method to select "Males" on the Demographics Tab gender selector
+	*/
+	public void selectMaleGender() {		
+		Select selector = new Select(genderSelector());	
+		selector.selectByVisibleText("Males");	
+	}
+	
+	/**
+	* A method to select "Females" on the Demographics Tab gender selector
+	*/
+	public void selectFemaleGender() {		
+		Select selector = new Select(genderSelector());	
+		selector.selectByVisibleText("Females");	
+	}
+	
+	/**
+	* A method to select "Any Gender" on the Demographics Tab gender selector
+	*/
+	public void selectAnyGender() {		
+		Select selector = new Select(genderSelector());	
+		selector.selectByVisibleText("Any Gender");	
+	}
+	
+	/**
+	* A method to select the infant age on the Demographics Tab age selector
+	*/
+	public void selectInfantAge() {		
+		Select selector = new Select(ageSelector());	
+		selector.selectByValue("infant");	
+	}
+	
+	/**
+	* A method to select the child age on the Demographics Tab age selector
+	*/
+	public void selectChildAge() {		
+		Select selector = new Select(ageSelector());	
+		selector.selectByValue("child");	
+	}
+	
+	/**
+	* A method to select the adult age on the Demographics Tab age selector
+	*/
+	public void selectAdultAge() {		
+		Select selector = new Select(ageSelector());	
+		selector.selectByValue("adult");	
+	}
+	
+	/**
+	* A method to select the elderly age on the Demographics Tab age selector
+	*/
+	public void selectElderlyAge() {		
+		Select selector = new Select(ageSelector());	
+		selector.selectByValue("elderly");	
+	}
+	
+	/**
+	* A method to select the ANY age on the Demographics Tab age selector
+	*/
+	public void selectAnyAge() {		
+		Select selector = new Select(ageSelector());	
+		selector.selectByVisibleText("Any Age");	
+	}
 
 }
 

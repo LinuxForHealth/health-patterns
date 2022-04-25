@@ -69,7 +69,7 @@ public class PatientListPageTests extends TestClass {
         String prevItem = patientIDs.get(0);
         
         for( String id: patientIDs )  {
-        	System.out.println(id);
+
         	if(id.compareTo(prevItem)<0) {
         		assertTrue("Patient ID Ascending Sort Fail",false);
         	}
@@ -106,7 +106,7 @@ public class PatientListPageTests extends TestClass {
         String prevItem = patientIDs.get(0);
         
         for( String id: patientIDs )  {
-        	System.out.println(id);
+
         	if(id.compareTo(prevItem)>0) {
         		assertTrue("Patient ID Descending Sort Fail",false);
         	}
@@ -141,7 +141,7 @@ public class PatientListPageTests extends TestClass {
         String prevItem = patientNames.get(0);
         
         for( String name: patientNames )  {
-        	System.out.println(name);
+ 
         	if(name.compareTo(prevItem)<0) {
         		assertTrue("Patient Name Ascending Sort Fail",false);
         	}
@@ -177,7 +177,7 @@ public class PatientListPageTests extends TestClass {
         String prevItem = patientNames.get(0);
         
         for( String name: patientNames )  {
-        	System.out.println(name);
+
         	if(name.compareTo(prevItem)>0) {
         		assertTrue("Patient Name Descending Sort Fail",false);
         	}
@@ -211,7 +211,7 @@ public class PatientListPageTests extends TestClass {
         String prevItem = patientGenders.get(0);
         
         for( String gender: patientGenders )  {
-        	System.out.println(gender);
+
         	if(gender.compareTo(prevItem)<0) {
         		assertTrue("Patient Gender Ascending Sort Fail",false);
         	}
@@ -247,7 +247,7 @@ public class PatientListPageTests extends TestClass {
         String prevItem = patientGenders.get(0);
         
         for( String gender: patientGenders )  {
-        	System.out.println(gender);
+
         	if(gender.compareTo(prevItem)>0) {
         		assertTrue("Patient Gender Descending Sort Fail",false);
         	}
@@ -281,7 +281,7 @@ public class PatientListPageTests extends TestClass {
         String prevItem = patientDOBs.get(0);
         
         for( String dob: patientDOBs )  {
-        	System.out.println(dob);
+
         	if(dob.compareTo(prevItem)<0) {
         		assertTrue("Patient DOB Ascending Sort Fail",false);
         	}
@@ -317,7 +317,7 @@ public class PatientListPageTests extends TestClass {
         String prevItem = patientDOBs.get(0);
         
         for( String dob: patientDOBs )  {
-        	System.out.println(dob);
+
         	if(dob.compareTo(prevItem)>0) {
         		assertTrue("Patient DOB Descending Sort Fail",false);
         	}
@@ -412,8 +412,373 @@ public class PatientListPageTests extends TestClass {
         
         }
         
+	}	
+	
+	/**
+	* Sort By Name Ascending within Gender Ascending 
+	* Press the Sort By Gender button once
+	* Press the Sort By Name button once
+	* Scroll through the list of patients and collect the Genders and Names
+	* Verify the Gender list is in ascending order
+	* Verify the Name list is in ascending order within the genders
+	*/
+	@Test
+	public void sortAscendingByGenderThenNameAscending() throws InterruptedException {
+
+		patientListPage.clickOnSortByGender();
+		patientListPage.clickOnSortByName();
+		
+        List<String> patientGenders = patientListPage.getPatientGendersOnPage();
+        List<String> patientNames = patientListPage.getPatientNamesOnPage();
+        
+        // scroll through all pages of the patient list to collect Genders and Names
+        while(patientListPage.getPatientCountLastOnPage() < patientListPage.getTotalPatientCount()) {
+
+	        patientListPage.clickOnNext();
+	        
+	        patientGenders.addAll(patientListPage.getPatientGendersOnPage());
+	        patientNames.addAll(patientListPage.getPatientNamesOnPage());
+        }
+        
+        // At this point, we have 2 lists
+        //    List of genders
+        //    List of Names sorted within gender
+        
+        // Go through the gender list and verify ascending order
+        String prevItem = patientGenders.get(0);
+        
+        for( String gender: patientGenders )  {
+        	
+        	if(gender.compareTo(prevItem)<0) {
+        		assertTrue("Patient Gender Ascending Sort Fail",false);
+        	}
+        	prevItem = gender;
+        }
+        
+        // Go through the list of Names and verify the ascending order of Names within gender
+        String prevGender = patientGenders.get(0);
+        String prevName = patientNames.get(0);
+        int listPosition = 0;
+        
+        for(String name: patientNames) {
+
+        	if(!prevGender.equals(patientGenders.get(listPosition))) {
+        		// reset the name check for the new gender
+        		prevName = patientNames.get(listPosition);
+                prevGender = patientGenders.get(listPosition);
+        	}
+        	
+        	if(name.compareTo(prevName)<0) {
+        		assertTrue("Patient Name within Gender Ascending Sort Fail",false);
+        	}
+        	prevName = name;
+        	listPosition++;
+        	
+        }
+
 	}
 	
+	/**
+	* Sort By DOB Descending within Gender Descending 
+	* Press the Sort By Gender button twice
+	* Press the Sort By Name button twice
+	* Scroll through the list of patients and collect the Genders and DOBs
+	* Verify the Gender list is in descending order
+	* Verify the DOB list is in descending order within the genders
+	*/
+	@Test
+	public void sortDescendingByGenderThenDOBDescending() throws InterruptedException {
+
+		patientListPage.clickOnSortByGender();
+		patientListPage.clickOnSortByGender();
+		patientListPage.clickOnSortByDOB();
+		patientListPage.clickOnSortByDOB();
+		
+        List<String> patientGenders = patientListPage.getPatientGendersOnPage();
+        List<String> patientDOBs = patientListPage.getPatientDOBsOnPage();
+        
+        // scroll through all pages of the patient list to collect Genders and Names
+        while(patientListPage.getPatientCountLastOnPage() < patientListPage.getTotalPatientCount()) {
+
+	        patientListPage.clickOnNext();
+	        
+	        patientGenders.addAll(patientListPage.getPatientGendersOnPage());
+	        patientDOBs.addAll(patientListPage.getPatientDOBsOnPage());
+        }
+        
+        // At this point, we have 2 lists
+        //    List of genders
+        //    List of DOBs sorted within gender
+        
+        // Go through the gender list and verify ascending order
+        String prevItem = patientGenders.get(0);
+        
+        for( String gender: patientGenders )  {
+        	
+        	if(gender.compareTo(prevItem)>0) {
+        		assertTrue("Patient Gender Descending Sort Fail",false);
+        	}
+        	prevItem = gender;
+        }
+        
+        // Go through the list of DOBs and verify the descending order of DOBs within gender
+        int listPosition = 0;
+        String prevGender = patientGenders.get(listPosition);
+        String prevDOB = patientDOBs.get(listPosition);
+    
+        for(String dob: patientDOBs) {
+
+        	if(!prevGender.equals(patientGenders.get(listPosition))) {
+        		// reset the name check for the new gender
+        		prevDOB = patientDOBs.get(listPosition);
+                prevGender = patientGenders.get(listPosition);
+        	}
+        	
+        	if(dob.compareTo(prevDOB)>0) {
+        		assertTrue("Patient DOB within Gender Descending Sort Fail",false);
+        	}
+        	prevDOB = dob;
+        	listPosition++;
+        	
+        }
+
+	}
+	
+	/**
+	* Sort By Patient ID Descending within Gender Ascending 
+	* Press the Sort By Gender button once
+	* Press the Sort By Patient ID button twice
+	* Scroll through the list of patients and collect the Genders and Patient IDs
+	* Verify the Gender list is in ascending order
+	* Verify the Patient ID list is in descending order within the genders
+	*/
+	@Test
+	public void sortAscendingByGenderThenPatientIDDescending() throws InterruptedException {
+
+		patientListPage.clickOnSortByGender();
+		patientListPage.clickOnSortByID();
+		patientListPage.clickOnSortByID();
+		
+        List<String> patientGenders = patientListPage.getPatientGendersOnPage();
+        List<String> patientIDs = patientListPage.getPatientIDsOnPage();
+        
+        // scroll through all pages of the patient list to collect Genders and Names
+        while(patientListPage.getPatientCountLastOnPage() < patientListPage.getTotalPatientCount()) {
+
+	        patientListPage.clickOnNext();
+	        
+	        patientGenders.addAll(patientListPage.getPatientGendersOnPage());
+	        patientIDs.addAll(patientListPage.getPatientIDsOnPage());
+        }
+        
+        // At this point, we have 2 lists
+        //    List of genders
+        //    List of DOBs sorted within gender
+        
+        // Go through the gender list and verify ascending order
+        String prevItem = patientGenders.get(0);
+        
+        for( String gender: patientGenders )  {
+        	
+        	if(gender.compareTo(prevItem)<0) {
+        		assertTrue("Patient Gender Ascending Sort Fail",false);
+        	}
+        	prevItem = gender;
+        }
+        
+        // Go through the list of DOBs and verify the descending order of DOBs within gender
+        int listPosition = 0;
+        String prevGender = patientGenders.get(listPosition);
+        String prevID = patientIDs.get(listPosition);
+    
+        for(String id: patientIDs) {
+
+        	if(!prevGender.equals(patientGenders.get(listPosition))) {
+        		// reset the name check for the new gender
+        		prevID = patientIDs.get(listPosition);
+                prevGender = patientGenders.get(listPosition);
+        	}
+        	
+        	if(id.compareTo(prevID)>0) {
+        		assertTrue("Patient ID within Gender Descending Sort Fail",false);
+        	}
+        	prevID = id;
+        	listPosition++;
+        	
+        }
+
+	}
+	
+	/**
+	* Use the Name field in the Demographics Tab to search by name 
+	*  Put test in name field to search on
+	*  Press Enter in the name field
+	* Scroll through the list of patients and collect the patient Names
+	* Verify the patient names on the page contain the search text
+	*/
+	@Test
+	public void demographicsTabName() throws InterruptedException {
+		
+		String nameSearch = "Mrs";
+		
+		patientListPage.typeInNameField(nameSearch);
+		patientListPage.pressEnterInNameField();
+		PatientList.sleepWithReason(2, "Wait for the Name Search to complete.");
+
+        List<String> patientNames = patientListPage.getPatientNamesWithTitlesOnPage();
+        
+        // scroll through all pages of the patient list to collect Names
+        while(patientListPage.getPatientCountLastOnPage() < patientListPage.getTotalPatientCount()) {
+	        patientListPage.clickOnNext();     
+	        patientNames.addAll(patientListPage.getPatientNamesWithTitlesOnPage());
+        }
+        
+        for (String name: patientNames) {
+        	
+        	if(!name.contains(nameSearch))  {
+        		assertTrue("Demographics Tab Name Search Failure. Found '"+name+"' when searching on '"+nameSearch+"'", false);
+        	}
+        	
+        }
+		
+	}
+	
+	/**
+	* Use the Gender field in the Demographics Tab to search by Gender 
+	*  Select female gender
+	*  Press Enter in the name field
+	* Scroll through the list of patients and collect the patient genders
+	* Verify the genders contain the female gender
+	*/
+	@Test
+	public void demographicsTabGender() throws InterruptedException {
+		
+		String genderSearch = "female";
+		
+		patientListPage.selectFemaleGender();
+		patientListPage.pressEnterInNameField();
+		PatientList.sleepWithReason(2, "Wait for the Gender Search to complete.");
+
+        List<String> patientGenders = patientListPage.getPatientGendersOnPage();
+        
+        // scroll through all pages of the patient list to collect Names
+        while(patientListPage.getPatientCountLastOnPage() < patientListPage.getTotalPatientCount()) {
+	        patientListPage.clickOnNext();     
+	        patientGenders.addAll(patientListPage.getPatientGendersOnPage());
+        }
+        
+        for (String gender: patientGenders) {
+        	
+        	if(!gender.contains(genderSearch))  {
+        		assertTrue("Demographics Tab Gender Search Failure. Found '"+gender+"' when searching on '"+genderSearch+"'", false);
+        	}
+        	
+        }
+		
+	}
+	
+	/**
+	* Use the Age field in the Demographics Tab to search by Age
+	*  Select Children 1 - 18 years old
+	*  Press ENTER in the name field
+	* Scroll through the list of patients and collect the patient ages
+	* Verify the ages are with the 1 - 18 age range
+	*/
+	@Test
+	public void demographicsTabAge() throws InterruptedException {
+		
+		// Select "Children(1 - 18 years, Alive only)
+		patientListPage.selectChildAge();
+		patientListPage.pressEnterInNameField();
+		PatientList.sleepWithReason(2, "Wait for the Age Search to complete.");
+
+        List<Integer> patientAges = patientListPage.getPatientAgesOnPage();
+        
+        // scroll through all pages of the patient list to collect Names
+        while(patientListPage.getPatientCountLastOnPage() < patientListPage.getTotalPatientCount()) {
+	        patientListPage.clickOnNext();     
+	        patientAges.addAll(patientListPage.getPatientAgesOnPage());
+        }
+        
+        for (int age: patientAges) {
+        	
+        	if(age > 18)  {
+        		assertTrue("Demographics Tab Age Search Failure. Found '"+age+"' when searching on  Children 1 - 18 years of age", false);
+        	}
+        	
+        }
+		
+	}
+	
+	/**
+	* Use the Age field in the Demographics Tab to search by Age
+	*  Select Children 1 - 18 years old
+	*  Press ENTER in the name field
+	* Scroll through the list of patients and collect the patient ages
+	* Verify the ages are with the 1 - 18 age range
+	*/
+	@Test
+	public void demographicsTabGenderAgeName() throws InterruptedException {
+		
+		String genderSearch = "male";
+		String nameSearch = "Cl";
+		
+		// First, Search by gender
+		patientListPage.selectMaleGender();
+		patientListPage.pressEnterInNameField();
+			
+		// Select Elderly Age)
+		patientListPage.selectElderlyAge();
+		patientListPage.pressEnterInNameField();
+		
+		// Search on Name
+		patientListPage.typeInNameField(nameSearch);
+		patientListPage.pressEnterInNameField();
+		PatientList.sleepWithReason(2, "Wait for the Search to complete.");
+
+
+        List<Integer> patientAges = patientListPage.getPatientAgesOnPage();
+        List<String> patientGenders = patientListPage.getPatientGendersOnPage();
+        List<String> patientNames = patientListPage.getPatientNamesWithTitlesOnPage();
+        
+        // scroll through all pages of the patient list to collect Names
+        while(patientListPage.getPatientCountLastOnPage() < patientListPage.getTotalPatientCount()) {
+	        patientListPage.clickOnNext();     
+	        patientAges.addAll(patientListPage.getPatientAgesOnPage());
+	        patientGenders.addAll(patientListPage.getPatientGendersOnPage());
+	        patientGenders.addAll(patientListPage.getPatientGendersOnPage());
+        }
+        
+        
+        // Verify the age search
+        for (int age: patientAges) {
+        	
+        	if(age < 65)  {
+        		assertTrue("Demographics Tab Age Search Failure. Found '"+age+"' when searching on  Children 1 - 18 years of age", false);
+        	}
+        }
+        
+        // Verify the gender search
+        for (String gender: patientGenders) {
+        	
+        	if(!gender.contains(genderSearch))  {
+        		assertTrue("Demographics Tab Gender Search Failure. Found '"+gender+"' when searching on '"+genderSearch+"'", false);
+        	}
+        	
+        }
+        
+        // Verify the name search
+        for (String name: patientNames) {
+        	
+        	if(!name.contains(nameSearch))  {
+        		assertTrue("Demographics Tab Name Search Failure. Found '"+name+"' when searching on '"+nameSearch+"'", false);
+        	}
+        	
+        }
+		
+	}
+	
+
 	/**
 	* A method that runs after each test to close the web page  
 	*/
