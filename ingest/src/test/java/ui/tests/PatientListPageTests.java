@@ -46,9 +46,9 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By Patient IDs Ascending 
-	* Press the Sort By Patient IDs button once
-	* Scroll through the list of patients and collect the IDs
-	* Verify the ID list is in ascending order
+	*   Press the Sort By Patient IDs button once
+	*   Scroll through the list of patients and collect the IDs
+	*   Verify the ID list is in ascending order
 	*/
 	@Test
 	public void sortAscendingByIDTest() throws InterruptedException {
@@ -80,9 +80,9 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By Patient IDs Descending 
-	* Press the Sort By Patient IDs button twice
-	* Scroll through the list of patients and collect the IDs
-	* Verify the ID list is in descending order
+	*   Press the Sort By Patient IDs button twice
+	*   Scroll through the list of patients and collect the IDs
+	*   Verify the ID list is in descending order
 	*/
 	@Test
 	public void sortDescendingByIDTest() throws InterruptedException {
@@ -117,9 +117,9 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By Patient Names Ascending 
-	* Press the Sort By Name button once
-	* Scroll through the list of patients and collect the Names (removing titles Mr., Mrs., and Ms.)
-	* Verify the Name list is in ascending order
+	*   Press the Sort By Name button once
+	*   Scroll through the list of patients and collect the Names (removing titles Mr., Mrs., and Ms.)
+	*   Verify the Name list is in ascending order
 	*/
 	@Test
 	public void sortAscendingByNameTest() throws InterruptedException {
@@ -152,9 +152,9 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By Patient Names Descending 
-	* Press the Sort By Name button twice
-	* Scroll through the list of patients and collect the Names (removing titles Mr., Mrs., and Ms.)
-	* Verify the Name list is in descending order
+	*   Press the Sort By Name button twice
+	*   Scroll through the list of patients and collect the Names (removing titles Mr., Mrs., and Ms.)
+	*   Verify the Name list is in descending order
 	*/
 	@Test
 	public void sortDescendingByNameTest() throws InterruptedException {
@@ -188,9 +188,9 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By Gender Ascending 
-	* Press the Sort By Gender button once
-	* Scroll through the list of patients and collect the Genders 
-	* Verify the Gender list is in ascending order
+	*   Press the Sort By Gender button once
+	*   Scroll through the list of patients and collect the Genders 
+	*   Verify the Gender list is in ascending order
 	*/
 	@Test
 	public void sortAscendingByGenderTest() throws InterruptedException {
@@ -222,9 +222,9 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By Gender Descending 
-	* Press the Sort By Gender button twice
-	* Scroll through the list of patients and collect the Genders 
-	* Verify the Gender list is in descending order
+	*   Press the Sort By Gender button twice
+	*   Scroll through the list of patients and collect the Genders 
+	*   Verify the Gender list is in descending order
 	*/
 	@Test
 	public void sortDescendingByGenderTest() throws InterruptedException {
@@ -258,9 +258,9 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By DOB Ascending 
-	* Press the Sort By DOB button once
-	* Scroll through the list of patients and collect the DOBs 
-	* Verify the DOB list is in ascending order
+	*   Press the Sort By DOB button once
+	*   Scroll through the list of patients and collect the DOBs 
+	*   Verify the DOB list is in ascending order
 	*/
 	@Test
 	public void sortAscendingByDOBTest() throws InterruptedException {
@@ -292,9 +292,9 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By DOB Descending 
-	* Press the Sort By DOB button twice
-	* Scroll through the list of patients and collect the DOBs 
-	* Verify the DOB list is in descending order
+	*   Press the Sort By DOB button twice
+	*   Scroll through the list of patients and collect the DOBs 
+	*   Verify the DOB list is in descending order
 	*/
 	@Test
 	public void sortDescendingByDOBTest() throws InterruptedException {
@@ -328,9 +328,9 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Patient list scrolling test 
-	* Press the Sort By DOB button once
-	* Scroll forward (Next ->) through the patient list and verify x, y, and z in "patient x to y of z"
-	* Scroll backward (<- Prev) through the patient list and verify x, y, and z in "patient x to y of z"
+	*   Press the Sort By DOB button once
+	*   Scroll forward (Next ->) through the patient list and verify x, y, and z in "patient x to y of z"
+	*   Scroll backward (<- Prev) through the patient list and verify x, y, and z in "patient x to y of z"
 	*/
 	@Test
 	public void scrollingTest() throws InterruptedException {
@@ -416,11 +416,11 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By Name Ascending within Gender Ascending 
-	* Press the Sort By Gender button once
-	* Press the Sort By Name button once
-	* Scroll through the list of patients and collect the Genders and Names
-	* Verify the Gender list is in ascending order
-	* Verify the Name list is in ascending order within the genders
+	*   Press the Sort By Gender button once
+	*   Press the Sort By Name button once
+	*   Scroll through the list of patients and collect the Genders and Names
+	*   Verify the Gender list is in ascending order
+	*   Verify the Name list is in ascending order within the genders
 	*/
 	@Test
 	public void sortAscendingByGenderThenNameAscending() throws InterruptedException {
@@ -480,11 +480,11 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By DOB Descending within Gender Descending 
-	* Press the Sort By Gender button twice
-	* Press the Sort By Name button twice
-	* Scroll through the list of patients and collect the Genders and DOBs
-	* Verify the Gender list is in descending order
-	* Verify the DOB list is in descending order within the genders
+	*   Press the Sort By Gender button twice
+	*   Press the Sort By Name button twice
+	*   Scroll through the list of patients and collect the Genders and DOBs
+	*   Verify the Gender list is in descending order
+	*   Verify the DOB list is in descending order within the genders
 	*/
 	@Test
 	public void sortDescendingByGenderThenDOBDescending() throws InterruptedException {
@@ -546,11 +546,11 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Sort By Patient ID Descending within Gender Ascending 
-	* Press the Sort By Gender button once
-	* Press the Sort By Patient ID button twice
-	* Scroll through the list of patients and collect the Genders and Patient IDs
-	* Verify the Gender list is in ascending order
-	* Verify the Patient ID list is in descending order within the genders
+	*   Press the Sort By Gender button once
+	*   Press the Sort By Patient ID button twice
+	*   Scroll through the list of patients and collect the Genders and Patient IDs
+	*   Verify the Gender list is in ascending order
+	*   Verify the Patient ID list is in descending order within the genders
 	*/
 	@Test
 	public void sortAscendingByGenderThenPatientIDDescending() throws InterruptedException {
@@ -611,10 +611,10 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Use the Name field in the Demographics Tab to search by name 
-	*  Put test in name field to search on
-	*  Press Enter in the name field
-	* Scroll through the list of patients and collect the patient Names
-	* Verify the patient names on the page contain the search text
+	*   Put test in name field to search on
+	*   Press Enter in the name field
+	*   Scroll through the list of patients and collect the patient Names
+	*   Verify the patient names on the page contain the search text
 	*/
 	@Test
 	public void demographicsTabName() throws InterruptedException {
@@ -645,10 +645,10 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Use the Gender field in the Demographics Tab to search by Gender 
-	*  Select female gender
-	*  Press Enter in the name field
-	* Scroll through the list of patients and collect the patient genders
-	* Verify the genders contain the female gender
+	*   Select female gender
+	*   Press Enter in the name field
+	*   Scroll through the list of patients and collect the patient genders
+	*   Verify the genders contain the female gender
 	*/
 	@Test
 	public void demographicsTabGender() throws InterruptedException {
@@ -679,10 +679,10 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Use the Age field in the Demographics Tab to search by Age
-	*  Select Children 1 - 18 years old
-	*  Press ENTER in the name field
-	* Scroll through the list of patients and collect the patient ages
-	* Verify the ages are with the 1 - 18 age range
+	*   Select Children 1 - 18 years old
+	*   Press ENTER in the name field
+	*   Scroll through the list of patients and collect the patient ages
+	*   Verify the ages are with the 1 - 18 age range
 	*/
 	@Test
 	public void demographicsTabAge() throws InterruptedException {
@@ -712,10 +712,10 @@ public class PatientListPageTests extends TestClass {
 	
 	/**
 	* Use the Age field in the Demographics Tab to search by Age
-	*  Select Children 1 - 18 years old
-	*  Press ENTER in the name field
-	* Scroll through the list of patients and collect the patient ages
-	* Verify the ages are with the 1 - 18 age range
+	*   Select Children 1 - 18 years old
+	*   Press ENTER in the name field
+	*   Scroll through the list of patients and collect the patient ages
+	*   Verify the ages are with the 1 - 18 age range
 	*/
 	@Test
 	public void demographicsTabGenderAgeName() throws InterruptedException {
