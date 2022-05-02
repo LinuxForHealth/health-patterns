@@ -5,5 +5,5 @@ This directory contains a docker image that extends the IBM FHIR Server for use 
 # Bill of materials
 
 * IBM FHIR Server
-* fhir-smart and its transitive dependencies
+* fhir-smart
 * fhir-ig-us-core
