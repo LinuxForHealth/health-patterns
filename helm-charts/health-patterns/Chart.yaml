@@ -36,7 +36,7 @@ maintainers:
 dependencies:
   - name: ibm-fhir-server
     alias: fhir
-    version: 0.6.4
+    version: 0.7.0
     condition: fhir.enabled
     repository: https://alvearie.io/alvearie-helm
   - name: term-services-prep
@@ -48,7 +48,7 @@ dependencies:
     condition: fhir-trigger.enabled
     repository: https://linuxforhealth.github.io/health-patterns/charts
   - name: ibm-fhir-server
-    version: 0.6.4
+    version: 0.7.0
     condition: fhir-deid.enabled
     alias: fhir-deid
     repository: https://alvearie.io/alvearie-helm
