@@ -20,6 +20,7 @@ mvn clean install  --log-file ./mvnBuild.log /
 -Dip.deid.prep=<DEID Prep Service URL> /
 -Dip.term.prep=<TERM Prep Service URL> /
 -Dip.ascvd.from.fhir=<ASCVD From FHIR Service URL> /
+-Dip.expkafka=<expose-kafka Service URL>  /
 -Dip.nlp.insights=<NLP-Insights Service URL> /
 -Dpw=<Default Password for FHIR Server User fhiruser> /
 -Dloglevel=<TRACE, DEBUG, INFO, WARN or ERROR>
