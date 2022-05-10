@@ -122,6 +122,7 @@ public abstract class PageClass {
 	 * @return
 	 */
 	protected boolean isElementVisible(int secondsPerWait, int waitsToAttempt, By locator) {
+	
 		boolean found = true;
 		try {
 			found = waitAndFindElement(secondsPerWait, waitsToAttempt, locator).isDisplayed();
@@ -158,7 +159,8 @@ public abstract class PageClass {
 	 * @param locator
 	 * @return
 	 */
-	protected WebElement waitAndFindElement(int secondsPerWait, int waitsToAttempt, By locator) {
+	protected WebElement waitAndFindElement(int secondsPerWait2, int waitsToAttempt, By locator) {
+		Duration secondsPerWait = Duration.ofSeconds(secondsPerWait2);
 		boolean elementFound = false;
 		int count = 0;
 		WebElement elementIs = null;
@@ -175,7 +177,7 @@ public abstract class PageClass {
 			}
 		}
 		if (elementIs == null) {
-			LOGGER.info(locator + " element is still not found after waiting for " + secondsPerWait * waitsToAttempt
+			LOGGER.info(locator + " element is still not found after waiting for " + secondsPerWait2 * waitsToAttempt
 					+ " seconds...performing one final try");
 			elementIs = new WebDriverWait(theWebDriver, secondsPerWait).pollingEvery(Duration.ofSeconds(1))
 					.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -197,7 +199,7 @@ public abstract class PageClass {
 	 * @param childLocator
 	 * @return
 	 */
-	protected WebElement waitAndFindElement(long timeOutInSecs, By parentLocator, By childLocator) {
+	protected WebElement waitAndFindElement(Duration timeOutInSecs, By parentLocator, By childLocator) {
 		try {
 			WebElement element = new WebDriverWait(theWebDriver, timeOutInSecs).pollingEvery(Duration.ofSeconds(2))
 					.until(ExpectedConditions.presenceOfNestedElementLocatedBy(parentLocator, childLocator));
@@ -224,7 +226,8 @@ public abstract class PageClass {
 	 * wait for elements to be visible AND use parent child locators. It more than
 	 * one elements match parent locator it uses the first one ONLY
 	 */
-	protected List<WebElement> waitAndFindElements(long timeOutInSecs, By parentLocator, By childLocator) {
+	protected List<WebElement> waitAndFindElements(long timeOutInSecsIn, By parentLocator, By childLocator) {
+		Duration timeOutInSecs = Duration.ofSeconds(timeOutInSecsIn);
 		try {
 			List<WebElement> elements = new WebDriverWait(theWebDriver, timeOutInSecs).pollingEvery(Duration.ofSeconds(2))
 					.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(parentLocator, childLocator));
@@ -263,7 +266,8 @@ public abstract class PageClass {
 	 * @param locator
 	 * @param reason The reason to wait for the web page element to disappear
 	 */
-	public void waitAndLoseElement(long timeOutInSecs, By locator, String reason) {
+	public void waitAndLoseElement(long timeOutInSecsIn, By locator, String reason) {
+		Duration timeOutInSecs = Duration.ofSeconds(timeOutInSecsIn);
 		boolean elementFound = true;
 		int count = 0;
 		while (count < 30 && elementFound) {
@@ -296,7 +300,8 @@ public abstract class PageClass {
 	 * @param locater
 	 * @return
 	 */
-	protected WebElement waitAndFindClickableElement(long timeOutInSecs, By locater) {
+	protected WebElement waitAndFindClickableElement(long timeOutInSecsIn, By locater) {
+		Duration timeOutInSecs = Duration.ofSeconds(timeOutInSecsIn);
 		return new WebDriverWait(theWebDriver, timeOutInSecs).pollingEvery(Duration.ofSeconds(1))
 				.until(ExpectedConditions.elementToBeClickable(locater));
 	}
@@ -307,7 +312,8 @@ public abstract class PageClass {
 	 * @param locator
 	 * @return
 	 */
-	protected List<WebElement> waitAndFindElements(long timeOutInSecs, By locator) {
+	protected List<WebElement> waitAndFindElements(long timeOutInSecsIn, By locator) {
+		Duration timeOutInSecs = Duration.ofSeconds(timeOutInSecsIn);
 		List<WebElement> elements = null;
 		try {
 			elements = new WebDriverWait(theWebDriver, timeOutInSecs).pollingEvery(Duration.ofSeconds(2))
