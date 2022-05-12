@@ -1,4 +1,4 @@
-# Enrichment Test Repository
+# Enrich Test Repository
 
 ## Overview
 This is a Maven project that uses [Zerocode](https://github.com/authorjapps/zerocode) to define the tests and Java Junits to execute the tests.  The tests are organized and executed by Junit categories.  The tests use a properties file, [enrich-flow.properties](https://github.com/LinuxForHealth/health-patterns/blob/main/enrich/src/test/resources/enrich-flow.properties), that defines the URLs for each of the enrich services used in the tests.
@@ -7,6 +7,7 @@ This is a Maven project that uses [Zerocode](https://github.com/authorjapps/zero
 - [Zercode Test Scenarios](https://github.com/LinuxForHealth/health-patterns/tree/main/enrich/src/test/resources/scenarios)
 - [Junit Tests](https://github.com/LinuxForHealth/health-patterns/tree/main/enrich/src/test/java/tests)
 - [Junit Test Categories](https://github.com/LinuxForHealth/health-patterns/tree/main/enrich/src/test/java/categories)
+- [Java Utilities for Zerocode](https://github.com/LinuxForHealth/health-patterns/tree/main/enrich/src/test/java/utilities)
 
 
 ## Test Build
@@ -33,3 +34,6 @@ This will populate the properties file with the correct URLs and other values an
 ```
 mvn -DskipTests=false -Dtest=<test category name> test
 ```
+
+## Enrich Test Plan
+[Test Plan with test details](https://ibm.ent.box.com/notes/820166087174)
