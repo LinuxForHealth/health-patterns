@@ -7,6 +7,7 @@ This is a Maven project that uses [Zerocode](https://github.com/authorjapps/zero
 - [Zercode Test Scenarios](https://github.com/LinuxForHealth/health-patterns/tree/main/ingest/src/test/resources/scenarios)
 - [Junit Tests](https://github.com/LinuxForHealth/health-patterns/tree/main/ingest/src/test/java/tests)
 - [Junit Test Categories](https://github.com/LinuxForHealth/health-patterns/tree/main/ingest/src/test/java/categories)
+- [Java Utilities for Zerocode](https://github.com/LinuxForHealth/health-patterns/tree/main/ingest/src/test/java/utilities)
 - [Junit UI Tests for patient-browser](https://github.com/LinuxForHealth/health-patterns/tree/main/ingest/src/test/java/ui/tests)
 - [Selenium page object classes for the patient-browser UI tests](https://github.com/LinuxForHealth/health-patterns/tree/main/ingest/src/test/java/ui/pageobjects)
 
@@ -39,4 +40,7 @@ This will populate the properties file with the correct URLs and other values an
 ```
 mvn -DskipTests=false -Dtest=<test category name> test
 ```
+
+## Ingestion Test Plan
+[Test Plan with test details](https://ibm.ent.box.com/notes/763427627965)
 

@@ -28,7 +28,7 @@ public class PatientDetails extends PageClass{
 	// private element locator methods
 	
 	/**
-	* A method to locate the patient details element
+	* A method to locate the patient name element
 	*/
 	private WebElement patientName() {
 		return waitAndFindElement(By.className("patient-name"));
@@ -243,7 +243,7 @@ public class PatientDetails extends PageClass{
 	}
 	
 	/**
-	 * A method to check if the nlp popup table is displayed
+	 * A method to get the text from the NLP popup 
 	 */
 	public String[] getNLPInfo() {
 		
